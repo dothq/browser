@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/EnderAndFireDev/dot-browser/issues"
   },
-  "homepage": "https://github.com/EnderAndFireDev/dot-browser#readme"
+  "homepage": "https://github.com/EnderAndFireDev/dot-browser#readme",
+  "dependencies": {
+    "electron": "^4.1.4"
+  }
 }
