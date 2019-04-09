@@ -12,6 +12,14 @@ import {
   Title,
   Content,
   DropArrow,
+  Card,
+  WeatherHeader,
+  WeatherTitle,
+  WeatherNumber,
+  WeatherSymbol,
+  WeatherContent,
+  WeatherLeft,
+  WeatherIcon,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { MenuItem } from '../MenuItem';
@@ -22,7 +30,7 @@ import { callBrowserViewMethod } from '~/shared/utils/browser-view';
 const Header = ({ children, clickable }: any) => {
   return (
     <HeaderText clickable={clickable}>
-      <div style={{ display: 'inline-block' }}>{children}</div>
+      {children}
       {clickable && <HeaderArrow />}
     </HeaderText>
   );
@@ -51,6 +59,11 @@ const onSiteClick = (url: string) => () => {
   store.overlayStore.visible = false;
 };
 
+const getSize = (i: number) => {
+  const width = 800;
+  return (width - 48 - (i - 1)) / i;
+};
+
 export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlayStore.visible} onClick={onClick}>
@@ -59,19 +72,20 @@ export const Overlay = observer(() => {
           <SearchBox />
           {store.historyStore.topSites.length > 0 && (
             <>
-              <Title>
-                <div style={{ display: 'inline-block' }}>Top Sites</div>
+              <Title style={{ marginBottom: 24 }}>
+                Top Sites
                 <DropArrow />
               </Title>
               <Menu>
                 {store.historyStore.topSites.map(item => (
                   <MenuItem
+                    width={getSize(6)}
                     onClick={onSiteClick(item.url)}
                     key={item._id}
                     maxLines={1}
-                    iconSize={24}
+                    iconSize={20}
                     light
-                    icon={item.favicon}
+                    icon={store.faviconsStore.favicons[item.favicon]}
                   >
                     {item.title}
                   </MenuItem>
@@ -103,12 +117,6 @@ export const Overlay = observer(() => {
               <MenuItem invert icon={icons.extensions}>
                 Extensions
               </MenuItem>
-              <MenuItem invert icon={icons.window}>
-                New window
-              </MenuItem>
-              <MenuItem invert icon={icons.window}>
-                New incognito window
-              </MenuItem>
               <MenuItem invert icon={icons.find}>
                 Find
               </MenuItem>
@@ -117,6 +125,31 @@ export const Overlay = observer(() => {
               </MenuItem>
             </Menu>
           </Section>
+
+          <Title>News</Title>
+          <Card>
+            <WeatherHeader>
+              <WeatherLeft>
+                <WeatherTitle>Warsaw</WeatherTitle>
+                <WeatherNumber>
+                  20<WeatherSymbol>°C</WeatherSymbol>
+                </WeatherNumber>
+              </WeatherLeft>
+              <div
+                style={{
+                  display: 'flex',
+                  flexFlow: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <WeatherIcon
+                  style={{ backgroundImage: `url(${icons.fewClouds})` }}
+                />
+              </div>
+            </WeatherHeader>
+            <WeatherContent>More info</WeatherContent>
+          </Card>
         </Content>
       </Scrollable>
     </StyledOverlay>
