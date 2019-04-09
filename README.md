@@ -13,6 +13,9 @@
 * **Dot Overlay** - A neet little overlay, which has bookmarks, a search box, downloads and more.
 * **Tab Groups** - Organize your tabs in a breeze.
 
+## Build Information
+
+Please head over to our Wiki page for build instructions if you are planning to hack Dot.
 
 ## Support
 
