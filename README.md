@@ -23,6 +23,7 @@ For support, join our support discord server.
 ## Built With
 
 * [NodeJS](https://nodejs.org/en/) - The server environment
+* [Electron](https://electronjs.org/) - Desktop App environment
 * [Wexond](https://github.com/wexond/wexond) - Software used to create browser
 * [npm](https://npmjs.org) - Installing packages
 
