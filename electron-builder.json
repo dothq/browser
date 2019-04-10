@@ -1,10 +1,20 @@
 {
-  "appId": "org.wexond.wexond",
-  "productName": "Wexond",
+  "appId": "org.dot.dot",
+  "productName": "Dot",
   "asar": true,
   "directories": {
     "output": "dist",
     "buildResources": "static/app-icons"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
+  },
+  "nsisWeb": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
   },
   "files": ["build/**/*", "package.json"],
   "publish": "github",
@@ -22,7 +32,7 @@
     ]
   },
   "win": {
-    "target": ["zip", "nsis"]
+    "target": ["zip", "nsis", "nsis-web"]
   },
   "mac": {
     "category": "public.app-category.navigation"
@@ -30,7 +40,7 @@
   "fileAssociations": [
     {
       "name": "Document",
-      "description": "Wexond",
+      "description": "Dot",
       "role": "Viewer",
       "ext": "html"
     }
