@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "dot",
   "version": "2.0.0-beta.7",
   "description": "A beautiful browser with darn-simple UI, based on Wexond.",
@@ -14,7 +14,7 @@
   "main": "build/main.js",
   "author": {
     "name": "Ender & Fire Development",
-    "email": "efdev@ender.site"
+    "email": "thegaminggeek362@gmail.com"
   },
   "contributors": [
     {
@@ -24,13 +24,6 @@
     {
       "name": "Mikołaj Palkiewicz",
       "email": "xnerhu@gmail.com"
-    },
-    { "name": "EnderDev",
-      "email": "endercraftergaming@gmail.com"
-    },
-    {
-      "name": "Geek (Jake Ward)",
-      "email": "thegaminggeek362@gmail.com"
     }
   ],
   "repository": {
