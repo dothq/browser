@@ -2,6 +2,9 @@ import { BrowserWindow, app } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
+var time = new Date();
+process.env.RP_TYPE = `Idle-${time}`;
+
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
@@ -15,22 +18,41 @@ DiscordRPC.register(clientId);
 
 const rpc = new DiscordRPC.Client({ transport: 'ipc' });
 
-const startTimestamp = new Date();
-    
-async function setActivity() {    
+process.env.RP = rpc;
+
+async function setIdleActivity() {
+  var type = process.env.RP_TYPE;
+  var time = type.split("-");
   rpc.setActivity({
-    details: `Idle`,
-    state: 'on Dot Browser',
-    startTimestamp,
-    largeImageKey: 'dot',
-    largeImageText: `Idle on the Launcher`,
+    details: "Idle",
+    state: "on Dot Browser",
+    startTimestamp: parseInt(time[1]),
+    largeImageKey: "dot",
+    largeImageText: "Idle on the Launcher",
     instance: false,
   });
 }
 
-rpc.on('ready', () => {
-  setActivity();
-});
+async function setBrowseActivity() {
+  var type = process.env.RP_TYPE;
+  var site = type.split("-");   
+  rpc.setActivity({
+    details: `Browsing ${site[1]}`,
+    state: "on Dot Browser",
+    largeImageKey: "dot",
+    largeImageText: `Browsing ${site[1]} on Dot Browser`,
+    instance: false,
+  }); 
+}
+
+setInterval(function() {
+  if(process.env.RP_TYPE.substring(0,4) == "Idle") {
+    setIdleActivity()
+  }
+  if(process.env.RP_TYPE.substring(0,4) == "Brow") {
+    setBrowseActivity()
+  }  
+}, 250);
 
 rpc.login({ clientId }).catch(console.error);
 
