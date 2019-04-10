@@ -178,7 +178,9 @@ export class View extends BrowserView {
     );
 
     this.setAutoResize({ width: true, height: true });
-    this.webContents.loadURL(url);
+    if(url.substring(0,1) != "_") {
+      this.webContents.loadURL(url);
+    }
 
     var hostname = "";
     //find & remove protocol (http, ftp, etc.) and get hostname
