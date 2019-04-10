@@ -9,9 +9,9 @@
 
 * **Built in ad-blocker** - We all hate ads, so we releave the pain by having a ad-blocker built in. No downloads, nothing.
 * **Fancy Discord Rich Presence** - Tell your Discord Friends what page you're looking at, or if you're just Idle on the home screen...
-* **Minimalistic UI** - Forget Chrome, bye bye Firefox, fuck you IE and Edge. Our UI beats all of them.
+* **Minimalistic UI** - Forget Chrome, bye bye Firefox, see you later IE and Edge. Our UI beats all of them.
 * **Support for Chrome Extensions** - Don't worry, we thought about you chrome users, all your Chrome Extensions are right here.
-* **Dot Overlay** - A neet little overlay, which has bookmarks, a search box, downloads and more.
+* **Dot Overlay** - A neat little overlay, which has bookmarks, a search box, downloads and more.
 * **Tab Groups** - Organize your tabs in a breeze.
 
 ## Screenshots
