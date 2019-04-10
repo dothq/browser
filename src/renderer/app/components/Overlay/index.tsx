@@ -28,7 +28,6 @@ import { icons } from '../../constants';
 import { callBrowserViewMethod } from '~/shared/utils/browser-view';
 
 
-
 const Header = ({ children, clickable }: any) => {
   return (
     <HeaderText clickable={clickable}>
@@ -65,6 +64,11 @@ const onSiteClick = (url: string) => () => {
   store.overlayStore.visible = false;
 };
 
+const historyTab = () => {
+  document.getElementById('overlay').style.display = "none";
+  document.getElementById('history').style.display = null;
+}
+
 const getSize = (i: number) => {
   const width = 800;
   return (width - 48 - (i - 1)) / i;
@@ -74,7 +78,12 @@ export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlayStore.visible} onClick={onClick}>
       <Scrollable ref={store.overlayStore.scrollRef}>
-        <Content>
+        <Content id="history" style={{ display: 'none', transition: '0.15s opacity' }}>
+          <Title style={{ position: 'absolute', left: '50%', top: '70px', transform: 'translate(-50%, -50%)' }}>
+            History page hi
+          </Title>
+        </Content>
+        <Content id="overlay">
           <p align="center" style={{ marginBottom: '-20px' }}>
             <img src={icons.logo}></img>
           </p>
@@ -111,7 +120,7 @@ export const Overlay = observer(() => {
           <Section onClick={preventHiding}>
             <Header>Menu</Header>
             <Menu>
-              <MenuItem onClick={test} invert icon={icons.history}>
+              <MenuItem onClick={historyTab} invert icon={icons.history}>
                 History
               </MenuItem>
               <MenuItem onClick={test} invert icon={icons.bookmarks}>

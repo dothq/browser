@@ -60,6 +60,10 @@ export class OverlayStore {
   }
 
   public set visible(val: boolean) {
+    setTimeout(function() {
+      document.getElementById('overlay').style.display = null;
+      document.getElementById('history').style.display = "none";
+    }, 250)
     if (val === this._visible) return;
 
     if (!val) {
