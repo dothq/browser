@@ -14,7 +14,7 @@
   "main": "build/main.js",
   "author": {
     "name": "Ender & Fire Development",
-    "email": "thegaminggeek362@gmail.com"
+    "email": "efdev@ender.site"
   },
   "contributors": [
     {
@@ -24,6 +24,13 @@
     {
       "name": "Mikołaj Palkiewicz",
       "email": "xnerhu@gmail.com"
+    },
+    { "name": "EnderDev",
+      "email", "endercraftergaming@gmail.com"
+    },
+    {
+      "name": "Geek (Jake Ward)",
+      "email": "thegaminggeek365@gmail.com"
     }
   ],
   "repository": {
