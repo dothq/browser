@@ -178,7 +178,8 @@ export class View extends BrowserView {
     );
 
     this.setAutoResize({ width: true, height: true });
-    if(url.substring(0,1) != "_") {
+    console.log(url)
+    if(url != "_self") {
       this.webContents.loadURL(url);
     }
 
