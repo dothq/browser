@@ -20,6 +20,10 @@ import {
   WeatherContent,
   WeatherLeft,
   WeatherIcon,
+  LeftMenu,
+  HistoryContent,
+  Image,
+  HistoryBackItem,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { MenuItem } from '../MenuItem';
@@ -65,8 +69,9 @@ const onSiteClick = (url: string) => () => {
 };
 
 const historyTab = () => {
-  document.getElementById('overlay').style.display = "none";
-  document.getElementById('history').style.display = null;
+  document.getElementById('overlay').style.opacity = "0";
+  document.getElementById('overlay').style.pointerEvents = "none";
+  document.getElementById('history').style.opacity = "1";
 }
 
 const getSize = (i: number) => {
@@ -78,13 +83,20 @@ export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlayStore.visible} onClick={onClick}>
       <Scrollable ref={store.overlayStore.scrollRef}>
-        <Content id="history" style={{ display: 'none', transition: '0.15s opacity' }}>
-          <Title style={{ position: 'absolute', left: '50%', top: '70px', transform: 'translate(-50%, -50%)' }}>
-            History page hi
-          </Title>
-        </Content>
+        <HistoryContent id="history" style={{  opacity: 0 , transition: '0.15s opacity' }}>
+            <LeftMenu>
+              <Title style={{ fontWeight: 420, marginTop: '-5px', padding: '10px 10px 10px 10px' }}>
+                <Image src={icons.history} style={{ marginRight: '5px', filter: 'invert(100%)' }}></Image>
+                History
+              </Title>
+              <HistoryBackItem style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px', height: '5%' }}>
+                <Image src={icons.back} style={{ margin: '14px 10px 10px 10px', filter: 'invert(100%)' }}></Image>
+                <Title style={{ margin: '10px 10px 10px 5px', display: 'inline-block', position: 'absolute' }} >Back</Title>
+              </HistoryBackItem>
+            </LeftMenu>
+        </HistoryContent>
         <Content id="overlay">
-          <p align="center" style={{ marginBottom: '-20px' }}>
+          <p style={{ marginBottom: '-20px', textAlign: 'center' }}>
             <img src={icons.logo}></img>
           </p>
           <SearchBox />

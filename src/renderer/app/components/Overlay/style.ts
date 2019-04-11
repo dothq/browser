@@ -172,3 +172,32 @@ export const Content = styled.div`
   left: 50%;
   transform: translateX(-50%);
 `;
+
+export const HistoryContent = styled.div`
+  z-index: 1;
+`;
+
+export const LeftMenu = styled.div`
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.12);
+  overflow-x: hidden;
+  padding-top: 60px;
+`;
+
+export const Image = styled.img`
+  opacity: 1;  
+`;
+
+export const HistoryBackItem = styled.div`
+  transition: 0.1s background-color;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+`;

@@ -61,8 +61,9 @@ export class OverlayStore {
 
   public set visible(val: boolean) {
     setTimeout(function() {
-      document.getElementById('overlay').style.display = null;
-      document.getElementById('history').style.display = "none";
+      document.getElementById('overlay').style.opacity = "1";
+      document.getElementById('overlay').style.pointerEvents = null;
+      document.getElementById('history').style.opacity = "0";
     }, 250)
     if (val === this._visible) return;
 
