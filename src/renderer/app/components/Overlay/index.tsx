@@ -97,7 +97,7 @@ export const Overlay = observer(() => {
                 <Image src={icons.history} style={{ marginRight: '5px', filter: 'invert(100%)' }}></Image>
                 History
               </Title>
-              <HistoryBackItem onclick={historyTabBack} style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px' }}>
+              <HistoryBackItem onClick={historyTabBack} style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px' }}>
                 <Image src={icons.back} style={{ margin: '14px 10px 10px 10px', filter: 'invert(100%)' }}></Image>
                 <Title style={{ margin: '10px 10px 10px 5px', display: 'inline-block', position: 'absolute' }} >Back</Title>
               </HistoryBackItem>
