@@ -193,7 +193,7 @@ export const Image = styled.img`
   opacity: 1;  
 `;
 
-export const HistoryBackItem = styled.div`
+export const HistoryBackItem = styled.a`
   transition: 0.1s background-color;
   border-radius: 5px;
 

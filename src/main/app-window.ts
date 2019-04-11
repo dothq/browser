@@ -70,6 +70,7 @@ export class AppWindow extends BrowserWindow {
       darkTheme: true,
       title: 'Dot',
       titleBarStyle: 'hidden',
+      backgroundColor: '#191919',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
