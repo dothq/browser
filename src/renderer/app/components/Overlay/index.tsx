@@ -103,7 +103,7 @@ export const Overlay = observer(() => {
               </HistoryBackItem>
             </LeftMenu>
         </HistoryContent>
-        <Content id="overlay">
+        <Content id="overlay" style={{ transition: '0.15s opacity' }}>
           <p style={{ marginBottom: '-20px', textAlign: 'center' }}>
             <img src={icons.logo}></img>
           </p>
