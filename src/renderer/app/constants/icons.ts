@@ -23,6 +23,8 @@ import dfav from '~/shared/resources/icons/default_favicon.svg';
 import copy from '~/shared/resources/icons/copy.svg';
 import paste from '~/shared/resources/icons/paste.svg';
 import dev from '~/shared/resources/icons/dev.svg';
+import up from '~/shared/resources/icons/up.svg';
+import info from '~/shared/resources/icons/info.svg';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -53,4 +55,6 @@ export const icons = {
   copy,
   paste,
   dev,
+  up,
+  info,
 };

@@ -57,7 +57,7 @@ export const DropArrow = styled.div`
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  background-image: url(${icons.down});
+  background-image: url(${icons.up});
   filter: invert(100%);
   border-radius: 50%;
   transition: 0.1s background-color;
@@ -177,6 +177,17 @@ export const HistoryContent = styled.div`
   z-index: 1;
 `;
 
+export const SettingsContent = styled.div`
+  color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  transition: 0.15s opacity;
+`;
+
 export const LeftMenu = styled.div`
   height: 100%;
   width: 300px;
@@ -187,13 +198,23 @@ export const LeftMenu = styled.div`
   background-color: rgba(255, 255, 255, 0.12);
   overflow-x: hidden;
   padding-top: 60px;
+  box-shadow: 0px 2.4px 5.4px rgba(0,0,0,0.22), 0px 0.4px 1.35px rgba(0,0,0,0.18);
 `;
 
 export const Image = styled.img`
   opacity: 1;  
 `;
 
-export const HistoryBackItem = styled.a`
+export const HistoryBackItem = styled.div`
+  transition: 0.1s background-color;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+`;
+
+export const SettingsBackItem = styled.div`
   transition: 0.1s background-color;
   border-radius: 5px;
 

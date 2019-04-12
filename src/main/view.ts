@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { resolve, join } from 'path';
@@ -25,21 +25,27 @@ export class View extends BrowserView {
     this.homeUrl = url;
     this.tabId = id;
 
-    const copy = nativeImage.createFromPath(`../shared/resources/icons/copy.svg`);
-    const paste = nativeImage.createFromPath(`../shared/resources/icons/paste.svg`);
-    const dev = nativeImage.createFromPath(``);
-
     this.webContents.on('context-menu', (e, params) => {
       const menu = Menu.buildFromTemplate([
         {
           role: 'copy',
-          icon: '../shared/resources/icons/copy.svg',
           label: 'Copy'
         },
         {
           role: 'paste',
-          icon: '../shared/resources/icons/paste.svg',
           label: 'Paste'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          id: 'screenshot',
+          label: 'Screenshot',
+          click: () => {
+            this.webContents.capturePage(img => {
+              clipboard.writeBuffer("image/png", img.toPNG())
+            });
+          }
         },
         {
           type: 'separator'
@@ -47,7 +53,6 @@ export class View extends BrowserView {
         {
           id: 'inspect',
           label: 'Inspect',
-          icon: '../shared/resources/icons/dev.svg',
           click: () => {
             this.webContents.inspectElement(params.x, params.y);
 
@@ -95,6 +100,9 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener('did-finish-load', async () => {
+      // This blocks annoying google popups
+      let code = `document.getElementById("lb").style.display == 'none';`;
+      this.webContents.executeJavaScript(code);
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
         url: this.webContents.getURL(),

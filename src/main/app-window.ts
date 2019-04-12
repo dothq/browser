@@ -106,6 +106,10 @@ export class AppWindow extends BrowserWindow {
       }
     }
 
+    this.once('ready-to-show', () => {
+      this.show();
+    });    
+
     // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
       if (!this.isMaximized()) {
@@ -144,10 +148,6 @@ export class AppWindow extends BrowserWindow {
     } else {
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
     }
-
-    this.once('ready-to-show', () => {
-      this.show();
-    });
 
     this.on('enter-full-screen', () => {
       this.webContents.send('fullscreen', true);

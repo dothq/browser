@@ -9,7 +9,7 @@ import { runWebRequestService } from './services/web-request';
 
 ipcMain.setMaxListeners(0);
 
-app.setPath('userData', resolve(homedir(), '.wexond'));
+app.setPath('userData', resolve(homedir(), 'Dot'));
 
 export let appWindow: AppWindow;
 

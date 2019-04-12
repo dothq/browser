@@ -24,13 +24,14 @@ import {
   HistoryContent,
   Image,
   HistoryBackItem,
+  SettingsContent,
+  SettingsBackItem,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { MenuItem } from '../MenuItem';
 import { TabGroups } from '../TabGroups';
 import { icons } from '../../constants';
 import { callBrowserViewMethod } from '~/shared/utils/browser-view';
-
 
 const Header = ({ children, clickable }: any) => {
   return (
@@ -43,7 +44,12 @@ const Header = ({ children, clickable }: any) => {
 
 const onClick = () => {
   if (store.tabGroupsStore.currentGroup.tabs.length > 0) {
-    store.overlayStore.visible = false;
+    if(document.getElementById('history').style.opacity == "0") {
+      store.overlayStore.visible = false;
+    }
+    else {
+      store.overlayStore.visible = true;
+    }
   }
 };
 
@@ -82,6 +88,39 @@ const historyTabBack = () => {
   document.getElementById('history').style.pointerEvents = "none";
 }
 
+const settingsTabBack = () => {
+  document.getElementById('overlay').style.opacity = "1";
+  document.getElementById('overlay').style.pointerEvents = null;
+  document.getElementById('settings').style.opacity = "0";
+  document.getElementById('settings').style.pointerEvents = "none";
+}
+
+const hideTS = () => {
+  const displayIndicator = document.getElementById('topSites').getAttribute('data-react-display');
+  const dHeight = `${document.getElementById('topSites').getBoundingClientRect().height}px`
+  if(displayIndicator == "show") {
+    document.getElementById('topSites').style.maxHeight = "1px";
+    document.getElementById('topSites').setAttribute('data-react-display', "hide");
+    document.getElementById('topSites-arrow').style.backgroundImage = `url(${icons.down})`;
+    document.getElementById('topSites').style.overflow = "hidden";
+  }
+  else { 
+    document.getElementById('topSites').style.maxHeight = "400px";
+    document.getElementById('topSites').setAttribute('data-react-display', "show");
+    document.getElementById('topSites-arrow').style.backgroundImage = `url(${icons.up})`;
+    document.getElementById('topSites').style.overflow = null;
+  }
+}
+
+const aboutDot = (t: string) => {
+  document.getElementById('overlay').style.opacity = "0";
+  document.getElementById('overlay').style.pointerEvents = "none";
+  document.getElementById('settings').style.opacity = "1";
+  document.getElementById('settings').style.pointerEvents = null;
+  document.getElementById('about').style.opacity = "1";
+  document.getElementById('about').style.pointerEvents = null;
+}
+
 const getSize = (i: number) => {
   const width = 800;
   return (width - 48 - (i - 1)) / i;
@@ -91,10 +130,11 @@ export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlayStore.visible} onClick={onClick}>
       <Scrollable ref={store.overlayStore.scrollRef}>
-        <HistoryContent id="history" style={{  opacity: 0 , transition: '0.15s opacity', pointerEvents: 'none' }}>
+
+        <HistoryContent id="history" style={{  opacity: 0 , transition: '0.15s opacity', pointerEvents: 'none', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)' }} onClick={preventHiding}>
             <LeftMenu>
               <Title style={{ fontWeight: 420, marginTop: '-5px', padding: '10px 10px 10px 10px' }}>
-                <Image src={icons.history} style={{ marginRight: '5px', filter: 'invert(100%)' }}></Image>
+                <Image src={icons.history} style={{ marginRight: '5px', filter: 'invert(100%)', width: '25px' }}></Image>
                 History
               </Title>
               <HistoryBackItem onClick={historyTabBack} style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px' }}>
@@ -103,18 +143,41 @@ export const Overlay = observer(() => {
               </HistoryBackItem>
             </LeftMenu>
         </HistoryContent>
-        <Content id="overlay" style={{ transition: '0.15s opacity' }}>
+
+        <SettingsContent id="settings" style={{  opacity: 0 , transition: '0.15s opacity', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)', pointerEvents: 'none' }} onClick={preventHiding}>
+          <LeftMenu>
+            <Title style={{ fontWeight: 420, marginTop: '-5px', padding: '10px 10px 10px 10px' }}>
+              <Image src={icons.settings} style={{ marginRight: '5px', filter: 'invert(100%)', width: '25px' }}></Image>
+              Settings
+            </Title>
+            <SettingsBackItem onClick={settingsTabBack} style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px' }}>
+              <Image src={icons.back} style={{ margin: '14px 10px 10px 10px', filter: 'invert(100%)' }}></Image>
+              <Title style={{ margin: '10px 10px 10px 5px', display: 'inline-block', position: 'absolute' }} >Back</Title>
+            </SettingsBackItem>
+          </LeftMenu>
+          <Content id="about">
+            <Title>
+              About Dot
+            </Title>
+          </Content>
+        </SettingsContent>
+
+        <Content id="overlay" style={{ transition: '0.15s opacity', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)' }}>
           <p style={{ marginBottom: '-20px', textAlign: 'center' }}>
             <img src={icons.logo}></img>
           </p>
           <SearchBox />
+
           {store.historyStore.topSites.length > 0 && (
             <>
-              <Title style={{ marginBottom: 24 }}>
-                Top Sites
-                <DropArrow />
+              <Title id="data-react-ts-height" style={{ display: 'none' }}>
+                
               </Title>
-              <Menu>
+              <Title style={{ marginBottom: 24 }} onClick={preventHiding}>
+                Top Sites
+                <DropArrow id="topSites-arrow" onClick={hideTS} />
+              </Title>
+              <Menu id="topSites" data-react-display="show" data-react-height="" style={{ transition: 'all 0.35s', transitionProperty: 'all', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)' }}>              
                 {store.historyStore.topSites.map(item => (
                   <MenuItem
                     width={getSize(6)}
@@ -131,7 +194,6 @@ export const Overlay = observer(() => {
               </Menu>
             </>
           )}
-
           <Title>Overview</Title>
           <Section onClick={preventHiding}>
             <Header>Tab groups</Header>
@@ -158,8 +220,8 @@ export const Overlay = observer(() => {
               <MenuItem onClick={test} invert icon={icons.find}>
                 Find
               </MenuItem>
-              <MenuItem onClick={test} invert icon={icons.more}>
-                More tools
+              <MenuItem onClick={aboutDot} invert icon={icons.info}>
+                About Dot
               </MenuItem>
             </Menu>
           </Section>

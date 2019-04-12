@@ -20,6 +20,9 @@ import { ipcRenderer } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
 
 const removeTab = (tab: Tab) => () => {
+  if(store.tabsStore.tabs.length == 0) {
+    store.overlayStore.visible = true;
+  }
   tab.close();
 };
 
@@ -144,7 +147,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       onMouseLeave={onMouseLeave}
       visible={tab.tabGroupId === store.tabGroupsStore.currentGroupId}
       ref={tab.ref}
-      titlt="View webpage information"
+      title="View webpage information"
     >
       <TabContainer
         selected={tab.isSelected}
