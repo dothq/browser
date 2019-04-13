@@ -27,16 +27,16 @@ export class SuggestionsStore {
       if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {
         historySuggestions.unshift({
           primaryText: filter,
-          secondaryText: 'search in Google',
+          secondaryText: 'search on Google',
           favicon: icons.search,
           isSearch: true,
         });
         if (isURL(filter)) {
-          historySuggestions.unshift({
-            primaryText: filter,
-            secondaryText: 'open website',
-            favicon: icons.page,
-          });
+            historySuggestions.unshift({
+              primaryText: filter,
+              secondaryText: 'open website',
+              favicon: icons.page,
+            });
         }
       }
 
@@ -51,7 +51,7 @@ export class SuggestionsStore {
         } else {
           historySuggestions.push({
             primaryText: item.url,
-            secondaryText: 'search in Google',
+            secondaryText: 'search on Google',
             favicon: icons.search,
             canSuggest: item.canSuggest,
           });

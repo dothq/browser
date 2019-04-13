@@ -115,7 +115,7 @@ const hideTS = () => {
 }
 
 const aboutDot = (t: string) => {
-  document.getElementById('settings').scrollIntoView();
+  store.overlayStore.scrollRef.current.scrollTop = 0
   document.getElementById('scroll').style.overflow = "hidden";
   document.getElementById('overlay').style.opacity = "0";
   document.getElementById('overlay').style.pointerEvents = "none";

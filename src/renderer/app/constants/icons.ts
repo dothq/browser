@@ -25,6 +25,8 @@ import paste from '~/shared/resources/icons/paste.svg';
 import dev from '~/shared/resources/icons/dev.svg';
 import up from '~/shared/resources/icons/up.svg';
 import info from '~/shared/resources/icons/info.svg';
+import music from '~/shared/resources/icons/music.svg';
+import music_i from '~/shared/resources/icons/music_inverted.svg';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -57,4 +59,6 @@ export const icons = {
   dev,
   up,
   info,
+  music,
+  music_i,
 };
