@@ -35,6 +35,13 @@ For support, join our support discord server.
 
 [![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2)](https://discordbots.org/servers/525056817399726102)
 
+## Roadmap & To Do
+
+* Fix Discord Rich Presence
+* Add History Support
+* Get settings done
+* Get first build for download 
+
 ## Built With
 
 * [NodeJS](https://nodejs.org/en/) - The server environment
