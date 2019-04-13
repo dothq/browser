@@ -186,17 +186,18 @@ export const SettingsContent = styled.div`
   right: 0;
   z-index: 9999;
   transition: 0.15s opacity;
+  overflow-y: scroll;
 `;
 
 export const LeftMenu = styled.div`
   height: 100%;
   width: 300px;
-  position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   background-color: rgba(255, 255, 255, 0.12);
   overflow-x: hidden;
+  overflow: hidden;
   padding-top: 60px;
   box-shadow: 0px 2.4px 5.4px rgba(0,0,0,0.22), 0px 0.4px 1.35px rgba(0,0,0,0.18);
 `;
@@ -208,6 +209,9 @@ export const Image = styled.img`
 export const HistoryBackItem = styled.div`
   transition: 0.1s background-color;
   border-radius: 5px;
+  position: absolute;
+  bottom: 0;
+  margin: 30px 30px 30px 30px;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.08);
@@ -221,4 +225,14 @@ export const SettingsBackItem = styled.div`
   &:hover {
     background-color: rgba(255, 255, 255, 0.08);
   }
+`;
+
+export const Nav = styled.div`
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 70px;
+  background-color: #2F2F2F;
+  box-shadow: 0px 2.4px 5.4px rgba(0,0,0,0.22), 0px 0.4px 1.35px rgba(0,0,0,0.18);
 `;

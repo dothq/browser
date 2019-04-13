@@ -26,6 +26,7 @@ import {
   HistoryBackItem,
   SettingsContent,
   SettingsBackItem,
+  Nav,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { MenuItem } from '../MenuItem';
@@ -89,6 +90,7 @@ const historyTabBack = () => {
 }
 
 const settingsTabBack = () => {
+  document.getElementById('scroll').style.overflow = null;
   document.getElementById('overlay').style.opacity = "1";
   document.getElementById('overlay').style.pointerEvents = null;
   document.getElementById('settings').style.opacity = "0";
@@ -113,6 +115,8 @@ const hideTS = () => {
 }
 
 const aboutDot = (t: string) => {
+  document.getElementById('settings').scrollIntoView();
+  document.getElementById('scroll').style.overflow = "hidden";
   document.getElementById('overlay').style.opacity = "0";
   document.getElementById('overlay').style.pointerEvents = "none";
   document.getElementById('settings').style.opacity = "1";
@@ -129,7 +133,7 @@ const getSize = (i: number) => {
 export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlayStore.visible} onClick={onClick}>
-      <Scrollable ref={store.overlayStore.scrollRef}>
+      <Scrollable ref={store.overlayStore.scrollRef} id="scroll">
 
         <HistoryContent id="history" style={{  opacity: 0 , transition: '0.15s opacity', pointerEvents: 'none', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)' }} onClick={preventHiding}>
             <LeftMenu>
@@ -144,15 +148,17 @@ export const Overlay = observer(() => {
             </LeftMenu>
         </HistoryContent>
 
-        <SettingsContent id="settings" style={{  opacity: 0 , transition: '0.15s opacity', transitionTimingFunction: 'cubic-bezier(0, 1, 0.5, 1)', pointerEvents: 'none' }} onClick={preventHiding}>
-          <LeftMenu>
-            <Title style={{ fontWeight: 420, marginTop: '-5px', padding: '10px 10px 10px 10px' }}>
-              <Image src={icons.settings} style={{ marginRight: '5px', filter: 'invert(100%)', width: '25px' }}></Image>
+        <SettingsContent id="settings" style={{  opacity: 0 , pointerEvents: 'none', overflow: 'hidden' }} onClick={preventHiding}>
+          <Nav>
+            <Title style={{ fontWeight: 420, fontSize: '20px' }}>
+              <Image src={icons.settings} style={{ marginRight: '5px', filter: 'invert(100%)', width: '30px' }}></Image>
               Settings
             </Title>
-            <SettingsBackItem onClick={settingsTabBack} style={{ position: 'absolute', bottom: 0, width: '79%', margin: '30px 30px 30px 30px' }}>
+          </Nav>
+          <LeftMenu>
+            <SettingsBackItem onClick={settingsTabBack} style={{ position: 'absolute', bottom: 0, margin: '30px 30px 30px 30px' }}>
               <Image src={icons.back} style={{ margin: '14px 10px 10px 10px', filter: 'invert(100%)' }}></Image>
-              <Title style={{ margin: '10px 10px 10px 5px', display: 'inline-block', position: 'absolute' }} >Back</Title>
+              <Title style={{ position: 'relative', marginTop: '-41px', marginLeft: '40px', marginRight: '100px' }} >Back</Title>
             </SettingsBackItem>
           </LeftMenu>
           <Content id="about">
