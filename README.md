@@ -29,6 +29,9 @@
 
 Please head over to our Wiki page for build instructions if you are planning to hack Dot.
 
+## Notes
+* If loading a page takes around 20 or more seconds to load, disable your Anti-virus or create an exception.
+
 ## Support
 
 For support, join our support discord server.
