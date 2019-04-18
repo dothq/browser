@@ -2,7 +2,6 @@ import { observable, computed } from 'mobx';
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import store from '.';
-import { callBrowserViewMethod } from '~/shared/utils/browser-view';
 
 let lastSuggestion: string;
 
@@ -12,7 +11,7 @@ const autoComplete = (text: string, suggestion: string) => {
 
   const start = text.length;
 
-  const input = store.overlayStore.inputRef.current;
+  const input = store.overlay.inputRef.current;
 
   if (suggestion) {
     if (suggestion.startsWith(text.replace(regex, ''))) {
@@ -38,13 +37,52 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public bottom = 128;
+  public currentContent: 'default' | 'history' | 'bookmarks' = 'default';
+
+  @observable
+  public dialTypeMenuVisible = false;
+
+  @observable
+  public _searchBoxValue = '';
 
   private timeout: any;
 
   @computed
+  public get searchBoxValue() {
+    return this._searchBoxValue;
+  }
+
+  public set searchBoxValue(val: string) {
+    this._searchBoxValue = val;
+    this.inputRef.current.value = val;
+  }
+
+  constructor() {
+    window.addEventListener('keydown', this.onWindowKeyDown);
+  }
+
+  public onWindowKeyDown = (e: KeyboardEvent) => {
+    if (!this._visible || e.keyCode !== 27) return; // Escape
+
+    if (this.currentContent === 'history') {
+      this.currentContent = 'default';
+    } else if (this.currentContent === 'default') {
+      this._visible = false;
+    }
+  };
+
+  @computed
   public get visible() {
     return this._visible;
+  }
+
+  @computed
+  public get isBookmarked() {
+    if (!store.tabs.selectedTab) return false;
+
+    return !!store.bookmarks.list.find(
+      x => x.url === store.tabs.selectedTab.url,
+    );
   }
 
   public async show() {
@@ -60,35 +98,34 @@ export class OverlayStore {
   }
 
   public set visible(val: boolean) {
-    setTimeout(function() {
-      document.getElementById('overlay').style.opacity = "1";
-      document.getElementById('overlay').style.pointerEvents = null;
-      document.getElementById('history').style.opacity = "0";
-    }, 250)
     if (val === this._visible) return;
 
     if (!val) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         ipcRenderer.send('browserview-show');
-      }, 150);
-      store.suggestionsStore.suggestions = [];
+      }, 200);
+
+      store.suggestions.list = [];
       lastSuggestion = undefined;
+
       this.inputRef.current.value = '';
+
       this._visible = val;
       this.isNewTab = false;
+      this.currentContent = 'default';
     } else {
       this.show();
       ipcRenderer.send('window-focus');
 
       if (!this.isNewTab) {
-        callBrowserViewMethod('webContents.getURL').then(
-          async (url: string) => {
-            this.inputRef.current.value = url;
+        store.tabs.selectedTab
+          .callViewMethod('webContents.getURL')
+          .then(async (url: string) => {
+            this.searchBoxValue = url;
             this.inputRef.current.focus();
             this.inputRef.current.select();
-          },
-        );
+          });
       } else {
         this.inputRef.current.value = '';
 
@@ -103,14 +140,14 @@ export class OverlayStore {
   }
 
   public suggest() {
-    const { suggestionsStore } = store;
+    const { suggestions } = store;
     const input = this.inputRef.current;
 
     if (this.canSuggest) {
       autoComplete(input.value, lastSuggestion);
     }
 
-    suggestionsStore.load(input).then(suggestion => {
+    suggestions.load(input).then(suggestion => {
       lastSuggestion = suggestion;
       if (this.canSuggest) {
         autoComplete(
@@ -121,6 +158,6 @@ export class OverlayStore {
       }
     });
 
-    suggestionsStore.selected = 0;
+    suggestions.selected = 0;
   }
 }

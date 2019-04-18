@@ -41,7 +41,7 @@ export default class HorizontalScrollbar extends React.Component<Props, State> {
     this.container.addEventListener('wheel', this.onWheel);
     this.unmounted = false;
 
-    //this.resizeScrollbar();
+    this.resizeScrollbar();
   }
 
   public componentWillUnmount() {
@@ -79,7 +79,7 @@ export default class HorizontalScrollbar extends React.Component<Props, State> {
     if (this.props && this.container) {
       if (this.unmounted) return;
 
-      //const { scrollWidth, offsetWidth, scrollLeft } = this.container;
+      const { scrollWidth, offsetWidth, scrollLeft } = this.container;
 
       this.setState(({ thumbWidth }) => {
         return {

@@ -11,25 +11,21 @@ import { Buttons } from './style';
 import { observer } from 'mobx-react';
 import store from '../../store';
 
-const settings = () => {
-  console.log("settings")
-}
-
 export const WindowsButtons = observer(() => {
   return (
     <Buttons>
       <WindowsButton
-        isDark={store.overlayStore.visible}
+        isDark={store.overlay.visible}
         icon={icons.windowsMinimize}
         onClick={minimizeWindow}
       />
       <WindowsButton
-        isDark={store.overlayStore.visible}
+        isDark={store.overlay.visible}
         icon={icons.windowsMaximize}
         onClick={maximizeWindow}
       />
       <WindowsButton
-        isDark={store.overlayStore.visible}
+        isDark={store.overlay.visible}
         icon={icons.windowsClose}
         onClick={closeWindow}
         isClose

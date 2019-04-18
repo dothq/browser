@@ -20,9 +20,6 @@ import { ipcRenderer } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
 
 const removeTab = (tab: Tab) => () => {
-  if(store.tabsStore.tabs.length == 0) {
-    store.overlayStore.visible = true;
-  }
   tab.close();
 };
 
@@ -35,46 +32,27 @@ const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
 
   tab.select();
 
-  store.tabsStore.lastMouseX = 0;
-  store.tabsStore.isDragging = true;
-  store.tabsStore.mouseStartX = pageX;
-  store.tabsStore.tabStartX = tab.left;
+  store.tabs.lastMouseX = 0;
+  store.tabs.isDragging = true;
+  store.tabs.mouseStartX = pageX;
+  store.tabs.tabStartX = tab.left;
 
-  var url = store.tabsStore.selectedTab.url
-  var hostname = "";
-  //find & remove protocol (http, ftp, etc.) and get hostname
-
-  if (url.indexOf("//") > -1) {
-      hostname = url.split('/')[2];
-  }
-  else {
-      hostname = url.split('/')[0];
-  }
-
-  //find & remove port number
-  hostname = hostname.split(':')[0];
-  //find & remove "?"
-  hostname = hostname.split('?')[0];
-
-  process.env.RP_TYPE = `Brow-${hostname}`
-
-  store.tabsStore.lastScrollLeft =
-    store.tabsStore.containerRef.current.scrollLeft;
+  store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
 };
 
 const onMouseEnter = (tab: Tab) => () => {
-  if (!store.tabsStore.isDragging) {
-    store.tabsStore.hoveredTabId = tab.id;
+  if (!store.tabs.isDragging) {
+    store.tabs.hoveredTabId = tab.id;
   }
 };
 
 const onMouseLeave = () => {
-  store.tabsStore.hoveredTabId = -1;
+  store.tabs.hoveredTabId = -1;
 };
 
 const onClick = () => {
   if (store.canToggleMenu) {
-    store.overlayStore.visible = true;
+    store.overlay.visible = true;
   }
 };
 
@@ -115,7 +93,6 @@ const Close = observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onCloseMouseDown}
       onClick={removeTab(tab)}
       visible={tab.isExpanded}
-      title="Close this tab"
     />
   );
 });
@@ -145,9 +122,8 @@ export default observer(({ tab }: { tab: Tab }) => {
       onMouseEnter={onMouseEnter(tab)}
       onClick={onClick}
       onMouseLeave={onMouseLeave}
-      visible={tab.tabGroupId === store.tabGroupsStore.currentGroupId}
+      visible={tab.tabGroupId === store.tabGroups.currentGroupId}
       ref={tab.ref}
-      title="View webpage information"
     >
       <TabContainer
         selected={tab.isSelected}

@@ -1,18 +1,40 @@
 import styled, { css } from 'styled-components';
-import { body2, subtitle2, centerImage, caption } from '~/shared/mixins';
-import { colors } from '~/renderer/constants';
+import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
 
+export const OverlayScrollbarStyle = `
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.48);
+  }
+`;
+
 export const StyledOverlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.9);
   color: white;
   position: absolute;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
   left: 0;
   top: 0;
   bottom: 0;
   right: 0;
   z-index: 9999;
-  transition: 0.15s opacity;
+  transition: 0.2s opacity;
+  backface-visibility: hidden;
+  background-color: #1c1c1c;
 
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
@@ -44,20 +66,20 @@ export const HeaderText = styled.div`
 `;
 
 export const HeaderArrow = styled.div`
-  ${centerImage('18px', '18px')};
+  ${centerIcon()};
   margin-left: 8px;
-  height: 16px;
-  width: 16px;
+  height: 18px;
+  width: 18px;
   background-image: url(${icons.forward});
   filter: invert(100%);
 `;
 
 export const DropArrow = styled.div`
-  ${centerImage('24px', '24px')};
+  ${centerIcon(24)};
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  background-image: url(${icons.up});
+  background-image: url(${icons.down});
   filter: invert(100%);
   border-radius: 50%;
   transition: 0.1s background-color;
@@ -71,62 +93,14 @@ export const Separator = styled.div`
 
 export const Section = styled.div`
   padding: 24px;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
   border-radius: 30px;
   color: white;
   overflow: hidden;
 `;
 
-export const Card = styled.div`
-  background-color: rgba(255, 255, 255, 0.12);
-  margin-bottom: 24px;
-  border-radius: 30px;
-  color: white;
-  overflow: hidden;
-  width: 50%;
-`;
-
-export const WeatherHeader = styled.div`
-  width: 100%;
-  padding: 24px;
-  background-image: linear-gradient(to bottom right, #2196f3, #64b5f6);
-  display: flex;
-`;
-
-export const WeatherTitle = styled.div`
-  font-size: 24px;
-  font-weight: 300;
-  margin-bottom: 8px;
-`;
-
-export const WeatherNumber = styled.div`
-  font-size: 96px;
-  font-weight: 300;
-  display: flex;
-`;
-
-export const WeatherSymbol = styled.div`
-  font-size: 24px;
-  font-weight: 300;
-  margin-top: 16px;
-`;
-
-export const WeatherLeft = styled.div`
-  flex: 1;
-`;
-
-export const WeatherIcon = styled.div`
-  ${centerImage('96px', '96px')};
-  width: 96px;
-  height: 96px;
-`;
-
-export const WeatherContent = styled.div`
-  padding: 24px;
-`;
-
-export const Menu = styled.div`
+export const Actions = styled.div`
   display: flex;
   margin-left: -16px;
   margin-top: -16px;
@@ -135,16 +109,14 @@ export const Menu = styled.div`
 `;
 
 export const Scrollable = styled.div`
-  position: absolute;
+  width: 100%;
+  flex: 1;
   overflow-y: scroll;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  ${OverlayScrollbarStyle};
 `;
 
 export const Title = styled.div`
@@ -165,74 +137,26 @@ export const Title = styled.div`
   }
 `;
 
+export const Container = styled.div`
+  position: absolute;
+  transition: 0.2s transform, 0.2s opacity, 0.2s visibility;
+  will-change: transform, opacity, pointer-events;
+  backface-visibility: hidden;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  ${({ visible, right }: { visible: boolean; right?: boolean }) => css`
+    transform: translateX(${visible ? 0 : right ? 32 : -32}px);
+    opacity: ${visible ? 1 : 0};
+    pointer-events: ${visible ? 'auto' : 'none'};
+  `};
+`;
+
 export const Content = styled.div`
   width: calc(100% - 64px);
   max-width: 800px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-`;
-
-export const HistoryContent = styled.div`
-  z-index: 1;
-`;
-
-export const SettingsContent = styled.div`
-  color: white;
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 9999;
-  transition: 0.15s opacity;
-  overflow-y: scroll;
-`;
-
-export const LeftMenu = styled.div`
-  height: 100%;
-  width: 300px;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.12);
-  overflow-x: hidden;
-  overflow: hidden;
-  padding-top: 60px;
-  box-shadow: 0px 2.4px 5.4px rgba(0,0,0,0.22), 0px 0.4px 1.35px rgba(0,0,0,0.18);
-`;
-
-export const Image = styled.img`
-  opacity: 1;  
-`;
-
-export const HistoryBackItem = styled.div`
-  transition: 0.1s background-color;
-  border-radius: 5px;
-  position: absolute;
-  bottom: 0;
-  margin: 30px 30px 30px 30px;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-`;
-
-export const SettingsBackItem = styled.div`
-  transition: 0.1s background-color;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.08);
-  }
-`;
-
-export const Nav = styled.div`
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  height: 70px;
-  background-color: #2F2F2F;
-  box-shadow: 0px 2.4px 5.4px rgba(0,0,0,0.22), 0px 0.4px 1.35px rgba(0,0,0,0.18);
 `;

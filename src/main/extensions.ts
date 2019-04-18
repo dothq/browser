@@ -59,7 +59,7 @@ export const startBackgroundPage = async (extension: Extension) => {
     }
 
     const contents: WebContents = (webContents as any).create({
-      partition: 'persist:wexond_extension',
+      partition: 'persist:extension',
       isBackgroundPage: true,
       commandLineSwitches: ['--background-page'],
       preload: `${app.getAppPath()}/build/background-preload.js`,
@@ -82,7 +82,7 @@ export const startBackgroundPage = async (extension: Extension) => {
 
     contents.loadURL(
       format({
-        protocol: 'wexond-extension',
+        protocol: 'extension',
         slashes: true,
         hostname: id,
         pathname: fileName,

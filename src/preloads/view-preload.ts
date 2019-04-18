@@ -6,6 +6,8 @@ import { format, parse } from 'url';
 import { IpcExtension } from '~/shared/models';
 import { runInThisContext } from 'vm';
 
+webFrame.registerURLSchemeAsPrivileged('extension');
+
 webFrame.executeJavaScript('window', false, w => {
   w.chrome = {
     webstorePrivate: {
@@ -245,7 +247,7 @@ process.once('loaded', () => {
 
     if (manifest.content_scripts) {
       const readArrayOfFiles = (relativePath: string) => ({
-        url: `wexond-extension://${extension.id}/${relativePath}`,
+        url: `extension://${extension.id}/${relativePath}`,
         code: readFileSync(join(extension.path, relativePath), 'utf8'),
       });
 

@@ -7,20 +7,23 @@ import { extensions } from './extensions';
 const applets = ['newtab'];
 
 export const registerProtocols = () => {
-  protocol.registerSchemesAsPrivileged([
+  protocol.registerStandardSchemes(['dot', 'extension']);
+
+  // TODO: Electron 5.0.0
+  /*protocol.registerSchemesAsPrivileged([
     {
-      scheme: 'wexond',
+      scheme: 'dot',
       privileges: { bypassCSP: true, secure: true },
     },
     {
-      scheme: 'wexond-extension',
+      scheme: 'extension',
       privileges: { bypassCSP: true, secure: true },
     },
-  ]);
+  ]);*/
 
   (app as any).on('session-created', (sess: Electron.session) => {
     sess.protocol.registerBufferProtocol(
-      'wexond-extension',
+      'extension',
       (request, callback) => {
         const parsed = parse(decodeURIComponent(request.url));
 
@@ -62,7 +65,7 @@ export const registerProtocols = () => {
       },
     );
     sess.protocol.registerFileProtocol(
-      'wexond',
+      'dot',
       (request, callback: any) => {
         const parsed = parse(request.url);
 
