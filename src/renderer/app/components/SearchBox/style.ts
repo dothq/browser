@@ -35,9 +35,11 @@ export const Input = styled.input`
   font-size: 16px;
   margin-left: 12px;
   margin-right: 16px;
+  font-family: Roboto
 
   &::placeholder {
     color: rgba(255, 255, 255, 0.54);
+    font-family: Roboto
   }
 `;
 

@@ -32,6 +32,8 @@ export class AppWindow extends BrowserWindow {
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    app.commandLine.appendSwitch('auto-detect', 'false')
+    app.commandLine.appendSwitch('no-proxy-server')
 
     const windowDataPath = getPath('window-data.json');
 

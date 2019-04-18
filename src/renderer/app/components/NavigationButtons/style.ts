@@ -8,3 +8,14 @@ export const StyledContainer = styled.div`
     margin-left: ${platform() === 'darwin' && !isFullscreen ? 68 : 0}px;
   `};
 `;
+
+export const DotLauncher = styled.img`
+    width: 40px;
+    margin-left: 10px;
+    filter: invert(100%);
+    height: 38px;
+`;
+
+export const DotLauncherWrapper = styled.a`
+  cursor: pointer;
+`;

@@ -30,6 +30,7 @@ if (!existsSync(getPath('settings.json'))) {
 }
 
 app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 
 app.on('ready', () => {
