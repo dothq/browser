@@ -9,7 +9,7 @@ let searchSuggestions: Suggestion[] = [];
 
 export class SuggestionsStore {
   @observable
-  public suggestions: Suggestion[] = [];
+  public list: Suggestion[] = [];
 
   @observable
   public selected = 0;
@@ -27,16 +27,16 @@ export class SuggestionsStore {
       if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {
         historySuggestions.unshift({
           primaryText: filter,
-          secondaryText: 'search on Google',
+          secondaryText: 'search in Google',
           favicon: icons.search,
           isSearch: true,
         });
         if (isURL(filter)) {
-            historySuggestions.unshift({
-              primaryText: filter,
-              secondaryText: 'open website',
-              favicon: icons.page,
-            });
+          historySuggestions.unshift({
+            primaryText: filter,
+            secondaryText: 'open website',
+            favicon: icons.page,
+          });
         }
       }
 
@@ -45,13 +45,13 @@ export class SuggestionsStore {
           historySuggestions.push({
             primaryText: item.url,
             secondaryText: item.title,
-            favicon: store.faviconsStore.favicons[item.favicon],
+            favicon: store.favicons.favicons[item.favicon],
             canSuggest: item.canSuggest,
           });
         } else {
           historySuggestions.push({
             primaryText: item.url,
-            secondaryText: 'search on Google',
+            secondaryText: 'search in Google',
             favicon: icons.search,
             canSuggest: item.canSuggest,
           });
@@ -67,7 +67,7 @@ export class SuggestionsStore {
         suggestions[i].id = i;
       }
 
-      this.suggestions = suggestions;
+      this.list = suggestions;
 
       if (historySuggestions.length > 0 && historySuggestions[0].canSuggest) {
         resolve(historySuggestions[0].primaryText);
@@ -94,7 +94,7 @@ export class SuggestionsStore {
           suggestions[i].id = i;
         }
 
-        this.suggestions = suggestions;
+        this.list = suggestions;
       }
     });
   }

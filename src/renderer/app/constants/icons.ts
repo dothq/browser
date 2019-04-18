@@ -18,15 +18,13 @@ import more from '~/shared/resources/icons/more.svg';
 import find from '~/shared/resources/icons/find.svg';
 import edit from '~/shared/resources/icons/edit.svg';
 import down from '~/shared/resources/icons/down.svg';
-import logo from '~/shared/resources/icons/logo.svg';
-import dfav from '~/shared/resources/icons/default_favicon.svg';
-import copy from '~/shared/resources/icons/copy.svg';
-import paste from '~/shared/resources/icons/paste.svg';
-import dev from '~/shared/resources/icons/dev.svg';
+import arrowBack from '~/shared/resources/icons/arrow-back.svg';
+import star from '~/shared/resources/icons/star.svg';
+import starFilled from '~/shared/resources/icons/star-filled.svg';
+import fire from '~/shared/resources/icons/fire.svg';
+import trash from '~/shared/resources/icons/delete.svg';
 import up from '~/shared/resources/icons/up.svg';
-import info from '~/shared/resources/icons/info.svg';
-import music from '~/shared/resources/icons/music.svg';
-import music_i from '~/shared/resources/icons/music_inverted.svg';
+import shield from '~/shared/resources/icons/shield.svg';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -52,13 +50,11 @@ export const icons = {
   edit,
   down,
   fewClouds,
-  logo,
-  dfav,
-  copy,
-  paste,
-  dev,
+  arrowBack,
+  star,
+  starFilled,
+  fire,
+  trash,
   up,
-  info,
-  music,
-  music_i,
+  shield,
 };

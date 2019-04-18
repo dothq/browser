@@ -1,10 +1,51 @@
-import { ipcMain, session, webContents } from 'electron';
+import { ipcMain, session, webContents, app } from 'electron';
 import { makeId } from '~/shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '~/shared/utils/url';
 import { USER_AGENT } from '~/shared/constants';
+import { existsSync, readFile } from 'fs';
+import console = require('console');
+import { resolve } from 'path';
+import { appWindow } from '..';
+
+import {
+  FiltersEngine,
+  makeRequest,
+  updateResponseHeadersWithCSP,
+  parseFilters,
+} from '@cliqz/adblocker';
+import { parse } from 'tldts';
+import { requestURL } from '~/renderer/app/utils/network';
+
+export let engine: FiltersEngine;
 
 const eventListeners: any = {};
+
+export const loadFilters = async () => {
+  const path = resolve(app.getAppPath(), 'filters/default.dat');
+
+  /*const { data } = await requestURL(
+    'https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt',
+  );*/
+
+  if (existsSync(path)) {
+    readFile(resolve(path), (err, buffer) => {
+      if (err) return console.error(err);
+
+      engine = FiltersEngine.deserialize(buffer);
+
+      /*const { networkFilters, cosmeticFilters } = parseFilters(
+        data,
+        engine.config,
+      );
+
+      engine.update({
+        newNetworkFilters: networkFilters,
+        newCosmeticFilters: cosmeticFilters,
+      });*/
+    });
+  }
+};
 
 const getTabByWebContentsId = (window: AppWindow, id: number) => {
   for (const key in window.viewManager.views) {
@@ -189,9 +230,33 @@ export const runWebRequestService = (window: AppWindow) => {
     interceptRequest('onBeforeRequest', newDetails, callback);
   };
 
-  webviewRequest.onBeforeRequest(async (details: any, callback: any) => {
-    await onBeforeRequest(details, callback);
-  });
+  webviewRequest.onBeforeRequest(
+    async (details: Electron.OnBeforeRequestDetails, callback: any) => {
+      const tabId = getTabByWebContentsId(window, details.webContentsId);
+
+      if (engine) {
+        const { match, redirect } = engine.match(
+          makeRequest({ type: details.resourceType, url: details.url }, parse),
+        );
+
+        if (match || redirect) {
+          console.log(match, redirect, details.url);
+
+          appWindow.webContents.send(`blocked-ad-${tabId}`);
+
+          if (redirect) {
+            callback({ redirectURL: redirect });
+          } else {
+            callback({ cancel: true });
+          }
+
+          return;
+        }
+      }
+
+      await onBeforeRequest(details, callback);
+    },
+  );
 
   // onHeadersReceived
 
@@ -206,9 +271,35 @@ export const runWebRequestService = (window: AppWindow) => {
     interceptRequest('onHeadersReceived', newDetails, callback);
   };
 
-  webviewRequest.onHeadersReceived(async (details: any, callback: any) => {
-    await onHeadersReceived(details, callback);
-  });
+  webviewRequest.onHeadersReceived(
+    async (details: Electron.OnHeadersReceivedDetails, callback: any) => {
+      updateResponseHeadersWithCSP(
+        {
+          url: details.url,
+          type: details.resourceType as any,
+          tabId: getTabByWebContentsId(window, details.webContentsId),
+          method: details.method,
+          statusCode: details.statusCode,
+          statusLine: details.statusLine,
+          requestId: details.id.toString(),
+          frameId: 0,
+          parentFrameId: -1,
+          timeStamp: details.timestamp,
+        },
+        engine.getCSPDirectives(
+          makeRequest(
+            {
+              sourceUrl: details.url,
+              type: details.resourceType,
+              url: details.url,
+            },
+            parse,
+          ),
+        ),
+      ),
+        await onHeadersReceived(details, callback);
+    },
+  );
 
   // onSendHeaders
 

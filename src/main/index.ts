@@ -5,15 +5,32 @@ import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
 import { registerProtocols } from './protocols';
-import { runWebRequestService } from './services/web-request';
+import { runWebRequestService, loadFilters } from './services/web-request';
+import { existsSync, writeFileSync } from 'fs';
+import { getPath } from '~/shared/utils/paths';
+import { Settings } from '~/renderer/app/models/settings';
+import { makeId } from '~/shared/utils/string';
+
 
 ipcMain.setMaxListeners(0);
 
-app.setPath('userData', resolve(homedir(), 'Dot'));
+app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
 
 registerProtocols();
+
+if (!existsSync(getPath('settings.json'))) {
+  writeFileSync(
+    getPath('settings.json'),
+    JSON.stringify({
+      dialType: 'top-sites',
+    } as Settings),
+  );
+}
+
+app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+app.commandLine.appendSwitch('no-proxy-server')
 
 app.on('ready', () => {
   // Create our menu entries so that we can use macOS shortcuts
@@ -34,12 +51,10 @@ app.on('ready', () => {
           { role: 'quit' },
           { role: 'reload' },
           {
-            type: 'normal',
-            accelerator: 'CmdOrCtrl+Shift+R',
-            label: 'Reload main process',
+            accelerator: 'CmdOrCtrl+F',
+            label: 'Find in page',
             click() {
-              app.relaunch();
-              app.exit();
+              appWindow.webContents.send('find');
             },
           },
         ],
@@ -83,6 +98,47 @@ app.on('ready', () => {
     appWindow.webContents.focus();
   });
 
+  session
+    .fromPartition('persist:view')
+    .on('will-download', (event, item, webContents) => {
+      const fileName = item.getFilename();
+      const savePath = resolve(app.getPath('downloads'), fileName);
+      const id = makeId(32);
+
+      item.setSavePath(savePath);
+
+      appWindow.webContents.send('download-started', {
+        fileName,
+        receivedBytes: 0,
+        totalBytes: item.getTotalBytes(),
+        savePath,
+        id,
+      });
+
+      item.on('updated', (event, state) => {
+        if (state === 'interrupted') {
+          console.log('Download is interrupted but can be resumed');
+        } else if (state === 'progressing') {
+          if (item.isPaused()) {
+            console.log('Download is paused');
+          } else {
+            appWindow.webContents.send('download-progress', {
+              id,
+              receivedBytes: item.getReceivedBytes(),
+            });
+          }
+        }
+      });
+      item.once('done', (event, state) => {
+        if (state === 'completed') {
+          appWindow.webContents.send('download-completed', id);
+        } else {
+          console.log(`Download failed: ${state}`);
+        }
+      });
+    });
+
+  loadFilters();
   loadExtensions();
   runWebRequestService(appWindow);
 });

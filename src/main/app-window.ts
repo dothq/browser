@@ -2,82 +2,36 @@ import { BrowserWindow, app } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
-var time = new Date();
-process.env.RP_TYPE = `Idle-${time}`;
-
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 
-const DiscordRPC = require("discord-rpc");
-
-var clientId = '565573138146918421';
-
-// only needed for discord allowing spectate, join, ask to join
-DiscordRPC.register(clientId);
-
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
-
-process.env.RP = rpc;
-
-async function setIdleActivity() {
-  var type = process.env.RP_TYPE;
-  var time = type.split("-");
-  rpc.setActivity({
-    details: "Idle",
-    state: "on Dot Browser",
-    startTimestamp: parseInt(time[1]),
-    largeImageKey: "dot",
-    largeImageText: "Idle on the Launcher",
-    instance: false,
-  });
-}
-
-async function setBrowseActivity() {
-  var type = process.env.RP_TYPE;
-  var site = type.split("-");   
-  rpc.setActivity({
-    details: `Browsing ${site[1]}`,
-    state: "on Dot Browser",
-    largeImageKey: "dot",
-    largeImageText: `Browsing ${site[1]} on Dot Browser`,
-    instance: false,
-  }); 
-}
-
-setInterval(function() {
-  if(process.env.RP_TYPE.substring(0,4) == "Idle") {
-    setIdleActivity()
-  }
-  if(process.env.RP_TYPE.substring(0,4) == "Brow") {
-    setBrowseActivity()
-  }  
-}, 250);
-
-rpc.login({ clientId }).catch(console.error);
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
 
   constructor() {
     super({
-      frame: false,
+      frame: process.env.ENV === 'dev' || platform() === 'darwin',
       minWidth: 400,
       minHeight: 450,
       width: 900,
       height: 700,
       show: false,
-      darkTheme: true,
       title: 'Dot',
-      titleBarStyle: 'hidden',
-      backgroundColor: '#191919',
+      titleBarStyle: 'hiddenInset',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
         contextIsolation: false,
+        experimentalFeatures: true,
+        enableBlinkFeatures: 'OverlayScrollbars',
+        webviewTag: true,
       },
       icon: resolve(app.getAppPath(), 'static/app-icons/icon.png'),
     });
+
+    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
 
     const windowDataPath = getPath('window-data.json');
 
@@ -105,10 +59,6 @@ export class AppWindow extends BrowserWindow {
         this.setFullScreen(true);
       }
     }
-
-    this.once('ready-to-show', () => {
-      this.show();
-    });    
 
     // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
@@ -148,6 +98,10 @@ export class AppWindow extends BrowserWindow {
     } else {
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
     }
+
+    this.once('ready-to-show', () => {
+      this.show();
+    });
 
     this.on('enter-full-screen', () => {
       this.webContents.send('fullscreen', true);
