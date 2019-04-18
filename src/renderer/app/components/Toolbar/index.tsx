@@ -11,6 +11,7 @@ import { icons } from '../../constants';
 import { ipcRenderer } from 'electron';
 import BrowserAction from '../BrowserAction';
 import { Find } from '../Find';
+import { Button } from '../ToolbarButton/style';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -35,6 +36,10 @@ class BrowserActions extends React.Component {
   }
 }
 
+export const toggleAdBlockWindow = () => {
+  console.log("works")
+}
+
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -47,21 +52,25 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
-        <BrowserAction
-          size={18}
-          style={{ marginLeft: 0 }}
-          opacity={0.54}
-          data={{
-            badgeBackgroundColor: 'gray',
-            badgeText: store.tabs.selectedTab
-              ? store.tabs.selectedTab.blockedAds > 0
-                ? store.tabs.selectedTab.blockedAds.toString()
-                : ''
-              : '',
-            icon: icons.shield,
-            badgeTextColor: 'white',
-          }}
-        />
+        <Button onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
+          <BrowserAction
+            size={18}
+            style={{ marginLeft: 0 }}
+            opacity={0.54}
+            title="Dot Ad-Blocker"
+            onClick={toggleAdBlockWindow}
+            data={{
+              badgeBackgroundColor: 'gray',
+              badgeText: store.tabs.selectedTab
+                ? store.tabs.selectedTab.blockedAds > 0
+                  ? store.tabs.selectedTab.blockedAds.toString()
+                  : ''
+                : '',
+              icon: icons.shield,
+              badgeTextColor: 'white',
+            }}
+          />
+        </Button>
       </Buttons>
     </StyledToolbar>
   );

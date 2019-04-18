@@ -9,9 +9,11 @@ interface Props {
   size?: number;
   style?: any;
   opacity?: number;
+  title?: string;
+  onClick?: any;
 }
 
-const Component = observer(({ data, size, style, opacity }: Props) => {
+const Component = observer(({ data, size, style, opacity, title, onClick }: Props) => {
   const { icon, badgeText, badgeBackgroundColor, badgeTextColor } = data;
 
   return (

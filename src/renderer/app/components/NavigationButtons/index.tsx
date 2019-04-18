@@ -4,7 +4,8 @@ import * as React from 'react';
 import store from '~/renderer/app/store';
 import ToolbarButton from '~/renderer/app/components/ToolbarButton';
 import { icons } from '~/renderer/app/constants/icons';
-import { StyledContainer } from './style';
+import { StyledContainer, DotLauncher, DotLauncherWrapper } from './style';
+import { Button } from 'react-native';
 
 const onBackClick = () => {
   store.tabs.selectedTab.callViewMethod('webContents.goBack');
@@ -22,9 +23,16 @@ const onRefreshClick = () => {
   }
 };
 
+const launcherOpen = () => {
+  store.overlay.visible = true;
+}
+
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
+      <DotLauncherWrapper title="Open Dot Launcher" onClick={launcherOpen}>
+        <DotLauncher src={icons.logo}></DotLauncher>
+      </DotLauncherWrapper>
       <ToolbarButton
         disabled={!store.navigationState.canGoBack}
         size={24}

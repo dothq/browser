@@ -10,6 +10,7 @@ import {
   Title,
   Content,
   Container,
+  Image,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
@@ -19,6 +20,7 @@ import { Bookmarks } from '../Bookmarks';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
+import { icons } from '../../constants';
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -51,6 +53,7 @@ export const Overlay = observer(() => {
       >
         <Scrollable ref={store.overlay.scrollRef}>
           <Content>
+            <Image src={icons.logo} center></Image>
             <SearchBox />
             <Dial />
 

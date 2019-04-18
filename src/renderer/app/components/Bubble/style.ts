@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { caption, centerIcon } from '~/shared/mixins';
 
 export const StyledBubble = styled.div`
-  border-radius: 16px;
+  border-radius: 5px;
   margin-top: 8px;
   padding: 16px 8px;
   transition: 0.1s background-color;

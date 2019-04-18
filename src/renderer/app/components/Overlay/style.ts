@@ -65,6 +65,14 @@ export const HeaderText = styled.div`
   }
 `;
 
+export const Image = styled.img`
+  ${({ center }: { center: boolean }) => css`
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  `}
+`;
+
 export const HeaderArrow = styled.div`
   ${centerIcon()};
   margin-left: 8px;
