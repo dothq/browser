@@ -17,6 +17,7 @@ const scrollRef = React.createRef<HTMLDivElement>();
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
+  store.overlay.visible = false;
 };
 
 const onScroll = (e: any) => {
