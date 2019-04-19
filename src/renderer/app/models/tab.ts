@@ -17,6 +17,7 @@ import { setInterval } from 'timers';
 
 let id = 1;
 
+
 export class Tab {
   @observable
   public id: number = id++;
