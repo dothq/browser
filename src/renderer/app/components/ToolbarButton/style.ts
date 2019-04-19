@@ -34,6 +34,10 @@ export const Button = styled.div`
   `};
 `;
 
+export const AbButton = styled.a`
+
+`;
+
 export const Circle = styled.div`
   border-radius: 50%;
   width: 32px;

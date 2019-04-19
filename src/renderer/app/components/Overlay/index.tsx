@@ -17,6 +17,7 @@ import { TabGroups } from '../TabGroups';
 import { WeatherCard } from '../WeatherCard';
 import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
+import { AdBlock } from '../AdBlock';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
@@ -68,6 +69,7 @@ export const Overlay = observer(() => {
       </Container>
       <History />
       <Bookmarks />
+      <AdBlock />
     </StyledOverlay>
   );
 });

@@ -13,6 +13,7 @@ import {
 import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
+import { setInterval } from 'timers';
 
 let id = 1;
 

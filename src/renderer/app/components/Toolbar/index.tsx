@@ -11,7 +11,8 @@ import { icons } from '../../constants';
 import { ipcRenderer } from 'electron';
 import BrowserAction from '../BrowserAction';
 import { Find } from '../Find';
-import { Button } from '../ToolbarButton/style';
+import { AbButton } from '../ToolbarButton/style';
+import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -37,7 +38,8 @@ class BrowserActions extends React.Component {
 }
 
 export const toggleAdBlockWindow = () => {
-  console.log("works")
+  store.overlay.visible = true;
+  store.overlay.currentContent = "adblock";
 }
 
 export const Toolbar = observer(() => {
@@ -52,13 +54,12 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
-        <Button onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
+        <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}
             opacity={0.54}
             title="Dot Ad-Blocker"
-            onClick={toggleAdBlockWindow}
             data={{
               badgeBackgroundColor: 'gray',
               badgeText: store.tabs.selectedTab
@@ -70,7 +71,7 @@ export const Toolbar = observer(() => {
               badgeTextColor: 'white',
             }}
           />
-        </Button>
+        </AbButton>
       </Buttons>
     </StyledToolbar>
   );

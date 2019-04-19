@@ -37,7 +37,7 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' = 'default';
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' = 'default';
 
   @observable
   public dialTypeMenuVisible = false;
