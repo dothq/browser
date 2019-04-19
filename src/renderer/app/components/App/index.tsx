@@ -5,8 +5,9 @@ import { createGlobalStyle } from 'styled-components';
 import { Style } from '~/renderer/app/style';
 import { Toolbar } from '../Toolbar';
 import { ipcRenderer } from 'electron';
-import { Line, StyledApp } from './style';
+import { Line, StyledApp, Screenshot } from './style';
 import { WindowsButtons } from '../WindowsButtons';
+import store from '../../store';
 import { platform } from 'os';
 import { Overlay } from '../Overlay';
 
@@ -22,6 +23,12 @@ export const App = observer(() => {
       <GlobalStyle />
       <Toolbar />
       <Line />
+      <Screenshot
+        style={{
+          backgroundImage: `url(${store.tabs.selectedTab &&
+            store.tabs.selectedTab.screenshot})`,
+        }}
+      />
       <Overlay />
       {platform() !== 'darwin' && <WindowsButtons />}
     </StyledApp>

@@ -3,6 +3,7 @@ import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
+import console = require('console');
 
 export class View extends BrowserView {
   public title: string = '';
@@ -229,12 +230,16 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener('did-finish-load', async () => {
+      
+      
+
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
         url: this.webContents.getURL(),
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
+        screenshot: this.getScreenshot()
       });
     });
 
@@ -276,6 +281,7 @@ export class View extends BrowserView {
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
+        screenshot: this.getScreenshot()
       });
     });
 
