@@ -12,7 +12,7 @@ export class AppWindow extends BrowserWindow {
 
   constructor() {
     super({
-      frame: process.env.ENV === 'dev' || platform() === 'darwin',
+      frame: false,
       minWidth: 400,
       minHeight: 450,
       width: 900,
@@ -20,7 +20,7 @@ export class AppWindow extends BrowserWindow {
       show: false,
       backgroundColor: '#1c1c1c',
       title: 'Dot',
-      titleBarStyle: 'hiddenInset',
+      titleBarStyle: 'hidden',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
