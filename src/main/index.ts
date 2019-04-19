@@ -14,6 +14,7 @@ import { makeId } from '~/shared/utils/string';
 
 ipcMain.setMaxListeners(0);
 
+app.disableHardwareAcceleration(); 
 app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
@@ -133,6 +134,9 @@ app.on('ready', () => {
       item.once('done', (event, state) => {
         if (state === 'completed') {
           appWindow.webContents.send('download-completed', id);
+          const downloaddone = new Notification('Title', {
+            body: 'Lorem Ipsum Dolor Sit Amet'
+          })
         } else {
           console.log(`Download failed: ${state}`);
         }
