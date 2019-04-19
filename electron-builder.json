@@ -8,6 +8,16 @@
   },
   "files": ["build/**/*", "package.json", "filters"],
   "publish": "github",
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
+  },
+  "nsisWeb": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": true
+  },
   "linux": {
     "category": "Network",
     "target": [
@@ -18,7 +28,7 @@
     ]
   },
   "win": {
-    "target": ["zip", "nsis"]
+    "target": ["zip", "nsis", "nsis-web"]
   },
   "mac": {
     "category": "public.app-category.navigation"
