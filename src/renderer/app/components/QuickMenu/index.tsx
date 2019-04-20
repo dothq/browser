@@ -6,7 +6,7 @@ import { Bubble } from '../Bubble';
 import { icons } from '../../constants';
 import store from '../../store';
 
-const changeContent = (content: 'history' | 'default' | 'bookmarks') => () => {
+const changeContent = (content: 'history' | 'default' | 'bookmarks' | 'settings' | 'extensions' ) => () => {
   store.overlay.currentContent = content;
 };
 
@@ -38,10 +38,10 @@ export const QuickMenu = observer(() => {
         <Bubble disabled invert icon={icons.download}>
           Downloads
         </Bubble>
-        <Bubble disabled invert icon={icons.settings}>
+        <Bubble onClick={changeContent('settings')} invert icon={icons.settings}>
           Settings
         </Bubble>
-        <Bubble disabled invert icon={icons.extensions}>
+        <Bubble onClick={changeContent('extensions')} invert icon={icons.extensions}>
           Extensions
         </Bubble>
         <Bubble

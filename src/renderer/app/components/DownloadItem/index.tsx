@@ -15,7 +15,7 @@ export default observer(({ data }: { data: DownloadItem }) => {
   const progress = (data.receivedBytes / data.totalBytes) * 200;
 
   return (
-    <StyledItem onClick={onClick(data.savePath)}>
+    <StyledItem onClick={onClick(data.savePath)} title={data.fileName}>
       <Progress
         style={{
           width: progress,
