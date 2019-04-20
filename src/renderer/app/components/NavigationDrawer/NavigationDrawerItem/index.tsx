@@ -7,7 +7,7 @@ export const NavigationDrawerItem = ({
   onClick,
 }: {
   children: any;
-  selected?: boolean;
+  selected?: any;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) => {
   return (
