@@ -51,6 +51,9 @@ For support, join our support discord server.
 * [Electron](https://electronjs.org/) - Desktop App environment
 * [Wexond](https://github.com/wexond/wexond) - Software used to create browser
 * [npm](https://npmjs.org) - Installing packages
+* [mobx-react](https://github.com/mobxjs/mobx-react) - For building observers
+* [Material UI Icons](https://material.io/) - For the icons
+* [nersent-ui](https://github.com/nersent/nersent-ui) - Material design framework
 
 ## Authors
 
