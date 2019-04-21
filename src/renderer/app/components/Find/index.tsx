@@ -46,6 +46,31 @@ const onInput = async () => {
     store.tabs.addTab({url, active: true });
   }
 
+  if(value.toLocaleLowerCase() === "never gonna give you up") {
+    var url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "heres the mother fucking tea") {
+    var url = "https://www.youtube.com/watch?v=h_6QQYWoUjE"
+    store.tabs.addTab({url, active: true });
+  } 
+
+  if(value.toLocaleLowerCase() === "congrats tseries") {
+    var url = "https://www.youtube.com/watch?v=PHgc8Q6qTjc"
+    store.tabs.addTab({url, active: true });
+  } 
+
+  if(value.toLocaleLowerCase() === "welcome to the hypixel zoo") {
+    var url = "https://www.youtube.com/watch?v=ihZKUUxKWYA"
+    store.tabs.addTab({url, active: true });
+  } 
+
+  if(value.toLocaleLowerCase() === "lets play pickle") {
+    var url = "https://www.youtube.com/watch?v=ihZKUUxKWYA"
+    store.tabs.addTab({url, active: true });
+  }
+
   const requestId = await selectedTab.callViewMethod(
     'webContents.findInPage',
     value,
