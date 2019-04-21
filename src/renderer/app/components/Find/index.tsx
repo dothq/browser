@@ -10,6 +10,7 @@ import {
 import { observer } from 'mobx-react';
 import { icons } from '../../constants';
 import store from '../../store';
+const { dialog } = require('electron')
 
 const close = () => {
   const { selectedTab } = store.tabs;
@@ -28,6 +29,21 @@ const onInput = async () => {
     selectedTab.callViewMethod('webContents.stopFindInPage', 'clearSelection');
     selectedTab.findOccurrences = '0/0';
     return;
+  }
+
+  if(value.toLocaleLowerCase() === "f to pay respects") {
+    var url = "https://www.youtube.com/watch?v=NfT1XLD51zc"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "somebody once told me") {
+    var url = "https://www.youtube.com/watch?v=g7_VlmEamUQ"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "sodium chloride") {
+    var url = "https://www.youtube.com/watch?v=kbBgx0BEuuI"
+    store.tabs.addTab({url, active: true });
   }
 
   const requestId = await selectedTab.callViewMethod(
@@ -88,6 +104,7 @@ export const Find = observer(() => {
         onChange={onInput}
         ref={store.findInputRef}
         placeholder="Find in page"
+        id="find"
       />
       <Occurrences>{selectedTab && selectedTab.findOccurrences}</Occurrences>
       <Buttons>

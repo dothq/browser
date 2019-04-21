@@ -17,6 +17,7 @@ import { getPath } from '~/shared/utils/paths';
 import { Settings } from '../models/settings';
 import { DownloadsStore } from './downloads';
 import { AbStore } from './adblockwindow';
+import { OptionsStore } from './settings';
 
 export class Store {
   public history = new HistoryStore();
@@ -30,6 +31,7 @@ export class Store {
   public extensions = new ExtensionsStore();
   public downloads = new DownloadsStore();
   public adblockwindow = new AbStore();
+  public options = new OptionsStore();
 
   @observable
   public isFullscreen = false;
