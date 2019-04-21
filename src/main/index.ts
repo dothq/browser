@@ -10,6 +10,7 @@ import { existsSync, writeFileSync } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
 import { makeId } from '~/shared/utils/string';
+import store from '~/renderer/app/store'
 
 
 ipcMain.setMaxListeners(0);

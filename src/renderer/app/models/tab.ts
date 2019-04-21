@@ -61,6 +61,9 @@ export class Tab {
   @observable
   public blockedAds = 0;
 
+  @observable
+  public f = 0;
+
   @computed
   public get findVisible() {
     return this._findVisible;

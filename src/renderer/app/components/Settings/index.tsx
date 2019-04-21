@@ -12,6 +12,8 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
+import { Switch, TextField } from 'nersent-ui';
+import { toggleDotButton } from '../SettingsItems'
 import console = require('console');
 
 const scrollRef = React.createRef<HTMLDivElement>();
@@ -121,6 +123,27 @@ const clearSecretBoyo = () => {
   document.getElementById("maybe-click-the-arrow").style.filter = ``
 }
 
+export const Appearance = observer(() => {
+    console.log(store.options.dotLauncherEnabled)
+    return (
+      <SettingsSection>
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            <Switch onClick={toggleDotButton} toggled={store.options.dotLauncherEnabled}/>
+          </Buttons>
+        </ListItem>
+
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>Search Engine</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            
+          </Buttons>
+        </ListItem>
+      </SettingsSection>
+    );
+});
+
 export const Settings = observer(() => {
   return (
     <Container
@@ -142,7 +165,7 @@ export const Settings = observer(() => {
               <YourProfile />
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>
-
+              <Appearance />
               <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
               <AboutDot />
 
