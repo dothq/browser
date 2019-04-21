@@ -26,6 +26,16 @@ export const Button = styled.a`
   
 `;
 
+export const A = styled.a`
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+`;
+
+export const AboutWrapper = styled.div`
+
+`;
+
 export const NavDILine_Profile = styled.div`
   background: #fffff;
   height: 16px;
