@@ -27,6 +27,7 @@ import up from '~/shared/resources/icons/up.svg';
 import shield from '~/shared/resources/icons/shield.svg';
 import logo from '~/shared/resources/icons/logo.svg';
 import user from '~/shared/resources/icons/user.svg';
+import uk from '~/shared/resources/icons/uk.png';
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -61,4 +62,5 @@ export const icons = {
   shield,
   logo,
   user,
+  uk,
 };
