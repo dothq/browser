@@ -147,11 +147,16 @@ class ToggleSwitchDL extends React.Component {
         file.set("toggleDotLauncher", false);
         console.info(`[SettingsStore] Set dotLauncherEnabled to false`)
         file.save();
+        document.getElementById("dot").style.display = "none";
       }
       else {
         file.set("toggleDotLauncher", true);
         console.info(`[SettingsStore] Set dotLauncherEnabled to true`)
         file.save();
+        document.getElementById("dot").style.opacity = "1";
+        document.getElementById("dot").style.pointerEvents = "all";
+        document.getElementById("dot").style.width = "auto";
+        document.getElementById("dot").style.display = null;
       }
     }
   };

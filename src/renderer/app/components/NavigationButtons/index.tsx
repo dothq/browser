@@ -6,6 +6,8 @@ import ToolbarButton from '~/renderer/app/components/ToolbarButton';
 import { icons } from '~/renderer/app/constants/icons';
 import { StyledContainer, DotLauncher, DotLauncherWrapper } from './style';
 import { Button } from 'react-native';
+import { resolve } from 'path';
+import { platform, homedir } from 'os';
 
 const onBackClick = () => {
   store.tabs.selectedTab.callViewMethod('webContents.goBack');
@@ -27,10 +29,16 @@ const launcherOpen = () => {
   store.overlay.visible = true;
 }
 
+const editJsonFile = require("edit-json-file");
+ 
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+var tdl = file.get("toggleDotLauncher");
+
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
-      <DotLauncherWrapper title="Open Dot Launcher" onClick={launcherOpen}>
+      <DotLauncherWrapper title="Open Dot Launcher" id="dot" onClick={launcherOpen} visible={tdl}>
         <DotLauncher src={icons.logo}></DotLauncher>
       </DotLauncherWrapper>
       <ToolbarButton

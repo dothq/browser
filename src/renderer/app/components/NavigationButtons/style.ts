@@ -16,6 +16,12 @@ export const DotLauncher = styled.img`
     height: 38px;
 `;
 
-export const DotLauncherWrapper = styled.a`
+export const DotLauncherWrapper = styled.div`
   cursor: pointer;
+
+  ${({ visible }: { visible: boolean }) => css`
+    opacity: ${visible ? 1 : 0};
+    pointer-events: ${visible ? 'auto' : 'none'};
+    width: ${visible ? '' : '0px'};
+  `}
 `;
