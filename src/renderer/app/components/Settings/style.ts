@@ -36,6 +36,19 @@ export const AboutWrapper = styled.div`
 
 `;
 
+export const InputField = styled.input`
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  font-family: Roboto;
+  width: 82%
+
+  &:focus {
+    outline: none !important;
+  }
+`;
+
 export const NavDILine_Profile = styled.div`
   background: #fffff;
   height: 16px;

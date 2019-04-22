@@ -91,6 +91,10 @@ export const DropArrow = styled.div`
   filter: invert(100%);
   border-radius: 50%;
   transition: 0.1s background-color;
+
+  &:hover {
+    background-color: rgba(0,0,0,0.15);
+  }
 `;
 
 export const Separator = styled.div`
