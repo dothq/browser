@@ -9,6 +9,7 @@ import { runWebRequestService, loadFilters } from './services/web-request';
 import { existsSync, writeFileSync } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
+import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store'
 
@@ -27,7 +28,18 @@ if (!existsSync(getPath('settings.json'))) {
     getPath('settings.json'),
     JSON.stringify({
       dialType: 'top-sites',
+      toggleDotLauncher: true,
     } as Settings),
+  );
+}
+
+if (!existsSync(getPath('dot-options.json'))) {
+  writeFileSync(
+    getPath('dot-options.json'),
+    JSON.stringify({
+      toggleDotLauncher: true,
+      searchEngine: 'google',
+    } as DotOptions),
   );
 }
 
@@ -53,6 +65,13 @@ app.on('ready', () => {
           { role: 'selectall' },
           { role: 'quit' },
           { role: 'reload' },
+          {
+            accelerator: 'CmdOrCtrl+F',
+            label: 'Find in page',
+            click() {
+              appWindow.webContents.send('find');
+            },
+          },
           {
             accelerator: 'CmdOrCtrl+F',
             label: 'Find in page',

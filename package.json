@@ -85,10 +85,12 @@
   "dependencies": {
     "@cliqz/adblocker": "0.8.0",
     "@material-ui/core": "^3.9.3",
+    "edit-json-file": "^1.2.1",
     "electron-updater": "4.0.6",
     "file-type": "10.11.0",
     "gsap": "2.1.2",
     "icojs": "0.12.3",
+    "is-online": "^8.2.0",
     "leveldown": "5.0.1",
     "levelup": "4.0.1",
     "lru-cache": "^5.1.1",

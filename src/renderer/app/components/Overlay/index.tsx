@@ -44,6 +44,8 @@ const onClick = () => {
 export const preventHiding = (e: any) => {
   e.stopPropagation();
   store.overlay.dialTypeMenuVisible = false;
+  document.getElementById("search-engine-dp").style.opacity = "0";
+  document.getElementById("search-engine-dp").style.pointerEvents = "none";
 };
 
 export const Overlay = observer(() => {

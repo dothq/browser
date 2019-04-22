@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
+import { InputField } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper } from './style';
 import BookmarkC from '../Bookmark';
@@ -12,14 +13,18 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
-import { Switch, TextField } from 'nersent-ui';
-import { toggleDotButton } from '../SettingsItems'
 import console = require('console');
+import Switch from '@material-ui/core/Switch';
+import { resolve } from 'path';
+import { platform, homedir } from 'os';
+import { DropArrow } from '../Overlay/style';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
+  document.getElementById("search-engine-dp").style.opacity = "0";
+  document.getElementById("search-engine-dp").style.pointerEvents = "none";
 };
 
 const onScroll = (e: any) => {
@@ -123,21 +128,171 @@ const clearSecretBoyo = () => {
   document.getElementById("maybe-click-the-arrow").style.filter = ``
 }
 
+const editJsonFile = require("edit-json-file");
+ 
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+const optionsData = file.get();
+
+class ToggleSwitchDL extends React.Component {
+  state = {
+    dotLauncherToggle: optionsData.toggleDotLauncher,
+    checkedB: true,
+  };
+
+  handleChange = (name: any) => (event: any) => {
+    this.setState({ [name]: event.target.checked });
+    if(name == "dotLauncherToggle") {
+      if(optionsData.toggleDotLauncher == true) {
+        file.set("toggleDotLauncher", false);
+        console.info(`[SettingsStore] Set dotLauncherEnabled to false`)
+        file.save();
+      }
+      else {
+        file.set("toggleDotLauncher", true);
+        console.info(`[SettingsStore] Set dotLauncherEnabled to true`)
+        file.save();
+      }
+    }
+  };
+
+  render() {
+    return (
+      <Switch
+        checked={this.state.dotLauncherToggle}
+        onChange={this.handleChange('dotLauncherToggle')}
+        value="checkedA"
+        color="primary"
+      />
+    );
+  }
+}
+
+export default ToggleSwitchDL;
+
+var seMenuVisible = false;
+
+const toggleSeMenu = (e: any) => {
+  e.stopPropagation();
+  var x = document.getElementById("search-engine-dp")
+  if(x.style.opacity == "0") {
+    x.style.opacity = "1";
+    x.style.pointerEvents = "all";
+  }
+  else {
+    x.style.opacity = "0";
+    x.style.pointerEvents = "none";
+  }
+}
+
+const setEngineGoogle = () => {
+  file.set("searchEngine", "google");
+  console.info(`[SettingsStore] Set searchEngine to custom string google`)
+  file.save(); 
+  seMenuVisible = false   
+  document.getElementById("ctx-item-g").style.backgroundColor = "#585858c7";
+  document.getElementById("ctx-item-b").style.backgroundColor = "";
+  document.getElementById("ctx-item-y").style.backgroundColor = "";
+  document.getElementById("ctx-item-d").style.backgroundColor = "";
+  document.getElementById("ctx-item-e").style.backgroundColor = "";
+}
+
+const setEngineBing = () => {
+  file.set("searchEngine", "bing");
+  console.info(`[SettingsStore] Set searchEngine to custom string bing`)
+  file.save();  
+  seMenuVisible = false 
+  document.getElementById("ctx-item-g").style.backgroundColor = "";
+  document.getElementById("ctx-item-b").style.backgroundColor = "#585858c7";
+  document.getElementById("ctx-item-y").style.backgroundColor = "";
+  document.getElementById("ctx-item-d").style.backgroundColor = "";
+  document.getElementById("ctx-item-e").style.backgroundColor = "";
+}
+
+const setEngineYahoo = () => {
+  file.set("searchEngine", "yahoo");
+  console.info(`[SettingsStore] Set searchEngine to custom string yahoo`)
+  file.save(); 
+  seMenuVisible = false 
+  document.getElementById("ctx-item-g").style.backgroundColor = "";
+  document.getElementById("ctx-item-b").style.backgroundColor = "";
+  document.getElementById("ctx-item-y").style.backgroundColor = "#585858c7";
+  document.getElementById("ctx-item-d").style.backgroundColor = "";
+  document.getElementById("ctx-item-e").style.backgroundColor = "";
+}
+
+const setEngineDdg = () => {
+  file.set("searchEngine", "ddg");
+  console.info(`[SettingsStore] Set searchEngine to custom string ddg`)
+  file.save();    
+  seMenuVisible = false
+  document.getElementById("ctx-item-g").style.backgroundColor = "";
+  document.getElementById("ctx-item-b").style.backgroundColor = "";
+  document.getElementById("ctx-item-y").style.backgroundColor = "";
+  document.getElementById("ctx-item-d").style.backgroundColor = "#585858c7";
+  document.getElementById("ctx-item-e").style.backgroundColor = "";
+}
+
+const setEngineEcosia = () => {
+  file.set("searchEngine", "ecosia");
+  console.info(`[SettingsStore] Set searchEngine to custom string ecosia`)
+  file.save();    
+  seMenuVisible = false
+  document.getElementById("ctx-item-g").style.backgroundColor = "";
+  document.getElementById("ctx-item-b").style.backgroundColor = "";
+  document.getElementById("ctx-item-y").style.backgroundColor = "";
+  document.getElementById("ctx-item-d").style.backgroundColor = "";
+  document.getElementById("ctx-item-e").style.backgroundColor = "#585858c7";
+}
+
+var se = file.get("searchEngine");
+if(se == "google") {
+  var cmICG = "#585858c7"
+}
+if(se == "yahoo") {
+  var cmICY = "#585858c7"
+}
+if(se == "bing") {
+  var cmICB = "#585858c7"
+}
+if(se == "ddg") {
+  var cmICD = "#585858c7"
+}
+if(se == "ecosia") {
+  var cmICE = "#585858c7"
+}
+
 export const Appearance = observer(() => {
-    console.log(store.options.dotLauncherEnabled)
     return (
       <SettingsSection>
         <ListItem>
           <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <Switch onClick={toggleDotButton} toggled={store.options.dotLauncherEnabled}/>
+            <ToggleSwitchDL />
           </Buttons>
         </ListItem>
 
         <ListItem>
           <Title style={{ fontSize: 15 }}>Search Engine</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            
+            <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
+            <ContextMenu id="search-engine-dp" visible={seMenuVisible} style={{ top: '450px', marginLeft: '-50px' }}>            
+              <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
+                Google
+              </ContextMenuItem>
+              <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
+                Yahoo
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
+                Bing
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
+                DuckDuckGo
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
+                Ecosia
+              </ContextMenuItem>
+            </ContextMenu>
           </Buttons>
         </ListItem>
       </SettingsSection>

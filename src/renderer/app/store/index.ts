@@ -54,6 +54,7 @@ export class Store {
   @observable
   public settings: Settings = {
     dialType: 'top-sites',
+    toggleDotLauncher: true,
   };
 
   public findInputRef = React.createRef<HTMLInputElement>();
