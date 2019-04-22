@@ -48,7 +48,6 @@ export class AppWindow extends BrowserWindow {
         writeFileSync(windowDataPath, JSON.stringify({}));
       }
     }
-
     // Merge bounds from the last window state to the current window options.
     if (windowState) {
       this.setBounds({ ...windowState.bounds });
