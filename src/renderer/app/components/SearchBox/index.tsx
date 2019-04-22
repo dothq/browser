@@ -7,6 +7,8 @@ import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
+import { resolve } from 'path';
+import { platform, homedir } from 'os';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -20,10 +22,33 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
     let url = text;
 
+    const editJsonFile = require("edit-json-file");
+ 
+    let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+    var searchengine = file.get("searchEngine");
+
+    if(searchengine == "google") {
+      var searchurl = `https://www.google.com/search?q=`;
+    }
+    if(searchengine == "yahoo") {
+      var searchurl = `https://search.yahoo.com/search?p=`;
+    }
+    if(searchengine == "bing") {
+      var searchurl = `https://www.bing.com/search?q=`;
+    }
+    if(searchengine == "ddg") {
+      var searchurl = `https://duckduckgo.com/?q=`;
+    }
+    if(searchengine == "ecosia") {
+      var searchurl = `https://www.ecosia.org/search?q=`;
+    }
+
+
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
     } else if (!text.includes('://')) {
-      url = `https://www.google.com/search?q=${text}`;
+      url = `${searchurl}${text}`;
     }
 
     e.currentTarget.value = url;

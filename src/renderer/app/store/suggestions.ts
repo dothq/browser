@@ -4,7 +4,11 @@ import store from '.';
 import { icons } from '../constants';
 import { isURL } from '~/shared/utils/url';
 import { Suggestion } from '../models';
+import { platform, homedir } from 'os';
+import { resolve } from 'path';
 
+const editJsonFile = require("edit-json-file");
+ 
 let searchSuggestions: Suggestion[] = [];
 
 export class SuggestionsStore {
@@ -18,16 +22,23 @@ export class SuggestionsStore {
   public height = 0;
 
   public load(input: HTMLInputElement) {
+    let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
     return new Promise(async (resolve: (result: string) => void, reject) => {
       const filter = input.value.substring(0, input.selectionStart);
       const history = getHistorySuggestions(filter);
 
       const historySuggestions: Suggestion[] = [];
 
+      var searchengine:string = await file.get("searchEngine");
+      if(searchengine == "ddg") {
+        searchengine = "DuckDuckGo"
+      }
+      var cse = searchengine.charAt(0).toUpperCase() + searchengine.slice(1);
+
       if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {
         historySuggestions.unshift({
           primaryText: filter,
-          secondaryText: `search on Google`,
+          secondaryText: `search on ${cse}`,
           favicon: icons.search,
           isSearch: true,
         });
@@ -51,7 +62,7 @@ export class SuggestionsStore {
         } else {
           historySuggestions.push({
             primaryText: item.url,
-            secondaryText: `search on Google`,
+            secondaryText: `search on ${cse}`,
             favicon: icons.search,
             canSuggest: item.canSuggest,
           });
