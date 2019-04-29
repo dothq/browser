@@ -250,6 +250,7 @@ export class View extends BrowserView {
           if (frameName === '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
+            appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
           } else if (frameName === '_blank') {
             e.preventDefault();
             appWindow.webContents.send('api-tabs-create', {

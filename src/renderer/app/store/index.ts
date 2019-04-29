@@ -15,9 +15,32 @@ import { BookmarksStore } from './bookmarks';
 import { readFileSync, writeFile } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '../models/settings';
+import { SettingsFile } from '~/renderer/app/models/settings';
+import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { DownloadsStore } from './downloads';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
+import { existsSync, writeFileSync } from 'fs';
+
+if (!existsSync(getPath('settings.json'))) {
+  writeFileSync(
+    getPath('settings.json'),
+    JSON.stringify({
+      dialType: 'top-sites',
+      toggleDotLauncher: true,
+    } as SettingsFile),
+  );
+}
+
+if (!existsSync(getPath('dot-options.json'))) {
+  writeFileSync(
+    getPath('dot-options.json'),
+    JSON.stringify({
+      toggleDotLauncher: true,
+      searchEngine: 'google'
+    } as DotOptions),
+  );
+}
 
 export class Store {
   public history = new HistoryStore();
