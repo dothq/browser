@@ -12,6 +12,7 @@ import { Settings } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store'
+import console = require('console');
 
 
 ipcMain.setMaxListeners(0);
@@ -23,29 +24,43 @@ export let appWindow: AppWindow;
 
 registerProtocols();
 
-if (!existsSync(getPath('settings.json'))) {
+// Check for settings
+try {
+  if (existsSync(getPath('settings.json'))) { console.log("[SettingsStore] Checked for settings.json, exists.") }
+}
+catch (e) {
+  console.log(e)
   writeFileSync(
     getPath('settings.json'),
     JSON.stringify({
-      dialType: 'top-sites',
-      toggleDotLauncher: true,
+      dialType: 'top-sites'
     } as Settings),
   );
 }
 
-if (!existsSync(getPath('dot-options.json'))) {
+// Check for dot-options
+try {
+  if (existsSync(getPath('dot-options.json'))) { console.log("[OptionsStore] Checked for dot-options.json, exists.") }
+}
+catch (e) {
+  console.log(e)
   writeFileSync(
     getPath('dot-options.json'),
     JSON.stringify({
       toggleDotLauncher: true,
-      searchEngine: 'google',
+      searchEngine: 'google'
     } as DotOptions),
   );
 }
 
+
+}
+
 app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+// Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
+// Fixes any proxy bypass settings
 
 app.on('ready', () => {
   // Create our menu entries so that we can use macOS shortcuts
@@ -101,6 +116,8 @@ app.on('ready', () => {
   });
 
   appWindow = new AppWindow();
+
+  appWindow.webContents.loadURL('http://localhost:4444/app.html');
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);
