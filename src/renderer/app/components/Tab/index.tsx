@@ -38,11 +38,6 @@ const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
   store.tabs.tabStartX = tab.left;
 
   store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
-
-  if (e.button === 1) {
-    e.stopPropagation();
-    tab.close();
-  }
 };
 
 const onMouseEnter = (tab: Tab) => () => {

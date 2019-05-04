@@ -34,7 +34,12 @@ export const StyledOverlay = styled.div`
   z-index: 9999;
   transition: 0.2s opacity;
   backface-visibility: hidden;
-  background-color: rgba(0, 0, 0, 0.79);
+  background-color: #1c1c1c;
+
+  ${({ visible }: { visible: boolean }) => css`
+    opacity: ${visible ? 1 : 0};
+    pointer-events: ${visible ? 'auto' : 'none'};
+  `};
 `;
 
 export const HeaderText = styled.div`
