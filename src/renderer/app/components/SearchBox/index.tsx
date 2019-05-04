@@ -29,7 +29,7 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     var searchengine = file.get("searchEngine");
 
     if(searchengine == "google") {
-      var searchurl = `https://www.google.com/search?q=`;
+      var searchurl = `https://www.google.com/search?hl=en&q=`;
     }
     if(searchengine == "yahoo") {
       var searchurl = `https://search.yahoo.com/search?p=`;
