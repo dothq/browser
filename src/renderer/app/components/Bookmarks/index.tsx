@@ -39,11 +39,19 @@ const onCancelClick = (e: React.MouseEvent) => {
 
 const onDeleteClick = (e: React.MouseEvent) => {
   store.bookmarks.deleteSelected();
+  store.bookmarks.menuVisible = false;
 };
 
 const onRemoveClick = (item: Bookmark) => () => {
   store.bookmarks.removeItem(item._id);
+  store.bookmarks.menuVisible = false;
 };
+
+const openTab = (item: Bookmark) => () => {
+  var url = item.url
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
 
 const BookmarksList = observer(() => {
   return (
@@ -91,6 +99,12 @@ export const Bookmarks = observer(() => {
           }}
           visible={store.bookmarks.menuVisible}
         >
+          <ContextMenuItem
+            onClick={openTab(store.bookmarks.currentBookmark)}
+            icon={icons.forward}
+          >
+            Open Link
+          </ContextMenuItem>
           <ContextMenuItem
             onClick={onRemoveClick(store.bookmarks.currentBookmark)}
             icon={icons.trash}

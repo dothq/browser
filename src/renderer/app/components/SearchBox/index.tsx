@@ -43,8 +43,7 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(searchengine == "ecosia") {
       var searchurl = `https://www.ecosia.org/search?q=`;
     }
-
-
+    
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
     } else if (!text.includes('://')) {

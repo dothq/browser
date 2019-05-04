@@ -15,6 +15,8 @@ import {
   SmallDegrees,
 } from './style';
 import { icons } from '../../constants';
+const request = require("request");
+
 
 export const WeatherCard = observer(() => {
   return (
@@ -22,7 +24,7 @@ export const WeatherCard = observer(() => {
       <Header>
         <Left>
           <div>
-            <Title>Warsaw</Title>
+            <Title>London</Title>
             <Degrees>20°</Degrees>
             <div
               style={{

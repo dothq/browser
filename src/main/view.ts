@@ -136,14 +136,14 @@ export class View extends BrowserView {
       ) {
         menuItems = menuItems.concat([
           {
-            label: 'Go back',
+            label: 'Back',
             enabled: this.webContents.canGoBack(),
             click: () => {
               this.webContents.goBack();
             },
           },
           {
-            label: 'Go forward',
+            label: 'Forwards',
             enabled: this.webContents.canGoForward(),
             click: () => {
               this.webContents.goForward();
@@ -162,7 +162,7 @@ export class View extends BrowserView {
       }
 
       menuItems.push({
-        label: 'Inspect Element',
+        label: 'Inspect',
         click: () => {
           this.webContents.inspectElement(params.x, params.y);
 
@@ -231,7 +231,6 @@ export class View extends BrowserView {
 
     this.webContents.addListener('did-finish-load', async () => {
       
-      
 
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
@@ -239,8 +238,20 @@ export class View extends BrowserView {
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
-        screenshot: this.getScreenshot()
       });
+
+
+      appWindow.webContents.send(
+          `new-screenshot-${this.tabId}`,
+          await this.getScreenshot(),
+        );
+      });
+
+    this.webContents.addListener('did-frame-finish-load', async () => {
+      appWindow.webContents.send(
+        `new-screenshot-${this.tabId}`,
+        await this.getScreenshot(),
+      );
     });
 
     this.webContents.addListener(
