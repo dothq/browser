@@ -75,12 +75,15 @@ export class Store {
   };
 
   @observable
+  public screenshot: any;
+
+  @observable
   public settings: Settings = {
-    dialType: 'top-sites',
-    toggleDotLauncher: true,
+    dialType: 'top-sites'
   };
 
   public findInputRef = React.createRef<HTMLInputElement>();
+
 
   public canToggleMenu = false;
 

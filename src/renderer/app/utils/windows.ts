@@ -6,6 +6,10 @@ export const closeWindow = () => {
   getCurrentWindow().close();
 };
 
+export const getWebContents = () => {
+  remote.getCurrentWebContents();
+};
+
 export const minimizeWindow = () => {
   getCurrentWindow().minimize();
 };

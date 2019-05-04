@@ -14,7 +14,7 @@ export const Screenshot = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   flex: 1;
-  filter: blur(20px);
+  filter: blur(0px);
   margin: -20px;
   position: relative;
 `;
