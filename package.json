@@ -104,7 +104,6 @@
     "react-dom": "16.8.6",
     "react-native": "^0.59.6",
     "react-switch": "^4.1.0",
-    "request": "^2.88.0",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "4.2.0",
     "tldts": "4.0.6"

@@ -46,8 +46,6 @@ export const preventHiding = (e: any) => {
   store.overlay.dialTypeMenuVisible = false;
   document.getElementById("search-engine-dp").style.opacity = "0";
   document.getElementById("search-engine-dp").style.pointerEvents = "none";
-  store.bookmarks.menuVisible = false;
-
 };
 
 export const Overlay = observer(() => {

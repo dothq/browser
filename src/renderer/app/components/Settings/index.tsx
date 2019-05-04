@@ -320,7 +320,7 @@ export const Settings = observer(() => {
         >
         </NavigationDrawer>
         <Sections>
-          <Content style={{ width: 'calc(100% - 125px)' }}>
+          <Content>
               <Title style={{ margin: '75px -30px -25px -30px' }}>My Profile</Title>
               <YourProfile />
 

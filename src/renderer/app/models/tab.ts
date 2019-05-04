@@ -10,7 +10,7 @@ import {
   defaultTabOptions,
   TAB_ANIMATION_DURATION,
 } from '~/renderer/app/constants';
-import { closeWindow, getColorBrightness, getWebContents } from '../utils';
+import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
 import { setInterval } from 'timers';
@@ -45,9 +45,6 @@ export class Tab {
 
   @observable
   public background: string = colors.blue['500'];
-
-  @observable
-  public screenshot: string;
 
   @observable
   public url = '';
@@ -199,13 +196,6 @@ export class Tab {
         if (isMainFrame) {
           this.blockedAds = 0;
         }
-      },
-    );
-
-    ipcRenderer.on(
-      `new-screenshot-${this.id}`,
-      (e: any, screenshot: string) => {
-        this.screenshot = screenshot;
       },
     );
 
@@ -426,8 +416,6 @@ export class Tab {
     setTimeout(() => {
       store.tabs.removeTab(this.id);
     }, TAB_ANIMATION_DURATION * 1000);
-
-    store.overlay.visible = true;
   }
 
   public emitOnUpdated = (data: any) => {

@@ -54,6 +54,7 @@ catch (e) {
 }
 
 
+}
 
 app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
 // Adds the sexy scrollbar
