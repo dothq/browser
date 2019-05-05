@@ -1,9 +1,10 @@
-import { BrowserView, app, Menu, nativeImage, clipboard } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import console = require('console');
+const path = require("path");
 
 export class View extends BrowserView {
   public title: string = '';
@@ -136,14 +137,14 @@ export class View extends BrowserView {
       ) {
         menuItems = menuItems.concat([
           {
-            label: 'Go back',
+            label: 'Back',
             enabled: this.webContents.canGoBack(),
             click: () => {
               this.webContents.goBack();
             },
           },
           {
-            label: 'Go forward',
+            label: 'Forward',
             enabled: this.webContents.canGoForward(),
             click: () => {
               this.webContents.goForward();
@@ -161,8 +162,13 @@ export class View extends BrowserView {
         ]);
       }
 
+      const iconPath = '../shared/resources/icons/dev.svg';
+      let trayIcon = nativeImage.createFromPath(iconPath);
+      trayIcon = trayIcon.resize({ width: 16, height: 16 });
+
       menuItems.push({
-        label: 'Inspect Element',
+        label: 'Inspect',
+        icon: trayIcon,
         click: () => {
           this.webContents.inspectElement(params.x, params.y);
 
