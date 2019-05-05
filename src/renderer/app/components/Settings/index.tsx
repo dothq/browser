@@ -76,6 +76,13 @@ const func = () => {
   store.overlay.visible = false;
 }
 
+const sky = () => {
+  var url = "https://github.com/SkyPlayzYT05"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+
 const AboutDot = observer(() => {
   return (
     <SettingsSection style={{ backgroundColor: 'transparent' }}>
@@ -96,6 +103,7 @@ const AboutDot = observer(() => {
         <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
         <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function</A>
+        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Sky</A>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
       </AboutWrapper>
     </SettingsSection>

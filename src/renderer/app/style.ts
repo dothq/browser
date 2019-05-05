@@ -12,6 +12,8 @@ export const Style = css`
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    user-drag: none;
+    app-region: no-drag;
     ${body2()}
   }
 

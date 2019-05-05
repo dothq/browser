@@ -38,14 +38,14 @@ var tdl = file.get("toggleDotLauncher");
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
-      <DotLauncherWrapper title="Open Dot Launcher" id="dot" onClick={launcherOpen} visible={tdl}>
+      <DotLauncherWrapper title="Open Dot Launcher" id="dot" onClick={launcherOpen} visible={tdl} style={{ height: '42px' }}>
         <DotLauncher src={icons.logo}></DotLauncher>
       </DotLauncherWrapper>
       <ToolbarButton
         disabled={!store.navigationState.canGoBack}
         size={24}
         icon={icons.back}
-        style={{ marginLeft: 8 }}
+        style={{ marginLeft: 8, height: '42px' }}
         onClick={onBackClick}
       />
       <ToolbarButton
@@ -53,6 +53,7 @@ export const NavigationButtons = observer(() => {
         size={24}
         icon={icons.forward}
         onClick={onForwardClick}
+        style={{ height: '42px' }}
       />
       <ToolbarButton
         size={20}
@@ -62,6 +63,7 @@ export const NavigationButtons = observer(() => {
             : icons.refresh
         }
         onClick={onRefreshClick}
+        style={{ height: '42px' }}
       />
     </StyledContainer>
   );
