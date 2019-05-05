@@ -102,8 +102,8 @@ const AboutDot = observer(() => {
         <A onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev,</A>
         <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
-        <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function</A>
-        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Sky</A>
+        <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function, </A>
+        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky</A>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
       </AboutWrapper>
     </SettingsSection>
