@@ -76,7 +76,7 @@ export class TabGroupsStore {
     this.list.splice(index, 1);
 
     if (this.list.length === 0) {
-      closeWindow();
+      return this.addGroup();
     }
   }
 

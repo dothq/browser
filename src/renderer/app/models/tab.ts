@@ -407,15 +407,15 @@ export class Tab {
         const prevTab = tabs[index - 1];
         prevTab.select();
       } else if (store.tabGroups.list.length === 1) {
-        closeWindow();
+        store.overlay.visible = true;
       } else if (this.tabGroup.tabs.length === 0) {
         store.overlay.visible = true;
       }
     }
 
-    setTimeout(() => {
+    //setTimeout(() => {
       store.tabs.removeTab(this.id);
-    }, TAB_ANIMATION_DURATION * 1000);
+    //}, TAB_ANIMATION_DURATION * 1000);
   }
 
   public emitOnUpdated = (data: any) => {
