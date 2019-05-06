@@ -129,7 +129,11 @@ export class HistoryStore {
       loaded++;
     }
 
+    if(list.length) {
+      
+    }
     return list;
+
   }
 
   @computed

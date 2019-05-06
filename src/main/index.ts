@@ -54,8 +54,6 @@ catch (e) {
 }
 
 
-}
-
 app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
 // Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false')
@@ -86,14 +84,7 @@ app.on('ready', () => {
             click() {
               appWindow.webContents.send('find');
             },
-          },
-          {
-            accelerator: 'CmdOrCtrl+F',
-            label: 'Find in page',
-            click() {
-              appWindow.webContents.send('find');
-            },
-          },
+          }
         ],
       },
     ]),
