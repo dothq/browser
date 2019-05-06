@@ -280,7 +280,7 @@ export const Appearance = observer(() => {
       <SettingsSection>
         <ListItem>
           <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
-          <Buttons style={{ marginLeft: 'auto' }}>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
           </Buttons>
         </ListItem>

@@ -71,6 +71,11 @@ const onInput = async () => {
     store.tabs.addTab({url, active: true });
   }
 
+  if(value.toLocaleLowerCase() === "take me home country roads") {
+    var url = "https://www.youtube.com/watch?v=1vrEljMfXYo"
+    store.tabs.addTab({url, active: true });
+  }
+
   const requestId = await selectedTab.callViewMethod(
     'webContents.findInPage',
     value,
