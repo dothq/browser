@@ -75,6 +75,17 @@ const onInput = async () => {
     var url = "https://www.youtube.com/watch?v=1vrEljMfXYo"
     store.tabs.addTab({url, active: true });
   }
+  
+  if(value.toLocaleLowerCase() === "avengers endgame spoilers") {
+    var url = "https://www.youtube.com/watch?v=HzyZYhit-sg"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "shooting stars") {
+    var url = "https://www.youtube.com/watch?v=O-MQC_G9jTU"
+    store.tabs.addTab({url, active: true });
+  }
+
 
   const requestId = await selectedTab.callViewMethod(
     'webContents.findInPage',
