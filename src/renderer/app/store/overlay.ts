@@ -104,7 +104,7 @@ export class OverlayStore {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         ipcRenderer.send('browserview-show');
-      }, 200);
+      }, 150);
 
       store.suggestions.list = [];
       lastSuggestion = undefined;

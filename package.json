@@ -88,6 +88,7 @@
     "edit-json-file": "^1.2.1",
     "electron-updater": "4.0.6",
     "file-type": "10.11.0",
+    "folder-delete": "^1.0.4",
     "gsap": "2.1.2",
     "icojs": "0.12.3",
     "is-online": "^8.2.0",

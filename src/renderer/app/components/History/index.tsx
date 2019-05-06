@@ -11,6 +11,9 @@ import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { icons } from '../../constants';
 
+const deleteFolder = require('folder-delete');
+const remote = require('electron').remote;
+const path = require("path");
 const scrollRef = React.createRef<HTMLDivElement>();
 
 const preventHiding = (e: any) => {
@@ -69,6 +72,10 @@ const MenuItem = observer(
 );
 
 const onClearClick = () => {
+  const app = remote.app;
+  const data = app.getPath('userData');
+  var deletePath: any = path.join(data, 'storage');
+  deleteFolder(deletePath);
 }
 
 const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
