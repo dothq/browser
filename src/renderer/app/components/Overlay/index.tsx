@@ -66,7 +66,7 @@ export const Overlay = observer(() => {
       >
         <Scrollable ref={store.overlay.scrollRef}>
           <Content>
-            <Image src={icons.logo} center></Image>
+            <Image src={icons.logo} center style={{ width: '250px' }}></Image>
             <SearchBox />
             <Dial />
 

@@ -162,13 +162,8 @@ export class View extends BrowserView {
         ]);
       }
 
-      const iconPath = '../shared/resources/icons/dev.svg';
-      let trayIcon = nativeImage.createFromPath(iconPath);
-      trayIcon = trayIcon.resize({ width: 16, height: 16 });
-
       menuItems.push({
         label: 'Inspect',
-        icon: trayIcon,
         click: () => {
           this.webContents.inspectElement(params.x, params.y);
 

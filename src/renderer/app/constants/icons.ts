@@ -25,7 +25,7 @@ import fire from '~/shared/resources/icons/fire.svg';
 import trash from '~/shared/resources/icons/delete.svg';
 import up from '~/shared/resources/icons/up.svg';
 import shield from '~/shared/resources/icons/shield.svg';
-import logo from '~/shared/resources/icons/logo.svg';
+import logo from '~/shared/resources/icons/logo.png';
 import user from '~/shared/resources/icons/user.svg';
 import uk from '~/shared/resources/icons/uk.png';
 
