@@ -66,11 +66,6 @@ const onInput = async () => {
     store.tabs.addTab({url, active: true });
   } 
 
-  if(value.toLocaleLowerCase() === "lets play pickle") {
-    var url = "https://www.youtube.com/watch?v=ihZKUUxKWYA"
-    store.tabs.addTab({url, active: true });
-  }
-
   if(value.toLocaleLowerCase() === "take me home country roads") {
     var url = "https://www.youtube.com/watch?v=1vrEljMfXYo"
     store.tabs.addTab({url, active: true });
