@@ -1,4 +1,4 @@
-import { ipcMain, app, Menu, session } from 'electron';
+import { ipcMain, app, Menu, session, globalShortcut, Tray } from 'electron';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
@@ -13,7 +13,7 @@ import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store'
 import console = require('console');
-
+const nativeImage = require("electron").nativeImage;
 
 ipcMain.setMaxListeners(0);
 
@@ -60,6 +60,7 @@ app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 // Fixes any proxy bypass settings
 
+var tray = null;
 app.on('ready', () => {
   // Create our menu entries so that we can use macOS shortcuts
   Menu.setApplicationMenu(
@@ -89,6 +90,24 @@ app.on('ready', () => {
       },
     ]),
   );
+
+  globalShortcut.register('Alt+Backspace', () => {
+    console.log("fsd")
+    appWindow.webContents.goBack();
+  });
+
+  tray = new Tray(resolve(app.getAppPath(), 'src/shared/resources/icons/logo.png'))
+  const contextMenu = Menu.buildFromTemplate([
+    { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'src/shared/resources/icons/tray-icon.png') },
+    { type: 'separator' },
+    { label: 'History', type: 'normal' },
+    { label: 'Bookmarks', type: 'normal' },
+    { label: 'Settings', type: 'normal' },
+    { type: 'separator' },
+    { label: `Quit Dot ${app.getVersion()}`, type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'src/shared/resources/icons/tray-close.png') },
+  ])
+  tray.setToolTip(`Dot ${app.getVersion()}`)
+  tray.setContextMenu(contextMenu)
 
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback) => {
