@@ -96,15 +96,15 @@ app.on('ready', () => {
     appWindow.webContents.goBack();
   });
 
-  tray = new Tray(resolve(app.getAppPath(), 'src/shared/resources/icons/logo.png'))
+  tray = new Tray(resolve(app.getAppPath(), 'static/app-icons/logo.png'))
   const contextMenu = Menu.buildFromTemplate([
-    { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'src/shared/resources/icons/tray-icon.png') },
+    { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
     { type: 'separator' },
     { label: 'History', type: 'normal' },
     { label: 'Bookmarks', type: 'normal' },
     { label: 'Settings', type: 'normal' },
     { type: 'separator' },
-    { label: `Quit Dot ${app.getVersion()}`, type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'src/shared/resources/icons/tray-close.png') },
+    { label: `Quit Dot ${app.getVersion()}`, type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'static/app-icons/tray-close.png') },
   ])
   tray.setToolTip(`Dot ${app.getVersion()}`)
   tray.setContextMenu(contextMenu)
@@ -126,8 +126,6 @@ app.on('ready', () => {
   });
 
   appWindow = new AppWindow();
-
-  appWindow.webContents.loadURL('http://localhost:4444/app.html');
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);
