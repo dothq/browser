@@ -6,7 +6,7 @@
     "output": "dist",
     "buildResources": "static/app-icons"
   },
-  "files": ["build/**/*", "package.json", "filters"],
+  "files": ["build/**/*", "package.json", "filters", "static/app-icons"],
   "publish": "github",
   "nsis": {
     "oneClick": false,
