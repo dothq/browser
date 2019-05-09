@@ -96,7 +96,7 @@ app.on('ready', () => {
     appWindow.webContents.goBack();
   });
 
-  tray = new Tray(resolve(app.getAppPath(), 'static/app-icons/logo.png'))
+  tray = new Tray(resolve(app.getAppPath(), 'static/app-icons/icon.png'))
   const contextMenu = Menu.buildFromTemplate([
     { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
     { type: 'separator' },
