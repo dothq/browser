@@ -3,6 +3,7 @@ import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
+import { client } from '../../src/main'
 import console = require('console');
 const path = require("path");
 
@@ -242,6 +243,9 @@ export class View extends BrowserView {
         processId: process.pid,
         screenshot: this.getScreenshot()
       });
+
+      
+
     });
 
     this.webContents.addListener(
