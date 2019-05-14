@@ -17,7 +17,6 @@ const nativeImage = require("electron").nativeImage;
 
 ipcMain.setMaxListeners(0);
 
-app.disableHardwareAcceleration(); 
 app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
@@ -60,54 +59,7 @@ app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 // Fixes any proxy bypass settings
 
-var tray = null;
 app.on('ready', () => {
-  // Create our menu entries so that we can use macOS shortcuts
-  Menu.setApplicationMenu(
-    Menu.buildFromTemplate([
-      {
-        label: 'Edit',
-        submenu: [
-          { role: 'undo' },
-          { role: 'redo' },
-          { type: 'separator' },
-          { role: 'cut' },
-          { role: 'copy' },
-          { role: 'paste' },
-          { role: 'pasteandmatchstyle' },
-          { role: 'delete' },
-          { role: 'selectall' },
-          { role: 'quit' },
-          { role: 'reload' },
-          {
-            accelerator: 'CmdOrCtrl+F',
-            label: 'Find in page',
-            click() {
-              appWindow.webContents.send('find');
-            },
-          }
-        ],
-      },
-    ]),
-  );
-
-  globalShortcut.register('Alt+Backspace', () => {
-    console.log("fsd")
-    appWindow.webContents.goBack();
-  });
-
-  tray = new Tray(resolve(app.getAppPath(), 'static/app-icons/icon.png'))
-  const contextMenu = Menu.buildFromTemplate([
-    { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
-    { type: 'separator' },
-    { label: 'History', type: 'normal' },
-    { label: 'Bookmarks', type: 'normal' },
-    { label: 'Settings', type: 'normal' },
-    { type: 'separator' },
-    { label: `Quit Dot ${app.getVersion()}`, type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'static/app-icons/tray-close.png') },
-  ])
-  tray.setToolTip(`Dot ${app.getVersion()}`)
-  tray.setContextMenu(contextMenu)
 
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback) => {
