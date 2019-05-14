@@ -20,7 +20,7 @@ export class AppWindow extends BrowserWindow {
       show: false,
       backgroundColor: '#1c1c1c',
       title: 'Dot',
-      titleBarStyle: 'hidden',
+      //titleBarStyle: 'hidden',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,

@@ -133,6 +133,7 @@ export class Tab {
   public hasThemeColor = false;
   public webContentsId: number;
   public findRequestId: number;
+  public isWindow: boolean = false;
 
   constructor({ url, active } = defaultTabOptions, tabGroupId: number) {
     this.tabGroupId = tabGroupId;

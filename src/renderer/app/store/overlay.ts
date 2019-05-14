@@ -65,9 +65,19 @@ export class OverlayStore {
     if (!this._visible || e.keyCode !== 27) return; // Escape
 
     if (this.currentContent === 'history') {
-      this.currentContent = 'default';
-    } else if (this.currentContent === 'default') {
-      this._visible = false;
+      return this.currentContent = 'default';
+    }    
+    if (this.currentContent === 'bookmarks') {
+      return this.currentContent = 'default';
+    } 
+    if (this.currentContent === 'settings') {
+      return this.currentContent = 'default';
+    }
+    if (this.currentContent === 'extensions') {
+      return this.currentContent = 'default';
+    }    
+    if (this.currentContent === 'default') {
+      this.visible = false;
     }
   };
 
@@ -93,6 +103,7 @@ export class OverlayStore {
     }
 
     ipcRenderer.send('browserview-hide');
+    
 
     this._visible = true;
   }
@@ -102,9 +113,17 @@ export class OverlayStore {
 
     if (!val) {
       clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
+
+      setTimeout(function() {
         ipcRenderer.send('browserview-show');
-      }, 150);
+      }, 100)
+      
+      // this.timeout = setTimeout(() => {
+      //   if (store.tabs.selectedTab) {
+      //     if (store.tabs.selectedTab.isWindow) store.tabs.selectedTab.select();
+      //     else ipcRenderer.send('browserview-show');
+      //   }
+      // }, 200);
 
       store.suggestions.list = [];
       lastSuggestion = undefined;
