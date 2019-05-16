@@ -48,6 +48,10 @@ ipcRenderer.setMaxListeners(0);
 
 const styleElement = document.createElement('style');
 
+ipcRenderer.on('dev-tools-opened', () => {
+  appWindow.webContents.openDevTools();
+});
+
 var reload = () => {
   store.tabs.selectedTab.callViewMethod('webContents.reload');
 }
@@ -129,14 +133,15 @@ Menu.setApplicationMenu(
           },
         },
         { 
-          label: 'Reload',
+          label: 'Reload Page',
           accelerator: 'F5',
           click() { 
             store.tabs.selectedTab.callViewMethod('webContents.reload'); 
           } 
         },
+        { type: 'separator' },
         { 
-          label: 'Open Launcher',
+          label: 'Launcher',
           accelerator: 'Ctrl+Space',
           click() { 
             store.overlay.visible = true;
@@ -169,6 +174,7 @@ Menu.setApplicationMenu(
             store.overlay.scrollRef.current.scrollTop = 0;
           } 
         },
+        { type: 'separator' },
         { 
           label: 'Zoom in',
           accelerator: 'Ctrl+=',
@@ -183,7 +189,18 @@ Menu.setApplicationMenu(
           click() { 
               
           } 
-        },          
+        },        
+        { 
+          label: 'Dev Tools F12',
+          accelerator: 'F12',
+          click() { 
+            remote.webContents.getFocusedWebContents().openDevTools();  
+            
+            if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+              remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+            }
+          } 
+        },   
       ],
     },
   ]),

@@ -77,6 +77,7 @@ export class OverlayStore {
       return this.currentContent = 'default';
     }    
     if (this.currentContent === 'default') {
+      if(store.tabs.list.length == 0) return;
       this.visible = false;
     }
   };

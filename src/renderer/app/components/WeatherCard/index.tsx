@@ -15,6 +15,30 @@ import {
   SmallDegrees,
 } from './style';
 import { icons } from '../../constants';
+import console = require('console');
+const net = require("electron").remote.net;
+
+const city = net.request({
+  method: 'GET',
+  protocol: 'https:',
+  hostname: 'api.ipdata.co',
+  port: 443,
+  path: '/city?api-key=e7ff7273b86c9724895708c38bb01e05990667e502326f25d5ebf4cb'
+});
+
+city.on('response', (response) => {
+  var setCity = response.statusMessage;
+  sendCity(setCity);
+  console.log(setCity)
+})
+
+var lC = '';
+
+function sendCity(city: string) {
+  lC = city;
+}
+
+const locationCity = lC;
 
 export const WeatherCard = observer(() => {
   return (
@@ -22,7 +46,7 @@ export const WeatherCard = observer(() => {
       <Header>
         <Left>
           <div>
-            <Title>Warsaw</Title>
+            <Title>{locationCity}</Title>
             <Degrees>20°</Degrees>
             <div
               style={{

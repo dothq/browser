@@ -85,6 +85,8 @@
   "dependencies": {
     "@cliqz/adblocker": "0.8.0",
     "@material-ui/core": "^3.9.3",
+    "discord-rich-presence": "0.0.8",
+    "discord-rpc": "^3.0.1",
     "edit-json-file": "^1.2.1",
     "electron-updater": "4.0.6",
     "file-type": "10.11.0",
@@ -101,7 +103,9 @@
     "nedb": "1.8.0",
     "nersent-ui": "^3.5.3",
     "node-vibrant": "3.2.0-alpha",
+    "phin": "^3.3.0",
     "pretty-bytes": "5.1.0",
+    "psl": "^1.1.31",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-native": "^0.59.6",
