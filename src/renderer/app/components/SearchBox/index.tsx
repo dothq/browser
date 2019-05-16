@@ -135,13 +135,26 @@ export const SearchBox = observer(() => {
     height += 48;
   }
 
+  var today = new Date()
+  var curHr = today.getHours()
+
+  if (curHr < 12) {
+    var timeType = "Good morning"
+  } else if (curHr < 18) {
+    var timeType = "Good afternoon"
+  } else {
+    var timeType = "Good evening"
+  }
+  var sBV = [`Where do you want to go today?`, `What's on your mind ${require("os").userInfo().username}?`, 'Enter a search term or URL to get started.', `${timeType}, ${require("os").userInfo().username}`]
+  var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
+
   return (
     <StyledSearchBox style={{ height }} onClick={onClick}>
       <InputContainer>
         <SearchIcon />
         <Input
           autoFocus
-          placeholder="Enter a search term or URL"
+          placeholder={searchBoxValue}
           onKeyPress={onKeyPress}
           onFocus={onInputFocus}
           onChange={onInput}

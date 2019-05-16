@@ -5,6 +5,7 @@ import { platform } from 'os';
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
+import store from '~/renderer/app/store';
 
 
 export class AppWindow extends BrowserWindow {
@@ -20,7 +21,7 @@ export class AppWindow extends BrowserWindow {
       show: false,
       backgroundColor: '#1c1c1c',
       title: 'Dot',
-      //titleBarStyle: 'hidden',
+      titleBarStyle: 'hiddenInset',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,

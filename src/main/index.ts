@@ -87,6 +87,14 @@ app.on('ready', () => {
     autoUpdater.quitAndInstall();
   });
 
+  ipcMain.on('dev-tools-open', () => {
+    appWindow.webContents.inspectElement(0, 0);
+
+    if (appWindow.webContents.isDevToolsOpened()) {
+      appWindow.webContents.devToolsWebContents.focus();
+    }  
+  });  
+
   ipcMain.on('update-check', () => {
     if (process.env.ENV !== 'dev') {
       autoUpdater.checkForUpdates();
