@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import store from '../../store';
 import { InputField } from './style'
 import { Button } from '~/renderer/components/Button';
-import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper } from './style';
+import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
 import { icons } from '../../constants';
@@ -38,7 +38,7 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
 const YourProfile = observer(() => {
   return (
-    <SettingsSection>
+    <SettingsSection id="my-profile">
       <ListItem>
         <Image src={icons.user} style={{ filter: 'invert(100%)', width: '30px' }}></Image>
         <Title style={{ fontSize: 25 }}>{require("os").userInfo().username}</Title>
@@ -88,7 +88,7 @@ const AboutDot = observer(() => {
     <SettingsSection style={{ backgroundColor: 'transparent' }}>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.11</Title>
+        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.12</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -312,6 +312,10 @@ export const Appearance = observer(() => {
     );
 });
 
+export const scrollMp = () => {
+  document.getElementById("my-profile").scrollTop = 0;
+}
+
 export const Settings = observer(() => {
   return (
     <Container
@@ -325,6 +329,8 @@ export const Settings = observer(() => {
         <NavigationDrawer
           title="Settings"
           onBackClick={onBackClick}
+          search
+          onSearchInput={onInput}
         >
         </NavigationDrawer>
         <Sections>

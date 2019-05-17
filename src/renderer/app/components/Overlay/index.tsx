@@ -11,6 +11,8 @@ import {
   Content,
   Container,
   Image,
+  Dot,
+  Preloader,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
@@ -20,6 +22,7 @@ import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
 import { Extensions } from '../Extensions';
+import { Preload } from '../Preload';
 import { Dial } from '../Dial';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
@@ -56,9 +59,16 @@ export const preventHiding = (e: any) => {
   document.getElementById("search-engine-dp").style.pointerEvents = "none";
 };
 
+setTimeout(function() {
+  store.overlay.currentContent = "default";
+}, 2000);
+
 export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
+      <Preload id="pre">
+        <Dot src={icons.logo} />
+      </Preload>
       <Container
         visible={
           store.overlay.currentContent === 'default' && store.overlay.visible
