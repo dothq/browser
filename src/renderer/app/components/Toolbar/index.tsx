@@ -63,6 +63,11 @@ export const viewPrefs = () => {
   store.overlay.currentContent = "settings";
 }
 
+export const resetZoom = () => {
+  remote.webContents.getFocusedWebContents().setZoomLevel(1);
+  store.tabs.selectedTab.zoomAmount = 1;  
+};
+
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -93,7 +98,6 @@ export const Toolbar = observer(() => {
             }}
           />          
         </AbButton>
-        <AbButton icon={icons.settings} onClick={viewPrefs} title="Dot Settings"/>
         <Separator />
         <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
           <BrowserAction

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import store from '../../store';
 import { Button } from '~/renderer/components/Button';
-import { Sections, BookmarkSection } from './style';
+import { Sections, BookmarkSection, Image } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
 import { icons } from '../../constants';
@@ -12,6 +12,7 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
+import { ListItem } from '../ListItem';
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -40,6 +41,15 @@ export const AdBlock = observer(() => {
           title="Ad Blocker"
           onBackClick={onBackClick}
         />
+        <Sections>
+          <Content style={{
+              margin: '100px'
+          }}>
+            <ListItem selected={true}>
+              <Image src={icons.shield} style={{ filter: 'invert(100%)', width: '80px' }}/>
+            </ListItem>
+          </Content>
+        </Sections>
       </Scrollable>
     </Container>
   );

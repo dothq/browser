@@ -184,20 +184,6 @@ Menu.setApplicationMenu(
         },
         { type: 'separator' },
         { 
-          label: 'Zoom in',
-          accelerator: 'Ctrl+=',
-          click() { 
-            store.tabs.selectedTab.zoomIn(store.tabs.selectedTab.zoomAmount)
-          } 
-        },        
-        { 
-          label: 'Zoom out',
-          accelerator: 'Ctrl+-',
-          click() { 
-            store.tabs.selectedTab.zoomIn(store.tabs.selectedTab.zoomAmount)
-          } 
-        },        
-        { 
           label: 'Dev Tools F12',
           accelerator: 'F12',
           click() { 
