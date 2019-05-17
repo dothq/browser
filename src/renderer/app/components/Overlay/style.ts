@@ -172,3 +172,19 @@ export const Content = styled.div`
   width: calc(100% - 64px);
   max-width: 800px;
 `;
+
+export const Preloader = styled.div`
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+`;
+
+export const Dot = styled.img`
+  width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 0.8s;
+`;

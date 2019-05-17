@@ -13,7 +13,7 @@ export class DownloadsStore {
   constructor() {
 
     ipcRenderer.on('download-started', (e: any, item: DownloadItem) => {
-      this.list.push(item);
+      this.list.unshift(item);
     });
 
     ipcRenderer.on('download-progress', (e: any, item: DownloadItem) => {

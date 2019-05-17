@@ -2,6 +2,7 @@ import { observable, computed, action } from 'mobx';
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import * as Vibrant from 'node-vibrant';
+import { remote } from 'electron';
 
 import store from '~/renderer/app/store';
 import {
@@ -64,6 +65,9 @@ export class Tab {
   @observable
   public f = 0;
 
+  @observable
+  public zoomAmount: number = 1;  
+
   @computed
   public get findVisible() {
     return this._findVisible;
@@ -82,6 +86,11 @@ export class Tab {
         store.findInputRef.current.focus();
       }
     });
+  }
+
+  public set zoomIn(zoom: any) {
+    remote.webContents.getFocusedWebContents().setZoomFactor(zoom+0.25);
+    return true;
   }
 
   @computed

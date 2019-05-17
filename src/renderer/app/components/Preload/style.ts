@@ -98,14 +98,3 @@ export const StyledNavigationDrawerItem = styled.div`
     background-color: rgba(255, 255, 255, 0.12);
   }
 `;
-
-export const SettingsItem = styled.a`
-  margin-left: 32px;
-  margin-right: 32px;
-  margin-top: 24px;
-  height: 42px;
-  border-radius: 30px;
-  background-color: rgba(255, 255, 255, 0.06);
-  position: relative;
-  
-`;

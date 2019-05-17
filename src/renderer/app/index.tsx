@@ -179,15 +179,14 @@ Menu.setApplicationMenu(
           label: 'Zoom in',
           accelerator: 'Ctrl+=',
           click() { 
-            var zoom = ipcRenderer.send('api-tabs-getZoom', store.tabs.selectedTab.id);
-            console.log(zoom)
+            store.tabs.selectedTab.zoomIn(store.tabs.selectedTab.zoomAmount)
           } 
         },        
         { 
           label: 'Zoom out',
           accelerator: 'Ctrl+-',
           click() { 
-              
+            store.tabs.selectedTab.zoomIn(store.tabs.selectedTab.zoomAmount)
           } 
         },        
         { 
