@@ -139,6 +139,14 @@ Menu.setApplicationMenu(
             store.tabs.selectedTab.callViewMethod('webContents.reload'); 
           } 
         },
+        { 
+          label: 'Reload Webpage',
+          accelerator: 'Ctrl+R',
+          click() { 
+            // Hi!
+            store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+          } 
+        },
         { type: 'separator' },
         { 
           label: 'Launcher',
