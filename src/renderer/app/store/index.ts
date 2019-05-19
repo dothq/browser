@@ -20,6 +20,7 @@ import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { DownloadsStore } from './downloads';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
+import { WeatherStore } from './weather';
 import { existsSync, writeFileSync } from 'fs';
 
 if (!existsSync(getPath('settings.json'))) {
@@ -55,6 +56,7 @@ export class Store {
   public downloads = new DownloadsStore();
   public adblockwindow = new AbStore();
   public options = new OptionsStore();
+  public weather = new WeatherStore();
 
   @observable
   public isFullscreen = false;
