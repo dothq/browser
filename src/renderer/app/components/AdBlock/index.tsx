@@ -45,9 +45,6 @@ export const AdBlock = observer(() => {
           <Content style={{
               margin: '100px'
           }}>
-            <ListItem selected={true}>
-              <Image src={icons.shield} style={{ filter: 'invert(100%)', width: '80px' }}/>
-            </ListItem>
           </Content>
         </Sections>
       </Scrollable>

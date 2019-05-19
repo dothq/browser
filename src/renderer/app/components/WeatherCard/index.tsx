@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import {
-  Content,
   StyledCard,
   Icon,
   Header,
@@ -16,29 +15,10 @@ import {
 } from './style';
 import { icons } from '../../constants';
 import console = require('console');
-const net = require("electron").remote.net;
+const fetch = require("node-fetch");
+import store from '../../store';
 
-const city = net.request({
-  method: 'GET',
-  protocol: 'https:',
-  hostname: 'api.ipdata.co',
-  port: 443,
-  path: '/city?api-key=e7ff7273b86c9724895708c38bb01e05990667e502326f25d5ebf4cb'
-});
-
-city.on('response', (response) => {
-  var setCity = response.statusMessage;
-  sendCity(setCity);
-  console.log(setCity)
-})
-
-var lC = '';
-
-function sendCity(city: string) {
-  lC = city;
-}
-
-const locationCity = lC;
+store.weather.load()
 
 export const WeatherCard = observer(() => {
   return (
@@ -46,8 +26,8 @@ export const WeatherCard = observer(() => {
       <Header>
         <Left>
           <div>
-            <Title>{locationCity}</Title>
-            <Degrees>20°</Degrees>
+            <Title>{store.weather.location}</Title>
+            <Degrees>{store.weather.temp}°</Degrees>
             <div
               style={{
                 fontSize: 16,
@@ -56,7 +36,7 @@ export const WeatherCard = observer(() => {
                 marginTop: 8,
               }}
             >
-              Few clouds
+              {store.weather.summary}
             </div>
             <div style={{ fontSize: 16, fontWeight: 300 }}>Day</div>
           </div>

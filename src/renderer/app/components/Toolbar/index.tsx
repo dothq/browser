@@ -14,6 +14,7 @@ import { Find } from '../Find';
 import { AbButton } from '../ToolbarButton/style';
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
+import { remote } from 'electron'
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -63,9 +64,79 @@ export const viewPrefs = () => {
   store.overlay.currentContent = "settings";
 }
 
-export const resetZoom = () => {
-  remote.webContents.getFocusedWebContents().setZoomLevel(1);
-  store.tabs.selectedTab.zoomAmount = 1;  
+const onContextMenu = (tab: Tab) => () => {
+  const { tabs } = store.tabGroups.currentGroup;
+
+  const menu = remote.Menu.buildFromTemplate([
+    {
+      label: `Blocked Ads - `,
+      click: () => {
+        store.tabs.onNewTab();
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Reload',
+      click: () => {
+        tab.callViewMethod('webContents.reload');
+      },
+    },
+    {
+      label: 'Duplicate',
+      click: () => {
+        store.tabs.addTab({ active: true, url: tab.url });
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Close tab',
+      click: () => {
+        tab.close();
+      },
+    },
+    {
+      label: 'Close other tabs',
+      click: () => {
+        for (const t of tabs) {
+          if (t !== tab) {
+            t.close();
+          }
+        }
+      },
+    },
+    {
+      label: 'Close tabs from left',
+      click: () => {
+        for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      label: 'Close tabs from right',
+      click: () => {
+        for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Revert closed tab',
+      enabled: store.tabs.closedUrl !== '',
+      click: () => {
+        store.tabs.addTab({ active: true, url: store.tabs.closedUrl });
+      },
+    },
+  ]);
+
+  menu.popup();
 };
 
 export const Toolbar = observer(() => {
@@ -99,7 +170,7 @@ export const Toolbar = observer(() => {
           />          
         </AbButton>
         <Separator />
-        <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
+        <AbButton onClick={} title="Dot Ad-Blocker">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}

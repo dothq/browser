@@ -102,6 +102,7 @@
     "mousetrap": "^1.6.3",
     "nedb": "1.8.0",
     "nersent-ui": "^3.5.3",
+    "node-fetch": "^2.6.0",
     "node-vibrant": "3.2.0-alpha",
     "phin": "^3.3.0",
     "pretty-bytes": "5.1.0",
@@ -113,6 +114,7 @@
     "register-scheme": "0.0.2",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "4.2.0",
-    "tldts": "4.0.6"
+    "tldts": "4.0.6",
+    "unirest": "^0.6.0"
   }
 }
