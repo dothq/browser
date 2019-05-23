@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Section } from '../Overlay/style';
 
@@ -8,6 +8,16 @@ export const Sections = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
+`;
+
+export const Panel = styled.div`
+  height: 100%;
+  background-color: #000000c7;
+
+  ${({ visible }: { visible: boolean }) => css`
+    opacity: ${visible ? 1 : 0};
+    pointer-events: ${visible ? 'auto' : 'none'};
+  `} 
 `;
 
 export const Image = styled.img`

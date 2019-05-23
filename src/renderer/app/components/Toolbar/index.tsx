@@ -64,81 +64,6 @@ export const viewPrefs = () => {
   store.overlay.currentContent = "settings";
 }
 
-const onContextMenu = (tab: Tab) => () => {
-  const { tabs } = store.tabGroups.currentGroup;
-
-  const menu = remote.Menu.buildFromTemplate([
-    {
-      label: `Blocked Ads - `,
-      click: () => {
-        store.tabs.onNewTab();
-      },
-    },
-    {
-      type: 'separator',
-    },
-    {
-      label: 'Reload',
-      click: () => {
-        tab.callViewMethod('webContents.reload');
-      },
-    },
-    {
-      label: 'Duplicate',
-      click: () => {
-        store.tabs.addTab({ active: true, url: tab.url });
-      },
-    },
-    {
-      type: 'separator',
-    },
-    {
-      label: 'Close tab',
-      click: () => {
-        tab.close();
-      },
-    },
-    {
-      label: 'Close other tabs',
-      click: () => {
-        for (const t of tabs) {
-          if (t !== tab) {
-            t.close();
-          }
-        }
-      },
-    },
-    {
-      label: 'Close tabs from left',
-      click: () => {
-        for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
-          tabs[i].close();
-        }
-      },
-    },
-    {
-      label: 'Close tabs from right',
-      click: () => {
-        for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
-          tabs[i].close();
-        }
-      },
-    },
-    {
-      type: 'separator',
-    },
-    {
-      label: 'Revert closed tab',
-      enabled: store.tabs.closedUrl !== '',
-      click: () => {
-        store.tabs.addTab({ active: true, url: store.tabs.closedUrl });
-      },
-    },
-  ]);
-
-  menu.popup();
-};
-
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -170,7 +95,7 @@ export const Toolbar = observer(() => {
           />          
         </AbButton>
         <Separator />
-        <AbButton onClick={} title="Dot Ad-Blocker">
+        <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}

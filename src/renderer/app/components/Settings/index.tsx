@@ -25,6 +25,7 @@ const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
   document.getElementById("search-engine-dp").style.opacity = "0";
   document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.bookmarks.menuVisible = false;
 };
 
 const onScroll = (e: any) => {
@@ -36,6 +37,10 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
+const login = () => {
+  store.overlay.currentContent = "login";
+}
+
 const YourProfile = observer(() => {
   return (
     <SettingsSection id="my-profile">
@@ -43,8 +48,8 @@ const YourProfile = observer(() => {
         <Image src={icons.user} style={{ filter: 'invert(100%)', width: '30px' }}></Image>
         <Title style={{ fontSize: 25 }}>{require("os").userInfo().username}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign out
+          <Button onClick={login} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+            Sign in
           </Button>
         </Buttons>
       </ListItem>
@@ -103,7 +108,7 @@ const AboutDot = observer(() => {
       </ListItem>
       <AboutWrapper id="about-wrapper">
         <Title style={{ fontSize: 14, marginLeft: '40px' }}>Dot was made possible thanks to <A onClick={wexond}>Wexond</A> and ☕.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Made in <Image src={icons.uk} style={{ width: '14px' }}></Image>Great Britain with ❤.</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Made in <Image src={icons.uk} style={{ width: '14px' }}></Image>Great Britain with <span style={{ color: '#ff4040' }}>❤</span>.</Title>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Developers</Title>
         <A onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev,</A>
         <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
@@ -329,6 +334,7 @@ export const Settings = observer(() => {
     <Container
       onClick={preventHiding}
       right
+      id="settings"
       visible={
         store.overlay.currentContent === 'settings' && store.overlay.visible
       }

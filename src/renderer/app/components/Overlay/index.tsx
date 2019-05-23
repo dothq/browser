@@ -13,6 +13,7 @@ import {
   Image,
   Dot,
   Preloader,
+  Panel,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
@@ -21,6 +22,7 @@ import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
+import { LoginModal } from '../Login';
 import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
@@ -28,6 +30,9 @@ import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
 import { icons } from '../../constants';
 import { Menu, MenuItem } from 'nersent-ui';
+import { resolve } from 'path';
+import { platform, homedir } from 'os';
+const editJsonFile = require("edit-json-file");
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -57,18 +62,31 @@ export const preventHiding = (e: any) => {
   store.overlay.dialTypeMenuVisible = false;
   document.getElementById("search-engine-dp").style.opacity = "0";
   document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.bookmarks.menuVisible = false;
 };
 
-setTimeout(function() {
-  store.overlay.currentContent = "default";
-}, 2000);
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+if(!file.get("setupDot")) {
+  file.set("setupDot", false);
+  file.save()
+}
+if(file.get("setupDot") == false) {
+  file.set("setupDot", false);
+  file.save()
+}
+if(file.get("setupDot") == true) {
+  setTimeout(function() {
+    store.overlay.currentContent = "default";
+  }, 2000);
+}
+
+store.user.load()
 
 export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
-      <Preload id="pre">
-        <Dot src={icons.logo} />
-      </Preload>
+      <Preload/>
       <Container
         visible={
           store.overlay.currentContent === 'default' && store.overlay.visible
@@ -93,6 +111,7 @@ export const Overlay = observer(() => {
       <Bookmarks />
       <Extensions />
       <Settings />
+      <LoginModal />
       <AdBlock />
     </StyledOverlay>
   );

@@ -18,7 +18,9 @@ const scrollRef = React.createRef<HTMLDivElement>();
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
   store.bookmarks.resetLoadedItems();
+  store.bookmarks.menuVisible = false;
 };
+
 
 const onScroll = (e: any) => {
   const scrollPos = e.target.scrollTop;
