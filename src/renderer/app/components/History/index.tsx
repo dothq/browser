@@ -76,6 +76,8 @@ const onClearClick = () => {
   const data = app.getPath('userData');
   var deletePath: any = path.join(data, 'storage');
   deleteFolder(deletePath);
+  store.history.resetLoadedItems()
+  store.history.load();
 }
 
 const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

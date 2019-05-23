@@ -21,6 +21,11 @@ export const OverlayScrollbarStyle = `
   }
 `;
 
+export const Panel = styled.div`
+  height: 100%;
+  background-color: #00000079
+`;
+
 export const StyledOverlay = styled.div`
   color: white;
   position: absolute;
@@ -110,6 +115,7 @@ export const Section = styled.div`
   border-radius: 30px;
   color: white;
   overflow: hidden;
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
 `;
 
 export const Actions = styled.div`

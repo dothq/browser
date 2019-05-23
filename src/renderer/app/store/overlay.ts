@@ -37,13 +37,16 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' | 'login' = 'preload';
 
   @observable
   public dialTypeMenuVisible = false;
 
   @observable
   public _searchBoxValue = '';
+
+  @observable
+  public panelVisible:boolean = false;
 
   private timeout: any;
 

@@ -7,8 +7,10 @@ import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
+import UserIcon from '../UserButton';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
+import { Bookmark } from '../../models/bookmark';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -117,13 +119,33 @@ const onInput = (e: any) => {
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
-  await store.bookmarks.addItem({
-    title: selectedTab.title,
-    url: store.overlay.inputRef.current.value,
-    parent: null,
-    type: 'item',
-    favicon: selectedTab.favicon,
-  });
+  var foundBkm = store.bookmarks.list.find(
+    x => x.url === store.tabs.selectedTab.url,
+  );
+
+  if(!foundBkm) {
+
+    // If this check passes, the bookmark doesn't exist yet, so create it.
+    await store.bookmarks.addItem({
+      title: selectedTab.title,
+      url: store.overlay.inputRef.current.value,
+      parent: null,
+      type: 'item',
+      favicon: selectedTab.favicon,
+    });
+
+  }
+
+  else {
+
+    // It already exists, so delete it.
+    store.bookmarks.removeItem(foundBkm._id)
+
+  }
+};
+
+const onUserClick = () => {
+
 };
 
 export const SearchBox = observer(() => {
@@ -165,6 +187,7 @@ export const SearchBox = observer(() => {
           invert
           icon={store.overlay.isBookmarked ? icons.starFilled : icons.star}
           onClick={onStarClick}
+          id="star-bkm"
           style={{
             marginRight: 8,
             display:
@@ -172,6 +195,14 @@ export const SearchBox = observer(() => {
               store.tabs.selectedTab.url === store.overlay.searchBoxValue
                 ? 'block'
                 : 'none',
+          }}
+        />
+        <UserIcon
+          icon={"https://bot.ender.site/img/enderbot.png"}
+          onClick={onUserClick}
+          visible={store.user.loggedin}
+          style={{
+            marginRight: 8
           }}
         />
       </InputContainer>

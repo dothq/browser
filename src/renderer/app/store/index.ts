@@ -21,6 +21,7 @@ import { DownloadsStore } from './downloads';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
 import { WeatherStore } from './weather';
+import { UserStore } from './user';
 import { existsSync, writeFileSync } from 'fs';
 
 if (!existsSync(getPath('settings.json'))) {
@@ -57,6 +58,7 @@ export class Store {
   public adblockwindow = new AbStore();
   public options = new OptionsStore();
   public weather = new WeatherStore();
+  public user = new UserStore();
 
   @observable
   public isFullscreen = false;
@@ -171,7 +173,10 @@ export class Store {
         const ext = extname(path);
 
         if (ext === '.html') {
-          this.tabs.addTab({ url: `file:///${path}`, active: true });
+          setTimeout(function(this: any) {
+            this.tabs.addTab({ url: `file:///${path}`, active: true });
+          }, 4000);
+         
         }
       }
     });
