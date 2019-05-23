@@ -10,7 +10,7 @@
     "mobx",
     "styled-components"
   ],
-  "homepage": "https://github.com/EnderAndFireDev/dot-browser#readme",
+  "homepage": "https://github.com/dot-inc/browser#readme",
   "main": "build/main.js",
   "author": {
     "name": "Ender And Fire Development",
@@ -36,10 +36,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EnderAndFireDev/dot-browser.git"
+    "url": "git+https://github.com/dot-inc/browser.git"
   },
   "bugs": {
-    "url": "https://github.com/EnderAndFireDev/dot-browser/issues"
+    "url": "https://github.com/dot-inc/browser/issues"
   },
   "scripts": {
     "dev": "npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
