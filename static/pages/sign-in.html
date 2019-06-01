@@ -9,50 +9,193 @@
 </head>
 
 <body ondragstart="return false">
-  <div id="app">
-    <a id="close" style="position:absolute;top:0;right:0;padding: 20px;color: grey;" href="https://bot.ender.site">
-        <img src="../app-icons/tray-close.png" draggable="false">
-    </a>
+  <div id="app" style="opacity: 0; transition: opacity 0.4s; transition-delay: 0.5s"> 
+    <div id="titleBar" style="-webkit-app-region: drag;width: 100%;float: right;">
+        <a id="close" style="float: right;-webkit-app-region: no-drag;padding: 20px;">
+            <img src="../app-icons/tray-close.png" draggable="false">
+        </a>
+    </div>
 
-    <div id="form" style="transform: translateY(45%) translateX(-51%)">
+    <div id="form" style="transform: translateY(45%) translateX(-51%); ">
         <img src="https://getdot.js.org/src/icon.png" style="filter: invert(100%);width: 100px;margin-left: auto;margin-right: auto;display: block;">
-        <h1 class="title ieb-title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your Dot Account</h1>
-        <div class="field" id="logon-field" style="  margin-left: 5px;">
+        <h1 class="title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your Dot Account</h1>
+        <h1 class="title" id="verif-info" style="  color: #494949;  font-size: 16px;  margin-left: 5px; text-align: center; opacity: 0; transition: opacity 0.3s; margin-top: -8px"></h1>
+        <h1 class="title" id="verif-info-2" style="  color: #757575;  font-size: 14px; text-align: center; opacity: 0; transition: opacity 0.3s; transition-delay: 0.7s; position: absolute;bottom: 0;"></h1>
+        <div class="field" id="logon-field" style="  margin-left: 5px;transition: opacity 0.3s">
             <p class="control" style="width: 300px;">
-                <input class="input" type="email" placeholder="Email" id="login-email" style="text-align: center" required="required">
+                <input class="input" type="email" onkeyup="valEmail()" onkeypress="awaitEnter(event)" placeholder="Email" id="login-email" style="text-align: center; transition: border-color 0.3s" required="required">
             </p>
             <div class="field" style="width: 300px;margin-top: 11px;">
                 <p class="control">
-                    <input class="input" type="password" placeholder="Password" style="text-align: center" id="login-password" required="required">
+                    <input class="input" type="password" onkeypress="awaitEnter(event)" onkeyup="document.getElementById('login-password').classList.remove('is-info')" placeholder="Password" style="text-align: center" id="login-password" required="required">
                 </p>
             </div>
             <div class="field">
                 <p class="control">
-                    <button style="margin: 0 auto;display: block; width: 25%" class="button is-dark is-outlined" id="login-btn">Login</button>
+                    <button onclick="login()" style="margin: 0 auto;display: block; width: 25%" class="button is-dark is-outlined" id="login-btn">Login</button>
                 </p>
             </div>
         </div>
     </div>
 
-  </div>
+    <script>
 
-  <script>
-    // function disableselect(e) {
-    //     return false;
-    // }
+            document.getElementById("app").style.opacity = 1;
+        
+            function valEmail() {
+        
+                awaitEnter(event)
+        
+                document.getElementById("login-email").classList.remove("is-info");
+                document.getElementById("login-email").classList.remove("is-good");
+                document.getElementById("login-email").classList.remove("is-danger");  
+                document.getElementById("login-email").classList.add("is-loading");
+        
+                var email = document.getElementById("login-email").value;
+        
+                if(email.length <= 0) {
+                    return;
+                }
+        
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                var res = re.test(String(email).toLowerCase());
+                if(res) {
+                    document.getElementById("login-email").classList.remove("is-loading");
+                    document.getElementById("login-email").classList.add("is-good");
+                }
+                else {
+                    document.getElementById("login-email").classList.remove("is-loading");
+                    document.getElementById("login-email").classList.add("is-danger");            
+                }
+        
+            }
+        
+            function awaitEnter(event) {
+                if (event.keyCode == 13) {
+                    login()
+                }
+            };
+        
+            function login() {
+        
+                var email = document.getElementById("login-email").value;
+                var password = document.getElementById("login-password").value;
+        
+                if(!email) {
+                    return document.getElementById("login-email").classList.add("is-info");
+                }
+        
+                if(!password) {
+                    return document.getElementById("login-password").classList.add("is-info");
+                }
 
-    // //document.onselectstart = new Function("return false");
+                if(password.length == 0) {
+                    return document.getElementById("login-password").classList.add("is-info");
+                }
+        
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                var res = re.test(String(email).toLowerCase());
+        
+                if(res) {
 
-    // if (window.sidebar) {
-    //     document.onmousedown = disableselect;
-    // }
+                    document.getElementById("logon-title").innerText = "Waiting...";
+                    document.getElementById("login-email").disabled = "true";
+                    document.getElementById("login-password").disabled = "true";
+                    document.getElementById("login-btn").disabled = "true";
 
-    document.getElementById("close").onclick = function() {
-        window.close();
-    }
+                    document.getElementById("login-email").style.pointerEvents = "none";
+                    document.getElementById("login-password").style.pointerEvents = "none";
+                    document.getElementById("login-btn").style.pointerEvents = "none";
 
-  </script>
+                    const loginData = {
+                        email,
+                        password
+                    }
+        
+                    const http = new XMLHttpRequest()
 
+                    http.open('POST', 'https://dot.ender.site/api/session/l')
+                    http.setRequestHeader('Content-type', 'application/json')
+                    http.send(JSON.stringify(loginData))
+                    http.onload = function() {
+                        var body = JSON.parse(http.responseText);
+                        console.log(body)
+                        if(body.message) {
+                            if(body.message == "Logged in") {
+                                if(body.credentials.customname == ".") {
+                                    document.getElementById("logon-title").innerText = `Welcome to Dot`;
+                                    document.getElementById("verif-info").innerHTML = "First, you'll need a username.";
+                                    document.getElementById("verif-info").style.opacity = 0;
+                                    document.getElementById("verif-info-2").style.opacity = 0;
+                                    document.getElementById("logon-field").style.opacity = 0;
+                                }
+                                else {
+                                    document.getElementById("logon-title").innerText = `Welcome back ${body.credentials.customname}`;
+                                }
+                            }
+                            if(body.message == "Check your email for a verification email.") {
+                                document.getElementById("logon-title").innerText = "Check your email for a verification email";
+                                document.getElementById("verif-info").innerHTML = `We've sent it to ${email}`;
+                                document.getElementById("verif-info-2").innerHTML = `This screen will automatically update when you verify your email.`;
+                                document.getElementById("logon-field").style.opacity = 0;
+                                document.getElementById("verif-info").style.opacity = 1;
+                                document.getElementById("verif-info-2").style.opacity = 1;
+
+                                var int = setInterval(function() {
+                                    const req = new XMLHttpRequest()
+
+                                    req.open('GET', `https://dot.ender.site/api/verified/endercraftergaming@gmail.com`, true)
+                                    req.setRequestHeader('Content-type', 'application/json')
+                                    req.send(null);
+                                    req.onload = function() {
+                                        var body = JSON.parse(req.responseText);
+                                        if(body.verified == true) {
+                                            login();
+                                            clearInterval(int)
+                                            document.getElementById("verif-info").innerHTML = "First, you'll need a username.";
+                                            document.getElementById("verif-info-2").style.opacity = 0;
+                                        }
+                                        else {
+                                            console.log("Still waiting for verification...")
+                                        }
+                                    };
+                                }, 500);
+                            }
+                            if(body.message == "Incorrect password.") {
+                                document.getElementById("logon-title").innerText = "Incorrect password";
+                                document.getElementById("login-email").disabled = null;
+                                document.getElementById("login-password").disabled = null;
+                                document.getElementById("login-btn").disabled = null;
+                                document.getElementById("login-password").value = null;
+                                document.getElementById("login-email").style.pointerEvents = null;
+                                document.getElementById("login-password").style.pointerEvents = null;
+                                document.getElementById("login-btn").style.pointerEvents = null;
+                            }
+                        }
+                    }
+                }
+                else {
+                    return document.getElementById("login-email").classList.add("is-danger");
+                }
+            }
+
+            function awaitVerify(email) {
+                
+                if(email == "stop") {
+                    clearInterval(interval);
+                }
+
+
+            }
+        
+            document.getElementById("close").onclick = function() {
+                window.close();
+            }
+        
+            </script> 
+
+</div>
+ 
   <style>
   
     #form {
@@ -84,11 +227,18 @@
         outline: none;
     }
 
-    #app {
-        -webkit-user-drag: none;
-        -webkit-app-region: no-drag;
+    h1 {
+        user-select: none;
+    }
+
+    img {
+        user-select: none;
+    }
+
+    .is-good {
+        border-color: rgb(0, 185, 57);
     }
   </style>
 </body>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript"></script>  
 </html>

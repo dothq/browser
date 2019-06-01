@@ -23,7 +23,7 @@ export class UserStore {
   public avatar?: string;
 
   @observable
-  public loginState?: string = "Waiting";
+  public loginState?: string = "Login to your Dot account";
  
   public async login(email: string, password: string) {
     const body = {

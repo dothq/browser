@@ -5,6 +5,7 @@ import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import { client } from '../../src/main'
 import console = require('console');
+import store from '~/renderer/app/store';
 const path = require("path");
 
 export class View extends BrowserView {
@@ -244,7 +245,7 @@ export class View extends BrowserView {
         screenshot: this.getScreenshot()
       });
 
-      
+      //appWindow.setTitle(`${store.tabs.selectedTab.title} - Dot`)
 
     });
 
