@@ -19,6 +19,10 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow } from '../Overlay/style';
 
+var modal = require('electron-modal');
+const { remote } = require('electron')
+const { Menu, MenuItem, Tray, app } = remote
+
 const scrollRef = React.createRef<HTMLDivElement>();
 
 const onBackClick = () => {
@@ -37,8 +41,59 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
-const login = () => {
-  store.overlay.currentContent = "login";
+const login = async () => {
+  var si = await modal.open(resolve(app.getAppPath(), 'static/pages/sign-in.html'), {
+    width: 400,
+    height: 600,
+    resizable: false,
+    center: true,
+    alwaysOnTop: false,
+    title: 'Sign in',
+    titleBarStyle: 'hiddenInset',
+    frame: false
+  })
+
+  si.show();
+  
+  si.on('show', () => {
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+  
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = "blur(5px)";
+      divChildren[i].style.pointerEvents = "none";
+    }
+
+  });
+
+  si.on('closed', () => {
+
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = null;
+      divChildren[i].style.pointerEvents = null;
+    }
+
+    si = null;
+
+  })
+
+  si.on('hide', () => {
+
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = null;
+      divChildren[i].style.pointerEvents = null;
+    }
+
+    si = null;
+  })  
+
+
 }
 
 const YourProfile = observer(() => {
@@ -339,7 +394,7 @@ export const Settings = observer(() => {
         store.overlay.currentContent === 'settings' && store.overlay.visible
       }
     >
-      <Scrollable onScroll={onScroll} ref={scrollRef}>
+      <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
           title="Settings"
           onBackClick={onBackClick}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=3.0, shrink-to-fit=no">
+  <meta charset="UTF-8" />
+  <title>Sign in</title>
+  <link rel="stylesheet" href="https://dot.ender.site/style">
+</head>
+
+<body ondragstart="return false">
+  <div id="app">
+    <a id="close" style="position:absolute;top:0;right:0;padding: 20px;color: grey;" href="https://bot.ender.site">
+        <img src="../app-icons/tray-close.png" draggable="false">
+    </a>
+
+    <div id="form" style="transform: translateY(45%) translateX(-51%)">
+        <img src="https://getdot.js.org/src/icon.png" style="filter: invert(100%);width: 100px;margin-left: auto;margin-right: auto;display: block;">
+        <h1 class="title ieb-title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your Dot Account</h1>
+        <div class="field" id="logon-field" style="  margin-left: 5px;">
+            <p class="control" style="width: 300px;">
+                <input class="input" type="email" placeholder="Email" id="login-email" style="text-align: center" required="required">
+            </p>
+            <div class="field" style="width: 300px;margin-top: 11px;">
+                <p class="control">
+                    <input class="input" type="password" placeholder="Password" style="text-align: center" id="login-password" required="required">
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                    <button style="margin: 0 auto;display: block; width: 25%" class="button is-dark is-outlined" id="login-btn">Login</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+  <script>
+    // function disableselect(e) {
+    //     return false;
+    // }
+
+    // //document.onselectstart = new Function("return false");
+
+    // if (window.sidebar) {
+    //     document.onmousedown = disableselect;
+    // }
+
+    document.getElementById("close").onclick = function() {
+        window.close();
+    }
+
+  </script>
+
+  <style>
+  
+    #form {
+        position: absolute;
+        left: 50%;
+        transform: translateY(45%) translateX(-51%);
+    }
+
+    .email {
+        padding: 8px;
+        font-family: Roboto;
+        font-size: 16px;
+        width: 280px;
+        border: 1px #80808040 solid;
+        border-radius: 3px;
+    }
+
+    .password {
+        padding: 8px;
+        font-family: Roboto;
+        font-size: 16px;
+        width: 280px;
+        border: 1px #80808040 solid;
+        border-radius: 3px;
+        margin-top: 15px
+    }
+
+    *:focus {
+        outline: none;
+    }
+
+    #app {
+        -webkit-user-drag: none;
+        -webkit-app-region: no-drag;
+    }
+  </style>
+</body>
+
+</html>
