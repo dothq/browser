@@ -20,7 +20,7 @@ export class AppWindow extends BrowserWindow {
       height: 700,
       show: false,
       backgroundColor: '#1c1c1c',
-      title: 'Dot',
+      title: 'Dot Browser',
       titleBarStyle: 'hiddenInset',
       webPreferences: {
         plugins: true,

@@ -46,7 +46,7 @@ const login = async () => {
     width: 400,
     height: 600,
     resizable: false,
-    center: true,
+    center: false,
     alwaysOnTop: false,
     title: 'Sign in',
     titleBarStyle: 'hiddenInset',
@@ -68,6 +68,8 @@ const login = async () => {
 
   si.on('closed', () => {
 
+    app.focus()
+
     var div = document.getElementById('settings'),
     divChildren = div.childNodes;
 
@@ -81,6 +83,8 @@ const login = async () => {
   })
 
   si.on('hide', () => {
+
+    app.focus()
 
     var div = document.getElementById('settings'),
     divChildren = div.childNodes;
@@ -97,11 +101,26 @@ const login = async () => {
 }
 
 const YourProfile = observer(() => {
+  var user = {
+    username: 'Guest',
+    avatar: icons.user
+  };
+
+  var shouldInvert = 'invert(100%)';
+
+  if(store.user.loggedin == true) {
+    user.username = store.user.username
+    user.avatar = store.user.avatar
+    shouldInvert = 'invert(0%)';
+  }
+  else {
+
+  }
   return (
     <SettingsSection id="my-profile">
       <ListItem>
-        <Image src={icons.user} style={{ filter: 'invert(100%)', width: '30px' }}></Image>
-        <Title style={{ fontSize: 25 }}>{require("os").userInfo().username}</Title>
+        <Image src={icons.user} style={{ filter: `${shouldInvert}`, width: '45px', marginLeft: '-12px' }}></Image>
+        <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button onClick={login} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
             Sign in
