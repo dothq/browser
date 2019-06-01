@@ -14,6 +14,7 @@ import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store'
 import console = require('console');
 const nativeImage = require("electron").nativeImage;
+const modal = require('electron-modal');
 
 ipcMain.setMaxListeners(0);
 
@@ -61,6 +62,8 @@ app.commandLine.appendSwitch('no-proxy-server')
 // Fixes any proxy bypass settings
 
 app.on('ready', () => {
+
+  modal.setup();
 
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback) => {
