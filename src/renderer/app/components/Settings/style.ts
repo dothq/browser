@@ -69,6 +69,7 @@ export const SettingsSection = styled.div`
   overflow: hidden;
   padding: 8px 0px;
   margin-top: 48px;
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
 `;
 
 export const ListItem = styled.div`
@@ -82,7 +83,7 @@ export const ListItem = styled.div`
   align-items: center;
   padding: 0 24px;
   height: 48px;
-  background-color: transparent;  
+  background-color: transparent;
 `;
 
 export const StyledNavigationDrawerItem = styled.div`
