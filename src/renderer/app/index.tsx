@@ -184,7 +184,7 @@ Menu.setApplicationMenu(
         },
         { type: 'separator' },
         { 
-          label: 'Dev Tools F12',
+          label: 'Dev Tools',
           accelerator: 'F12',
           click() { 
             remote.webContents.getFocusedWebContents().openDevTools();  

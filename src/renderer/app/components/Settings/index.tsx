@@ -167,13 +167,19 @@ const dtf = () => {
   store.overlay.visible = false;
 }
 
+const blz = () => {
+  var url = "https://github.com/blizma"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
 
 const AboutDot = observer(() => {
   return (
-    <SettingsSection style={{ backgroundColor: 'transparent' }}>
+    <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.12</Title>
+        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.13</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -188,7 +194,8 @@ const AboutDot = observer(() => {
         <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
         <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function, </A>
-        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky</A>
+        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky, </A>
+        <A onClick={blz} title="<>" style={{ color: '#dadada' }}>Blizma</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Special Thanks</Title>
         <A onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>DusterTheFirst</A>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
