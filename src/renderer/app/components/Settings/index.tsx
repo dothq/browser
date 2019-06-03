@@ -142,12 +142,6 @@ function avatarTitle() {
   }
 }
 
-function avatarUpdated(event: any) {
-  if(store.user.loggedin == true) {
-    document.getElementById("user-avatar").src = URL.createObjectURL(event.target.files[0]);
-  } 
-}
-
 const YourProfile = observer(() => {
   var user = {
     username: 'Guest',
@@ -170,7 +164,7 @@ const YourProfile = observer(() => {
     <SettingsSection id="my-profile">
       <ListItem>
         <div style={{ display: 'none' }}>
-          <input type="file" id="avatar-choose" onChange={avatarUpdated(event)} accept="image/png" />
+          <input type="file" id="avatar-choose" accept="image/png" />
         </div>
         <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
