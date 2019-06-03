@@ -3,10 +3,6 @@ import styled, { css } from 'styled-components';
 export const StyledBrowserAction = styled.div`
   position: relative;
   margin-left: 8px;
-
-  ${({ visible }: { visible: boolean }) => css`
-    display: ${visible ? 'auto' : 'none'};
-  `};
 `;
 
 interface BadgeProps {

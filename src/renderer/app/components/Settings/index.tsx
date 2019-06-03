@@ -41,14 +41,6 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
-const logout = async () => {
-  store.user.loggedin = false;
-  store.user.username = "Guest";
-  store.user.avatar = icons.user
-  store.user.email = null;
-  localStorage.removeItem("dot_footprint")
-}
-
 const login = async () => {
   var si = await modal.open(resolve(app.getAppPath(), 'static/pages/sign-in.html'), {
     width: 400,
@@ -60,16 +52,6 @@ const login = async () => {
     titleBarStyle: 'hiddenInset',
     frame: false
   })
-
-  si.on('passed-details', (c: any) => {
-    store.user.username = c.customname;
-    store.user.avatar = c.avatar;
-    store.user.loggedin = true;
-
-    localStorage.setItem("dot_footprint", Buffer.from(c.email + '||' + c.password).toString('base64'));
-
-    si.hide();
-  });
 
   si.show();
   
@@ -118,36 +100,6 @@ const login = async () => {
 
 }
 
-const onMouse = () => {
-  if(store.user.loggedin == true) {
-    document.getElementById("user-avatar").style.filter = "brightness(70%)";
-  }
-};
-
-const offMouse = () => {
-  if(store.user.loggedin == true) {
-    document.getElementById("user-avatar").style.filter = null
-  }
-};
-
-const pickAvatar = () => {
-  if(store.user.loggedin == true) {
-    document.getElementById("avatar-choose").click();
-  }
-};
-
-function avatarTitle() {
-  if(store.user.loggedin == true) {
-    return "Upload a new avatar"
-  }
-}
-
-function avatarUpdated(event: any) {
-  if(store.user.loggedin == true) {
-    document.getElementById("user-avatar").src = URL.createObjectURL(event.target.files[0]);
-  } 
-}
-
 const YourProfile = observer(() => {
   var user = {
     username: 'Guest',
@@ -155,13 +107,11 @@ const YourProfile = observer(() => {
   };
 
   var shouldInvert = 'invert(100%)';
-  var shouldBr = '0';
 
   if(store.user.loggedin == true) {
     user.username = store.user.username
     user.avatar = store.user.avatar
     shouldInvert = 'invert(0%)';
-    shouldBr = '50%';
   }
   else {
 
@@ -169,17 +119,11 @@ const YourProfile = observer(() => {
   return (
     <SettingsSection id="my-profile">
       <ListItem>
-        <div style={{ display: 'none' }}>
-          <input type="file" id="avatar-choose" onChange={avatarUpdated(event)} accept="image/png" />
-        </div>
-        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
+        <Image src={icons.user} style={{ filter: `${shouldInvert}`, width: '45px', marginLeft: '-12px' }}></Image>
         <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+          <Button onClick={login} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
             Sign in
-          </Button>
-          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign out
           </Button>
         </Buttons>
       </ListItem>
