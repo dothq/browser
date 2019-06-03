@@ -82,6 +82,7 @@ export const Toolbar = observer(() => {
             style={{ marginLeft: 0 }}
             opacity={0.54}
             title="Dot Downloads"
+            visible={store.downloads.list.length > 0}
             data={{
               badgeBackgroundColor: 'gray',
               badgeText: store.tabs.selectedTab
@@ -94,13 +95,14 @@ export const Toolbar = observer(() => {
             }}
           />          
         </AbButton>
-        <Separator />
+        { store.downloads.list.length > 0 && <Separator />}
         <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}
             opacity={0.54}
             title="Dot Ad-Blocker"
+            visible={true}
             data={{
               badgeBackgroundColor: 'gray',
               badgeText: store.tabs.selectedTab
