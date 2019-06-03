@@ -6,6 +6,7 @@ import { ipcRenderer, remote } from 'electron';
 import { extname } from 'path';
 import { string } from 'prop-types';
 import { checkServerIdentity } from 'tls';
+import console = require('console');
 
 // Special thanks to DusterTheFirst for this neat bit of code 😊
 
@@ -32,24 +33,32 @@ export class WeatherStore {
   }
 
   private async getData(type: string): Promise<string> {
-    const data = await fetch('https://dot.ender.site/weather');
-    const json = await data.json();
-    if(type == "l") {
-      return await json.city;
+    try {
+      const data = await fetch('https://dot.ender.site/weather');
+      const json = await data.json();
+      if(type == "l") {
+        return await json.city;
+      }
+      if(type == "t") {
+        return await json.temp;
+      }
+      if(type == "s") {
+        return await json.weather;
+      }
+      if(type == "i") {
+        return await json.icon;
+      }
+      else {
+        return await JSON.stringify({
+          error: 'Unexpected.'
+        })
+      }
     }
-    if(type == "t") {
-      return await json.temp;
-    }
-    if(type == "s") {
-      return await json.weather;
-    }
-    if(type == "i") {
-      return await json.icon;
-    }
-    else {
-      return await JSON.stringify({
-        error: 'Unexpected.'
-      })
+    catch (e) {
+      console.log(e)
+      if(type == "l") {
+        return "Offline"
+      }
     }
   }
 

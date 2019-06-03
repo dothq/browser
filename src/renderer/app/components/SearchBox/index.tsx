@@ -7,6 +7,7 @@ import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
+import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import UserIcon from '../UserButton';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
@@ -113,8 +114,16 @@ const onInput = (e: any) => {
   store.overlay.show();
   store.overlay.suggest();
   store.overlay.scrollRef.current.scrollTop = 0;
-  store.overlay.searchBoxValue = e.currentTarget.value;
 };
+
+const logout = async () => {
+  store.user.loggedin = false;
+  store.user.username = "Guest";
+  store.user.avatar = icons.user
+  store.user.email = null;
+  localStorage.removeItem("dot_footprint")
+  store.user.menuVisible = false;
+}
 
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
@@ -145,7 +154,7 @@ const onStarClick = async () => {
 };
 
 const onUserClick = () => {
-
+  store.user.menuVisible = true;
 };
 
 export const SearchBox = observer(() => {
@@ -198,13 +207,21 @@ export const SearchBox = observer(() => {
           }}
         />
         <UserIcon
-          icon={"https://bot.ender.site/img/enderbot.png"}
+          icon={store.user.avatar}
           onClick={onUserClick}
           visible={store.user.loggedin}
           style={{
-            marginRight: 8
+            marginRight: 8,
           }}
         />
+        {/* <ContextMenu visible={store.user.menuVisible} style={{ marginLeft: '650px', marginTop: '-24px', position: 'fixed' }}>
+          <ContextMenuItem icon={icons.user}>
+              My Profile
+          </ContextMenuItem>
+          <ContextMenuItem icon={icons.close} onClick={logout}>
+              Sign out
+          </ContextMenuItem>
+        </ContextMenu> */}
       </InputContainer>
       <Suggestions visible={suggestionsVisible} />
     </StyledSearchBox>
