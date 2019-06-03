@@ -67,20 +67,6 @@ export const preventHiding = (e: any) => {
 
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
-if(!file.get("setupDot")) {
-  file.set("setupDot", false);
-  file.save()
-}
-if(file.get("setupDot") == false) {
-  file.set("setupDot", false);
-  file.save()
-}
-if(file.get("setupDot") == true) {
-  setTimeout(function() {
-    store.overlay.currentContent = "default";
-  }, 2000);
-}
-
 store.user.load()
 
 export const Overlay = observer(() => {
