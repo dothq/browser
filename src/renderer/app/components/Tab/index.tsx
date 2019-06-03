@@ -97,6 +97,7 @@ const Close = observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onCloseMouseDown}
       onClick={removeTab(tab)}
       visible={tab.isExpanded}
+      title="Close tab (Ctrl+W)"
     />
   );
 });
@@ -125,6 +126,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onMouseDown(tab)}
       onMouseEnter={onMouseEnter(tab)}
       onClick={onClick}
+      title={tab.title}
       onMouseLeave={onMouseLeave}
       visible={tab.tabGroupId === store.tabGroups.currentGroupId}
       ref={tab.ref}
@@ -138,7 +140,7 @@ export default observer(({ tab }: { tab: Tab }) => {
         }}
       >
         <Content tab={tab} />
-        <Close tab={tab} />
+        <Close tab={tab}/>
 
         <Overlay tab={tab} />
         <Ripple

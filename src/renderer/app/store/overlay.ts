@@ -57,7 +57,12 @@ export class OverlayStore {
 
   public set searchBoxValue(val: string) {
     this._searchBoxValue = val;
-    this.inputRef.current.value = val;
+    if(this._searchBoxValue.substring(0, 8) == "file:///") {
+      this.inputRef.current.value = val.split("file:///")[1];;
+    }
+    else {
+      this.inputRef.current.value = val;
+    }
   }
 
   constructor() {

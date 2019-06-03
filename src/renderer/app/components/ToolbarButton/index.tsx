@@ -17,6 +17,7 @@ interface Props {
   children?: any;
   opacity?: number;
   invert?: boolean;
+  title?: any;
 }
 
 @observer
@@ -62,6 +63,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
       children,
       opacity,
       invert,
+      title,
     } = this.props;
 
     let { style } = this.props;
@@ -75,6 +77,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
         className={className}
         style={style}
         invert={invert}
+        title={title}
         ref={(r: HTMLDivElement) => {
           this.ref = r;
           if (typeof divRef === 'function') {

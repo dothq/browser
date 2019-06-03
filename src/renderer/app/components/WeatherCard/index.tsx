@@ -12,6 +12,7 @@ import {
   SmallIcon,
   Degrees,
   SmallDegrees,
+  Offline,
 } from './style';
 import { icons } from '../../constants';
 import console = require('console');
