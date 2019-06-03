@@ -40,6 +40,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import console = require('console');
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -55,11 +56,13 @@ const onClick = () => {
     store.overlay.visible = false;
   }
   store.overlay.dialTypeMenuVisible = false;
+  store.user.menuVisible = false;
 };
 
 export const preventHiding = (e: any) => {
   e.stopPropagation();
   store.overlay.dialTypeMenuVisible = false;
+  store.user.menuVisible = false;
   document.getElementById("search-engine-dp").style.opacity = "0";
   document.getElementById("search-engine-dp").style.pointerEvents = "none";
   store.bookmarks.menuVisible = false;
@@ -67,7 +70,7 @@ export const preventHiding = (e: any) => {
 
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
-store.user.load()
+store.user.loadProfile()
 
 export const Overlay = observer(() => {
   return (
@@ -78,7 +81,7 @@ export const Overlay = observer(() => {
           store.overlay.currentContent === 'default' && store.overlay.visible
         }
       >
-        <Scrollable ref={store.overlay.scrollRef}>
+        <Scrollable ref={store.overlay.scrollRef} id="home">
           <Content>
             <Image src={icons.logo} center style={{ width: '250px' }}></Image>
             <SearchBox />
