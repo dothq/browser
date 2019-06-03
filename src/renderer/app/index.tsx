@@ -147,28 +147,6 @@ Menu.setApplicationMenu(
             store.tabs.selectedTab.callViewMethod('webContents.reload'); 
           } 
         },
-        { 
-          label: 'Close tab',
-          accelerator: 'Ctrl+W',
-          click() { 
-            if (store.tabs.selectedTab.loading) {
-              store.tabs.selectedTab.callViewMethod('webContents.stop');
-              store.tabs.selectedTab.close()
-            }
-            else {
-              store.tabs.selectedTab.close()
-            }
-            
-          } 
-        },
-        { 
-          label: 'New tab',
-          accelerator: 'Ctrl+T',
-          click() { 
-            store.overlay.isNewTab = true;
-            store.overlay.visible = true;
-          } 
-        },
         { type: 'separator' },
         { 
           label: 'Launcher',

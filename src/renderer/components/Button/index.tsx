@@ -10,7 +10,6 @@ interface Props {
   children?: any;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   style?: any;
-  visible?: any;
 }
 
 export const Button = ({
@@ -20,7 +19,6 @@ export const Button = ({
   onClick,
   children,
   style,
-  visible,
 }: Props) => (
   <StyledButton
     background={background}
@@ -28,7 +26,6 @@ export const Button = ({
     type={type}
     onClick={onClick}
     style={style}
-    visible={visible}
   >
     <StyledLabel>{children}</StyledLabel>
     <Ripple color={foreground || '#fff'} />
