@@ -18,13 +18,12 @@ interface Props {
   opacity?: number;
   invert?: boolean;
   visible?: boolean;
-  id?: string;
 }
 
 @observer
 export default class UserIcon extends React.Component<Props, {}> {
   public static defaultProps = {
-    size: 38
+    size: 32
   };
 
   private ripple = React.createRef<Ripple>();
@@ -64,7 +63,6 @@ export default class UserIcon extends React.Component<Props, {}> {
       opacity,
       invert,
       visible,
-      id,
     } = this.props;
 
     let { style } = this.props;
@@ -78,7 +76,6 @@ export default class UserIcon extends React.Component<Props, {}> {
         className={className}
         style={style}
         invert={invert}
-        id={id}
         visible={visible}
         ref={(r: HTMLDivElement) => {
           this.ref = r;
@@ -89,7 +86,7 @@ export default class UserIcon extends React.Component<Props, {}> {
         disabled={disabled}
       >
         <Icon
-          style={{ backgroundImage: `url(${icon})`, borderRadius: '50%' }}
+          style={{ backgroundImage: `url(${icon})` }}
           size={size}
           disabled={disabled}
           opacity={opacity}

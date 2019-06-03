@@ -4,10 +4,6 @@ import { getPath } from '~/shared/utils/paths';
 import * as React from 'react';
 import { resolve } from 'path';
 import { homedir } from 'os';
-import { icons } from '../constants';
-import store from '.';
-import { countVisitedTimes } from '../utils';
-import console = require('console');
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 const fetch = require("node-fetch");
@@ -24,54 +20,56 @@ export class UserStore {
   public email?: string;
 
   @observable
-  public avatar?: string = icons.user;
-
-  @observable
-  public menuVisible?: boolean = false;
+  public avatar?: string;
 
   @observable
   public loginState?: string = "Login to your Dot account";
  
-  public async loadProfile() {
-    var fp = localStorage.getItem("dot_footprint");
-    if(fp) {
-      var decodedfp = atob(fp);
-
-      console.log(decodedfp)
-
-      var email = decodedfp.split("||")[0];
-      var password = decodedfp.split("||")[1];
-
-      console.log(email)
-      console.log(password)
-  
-      const body = {
-        email,
-        password
-      }
-      const data = await fetch('https://dot.ender.site/api/session/l', {
-        method: 'post',
-        body: JSON.stringify(body),
-        headers: { 'content-type': 'application/json' }
-      });
-      const json = await data.json();
-
-      console.log(json)
-
-      if(json.message == "Logged in") {
-        if(json.credentials) {
-          this.username = json.credentials.customname
-          this.email = json.credentials.email
-          this.avatar = json.credentials.avatar
-          this.loggedin = true;
-        }
-      }
-      else {
-        localStorage.setItem("lkr", json)
-        localStorage.setItem("dot_footprint", null);
-        this.loggedin = false;
-      }
+  public async login(email: string, password: string) {
+    const body = {
+      email,
+      password
     }
+    const data = await fetch('https://dot.ender.site/app/session/l', {
+      method: 'post',
+      body: JSON.stringify(body)
+    });
+    const json = await data.json();
+
+    // Will happen.
+    if(json.message == "Logged in") {
+      // ACK
+      this.loginState = "Logged in."
+    }
+    if(json.message == "Check your email for a verification email.") {
+      this.loginState = "Check your email for a verification email."
+    }
+
+    // Likely
+    if(json.message == "Incorrect password.") {
+      this.loginState = "Incorrect password.";
+    }
+    if(json.message = "User not found.") {
+      this.loginState = "Email not found.";
+    }
+
+    // Unlikely to happen
+    if(json.message == "No email specified.") {
+      this.loginState = "No email specified.";
+    }
+    if(json.message == "No password specified.") {
+      this.loginState = "No password specified.";
+    }
+  }
+
+  public async load() {
+    if(file.get("creds.email")) {
+
+    }
+    if(!file.get("creds.email")) {
+      file.set("creds.email", "");
+    }
+    file.save()
   }
 
 }
