@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
@@ -233,7 +233,9 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener('did-finish-load', async () => {
-    
+      
+      
+
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
         url: this.webContents.getURL(),
@@ -242,6 +244,8 @@ export class View extends BrowserView {
         processId: process.pid,
         screenshot: this.getScreenshot()
       });
+
+      //appWindow.setTitle(`${store.tabs.selectedTab.title} - Dot`)
 
     });
 
@@ -286,7 +290,6 @@ export class View extends BrowserView {
     );
 
     this.webContents.addListener('dom-ready', () => {
-
       this.emitWebNavigationEvent('onDOMContentLoaded', {
         tabId: this.tabId,
         url: this.webContents.getURL(),
@@ -295,8 +298,6 @@ export class View extends BrowserView {
         processId: process.pid,
         screenshot: this.getScreenshot()
       });
-
-      console.log(this.getScreenshot())
     });
 
     this.webContents.addListener(

@@ -1,23 +1,10 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
-import { appWindow } from '../../'
-import console = require('console');
-import { remote } from 'electron';
-
-function width() {
-  console.log(appWindow)
-  if(remote.screen.getPrimaryDisplay().size.width >= 1720) {
-    return "6px"
-  }
-  else {
-    return "13px"
-  }
-}
 
 export const OverlayScrollbarStyle = `
   ::-webkit-scrollbar {
-    width: ${width()};
+    width: 6px;
     height: 3px;
   }
 

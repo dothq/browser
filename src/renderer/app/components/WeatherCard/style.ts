@@ -11,10 +11,6 @@ export const StyledCard = styled.div`
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
 `;
 
-export const Offline = styled.div`
-
-`;
-
 export const Header = styled.div`
   width: 100%;
   padding: 24px;
