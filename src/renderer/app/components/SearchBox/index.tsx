@@ -212,6 +212,7 @@ export const SearchBox = observer(() => {
           visible={store.user.loggedin}
           style={{
             marginRight: 8,
+            width: '38px'
           }}
         />
         {/* <ContextMenu visible={store.user.menuVisible} style={{ marginLeft: '650px', marginTop: '-24px', position: 'fixed' }}>

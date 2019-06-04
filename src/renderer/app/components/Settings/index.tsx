@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import store from '../../store';
 import { InputField } from './style'
 import { Button } from '~/renderer/components/Button';
-import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem } from './style';
+import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
 import { icons } from '../../constants';
@@ -64,6 +64,7 @@ const login = async () => {
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
     store.user.avatar = c.avatar;
+    store.user.email = c.email;
     store.user.loggedin = true;
 
     localStorage.setItem("dot_footprint", Buffer.from(c.email + '||' + c.password).toString('base64'));
@@ -136,6 +137,19 @@ const pickAvatar = () => {
   }
 };
 
+const Email = observer(() => {
+  if(store.user.loggedin == true) {
+    return (
+      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px' }}>{store.user.email}</TitleEmail>
+    );
+  }
+  else {
+    return (
+      <TitleEmail visible={true} style={{ fontSize: 16, marginLeft: '4px' }}>{store.user.email}</TitleEmail>
+    );    
+  }
+});
+
 function avatarTitle() {
   if(store.user.loggedin == true) {
     return "Upload a new avatar"
@@ -145,7 +159,8 @@ function avatarTitle() {
 const YourProfile = observer(() => {
   var user = {
     username: 'Guest',
-    avatar: icons.user
+    avatar: icons.user,
+    email: '.'
   };
 
   var shouldInvert = 'invert(100%)';
@@ -154,6 +169,7 @@ const YourProfile = observer(() => {
   if(store.user.loggedin == true) {
     user.username = store.user.username
     user.avatar = store.user.avatar
+    user.email = store.user.email
     shouldInvert = 'invert(0%)';
     shouldBr = '50%';
   }
@@ -164,7 +180,10 @@ const YourProfile = observer(() => {
     <SettingsSection id="my-profile">
       <ListItem>
         <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
-        <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
+        <div style={{ marginTop: '-7px' }}>
+          <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
+          <Email />
+        </div>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
             Sign in
