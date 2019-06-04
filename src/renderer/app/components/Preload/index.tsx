@@ -38,9 +38,17 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
-setTimeout(function() {
-  store.overlay.currentContent = "default";
-}, 1000)
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+if(file.get("setupDot") == false) {
+  store.overlay.panelVisible = true;
+}
+if(!file.get("setupDot")) {
+  store.overlay.panelVisible = true;
+}
+if(file.get("setupDot")) {
+  store.overlay.panelVisible = false;
+}
 
 export const Preload = observer(() => {
   return (

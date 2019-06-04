@@ -11,13 +11,14 @@ interface Props {
   opacity?: number;
   title?: string;
   onClick?: any;
+  visible?: boolean;
 }
 
-const Component = observer(({ data, size, style, opacity, title, onClick }: Props) => {
+const Component = observer(({ data, size, style, opacity, title, onClick, visible }: Props) => {
   const { icon, badgeText, badgeBackgroundColor, badgeTextColor } = data;
 
   return (
-    <StyledBrowserAction style={style}>
+    <StyledBrowserAction style={style} visible={visible}>
       <ToolbarButton opacity={opacity} size={size} icon={icon} />
       {badgeText.trim() !== '' && (
         <Badge background={badgeBackgroundColor} color={badgeTextColor}>
