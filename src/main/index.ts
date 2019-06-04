@@ -48,7 +48,8 @@ catch (e) {
     getPath('dot-options.json'),
     JSON.stringify({
       toggleDotLauncher: true,
-      searchEngine: 'google'
+      searchEngine: 'google',
+      setupDot: false
     } as DotOptions),
   );
 }

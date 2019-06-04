@@ -176,6 +176,11 @@ export class TabsStore {
 
     this.emitEvent('onCreated', tab.getApiTab());
 
+    setInterval(function(this: any) {
+      remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
+    }, 250);
+
+
     requestAnimationFrame(() => {
       tab.setLeft(tab.getLeft(), false);
       this.updateTabsBounds(true);

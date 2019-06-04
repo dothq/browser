@@ -6,6 +6,7 @@
   <meta charset="UTF-8" />
   <title>Sign in</title>
   <link rel="stylesheet" href="https://dot.ender.site/style">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
 <body ondragstart="return false">
@@ -72,6 +73,8 @@
     <span>Dot 2.0.0-beta.13</span></p>
 
     <script>
+
+            const modal = require('electron-modal');
 
             document.getElementById("app").style.opacity = 1;
         
@@ -154,7 +157,11 @@
                                 document.getElementById("login-email").style.display = "none";
 
                                 document.getElementById("back").style.cursor = "default";
-                                document.getElementById("back-src").style.filter = "invert(0.6)";                                
+                                document.getElementById("back-src").style.filter = "invert(0.6)";
+                                
+                                setTimeout(function() {
+                                    modal.emit("passed-details", body.customname, body.avatar, document.getElementById("login-email").value, document.getElementById("login-password").value)
+                                }, 1000);
                             }
                         }
 
@@ -249,7 +256,11 @@
 
                                 }
                                 else {
+                                    console.log(body.credentials)
                                     document.getElementById("logon-title").innerText = `Welcome back ${body.credentials.customname}`;
+                                    setTimeout(function() {
+                                        modal.emit("passed-details", body.credentials)
+                                }   , 1000);
                                 }
                             }
                             if(body.message == "Check your email for a verification email.") {

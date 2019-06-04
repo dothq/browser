@@ -6,6 +6,7 @@ interface StyledButtonProps {
   background: string;
   foreground: string;
   type?: 'contained' | 'outlined';
+  visible: boolean;
 }
 
 export const StyledButton = styled.div`
@@ -36,7 +37,8 @@ export const StyledButton = styled.div`
     opacity: 0.12;
   }
 
-  ${({ background, foreground, type }: StyledButtonProps) => css`
+  ${({ background, foreground, type, visible }: StyledButtonProps) => css`
+    display: ${visible ? 'auto' : 'none'};
     color: ${foreground || '#fff'};
     border: ${type === 'outlined'
       ? `1px solid ${background || '#2196F3'}`
