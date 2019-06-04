@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Section } from '../Overlay/style';
 
@@ -16,6 +16,14 @@ export const Image = styled.img`
 
 export const Title = styled.h1`
   font-weight: 100
+`;
+
+export const TitleEmail = styled.h1`
+  font-weight: 100
+
+  ${({ visible }: { visible: boolean; }) => css`
+    display: ${visible ? 'none' : 'block'};
+  `};  
 `;
 
 export const Buttons = styled.div`
