@@ -37,13 +37,8 @@ export class UserStore {
     if(fp) {
       var decodedfp = atob(fp);
 
-      console.log(decodedfp)
-
       var email = decodedfp.split("||")[0];
       var password = decodedfp.split("||")[1];
-
-      console.log(email)
-      console.log(password)
   
       const body = {
         email,
@@ -55,8 +50,6 @@ export class UserStore {
         headers: { 'content-type': 'application/json' }
       });
       const json = await data.json();
-
-      console.log(json)
 
       if(json.message == "Logged in") {
         if(json.credentials) {

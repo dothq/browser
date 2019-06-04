@@ -17,11 +17,13 @@ import console = require('console');
 import Switch from '@material-ui/core/Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
-import { DropArrow } from '../Overlay/style';
+import { DropArrow, IconButton } from '../Overlay/style';
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -270,6 +272,49 @@ const AboutDot = observer(() => {
   );
 });
 
+if(!file.get("downloadLocation")) {
+  file.set("downloadLocation", resolve(homedir()) + '\\Downloads');
+  file.save()
+  var dl = file.get("downloadLocation");
+}
+else {
+  var dl = file.get("downloadLocation");
+}
+
+const pickLocation = () => {
+  var input = document.getElementById("download-picker");
+  input.click();
+}
+
+const awaitDownloadUpdate = async () => {
+  var input = document.getElementById("download-picker")
+  dl = input.files[0].path;
+
+  setTimeout(function() {
+    document.getElementById("dl-l").innerText = dl;
+  }, 300);
+  
+  file.set("downloadLocation", dl)
+  file.save()
+}
+
+const Downloads = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <div>
+          <Title style={{ fontSize: 15 }}>Downloads Location</Title>
+          <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
+        </div>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <IconButton onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
+        </Buttons>
+        <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
 
 const showProfile = () => {
 }
@@ -295,10 +340,6 @@ const secretBoyo = () => {
 const clearSecretBoyo = () => {
   document.getElementById("maybe-click-the-arrow").style.filter = ``
 }
-
-const editJsonFile = require("edit-json-file");
- 
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 const optionsData = file.get();
 
@@ -501,6 +542,10 @@ export const Settings = observer(() => {
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>
               <Appearance />
+
+              <Title style={{ margin: '75px -30px -25px -30px' }}>Downloads</Title>
+              <Downloads />
+
               <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
               <AboutDot />
 

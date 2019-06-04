@@ -7,6 +7,8 @@ import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
 import { appWindow } from '..';
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 import {
   FiltersEngine,
@@ -229,6 +231,13 @@ export const runWebRequestService = (window: AppWindow) => {
     const newDetails: any = getDetails(details, window, true);
     interceptRequest('onBeforeRequest', newDetails, callback);
   };
+
+  if(!file.get("block-ads")) {
+    file.set("block-ads", true);
+  }
+  else {
+
+  }
 
   webviewRequest.onBeforeRequest(
     async (details: Electron.OnBeforeRequestDetails, callback: any) => {
