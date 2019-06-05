@@ -18,8 +18,19 @@ import { icons } from '../../constants';
 import console = require('console');
 const fetch = require("node-fetch");
 import store from '../../store';
+import { resolve } from 'path';
+import { homedir } from 'os';
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
-store.weather.load()
+if(!file.get("tempType")) {
+  file.set("tempType", "c");
+  file.save()
+  store.weather.tempindicator = "c"
+}
+else {
+  store.weather.tempindicator = file.get("tempType")
+}
 
 export const WeatherCard = observer(() => {
   return (
@@ -39,7 +50,7 @@ export const WeatherCard = observer(() => {
             >
               {store.weather.summary}
             </div>
-            <div style={{ fontSize: 16, fontWeight: 300 }}>Day</div>
+            <div style={{ fontSize: 16, fontWeight: 300 }}>{store.weather.timetype}</div>
           </div>
           <div>
             <Icon style={{ backgroundImage: `url(${icons.fewClouds})` }} />

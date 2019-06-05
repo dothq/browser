@@ -14,6 +14,8 @@ import { icons } from '../../constants'
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
+store.weather.load()
+
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');
 };

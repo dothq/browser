@@ -6,7 +6,7 @@ import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
-import { existsSync, writeFileSync } from 'fs';
+import { existsSync, writeFileSync, rename } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
@@ -15,6 +15,9 @@ import store from '~/renderer/app/store'
 import console = require('console');
 const nativeImage = require("electron").nativeImage;
 const modal = require('electron-modal');
+const editJsonFile = require("edit-json-file");
+
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 ipcMain.setMaxListeners(0);
 
@@ -48,8 +51,7 @@ catch (e) {
     getPath('dot-options.json'),
     JSON.stringify({
       toggleDotLauncher: true,
-      searchEngine: 'google',
-      setupDot: false
+      searchEngine: 'google'
     } as DotOptions),
   );
 }
@@ -113,7 +115,7 @@ app.on('ready', () => {
     .fromPartition('persist:view')
     .on('will-download', (event, item, webContents) => {
       const fileName = item.getFilename();
-      const savePath = resolve(app.getPath('downloads'), fileName);
+      const savePath = resolve(app.getPath("temp"), fileName);
       const id = makeId(32);
 
       item.setSavePath(savePath);
