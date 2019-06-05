@@ -3,14 +3,20 @@ import * as React from 'react';
 
 import store from '.';
 import { ipcRenderer, remote } from 'electron';
-import { extname } from 'path';
+import { extname, resolve } from 'path';
 import { string } from 'prop-types';
 import { checkServerIdentity } from 'tls';
 import console = require('console');
+import { homedir } from 'os';
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 // Special thanks to DusterTheFirst for this neat bit of code 😊
 
 export class WeatherStore {
+
+  @observable
+  public loaded?: boolean = false;
 
   @observable
   public location?: string;
@@ -24,42 +30,52 @@ export class WeatherStore {
   @observable
   public icon?: string;
 
-  /** This function will be called when your app is first opened or when they need to reload the data */
-  public async load() {
-    this.location = await this.getData('l');
-    this.temp = await this.getData('t');
-    this.summary = await this.getData('s');
-    this.icon = await this.getData('i');
-  }
+  @observable
+  public timetype?: string;
 
-  private async getData(type: string): Promise<string> {
+  @observable
+  public tempindicator?: string;
+
+  /** This function will be called when your app is first opened or when they need to reload the data */
+  public async load(deg: string) {
+
     try {
-      const data = await fetch('https://dot.ender.site/weather');
-      const json = await data.json();
-      if(type == "l") {
-        return await json.city;
+
+      if(!file.get("tempType")) {
+        file.set("tempType", "c");
+        file.save()
       }
-      if(type == "t") {
-        return await json.temp;
-      }
-      if(type == "s") {
-        return await json.weather;
-      }
-      if(type == "i") {
-        return await json.icon;
+
+      var dt = "c";
+      if(deg) {
+        if(deg == "F") {
+          dt = "F"
+        }
       }
       else {
-        return await JSON.stringify({
-          error: 'Unexpected.'
-        })
+        if(!file.get("tempType")) {
+          return dt = "c"
+        }
+        dt = file.get("tempType");
       }
+
+      const data = await fetch(`https://dot.ender.site/weather?d=${dt}`);
+      const json = await data.json();
+
+      this.location = json.city;
+      this.temp = json.temp;
+      this.summary = json.weather;
+      this.icon = json.icon;
+      this.timetype = json.timetype;
     }
     catch (e) {
       console.log(e)
-      if(type == "l") {
-        return "Offline"
-      }
     }
+  }
+
+  private async getData(): Promise<string> {
+    if(this.loaded == false) {
+
   }
 
 }

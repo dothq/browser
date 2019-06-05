@@ -42,6 +42,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import console = require('console');
 
+store.downloads.load()
+
 export const Header = ({ children, clickable }: any) => {
   return (
     <HeaderText clickable={clickable}>
@@ -73,7 +75,6 @@ setTimeout(function() {
 }, 2000);
 
 store.user.loadProfile()
-store.weather.load()
 
 export const Overlay = observer(() => {
   return (

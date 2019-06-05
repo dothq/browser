@@ -15,6 +15,7 @@ import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
 import console = require('console');
 import Switch from '@material-ui/core/Switch';
+import OptSwitch from '../Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
@@ -296,6 +297,8 @@ const awaitDownloadUpdate = async () => {
   
   file.set("downloadLocation", dl)
   file.save()
+
+  store.downloads.load()
 }
 
 const Downloads = observer(() => {
@@ -310,6 +313,19 @@ const Downloads = observer(() => {
           <IconButton onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
         </Buttons>
         <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
+const Advanced = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>Block ads and trackers</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+            <OptSwitch />
+        </Buttons>
       </ListItem>
     </SettingsSection>
   );
@@ -476,6 +492,54 @@ if(se == "ecosia") {
   var cmICE = "#585858c7"
 }
 
+if(!file.get("tempType")) {
+  file.set("tempType", "c");
+  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  file.save()
+}
+
+export const setDTC = () => {
+  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  document.getElementById("deg-type-fah").style.backgroundColor = "";
+
+  if(!file.get("tempType")) {
+    file.set("tempType", "c")
+    file.save()
+    store.weather.load("c");
+  }
+  else {
+    file.set("tempType", "c")
+    file.save()
+    store.weather.load("c");
+  }
+  
+};
+
+export const setDTF = () => {
+  document.getElementById("deg-type-fah").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  document.getElementById("deg-type-cel").style.backgroundColor = "";
+
+  if(!file.get("tempType")) {
+    file.set("tempType", "F")
+    file.save()
+    store.weather.load("F");
+  }
+  else {
+    file.set("tempType", "F")
+    file.save()
+    store.weather.load("F");
+  }
+};
+
+var isC = "";
+var isF = "";
+if(file.get("tempType") == "c") {
+  isC = "#585858c7"
+}
+if(file.get("tempType") == "F") {
+  isF = "#585858c7"
+}
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
@@ -509,6 +573,19 @@ export const Appearance = observer(() => {
             </ContextMenu>
           </Buttons>
         </ListItem>
+
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>Weather Degree Type</Title>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
+            <IconButton id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
+            </IconButton>
+            <IconButton id="deg-type-fah" onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
+            </IconButton>
+          </Buttons>
+        </ListItem>
+
       </SettingsSection>
     );
 });
@@ -545,6 +622,9 @@ export const Settings = observer(() => {
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>Downloads</Title>
               <Downloads />
+
+              <Title style={{ margin: '75px -30px -25px -30px' }}>Advanced</Title>
+              <Advanced />              
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
               <AboutDot />
