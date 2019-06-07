@@ -233,7 +233,8 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener('did-finish-load', async () => {
-    
+
+
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
         url: this.webContents.getURL(),
@@ -295,8 +296,6 @@ export class View extends BrowserView {
         processId: process.pid,
         screenshot: this.getScreenshot()
       });
-
-      console.log(this.getScreenshot())
     });
 
     this.webContents.addListener(

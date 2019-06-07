@@ -73,9 +73,4 @@ export class WeatherStore {
     }
   }
 
-  private async getData(): Promise<string> {
-    if(this.loaded == false) {
-
-  }
-
 }

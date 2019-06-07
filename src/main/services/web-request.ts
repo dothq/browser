@@ -145,7 +145,7 @@ const interceptRequest = (
         continue;
       }
       const id = makeId(32);
-
+      
       ipcMain.once(
         `api-webRequest-response-${eventName}-${event.id}-${id}`,
         (e: any, res: any) => {
@@ -167,6 +167,7 @@ const interceptRequest = (
                 eventName === 'onSendHeaders')
             ) {
               const requestHeaders = arrayToObject(res.requestHeaders);
+
               return cb({ cancel: false, requestHeaders });
             }
 

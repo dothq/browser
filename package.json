@@ -85,6 +85,7 @@
   "dependencies": {
     "@cliqz/adblocker": "0.8.0",
     "@material-ui/core": "^3.9.3",
+    "braces": "^3.0.2",
     "discord-rich-presence": "0.0.8",
     "discord-rpc": "^3.0.1",
     "edit-json-file": "^1.2.1",
@@ -110,12 +111,13 @@
     "psl": "^1.1.31",
     "react": "16.8.6",
     "react-dom": "16.8.6",
-    "react-native": "^0.59.6",
+    "react-native": "^0.59.9",
     "react-switch": "^4.1.0",
     "register-scheme": "0.0.2",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "4.2.0",
     "tldts": "4.0.6",
-    "unirest": "^0.6.0"
+    "unirest": "^0.6.0",
+    "ws": "^7.0.0"
   }
 }
