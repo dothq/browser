@@ -95,6 +95,10 @@ export class AppWindow extends BrowserWindow {
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
 
+    this.webContents.on('crashed', (event: any, crashed: boolean) => {
+      this.loadURL(app.getAppPath() + 'static\\pages\\crash.html')
+    });   
+
     if (process.env.ENV === 'dev') {
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');

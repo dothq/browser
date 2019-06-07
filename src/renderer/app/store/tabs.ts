@@ -176,8 +176,13 @@ export class TabsStore {
 
     this.emitEvent('onCreated', tab.getApiTab());
 
-    setInterval(function(this: any) {
-      remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
+    setInterval(function() {
+      if(store.tabs.selectedTab) {
+        remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
+      }
+      else {
+        remote.getCurrentWindow().setTitle(`Dot`)
+      }
     }, 250);
 
 

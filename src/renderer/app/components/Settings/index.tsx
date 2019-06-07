@@ -575,7 +575,7 @@ export const Appearance = observer(() => {
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Weather Degree Type</Title>
+          <Title style={{ fontSize: 15 }}>Temperature Type</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
             <IconButton id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
