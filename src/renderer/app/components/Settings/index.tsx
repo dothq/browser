@@ -19,6 +19,7 @@ import OptSwitch from '../Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
+import { notify } from 'node-notifier';
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
@@ -27,6 +28,11 @@ const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 const scrollRef = React.createRef<HTMLDivElement>();
+
+var win = remote.getCurrentWindow();
+win.webContents.session.clearCache(function(){
+  
+});
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
@@ -577,10 +583,10 @@ export const Appearance = observer(() => {
         <ListItem>
           <Title style={{ fontSize: 15 }}>Temperature Type</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
-            <IconButton id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+            <IconButton icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
             </IconButton>
-            <IconButton id="deg-type-fah" onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+            <IconButton id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
             </IconButton>
           </Buttons>
@@ -588,6 +594,50 @@ export const Appearance = observer(() => {
 
       </SettingsSection>
     );
+});
+
+export const openDevTools = () => {
+  remote.webContents.getFocusedWebContents().openDevTools();  
+              
+  if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+    remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+  }
+}
+
+export const testNotif = () => {
+  notify({
+      title: 'Dot',
+      appName: "Dot",
+      message: 'Testing Notification',
+      icon: resolve(app.getAppPath() + '\\static\\app-icons\\icon.png'),
+      sound: true
+    },
+    function(err: any, response: any) {
+      
+    }); 
+};
+
+export const Experiments = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>Chromium Developer Tools</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+            Open
+          </Button>
+        </Buttons>
+      </ListItem>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>Send test notification</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+            Run
+          </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
 });
 
 export const scrollMp = () => {
@@ -624,7 +674,10 @@ export const Settings = observer(() => {
               <Downloads />
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>Advanced</Title>
-              <Advanced />              
+              <Advanced />
+
+              {store.user.experiments == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Developer Experiments</Title>}
+              {store.user.experiments == true && <Experiments />}
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
               <AboutDot />

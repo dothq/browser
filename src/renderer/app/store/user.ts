@@ -30,6 +30,9 @@ export class UserStore {
   public menuVisible?: boolean = false;
 
   @observable
+  public experiments?: boolean = false;
+
+  @observable
   public loginState?: string = "Login to your Dot account";
  
   public async loadProfile() {
@@ -57,6 +60,18 @@ export class UserStore {
           this.email = json.credentials.email
           this.avatar = json.credentials.avatar
           this.loggedin = true;
+
+          const experiments = await fetch('https://dot.ender.site/api/experiments/users', {
+            method: 'get',
+            headers: { 'content-type': 'application/json' }
+          });
+
+          const expjson = await experiments.json();
+
+          if(expjson.includes(json.credentials.email) == true) {
+            this.experiments = true;
+          }
+
         }
       }
       else {

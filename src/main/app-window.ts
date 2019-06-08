@@ -63,6 +63,10 @@ export class AppWindow extends BrowserWindow {
       }
     }
 
+    // systemPreferences.on('accent-color-changed', (event: any, newColor: string) => {
+    //   console.log(newColor)
+    // });
+
     // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
       if (!this.isMaximized()) {

@@ -3,9 +3,9 @@ import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
-import { client } from '../../src/main'
 import console = require('console');
 import store from '~/renderer/app/store';
+import { resolve } from 'path';
 const path = require("path");
 
 export class View extends BrowserView {
@@ -24,6 +24,7 @@ export class View extends BrowserView {
         partition: 'persist:view',
       },
     });
+    
 
     this.homeUrl = url;
     this.tabId = id;
@@ -139,14 +140,18 @@ export class View extends BrowserView {
       ) {
         menuItems = menuItems.concat([
           {
-            label: 'Back',
+            label: 'Back              ',
+            accelerator: 'Alt+Left',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\bck.png'),
             enabled: this.webContents.canGoBack(),
             click: () => {
               this.webContents.goBack();
             },
           },
           {
-            label: 'Forward',
+            label: 'Forward         ',
+            accelerator: 'Alt+Right',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\fwd.png'),
             enabled: this.webContents.canGoForward(),
             click: () => {
               this.webContents.goForward();
@@ -154,6 +159,8 @@ export class View extends BrowserView {
           },
           {
             label: 'Refresh',
+            accelerator: 'F5',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\refresh.png'),
             click: () => {
               this.webContents.reload();
             },
@@ -163,15 +170,33 @@ export class View extends BrowserView {
           },
         ]);
       }
-
+     
       menuItems.push({
-        label: 'Inspect',
+        label: 'View source',
         click: () => {
-          this.webContents.inspectElement(params.x, params.y);
 
-          if (this.webContents.isDevToolsOpened()) {
-            this.webContents.devToolsWebContents.focus();
+          if(this.webContents.getURL().substr(0, 12) != "view-source:") {
+            var url = `view-source:${this.webContents.getURL()}`;
+
+            this.webContents.loadURL(url);
           }
+
+        },
+      },
+      {
+        label: 'Inspect',
+        accelerator: 'F12',
+        icon: resolve(app.getAppPath() + '\\static\\app-icons\\dev.png'),
+        click: () => {
+
+            if(this.webContents.getURL()) {
+              this.webContents.inspectElement(params.x, params.y);
+
+              if (this.webContents.isDevToolsOpened()) {
+                this.webContents.devToolsWebContents.focus();
+              }
+            }
+
         },
       });
 
