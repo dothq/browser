@@ -59,7 +59,7 @@ const logout = async () => {
 }
 
 const login = async () => {
-  var si = await modal.open(resolve(app.getAppPath(), 'static/pages/sign-in.html'), {
+  var si = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\sign-in.html'), {
     width: 400,
     height: 600,
     resizable: false,
@@ -73,6 +73,9 @@ const login = async () => {
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
     store.user.avatar = c.avatar;
+
+    console.log(store.user.avatar + ' ' + c.avatar)
+
     store.user.email = c.email;
     store.user.loggedin = true;
 
@@ -610,7 +613,8 @@ export const testNotif = () => {
       appName: "Dot",
       message: 'Testing Notification',
       icon: resolve(app.getAppPath() + '\\static\\app-icons\\icon.png'),
-      sound: true
+      sound: true,
+      wait: true,
     },
     function(err: any, response: any) {
       

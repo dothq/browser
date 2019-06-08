@@ -257,15 +257,15 @@ Menu.setApplicationMenu(
               return;
             }
 
-            if(store.tabs.list.length != 0) {
-              if(store.overlay.visible == false) {
+            // if(store.tabs.list.length != 0) {
+            //   if(store.overlay.visible == false) {
                 remote.webContents.getFocusedWebContents().openDevTools();  
               
                 if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
                   remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
                 }
-              }
-            }
+            //   }
+            // }
             
           } 
         },   
