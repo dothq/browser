@@ -20,10 +20,10 @@
 ## Screenshots
 
 ### Browsing a webpage
-[![Browsing](https://i.imgur.com/AibZG3N.png)]()
+[![Browsing](https://i.imgur.com/hHeoAXN.png)]()
 
 ### The Launcher
-[![Launcher](https://i.imgur.com/Y3CDnSp.png)]()
+[![Launcher](https://i.imgur.com/ME6m5Rc.png)]()
 
 ### Rich Presence
 [![RP](https://i.imgur.com/DCI96kW.png)]()
