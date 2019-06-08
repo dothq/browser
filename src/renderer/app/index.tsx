@@ -8,7 +8,7 @@ import { ipcRenderer } from 'electron';
 import { Settings } from 'react-native';
 var Mousetrap = require('mousetrap');
 import { AppWindow } from './app-window';
-import { resolve } from 'path';
+import { resolve, join } from 'path';
 import console = require('console');
 
 const { remote } = require('electron')
@@ -129,34 +129,50 @@ Menu.setApplicationMenu(
           accelerator: 'Ctrl+F',
           label: 'Find in page',
           click() {
-            appWindow.webContents.send('find');
+            if(store.tabs.selectedTab) {
+              appWindow.webContents.send('find');
+            }
           },
         },
         { 
           label: 'Reload Page',
           accelerator: 'F5',
           click() { 
-            store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+            if(store.tabs.selectedTab) {
+              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+            }
           } 
         },
         { 
           label: 'Reload Webpage',
           accelerator: 'Ctrl+R',
           click() { 
-            // Hi!
-            store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+            if(store.tabs.selectedTab) {
+              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+            }
+          } 
+        },
+        { 
+          label: 'Save Page',
+          accelerator: 'Ctrl+S',
+          click() { 
+            if(store.tabs.selectedTab) {
+              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
+            }
           } 
         },
         { 
           label: 'Close tab',
           accelerator: 'Ctrl+W',
           click() { 
-            if (store.tabs.selectedTab.loading) {
-              store.tabs.selectedTab.callViewMethod('webContents.stop');
-              store.tabs.selectedTab.close()
-            }
-            else {
-              store.tabs.selectedTab.close()
+            if(store.tabs.selectedTab) {
+              if (store.tabs.selectedTab.loading) {
+                store.tabs.selectedTab.callViewMethod('webContents.stop');
+                store.tabs.selectedTab.close()
+              }
+              else {
+                store.tabs.selectedTab.close()
+              }
             }
             
           } 
@@ -167,6 +183,29 @@ Menu.setApplicationMenu(
           click() { 
             store.overlay.isNewTab = true;
             store.overlay.visible = true;
+          } 
+        },
+        { type: 'separator' },
+        { 
+          label: 'Back',
+          accelerator: 'Alt+Left',
+          click() { 
+            if(store.tabs.selectedTab) {
+              if(store.navigationState.canGoBack == true) {
+                store.tabs.selectedTab.callViewMethod('webContents.goBack');
+              }
+            }
+          } 
+        },
+        { 
+          label: 'Forward',
+          accelerator: 'Alt+Left',
+          click() { 
+            if(store.tabs.selectedTab) {
+              if(store.navigationState.canGoForward == true) {
+                store.tabs.selectedTab.callViewMethod('webContents.goForward');
+              }
+            }
           } 
         },
         { type: 'separator' },
@@ -209,11 +248,25 @@ Menu.setApplicationMenu(
           label: 'Dev Tools',
           accelerator: 'F12',
           click() { 
-            remote.webContents.getFocusedWebContents().openDevTools();  
-            
-            if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
-              remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+
+            if(remote.webContents.getFocusedWebContents().getURL() == "http://localhost:4444/app.html") {
+              return;
             }
+
+            if(remote.webContents.getFocusedWebContents().getURL() == join('file://', app.getAppPath(), 'build/app.html')) {
+              return;
+            }
+
+            if(store.tabs.list.length != 0) {
+              if(store.overlay.visible == false) {
+                remote.webContents.getFocusedWebContents().openDevTools();  
+              
+                if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+                  remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+                }
+              }
+            }
+            
           } 
         },   
       ],

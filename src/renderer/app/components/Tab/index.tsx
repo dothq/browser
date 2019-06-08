@@ -16,8 +16,9 @@ import {
 } from './style';
 import { shadeBlendConvert } from '../../utils';
 import { transparency } from '~/renderer/constants';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
+import { resolve } from 'path';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -58,6 +59,86 @@ const onClick = () => {
   if (store.canToggleMenu) {
     store.overlay.visible = true;
   }
+};
+
+const contextMenu = (tab: Tab) => () => {
+  const { tabs } = store.tabGroups.currentGroup;
+
+  const menu = remote.Menu.buildFromTemplate([
+    {
+      label: 'New tab',
+      accelerator: 'Ctrl+T',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/add.png'),
+      click: () => {
+        store.overlay.isNewTab = true;
+        store.overlay.visible = true;
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Reload',
+      accelerator: 'F5',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/refresh.png'),
+      click: () => {
+        tab.callViewMethod('webContents.reload');
+      },
+    },
+    {
+      label: 'Duplicate',
+      click: () => {
+        store.tabs.addTab({ active: true, url: tab.url });
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Close tab',
+      accelerator: 'Ctrl+W',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/close.png'),
+      click: () => {
+        tab.close();
+      },
+    },
+    {
+      label: 'Close other tabs',
+      click: () => {
+        for (const t of tabs) {
+          if (t !== tab) {
+            t.close();
+          }
+        }
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Close tabs from left',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/left.png'),
+      click: () => {
+        for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      label: 'Close tabs from right',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/right.png'),
+      click: () => {
+        for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      type: 'separator',
+    },
+  ]);
+
+  menu.popup();
 };
 
 const Content = observer(({ tab }: { tab: Tab }) => {
@@ -125,6 +206,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       selected={tab.isSelected}
       onMouseDown={onMouseDown(tab)}
       onMouseEnter={onMouseEnter(tab)}
+      onContextMenu={contextMenu(tab)}
       onClick={onClick}
       title={tab.title}
       onMouseLeave={onMouseLeave}

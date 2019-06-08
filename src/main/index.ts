@@ -1,12 +1,12 @@
 import { ipcMain, app, Menu, session, globalShortcut, Tray } from 'electron';
-import { resolve } from 'path';
+import { resolve, extname } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
-import { existsSync, writeFileSync, rename } from 'fs';
+import { existsSync, writeFileSync, rename, promises } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
@@ -63,7 +63,7 @@ app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 // Fixes any proxy bypass settings
 
-app.on('ready', () => {
+app.on('ready', async () => {
 
   modal.setup();
 
@@ -76,6 +76,31 @@ app.on('ready', () => {
       }
     },
   );
+
+  // const gotTheLock = app.requestSingleInstanceLock();
+
+  // if (!gotTheLock) {
+  //   app.quit();
+  // } else {
+  //   app.on('second-instance', (e, argv) => {
+  //     if (appWindow) {
+  //       if (appWindow.isMinimized()) appWindow.restore();
+  //       appWindow.focus();
+  
+  //       if (process.env.ENV !== 'dev') {
+  //         const path = argv[argv.length - 1];
+  //         const ext = extname(path);
+  
+  //         if (ext === '.html') {
+  //           appWindow.webContents.send('api-tabs-create', {
+  //             url: `file:///${path}`,
+  //             active: true,
+  //           });
+  //         }
+  //       }
+  //     }
+  //   });
+  // }
 
   app.on('activate', () => {
     if (appWindow === null) {
@@ -110,6 +135,8 @@ app.on('ready', () => {
   ipcMain.on('window-focus', () => {
     appWindow.webContents.focus();
   });
+
+  const viewSession = session.fromPartition('persist:view');
 
   session
     .fromPartition('persist:view')
@@ -154,6 +181,17 @@ app.on('ready', () => {
   loadFilters();
   loadExtensions();
   runWebRequestService(appWindow);
+
+  // extensionsMain.setSession(viewSession);
+
+  // const extensionsPath = getPath('extensions');
+
+  // const dirs = await promises.readdir(extensionsPath);
+
+  // for (const dir of dirs) {
+  //   extensionsMain.load(resolve(extensionsPath, dir));
+  // }
+
 });
 
 app.on('window-all-closed', () => {
