@@ -3,16 +3,19 @@
 </p>
 
 <h1 align="center">Dot</h1>
-<h3 align="center">A beautiful browser with darn-simple UI, based on Wexond.</h3>
+<h3 align="center">A beautiful browser with material UI, with built-in adblock, based on Wexond.</h3>
 
 ## Features
 
 * **Built in ad-blocker** - We all hate ads, so we releave the pain by having a ad-blocker built in. No downloads, nothing.
 * **Fancy Discord Rich Presence** - Tell your Discord Friends what page you're looking at, or if you're just Idle on the home screen...
 * **Minimalistic UI** - Forget Chrome, bye bye Firefox, see you later IE and Edge. Our UI beats all of them.
-* **Support for Chrome Extensions** - Don't worry, we thought about you chrome users, all your Chrome Extensions are right here.
 * **Dot Overlay** - A neat little overlay, which has bookmarks, a search box, downloads and more.
 * **Tab Groups** - Organize your tabs in a breeze.
+* **Customization** - Edit your Dot experience to what you want.
+* **Bookmarks & History** - Keep track of your favourite pages and your browsing history.
+* **Weather Updates** - A little card on the overlay telling you about the weather in your location.
+* **Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
 
 ## Screenshots
 
@@ -41,9 +44,6 @@ For support, join our support discord server.
 ## Roadmap & To Do
 
 * Fix Discord Rich Presence
-* Add History Support
-* Get settings done
-* Get first build for download 
 
 ## Built With
 
