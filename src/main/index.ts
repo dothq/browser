@@ -6,13 +6,14 @@ import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
-import { existsSync, writeFileSync, rename, promises } from 'fs';
+import { existsSync, writeFileSync, rename, promises, createWriteStream } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store'
 import console = require('console');
+import { get } from 'http';
 const nativeImage = require("electron").nativeImage;
 const modal = require('electron-modal');
 const editJsonFile = require("edit-json-file");
@@ -26,6 +27,18 @@ app.setPath('userData', resolve(homedir(), 'dot'));
 export let appWindow: AppWindow;
 
 registerProtocols();
+
+try {
+  if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
+    console.log("[SettingsStore] Notification sound exists.")
+  }
+}
+catch (e) {
+  const notifFile = createWriteStream(app.getPath("userData") + "\\notification_sound.mp3");
+  const request = get("https://dot.ender.site/api/static/notification.mp3", function(response: any) {
+    response.pipe(notifFile);
+  });
+}
 
 // Check for settings
 try {
