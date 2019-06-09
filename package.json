@@ -92,6 +92,7 @@
     "edit-json-file": "^1.2.1",
     "electron-extensions": "^1.0.0",
     "electron-modal": "^1.0.0",
+    "electron-push-receiver": "^2.1.2",
     "electron-updater": "4.0.6",
     "file-type": "10.11.0",
     "folder-delete": "^1.0.4",
