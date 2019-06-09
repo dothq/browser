@@ -140,7 +140,7 @@
 
                         http.open('PUT', `https://dot.ender.site/api/options/username/${document.getElementById("usn").value}`, true)
                         http.setRequestHeader('Content-type', 'application/json')
-                        http.setRequestHeader('Authorization', `User ${a} at ${b}`)
+                        http.setRequestHeader('Authorization', `DotUser ${a} at ${b}`)
                         http.send(null);
                         http.onload = function() {
                             var body = JSON.parse(http.responseText);
@@ -247,7 +247,7 @@
                         if(body.message) {
                             if(body.message == "Logged in") {
                                 if(body.credentials.customname == ".") {
-                                    document.getElementById("logon-title").innerText = `Welcome to `;
+                                    document.getElementById("logon-title").innerText = `Welcome to Dot`;
                                     document.getElementById("verif-info").style.opacity = 0;
                                     document.getElementById("verif-info-2").style.opacity = 0;
                                     document.getElementById("logon-field").style.opacity = 0;
@@ -291,7 +291,7 @@
                                         var body = JSON.parse(req.responseText);
                                         if(body.verified == true) {
                                             clearInterval(int)
-                                            document.getElementById("logon-title").innerText = "Login to your  account"
+                                            document.getElementById("logon-title").innerText = "Login to your Dot account"
                                             document.getElementById("verif-info").style.opacity = 0;
                                             document.getElementById("verif-info-2").style.opacity = 0;
                                             document.getElementById("verif-info").style.display = "none";

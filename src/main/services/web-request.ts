@@ -223,14 +223,16 @@ export const runWebRequestService = (window: AppWindow) => {
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
 
     var url = new URL(details.url);
+    var hn = url.hostname.split(".")[1];
 
-    console.log(url.hostname.split(".")[1])
-    if(url.hostname.split(".")[1] != "google") {
-      details.requestHeaders['User-Agent'] = USER_AGENT;
+    var blacklisted_from_ua = ['google', 'youtube', 'www.google', 'www.youtube']
+
+    if(blacklisted_from_ua.includes(hn.toLowerCase()) == true) {
+      details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
       details.requestHeaders['DNT'] = '1';
     }
     else {
-      details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
+      details.requestHeaders['User-Agent'] = USER_AGENT;
       details.requestHeaders['DNT'] = '1';      
     }
 
