@@ -88,10 +88,6 @@ export class Tab {
     });
   }
 
-  public set zoomIn(zoom: any) {
-    remote.webContents.getFocusedWebContents().setZoomFactor(zoom+0.25);
-    return true;
-  }
 
   @computed
   public get isSelected() {

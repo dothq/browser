@@ -82,7 +82,7 @@ export const startBackgroundPage = async (extension: Extension) => {
 
     contents.loadURL(
       format({
-        protocol: 'extension',
+        protocol: 'dot-extension',
         slashes: true,
         hostname: id,
         pathname: fileName,

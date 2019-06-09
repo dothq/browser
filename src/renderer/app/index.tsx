@@ -14,7 +14,7 @@ import console = require('console');
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
 
-var tray = new Tray(resolve(app.getAppPath(), 'static/app-icons/icon.png'))
+var tray = new Tray(resolve(app.getAppPath(), 'static/icon.png'))
 const contextMenu = Menu.buildFromTemplate([
   { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
   { type: 'separator' },
@@ -130,7 +130,13 @@ Menu.setApplicationMenu(
           label: 'Find in page',
           click() {
             if(store.tabs.selectedTab) {
-              appWindow.webContents.send('find');
+              store.overlay.visible = false;
+
+              store.tabs.selectedTab.findVisible = true;
+            
+              setTimeout(() => {
+                store.tabs.selectedTab.findVisible = true;
+              }, 200);
             }
           },
         },
@@ -257,15 +263,15 @@ Menu.setApplicationMenu(
               return;
             }
 
-            // if(store.tabs.list.length != 0) {
-            //   if(store.overlay.visible == false) {
+            //  if(store.tabs.list.length != 0) {
+            //    if(store.overlay.visible == false) {
                 remote.webContents.getFocusedWebContents().openDevTools();  
               
                 if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
                   remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
                 }
-            //   }
-            // }
+            //    }
+            //  }
             
           } 
         },   

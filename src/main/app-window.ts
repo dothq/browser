@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, nativeImage } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
@@ -30,7 +30,7 @@ export class AppWindow extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), 'static/app-icons/icon.png'),
+      icon: resolve(app.getAppPath(), '/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
@@ -104,6 +104,7 @@ export class AppWindow extends BrowserWindow {
     });   
 
     if (process.env.ENV === 'dev') {
+      this.setIcon(nativeImage.createFromPath(resolve(app.getAppPath() + '\\static\\icon.png')))
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
@@ -142,5 +143,6 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.selected.webContents.send('scroll-touch-end');
       this.webContents.send('scroll-touch-end');
     });
+
   }
 }

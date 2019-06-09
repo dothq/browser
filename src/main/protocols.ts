@@ -7,23 +7,22 @@ import { extensions } from './extensions';
 const applets = ['newtab'];
 
 export const registerProtocols = () => {
-  protocol.registerStandardSchemes(['dot', 'extension']);
+  // protocol.registerStandardSchemes(['dot', 'extension']);
 
-  // TODO: Electron 5.0.0
-  /*protocol.registerSchemesAsPrivileged([
+  protocol.registerSchemesAsPrivileged([
     {
       scheme: 'dot',
       privileges: { bypassCSP: true, secure: true },
     },
     {
-      scheme: 'extension',
+      scheme: 'dot-extension',
       privileges: { bypassCSP: true, secure: true },
     },
-  ]);*/
+  ]);
 
   (app as any).on('session-created', (sess: Electron.session) => {
     sess.protocol.registerBufferProtocol(
-      'extension',
+      'dot-extension',
       (request, callback) => {
         const parsed = parse(decodeURIComponent(request.url));
 

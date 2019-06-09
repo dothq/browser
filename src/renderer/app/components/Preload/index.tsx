@@ -42,7 +42,7 @@ let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 setTimeout(function() {
   store.overlay.currentContent = "default"
-}, 2000); 
+}, 800); 
 
 export const Preload = observer(() => {
   return (

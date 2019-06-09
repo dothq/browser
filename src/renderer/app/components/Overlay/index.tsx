@@ -70,10 +70,6 @@ export const preventHiding = (e: any) => {
   store.bookmarks.menuVisible = false;
 };
 
-setTimeout(function() {
-  store.overlay.currentContent = "default";
-}, 2000);
-
 store.user.loadProfile()
 
 export const Overlay = observer(() => {

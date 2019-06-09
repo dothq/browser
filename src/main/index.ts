@@ -137,7 +137,9 @@ app.on('ready', async () => {
     if (appWindow.webContents.isDevToolsOpened()) {
       appWindow.webContents.devToolsWebContents.focus();
     }  
-  });  
+  });
+  
+  
 
   ipcMain.on('update-check', () => {
     if (process.env.ENV !== 'dev') {
@@ -194,6 +196,8 @@ app.on('ready', async () => {
   loadFilters();
   loadExtensions();
   runWebRequestService(appWindow);
+
+  
 
   // extensionsMain.setSession(viewSession);
 

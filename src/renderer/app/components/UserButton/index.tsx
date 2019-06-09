@@ -19,6 +19,7 @@ interface Props {
   invert?: boolean;
   visible?: boolean;
   id?: string;
+  title?: any;
 }
 
 @observer
@@ -65,6 +66,7 @@ export default class UserIcon extends React.Component<Props, {}> {
       invert,
       visible,
       id,
+      title,
     } = this.props;
 
     let { style } = this.props;
@@ -79,6 +81,7 @@ export default class UserIcon extends React.Component<Props, {}> {
         style={style}
         invert={invert}
         id={id}
+        title={title}
         visible={visible}
         ref={(r: HTMLDivElement) => {
           this.ref = r;

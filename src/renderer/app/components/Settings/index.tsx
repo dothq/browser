@@ -20,6 +20,7 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
+const DataURI = require('datauri').promise;
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
@@ -67,6 +68,9 @@ const login = async () => {
     alwaysOnTop: false,
     title: 'Sign in',
     titleBarStyle: 'hiddenInset',
+    webPreferences: {
+      nodeIntegration: true
+    },
     frame: false
   })
 
@@ -191,6 +195,7 @@ const YourProfile = observer(() => {
   return (
     <SettingsSection id="my-profile">
       <ListItem>
+        <input id="avatar-choose" onChange={avatarChange} accept="image/png" type="file" style={{ display: 'none' }}></input>
         <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <div style={{ marginTop: '-7px' }}>
           <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
@@ -208,6 +213,17 @@ const YourProfile = observer(() => {
     </SettingsSection>
   );
 });
+
+async function avatarChange() {
+  var files = document.getElementById('avatar-choose').files[0];
+
+  if(files.type == "image/png") {
+    DataURI(files.path)
+    .then((content: any) => store.user.avatar = content )
+  }
+
+  
+};
 
 const wexond = () => {
   var url = "https://github.com/wexond/wexond"
@@ -301,13 +317,16 @@ const awaitDownloadUpdate = async () => {
   dl = input.files[0].path;
 
   setTimeout(function() {
-    document.getElementById("dl-l").innerText = dl;
-  }, 300);
-  
-  file.set("downloadLocation", dl)
-  file.save()
 
-  store.downloads.load()
+    file.set("downloadLocation", dl)
+    file.save()
+  
+    store.downloads.location = dl;
+
+    document.getElementById("dl-l").innerText = store.downloads.location;
+
+  }, 300);
+
 }
 
 const Downloads = observer(() => {
@@ -612,9 +631,9 @@ export const testNotif = () => {
       title: 'Dot',
       appName: "Dot",
       message: 'Testing Notification',
-      icon: resolve(app.getAppPath() + '\\static\\app-icons\\icon.png'),
+      icon: resolve(app.getAppPath() + '\\static\\icon.png'),
       sound: true,
-      wait: true,
+      wait: true
     },
     function(err: any, response: any) {
       
