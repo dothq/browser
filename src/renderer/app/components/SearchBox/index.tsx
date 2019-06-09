@@ -116,15 +116,6 @@ const onInput = (e: any) => {
   store.overlay.scrollRef.current.scrollTop = 0;
 };
 
-const logout = async () => {
-  store.user.loggedin = false;
-  store.user.username = "Guest";
-  store.user.avatar = icons.user
-  store.user.email = null;
-  localStorage.removeItem("dot_footprint")
-  store.user.menuVisible = false;
-}
-
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
@@ -134,14 +125,15 @@ const onStarClick = async () => {
 
   if(!foundBkm) {
 
-    // If this check passes, the bookmark doesn't exist yet, so create it.
-    await store.bookmarks.addItem({
-      title: selectedTab.title,
-      url: store.overlay.inputRef.current.value,
-      parent: null,
-      type: 'item',
-      favicon: selectedTab.favicon,
-    });
+    if(store.overlay.inputRef.current.value) {
+      await store.bookmarks.addItem({
+        title: selectedTab.title,
+        url: store.overlay.inputRef.current.value,
+        parent: null,
+        type: 'item',
+        favicon: selectedTab.favicon,
+      });
+    }
 
   }
 
@@ -154,7 +146,12 @@ const onStarClick = async () => {
 };
 
 const onUserClick = () => {
-  store.overlay.currentContent = "settings";
+  if(store.user.menuVisible == true) {
+    store.user.menuVisible = false
+  }
+  else {
+    store.user.menuVisible = true
+  }
 };
 
 export const SearchBox = observer(() => {
@@ -176,8 +173,17 @@ export const SearchBox = observer(() => {
   } else {
     var timeType = "Good evening"
   }
-  var sBV = [`Where do you want to go today?`, `What's on your mind ${require("os").userInfo().username}?`, 'Enter a search term or URL to get started.', `${timeType}, ${require("os").userInfo().username}`]
-  var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
+  if(store.user.loggedin == true) {
+    // Personalized messages
+
+    var sBV = [`Where do you want to go today?`, `What's on your mind ${store.user.username}?`, 'Enter a search term or URL to get started.', `${timeType}, ${store.user.username}`]
+    var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];    
+  }
+  else {
+    var sBV = [`Where do you want to go today?`, `What's on your mind?`, 'Enter a search term or URL to get started.', `${timeType}.`]
+    var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
+  }
+
 
   return (
     <StyledSearchBox style={{ height }} onClick={onClick}>
@@ -216,14 +222,6 @@ export const SearchBox = observer(() => {
             width: '38px'
           }}
         />
-        {/* <ContextMenu visible={store.user.menuVisible} style={{ marginLeft: '650px', marginTop: '-24px', position: 'fixed' }}>
-          <ContextMenuItem icon={icons.user}>
-              My Profile
-          </ContextMenuItem>
-          <ContextMenuItem icon={icons.close} onClick={logout}>
-              Sign out
-          </ContextMenuItem>
-        </ContextMenu> */}
       </InputContainer>
       <Suggestions visible={suggestionsVisible} />
     </StyledSearchBox>

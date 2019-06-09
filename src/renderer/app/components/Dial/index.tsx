@@ -17,6 +17,22 @@ const onDialTitleClick = (e: any) => {
   store.overlay.dialTypeMenuVisible = !store.overlay.dialTypeMenuVisible;
 };
 
+const logout = async (e: any) => {
+  e.stopPropagation();
+  store.user.loggedin = false;
+  store.user.username = "Guest";
+  store.user.avatar = icons.user
+  store.user.email = null;
+  localStorage.removeItem("dot_footprint")
+  store.user.menuVisible = false;
+}
+
+const settings = async (e: any) => {
+  e.stopPropagation();
+  store.overlay.currentContent = 'settings'
+  store.user.menuVisible = false;
+};
+
 export const Dial = observer(() => {
   const { dialType } = store.settings;
 
@@ -48,6 +64,14 @@ export const Dial = observer(() => {
                 onClick={changeDialType('bookmarks')}
               >
                 Bookmarks
+              </ContextMenuItem>
+            </ContextMenu>
+            <ContextMenu visible={store.user.menuVisible == true} style={{ top: '-20px', right: 0 }}>
+              <ContextMenuItem icon={icons.user} onClick={settings}>
+                  My Profile
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.close} onClick={logout}>
+                  Sign out
               </ContextMenuItem>
             </ContextMenu>
           </Title>

@@ -79,6 +79,8 @@ export class AppWindow extends BrowserWindow {
       }
     });
 
+    this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
+
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
