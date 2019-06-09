@@ -261,8 +261,6 @@ export class View extends BrowserView {
 
     this.webContents.addListener('did-finish-load', async () => {
 
-      setupPushReceiver(appWindow.webContents);
-
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
         url: this.webContents.getURL(),

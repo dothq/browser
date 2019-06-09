@@ -6,6 +6,7 @@ import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 import store from '~/renderer/app/store';
+const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 
 export class AppWindow extends BrowserWindow {
@@ -38,6 +39,8 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('no-proxy-server')
 
     const windowDataPath = getPath('window-data.json');
+
+    setupPushReceiver(this.webContents);
 
     let windowState: any = {};
 

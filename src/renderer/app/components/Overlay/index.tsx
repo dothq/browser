@@ -44,24 +44,47 @@ import console = require('console');
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
-import {
+const {
   START_NOTIFICATION_SERVICE,
   NOTIFICATION_SERVICE_STARTED,
   NOTIFICATION_SERVICE_ERROR,
-  NOTIFICATION_RECEIVED as ON_NOTIFICATION_RECEIVED,
+  NOTIFICATION_RECEIVED,
   TOKEN_UPDATED,
-} from 'electron-push-receiver/src/constants';
- 
+} = require ('electron-push-receiver/src/constants')
+
 // Listen for service successfully started
-ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => // do something);
+ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => {
+  console.log(`[FCMNS] The Firebase Cloud Messaging service has been launched using token ${token}`)
+})
+
 // Handle notification errors
-ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_: any, error: any) => // do something);
+ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_: any, error: any) => {
+  console.error(`[FCMNS] Notification error: ${error}`)
+})
+
 // Send FCM token to backend
-ipcRenderer.on(TOKEN_UPDATED, (_: any, token: any) => // Send token);
+ipcRenderer.on(TOKEN_UPDATED, (_: any, token: any) => {
+  console.log(`[FCMNS] Token has been updated ${token}`)
+})
+
 // Display notification
-ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_: any, notification: any) => // display notification);
-// Start service
-ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
+ipcRenderer.on(NOTIFICATION_RECEIVED, (_: any, serverNotificationPayload: any) => {
+  // check to see if payload contains a body string, if it doesn't consider it a silent push
+  if (serverNotificationPayload.notification.body){
+    // payload has a body, so show it to the user
+    console.log(`[FCMNS] Recieved a notification from ${serverNotificationPayload.from}`, serverNotificationPayload)
+    let myNotification = new Notification(serverNotificationPayload.notification.title, {
+      body: serverNotificationPayload.notification.body
+    })
+    
+    myNotification.onclick = () => {
+      console.log('Notification clicked')
+    }  
+  } else {
+    // payload has no body, so consider it silent (and just consider the data portion)
+    console.log('do something with the key/value pairs in the data', serverNotificationPayload.data)
+  }
+})
 
 
 store.downloads.load()
@@ -127,3 +150,7 @@ export const Overlay = observer(() => {
     </StyledOverlay>
   );
 });
+
+const senderId = '534960319282'
+console.log("[FCMNS] Started service");
+ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId)
