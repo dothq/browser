@@ -154,7 +154,7 @@ const onStarClick = async () => {
 };
 
 const onUserClick = () => {
-  store.user.menuVisible = true;
+  store.overlay.currentContent = "settings";
 };
 
 export const SearchBox = observer(() => {
@@ -208,6 +208,7 @@ export const SearchBox = observer(() => {
         />
         <UserIcon
           icon={store.user.avatar}
+          title={`${store.user.username} <${store.user.email}>`}
           onClick={onUserClick}
           visible={store.user.loggedin}
           style={{

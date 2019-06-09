@@ -21,7 +21,7 @@ export class DownloadsStore {
 
   @observable
   public async load() {
-    this.location = file.get("downloadLocation")
+    this.location = file.get("downloadLocation");
   }
 
   constructor() {
