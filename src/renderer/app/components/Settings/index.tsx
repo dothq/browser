@@ -219,7 +219,29 @@ async function avatarChange() {
 
   if(files.type == "image/png") {
     DataURI(files.path)
-    .then((content: any) => store.user.avatar = content )
+    .then((content: any) => {
+
+      const http = new XMLHttpRequest()
+
+      var decodedfp = atob(localStorage.getItem("dot_footprint"));
+
+      var email = decodedfp.split("||")[0];
+      var password = decodedfp.split("||")[1];
+
+      console.log(email, password)
+
+      const data = {
+        content
+      }
+
+      http.open('POST', `https://dot.ender.site/api/options/avatar`)
+      http.setRequestHeader('Content-type', 'application/json')
+      http.setRequestHeader('Authorization', `DotUser ${password} at ${email}`)
+      http.send(JSON.stringify(data));
+      http.onload = function() {
+          store.user.avatar = content 
+      } 
+    });
   }
 
   

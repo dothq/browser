@@ -22,7 +22,7 @@
 
     <div id="form" style="transform: translateY(45%) translateX(-51%); ">
         <img src="https://getdot.js.org/src/icon.png" style="filter: invert(100%);width: 100px;margin-left: auto;margin-right: auto;display: block;">
-        <h1 class="title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your Dot Account</h1>
+        <h1 class="title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your  Account</h1>
         <h1 class="title" id="verif-info" style="  color: #494949;  font-size: 16px;  margin-left: 5px; text-align: center; opacity: 0; transition: opacity 0.3s; margin-top: -8px"></h1>
         <h1 class="title" id="verif-info-2" style="  color: #757575;  font-size: 14px; text-align: center; opacity: 0; transition: opacity 0.3s; transition-delay: 0.7s; position: absolute;bottom: 0;"></h1>
         <h1 class="title" id="username-info" style="display: none; color: #494949;  font-size: 16px;  margin-left: 5px; text-align: center; opacity: 0; transition: opacity 0.3s; margin-top: -8px; transition-delay: 1s">First you'll need a username.</h1>
@@ -140,7 +140,7 @@
 
                         http.open('PUT', `https://dot.ender.site/api/options/username/${document.getElementById("usn").value}`, true)
                         http.setRequestHeader('Content-type', 'application/json')
-                        http.setRequestHeader('Authorization', `DotUser ${a} at ${b}`)
+                        http.setRequestHeader('Authorization', `User ${a} at ${b}`)
                         http.send(null);
                         http.onload = function() {
                             var body = JSON.parse(http.responseText);
@@ -247,7 +247,7 @@
                         if(body.message) {
                             if(body.message == "Logged in") {
                                 if(body.credentials.customname == ".") {
-                                    document.getElementById("logon-title").innerText = `Welcome to Dot`;
+                                    document.getElementById("logon-title").innerText = `Welcome to `;
                                     document.getElementById("verif-info").style.opacity = 0;
                                     document.getElementById("verif-info-2").style.opacity = 0;
                                     document.getElementById("logon-field").style.opacity = 0;
@@ -291,7 +291,7 @@
                                         var body = JSON.parse(req.responseText);
                                         if(body.verified == true) {
                                             clearInterval(int)
-                                            document.getElementById("logon-title").innerText = "Login to your Dot account"
+                                            document.getElementById("logon-title").innerText = "Login to your  account"
                                             document.getElementById("verif-info").style.opacity = 0;
                                             document.getElementById("verif-info-2").style.opacity = 0;
                                             document.getElementById("verif-info").style.display = "none";

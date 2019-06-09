@@ -2,7 +2,7 @@ import { ipcMain, session, webContents, app } from 'electron';
 import { makeId } from '~/shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '~/shared/utils/url';
-import { USER_AGENT } from '~/shared/constants';
+import { USER_AGENT, FALLBACK_USER_AGENT } from '~/shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
@@ -221,10 +221,20 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-    details.requestHeaders['User-Agent'] = `Dot/${app.getVersion()}`;
-    details.requestHeaders['DNT'] = '1';
 
-    await onBeforeSendHeaders(details, callback);
+    var url = new URL(details.url);
+
+    console.log(url.hostname.split(".")[1])
+    if(url.hostname.split(".")[1] != "google") {
+      details.requestHeaders['User-Agent'] = USER_AGENT;
+      details.requestHeaders['DNT'] = '1';
+    }
+    else {
+      details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
+      details.requestHeaders['DNT'] = '1';      
+    }
+
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
   // onBeforeRequest
@@ -251,7 +261,6 @@ export const runWebRequestService = (window: AppWindow) => {
         );
 
         if (match || redirect) {
-          console.log(match, redirect, details.url);
 
           appWindow.webContents.send(`blocked-ad-${tabId}`);
 
