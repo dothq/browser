@@ -20,6 +20,7 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
+import { ipcRenderer } from 'electron';
 const DataURI = require('datauri').promise;
 
 var modal = require('electron-modal');
@@ -314,6 +315,7 @@ const AboutDot = observer(() => {
         <A onClick={blz} title="<>" style={{ color: '#dadada' }}>Blizma</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Special Thanks</Title>
         <A onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>DusterTheFirst</A>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>Loaded FCM Notification services</Title>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
       </AboutWrapper>
     </SettingsSection>

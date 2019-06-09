@@ -70,7 +70,7 @@
     "axios": "0.19.0",
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
-    "electron": "^5.0.3",
+    "electron": "^4.1.4",
     "electron-builder": "20.39.0",
     "fuse-box": "3.7.1",
     "log-update": "3.2.0",
