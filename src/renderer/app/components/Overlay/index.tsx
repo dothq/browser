@@ -42,6 +42,28 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import console = require('console');
 
+// FCM Notifcation Handler
+import { ipcRenderer } from 'electron';
+import {
+  START_NOTIFICATION_SERVICE,
+  NOTIFICATION_SERVICE_STARTED,
+  NOTIFICATION_SERVICE_ERROR,
+  NOTIFICATION_RECEIVED as ON_NOTIFICATION_RECEIVED,
+  TOKEN_UPDATED,
+} from 'electron-push-receiver/src/constants';
+ 
+// Listen for service successfully started
+ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => // do something);
+// Handle notification errors
+ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_: any, error: any) => // do something);
+// Send FCM token to backend
+ipcRenderer.on(TOKEN_UPDATED, (_: any, token: any) => // Send token);
+// Display notification
+ipcRenderer.on(ON_NOTIFICATION_RECEIVED, (_: any, notification: any) => // display notification);
+// Start service
+ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId);
+
+
 store.downloads.load()
 
 export const Header = ({ children, clickable }: any) => {

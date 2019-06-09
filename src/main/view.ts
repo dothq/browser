@@ -7,6 +7,7 @@ import console = require('console');
 import store from '~/renderer/app/store';
 import { resolve } from 'path';
 const path = require("path");
+const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class View extends BrowserView {
   public title: string = '';
@@ -260,6 +261,7 @@ export class View extends BrowserView {
 
     this.webContents.addListener('did-finish-load', async () => {
 
+      setupPushReceiver(appWindow.webContents);
 
       this.emitWebNavigationEvent('onCompleted', {
         tabId: this.tabId,
