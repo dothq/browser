@@ -2,6 +2,8 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import store from '../../store';
+import { remote } from "electron";
+import { Client } from 'discord-rpc';
 import {
   StyledOverlay,
   HeaderText,
@@ -86,6 +88,45 @@ ipcRenderer.on(NOTIFICATION_RECEIVED, (_: any, serverNotificationPayload: any) =
   }
 })
 
+//Discord Rich Presence
+const clientId = '587738190203453626';
+
+const rpclient = new Client({ transport: 'ipc'});
+const startDate = new Date();
+const startTimestamp = startDate.getTime()
+
+async function setActivity() {
+  if (!rpclient) {
+    return;
+  }
+  try {
+  var details = 'Browsing the web';
+  var state = store.tabs.selectedTab.url;
+  } catch {
+    var details = 'Dot Browser';
+    var state = 'Idle';
+  }
+  rpclient.setActivity({
+    details: details,
+    state: state,
+    startTimestamp,
+    largeImageKey: 'dotico',
+    largeImageText: `Dot Browser ${remote.app.getVersion()}`,
+    instance: false
+  })
+};
+
+rpclient.on('ready', () => {
+  console.log('Loaded Discord RPC');
+  setActivity();
+
+  setInterval(() => {
+    setActivity();
+  }, 15e3);
+});
+
+rpclient.login({ clientId }).catch(console.error);
+//Discord Rich Presence
 
 store.downloads.load()
 
