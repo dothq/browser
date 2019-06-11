@@ -89,40 +89,50 @@ ipcRenderer.on(NOTIFICATION_RECEIVED, (_: any, serverNotificationPayload: any) =
 })
 
 //Discord Rich Presence
-const clientId = '587738190203453626';
+const clientId = '565573138146918421';
 
 const rpclient = new Client({ transport: 'ipc'});
-const startDate = new Date();
-const startTimestamp = startDate.getTime()
+const startTimestamp = Math.round(+new Date()/1000)
+
+window.onbeforeunload = () => {
+  rpclient.destroy()
+}
 
 async function setActivity() {
   if (!rpclient) {
     return;
   }
   try {
-  var details = 'Browsing the web';
-  var state = store.tabs.selectedTab.url;
+  var details = 'Browsing on';
+  var state = store.tabs.getHostname(store.tabs.selectedTab.url);
+  var largeImageKey = 'dlogo';
+  var smallImageKey = 'dot-online';
+  var smallImageText = `Browsing a webpage`;
   } catch {
     var details = 'Dot Browser';
     var state = 'Idle';
+    var largeImageKey = 'dlogo';
+    var smallImageKey = 'dot-idle';
+    var smallImageText = 'Idle';
   }
   rpclient.setActivity({
     details: details,
     state: state,
     startTimestamp,
-    largeImageKey: 'dotico',
+    largeImageKey,
+    smallImageKey,
     largeImageText: `Dot Browser ${remote.app.getVersion()}`,
+    smallImageText,
     instance: false
   })
 };
 
 rpclient.on('ready', () => {
-  console.log('Loaded Discord RPC');
   setActivity();
 
   setInterval(() => {
     setActivity();
-  }, 15e3);
+  }, 3e3);
 });
 
 rpclient.login({ clientId }).catch(console.error);
