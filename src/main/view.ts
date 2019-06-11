@@ -278,6 +278,13 @@ export class View extends BrowserView {
         if (disposition === 'new-window') {
           console.log(frameName)
           console.log(disposition)
+          if (disposition === 'new-window') {
+            e.preventDefault();
+            return appWindow.webContents.send('api-tabs-create', {
+              url,
+              active: true,
+            });    
+          }
           if (frameName === '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
