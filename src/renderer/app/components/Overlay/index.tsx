@@ -36,13 +36,8 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 const editJsonFile = require("edit-json-file");
 
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import console = require('console');
+const show = require("mui-simple-snackbars").show;
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
@@ -108,7 +103,7 @@ async function setActivity() {
   var largeImageKey = 'dlogo';
   var smallImageKey = 'dot-online';
   var smallImageText = `Browsing a webpage`;
-  } catch {
+  } catch(e) {
     var details = 'Dot Browser';
     var state = 'Idle';
     var largeImageKey = 'dlogo';
@@ -168,7 +163,10 @@ export const preventHiding = (e: any) => {
 
 store.user.loadProfile()
 
+show('Hey Hey!');
+
 export const Overlay = observer(() => {
+
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
       <Preload/>
