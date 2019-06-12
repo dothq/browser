@@ -2,6 +2,8 @@ import * as Datastore from 'nedb';
 import { observable, computed, action } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import { Bookmark } from '../models/bookmark';
+import console = require('console');
+const bds = require("../../constants/defaultBookmarks.json");
 
 export class BookmarksStore {
   public db = new Datastore({
@@ -52,10 +54,49 @@ export class BookmarksStore {
   }
 
   public async load() {
-    await this.db.find({}).exec((err: any, items: Bookmark[]) => {
+    await this.db.find({}).exec(async (err: any, items: Bookmark[]) => {
       if (err) return console.warn(err);
 
-      this.list = items;
+      if(items) {
+
+        await this.addItem({
+          title: bds.google.title,
+          url: bds.google.url,
+          favicon: bds.google.favicon,
+          parent: null,
+          type: 'item'
+        })
+
+        await this.addItem({
+          title: bds.amazon.title,
+          url: bds.amazon.url,
+          favicon: bds.amazon.favicon,
+          parent: null,
+          type: 'item'
+        })
+
+        await this.addItem({
+          title: bds.ebay.title,
+          url: bds.ebay.url,
+          favicon: bds.ebay.favicon,
+          parent: null,
+          type: 'item'
+        })
+
+        await this.addItem({
+          title: bds.dot.title,
+          url: bds.dot.url,
+          favicon: bds.dot.favicon,
+          parent: null,
+          type: 'item'
+        })
+
+      }
+      else {
+        this.list = items;
+      }
+
+
     });
   }
 
