@@ -36,13 +36,8 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 const editJsonFile = require("edit-json-file");
 
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import console = require('console');
+const show = require("mui-simple-snackbars").show;
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
@@ -89,40 +84,50 @@ ipcRenderer.on(NOTIFICATION_RECEIVED, (_: any, serverNotificationPayload: any) =
 })
 
 //Discord Rich Presence
-const clientId = '587738190203453626';
+const clientId = '565573138146918421';
 
 const rpclient = new Client({ transport: 'ipc'});
-const startDate = new Date();
-const startTimestamp = startDate.getTime()
+const startTimestamp = Math.round(+new Date()/1000)
+
+window.onbeforeunload = () => {
+  rpclient.destroy()
+}
 
 async function setActivity() {
   if (!rpclient) {
     return;
   }
   try {
-  var details = 'Browsing the web';
-  var state = store.tabs.selectedTab.url;
-  } catch {
+  var details = 'Browsing on';
+  var state = store.tabs.getHostname(store.tabs.selectedTab.url);
+  var largeImageKey = 'dlogo';
+  var smallImageKey = 'dot-online';
+  var smallImageText = `Browsing a webpage`;
+  } catch(e) {
     var details = 'Dot Browser';
     var state = 'Idle';
+    var largeImageKey = 'dlogo';
+    var smallImageKey = 'dot-idle';
+    var smallImageText = 'Idle';
   }
   rpclient.setActivity({
     details: details,
     state: state,
     startTimestamp,
-    largeImageKey: 'dotico',
+    largeImageKey,
+    smallImageKey,
     largeImageText: `Dot Browser ${remote.app.getVersion()}`,
+    smallImageText,
     instance: false
   })
 };
 
 rpclient.on('ready', () => {
-  console.log('Loaded Discord RPC');
   setActivity();
 
   setInterval(() => {
     setActivity();
-  }, 15e3);
+  }, 3e3);
 });
 
 rpclient.login({ clientId }).catch(console.error);
@@ -158,7 +163,10 @@ export const preventHiding = (e: any) => {
 
 store.user.loadProfile()
 
+show('Hey Hey!');
+
 export const Overlay = observer(() => {
+
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
       <Preload/>
