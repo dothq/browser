@@ -17,53 +17,6 @@ import HorizontalScrollbar from '~/renderer/app/components/HorizontalScrollbar';
 import store from '.';
 import { ipcRenderer, remote } from 'electron';
 import { extname } from 'path';
-const RPC = require("discord-rpc")
-
-// const client = require('discord-rich-presence')('565161122798370816');
-
-// const startTimestamp = new Date();
-
-// async function setActivity(domain: string) {
-
-//   if(!domain) {
-//     var details = "Idle"
-//   }
-//   else {
-//     var details = `Browsing ${domain}`
-//   }
-
-//   client.updatePresence({
-//     details,
-//     state: 'on Dot Browser',
-//     startTimestamp,
-//     largeImageKey: 'dot-large',
-//     largeImageText: 'Dot Browser',
-//     instance: false,
-//   });
-// }
-
-// client.on('connected', () => {
-//   var state = null;
-//   setActivity(state);
-
-//   // activity can only be set every 15 seconds
-//   setInterval(() => {
-//     var url = store.tabs.selectedTab.url;
-//     var hostname = getHostName(url);
-//     var state = null;
-//     setActivity(hostname);
-//   }, 2000);
-// });
-
-// function getHostName(url: any) {
-//   var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
-//   if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
-//   return match[2];
-//   }
-//   else {
-//       return null;
-//   }
-// }
 
 export class TabsStore {
   @observable
@@ -155,6 +108,12 @@ export class TabsStore {
       return this.containerRef.current.offsetWidth;
     }
     return 0;
+  }
+
+  public getHostname(url: string) {
+    var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
+    var arr = pattern.exec(url);
+    return arr[2];
   }
 
   public get selectedTab() {

@@ -17,7 +17,6 @@ import { get } from 'http';
 const nativeImage = require("electron").nativeImage;
 const modal = require('electron-modal');
 const editJsonFile = require("edit-json-file");
-const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 

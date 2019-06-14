@@ -225,7 +225,7 @@ export const runWebRequestService = (window: AppWindow) => {
     var url = new URL(details.url);
     var hn = url.hostname.split(".")[1];
 
-    var blacklisted_from_ua = ['google', 'youtube', 'www.google', 'www.youtube']
+    var blacklisted_from_ua = ['google', 'youtube', 'www.google', 'www.youtube', 'ebay', 'www.ebay']
 
     if(blacklisted_from_ua.includes(hn.toLowerCase()) == true) {
       details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
