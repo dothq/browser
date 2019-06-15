@@ -28,6 +28,7 @@ import { LoginModal } from '../Login';
 import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
+import { Snackbar } from '../Snackbar';
 import { QuickMenu } from '../QuickMenu';
 import { DownloadsSection } from '../DownloadsSection';
 import { icons } from '../../constants';
@@ -37,7 +38,6 @@ import { platform, homedir } from 'os';
 const editJsonFile = require("edit-json-file");
 
 import console = require('console');
-const show = require("mui-simple-snackbars").show;
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
@@ -52,6 +52,7 @@ const {
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => {
   console.log(`[FCMNS] The Firebase Cloud Messaging service has been launched using token ${token}`)
+  ipcRenderer.send('fcm-ready', { token: token })
 })
 
 // Handle notification errors
@@ -163,13 +164,20 @@ export const preventHiding = (e: any) => {
 
 store.user.loadProfile()
 
-show('Hey Hey!');
+const LoginSnackbar = () => {
+  return (
+    <Snackbar visible={store.user.loggedin}>
+      Welcome back, {store.user.username}
+    </Snackbar>
+  )
+};
 
 export const Overlay = observer(() => {
 
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
       <Preload/>
+      {store.user.loggedin == true && <LoginSnackbar />}
       <Container
         visible={
           store.overlay.currentContent === 'default' && store.overlay.visible

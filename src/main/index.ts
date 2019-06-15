@@ -76,6 +76,10 @@ app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 // Fixes any proxy bypass settings
 
+ipcMain.on('online-status-changed', (event: any, status: any) => {
+  console.log("Dot is OFFLINE", status)
+})
+
 app.on('ready', async () => {
 
   modal.setup();

@@ -142,6 +142,10 @@ export class TabsStore {
       else {
         remote.getCurrentWindow().setTitle(`Dot`)
       }
+
+      if(store.tabs.list.length == 0) {
+        remote.getCurrentWindow().setTitle(`Dot`)
+      }
     }, 250);
 
 

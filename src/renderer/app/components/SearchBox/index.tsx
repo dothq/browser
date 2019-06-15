@@ -180,7 +180,7 @@ export const SearchBox = observer(() => {
     var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];    
   }
   else {
-    var sBV = [`Where do you want to go today?`, `What's on your mind?`, 'Enter a search term or URL to get started.', `${timeType}.`]
+    var sBV = [`Where do you want to go today?`, `What's on your mind?`, 'Enter a search term or URL to get started.', `${timeType}`]
     var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
   }
 

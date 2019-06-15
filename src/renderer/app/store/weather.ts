@@ -37,7 +37,7 @@ export class WeatherStore {
   public tempindicator?: string;
 
   /** This function will be called when your app is first opened or when they need to reload the data */
-  public async load(deg: string) {
+  public async load(deg?: string) {
 
     try {
 
@@ -52,7 +52,7 @@ export class WeatherStore {
           dt = "F"
         }
       }
-      else {
+      if(!deg) {
         if(!file.get("tempType")) {
           return dt = "c"
         }
