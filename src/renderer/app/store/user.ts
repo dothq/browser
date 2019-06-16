@@ -8,6 +8,7 @@ import { icons } from '../constants';
 import store from '.';
 import { countVisitedTimes } from '../utils';
 import console = require('console');
+import { remote } from 'electron';
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 const fetch = require("node-fetch");
@@ -50,7 +51,7 @@ export class UserStore {
       const data = await fetch('https://dot.ender.site/api/session/l', {
         method: 'post',
         body: JSON.stringify(body),
-        headers: { 'content-type': 'application/json' }
+        headers: { 'content-type': 'application/json', 'X-Dot-Version': `${remote.app.getVersion()}` }
       });
       const json = await data.json();
 

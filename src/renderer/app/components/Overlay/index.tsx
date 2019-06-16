@@ -166,7 +166,7 @@ store.user.loadProfile()
 
 const LoginSnackbar = () => {
   return (
-    <Snackbar visible={store.user.loggedin}>
+    <Snackbar visible={store.user.loggedin == true}>
       Welcome back, {store.user.username}
     </Snackbar>
   )

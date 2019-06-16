@@ -6,7 +6,247 @@
   <meta charset="UTF-8" />
   <title>Sign in</title>
   <link rel="stylesheet" href="https://dot.ender.site/style">
-  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Google Sans Italic'), local('GoogleSans-Italic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaErENHsxJlGDuGo1OIlL3L8phULjtH.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Google Sans Italic'), local('GoogleSans-Italic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaErENHsxJlGDuGo1OIlL3L8p9ULjtH.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Google Sans Italic'), local('GoogleSans-Italic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaErENHsxJlGDuGo1OIlL3L8pNULjtH.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Google Sans Italic'), local('GoogleSans-Italic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaErENHsxJlGDuGo1OIlL3L8pJULjtH.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('Google Sans Italic'), local('GoogleSans-Italic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaErENHsxJlGDuGo1OIlL3L8pxULg.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* cyrillic */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 500;
+        src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-m93OwBmO24p.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 500;
+        src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-m93OwdmO24p.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 500;
+        src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-m93OwtmO24p.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 500;
+        src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-m93OwpmO24p.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 500;
+        src: local('Google Sans Medium Italic'), local('GoogleSans-MediumItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-m93OwRmOw.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* cyrillic */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-idxOwBmO24p.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-idxOwdmO24p.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-idxOwtmO24p.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-idxOwpmO24p.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('Google Sans Bold Italic'), local('GoogleSans-BoldItalic'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaZrENHsxJlGDuGo1OIlL3L-idxOwRmOw.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* cyrillic */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Google Sans Regular'), local('GoogleSans-Regular'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Kwp5MKg.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Google Sans Regular'), local('GoogleSans-Regular'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Nwp5MKg.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Google Sans Regular'), local('GoogleSans-Regular'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Bwp5MKg.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Google Sans Regular'), local('GoogleSans-Regular'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Awp5MKg.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('Google Sans Regular'), local('GoogleSans-Regular'), url(https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Owp4.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* cyrillic */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94Yt3CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94YtwCwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94Yt8CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94Yt9CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: local('Google Sans Medium'), local('GoogleSans-Medium'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLU94YtzCwY.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        /* cyrillic */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154t3CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+        }
+        /* greek */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154twCwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0370-03FF;
+        }
+        /* vietnamese */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154t8CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
+        }
+        /* latin-ext */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154t9CwZ-Pw.woff2) format('woff2');
+        unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+        }
+        /* latin */
+        @font-face {
+        font-family: 'Google Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154tzCwY.woff2) format('woff2');
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+   </style>
 </head>
 
 <body ondragstart="return false">
@@ -67,7 +307,7 @@
     transform: translateY(1780%) translateX(30%);
     font-size: 12px;
     color: #d0d0d0;
-    font-family: Roboto;
+    font-family: "Google Sans";
     ">
         <span>Don't have an account? <a onclick="openURL('https://dot.ender.site')">Create one</a>.</span>
     </p>
@@ -76,7 +316,7 @@
     transform: translateY(2222%) translateX(2%);
     font-size: 12px;
     color: #828282;
-    font-family: Roboto;
+    font-family: "Google Sans";
     ">
     <img src="../icon.png" style="width: 15px; filter: invert(1);transform: translateY(19%);">
     <span>Dot Browser 2.1.0</span></p>
@@ -254,6 +494,7 @@
 
                     http.open('POST', 'https://dot.ender.site/api/session/l')
                     http.setRequestHeader('Content-type', 'application/json')
+                    http.setRequestHeader('X-Dot-Version', '2.1.0')
                     http.send(JSON.stringify(loginData))
                     http.onload = function() {
                         var body = JSON.parse(http.responseText);
@@ -428,10 +669,12 @@
         position: absolute;
         left: 50%;
         transform: translateY(45%) translateX(-51%);
+        font-family: "Google Sans";
     }
 
     .input {
         border-color: none;
+        font-family: "Google Sans";
     }
 
     .login-field {
@@ -444,10 +687,11 @@
         border-top: none;
         border-right: none;
         transition: border-bottom 0.7s;
+        font-family: "Google Sans";
     }
 
     #logon-title {
-        font-family: Roboto;
+        font-family: "Google Sans";
         font-weight: 300;
     }
 
@@ -461,18 +705,22 @@
 
     h1 {
         user-select: none;
+        font-family: "Google Sans";
     }
 
     span {
         user-select: none;
+        font-family: "Google Sans";
     }
 
     p {
-        user-select: none
+        user-select: none;
+        font-family: "Google Sans";
     }
 
     a {
-        user-select: none
+        user-select: none;
+        font-family: "Google Sans";
     }
 
     img {
