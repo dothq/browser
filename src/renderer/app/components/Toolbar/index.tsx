@@ -15,6 +15,8 @@ import { AbButton } from '../ToolbarButton/style';
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
 import { remote } from 'electron'
+import { SSL_OP_TLS_ROLLBACK_BUG } from 'constants';
+import { appWindow } from '~/main';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -64,6 +66,34 @@ export const viewPrefs = () => {
   store.overlay.currentContent = "settings";
 }
 
+export const audioPlaying = () => {
+  if(store.tabs.selectedTab) {
+    if(store.tabs.selectedTab.audioPlaying == true) {
+      return "This tab is playing audio."
+    }
+    else {
+      return "This tab is not playing audio or has been pasued."
+    }
+  }
+  else {
+    return ""
+  }
+}
+
+export const audioVisible = () => {
+  if(store.tabs.selectedTab) {
+    if(store.tabs.selectedTab.audioPlaying == true) {
+      return true
+    }
+    if(store.tabs.selectedTab.audioPlaying == false) {
+      return false
+    }
+  }
+  else {
+    return false
+  }
+}
+
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -76,6 +106,25 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
+        <AbButton title={audioPlaying()}>
+          <BrowserAction
+            size={18}
+            style={{ marginLeft: 0 }}
+            opacity={0.54}
+            title="This tab is playing audio."
+            visible={audioVisible()}
+            data={{
+              badgeBackgroundColor: 'gray',
+              badgeText: store.tabs.selectedTab
+              ? store.tabs.selectedTab.audioPlaying
+                ? ''
+                : ''
+              : '',
+              icon: icons.music,
+              badgeTextColor: 'white',
+            }}
+          />          
+        </AbButton>
         <AbButton onClick={viewLauncher}>
           <BrowserAction
             size={18}
