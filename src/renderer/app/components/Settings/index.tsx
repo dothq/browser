@@ -182,6 +182,10 @@ function avatarTitle() {
   }
 }
 
+const formSubmit = () => {
+  return false;
+}
+
 const YourProfile = observer(() => {
   var user = {
     username: 'Guest',
@@ -205,7 +209,9 @@ const YourProfile = observer(() => {
   return (
     <SettingsSection id="my-profile">
       <ListItem>
-        <input id="avatar-choose" onChange={avatarChange} accept="image/png" type="file" style={{ display: 'none' }}></input>
+        <form encType="multipart/form-data" method="post" name="fileinfo">
+          <input id="avatar-choose" onChange={avatarChange} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
+        </form>
         <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <div style={{ marginTop: '-7px' }}>
           <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
@@ -225,36 +231,37 @@ const YourProfile = observer(() => {
 });
 
 async function avatarChange() {
+
   var files = document.getElementById('avatar-choose').files[0];
 
   if(files.type == "image/png") {
-    DataURI(files.path)
-    .then((content: any) => {
+    if(files.size / 1024 / 1024 <= 2) {
 
-      const http = new XMLHttpRequest()
+      var content = await DataURI(files.path);
 
-      var decodedfp = atob(localStorage.getItem("dot_footprint"));
+      store.user.avatar = content
 
-      var email = decodedfp.split("||")[0];
-      var password = decodedfp.split("||")[1];
+      var form = document.forms.namedItem("fileinfo");
+    
+        var footprint = atob(localStorage.getItem("dot_footprint"));
 
-      console.log(email, password)
+        var email = footprint.split("||")[0];
+        var password = footprint.split("||")[1];
 
-      const data = {
-        content
-      }
+        var oData = new FormData(form);
 
-      http.open('POST', `https://dot.ender.site/api/options/avatar`)
-      http.setRequestHeader('Content-type', 'application/json')
-      http.setRequestHeader('Authorization', `DotUser ${password} at ${email}`)
-      http.send(JSON.stringify(data));
-      http.onload = function() {
-          store.user.avatar = content 
-      } 
-    });
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "https://dot.ender.site/api/upload/avatar", true);
+        oReq.setRequestHeader("Authorization", `DotUser ${password} at ${email}`)
+        oReq.send(oData);
+        oReq.onload = function() {
+          var body = JSON.parse(oReq.responseText);
+        };
+  
+
+    }
   }
 
-  
 };
 
 const wexond = () => {

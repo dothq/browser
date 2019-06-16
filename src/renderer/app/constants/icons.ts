@@ -31,6 +31,8 @@ import uk from '~/shared/resources/icons/uk.png';
 import lock from '~/shared/resources/icons/lock.svg';
 import unlock from '~/shared/resources/icons/unlock.svg';
 import zoom from '~/shared/resources/icons/zoom.svg';
+import music from '~/shared/resources/icons/music.svg';
+import muted from '~/shared/resources/icons/muted.svg';
 
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
@@ -70,4 +72,6 @@ export const icons = {
   lock,
   unlock,
   zoom,
+  music,
+  muted,
 };

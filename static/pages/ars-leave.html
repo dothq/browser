@@ -4,7 +4,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=3.0, shrink-to-fit=no">
   <meta charset="UTF-8" />
-  <title>Dot</title>
+  <title>Are you sure?</title>
+  <link rel="stylesheet" href="https://dot.ender.site/style">
   <style>
     @font-face {
         font-family: 'Google Sans';
@@ -245,32 +246,25 @@
         src: local('Google Sans Bold'), local('GoogleSans-Bold'), url(https://fonts.gstatic.com/s/googlesans/v14/4UabrENHsxJlGDuGo1OIlLV154tzCwY.woff2) format('woff2');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
-
-      .eOnhlq {
-        font-family: "Google Sans";
-        font-size: 15px;
-      }
-  </style>
+   </style>
 </head>
 
 <body ondragstart="return false">
-  <div id="app"></div>
+  <div id="app" style="opacity: 0; transition: opacity 0.4s; transition-delay: 0.5s"> 
+    <div id="titleBar" style="-webkit-app-region: drag;width: 100%;float: right;">
+        <a id="close" style="float: right;-webkit-app-region: no-drag;padding: 20px;">
+            <img src="../app-icons/tray-close.png" draggable="false">
+        </a>
+    </div>
 
-  $bundles
-
-  <script>
+    <script>
     
-    const { ipcRenderer } = require('electron')
+        document.getElementById("close").addEventListener('click', function() {
+            window.close()
+        });
 
-    ipcRenderer.on('ready', (event) => {
-      console.log(`%c Dot Browser %c Loaded `,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
-    })
+    </script>
 
-    ipcRenderer.on('fcm-ready', (event, token) => {
-      console.log(`%c Dot Browser %c FCM Client loaded with token ${token}`,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
-    })
-  </script>
-
+</div>
 </body>
-
 </html>
