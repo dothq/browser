@@ -4,6 +4,8 @@ import * as React from 'react';
 import { Preloader } from '~/renderer/components/Preloader';
 import { Tab } from '~/renderer/app/models';
 import store from '~/renderer/app/store';
+const emote = require("react-easy-emoji");
+const emoji = require("node-emoji");
 import {
   StyledTab,
   StyledContent,
@@ -19,6 +21,7 @@ import { transparency } from '~/renderer/constants';
 import { ipcRenderer, remote } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
 import { resolve } from 'path';
+import console = require('console');
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -142,6 +145,9 @@ const contextMenu = (tab: Tab) => () => {
 };
 
 const Content = observer(({ tab }: { tab: Tab }) => {
+
+  var title = tab.title
+
   return (
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && tab.favicon !== '' && (
@@ -166,7 +172,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
-        {tab.title}
+        {title}
       </StyledTitle>
     </StyledContent>
   );

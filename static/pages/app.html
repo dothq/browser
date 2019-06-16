@@ -12,11 +12,19 @@
 
   $bundles
 
-  <style>
-    body {
-      background-color: #fff
-    }
-  </style>  
+  <script>
+    
+    const { ipcRenderer } = require('electron')
+
+    ipcRenderer.on('ready', (event) => {
+      console.log(`%c Dot Browser %c Loaded `,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
+    })
+
+    ipcRenderer.on('fcm-ready', (event, token) => {
+      console.log(`%c Dot Browser %c FCM Client loaded with token ${token}`,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
+    })
+  </script>
+
 </body>
 
 </html>

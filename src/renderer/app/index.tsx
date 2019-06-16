@@ -10,6 +10,7 @@ var Mousetrap = require('mousetrap');
 import { AppWindow } from './app-window';
 import { resolve, join } from 'path';
 import console = require('console');
+import { platform } from 'os';
 
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
