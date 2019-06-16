@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { SnackbarProvider } from 'notistack';
+
 
 import { Style } from '~/renderer/app/style';
 import { Toolbar } from '../Toolbar';
@@ -12,6 +12,7 @@ import store from '../../store';
 import { platform } from 'os';
 import { Overlay } from '../Overlay';
 import { icons } from '../../constants'
+import console = require('console');
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
@@ -23,15 +24,13 @@ window.onbeforeunload = () => {
 
 export const App = observer(() => {
   return (
-    <SnackbarProvider maxSnack={4}>
       <StyledApp>
-        <GlobalStyle />
-        <Toolbar />
-        <Line />
-        <Screenshot/>
-        <Overlay />
-        {platform() !== 'darwin' && <WindowsButtons />}
+          <GlobalStyle />
+          <Toolbar />
+          <Line />
+          <Screenshot/>
+          <Overlay />
+          {platform() !== 'darwin' && <WindowsButtons />}
       </StyledApp>
-    </SnackbarProvider>
   );
 });

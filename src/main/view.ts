@@ -8,6 +8,7 @@ import store from '~/renderer/app/store';
 import { resolve } from 'path';
 const path = require("path");
 const { setup: setupPushReceiver } = require('electron-push-receiver');
+import { Client } from 'discord-rpc';
 
 export class View extends BrowserView {
   public title: string = '';
@@ -275,6 +276,59 @@ export class View extends BrowserView {
     this.webContents.addListener(
       'new-window',
       (e, url, frameName, disposition) => {
+
+        //Discord Rich Presence
+        const clientId = '565573138146918421';
+
+        const rpclient = new Client({ transport: 'ipc'});
+        const startTimestamp = Math.round(+new Date()/1000)
+
+        window.onbeforeunload = () => {
+          rpclient.destroy()
+        }
+
+        async function setActivity() {
+          if (!rpclient) {
+            return;
+          }
+          try {
+          var details = 'Browsing on';
+          var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
+          var arr = pattern.exec(url);
+          var state = arr[2];
+          var largeImageKey = 'dlogo';
+          var smallImageKey = 'dot-online';
+          var smallImageText = `Browsing a webpage`;
+          } catch(e) {
+            var details = 'Dot Browser';
+            var state = 'Idle';
+            var largeImageKey = 'dlogo';
+            var smallImageKey = 'dot-idle';
+            var smallImageText = 'Idle';
+          }
+          rpclient.setActivity({
+            details: details,
+            state: state,
+            startTimestamp,
+            largeImageKey,
+            smallImageKey,
+            largeImageText: `Dot Browser ${app.getVersion()}`,
+            smallImageText,
+            instance: false
+          })
+        };
+
+        rpclient.on('ready', () => {
+          setActivity();
+
+          setInterval(() => {
+            setActivity();
+          }, 3e3);
+        });
+
+        rpclient.login({ clientId }).catch(console.error);
+        //Discord Rich Presence
+
         if (disposition === 'new-window') {
           console.log(frameName)
           console.log(disposition)

@@ -22,7 +22,7 @@
 
     <div id="form" style="transform: translateY(45%) translateX(-51%); ">
         <img src="https://getdot.js.org/src/icon.png" style="filter: invert(100%);width: 100px;margin-left: auto;margin-right: auto;display: block;">
-        <h1 class="title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your  Account</h1>
+        <h1 class="title" id="logon-title" style="  color: #232323;  font-size: 23px;  margin-left: 5px; text-align: center">Login to your Dot Account</h1>
         <h1 class="title" id="verif-info" style="  color: #494949;  font-size: 16px;  margin-left: 5px; text-align: center; opacity: 0; transition: opacity 0.3s; margin-top: -8px"></h1>
         <h1 class="title" id="verif-info-2" style="  color: #757575;  font-size: 14px; text-align: center; opacity: 0; transition: opacity 0.3s; transition-delay: 0.7s; position: absolute;bottom: 0;"></h1>
         <h1 class="title" id="username-info" style="display: none; color: #494949;  font-size: 16px;  margin-left: 5px; text-align: center; opacity: 0; transition: opacity 0.3s; margin-top: -8px; transition-delay: 1s">First you'll need a username.</h1>
@@ -64,13 +64,22 @@
     </div>   
 
     <p style="
-    transform: translateY(2330%) translateX(2%);
+    transform: translateY(1780%) translateX(30%);
+    font-size: 12px;
+    color: #d0d0d0;
+    font-family: Roboto;
+    ">
+        <span>Don't have an account? <a onclick="openURL('https://dot.ender.site')">Create one</a>.</span>
+    </p>
+
+    <p style="
+    transform: translateY(2222%) translateX(2%);
     font-size: 12px;
     color: #828282;
     font-family: Roboto;
     ">
     <img src="../icon.png" style="width: 15px; filter: invert(1);transform: translateY(19%);">
-    <span>Dot 2.0.0-beta.13</span></p>
+    <span>Dot Browser 2.1.0</span></p>
 
     <script>
 
@@ -78,6 +87,11 @@
 
             document.getElementById("app").style.opacity = 1;
         
+            function openURL(url) {
+                modal.emit('load-external-url', url);
+                window.close()
+            }           
+
             function valEmail() {
         
                 awaitEnter(event)
@@ -451,6 +465,14 @@
 
     span {
         user-select: none;
+    }
+
+    p {
+        user-select: none
+    }
+
+    a {
+        user-select: none
     }
 
     img {

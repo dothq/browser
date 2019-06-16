@@ -89,6 +89,15 @@ const login = async () => {
     si.hide();
   });
 
+  si.on('load-external-url', (c: any) => {
+    var url = c;
+    store.tabs.addTab({ url, active: true });
+
+    setTimeout(function() {
+      store.overlay.visible = false;
+    }, 250);
+  });
+
   si.show();
   
   si.on('show', () => {
@@ -296,7 +305,7 @@ const AboutDot = observer(() => {
     <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.13</Title>
+        <Title style={{ fontSize: 20 }}>Dot Browser 2.1.0</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
