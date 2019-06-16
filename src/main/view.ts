@@ -9,6 +9,7 @@ import { resolve } from 'path';
 const path = require("path");
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import { Client } from 'discord-rpc';
+var modal = require('electron-modal');
 
 export class View extends BrowserView {
   public title: string = '';
@@ -208,8 +209,38 @@ export class View extends BrowserView {
       menu.popup();
     });
 
+    this.webContents.on('will-prevent-unload', async (event) => {
+      var ars = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\ars-leave.html'), {
+        width: 600,
+        height: 400,
+        resizable: false,
+        center: false,
+        alwaysOnTop: true,
+        title: 'Are you sure you want to leave?',
+        titleBarStyle: 'hiddenInset',
+        webPreferences: {
+          nodeIntegration: true
+        },
+        frame: false
+      })
+    
+      ars.on('passed-details', (c: any) => {
+
+      });
+    
+      ars.show();        
+    })
+
     this.webContents.addListener('found-in-page', (e, result) => {
       appWindow.webContents.send('found-in-page', result);
+    });
+
+    this.webContents.on('media-started-playing', (listener: any) => {
+      appWindow.webContents.send(`audio-playing-${this.tabId}`);
+    });
+
+    this.webContents.on('media-paused', (listener: any) => {
+      appWindow.webContents.send(`audio-stopped-${this.tabId}`);
     });
 
     this.webContents.addListener('did-stop-loading', () => {
@@ -292,13 +323,19 @@ export class View extends BrowserView {
             return;
           }
           try {
-          var details = 'Browsing on';
-          var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
-          var arr = pattern.exec(url);
-          var state = arr[2];
-          var largeImageKey = 'dlogo';
-          var smallImageKey = 'dot-online';
-          var smallImageText = `Browsing a webpage`;
+
+            var details = 'Browsing on';
+
+            if(appWindow.webContents.isCurrentlyAudible() == true) {
+              details = 'Listening to audio on'
+            }
+
+            var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
+            var arr = pattern.exec(url);
+            var state = arr[2];
+            var largeImageKey = 'dlogo';
+            var smallImageKey = 'dot-online';
+            var smallImageText = `Browsing a webpage`;
           } catch(e) {
             var details = 'Dot Browser';
             var state = 'Idle';
