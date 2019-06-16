@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, webContents } from 'electron';
 import * as Vibrant from 'node-vibrant';
 import { remote } from 'electron';
 
@@ -28,6 +28,9 @@ export class Tab {
 
   @observable
   public title: string = 'New tab';
+
+  @observable
+  public originalTitle: string = 'New tab';
 
   @observable
   public loading: boolean = false;
@@ -71,6 +74,17 @@ export class Tab {
   @computed
   public get findVisible() {
     return this._findVisible;
+  }
+
+  public muteTab() {
+    if(this.audioPlaying == true) {
+      ipcRenderer.send('audio-pause');
+      this.audioPlaying = false;
+    }
+    else {
+      ipcRenderer.send('audio-resume');
+      this.audioPlaying = true;
+    }
   }
 
   public set findVisible(val: boolean) {
@@ -139,6 +153,7 @@ export class Tab {
   public webContentsId: number;
   public findRequestId: number;
   public isWindow: boolean = false;
+  public audioPlaying: boolean = false;
 
   constructor({ url, active } = defaultTabOptions, tabGroupId: number) {
     this.tabGroupId = tabGroupId;
@@ -256,6 +271,17 @@ export class Tab {
       this.emitOnUpdated({
         status: loading ? 'loading' : 'complete',
       });
+    });
+
+    ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
+      this.originalTitle = this.title;
+      this.title = `🔊 • ${this.title}`
+      this.audioPlaying = true;
+    });
+
+    ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
+      this.audioPlaying = false;
+      this.title = this.originalTitle;
     });
 
     const { defaultBrowserActions, browserActions } = store.extensions;

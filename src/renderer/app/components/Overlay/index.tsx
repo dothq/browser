@@ -99,11 +99,16 @@ async function setActivity() {
     return;
   }
   try {
-  var details = 'Browsing on';
-  var state = store.tabs.getHostname(store.tabs.selectedTab.url);
-  var largeImageKey = 'dlogo';
-  var smallImageKey = 'dot-online';
-  var smallImageText = `Browsing a webpage`;
+    var details = 'Browsing on';
+
+    if(store.tabs.selectedTab.audioPlaying == true) {
+      details = 'Listening to audio on'
+    }
+    
+    var state = store.tabs.getHostname(store.tabs.selectedTab.url);
+    var largeImageKey = 'dlogo';
+    var smallImageKey = 'dot-online';
+    var smallImageText = `Browsing a webpage`;
   } catch(e) {
     var details = 'Dot Browser';
     var state = 'Idle';
@@ -166,7 +171,7 @@ store.user.loadProfile()
 
 const LoginSnackbar = () => {
   return (
-    <Snackbar visible={store.user.loggedin}>
+    <Snackbar visible={store.user.loggedin == true}>
       Welcome back, {store.user.username}
     </Snackbar>
   )
