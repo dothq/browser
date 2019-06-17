@@ -23,6 +23,7 @@ export class AppWindow extends BrowserWindow {
       backgroundColor: '#1c1c1c',
       title: 'Dot Browser',
       titleBarStyle: 'hiddenInset',
+      maximizable: false,
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
@@ -82,7 +83,10 @@ export class AppWindow extends BrowserWindow {
       }
     });
 
-    this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
+    if(this.webContents.getURL() != "https://dot.ender.site/api/session/l") {
+      this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
+    }
+    
 
     const resize = () => {
       this.viewManager.fixBounds();

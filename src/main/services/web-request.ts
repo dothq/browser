@@ -246,13 +246,6 @@ export const runWebRequestService = (window: AppWindow) => {
     interceptRequest('onBeforeRequest', newDetails, callback);
   };
 
-  if(!file.get("block-ads")) {
-    file.set("block-ads", true);
-  }
-  else {
-
-  }
-
   webviewRequest.onBeforeRequest(
     async (details: Electron.OnBeforeRequestDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
@@ -264,15 +257,17 @@ export const runWebRequestService = (window: AppWindow) => {
 
         if (match || redirect) {
 
-          appWindow.webContents.send(`blocked-ad-${tabId}`);
+          // if(file.get("adblockEnabled") == true) {
+            appWindow.webContents.send(`blocked-ad-${tabId}`);
 
-          if (redirect) {
-            callback({ redirectURL: redirect });
-          } else {
-            callback({ cancel: true });
-          }
-
-          return;
+            if (redirect) {
+              callback({ redirectURL: redirect });
+            } else {
+              callback({ cancel: true });
+            }
+  
+            return;
+          // }
         }
       }
 
