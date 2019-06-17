@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import * as React from 'react';
 import { resolve } from 'path';
-import { homedir } from 'os';
+import { homedir, platform } from 'os';
 import { icons } from '../constants';
 import store from '.';
 import { countVisitedTimes } from '../utils';
@@ -51,7 +51,7 @@ export class UserStore {
       const data = await fetch('https://dot.ender.site/api/session/l', {
         method: 'post',
         body: JSON.stringify(body),
-        headers: { 'content-type': 'application/json', 'X-Dot-Version': `${remote.app.getVersion()}` }
+        headers: { 'content-type': 'application/json', 'X-Dot-Version': `${remote.app.getVersion()}`, 'X-Operating-System': `${platform()}` }
       });
       const json = await data.json();
 

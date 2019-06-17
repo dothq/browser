@@ -111,9 +111,13 @@ export class TabsStore {
   }
 
   public getHostname(url: string) {
-    var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
-    var arr = pattern.exec(url);
-    return arr[2];
+    var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+    if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+      return match[2];
+    }
+    else {
+        return null;
+    }
   }
 
   public get selectedTab() {

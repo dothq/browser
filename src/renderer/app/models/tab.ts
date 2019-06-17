@@ -176,6 +176,7 @@ export class Tab {
         let updated = null;
 
         if (url !== this.url) {
+          this.title.replace(/🔊 • /g, "");
           this.lastHistoryId = await store.history.addItem({
             title: this.title,
             url,
