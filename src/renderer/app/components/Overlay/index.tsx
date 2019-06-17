@@ -41,6 +41,9 @@ import console = require('console');
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
+
+let file = editJsonFile(`${remote.app.getPath('userData')}/dot/dot-options.json`);
+
 const {
   START_NOTIFICATION_SERVICE,
   NOTIFICATION_SERVICE_STARTED,
@@ -129,11 +132,13 @@ async function setActivity() {
 };
 
 rpclient.on('ready', () => {
-  setActivity();
-
-  setInterval(() => {
+  // if(file.get("discordRichPresenceEnabled") == true) {
     setActivity();
-  }, 3e3);
+
+    setInterval(() => {
+      setActivity();
+    }, 3e3);
+  // }
 });
 
 rpclient.login({ clientId }).catch(console.error);

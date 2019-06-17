@@ -20,7 +20,8 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, ipcMain } from 'electron';
+import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 
 var modal = require('electron-modal');
@@ -179,6 +180,9 @@ const Email = observer(() => {
 function avatarTitle() {
   if(store.user.loggedin == true) {
     return "Upload a new avatar"
+  }
+  else {
+    return "";
   }
 }
 
@@ -390,9 +394,9 @@ const Advanced = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>Block ads and trackers</Title>
+        <Title style={{ fontSize: 15 }}>Show Discord Rich Presence</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-            <OptSwitch />
+          <RPCSwitch />
         </Buttons>
       </ListItem>
     </SettingsSection>

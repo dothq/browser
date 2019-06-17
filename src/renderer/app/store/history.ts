@@ -72,6 +72,7 @@ export class HistoryStore {
   }
 
   public addItem(item: HistoryItem) {
+    item.title.replace(/🔊 • /g, "");
     return new Promise((resolve: (id: string) => void) => {
       this.db.insert(item, (err: any, doc: HistoryItem) => {
         if (err) return console.error(err);

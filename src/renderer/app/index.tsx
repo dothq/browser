@@ -125,7 +125,7 @@ Menu.setApplicationMenu(
         { role: 'delete' },
         { role: 'selectall' },
         { role: 'quit' },
-        { role: 'reload', accelerator: 'Ctrl+Shift+Alt+R', click() { console.log("Reloading session...") } },
+        { role: 'reload', accelerator: 'Ctrl+Shift+Alt+R' },
         {
           accelerator: 'Ctrl+F',
           label: 'Find in page',
