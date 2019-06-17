@@ -209,28 +209,6 @@ export class View extends BrowserView {
       menu.popup();
     });
 
-    this.webContents.on('will-prevent-unload', async (event) => {
-      var ars = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\ars-leave.html'), {
-        width: 600,
-        height: 400,
-        resizable: false,
-        center: false,
-        alwaysOnTop: true,
-        title: 'Are you sure you want to leave?',
-        titleBarStyle: 'hiddenInset',
-        webPreferences: {
-          nodeIntegration: true
-        },
-        frame: false
-      })
-    
-      ars.on('passed-details', (c: any) => {
-
-      });
-    
-      ars.show();        
-    })
-
     this.webContents.addListener('found-in-page', (e, result) => {
       appWindow.webContents.send('found-in-page', result);
     });

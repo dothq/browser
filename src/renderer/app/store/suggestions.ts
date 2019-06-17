@@ -29,6 +29,11 @@ export class SuggestionsStore {
 
       const historySuggestions: Suggestion[] = [];
 
+      if(!file.get("searchEngine")) {
+        file.set("searchEngine", "google");
+        file.save()
+      }
+
       var searchengine:string = await file.get("searchEngine");
       if(searchengine == "ddg") {
         searchengine = "DuckDuckGo"

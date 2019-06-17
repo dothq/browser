@@ -5,7 +5,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import { Style } from '~/renderer/app/style';
 import { Toolbar } from '../Toolbar';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import { Line, StyledApp, Screenshot} from './style';
 import { WindowsButtons } from '../WindowsButtons';
 import store from '../../store';
@@ -13,6 +13,8 @@ import { platform } from 'os';
 import { Overlay } from '../Overlay';
 import { icons } from '../../constants'
 import console = require('console');
+import { resolve } from 'path';
+var modal = require("electron-modal");
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
