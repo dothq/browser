@@ -50,7 +50,7 @@ ipcRenderer.setMaxListeners(0);
 const styleElement = document.createElement('style');
 
 ipcRenderer.on('dev-tools-opened', () => {
-  appWindow.webContents.openDevTools();
+  appWindow.webContents.openDevTools({ mode: 'detach' });
 });
 
 var reload = () => {
@@ -264,15 +264,15 @@ Menu.setApplicationMenu(
               return;
             }
 
-            //  if(store.tabs.list.length != 0) {
-            //    if(store.overlay.visible == false) {
-                remote.webContents.getFocusedWebContents().openDevTools();  
+              if(store.tabs.list.length != 0) {
+                if(store.overlay.visible == false) {
+                remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
               
                 if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
                   remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
                 }
-            //    }
-            //  }
+                }
+              }
             
           } 
         },   

@@ -6,6 +6,7 @@ import console = require('console');
 import { homedir } from 'os';
 import { resolve } from 'path';
 import { rename } from 'fs'; 
+
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 const app = remote.app;
