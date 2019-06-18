@@ -103,6 +103,7 @@
     "leveldown": "5.0.1",
     "levelup": "4.0.1",
     "lru-cache": "^5.1.1",
+    "material-ui": "^0.20.2",
     "mobx": "5.9.4",
     "mobx-react": "5.4.3",
     "mousetrap": "^1.6.3",
