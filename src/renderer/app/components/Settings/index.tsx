@@ -366,8 +366,9 @@ const awaitDownloadUpdate = async () => {
     file.save()
   
     store.downloads.location = dl;
+    ipcRenderer.send('set-downloads-loc', `${dl}`);
 
-    document.getElementById("dl-l").innerText = store.downloads.location;
+    document.getElementById("dl-l").innerText = dl;
 
   }, 300);
 
@@ -663,7 +664,7 @@ export const Appearance = observer(() => {
 });
 
 export const openDevTools = () => {
-  remote.webContents.getFocusedWebContents().openDevTools();  
+  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
               
   if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
     remote.webContents.getFocusedWebContents().devToolsWebContents.focus();

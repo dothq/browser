@@ -155,6 +155,10 @@ app.on('ready', async () => {
     appWindow.webContents.focus();
   });
 
+  ipcMain.on('set-downloads-loc', (path: any) => {
+    appWindow.webContents.session.setDownloadPath(path);
+  });
+
   const viewSession = session.fromPartition('persist:view');
 
   session
