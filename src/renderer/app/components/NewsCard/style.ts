@@ -2,19 +2,6 @@ import styled, { css } from 'styled-components';
 import { centerIcon, overline } from '~/shared/mixins';
 import store from '../../store'
 
-var gradient = ['#64b5f6', '#1e88e5']
-if(store.weather.timetype == "Night") {
-  gradient = ['#101010', '#282828b3']
-}
-
-if(store.weather.timetype == "Morning") {
-  gradient = ['#fe9900', '#ffe2adfa']
-}
-
-if(store.weather.timetype == "Afternoon") {
-  gradient = ['#646ff6', '#1e64e56b']
-}
-
 export const StyledCard = styled.div`
   background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
@@ -23,6 +10,7 @@ export const StyledCard = styled.div`
   overflow: hidden;
   width: 264px;
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
+  margin-left: 25px
 `;
 
 export const Offline = styled.div`
@@ -32,7 +20,11 @@ export const Offline = styled.div`
 export const Header = styled.div`
   width: 100%;
   padding: 24px;
-  background-image: linear-gradient(to bottom right, ${gradient[0]}, ${gradient[1]});
+  height: 212px
+
+  ${({ image }: { image: any }) => css`
+    background-image: url(${image})
+  `};
 `;
 
 export const Title = styled.div`

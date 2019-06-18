@@ -20,6 +20,7 @@ import {
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
 import { WeatherCard } from '../WeatherCard';
+import { NewsCard } from '../NewsCard';
 import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
@@ -182,6 +183,18 @@ const LoginSnackbar = () => {
   )
 };
 
+interface Props {
+  children: any;
+}
+
+const CardWrapper = observer(({ children }: Props) => {
+  return (
+    <div style={{ display: 'flex' }}>
+      {children}
+    </div>
+  );
+});
+
 export const Overlay = observer(() => {
 
   return (
@@ -204,7 +217,10 @@ export const Overlay = observer(() => {
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
             <Title>World</Title>
-            <WeatherCard />
+            <CardWrapper>
+              <WeatherCard />
+              <NewsCard newsImage={"https://ichef.bbci.co.uk/news/660/cpsprodpb/15D32/production/_107449398_gettyimages-1146471727.jpg"} />
+            </CardWrapper>
           </Content>
         </Scrollable>
       </Container>
