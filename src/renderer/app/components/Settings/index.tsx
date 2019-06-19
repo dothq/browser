@@ -741,9 +741,6 @@ export const Settings = observer(() => {
               <Title style={{ margin: '75px -30px -25px -30px' }}>Downloads</Title>
               <Downloads />
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Advanced</Title>
-              <Advanced />
-
               {store.user.experiments == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Developer Experiments</Title>}
               {store.user.experiments == true && <Experiments />}
 

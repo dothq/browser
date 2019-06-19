@@ -25,7 +25,6 @@ import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
-import { LoginModal } from '../Login';
 import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
@@ -228,7 +227,6 @@ export const Overlay = observer(() => {
       <Bookmarks />
       <Extensions />
       <Settings />
-      <LoginModal />
       <AdBlock />
     </StyledOverlay>
   );
