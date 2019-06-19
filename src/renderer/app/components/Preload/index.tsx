@@ -14,7 +14,6 @@ import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
 import console = require('console');
-import Switch from '@material-ui/core/Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow } from '../Overlay/style';
