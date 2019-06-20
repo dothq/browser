@@ -7,7 +7,10 @@
             "dot_full_with_version": "Dot Browser {appVersion}",
             "button_open": "Open",
             "button_run": "Run",
-            "search_placeholder": "Search"
+            "search_placeholder": "Search",
+            "quit": "Quit",
+            "quit_dot": "Quit Dot",
+            "quit_dot_with_version": "Quit Dot {appVersion}"
         }
     ],
     "rich_presence": [
@@ -120,7 +123,18 @@
     ],
     "history": [
         {
-            "title": "History"
+            "title": "History",
+            "clear_browsing_history": "Clear browsing data",
+            "sort": [
+                {
+                    "range_all": "All",
+                    "range_today": "Today",
+                    "range_yesterday": "Yesterday",
+                    "range_last_week": "Last week",
+                    "range_last_month": "Last month",
+                    "range_older": "Older"
+                }
+            ]
         }
     ],
     "bookmarks": [
@@ -131,6 +145,15 @@
     "extensions": [
         {
             "title": "Extensions"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Find in page",
+            "navigate_back": "Back",
+            "navigate_forward": "Forward",
+            "navigate_refresh": "Refresh (F5)",
+            "open_dot": "Open Dot Launcher"
         }
     ]
 }

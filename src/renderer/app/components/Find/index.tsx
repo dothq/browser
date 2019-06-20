@@ -153,7 +153,7 @@ export const Find = observer(() => {
         onKeyPress={onKeyPress}
         onChange={onInput}
         ref={store.findInputRef}
-        placeholder="Find in page"
+        placeholder={store.locale.uk.window[0].find_in_page}
         id="find"
       />
       <Occurrences>{selectedTab && selectedTab.findOccurrences}</Occurrences>
