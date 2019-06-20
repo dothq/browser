@@ -8,6 +8,27 @@ interface CloseProps {
   visible: boolean;
 }
 
+export const SearchInput = styled.input`
+  color: #000;
+  font-size: 13px;
+  font-family: Roboto;
+  width: 124px;
+  background: none;
+  border: none;
+  font-family: Roboto;
+  transition: 0.5s opacity, width;
+
+  &::placeholder {
+    color: rgb(33, 150, 243);
+    font-family: Roboto
+  }
+
+  ${({ visible }: { visible: boolean }) => css`
+    opacity: ${visible ? 1 : 0};
+    width: ${visible ? 'auto' : '0px'};
+  `};  
+`;
+
 export const StyledClose = styled.div`
   position: absolute;
   right: 6px;

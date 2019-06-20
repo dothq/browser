@@ -15,6 +15,7 @@ import { AbButton } from '../ToolbarButton/style';
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
 import { remote } from 'electron'
+import { TabSearchBox } from '../TabSearchBox';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');

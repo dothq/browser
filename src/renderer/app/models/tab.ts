@@ -15,6 +15,8 @@ import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
 import { setInterval } from 'timers';
+import { ClosedTabs } from './closed-tabs';
+import console = require('console');
 
 let id = 1;
 
@@ -48,6 +50,9 @@ export class Tab {
   public position = 0;
 
   @observable
+  public isUrlVisible: boolean = false;;
+
+  @observable
   public background: string = colors.blue['500'];
 
   @observable
@@ -67,6 +72,9 @@ export class Tab {
 
   @observable
   public f = 0;
+
+  @observable
+  public closedTabs: ClosedTabs[] = [];
 
   @observable
   public zoomAmount: number = 1;  
@@ -405,6 +413,8 @@ export class Tab {
     const tabGroup = this.tabGroup;
     const tabs = tabGroup.tabs.slice().sort((a, b) => a.position - b.position);
 
+    store.tabs.lastUrl = this.url;
+
     const selected = tabGroup.selectedTabId === this.id;
 
     ipcRenderer.send('browserview-destroy', this.id);
@@ -446,9 +456,9 @@ export class Tab {
       }
     }
 
-    //setTimeout(() => {
+    setTimeout(() => {
       store.tabs.removeTab(this.id);
-    //}, TAB_ANIMATION_DURATION * 1000);
+    }, TAB_ANIMATION_DURATION * 1000);
   }
 
   public emitOnUpdated = (data: any) => {
