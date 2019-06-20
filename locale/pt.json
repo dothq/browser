@@ -1,0 +1,159 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Browser",
+            "dot_full_with_version": "Dot Browser {appVersion}",
+            "button_open": "Open",
+            "button_run": "Run",
+            "search_placeholder": "Search",
+            "quit": "Quit",
+            "quit_dot": "Quit Dot",
+            "quit_dot_with_version": "Quit Dot {appVersion}"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Browsing on",
+            "audio_details": "Listening to audio on",
+            "file_details": "Viewing a {fileType} file",
+            "active_small_text": "Browsing a webpage",
+            "idle_small_text": "Idle",
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Top Sites",
+            "dial_bookmarks": "Bookmarks",
+            "overview": "Overview",
+            "tab_groups": "Tab groups",
+            "default_tab_group": "New group",
+            "world": "World",
+            "history_bubble": "History",
+            "bookmarks_bubble": "Bookmarks",
+            "downloads_bubble": "Downloads",
+            "settings_bubble": "Settings",
+            "extensions_bubble": "Extensions",
+            "find_bubble": "Find",
+            "more_tools_bubble": "More tools",
+            "welcome_snackbar": "Welcome back, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind {username}?",
+                    "message_3": "Enter a search term or URL to get started.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind?",
+                    "message_3": "Enter a search term or URL to get started.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Good morning",
+                    "afternoon": "Good afternoon",
+                    "evening": "Good evening"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Settings",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "my_profile": [
+                {
+                    "title": "My Profile",
+                    "sign_in_btn": "Sign in",
+                    "sign_out_btn": "Sign out",
+                    "guest_user": "Guest"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Appearance",
+                    "toggle_dot": "Toggle Dot button",
+                    "search_engine": "Search Engine",
+                    "temp_type": "Temperature type",
+                    "guest_user": "Guest"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Downloads",
+                    "download_loc": "Downloads Location"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Developer Experiments",
+                    "chromium_dt": "Chromium Developer Tools",
+                    "send_test_notif": "Send test notification"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "About Dot",
+                    "thanks_message": "Dot was made possible thanks to {url:wexondRepo} and ☕.",
+                    "made_in": "Made in {emote:gb} Great Britain with {emote:heart}.",
+                    "developers_title": "Developers",
+                    "beta_testers_title": "Beta Testers",
+                    "special_thanks_title": "Special Thanks",
+                    "verbose_loaded_fcm": "Loaded FCM Notification services",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "History",
+            "clear_browsing_history": "Clear browsing data",
+            "sort": [
+                {
+                    "range_all": "All",
+                    "range_today": "Today",
+                    "range_yesterday": "Yesterday",
+                    "range_last_week": "Last week",
+                    "range_last_month": "Last month",
+                    "range_older": "Older"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bookmarks"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Extensions"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Find in page",
+            "navigate_back": "Back",
+            "navigate_forward": "Forward",
+            "navigate_refresh": "Refresh (F5)",
+            "open_dot": "Open Dot Launcher"
+        }
+    ]
+}
