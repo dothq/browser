@@ -1,0 +1,159 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Navegador de Dot",
+            "dot_full_with_version": "Dot Browser {appVersion}",
+            "button_open": "Abierto",
+            "button_run": "Ejecutar",
+            "search_placeholder": "Buscar",
+            "quit": "Dejar",
+            "quit_dot": "Salir Dot",
+            "quit_dot_with_version": "Salir Dot {appVersion}"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Navegando en",
+            "audio_details": "Escuchando audio en",
+            "file_details": "Viendo un archivo {fileType}",
+            "active_small_text": "Navegando por una página web",
+            "idle_small_text": "Inactiva",
+            "idle_details": "Navegador de Dot",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Sitios preferentes",
+            "dial_bookmarks": "Favoritos",
+            "overview": "Resumen",
+            "tab_groups": "Grupos de pestañas",
+            "default_tab_group": "Nuevo grupo",
+            "world": "Mundo",
+            "history_bubble": "Historia",
+            "bookmarks_bubble": "Favoritos",
+            "downloads_bubble": "Descargas",
+            "settings_bubble": "Configuración",
+            "extensions_bubble": "Extensiones",
+            "find_bubble": "Encontrar",
+            "more_tools_bubble": "Más herramientas",
+            "welcome_snackbar": "Bienvenido de nuevo, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "¿Dónde quieres ir hoy?",
+                    "message_2": "¿Qué tienes en mente {username}?",
+                    "message_3": "Introduzca un término de búsqueda o URL para empezar.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "¿Dónde quieres ir hoy?",
+                    "message_2": "¿En que estas pensando?",
+                    "message_3": "Introduzca un término de búsqueda o URL para empezar.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Buenos días",
+                    "afternoon": "Buenas tardes",
+                    "evening": "Buenas noches"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Configuración",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "my_profile": [
+                {
+                    "title": "Mi Perfil",
+                    "sign_in_btn": "Iniciar sesión",
+                    "sign_out_btn": "Sign out",
+                    "guest_user": "Guest"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Appearance",
+                    "toggle_dot": "Toggle Dot button",
+                    "search_engine": "Search Engine",
+                    "temp_type": "Temperature type",
+                    "guest_user": "Guest"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Downloads",
+                    "download_loc": "Downloads Location"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Developer Experiments",
+                    "chromium_dt": "Chromium Developer Tools",
+                    "send_test_notif": "Send test notification"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "About Dot",
+                    "thanks_message": "Dot was made possible thanks to {url:wexondRepo} and ☕.",
+                    "made_in": "Made in {emote:gb} Great Britain with {emote:heart}.",
+                    "developers_title": "Developers",
+                    "beta_testers_title": "Beta Testers",
+                    "special_thanks_title": "Special Thanks",
+                    "verbose_loaded_fcm": "Loaded FCM Notification services",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "History",
+            "clear_browsing_history": "Clear browsing data",
+            "sort": [
+                {
+                    "range_all": "All",
+                    "range_today": "Today",
+                    "range_yesterday": "Yesterday",
+                    "range_last_week": "Last week",
+                    "range_last_month": "Last month",
+                    "range_older": "Older"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bookmarks"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Extensions"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Find in page",
+            "navigate_back": "Back",
+            "navigate_forward": "Forward",
+            "navigate_refresh": "Refresh (F5)",
+            "open_dot": "Open Dot Launcher"
+        }
+    ]
+}
