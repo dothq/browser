@@ -81,6 +81,11 @@ const onInput = async () => {
     store.tabs.addTab({url, active: true });
   }
 
+  if(value.toLocaleLowerCase() === "burger king foot lettuce") {
+    var url = "https://www.youtube.com/watch?v=zpWbXltP43o"
+    store.tabs.addTab({url, active: true });
+  }
+
 
   const requestId = await selectedTab.callViewMethod(
     'webContents.findInPage',
@@ -109,6 +114,15 @@ const move = (forward: boolean) => async () => {
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.key === 'Enter') {
     move(true)();
+
+    var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+
+    if(regex.test(store.findInputRef.current.value)) {
+      var url = store.findInputRef.current.value
+      store.tabs.addTab({url, active: true });
+      close();
+    }
+
   }
 };
 

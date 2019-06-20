@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import store from '../../store';
-import { remote } from "electron";
+import { remote, app } from "electron";
 import { Client } from 'discord-rpc';
 import {
   StyledOverlay,
@@ -36,8 +36,13 @@ import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 const editJsonFile = require("edit-json-file");
+const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/lang_uk.json`);
 
 import console = require('console');
+
+var locale_uk = enUK.toObject()
+
+console.log(locale_uk.standard[0])
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
@@ -102,22 +107,29 @@ async function setActivity() {
     return;
   }
   try {
-    var details = 'Browsing on';
+    var details = locale_uk.rich_presence[0].default_details
 
     if(store.tabs.selectedTab.audioPlaying == true) {
-      details = 'Listening to audio on'
+      details = locale_uk.rich_presence[0].audio_details
     }
+
+    // if(store.tabs.selectedTab.url.substring(0, 8) == "file:///") {
+    //   var lastDot = store.tabs.selectedTab.url.lastIndexOf('.');
+    //   var fileType = store.tabs.selectedTab.url.substring(lastDot + 1);
+    //   console.log(fileType)
+    //   details = locale_uk.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
+    // }
     
     var state = store.tabs.getHostname(store.tabs.selectedTab.url);
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-online';
-    var smallImageText = `Browsing a webpage`;
+    var smallImageText:string = locale_uk.rich_presence[0].active_small_text;
   } catch(e) {
-    var details = 'Dot Browser';
-    var state = 'Idle';
+    var details = locale_uk.rich_presence[0].idle_details;
+    var state:string = locale_uk.rich_presence[0].idle_small_text;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-idle';
-    var smallImageText = 'Idle';
+    var smallImageText:string = locale_uk.rich_presence[0].idle_small_text;
   }
   rpclient.setActivity({
     details: details,
@@ -125,7 +137,7 @@ async function setActivity() {
     startTimestamp,
     largeImageKey,
     smallImageKey,
-    largeImageText: `Dot Browser ${remote.app.getVersion()}`,
+    largeImageText: locale_uk.rich_presence[0].large_text.replace(/{version}/, remote.app.getVersion()),
     smallImageText,
     instance: false
   })
@@ -177,7 +189,7 @@ store.user.loadProfile()
 const LoginSnackbar = () => {
   return (
     <Snackbar visible={store.user.loggedin == true}>
-      Welcome back, {store.user.username}
+      {locale_uk.overlay[0].welcome_snackbar.replace(/{username}/g, store.user.username)}
     </Snackbar>
   )
 };
@@ -211,11 +223,11 @@ export const Overlay = observer(() => {
             <SearchBox />
             <Dial />
 
-            <Title>Overview</Title>
+            <Title>{locale_uk.overlay[0].overview}</Title>
             <TabGroups />
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
-            <Title>World</Title>
+            <Title>{locale_uk.overlay[0].world}</Title>
             <CardWrapper>
               <WeatherCard />
               <NewsCard newsImage={"https://ichef.bbci.co.uk/news/660/cpsprodpb/15D32/production/_107449398_gettyimages-1146471727.jpg"} />

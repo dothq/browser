@@ -45,7 +45,7 @@ export const Dial = observer(() => {
             onClick={onDialTitleClick}
             style={{ marginBottom: 24, cursor: 'pointer' }}
           >
-            {dialType === 'bookmarks' ? 'Bookmarks' : 'Top Sites'}
+            {dialType === 'bookmarks' ? store.locale.uk.overlay[0].dial_bookmarks : store.locale.uk.overlay[0].dial_top_sites}
             <DropArrow />
             <ContextMenu
               style={{ top: 42 }}
@@ -56,22 +56,22 @@ export const Dial = observer(() => {
                 selected={dialType === 'top-sites'}
                 onClick={changeDialType('top-sites')}
               >
-                Top Sites
+                {store.locale.uk.overlay[0].dial_top_sites}
               </ContextMenuItem>
               <ContextMenuItem
                 icon={icons.bookmarks}
                 selected={dialType === 'bookmarks'}
                 onClick={changeDialType('bookmarks')}
               >
-                Bookmarks
+                {store.locale.uk.overlay[0].dial_bookmarks}
               </ContextMenuItem>
             </ContextMenu>
             <ContextMenu visible={store.user.menuVisible == true} style={{ top: '-20px', right: 0 }}>
               <ContextMenuItem icon={icons.user} onClick={settings}>
-                  My Profile
+                  {store.locale.uk.settings[0].my_profile[0].title}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.close} onClick={logout}>
-                  Sign out
+                  {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
               </ContextMenuItem>
             </ContextMenu>
           </Title>

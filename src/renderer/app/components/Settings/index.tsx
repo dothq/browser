@@ -68,7 +68,7 @@ const login = async () => {
     resizable: false,
     center: false,
     alwaysOnTop: false,
-    title: 'Sign in',
+    title: '{store.locale.uk.settings[0].my_profile[0].sign_in_btn}',
     titleBarStyle: 'hiddenInset',
     webPreferences: {
       nodeIntegration: true
@@ -223,10 +223,10 @@ const YourProfile = observer(() => {
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign in
+            {store.locale.uk.settings[0].my_profile[0].sign_in_btn}
           </Button>
           <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign out
+            {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
       </ListItem>
@@ -629,26 +629,26 @@ export const Appearance = observer(() => {
             <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
             <ContextMenu id="search-engine-dp" visible={seMenuVisible} style={{ top: '450px', marginLeft: '-50px' }}>            
               <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
-                Google
+                {store.locale.uk.settings[0].google_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
-                Yahoo
+                {store.locale.uk.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
-                Bing
+                {store.locale.uk.settings[0].bing_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
-                DuckDuckGo
+                {store.locale.uk.settings[0].ddg_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
-                Ecosia
+                {store.locale.uk.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Temperature Type</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].temp_type}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
             <IconButton icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
@@ -689,7 +689,7 @@ export const Experiments = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>Chromium Developer Tools</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
             Open
@@ -697,7 +697,7 @@ export const Experiments = observer(() => {
         </Buttons>
       </ListItem>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>Send test notification</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
             Run
@@ -724,7 +724,7 @@ export const Settings = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
-          title="Settings"
+          title={store.locale.uk.settings[0].title}
           onBackClick={onBackClick}
           search
           onSearchInput={onInput}
@@ -732,7 +732,7 @@ export const Settings = observer(() => {
         </NavigationDrawer>
         <Sections>
           <Content>
-              <Title style={{ margin: '75px -30px -25px -30px' }}>My Profile</Title>
+              <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].my_profile[0].title}</Title>
               <YourProfile />
 
               <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>

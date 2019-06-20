@@ -10,6 +10,17 @@
             "search_placeholder": "Search"
         }
     ],
+    "rich_presence": [
+        {
+            "default_details": "Browsing on",
+            "audio_details": "Listening to audio on",
+            "file_details": "Viewing a {fileType} file",
+            "active_small_text": "Browsing a webpage",
+            "idle_small_text": "Idle",
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
     "overlay": [
         {
             "dial_top_sites": "Top Sites",
@@ -24,19 +35,26 @@
             "settings_bubble": "Settings",
             "extensions_bubble": "Extensions",
             "find_bubble": "Find",
-            "more_tools_bubble": "More tools"
+            "more_tools_bubble": "More tools",
+            "welcome_snackbar": "Welcome back, {username}"
         }
     ],
     "search_bar": [
         {
             "logged_in": [
                 {
-                    "messages": ["Where do you want to go today?", "What's on your mind {username}?", "Enter a search term or URL to get started.", "{currentTimeType}, {username}"]
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind {username}?",
+                    "message_3": "Enter a search term or URL to get started.",
+                    "message_4": "{currentTimeType}, {username}"
                 }
             ],
             "guest": [
                 {
-                    "messages": ["Where do you want to go today?", "What's on your mind?", "Enter a search term or URL to get started.", "{currentTimeType}"]
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind?",
+                    "message_3": "Enter a search term or URL to get started.",
+                    "message_4": "{currentTimeType}"
                 }
             ],
             "timeTypes": [
@@ -98,6 +116,21 @@
                     "copyright_notice": "© 2019 Ender And Fire Development"
                 }
             ]
+        }
+    ],
+    "history": [
+        {
+            "title": "History"
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bookmarks"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Extensions"
         }
     ]
 }

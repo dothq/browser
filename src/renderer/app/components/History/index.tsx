@@ -107,7 +107,7 @@ export const History = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title="History"
+          title={store.locale.uk.history[0].title}
           search
           onSearchInput={onInput}
           onBackClick={onBackClick}

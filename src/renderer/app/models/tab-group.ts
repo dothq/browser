@@ -10,7 +10,7 @@ export class TabGroup {
   public id: number = id++;
 
   @observable
-  public name: string = 'New group';
+  public name: string = store.locale.uk.overlay[0].default_tab_group;
 
   @observable
   public selectedTabId: number;
