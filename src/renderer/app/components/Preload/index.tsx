@@ -17,6 +17,9 @@ import console = require('console');
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow } from '../Overlay/style';
+import { appWindow } from '../..';
+import { BrowserView, app } from 'electron';
+import { ViewManager } from '~/main/view-manager';
 const editJsonFile = require("edit-json-file");
 
 const scrollRef = React.createRef<HTMLDivElement>();
@@ -36,6 +39,18 @@ const onScroll = (e: any) => {
 const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
+
+// setInterval(function() {
+//   if(store.overlay.currentContent == "default") {
+//     if(require('electron').remote.BrowserView.getAllViews().length <= 1) {
+//       if(store.overlay.visible == true) {
+//         if(store.tabs.list.length == 0) {
+//           console.warn("ABORT: BrowserView active while reloading")
+//         }
+//       }
+//     }
+//   }
+// }, 500);
 
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 

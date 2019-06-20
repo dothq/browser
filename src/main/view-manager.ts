@@ -161,9 +161,9 @@ export class ViewManager {
     const { width, height } = appWindow.getContentBounds();
     view.setBounds({
       x: 0,
-      y: this.fullscreen ? 0 : TOOLBAR_HEIGHT + 1 + 38,
+      y: this.fullscreen ? 0 : TOOLBAR_HEIGHT + 1,
       width,
-      height: this.fullscreen ? height : height - TOOLBAR_HEIGHT + 38,
+      height: this.fullscreen ? height : height - TOOLBAR_HEIGHT,
     });
     view.setAutoResize({ width: true, height: true });
   }

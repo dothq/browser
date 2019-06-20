@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
@@ -40,6 +40,7 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open link in new tab',
+            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.linkURL,
@@ -67,11 +68,20 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open image in new tab',
+            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.srcURL,
                 active: false,
               });
+            },
+          },
+          {
+            label: 'Save image',
+            click: () => {
+              
+              this.webContents.downloadURL(params.srcURL)
+
             },
           },
           {
@@ -348,6 +358,13 @@ export class View extends BrowserView {
           console.log(frameName)
           console.log(disposition)
           if (disposition === 'new-window') {
+            e.preventDefault();
+            return appWindow.webContents.send('api-tabs-create', {
+              url,
+              active: true,
+            });    
+          }
+          if (frameName === 'link') {
             e.preventDefault();
             return appWindow.webContents.send('api-tabs-create', {
               url,

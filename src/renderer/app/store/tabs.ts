@@ -32,12 +32,18 @@ export class TabsStore {
   public list: Tab[] = [];
 
   @observable
+  public lastUrl: string = "";
+
+  @observable
   public scrollable = false;
 
   public lastScrollLeft: number = 0;
   public lastMouseX: number = 0;
   public mouseStartX: number = 0;
   public tabStartX: number = 0;
+
+  @observable
+  public ubVisible: boolean = false;
 
   public scrollbarRef = React.createRef<HorizontalScrollbar>();
   public containerRef = React.createRef<HTMLDivElement>();
@@ -108,6 +114,16 @@ export class TabsStore {
       return this.containerRef.current.offsetWidth;
     }
     return 0;
+  }
+
+  @action
+  public showUB() {
+    this.ubVisible = true;
+  }
+
+  @action
+  public hideUB() {
+    this.ubVisible = false;
   }
 
   public getHostname(url: string) {

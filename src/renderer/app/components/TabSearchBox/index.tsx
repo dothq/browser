@@ -12,6 +12,9 @@ import UserIcon from '../UserButton';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Bookmark } from '../../models/bookmark';
+import { appWindow } from '../..';
+import { ViewManager } from '~/main/view-manager';
+import { ipcRenderer } from 'electron';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -21,6 +24,8 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.which === 13) {
     // Enter.
     e.preventDefault();
+
+    ipcRenderer.send('browserview-show');
 
     const text = e.currentTarget.value;
     let url = text;
@@ -47,14 +52,13 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
       var searchurl = `https://www.ecosia.org/search?q=`;
     }
 
+    e.currentTarget.value = "";
 
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
     } else if (!text.includes('://')) {
       url = `${searchurl}${text}`;
     }
-
-    e.currentTarget.value = url;
 
     const tab = store.tabs.selectedTab;
     if (!tab || store.overlay.isNewTab) {
@@ -69,101 +73,38 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 };
 
 const onInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-  if (store.overlay.inputRef.current) {
-    store.overlay.inputRef.current.select();
-  }
+  e.stopPropagation()
 };
 
 const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  const key = e.keyCode;
-  const { suggestions } = store;
-  const { list } = suggestions;
-  const input = store.overlay.inputRef.current;
-
-  if (
-    key !== 8 && // backspace
-    key !== 13 && // enter
-    key !== 17 && // ctrl
-    key !== 18 && // alt
-    key !== 16 && // shift
-    key !== 9 && // tab
-    key !== 20 && // capslock
-    key !== 46 && // delete
-    key !== 32 // space
-  ) {
-    store.overlay.canSuggest = true;
-  } else {
-    store.overlay.canSuggest = false;
+  e.stopPropagation()
+  if(e.currentTarget.value.length != 0) {
+    e.stopPropagation()
+    ipcRenderer.send('browserview-hide');
   }
-
-  if (e.keyCode === 38 || e.keyCode === 40) {
-    e.preventDefault();
-    if (e.keyCode === 40 && suggestions.selected + 1 <= list.length - 1) {
-      suggestions.selected++;
-    } else if (e.keyCode === 38 && suggestions.selected - 1 >= 0) {
-      suggestions.selected--;
-    }
-
-    const suggestion = list.find(x => x.id === suggestions.selected);
-
-    input.value = suggestion.primaryText;
+  else {
+    ipcRenderer.send('browserview-show');
   }
 };
 
 const onInput = (e: any) => {
-  store.overlay.show();
-  store.overlay.suggest();
-  store.overlay.scrollRef.current.scrollTop = 0;
-};
-
-const onStarClick = async () => {
-  const { selectedTab } = store.tabs;
-
-  var foundBkm = store.bookmarks.list.find(
-    x => x.url === store.tabs.selectedTab.url,
-  );
-
-  if(!foundBkm) {
-
-    if(store.overlay.inputRef.current.value) {
-      await store.bookmarks.addItem({
-        title: selectedTab.title,
-        url: store.overlay.inputRef.current.value,
-        parent: null,
-        type: 'item',
-        favicon: selectedTab.favicon,
-      });
-    }
-
-  }
-
-  else {
-
-    // It already exists, so delete it.
-    store.bookmarks.removeItem(foundBkm._id)
-
-  }
-};
-
-const onUserClick = () => {
-  if(store.suggestions.list.length <= 1) {
-    store.suggestions
-  }
-  if(store.user.menuVisible == true) {
-    store.user.menuVisible = false
+  e.stopPropagation()
+  if(e.currentTarget.value.length != 0) {
+    e.stopPropagation()
+    ipcRenderer.send('browserview-hide');
   }
   else {
-    store.user.menuVisible = true
+    ipcRenderer.send('browserview-show');
   }
 };
 
-export const SearchBox = observer(() => {
+export const TabSearchBox = observer(() => {
   const suggestionsVisible = store.suggestions.list.length !== 0;
 
-  let height = 48;
+  let height = 44;
 
   for (const s of store.suggestions.list) {
-    height += 48;
+    height += 44;
   }
 
   var today = new Date()
@@ -189,44 +130,17 @@ export const SearchBox = observer(() => {
 
 
   return (
-    <StyledSearchBox style={{ height }} onClick={onClick}>
+    <StyledSearchBox visible={store.tabs.ubVisible == true} style={{ height }} onClick={onClick}>
       <InputContainer>
         <SearchIcon />
         <Input
-          autoFocus
           placeholder={searchBoxValue}
           onKeyPress={onKeyPress}
           onFocus={onInputFocus}
           onChange={onInput}
           onKeyDown={onKeyDown}
-          ref={store.overlay.inputRef}
-        />
-        <ToolbarButton
-          invert
-          icon={store.overlay.isBookmarked ? icons.starFilled : icons.star}
-          onClick={onStarClick}
-          id="star-bkm"
-          style={{
-            marginRight: 8,
-            display:
-              store.tabs.selectedTab &&
-              store.tabs.selectedTab.url === store.overlay.searchBoxValue
-                ? 'block'
-                : 'none',
-          }}
-        />
-        <UserIcon
-          icon={store.user.avatar}
-          title={`${store.user.username} <${store.user.email}>`}
-          onClick={onUserClick}
-          visible={store.user.loggedin}
-          style={{
-            marginRight: 8,
-            width: '38px'
-          }}
         />
       </InputContainer>
-      <Suggestions visible={suggestionsVisible} />
     </StyledSearchBox>
   );
 });
