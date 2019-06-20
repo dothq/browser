@@ -44,7 +44,7 @@ export const NavigationDrawer = ({
       </Header>
       {search && (
         <Search>
-          <Input placeholder="Search" onInput={onSearchInput} />
+          <Input placeholder={store.locale.uk.standard[0].search_placeholder} onInput={onSearchInput} />
         </Search>
       )}
       <MenuItems>{children}</MenuItems>

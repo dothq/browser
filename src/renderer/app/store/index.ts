@@ -18,6 +18,7 @@ import { Settings } from '../models/settings';
 import { SettingsFile } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { DownloadsStore } from './downloads';
+import { LocaleStore } from './locale';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
 import { WeatherStore } from './weather';
@@ -59,6 +60,7 @@ export class Store {
   public options = new OptionsStore();
   public weather = new WeatherStore();
   public user = new UserStore();
+  public locale = new LocaleStore();
 
   @observable
   public isFullscreen = false;

@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`${Style}`;
 
 store.weather.load()
 
+// Locale loader
+
+store.locale.loadUK()
+
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');
 };

@@ -74,7 +74,7 @@ export const Bookmarks = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title="Bookmarks"
+          title={store.locale.uk.bookmarks[0].title}
           search
           onSearchInput={onInput}
           onBackClick={onBackClick}
