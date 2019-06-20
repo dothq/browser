@@ -112,14 +112,14 @@ export const History = observer(() => {
           onSearchInput={onInput}
           onBackClick={onBackClick}
         >
-          <MenuItem range="all">All</MenuItem>
-          <MenuItem range="today">Today</MenuItem>
-          <MenuItem range="yesterday">Yesterday</MenuItem>
-          <MenuItem range="last-week">Last week</MenuItem>
-          <MenuItem range="last-month">Last month</MenuItem>
-          <MenuItem range="older">Older</MenuItem>
+          <MenuItem range="all">{store.locale.uk.history[0].sort[0].range_all}</MenuItem>
+          <MenuItem range="today">{store.locale.uk.history[0].sort[0].range_today}</MenuItem>
+          <MenuItem range="yesterday">{store.locale.uk.history[0].sort[0].range_yesterday}</MenuItem>
+          <MenuItem range="last-week">{store.locale.uk.history[0].sort[0].range_last_week}</MenuItem>
+          <MenuItem range="last-month">{store.locale.uk.history[0].sort[0].range_last_month}</MenuItem>
+          <MenuItem range="older">{store.locale.uk.history[0].sort[0].range_older}</MenuItem>
           <NavigationDrawer.Item icon={icons.trash} style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} onClick={onClearClick}>
-            Clear browsing data
+            {store.locale.uk.history[0].clear_browsing_history}
           </NavigationDrawer.Item>
         </NavigationDrawer>
         <HistorySections />
