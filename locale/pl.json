@@ -3,75 +3,75 @@
         {
             "dot": "Dot",
             "dot_with_version": "Dot {appVersion}",
-            "dot_full": "Navegador de Dot",
+            "dot_full": "Dot Browser",
             "dot_full_with_version": "Dot Browser {appVersion}",
-            "button_open": "Abierto",
-            "button_run": "Ejecutar",
-            "search_placeholder": "Buscar",
-            "quit": "Dejar",
-            "quit_dot": "Salir Dot",
-            "quit_dot_with_version": "Salir Dot {appVersion}"
+            "button_open": "Open",
+            "button_run": "Run",
+            "search_placeholder": "Search",
+            "quit": "Quit",
+            "quit_dot": "Quit Dot",
+            "quit_dot_with_version": "Quit Dot {appVersion}"
         }
     ],
     "rich_presence": [
         {
-            "default_details": "Navegando en",
-            "audio_details": "Escuchando audio en",
-            "file_details": "Viendo un archivo {fileType}",
-            "active_small_text": "Navegando por una página web",
-            "idle_small_text": "Inactiva",
-            "idle_details": "Navegador de Dot",
+            "default_details": "Browsing on",
+            "audio_details": "Listening to audio on",
+            "file_details": "Viewing a {fileType} file",
+            "active_small_text": "Browsing a webpage",
+            "idle_small_text": "Idle",
+            "idle_details": "Dot Browser",
             "large_text": "Dot Browser {version}"
         }
     ],
     "overlay": [
         {
-            "dial_top_sites": "Sitios preferentes",
-            "dial_bookmarks": "Favoritos",
-            "overview": "Resumen",
-            "tab_groups": "Grupos de pestañas",
-            "default_tab_group": "Nuevo grupo",
-            "world": "Mundo",
-            "history_bubble": "Historia",
-            "bookmarks_bubble": "Favoritos",
-            "downloads_bubble": "Descargas",
-            "settings_bubble": "Configuración",
-            "extensions_bubble": "Extensiones",
-            "find_bubble": "Encontrar",
-            "more_tools_bubble": "Más herramientas",
-            "welcome_snackbar": "Bienvenido de nuevo, {username}"
+            "dial_top_sites": "Top Sites",
+            "dial_bookmarks": "Bookmarks",
+            "overview": "Overview",
+            "tab_groups": "Tab groups",
+            "default_tab_group": "New group",
+            "world": "World",
+            "history_bubble": "History",
+            "bookmarks_bubble": "Bookmarks",
+            "downloads_bubble": "Downloads",
+            "settings_bubble": "Settings",
+            "extensions_bubble": "Extensions",
+            "find_bubble": "Find",
+            "more_tools_bubble": "More tools",
+            "welcome_snackbar": "Welcome back, {username}"
         }
     ],
     "search_bar": [
         {
             "logged_in": [
                 {
-                    "message_1": "¿Dónde quieres ir hoy?",
-                    "message_2": "¿Qué tienes en mente {username}?",
-                    "message_3": "Introduzca un término de búsqueda o URL para empezar.",
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind {username}?",
+                    "message_3": "Enter a search term or URL to get started.",
                     "message_4": "{currentTimeType}, {username}"
                 }
             ],
             "guest": [
                 {
-                    "message_1": "¿Dónde quieres ir hoy?",
-                    "message_2": "¿En que estas pensando?",
-                    "message_3": "Introduzca un término de búsqueda o URL para empezar.",
+                    "message_1": "Where do you want to go today?",
+                    "message_2": "What's on your mind?",
+                    "message_3": "Enter a search term or URL to get started.",
                     "message_4": "{currentTimeType}"
                 }
             ],
             "timeTypes": [
                 {
-                    "morning": "Buenos días",
-                    "afternoon": "Buenas tardes",
-                    "evening": "Buenas noches"
+                    "morning": "Good morning",
+                    "afternoon": "Good afternoon",
+                    "evening": "Good evening"
                 }
             ]
         }
     ],
     "settings": [
         {
-            "title": "Configuración",
+            "title": "Settings",
             "google_searchEngine": "Google",
             "bing_searchEngine": "Bing",
             "yahoo_searchEngine": "Yahoo",
@@ -79,8 +79,8 @@
             "ecosia_searchEngine": "Ecosia",
             "my_profile": [
                 {
-                    "title": "Mi Perfil",
-                    "sign_in_btn": "Iniciar sesión",
+                    "title": "My Profile",
+                    "sign_in_btn": "Sign in",
                     "sign_out_btn": "Sign out",
                     "guest_user": "Guest"
                 }
