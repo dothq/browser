@@ -310,6 +310,12 @@ const blz = () => {
   store.overlay.visible = false;
 }
 
+const chachy = () => {
+  var url = "https://github.com/chachyyyy"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
 
 const AboutDot = observer(() => {
   return (
@@ -333,6 +339,7 @@ const AboutDot = observer(() => {
         <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function, </A>
         <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky, </A>
         <A onClick={blz} title="<>" style={{ color: '#dadada' }}>Blizma</A>
+        <A onClick={chachy} title="<>" style={{ color: '#dadada' }}>Chachy</A>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Special Thanks</Title>
         <A onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>DusterTheFirst</A>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>Loaded FCM Notification services</Title>
