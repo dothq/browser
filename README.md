@@ -20,7 +20,7 @@
 ## 💻 Downloads
 
    ### ✔ Latest Release
-   #### [![](https://img.shields.io/github/release/dot-inc/browser.svg?style=flat-square)](https://github.com/dot-inc/browser/releases/latest)
+   #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
 
 ## 🖼 Screenshots
 
