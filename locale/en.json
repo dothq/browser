@@ -104,7 +104,8 @@
                 {
                     "title": "Developer Experiments",
                     "chromium_dt": "Chromium Developer Tools",
-                    "send_test_notif": "Send test notification"
+                    "send_test_notif": "Send test notification",
+                    "open_log": "Open log file"
                 }
             ],
             "about_dot": [

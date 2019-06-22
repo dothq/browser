@@ -32,7 +32,7 @@ export class TabsStore {
   public list: Tab[] = [];
 
   @observable
-  public lastUrl: string = "";
+  public lastUrl: any = [];
 
   @observable
   public scrollable = false;

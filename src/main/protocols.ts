@@ -7,7 +7,7 @@ import { extensions } from './extensions';
 const applets = ['newtab'];
 
 export const registerProtocols = () => {
-  protocol.registerStandardSchemes(['dot', 'extension']);
+  protocol.registerStandardSchemes(['dot', 'extension', 'json']);
 
   // protocol.registerSchemesAsPrivileged([
   //   {
@@ -98,5 +98,19 @@ export const registerProtocols = () => {
         if (error) console.error('Failed to register protocol');
       },
     );
+
+    sess.protocol.registerFileProtocol(
+      'json',
+      (request, callback: any) => {
+        const parsed = parse(request.url);
+
+        return callback({
+          path: join(app.getAppPath(), `static/pages/json-format.html?url=${parsed.path}`),
+        });
+      },
+      error => {
+        if (error) console.error('Failed to register protocol');
+      },
+    );    
   });
 };
