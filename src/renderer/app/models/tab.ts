@@ -156,7 +156,7 @@ export class Tab {
 
   public left = 0;
   public tempPosition = 0;
-  public lastUrl = '';
+  public lastUrl: any = [];
   public isClosing = false;
   public ref = React.createRef<HTMLDivElement>();
   public lastHistoryId: string;
@@ -416,7 +416,7 @@ export class Tab {
     const tabGroup = this.tabGroup;
     const tabs = tabGroup.tabs.slice().sort((a, b) => a.position - b.position);
 
-    store.tabs.lastUrl = this.url;
+    store.tabs.lastUrl.push(this.url);
 
     const selected = tabGroup.selectedTabId === this.id;
 

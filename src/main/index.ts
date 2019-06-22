@@ -94,6 +94,16 @@ app.on('ready', async () => {
       } else {
         callback(false);
       }
+      if(permission == "media") {
+        var url = new URL(webContents.getURL());
+        var hn = url.hostname.split(".")[1];
+        if(hn == "youtube" || hn == "www.youtube") {
+          callback(true)
+        }
+        else {
+          callback(false)
+        }
+      }
     },
   );
 

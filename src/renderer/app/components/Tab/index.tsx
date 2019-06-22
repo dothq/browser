@@ -163,9 +163,10 @@ const contextMenu = (tab: Tab) => () => {
       accelerator: 'Ctrl+Shift+T',
       enabled: store.tabs.lastUrl != "",
       click: () => {
-        var url = store.tabs.lastUrl;
+        var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
         if(url != "") {
           store.tabs.addTab({ url, active: true });
+          store.tabs.lastUrl.splice(-1,1)
         }
       },
     },

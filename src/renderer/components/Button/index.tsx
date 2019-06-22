@@ -31,6 +31,6 @@ export const Button = ({
     visible={visible}
   >
     <StyledLabel>{children}</StyledLabel>
-    <Ripple color={foreground || '#fff'} />
+    <Ripple style={{ display: 'none' }} color={foreground || '#fff'} />
   </StyledButton>
 );

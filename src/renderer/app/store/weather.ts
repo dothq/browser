@@ -84,7 +84,7 @@ export class WeatherStore {
         this.timeInt = 3;
       }
 
-      console.log(this.timeInt)
+      console.log("Displaying time type ", this.timeInt, " on WeatherCard")
       this.timeInt = 2;
       this.loaded = true;
     }

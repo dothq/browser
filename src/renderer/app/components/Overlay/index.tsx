@@ -42,8 +42,6 @@ import console = require('console');
 
 var locale_uk = enUK.toObject()
 
-console.log(locale_uk.standard[0])
-
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
 

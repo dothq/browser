@@ -20,7 +20,7 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
-import { ipcRenderer, ipcMain } from 'electron';
+import { ipcRenderer, ipcMain, shell } from 'electron';
 import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 
@@ -222,10 +222,10 @@ const YourProfile = observer(() => {
           <Email />
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.settings[0].my_profile[0].sign_in_btn}
           </Button>
-          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
@@ -704,13 +704,17 @@ export const testNotif = () => {
     }); 
 };
 
+const openLog = () => {
+  remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
+}
+
 export const Experiments = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
         <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.standard[0].button_open}
           </Button>
         </Buttons>
@@ -718,7 +722,15 @@ export const Experiments = observer(() => {
       <ListItem>
         <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
+          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_run}
+          </Button>
+        </Buttons>
+      </ListItem>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].open_log}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={openLog} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.standard[0].button_run}
           </Button>
         </Buttons>
