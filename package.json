@@ -10,10 +10,10 @@
     "mobx",
     "styled-components"
   ],
-  "homepage": "https://github.com/dot-inc/browser#readme",
+  "homepage": "https://github.com/dot-browser/desktop#readme",
   "main": "build/main.js",
   "author": {
-    "name": "Dot Inc.",
+    "name": "Dot Inc. & Ender And Fire Development",
     "email": "efdev@ender.site"
   },
   "contributors": [
@@ -36,10 +36,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dot-inc/browser.git"
+    "url": "git+https://github.com/dot-browser/desktop.git"
   },
   "bugs": {
-    "url": "https://github.com/dot-inc/browser/issues"
+    "url": "https://github.com/dot-browser/desktop/issues"
   },
   "scripts": {
     "dev": "npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
