@@ -18,7 +18,7 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow } from '../Overlay/style';
 import { appWindow } from '../..';
-import { BrowserView, app } from 'electron';
+import { BrowserView, shell, remote } from 'electron';
 import { ViewManager } from '~/main/view-manager';
 const editJsonFile = require("edit-json-file");
 
@@ -56,6 +56,16 @@ let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 setTimeout(function() {
   store.overlay.currentContent = "default"
+  
+  // if(platform() == "win32") {
+  //   remote.app.setAsDefaultProtocolClient('http');
+  //   var url = "ms-settings:defaultapps";
+  //   var tab = store.tabs.addTab({
+  //     url,
+  //     active: true
+  //   });
+  //   tab.close();
+  // }
 }, 800); 
 
 export const Preload = observer(() => {

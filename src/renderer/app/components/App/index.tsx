@@ -14,6 +14,7 @@ import { Overlay } from '../Overlay';
 import console = require('console');
 import { writeFileSync, readFileSync, existsSync, appendFile } from 'fs';
 import { getPath } from '~/shared/utils/paths';
+import { ViewManager } from '~/main/view-manager';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 

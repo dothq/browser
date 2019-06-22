@@ -28,6 +28,9 @@ export let appWindow: AppWindow;
 
 registerProtocols();
 
+app.setAsDefaultProtocolClient('http');
+app.setAsDefaultProtocolClient('https');
+
 try {
   if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
     console.log("[SettingsStore] Notification sound exists.")

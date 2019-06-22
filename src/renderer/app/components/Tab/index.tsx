@@ -140,6 +140,7 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Close tabs from left',
+      enabled: store.tabs.list.length != 1,
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/left.png'),
       click: () => {
         for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
@@ -149,6 +150,7 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Close tabs from right',
+      enabled: store.tabs.list.length != 1,
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/right.png'),
       click: () => {
         for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {

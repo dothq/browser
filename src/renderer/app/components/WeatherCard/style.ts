@@ -2,23 +2,10 @@ import styled, { css } from 'styled-components';
 import { centerIcon, overline } from '~/shared/mixins';
 import store from '../../store'
 
-var gradient = ['#64b5f6', '#1e88e5']
-if(store.weather.timetype == "Night") {
-  gradient = ['#101010', '#282828b3']
-}
-
-if(store.weather.timetype == "Morning") {
-  gradient = ['#fe9900', '#ffe2adfa']
-}
-
-if(store.weather.timetype == "Afternoon") {
-  gradient = ['#646ff6', '#1e64e56b']
-}
 
 export const StyledCard = styled.div`
-  background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
-  border-radius: 15px;
+  border-radius: 30px;
   color: white;
   overflow: hidden;
   width: 264px;
@@ -32,7 +19,33 @@ export const Offline = styled.div`
 export const Header = styled.div`
   width: 100%;
   padding: 24px;
-  background-image: linear-gradient(to bottom right, ${gradient[0]}, ${gradient[1]});
+
+  ${({ time }: { time: number }) => {
+    // Day/Sunny
+    if(time == 0) {
+      return css`
+        background-image: linear-gradient(to bottom right, #64b5f6, #1e88e5)
+      `;
+    }
+    // Morning
+    if(time == 1) {
+      return css`
+        background-image: linear-gradient(to bottom right, #fe9900, #ffd079fa)
+      `;
+    }
+    // Afternoon
+    if(time == 2) {
+      return css`
+        background-image: linear-gradient(to bottom right, #646ff6, #1e64e56b)
+      `;
+    }
+    // Night
+    if(time == 3) {
+      return css`
+        background-image: linear-gradient(to bottom right, #101010, #282828b3)
+      `;
+    }
+  }}
 `;
 
 export const Title = styled.div`

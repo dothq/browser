@@ -79,6 +79,9 @@ export class Tab {
   @observable
   public zoomAmount: number = 1;  
 
+  @observable
+  public screenshot: any = "";
+
   @computed
   public get findVisible() {
     return this._findVisible;

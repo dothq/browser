@@ -5,7 +5,7 @@ import store from '../../store'
 export const StyledCard = styled.div`
   background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
-  border-radius: 15px;
+  border-radius: 30px;
   color: white;
   overflow: hidden;
   width: 264px;

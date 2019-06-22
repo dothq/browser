@@ -35,7 +35,7 @@ else {
 export const WeatherCard = observer(() => {
   return (
     <StyledCard>
-      <Header>
+      <Header time={store.weather.timeInt}>
         <Left>
           <div>
             <Title>{store.weather.location}</Title>

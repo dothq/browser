@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField } from './style'
+import { InputField, ExtLink } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
 import BookmarkC from '../Bookmark';
@@ -310,13 +310,25 @@ const blz = () => {
   store.overlay.visible = false;
 }
 
+const UKFlag = observer(() => {
+  return (
+    <Image src={icons.uk} style={{ width: '14px' }}></Image>
+  )
+});
+
+const HeartEmote = observer(() => {
+  return (
+    <span style={{ color: '#ff4040' }}>❤</span>
+  );
+});
+
 
 const AboutDot = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot Browser 2.1.0</Title>
+        <Title style={{ fontSize: 20 }}>{store.locale.uk.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -324,19 +336,19 @@ const AboutDot = observer(() => {
         </Buttons>
       </ListItem>
       <AboutWrapper id="about-wrapper">
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Dot was made possible thanks to <A onClick={wexond}>Wexond</A> and ☕.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Made in <Image src={icons.uk} style={{ width: '14px' }}></Image>Great Britain with <span style={{ color: '#ff4040' }}>❤</span>.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Developers</Title>
-        <A onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev,</A>
-        <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
-        <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function, </A>
-        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky, </A>
-        <A onClick={blz} title="<>" style={{ color: '#dadada' }}>Blizma</A>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Special Thanks</Title>
-        <A onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>DusterTheFirst</A>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>Loaded FCM Notification services</Title>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.uk.settings[0].about_dot[0].wxnd_coffee}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.uk.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].developers_title}</Title>
+        <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
+        <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].beta_testers_title}</Title>
+        <ExtLink onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Oli</ExtLink>
+        <ExtLink onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Jeremy Bognon</ExtLink>
+        <ExtLink onClick={blz} title="<blizzyisheres@gmail.com>" style={{ color: '#dadada' }}>Blizma</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].special_thanks_title}</Title>
+        <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].verbose_loaded_fcm}</Title>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>
     </SettingsSection>
   );
@@ -379,7 +391,7 @@ const Downloads = observer(() => {
     <SettingsSection>
       <ListItem>
         <div>
-          <Title style={{ fontSize: 15 }}>Downloads Location</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].downloads[0].download_loc}</Title>
           <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
@@ -617,14 +629,14 @@ export const Appearance = observer(() => {
     return (
       <SettingsSection>
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].toggle_dot}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Search Engine</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
             <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
             <ContextMenu id="search-engine-dp" visible={seMenuVisible} style={{ top: '450px', marginLeft: '-50px' }}>            
@@ -692,7 +704,7 @@ export const Experiments = observer(() => {
         <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Open
+            {store.locale.uk.standard[0].button_open}
           </Button>
         </Buttons>
       </ListItem>
@@ -700,7 +712,7 @@ export const Experiments = observer(() => {
         <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Run
+            {store.locale.uk.standard[0].button_run}
           </Button>
         </Buttons>
       </ListItem>
@@ -735,16 +747,16 @@ export const Settings = observer(() => {
               <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].my_profile[0].title}</Title>
               <YourProfile />
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>
+              <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].appearance[0].title}</Title>
               <Appearance />
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Downloads</Title>
+              <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].downloads[0].title}</Title>
               <Downloads />
 
-              {store.user.experiments == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Developer Experiments</Title>}
+              {store.user.experiments == true && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && <Experiments />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
+              <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].about_dot[0].title}</Title>
               <AboutDot />
 
           </Content>

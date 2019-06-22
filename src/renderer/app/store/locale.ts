@@ -7,7 +7,7 @@ export class LocaleStore {
   public uk: any;
 
   public loadUK() {
-    const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/lang_uk.json`);
+    const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
     this.uk = enUK.toObject()
   }
 
