@@ -110,8 +110,11 @@
             "about_dot": [
                 {
                     "title": "About Dot",
-                    "thanks_message": "Dot was made possible thanks to {url:wexondRepo} and ☕.",
-                    "made_in": "Made in {emote:gb} Great Britain with {emote:heart}.",
+                    "thanks_message": "Dot was made possible thanks to",
+                    "wxnd_coffee": "and ☕.",
+                    "made_in": "Made in",
+                    "gb_with": "Great Britain with ",
+                    "end": ".",
                     "developers_title": "Developers",
                     "beta_testers_title": "Beta Testers",
                     "special_thanks_title": "Special Thanks",

@@ -2,6 +2,9 @@ import { observable, computed } from 'mobx';
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import store from '.';
+import { viewBm } from '../components/Toolbar';
+import { ViewManager } from '~/main/view-manager';
+import { View } from '../../../main/view';
 
 let lastSuggestion: string;
 
@@ -84,6 +87,10 @@ export class OverlayStore {
     if (this.currentContent === 'extensions') {
       return this.currentContent = 'default';
     }    
+    if (this.currentContent === 'adblock') {
+      ipcRenderer.send('browserview-hide');
+      return store.overlay.visible = false;
+    }
     if (this.currentContent === 'default') {
       if(store.tabs.list.length == 0) return;
       this.visible = false;

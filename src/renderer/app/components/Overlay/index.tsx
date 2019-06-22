@@ -36,7 +36,7 @@ import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 const editJsonFile = require("edit-json-file");
-const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/lang_uk.json`);
+const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
 
 import console = require('console');
 
@@ -230,7 +230,7 @@ export const Overlay = observer(() => {
             <Title>{locale_uk.overlay[0].world}</Title>
             <CardWrapper>
               <WeatherCard />
-              <NewsCard newsImage={"https://ichef.bbci.co.uk/news/660/cpsprodpb/15D32/production/_107449398_gettyimages-1146471727.jpg"} />
+              <NewsCard newsImage={"https://ichef.bbci.co.uk/news/660/cpsprodpb/177B1/production/_107477169_gettyimages-1150934094.jpg"} />
             </CardWrapper>
           </Content>
         </Scrollable>
