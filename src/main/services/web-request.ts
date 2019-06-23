@@ -19,6 +19,8 @@ import {
 } from '@cliqz/adblocker';
 import { parse } from 'tldts';
 import { requestURL } from '~/renderer/app/utils/network';
+import store from '~/renderer/app/store';
+import { Tab } from '~/renderer/app/models';
 
 export let engine: FiltersEngine;
 
@@ -337,34 +339,32 @@ export const runWebRequestService = (window: AppWindow) => {
   // onCompleted
 
   const onCompleted = (details: any) => {
-    const newDetails: any = getDetails(details, window, true);
 
-    console.log(details.responseHeaders['content-type'])
     if(details.resourceType == "mainFrame") {
-      console.log(details.resourceType)
+      const request = net.request(details.url)
       if(`${details.responseHeaders['content-type']}`.indexOf("application/json") >= 0) {
 
-        webContents.getFocusedWebContents().stop()
-
-        const request = net.request(details.url)
-
-        request.on('error', (error) => {
-          console.log(`ERROR: ${JSON.stringify(error)}`)
-        })
+        appWindow.viewManager.selected.webContents.stop()
 
         request.on('response', (response) => {
             response.on('data', (chunk) => {
               var data = `${chunk}`.replace(/<[^>]+>/g, '');
-              webContents.getFocusedWebContents().loadURL(app.getAppPath() + '\\static\\pages\\json-format.html?url=' + details.url + '&json=' + data)
+              var url = app.getAppPath() + '\\static\\pages\\json-format.html?url=' + details.url + '&json=' + data;
+
+              appWindow.viewManager.selected.webContents.loadURL(url);
+
             })
         })
       
         request.end()
       }
     }
+
+    const newDetails: any = getDetails(details, window, true);
   };
 
   webviewRequest.onCompleted(async (details: any) => {
+
     await onCompleted(details);
   });
 

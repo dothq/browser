@@ -6,6 +6,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
+    "esModuleInterop": true,
 
     "module": "commonjs",
     "target": "es6",

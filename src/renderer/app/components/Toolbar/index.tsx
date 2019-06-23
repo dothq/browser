@@ -119,12 +119,12 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
-        <AbButton title="Switch to raw JSON">
+        <AbButton title="Viewing JSON data">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}
             opacity={0.54}
-            title="Switch to raw JSON"
+            title="Viewing JSON data"
             visible={JSONVisible()}
             data={{
               badgeBackgroundColor: 'gray',

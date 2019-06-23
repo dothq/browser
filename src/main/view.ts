@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog, session, net } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
@@ -428,6 +428,36 @@ export class View extends BrowserView {
         );
       },
     );
+
+    // session.defaultSession.webRequest.onCompleted({ urls: ['*'] }, async (details: any) => {
+    //   console.log(details)
+    //   console.log(details.responseHeaders['content-type'])
+    //   if(details.resourceType == "mainFrame") {
+    //     console.log(details.resourceType)
+    //     if(`${details.responseHeaders['content-type']}`.indexOf("application/json") >= 0) {
+  
+    //       this.webContents.stop()
+  
+    //       const request = net.request(details.url)
+  
+    //       request.on('error', (error) => {
+    //         console.log(`ERROR: ${JSON.stringify(error)}`)
+    //       })
+  
+    //       request.on('response', (response) => {
+    //           response.on('data', (chunk) => {
+    //             var data = `${chunk}`.replace(/<[^>]+>/g, '');
+    //             var url = app.getAppPath() + '\\static\\pages\\json-format.html?url=' + details.url + '&json=' + data;
+
+    //             appWindow.webContents.send('api-tabs-create', { url, active: true });
+
+    //           })
+    //       })
+        
+    //       request.end()
+    //     }
+    //   }
+    // })
 
     this.webContents.addListener('did-change-theme-color', (e, color) => {
       appWindow.webContents.send(
