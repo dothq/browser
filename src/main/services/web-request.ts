@@ -1,4 +1,4 @@
-import { ipcMain, session, webContents, app } from 'electron';
+import { ipcMain, session, webContents, app, net } from 'electron';
 import { makeId } from '~/shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '~/shared/utils/url';
@@ -336,15 +336,32 @@ export const runWebRequestService = (window: AppWindow) => {
 
   // onCompleted
 
-  const onCompleted = async (details: any) => {
+  const onCompleted = (details: any) => {
     const newDetails: any = getDetails(details, window, true);
 
-    if(details.responseHeaders['content-type'].includes("application/json") == true) {
-      console.log("Redirecting")
-      window.webContents.executeJavaScript(`<script>window.location.replace("${app.getAppPath()}\\static\\pages\\json-format?json=" + JSON.format(document.body))</script>`);
-    }
+    console.log(details.responseHeaders['content-type'])
+    if(details.resourceType == "mainFrame") {
+      console.log(details.resourceType)
+      if(`${details.responseHeaders['content-type']}`.indexOf("application/json") >= 0) {
 
-    interceptRequest('onCompleted', newDetails);
+        webContents.getFocusedWebContents().stop()
+
+        const request = net.request(details.url)
+
+        request.on('error', (error) => {
+          console.log(`ERROR: ${JSON.stringify(error)}`)
+        })
+
+        request.on('response', (response) => {
+            response.on('data', (chunk) => {
+              var data = `${chunk}`.replace(/<[^>]+>/g, '');
+              webContents.getFocusedWebContents().loadURL(app.getAppPath() + '\\static\\pages\\json-format.html?url=' + details.url + '&json=' + data)
+            })
+        })
+      
+        request.end()
+      }
+    }
   };
 
   webviewRequest.onCompleted(async (details: any) => {
