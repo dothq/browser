@@ -5,19 +5,52 @@
         <meta charset="UTF-8">
     </head>
     <style>
-    body { background-color: rgb(40, 40, 40); margin: 0px }
-    pre { padding: 5px; margin: 5px; font-size: 20px; color: #fff; user-select: none }
-    .string { color: rgb(230, 219, 116); user-select: text; }
-    .number { color:rgb(174, 129, 255); user-select: text; }
-    .boolean { color: rgb(174, 129, 255); user-select: text; }
-    .null { color: #707070; user-select: text; }
-    .key { color: rgb(166, 226, 46); user-select: text; }
-    .error { color: #ff4a4a; user-select: text; }
-    .bracket { color:rgb(255, 255, 255); user-select: text; }
-    .link { color: rgb(230, 219, 116) !important; text-decoration: none; font-style: italic; transition: text-decoration 0.3s; user-select: text; }
+    body { background-color: rgb(255, 255, 255); margin: 0px; transition: 0.5s background-color cubic-bezier(0.075, 0.82, 0.165, 1) }
+    pre { padding: 5px; margin: 5px; font-size: 20px; color: #000; user-select: none; transition-delay: 3s; transition: 0.7s opacity cubic-bezier(0.215, 0.610, 0.355, 1) }
+    .string { color: rgba(255, 0, 188, 0.99); user-select: text; white-space: initial; }
+    .number { color:rgb(174, 129, 255); user-select: text; white-space: initial; }
+    .boolean { color: rgb(174, 129, 255); user-select: text; white-space: initial; }
+    .null { color: #707070; user-select: text; white-space: initial; }
+    .key { color: rgb(0, 112, 255); user-select: text; white-space: initial; }
+    .error { color: #ff4a4a; user-select: text; white-space: initial; }
+    .bracket { color:rgb(0, 0, 0); user-select: text; white-space: initial; }
+    .link { color: rgb(230, 219, 116) !important; text-decoration: none; font-style: italic; transition: text-decoration 0.3s; user-select: text; white-space: initial; }
     .link:hover {
         text-decoration: underline;
         transition: text-decoration 0.3s;
+        white-space: initial;
+    }
+    .tabs {
+        height: 100%;
+        background: rgba(238, 238, 238, 0.44);
+        min-height: 30px;
+        display: flex;
+        padding-left: 15px
+    }
+    .tabs a {
+        padding-top: 6px;
+        margin-right: 10px;
+        font-family: Roboto;
+        padding-left: 10px;
+        padding-right: 10px;
+        transition: border-bottom 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        user-select: none;
+        cursor: pointer;
+    }
+    .selected {
+        border-bottom: 2px #0000007a solid;
+    }
+    .tabs-end {
+        display: flex;
+        margin-left: auto;
+    }
+
+    body .dark ::selection {
+        background-color: #fff;
+    }
+
+    body .light ::selection {
+        background-color: blue;
     }
     </style>
     <script>
@@ -44,7 +77,7 @@
 
                 return '<span class="' + cls + '">' + match + '</span>';
             });
-            newjson = newjson.replace(/(https?|ftp):\/\/[\.[a-zA-Z0-9\/\-]+/, function(match) {
+            newjson = newjson.replace(/(https?|ftp|http?):\/\/[\_.[a-zA-Z0-9\/\-]+/g, function(match) {
                 return '<a class="link" href="' + match + '">' + match + '</a>'
             })
             newjson = newjson.replace(/[\{\}]/g, function(match) {
@@ -55,11 +88,70 @@
             })
         }
 
+        function json() {
+            document.getElementById("json-btn").classList.add("selected");
+            document.getElementById("raw-btn").classList.remove("selected");
+            // document.getElementById("headers-btn").classList.remove("selected");
+            document.getElementById("json").style.display = null;
+            document.getElementById("raw").style.display = "none";
+            // document.getElementById("headers").style.display = "none";
+        }
+
+        function raw() {
+            document.getElementById("json-btn").classList.remove("selected");
+            document.getElementById("raw-btn").classList.add("selected");
+            // document.getElementById("headers-btn").classList.remove("selected");
+            document.getElementById("json").style.display = "none";
+            document.getElementById("raw").style.display = null;
+            // document.getElementById("headers").style.display = "none";
+        }
+
+        function headers() {
+            document.getElementById("json-btn").classList.remove("selected");
+            document.getElementById("raw-btn").classList.remove("selected");
+            // document.getElementById("headers-btn").classList.add("selected");
+            document.getElementById("json").style.display = "none";
+            document.getElementById("raw").style.display = "none";
+            // document.getElementById("headers").style.display = null;
+        }
+
+        function light() {
+            document.getElementById("light-btn").classList.add("selected");
+            document.getElementById("dark-btn").classList.remove("selected");
+            document.getElementsByTagName("body")[0].style.filter = "invert(0)"
+            document.getElementsByTagName("body")[0].style.backgroundColor = "white";
+            document.getElementsByTagName("body")[0].classList.remove("dark");
+            document.getElementsByTagName("body")[0].classList.add("light");
+        }
+
+        function drk() {
+            document.getElementById("dark-btn").classList.add("selected");
+            document.getElementById("light-btn").classList.remove("selected");
+            document.getElementsByTagName("body")[0].style.filter = "invert(1)"
+            document.getElementsByTagName("body")[0].style.backgroundColor = "black";
+            document.getElementsByTagName("body")[0].classList.remove("light");
+            document.getElementsByTagName("body")[0].classList.add("dark");
+        }
+
+        function save() {
+
+            let a = document.createElement('a');
+            a.href = "data:application/json,"+encodeURIComponent(JSON.stringify(JSON.parse(document.getElementById("raw").innerText)));
+            a.download = `${window.location.href.split("?url=")[1].split("&json=")[0]}.json`;
+            a.click();    
+
+
+        }
+
         window.onload = function() {
 
             try {
                 var json = JSON.stringify(JSON.parse(decodeURIComponent(window.location.href.split("&json=")[1])), null, 2);
                 document.getElementById("json").innerHTML = pp(json);
+                document.getElementById("json").style.opacity = 1;
+
+                document.getElementById("raw").innerHTML = decodeURIComponent(window.location.href.split("&json=")[1]);
+
                 document.title = window.location.href.split("?url=")[1].split("&json=")[0];
             }
             catch (e) {
@@ -68,13 +160,27 @@
             
         }
     </script>
-    <body>
+    <body class="light">
 
         <!--
             © 2019 Ender And Fire Development
         -->
 
+        <div class="tabs">
+            <a onclick="json()" class="button selected" id="json-btn">JSON</a>
+            <a onclick="raw()" class="button" id="raw-btn">Raw JSON</a>
+            <a onclick="save()" class="button" id="save-btn">Save</a>
+            <div class="tabs-end">
+                <a onclick="light()" class="button selected" id="light-btn">Light Theme</a>
+                <a onclick="drk()" class="button" id="dark-btn">Dark Theme</a>
+            </div>
+        </div>
+
         <pre id="json">
+
+        </pre>
+
+        <pre id="raw" style="display: none; user-select: text">
 
         </pre>
     </body>

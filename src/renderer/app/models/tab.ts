@@ -191,6 +191,9 @@ export class Tab {
 
         if (url !== this.url) {
           this.title.replace(/🔊 • /g, "");
+          if(this.title.indexOf("json-format.html") <= 0) {
+            this.title = this.url
+          }
           this.lastHistoryId = await store.history.addItem({
             title: this.title,
             url,
