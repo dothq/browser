@@ -66,6 +66,10 @@ export class OverlayStore {
     else {
       this.inputRef.current.value = val;
     }
+
+    if(this._searchBoxValue.indexOf("static/pages/json-format.html?url=") >= 0) {
+      this.inputRef.current.value = this._searchBoxValue.split("?url=")[1].split("&json=")[0];
+    }
   }
 
   constructor() {

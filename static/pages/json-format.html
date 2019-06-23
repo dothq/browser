@@ -58,8 +58,9 @@
         window.onload = function() {
 
             try {
-                var json = JSON.stringify(JSON.parse(decodeURIComponent(window.location.href.split("?json=")[1])), null, 2);
+                var json = JSON.stringify(JSON.parse(decodeURIComponent(window.location.href.split("&json=")[1])), null, 2);
                 document.getElementById("json").innerHTML = pp(json);
+                document.title = window.location.href.split("?url=")[1].split("&json=")[0];
             }
             catch (e) {
                 document.getElementById("json").innerHTML = `<span class='error'>${`${e.message}`}</span>`;

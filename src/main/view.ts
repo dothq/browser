@@ -28,7 +28,7 @@ export class View extends BrowserView {
         plugins: true,
       },
     });
-    
+  
 
     this.homeUrl = url;
     this.tabId = id;
