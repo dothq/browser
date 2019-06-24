@@ -93,20 +93,6 @@ export const audioVisible = () => {
   }
 }
 
-export const JSONVisible = () => {
-  if(store.tabs.selectedTab) {
-    if(store.tabs.selectedTab.isJSON == true) {
-      return true
-    }
-    if(store.tabs.selectedTab.isJSON == false) {
-      return false
-    }
-  }
-  else {
-    return false
-  }
-}
-
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -119,25 +105,6 @@ export const Toolbar = observer(() => {
           <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
         )}
         {store.extensions.browserActions.length > 0 && <Separator />}
-        <AbButton title="Viewing JSON data">
-          <BrowserAction
-            size={18}
-            style={{ marginLeft: 0 }}
-            opacity={0.54}
-            title="Viewing JSON data"
-            visible={JSONVisible()}
-            data={{
-              badgeBackgroundColor: 'gray',
-              badgeText: store.tabs.selectedTab
-              ? store.tabs.selectedTab.isJSON
-                ? ''
-                : ''
-              : '',
-              icon: icons.code,
-              badgeTextColor: 'white',
-            }}
-          />          
-        </AbButton>
         <AbButton title={audioPlaying()}>
           <BrowserAction
             size={18}

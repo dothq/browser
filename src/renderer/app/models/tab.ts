@@ -74,9 +74,6 @@ export class Tab {
   public f = 0;
 
   @observable
-  public isJSON: boolean = false;
-
-  @observable
   public closedTabs: ClosedTabs[] = [];
 
   @observable
@@ -191,9 +188,6 @@ export class Tab {
 
         if (url !== this.url) {
           this.title.replace(/🔊 • /g, "");
-          if(this.title.indexOf("json-format.html") <= 0) {
-            this.title = this.url
-          }
           this.lastHistoryId = await store.history.addItem({
             title: this.title,
             url,
@@ -217,15 +211,7 @@ export class Tab {
         }
 
         this.title = title;
-        if(url.indexOf("static/pages/json-format.html?url=") >= 0) {
-          this.url = url.split("?url=")[1].split("&json=")[0];
-          this.isJSON = true;
-        }
-        else {
-          this.isJSON = false;
-          this.url = url;
-        }
-        
+        this.url = url;
 
         this.updateData();
       },

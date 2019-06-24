@@ -2,7 +2,7 @@
   <img src="https://bot.ender.site/img/dot.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://bot.ender.site/img/dot.png" width="200" height="200" align="center"/>
 </p>
 
-<h1 align="center">Dot Browser</h1>
+<h1 align="center">Dot</h1>
 <h3 align="center">A beautiful browser with material UI, with built-in adblock, based on Wexond.</h3>
 
 ## 👾 Features

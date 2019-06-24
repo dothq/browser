@@ -1,4 +1,4 @@
-import { BrowserWindow, app, nativeImage, dialog, remote } from 'electron';
+import { BrowserWindow, app, nativeImage, dialog, dialog, remote } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
