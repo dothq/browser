@@ -68,7 +68,7 @@ const login = async () => {
     resizable: false,
     center: false,
     alwaysOnTop: false,
-    title: '{store.locale.uk.settings[0].my_profile[0].sign_in_btn}',
+    title: store.locale.uk.settings[0].my_profile[0].sign_in_btn,
     titleBarStyle: 'hiddenInset',
     webPreferences: {
       nodeIntegration: true

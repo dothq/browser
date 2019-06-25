@@ -182,7 +182,7 @@ export const preventHiding = (e: any) => {
   store.bookmarks.menuVisible = false;
 };
 
-store.user.loadProfile()
+store.user.loadProfile();
 
 const LoginSnackbar = () => {
   return (
@@ -198,11 +198,17 @@ interface Props {
 
 const CardWrapper = observer(({ children }: Props) => {
   return (
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
       {children}
     </div>
   );
 });
+
+const openExtLink = (url: string) => () => {
+  store.tabs.addTab({ url, active: true });
+};
+
+console.log(store.news.list)
 
 export const Overlay = observer(() => {
 
@@ -228,7 +234,18 @@ export const Overlay = observer(() => {
             <Title>{locale_uk.overlay[0].world}</Title>
             <CardWrapper>
               <WeatherCard />
-              <NewsCard newsImage={"https://ichef.bbci.co.uk/news/660/cpsprodpb/177B1/production/_107477169_gettyimages-1150934094.jpg"} />
+              {store.news.list.map((item: any) => (
+                <NewsCard 
+                  key={item.key} 
+                  newsImage={item.image} 
+                  newsURL={item.url} 
+                  newsPubIcon={item.favicon} 
+                  newsPublisher={item.source} 
+                  newsTitle={item.title} 
+                  newsFullTitle={item.wholeTitle}
+                  newsOnClick={openExtLink(item.url)}
+                />
+              ))}
             </CardWrapper>
           </Content>
         </Scrollable>

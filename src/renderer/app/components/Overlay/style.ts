@@ -19,6 +19,7 @@ export const OverlayScrollbarStyle = `
   ::-webkit-scrollbar {
     width: ${width()};
     height: 3px;
+    border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -27,10 +28,14 @@ export const OverlayScrollbarStyle = `
 
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.16);
+    transition: 0.5s border-radius;
+    border-radius: 15px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.48);
+    transition: 0.5s border-radius;
+    border-radius: 35px;
   }
 `;
 
