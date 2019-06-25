@@ -19,6 +19,7 @@ import { ViewManager } from '~/main/view-manager';
 const GlobalStyle = createGlobalStyle`${Style}`;
 
 store.weather.load()
+store.news.load();
 
 // Locale loader
 

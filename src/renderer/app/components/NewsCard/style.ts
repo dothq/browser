@@ -8,29 +8,59 @@ export const StyledCard = styled.div`
   border-radius: 30px;
   color: white;
   overflow: hidden;
-  width: 264px;
+  width: 245px;
+  height: 359px;
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
-  margin-left: 25px
+  background-color: rgba(255,255,255,0.08);
 `;
 
 export const Offline = styled.div`
 
 `;
 
+export const PubIcon = styled.img`
+  border-radius: 50%;
+`;
+
 export const Header = styled.div`
   width: 100%;
   padding: 24px;
-  height: 212px
+  height: 212px;
+  background-size: cover;
+  transition: 0.5s filter;
+
+  &:hover {
+    filter: brightness(50%);
+  }
 
   ${({ image }: { image: any }) => css`
     background-image: url(${image})
   `};
 `;
 
+export const ExtIcon = styled.img`
+  opacity: 0;
+  zoom: 0%;
+  -webkit-transition: 0.5s all;
+  transition: 0.5s all;
+  width: 20%;
+  height: 100%;
+  transform: translate(206%, 0%);
+  filter: invert(1)
+
+  &:hover {
+    opacity: 1;
+    zoom: 50%;
+  }
+`;
+
 export const Title = styled.div`
-  font-size: 24px;
-  font-weight: 300;
+  font-size: 18px;
+  font-weight: 100;
   margin-bottom: 8px;
+  padding-left: 18px;
+  margin-top: -3px;
+  padding-right: 18px;
 `;
 
 export const Degrees = styled.div`
@@ -61,8 +91,7 @@ export const SmallIcon = styled.div`
 
 export const Items = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-left: 7px;
 `;
 
 export const Item = styled.div`
@@ -71,8 +100,7 @@ export const Item = styled.div`
   padding-top: 16px;
   padding-bottom: 16px;
   flex-flow: column;
-  justify-content: center;
-  align-items: center;
+  margin-left: 10px;
 `;
 
 export const SmallDegrees = styled.div`

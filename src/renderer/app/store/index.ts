@@ -22,6 +22,7 @@ import { LocaleStore } from './locale';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
 import { WeatherStore } from './weather';
+import { NewsStore } from './news';
 import { UserStore } from './user';
 import { existsSync, writeFileSync } from 'fs';
 
@@ -61,6 +62,7 @@ export class Store {
   public weather = new WeatherStore();
   public user = new UserStore();
   public locale = new LocaleStore();
+  public news = new NewsStore();
 
   @observable
   public isFullscreen = false;
