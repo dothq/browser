@@ -364,6 +364,13 @@ export class View extends BrowserView {
               active: true,
             });    
           }
+          else {
+            e.preventDefault();
+            appWindow.webContents.send('api-tabs-create', {
+              url,
+              active: true,
+            });   
+          }
           if (frameName === 'link') {
             e.preventDefault();
             return appWindow.webContents.send('api-tabs-create', {

@@ -11,7 +11,8 @@ export const StyledTabGroups = styled.div`
 export const AddTabGroup = styled.div`
   width: 42px;
   height: 42px;
-  border: 1px solid black;
+  border: 1px #42424252 solid;
+  transition: background-color 0.3s;
   opacity: 0.54;
   border-radius: 50px;
   ${centerIcon(24)};
@@ -22,5 +23,6 @@ export const AddTabGroup = styled.div`
 
   &:hover {
     opacity: 1;
+    background-color: rgba(255, 255, 255, 0.12);
   }
 `;

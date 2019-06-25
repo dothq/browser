@@ -44,6 +44,7 @@ var locale_uk = enUK.toObject()
 
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
+import { ExtLink } from '../NewsCard/style';
 
 let file = editJsonFile(`${remote.app.getPath('userData')}/dot/dot-options.json`);
 
@@ -246,6 +247,9 @@ export const Overlay = observer(() => {
                   newsOnClick={openExtLink(item.url)}
                 />
               ))}
+              <ExtLink>
+                Load more
+              </ExtLink>
             </CardWrapper>
           </Content>
         </Scrollable>
