@@ -13,8 +13,10 @@ const onClick = (item: TabGroup) => () => {
 };
 
 const onCloseClick = (id: number) => (e: any) => {
-  e.stopPropagation();
-  store.tabGroups.removeGroup(id);
+  if(store.tabGroups.list.length != 1) {
+    e.stopPropagation();
+    store.tabGroups.removeGroup(id);
+  }
 };
 
 const onEditClick = (item: TabGroup) => (e: any) => {

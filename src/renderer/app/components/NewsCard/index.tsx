@@ -8,7 +8,7 @@ import {
   Overline,
   PubIcon,
   Title,
-  ExtIcon,
+  ExtLink,
 } from './style';
 import { icons } from '../../constants';
 
@@ -21,14 +21,13 @@ interface Props {
   publishedWhen?: any;
   newsTitle: any;
   newsFullTitle: any;
-  newsOnClick: (e?: React.MouseEvent<HTMLDivElement>) => void;
+  newsOnClick: any;
 }
 
 export const NewsCard = observer(({ newsImage, newsURL, newsCategory, newsPublisher, newsPubIcon, publishedWhen, newsTitle, newsFullTitle, newsOnClick }: Props) => {
   return (
-    <StyledCard onClick={newsOnClick}>
+    <StyledCard>
       <Header image={newsImage}>
-        <ExtIcon src={icons.open} />
       </Header>
       <Items>
         <Item>
@@ -41,6 +40,9 @@ export const NewsCard = observer(({ newsImage, newsURL, newsCategory, newsPublis
         </Item>
       </Items>
       <Title title={newsFullTitle}>{newsTitle}</Title>
+      <ExtLink onClick={newsOnClick}>
+        Read more
+      </ExtLink>
     </StyledCard>
   );
 });
