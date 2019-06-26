@@ -15,7 +15,7 @@ import { platform } from 'os';
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
 
-var tray = new Tray(resolve(app.getAppPath(), 'static/icon.png'))
+var tray = new Tray(resolve(app.getAppPath(), 'static/tray-icon.png'))
 const contextMenu = Menu.buildFromTemplate([
   { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
   { type: 'separator' },
