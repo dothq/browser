@@ -3,6 +3,7 @@ import { observable, action } from 'mobx';
 import { defaultNotifOptions, TOOLBAR_HEIGHT } from '../constants'
 import { resolve } from 'path';
 import store from '.';
+import { appWindow } from '..';
 var modal = require('electron-modal');
 
 export class NotifsStore {
@@ -44,10 +45,9 @@ export class NotifsStore {
 
     win.webContents.toggleDevTools();
 
-    win.hide();
-
     win.webContents.on('did-finish-load', async () => {
 
+      win.hide();
       win.webContents.send("new-notification", 'example.com||Location');
 
       win.on('hide', () => {
