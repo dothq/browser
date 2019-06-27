@@ -26,7 +26,7 @@ const DataURI = require('datauri').promise;
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
-const { Menu, MenuItem, Tray, app } = remote
+const { Tray, app } = remote
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
@@ -708,6 +708,17 @@ const openLog = () => {
   remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
 }
 
+const MenuItem = observer(
+  ({ selected, children, display }: { selected: boolean; children: any; display: any }) => (
+    <NavigationDrawer.Item
+      selected={selected}
+      onClick={() => (store.options.currentDisplay = display)}
+    >
+      {children}
+    </NavigationDrawer.Item>
+  ),
+);
+
 export const Experiments = observer(() => {
   return (
     <SettingsSection>
@@ -760,6 +771,9 @@ export const Settings = observer(() => {
           search
           onSearchInput={onInput}
         >
+          <MenuItem selected={true} display="profile">{store.locale.uk.settings[0].my_profile[0].title}</MenuItem>
+          <MenuItem selected={false} display="appearance">{store.locale.uk.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={false} display="downloads">{store.locale.uk.settings[0].downloads[0].title}</MenuItem>
         </NavigationDrawer>
         <Sections>
           <Content>
