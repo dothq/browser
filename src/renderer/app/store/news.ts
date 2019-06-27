@@ -26,15 +26,16 @@ export class NewsStore {
           if(i != 5) {
 
             if(json.articles[i].title.length >= 65) {
-              if(json.articles[i].title.split("-")[0].substring(0, 65).slice(-1) == " ") {
-                var title = json.articles[i].title.split("-")[0].substring(0, 65-1) + '...'
+              var lastIndex = json.articles[i].title.lastIndexOf("-");
+              if(json.articles[i].title.substring(0, lastIndex).substring(0, 65).slice(-1) == " ") {
+                var title = json.articles[i].title.substring(0, lastIndex).substring(0, 65-1) + '...'
               }
               else {
-                var title = json.articles[i].title.split("-")[0].substring(0, 65) + '...'
+                var title = json.articles[i].title.substring(0, lastIndex).substring(0, 65) + '...'
               }
             }
             else {
-              var title = `${json.articles[i].title.split("-")[0]}`;
+              var title = `${json.articles[i].title.substring(0, lastIndex)}`;
             }
     
             this.list.push({

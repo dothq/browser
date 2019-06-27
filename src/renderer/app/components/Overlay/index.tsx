@@ -157,6 +157,15 @@ rpclient.login({ clientId }).catch(console.error);
 
 store.downloads.load()
 
+// remote.ipcMain.on('window-focus', async () => {
+//   if(store.overlay.visible == true) {
+//     store.notifications.hidePermissionWindow()
+//   }
+//   else {
+//     store.notifications.showPermissionWindow()
+//   }
+// })
+
 export const Header = ({ children, clickable }: any) => {
   return (
     <HeaderText clickable={clickable}>
