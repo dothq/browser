@@ -28,7 +28,7 @@
 [![Browsing](https://i.imgur.com/kw8f5KB.png)]()
 
 ### The Launcher
-[![Launcher](https://i.imgur.com/OaLcfvn.png)]()
+[![Launcher](https://i.imgur.com/ZMVBnNm.png)]()
 
 ### Rich Presence
 [![RP](https://i.imgur.com/Nsekr6W.png)]()
