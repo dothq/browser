@@ -10,6 +10,7 @@ import { HistoryStore } from './history';
 import { FaviconsStore } from './favicons';
 import { SuggestionsStore } from './suggestions';
 import { ExtensionsStore } from './extensions';
+import { NotifsStore } from './notifications';
 import { extname } from 'path';
 import { BookmarksStore } from './bookmarks';
 import { readFileSync, writeFile } from 'fs';
@@ -63,6 +64,7 @@ export class Store {
   public user = new UserStore();
   public locale = new LocaleStore();
   public news = new NewsStore();
+  public notifications = new NotifsStore();
 
   @observable
   public isFullscreen = false;

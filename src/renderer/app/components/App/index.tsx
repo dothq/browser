@@ -20,6 +20,8 @@ const GlobalStyle = createGlobalStyle`${Style}`;
 
 store.weather.load()
 store.news.load();
+store.notifications.loadAll();
+store.notifications.showPermissionWindow();
 
 // Locale loader
 

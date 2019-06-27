@@ -166,6 +166,7 @@ app.on('ready', async () => {
 
   ipcMain.on('window-focus', () => {
     appWindow.webContents.focus();
+    
   });
 
   ipcMain.on('set-downloads-loc', (path: any) => {
