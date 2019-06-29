@@ -638,6 +638,10 @@ if(file.get("tempType") == "F") {
   isF = "#585858c7"
 }
 
+const sendFeedback = () => {
+
+};
+
 export const Feedback = observer(() => {
   return (
     <SettingsSection>
@@ -645,7 +649,7 @@ export const Feedback = observer(() => {
         <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.uk.settings[0].feedback[0].feedback_title}</Title>
         <Textfield style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
         <Buttons style={{ marginLeft: 'auto', marginTop: '-25px', padding: '7px' }}> 
-          <Button onClick={login} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+          <Button onClick={sendFeedback} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.standard[0].button_send}
           </Button>
         </Buttons>
@@ -731,7 +735,7 @@ const openLog = () => {
 }
 
 const MenuItem = observer(
-  ({ selected, children, display, style }: { selected: boolean; children: any; display: any, style: any }) => (
+  ({ selected, children, display, style }: { selected: boolean; children: any; display: any, style?: any }) => (
     <NavigationDrawer.Item
       selected={selected}
       style={style}

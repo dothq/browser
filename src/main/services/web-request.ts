@@ -339,11 +339,6 @@ export const runWebRequestService = (window: AppWindow) => {
   const onCompleted = async (details: any) => {
     const newDetails: any = getDetails(details, window, true);
 
-    if(details.responseHeaders['content-type'].includes("application/json") == true) {
-      console.log("Redirecting")
-      window.webContents.executeJavaScript(`<script>window.location.replace("${app.getAppPath()}\\static\\pages\\json-format?json=" + JSON.format(document.body))</script>`);
-    }
-
     interceptRequest('onCompleted', newDetails);
   };
 

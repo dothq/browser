@@ -152,7 +152,10 @@
     ],
     "bookmarks": [
         {
-            "title": "Bookmarks"
+            "title": "Bookmarks",
+            "import": "Import Bookmarks",
+            "export": "Export Bookmarks",
+            "add_bookmark": "New Bookmark"
         }
     ],
     "extensions": [
