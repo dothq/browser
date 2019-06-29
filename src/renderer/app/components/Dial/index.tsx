@@ -46,7 +46,7 @@ export const Dial = observer(() => {
             style={{ marginBottom: 24, cursor: 'pointer' }}
           >
             {dialType === 'bookmarks' ? store.locale.uk.overlay[0].dial_bookmarks : store.locale.uk.overlay[0].dial_top_sites}
-            <DropArrow />
+            <DropArrow visible={true} />
             <ContextMenu
               style={{ top: 42 }}
               visible={store.overlay.dialTypeMenuVisible}

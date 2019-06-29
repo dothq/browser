@@ -26,8 +26,7 @@ const scrollRef = React.createRef<HTMLDivElement>();
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
