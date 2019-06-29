@@ -3,7 +3,6 @@ import { observable, computed, action } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import { Bookmark } from '../models/bookmark';
 import console = require('console');
-const bds = require("../../constants/defaultBookmarks.json");
 
 export class BookmarksStore {
   public db = new Datastore({
@@ -25,6 +24,9 @@ export class BookmarksStore {
 
   @observable
   public menuLeft: number = 0;
+
+  @observable
+  public currentDisplay: 'default' | 'new_bookmark' | 'import' | 'export' = 'default'
 
   @observable
   public menuTop: number = 0;
@@ -57,6 +59,7 @@ export class BookmarksStore {
     await this.db.find({}).exec(async (err: any, items: Bookmark[]) => {
       if (err) return console.warn(err);
 
+      this.list = items;
     });
   }
 
