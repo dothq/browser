@@ -7,7 +7,7 @@ import { extensions } from './extensions';
 const applets = ['newtab'];
 
 export const registerProtocols = () => {
-  protocol.registerStandardSchemes(['dot', 'extension', 'json']);
+  protocol.registerStandardSchemes(['dot', 'extension', 'theme']);
 
   // protocol.registerSchemesAsPrivileged([
   //   {
@@ -71,7 +71,7 @@ export const registerProtocols = () => {
         if (applets.indexOf(parsed.hostname) !== -1) {
           if (parsed.path === '/') {
             return callback({
-              path: join(app.getAppPath(), 'build', 'applets.html'),
+              path: join(app.getAppPath(), 'static/pages', 'about.html'),
             });
           }
 
@@ -100,12 +100,12 @@ export const registerProtocols = () => {
     );
 
     sess.protocol.registerFileProtocol(
-      'json',
+      'theme',
       (request, callback: any) => {
         const parsed = parse(request.url);
 
         return callback({
-          path: join(app.getAppPath(), `static/pages/json-format.html?url=${parsed.path}`),
+          path: join(app.getAppPath(), `static/theme/${parsed.path}`),
         });
       },
       error => {

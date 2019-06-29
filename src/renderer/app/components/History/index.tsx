@@ -118,7 +118,7 @@ export const History = observer(() => {
           <MenuItem range="last-week">{store.locale.uk.history[0].sort[0].range_last_week}</MenuItem>
           <MenuItem range="last-month">{store.locale.uk.history[0].sort[0].range_last_month}</MenuItem>
           <MenuItem range="older">{store.locale.uk.history[0].sort[0].range_older}</MenuItem>
-          <NavigationDrawer.Item icon={icons.trash} style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} onClick={onClearClick} selected={true}>
+          <NavigationDrawer.Item icon={icons.trash} style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} onClick={onClearClick}>
             {store.locale.uk.history[0].clear_browsing_history}
           </NavigationDrawer.Item>
         </NavigationDrawer>

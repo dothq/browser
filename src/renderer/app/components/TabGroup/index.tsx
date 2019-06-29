@@ -6,13 +6,15 @@ import { icons } from '../../constants';
 import { TabGroup } from '../../models';
 import store from '../../store';
 
-const onClick = (item: TabGroup) => () => {
+const onClick = (item: TabGroup) => (e: any) => {
+  e.stopPropagation();
   if (!item.editMode) {
     store.tabGroups.currentGroupId = item.id;
   }
 };
 
 const onCloseClick = (id: number) => (e: any) => {
+  e.stopPropagation();
   if(store.tabGroups.list.length != 1) {
     e.stopPropagation();
     store.tabGroups.removeGroup(id);
@@ -20,6 +22,7 @@ const onCloseClick = (id: number) => (e: any) => {
 };
 
 const onEditClick = (item: TabGroup) => (e: any) => {
+  e.stopPropagation();
   e.stopPropagation();
   item.editMode = !item.editMode;
 };

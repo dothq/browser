@@ -179,6 +179,12 @@ export class TabsStore {
     return tab;
   }
 
+  @action
+  public openExternalLink(options = defaultTabOptions) {
+    this.addTab(options)
+    store.overlay.visible = false;
+  }
+
   public removeTab(id: number) {
     (this.list as any).remove(this.getTabById(id));
   }

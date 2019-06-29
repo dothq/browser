@@ -113,11 +113,15 @@ export const DropArrow = styled.div`
   background-image: url(${icons.down});
   filter: invert(100%);
   border-radius: 50%;
-  transition: 0.1s background-color;
+  transition: 0.3s background-color;
 
   &:hover {
     background-color: rgba(0,0,0,0.15);
   }
+
+  ${({ visible }: { visible?: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
+  `} 
 `;
 
 export const IconButton = styled.div`
@@ -127,13 +131,14 @@ export const IconButton = styled.div`
   width: 32px;
   filter: invert(100%);
   border-radius: 50%;
-  transition: 0.1s background-color;
+  transition: 0.3s background-color;
 
   &:hover {
     background-color: rgba(0,0,0,0.15);
   }
 
-  ${({ icon }: { icon: any }) => css`
+  ${({ icon, visible }: { icon: any; visible: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
     background-image: url(${icon});
   `}  
 `;

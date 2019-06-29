@@ -185,7 +185,11 @@ export class View extends BrowserView {
         ]);
       }
      
-      menuItems.push({
+      menuItems.push(
+        {
+            type: 'separator',
+        },
+        {
         label: 'View source',
         click: () => {
 
@@ -293,6 +297,17 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener(
+      'will-navigate',
+      (e, url) => {
+          e.preventDefault();
+          return appWindow.webContents.send('api-tabs-create', {
+            url,
+            active: true,
+          });    
+      }
+    )
+
+    this.webContents.addListener(
       'new-window',
       (e, url, frameName, disposition) => {
 
@@ -355,6 +370,11 @@ export class View extends BrowserView {
         //Discord Rich Presence
 
         if (disposition === 'new-window') {
+          e.preventDefault();
+          appWindow.webContents.send('api-tabs-create', {
+            url,
+            active: true,
+          });   
           console.log(frameName)
           console.log(disposition)
           if (disposition === 'new-window') {
@@ -370,25 +390,6 @@ export class View extends BrowserView {
               url,
               active: true,
             });   
-          }
-          if (frameName === 'link') {
-            e.preventDefault();
-            return appWindow.webContents.send('api-tabs-create', {
-              url,
-              active: true,
-            });    
-          }
-          if (frameName === '_self') {
-            e.preventDefault();
-            appWindow.viewManager.selected.webContents.loadURL(url);
-            appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
-          }
-          if (frameName === '_blank') {
-            e.preventDefault();
-            appWindow.webContents.send('api-tabs-create', {
-              url,
-              active: true,
-            });
           }
           if (frameName === 'modal') {
             e.preventDefault();

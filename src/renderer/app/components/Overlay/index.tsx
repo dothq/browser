@@ -14,8 +14,9 @@ import {
   Container,
   Image,
   Dot,
-  Preloader,
   Panel,
+  DropArrow,
+  IconButton,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
@@ -35,6 +36,7 @@ import { icons } from '../../constants';
 import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
+import { Preloader } from '~/renderer/components/Preloader'
 const editJsonFile = require("edit-json-file");
 const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
 
@@ -187,8 +189,7 @@ export const preventHiding = (e: any) => {
   e.stopPropagation();
   store.overlay.dialTypeMenuVisible = false;
   store.user.menuVisible = false;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
@@ -208,15 +209,26 @@ interface Props {
 
 const CardWrapper = observer(({ children }: Props) => {
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }} onClick={preventHiding}>
       {children}
     </div>
   );
 });
 
 const openExtLink = (url: string) => () => {
-  store.tabs.addTab({ url, active: true });
+  store.tabs.openExternalLink({ url, active: true })
 };
+
+const loadNews = (amount: any) => () => {
+  if(amount == 5) {
+    store.news.load();
+    store.news.shouldLoadNews = true;
+  }
+  else {
+    store.news.loadAll()
+    store.news.shouldLoadNews = true;
+  }
+}
 
 console.log(store.news.list)
 
@@ -256,10 +268,27 @@ export const Overlay = observer(() => {
                   newsOnClick={openExtLink(item.url)}
                 />
               ))}
-              <ExtLink>
-                Load more
-              </ExtLink>
             </CardWrapper>
+            <div onClick={preventHiding}>
+              <DropArrow visible={store.news.list.length == 5} style={{ textAlign: 'center', margin: '10px auto 20px auto', filter: 'invert(1)', zoom: '1.5', cursor: 'pointer' }} title="Load more articles" onClick={loadNews('more')}>
+                {store.news.shouldLoadNews == true && (
+                  <Preloader
+                      thickness={6}
+                      size={16}
+                      style={{ zoom: '2', filter: 'invert(1)' }}
+                  />
+                )}
+              </DropArrow>
+              <IconButton visible={store.news.list.length >= 6} style={{ textAlign: 'center', margin: '10px auto 20px auto', filter: 'invert(1)', zoom: '1.5', cursor: 'pointer' }} icon={icons.up} title="Load less articles" onClick={loadNews(5)}>
+                {store.news.shouldLoadNews == true && (
+                  <Preloader
+                      thickness={6}
+                      size={16}
+                      style={{ zoom: '2', filter: 'invert(1)' }}
+                  />
+                )}
+              </IconButton>
+            </div>
           </Content>
         </Scrollable>
       </Container>
