@@ -26,6 +26,8 @@ import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { openNewGitHubIssue } from 'electron-util';
+import { createWriteStream } from 'fs';
+import { get } from 'https';
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
@@ -784,6 +786,13 @@ export const Experiments = observer(() => {
   );
 });
 
+const downloadLatestLangs = () => {
+  const file = createWriteStream(app.getPath("temp") + '\\dot-extracted.zip' );
+  const request = get("https://github.com/dot-browser/desktop/archive/master.zip", function(response) {
+    response.pipe(file);
+  });
+}
+
 export const Languages = observer(() => {
   var itemChecked = file.get("language");
   return (
@@ -810,6 +819,21 @@ export const Languages = observer(() => {
       })}
     </SettingsSection>
   );
+});
+
+export const DownloadLanguages = observer(() => {
+  return (
+    <SettingsSection style={{ marginTop: '50px' }}>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].languages[0].download_languages}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+            <Button onClick={downloadLatestLangs} visible={true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+              {store.locale.lang.standard[0].button_download}
+            </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  )
 });
 
 function setLanguage(l: any) {
@@ -864,6 +888,7 @@ export const Settings = observer(() => {
 
               {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].languages[0].title}</Title>}
               {store.options.currentDisplay == 'languages' && <Languages />}
+              {store.options.currentDisplay == 'languages' && <DownloadLanguages />}
 
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}

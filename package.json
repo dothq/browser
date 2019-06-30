@@ -90,6 +90,7 @@
     "datauri": "^2.0.0",
     "discord-rich-presence": "0.0.8",
     "discord-rpc": "^3.0.2",
+    "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.2.1",
     "electron-extensions": "^1.0.0",
     "electron-modal": "^1.0.0",

@@ -8,6 +8,7 @@
             "button_open": "Open",
             "button_run": "Run",
             "button_send": "Send",
+            "button_download": "Nedlasting",
             "search_placeholder": "Search",
             "quit": "Forlat",
             "quit_dot": "Forlat Dot",
@@ -135,7 +136,8 @@
             ],
             "languages": [
                 {
-                    "title": "Språk"
+                    "title": "Språk",
+                    "download_languages": "Last ned siste språkpakke"
                 }
             ]
         }

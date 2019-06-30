@@ -8,6 +8,7 @@
             "button_open": "Abierto",
             "button_run": "Ejecutar",
             "button_send": "Enviar",
+            "button_download": "Descargar",
             "search_placeholder": "Buscar",
             "quit": "Dejar",
             "quit_dot": "Salir Dot",
@@ -135,7 +136,8 @@
             ],
             "languages": [
                 {
-                    "title": "Idiomas"
+                    "title": "Idiomas",
+                    "download_languages": "Descargar el paquete de idioma más reciente"
                 }
             ]
         }
