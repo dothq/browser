@@ -15,6 +15,17 @@
             "quit_dot_with_version": "Quitter Dot {appVersion}"
         }
     ],
+    "languages": [
+        {
+            "en": "English",
+            "de": "German",
+            "fr": "French",
+            "fi": "Finnish",
+            "ru": "Russian",
+            "no": "Norweigan",
+            "ir": "Irish"
+        }
+    ],
     "rich_presence": [
         {
             "default_details": "Naviguer sur",
