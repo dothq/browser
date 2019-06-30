@@ -8,6 +8,7 @@
             "button_open": "Ouvert",
             "button_run": "Exécuter",
             "button_send": "Envoyer",
+            "button_download": "Télécharger",
             "search_placeholder": "Recherche",
             "quit": "Quitter",
             "quit_dot": "Quitter Dot",
@@ -135,7 +136,8 @@
             ],
             "languages": [
                 {
-                    "title": "La langue"
+                    "title": "La langue",
+                    "download_languages": "Télécharger le dernier pack de langue"
                 }
             ]
         }

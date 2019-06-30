@@ -8,6 +8,7 @@
             "button_open": "Avaa",
             "button_run": "Suorita",
             "button_send": "Lähetä",
+            "button_download": "Ladata",
             "search_placeholder": "Etsi",
             "quit": "Lopeta",
             "quit_dot": "Lopeta Dot",
@@ -135,7 +136,8 @@
             ],
             "languages": [
                 {
-                    "title": "Kielet"
+                    "title": "Kielet",
+                    "download_languages": "Lataa uusin kielipaketti"
                 }
             ]
         }

@@ -6,6 +6,11 @@ import store from '.';
 const editJsonFile = require("edit-json-file");
 const opts = editJsonFile(resolve(homedir() + '/dot/dot-options.json'));
 
+if(!opts.get("language")) {
+  opts.set("language", "en");
+  opts.save();
+}
+
 export class LocaleStore {
 
   public lang: any;
