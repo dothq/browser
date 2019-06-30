@@ -800,6 +800,8 @@ export const Languages = observer(() => {
     <SettingsSection>
       {allLangs.languages.map((i: any) => {
 
+        i.flag_icon = `https://twemoji.maxcdn.com/2/72x72/${i.flag_icon}`
+
         if(itemChecked == i.flag) {
           i.icon = icons.checked
         }
@@ -810,9 +812,11 @@ export const Languages = observer(() => {
         i.id = `lang-btn-${i.flag}`
 
         return (<ListItem key={i.flag}>
-          <Title style={{ fontSize: 15 }}>{i.title}</Title>
-          <Buttons style={{ marginLeft: 'auto' }}>
-            <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image' }}>
+          <Title style={{ fontSize: 15 }}> {i.title}</Title>
+          <Buttons style={{ marginLeft: 'auto', display: 'flex' }}>
+            <Title style={{ color: '#72767d', fontSize: '17px', margin: '0px', height: '22px', marginTop: '3px' }}>English</Title>
+            <img style={{ width: '28px', height: '28px', marginLeft: '10px' }} src={i.flag_icon}></img>
+            <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image', cursor: 'pointer' }}>
               ----
             </LanguageButton>
           </Buttons>
