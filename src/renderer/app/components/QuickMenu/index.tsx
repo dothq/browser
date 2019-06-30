@@ -23,7 +23,7 @@ const onFindClick = () => {
 export const QuickMenu = observer(() => {
   return (
     <Section onClick={preventHiding}>
-      <Header>Menu</Header>
+      <Header>{store.locale.lang.overlay[0].menu}</Header>
       <Actions>
         <Bubble onClick={changeContent('history')} invert icon={icons.history}>
           {store.locale.lang.overlay[0].history_bubble}

@@ -31,6 +31,7 @@
             "dial_top_sites": "Top Seiten",
             "dial_bookmarks": "Lesezeichen",
             "overview": "Überblick",
+            "menu": "Speisekarte",
             "tab_groups": "Tab Gruppen",
             "default_tab_group": "Neue Gruppe",
             "world": "Welt",
@@ -130,7 +131,8 @@
                 {
                     "title": "Feedback senden",
                     "feedback_title": "Sende Feedback an die Entwickler",
-                    "bug_report_title": "Bug Report öffnen"
+                    "bug_report_title": "Bug Report öffnen",
+                    "describe_issue": "Beschreibe dein problem"
                 }
             ],
             "languages": [
