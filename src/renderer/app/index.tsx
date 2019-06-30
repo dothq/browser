@@ -206,7 +206,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'Forward',
-          accelerator: 'Alt+Left',
+          accelerator: 'Alt+Right',
           click() { 
             if(store.tabs.selectedTab) {
               if(store.navigationState.canGoForward == true) {

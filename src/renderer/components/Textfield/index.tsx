@@ -14,7 +14,7 @@ interface Props {
   onIconClick?: (target: Textfield) => void;
   inputType?: 'text' | 'email' | 'password' | 'number';
   style?: any;
-  test?: TestFunction;]
+  test?: TestFunction;
   rows?: number;
   cols?: number;
 }
@@ -26,7 +26,7 @@ interface State {
 }
 
 export class Textfield extends React.PureComponent<Props, State> {
-  public inputRef = React.createRef<HTMLInputElement>();
+  public inputRef = React.createRef<HTMLTextAreaElement>();
 
   static defaultProps: Props = {
     color: colors.blue['500'],
