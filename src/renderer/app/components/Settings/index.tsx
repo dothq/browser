@@ -335,6 +335,12 @@ const chachy = () => {
   store.overlay.visible = false;
 }
 
+const translators = () => {
+  var url = "https://github.com/dot-browser/desktop/pulls?q=is%3Apr+label%3Atranslator"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
 const aboutPage = () => {
   var url = "dot://about"
   store.tabs.addTab({url, active: true });
@@ -367,6 +373,8 @@ const AboutDot = observer(() => {
         <ExtLink onClick={chachy} title="<shalomadecoolboy@outlook.com>" style={{ color: '#dadada' }}>Chachy</ExtLink>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].special_thanks_title}</Title>
         <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].translators_title}</Title>
+        <ExtLink onClick={translators} title="View all contributors on GitHub.com" style={{ marginLeft: '60px', color: '#dadada' }}>View translators</ExtLink>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>
