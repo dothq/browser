@@ -36,7 +36,7 @@ export const Extensions = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title={store.locale.uk.extensions[0].title}
+          title={store.locale.lang.extensions[0].title}
           onBackClick={onBackClick}
         />
       </Scrollable>

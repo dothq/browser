@@ -25,7 +25,7 @@ store.notifications.showPermissionWindow();
 
 // Locale loader
 
-store.locale.loadUK()
+store.locale.load()
 
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');

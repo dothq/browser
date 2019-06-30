@@ -170,20 +170,20 @@ export const SearchBox = observer(() => {
   var curHr = today.getHours()
 
   if (curHr < 12) {
-    var timeType = store.locale.uk.search_bar[0].timeTypes[0].morning
+    var timeType = store.locale.lang.search_bar[0].timeTypes[0].morning
   } else if (curHr < 18) {
-    var timeType = store.locale.uk.search_bar[0].timeTypes[0].afternoon
+    var timeType = store.locale.lang.search_bar[0].timeTypes[0].afternoon
   } else {
-    var timeType = store.locale.uk.search_bar[0].timeTypes[0].evening
+    var timeType = store.locale.lang.search_bar[0].timeTypes[0].evening
   }
   if(store.user.loggedin == true) {
     // Personalized messages
 
-    var sBV = [store.locale.uk.search_bar[0].logged_in[0].message_1, store.locale.uk.search_bar[0].logged_in[0].message_2.replace(/{username}/g, store.user.username), store.locale.uk.search_bar[0].logged_in[0].message_3, store.locale.uk.search_bar[0].logged_in[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
+    var sBV = [store.locale.lang.search_bar[0].logged_in[0].message_1, store.locale.lang.search_bar[0].logged_in[0].message_2.replace(/{username}/g, store.user.username), store.locale.lang.search_bar[0].logged_in[0].message_3, store.locale.lang.search_bar[0].logged_in[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
     var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];    
   }
   else {
-    var sBV = [store.locale.uk.search_bar[0].guest[0].message_1, store.locale.uk.search_bar[0].guest[0].message_2, store.locale.uk.search_bar[0].guest[0].message_3, store.locale.uk.search_bar[0].guest[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
+    var sBV = [store.locale.lang.search_bar[0].guest[0].message_1, store.locale.lang.search_bar[0].guest[0].message_2, store.locale.lang.search_bar[0].guest[0].message_3, store.locale.lang.search_bar[0].guest[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
     var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
   }
 

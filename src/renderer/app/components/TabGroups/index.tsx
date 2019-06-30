@@ -16,7 +16,7 @@ const onAddClick = () => {
 export const TabGroups = observer(() => {
   return (
     <Section onClick={preventHiding}>
-      <Header>{store.locale.uk.overlay[0].tab_groups}</Header>
+      <Header>{store.locale.lang.overlay[0].tab_groups}</Header>
       <StyledTabGroups>
         {store.tabGroups.list.map(item => (
           <TabGroup data={item} key={item.id} />

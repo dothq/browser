@@ -115,15 +115,15 @@ export const Bookmarks = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title={store.locale.uk.bookmarks[0].title}
+          title={store.locale.lang.bookmarks[0].title}
           search
           onSearchInput={onInput}
           onBackClick={onBackClick}
         >
-          <MenuItem selected={store.bookmarks.currentDisplay == 'default'} display="default">{store.locale.uk.bookmarks[0].title}</MenuItem>
-          <MenuItem selected={store.bookmarks.currentDisplay == 'new_bookmark'} display="new_bookmark">{store.locale.uk.bookmarks[0].add_bookmark}</MenuItem>
-          <MenuItem selected={store.bookmarks.currentDisplay == 'import'} display="import">{store.locale.uk.bookmarks[0].import}</MenuItem>
-          <MenuItem selected={store.bookmarks.currentDisplay == 'export'} display="export">{store.locale.uk.bookmarks[0].export}</MenuItem>
+          <MenuItem selected={store.bookmarks.currentDisplay == 'default'} display="default">{store.locale.lang.bookmarks[0].title}</MenuItem>
+          <MenuItem selected={store.bookmarks.currentDisplay == 'new_bookmark'} display="new_bookmark">{store.locale.lang.bookmarks[0].add_bookmark}</MenuItem>
+          <MenuItem selected={store.bookmarks.currentDisplay == 'import'} display="import">{store.locale.lang.bookmarks[0].import}</MenuItem>
+          <MenuItem selected={store.bookmarks.currentDisplay == 'export'} display="export">{store.locale.lang.bookmarks[0].export}</MenuItem>
         </NavigationDrawer>
         {store.bookmarks.currentDisplay == 'default' && store.bookmarks.visibleItems.length > 0 && <BookmarksList />}
         <SelectionDialog
@@ -149,7 +149,7 @@ export const Bookmarks = observer(() => {
         <Sections>
           <Content>
 
-          {store.bookmarks.currentDisplay == 'new_bookmark' && (<Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.bookmarks[0].add_bookmark}</Title>)}
+          {store.bookmarks.currentDisplay == 'new_bookmark' && (<Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.bookmarks[0].add_bookmark}</Title>)}
           {store.bookmarks.currentDisplay == 'new_bookmark' && (<NewBookmark />)}
 
           {store.bookmarks.currentDisplay == 'import' && (<ImportDialog />)}

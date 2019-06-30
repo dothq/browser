@@ -42,8 +42,6 @@ const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
 
 import console = require('console');
 
-var locale_uk = enUK.toObject()
-
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
 import { ExtLink } from '../NewsCard/style';
@@ -118,29 +116,29 @@ async function setActivity() {
     return;
   }
   try {
-    var details = locale_uk.rich_presence[0].default_details
+    var details = store.locale.lang.rich_presence[0].default_details
 
     if(store.tabs.selectedTab.audioPlaying == true) {
-      details = locale_uk.rich_presence[0].audio_details
+      details = store.locale.lang.rich_presence[0].audio_details
     }
 
     // if(store.tabs.selectedTab.url.substring(0, 8) == "file:///") {
     //   var lastDot = store.tabs.selectedTab.url.lastIndexOf('.');
     //   var fileType = store.tabs.selectedTab.url.substring(lastDot + 1);
     //   console.log(fileType)
-    //   details = locale_uk.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
+    //   details = store.locale.lang.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
     // }
     
     var state = `${store.tabs.getHostname(store.tabs.selectedTab.url)}`;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-online';
-    var smallImageText:string = locale_uk.rich_presence[0].active_small_text;
+    var smallImageText:string = store.locale.lang.rich_presence[0].active_small_text;
   } catch(e) {
-    var details = locale_uk.rich_presence[0].idle_details;
-    var state:string = locale_uk.rich_presence[0].idle_small_text;
+    var details = store.locale.lang.rich_presence[0].idle_details;
+    var state:string = store.locale.lang.rich_presence[0].idle_small_text;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-idle';
-    var smallImageText:string = locale_uk.rich_presence[0].idle_small_text;
+    var smallImageText:string = store.locale.lang.rich_presence[0].idle_small_text;
   }
   rpclient.setActivity({
     details: details,
@@ -148,7 +146,7 @@ async function setActivity() {
     startTimestamp,
     largeImageKey,
     smallImageKey,
-    largeImageText: locale_uk.rich_presence[0].large_text.replace(/{version}/, remote.app.getVersion()),
+    largeImageText: store.locale.lang.rich_presence[0].large_text.replace(/{version}/, remote.app.getVersion()),
     smallImageText,
     instance: false
   })
@@ -208,7 +206,7 @@ store.user.loadProfile();
 const LoginSnackbar = () => {
   return (
     <Snackbar visible={store.user.loggedin == true}>
-      {locale_uk.overlay[0].welcome_snackbar.replace(/{username}/g, store.user.username)}
+      {store.locale.lang.overlay[0].welcome_snackbar.replace(/{username}/g, store.user.username)}
     </Snackbar>
   )
 };
@@ -259,11 +257,11 @@ export const Overlay = observer(() => {
             <SearchBox />
             <Dial />
 
-            <Title>{locale_uk.overlay[0].overview}</Title>
+            <Title>{store.locale.lang.overlay[0].overview}</Title>
             <TabGroups />
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
-            <Title>{locale_uk.overlay[0].world}</Title>
+            <Title>{store.locale.lang.overlay[0].world}</Title>
             <CardWrapper>
               <WeatherCard />
               {store.news.list.map((item: any) => (

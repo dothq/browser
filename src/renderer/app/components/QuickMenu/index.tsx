@@ -26,23 +26,23 @@ export const QuickMenu = observer(() => {
       <Header>Menu</Header>
       <Actions>
         <Bubble onClick={changeContent('history')} invert icon={icons.history}>
-          {store.locale.uk.overlay[0].history_bubble}
+          {store.locale.lang.overlay[0].history_bubble}
         </Bubble>
         <Bubble
           onClick={changeContent('bookmarks')}
           invert
           icon={icons.bookmarks}
         >
-          {store.locale.uk.overlay[0].bookmarks_bubble}
+          {store.locale.lang.overlay[0].bookmarks_bubble}
         </Bubble>
         <Bubble disabled invert icon={icons.download}>
-          {store.locale.uk.overlay[0].downloads_bubble}
+          {store.locale.lang.overlay[0].downloads_bubble}
         </Bubble>
         <Bubble onClick={changeContent('settings')} invert icon={icons.settings}>
-          {store.locale.uk.overlay[0].settings_bubble}
+          {store.locale.lang.overlay[0].settings_bubble}
         </Bubble>
         <Bubble onClick={changeContent('extensions')} invert icon={icons.extensions}>
-          {store.locale.uk.overlay[0].extensions_bubble}
+          {store.locale.lang.overlay[0].extensions_bubble}
         </Bubble>
         <Bubble
           disabled={!store.tabs.selectedTab}
@@ -50,10 +50,10 @@ export const QuickMenu = observer(() => {
           icon={icons.find}
           onClick={onFindClick}
         >
-          {store.locale.uk.overlay[0].find_bubble}
+          {store.locale.lang.overlay[0].find_bubble}
         </Bubble>
         <Bubble disabled invert icon={icons.more}>
-          {store.locale.uk.overlay[0].more_tools_bubble}
+          {store.locale.lang.overlay[0].more_tools_bubble}
         </Bubble>
       </Actions>
     </Section>
