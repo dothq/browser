@@ -129,7 +129,8 @@
                 {
                     "title": "Lähetä palautetta",
                     "feedback_title": "Lähetä palautetta kehittäjille",
-                    "bug_report_title": "Avaa vikailmoitus"
+                    "bug_report_title": "Avaa vikailmoitus",
+                    "describe_issue": "Kuvaile ongelmasi"
                 }
             ],
             "languages": [
