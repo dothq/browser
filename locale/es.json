@@ -10,9 +10,9 @@
             "button_send": "Enviar",
             "button_download": "Descargar",
             "search_placeholder": "Buscar",
-            "quit": "Dejar",
-            "quit_dot": "Salir Dot",
-            "quit_dot_with_version": "Salir Dot {appVersion}"
+            "quit": "Cerrar",
+            "quit_dot": "Cerrar Dot",
+            "quit_dot_with_version": "Cerrar Dot {appVersion}"
         }
     ],
     "rich_presence": [
@@ -42,7 +42,7 @@
             "extensions_bubble": "Extensiones",
             "find_bubble": "Encontrar",
             "more_tools_bubble": "Más herramientas",
-            "welcome_snackbar": "Dar una buena acogida, {username}"
+            "welcome_snackbar": "Bienvenido de nuevo, {username}"
         }
     ],
     "search_bar": [
@@ -106,7 +106,7 @@
             "dev_tools": [
                 {
                     "title": "Experimentos de desarrolladores",
-                    "chromium_dt": "Herramientas de desarrollo de cromo",
+                    "chromium_dt": "Herramientas de desarrollo de Chrome",
                     "send_test_notif": "Enviar notificación de prueba",
                     "open_log": "Abrir archivo de registro"
                 }
@@ -175,10 +175,10 @@
     "window": [
         {
             "find_on_page": "Encontrar en la página",
-            "navigate_back": "Espalda",
+            "navigate_back": "Atras",
             "navigate_forward": "Adelante",
-            "navigate_refresh": "Actualizar (F5)",
-            "open_dot": "Open Dot Launcher"
+            "navigate_refresh": "Recargar (F5)",
+            "open_dot": "Abrir Dot Launcher"
         }
     ]
 }
