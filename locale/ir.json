@@ -17,13 +17,13 @@
     ],
     "languages": [
         {
-            "en": "English",
-            "de": "German",
-            "fr": "French",
-            "fi": "Finnish",
-            "ru": "Russian",
-            "no": "Norweigan",
-            "ir": "Irish"
+            "en": "Béarla",
+            "de": "Gearmáinis",
+            "fr": "Fraincis",
+            "fi": "Fionlainnis",
+            "ru": "Rúisis",
+            "no": "Ioruais",
+            "ir": "Gaeilge"
         }
     ],
     "rich_presence": [
