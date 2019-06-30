@@ -35,7 +35,7 @@
             "world": "Monde",
             "history_bubble": "Histoire",
             "bookmarks_bubble": "Signets",
-            "downloads_bubble": "Téléchargers",
+            "downloads_bubble": "Télécharger",
             "settings_bubble": "Paramètres",
             "extensions_bubble": "Extensions",
             "find_bubble": "Trouver",
@@ -97,7 +97,7 @@
             ],
             "downloads": [
                 {
-                    "title": "Téléchargers",
+                    "title": "Télécharger",
                     "download_loc": "Emplacement des téléchargeurs"
                 }
             ],
