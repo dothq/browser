@@ -63,9 +63,9 @@
             ],
             "timeTypes": [
                 {
-                    "morning": "Good morning",
-                    "afternoon": "Good afternoon",
-                    "evening": "Good evening"
+                    "morning": "Bonjour",
+                    "afternoon": "Bonne Après-midi",
+                    "evening": "Bonsoir"
                 }
             ]
         }
@@ -111,30 +111,30 @@
             ],
             "about_dot": [
                 {
-                    "title": "About Dot",
-                    "thanks_message": "Dot was made possible thanks to",
-                    "wxnd_coffee": "and ☕.",
-                    "made_in": "Made in",
-                    "gb_with": "Great Britain with ",
+                    "title": "À propos de Dot",
+                    "thanks_message": "Dot a été rendu possible grâce à",
+                    "wxnd_coffee": "et ☕.",
+                    "made_in": "Fabriqué en",
+                    "gb_with": "La Grande-Bretagne avec ",
                     "end": ".",
-                    "developers_title": "Developers",
-                    "beta_testers_title": "Beta Testers",
-                    "special_thanks_title": "Special Thanks",
+                    "developers_title": "Équipe de développeurs",
+                    "beta_testers_title": "Bêta-testeurs",
+                    "special_thanks_title": "Remerciements spéciaux",
                     "verbose_loaded_fcm": "Loaded FCM Notification services",
-                    "about_page_btn": "Visit the debug page",
-                    "copyright_notice": "© 2019 Ender And Fire Development"
+                    "about_page_btn": "Visitez la page débogage",
+                    "copyright_notice": "© 2019 Ender et Fire Développement"
                 }
             ],
             "feedback": [
                 {
-                    "title": "Send feedback",
-                    "feedback_title": "Send feedback to developers",
-                    "bug_report_title": "Open a bug report"
+                    "title": "Envoyer des commentaires",
+                    "feedback_title": "Envoyer vos commentaires aux développeurs",
+                    "bug_report_title": "Ouvrez un rapport de bogue"
                 }
             ],
             "languages": [
                 {
-                    "title": "Languages"
+                    "title": "La langue"
                 }
             ]
         }
