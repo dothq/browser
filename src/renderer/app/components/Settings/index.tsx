@@ -26,8 +26,7 @@ import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { openNewGitHubIssue } from 'electron-util';
-import { createWriteStream } from 'fs';
-import { get } from 'https';
+var request = require('ajax-request');
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
@@ -787,10 +786,12 @@ export const Experiments = observer(() => {
 });
 
 const downloadLatestLangs = () => {
-  const file = createWriteStream(app.getPath("temp") + '\\dot-extracted.zip' );
-  const request = get("https://github.com/dot-browser/desktop/archive/master.zip", function(response) {
-    response.pipe(file);
-  });
+
+  request.download({
+    url: 'https://github.com/dot-browser/desktop/archive/master.zip',
+    destPath: resolve(homedir() + '/AppData/Local/master.zip')
+  }, function(err, res, body, destpath) { });
+
 }
 
 export const Languages = observer(() => {
