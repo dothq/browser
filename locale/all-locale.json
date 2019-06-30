@@ -1,41 +1,49 @@
 { 
     "languages": [ {
         "title": "English",
+        "en_title": "English",
         "flag": "en",
         "flag_icon": "1f1ec-1f1e7.png",
         "translators": "EnderDev, Geek"
     }, {
         "title": "Gaeilge",
+        "en_title": "Ireland",
         "flag": "ir",
         "flag_icon": "1f1ee-1f1ea.png",
         "translators": "Geek"
     }, {
         "title": "Español",
+        "en_title": "Spanish",
         "flag": "es",
         "flag_icon": "1f1ea-1f1f8.png",
         "translators": "EnderDev"
     }, {
         "title": "Français",
+        "en_title": "French",
         "flag": "fr",
         "flag_icon": "1f1eb-1f1f7.png",
         "translators": "Chachy, SkyPlayz"
     }, {
         "title": "Norsk",
+        "en_title": "Norwegian",
         "flag": "no",
         "flag_icon": "1f1f3-1f1f4.png",
         "translators": "Systemless"
     }, {
         "title": "Pусский",
+        "en_title": "Russian",
         "flag": "ru",
         "flag_icon": "1f1f7-1f1fa.png",
         "translators": "SkyPlayz"
     }, {
         "title": "Deutsche",
+        "en_title": "German",
         "flag": "de",
         "flag_icon": "1f1e9-1f1ea.png",
         "translators": "Jo"
     }, {
         "title": "Suomalainen",
+        "en_title": "Finnish",
         "flag": "fi",
         "flag_icon": "1f1eb-1f1ee.png",
         "translators": "Oona"
