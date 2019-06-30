@@ -89,7 +89,7 @@
             "appearance": [
                 {
                     "title": "Apariencia",
-                    "toggle_dot": "Botón de alternar punto",
+                    "toggle_dot": "Botón de alternar Dot",
                     "search_engine": "Buscador",
                     "temp_type": "Tipo de temperatura",
                     "guest_user": "Huésped"
