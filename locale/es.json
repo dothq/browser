@@ -175,10 +175,10 @@
     "window": [
         {
             "find_on_page": "Encontrar en la página",
-            "navigate_back": "Espalda",
+            "navigate_back": "Atras",
             "navigate_forward": "Adelante",
-            "navigate_refresh": "Actualizar (F5)",
-            "open_dot": "Open Dot Launcher"
+            "navigate_refresh": "Recargar (F5)",
+            "open_dot": "Abrir Dot Launcher"
         }
     ]
 }
