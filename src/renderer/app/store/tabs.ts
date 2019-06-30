@@ -155,6 +155,13 @@ export class TabsStore {
 
     this.emitEvent('onCreated', tab.getApiTab());
 
+    requestAnimationFrame(() => {
+      tab.setLeft(tab.getLeft(), false);
+      this.updateTabsBounds(true);
+
+      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
+    });
+
     setInterval(function() {
       if(store.tabs.selectedTab) {
         remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
@@ -167,14 +174,6 @@ export class TabsStore {
         remote.getCurrentWindow().setTitle(`Dot`)
       }
     }, 250);
-
-
-    requestAnimationFrame(() => {
-      tab.setLeft(tab.getLeft(), false);
-      this.updateTabsBounds(true);
-
-      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
-    });
 
     return tab;
   }

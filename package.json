@@ -95,6 +95,7 @@
     "electron-modal": "^1.0.0",
     "electron-push-receiver": "^2.1.2",
     "electron-updater": "4.0.6",
+    "electron-util": "^0.12.1",
     "file-type": "10.11.0",
     "folder-delete": "^1.0.4",
     "gsap": "2.1.2",

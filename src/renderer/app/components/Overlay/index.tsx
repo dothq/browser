@@ -48,7 +48,17 @@ var locale_uk = enUK.toObject()
 import { ipcRenderer } from 'electron';
 import { ExtLink } from '../NewsCard/style';
 
-let file = editJsonFile(`${remote.app.getPath('userData')}/dot/dot-options.json`);
+let file = editJsonFile(`${remote.app.getPath('userData')}/dot-options.json`);
+
+if(!file.get("searchEngine")) {
+  file.set("searchEngine", "google");
+  file.save()
+}
+
+if(!file.get("toggleDotLauncher")) {
+  file.set("toggleDotLauncher", true);
+  file.save()
+}
 
 const {
   START_NOTIFICATION_SERVICE,
@@ -121,7 +131,7 @@ async function setActivity() {
     //   details = locale_uk.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
     // }
     
-    var state = store.tabs.getHostname(store.tabs.selectedTab.url);
+    var state = `${store.tabs.getHostname(store.tabs.selectedTab.url)}`;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-online';
     var smallImageText:string = locale_uk.rich_presence[0].active_small_text;

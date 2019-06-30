@@ -25,6 +25,7 @@ import { ipcRenderer, ipcMain, shell } from 'electron';
 import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { openNewGitHubIssue } from 'electron-util';
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
@@ -39,7 +40,7 @@ win.webContents.session.clearCache(function(){
   
 });
 
-store.settings.currentDisplay = "my_profile";
+store.options.currentDisplay = "profile";
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
@@ -170,7 +171,7 @@ const pickAvatar = () => {
 const Email = observer(() => {
   if(store.user.loggedin == true) {
     return (
-      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px' }}>{store.user.email}</TitleEmail>
+      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px', color: 'rgba(220, 221, 222, 0.77)' }}>{store.user.email}</TitleEmail>
     );
   }
   else {
@@ -205,7 +206,7 @@ const YourProfile = observer(() => {
 
   if(store.user.loggedin == true) {
     user.username = store.user.username
-    user.avatar = store.user.avatar
+    user.avatar = store.user.avatar.split("/64")[0] + '/128'
     user.email = store.user.email
     shouldInvert = 'invert(0%)';
     shouldBr = '50%';
@@ -219,7 +220,7 @@ const YourProfile = observer(() => {
         <form encType="multipart/form-data" method="post" name="fileinfo">
           <input id="avatar-choose" onChange={avatarChange} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
         </form>
-        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
+        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '48px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <div style={{ marginTop: '-7px' }}>
           <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
           <Email />
@@ -411,7 +412,7 @@ const Downloads = observer(() => {
           <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <IconButton onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
+          <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
         </Buttons>
         <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
       </ListItem>
@@ -638,8 +639,12 @@ if(file.get("tempType") == "F") {
   isF = "#585858c7"
 }
 
-const sendFeedback = () => {
+const feedbackRef = React.createRef<Textfield>();
 
+const sendFeedback = () => {
+  var url = `https://github.com/dot-browser/desktop/issues/new?title=Enter a title&body=${feedbackRef.current.value}`
+  store.tabs.openExternalLink({ url, active: true })
+  feedbackRef.current.value = ''
 };
 
 export const Feedback = observer(() => {
@@ -647,7 +652,7 @@ export const Feedback = observer(() => {
     <SettingsSection>
       <ListItem style={{ display: 'block' }}> 
         <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.uk.settings[0].feedback[0].feedback_title}</Title>
-        <Textfield style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
+        <Textfield ref={feedbackRef} style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
         <Buttons style={{ marginLeft: 'auto', marginTop: '-25px', padding: '7px' }}> 
           <Button onClick={sendFeedback} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.uk.standard[0].button_send}
@@ -671,7 +676,7 @@ export const Appearance = observer(() => {
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
+            <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
             <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '255px', marginLeft: '-50px' }}>            
               <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
                 {store.locale.uk.settings[0].google_searchEngine}
@@ -695,10 +700,10 @@ export const Appearance = observer(() => {
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].temp_type}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
-            <IconButton icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
             </IconButton>
-            <IconButton id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
             </IconButton>
           </Buttons>
