@@ -794,10 +794,9 @@ const downloadLatestLangs = () => {
 
 }
 
-var langs = store.locale.lang.languages[0];
-
 export const Languages = observer(() => {
   var itemChecked = file.get("language");
+  var langs = store.locale.lang.languages[0];
   return (
     <SettingsSection>
       {allLangs.languages.map((i: any) => {
