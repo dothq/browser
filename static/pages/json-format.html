@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=3.0, shrink-to-fit=no">
+        <meta charset="UTF-8">
+    </head>
+    <style>
+    body { background-color: rgb(40, 40, 40); margin: 0px }
+    pre { padding: 5px; margin: 5px; font-size: 20px; color: #fff; user-select: none }
+    .string { color: rgb(230, 219, 116); user-select: text; }
+    .number { color:rgb(174, 129, 255); user-select: text; }
+    .boolean { color: rgb(174, 129, 255); user-select: text; }
+    .null { color: #707070; user-select: text; }
+    .key { color: rgb(166, 226, 46); user-select: text; }
+    .error { color: #ff4a4a; user-select: text; }
+    .bracket { color:rgb(255, 255, 255); user-select: text; }
+    .link { color: rgb(230, 219, 116) !important; text-decoration: none; font-style: italic; transition: text-decoration 0.3s; user-select: text; }
+    .link:hover {
+        text-decoration: underline;
+        transition: text-decoration 0.3s;
+    }
+    </style>
+    <script>
+
+        // https://jsfiddle.net/KJQ9K/554/
+
+        function pp(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            var newjson = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null|{|})\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'key';
+                    } else {
+                        cls = 'string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'null';
+                } else if (/{|}/.test(match)) {
+                    cls = 'bracket';
+                }
+
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+            newjson = newjson.replace(/(https?|ftp):\/\/[\.[a-zA-Z0-9\/\-]+/, function(match) {
+                return '<a class="link" href="' + match + '">' + match + '</a>'
+            })
+            newjson = newjson.replace(/[\{\}]/g, function(match) {
+                return '<span class="bracket">' + match + '</span>';
+            })
+            return newjson.replace(/\[|\]/g, function(match) {
+                return '<span class="bracket">' + match + '</span>';
+            })
+        }
+
+        window.onload = function() {
+
+            try {
+                var json = JSON.stringify(JSON.parse(decodeURIComponent(window.location.href.split("?json=")[1])), null, 2);
+                document.getElementById("json").innerHTML = pp(json);
+            }
+            catch (e) {
+                document.getElementById("json").innerHTML = `<span class='error'>${`${e.message}`}</span>`;
+            }
+            
+        }
+    </script>
+    <body>
+
+        <!--
+            © 2019 Ender And Fire Development
+        -->
+
+        <pre id="json">
+
+        </pre>
+    </body>
+</html>

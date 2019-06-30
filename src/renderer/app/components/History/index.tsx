@@ -9,7 +9,11 @@ import { Sections, DeletionDialog, DeletionDialogLabel } from './style';
 import { NavigationDrawer } from '../NavigationDrawer';
 import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
+import { icons } from '../../constants';
 
+const deleteFolder = require('folder-delete');
+const remote = require('electron').remote;
+const path = require("path");
 const scrollRef = React.createRef<HTMLDivElement>();
 
 const preventHiding = (e: any) => {
@@ -67,6 +71,28 @@ const MenuItem = observer(
   ),
 );
 
+const onClearClick = () => {
+  const app = remote.app;
+  const data = app.getPath('userData');
+  var deletePath: any = path.join(data, 'storage');
+  deleteFolder(deletePath);
+  store.history.resetLoadedItems()
+  store.history.load();
+}
+
+const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  e.stopPropagation();
+  if(e.keyCode == 27) {
+    if(store.tabGroups.list.length == 0) {
+      return;
+    }
+    else {
+      store.overlay.currentContent = "default";
+      store.overlay.visible = false;
+    }
+  }
+};
+
 export const History = observer(() => {
   const { length } = store.history.selectedItems;
 
@@ -74,23 +100,27 @@ export const History = observer(() => {
     <Container
       right
       onClick={preventHiding}
+      onKeyDown={keyDown}
       visible={
         store.overlay.currentContent === 'history' && store.overlay.visible
       }
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title="History"
+          title={store.locale.uk.history[0].title}
           search
           onSearchInput={onInput}
           onBackClick={onBackClick}
         >
-          <MenuItem range="all">All</MenuItem>
-          <MenuItem range="today">Today</MenuItem>
-          <MenuItem range="yesterday">Yesterday</MenuItem>
-          <MenuItem range="last-week">Last week</MenuItem>
-          <MenuItem range="last-month">Last month</MenuItem>
-          <MenuItem range="older">Older</MenuItem>
+          <MenuItem range="all">{store.locale.uk.history[0].sort[0].range_all}</MenuItem>
+          <MenuItem range="today">{store.locale.uk.history[0].sort[0].range_today}</MenuItem>
+          <MenuItem range="yesterday">{store.locale.uk.history[0].sort[0].range_yesterday}</MenuItem>
+          <MenuItem range="last-week">{store.locale.uk.history[0].sort[0].range_last_week}</MenuItem>
+          <MenuItem range="last-month">{store.locale.uk.history[0].sort[0].range_last_month}</MenuItem>
+          <MenuItem range="older">{store.locale.uk.history[0].sort[0].range_older}</MenuItem>
+          <NavigationDrawer.Item icon={icons.trash} style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} onClick={onClearClick}>
+            {store.locale.uk.history[0].clear_browsing_history}
+          </NavigationDrawer.Item>
         </NavigationDrawer>
         <HistorySections />
         <SelectionDialog

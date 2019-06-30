@@ -6,52 +6,40 @@ interface StyledButtonProps {
   background: string;
   foreground: string;
   type?: 'contained' | 'outlined';
+  visible: boolean;
 }
 
 export const StyledButton = styled.div`
   min-width: 88px;
-  width: fit-content;
   height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  border-radius: 4px;
-  position: relative;
   cursor: pointer;
+  border: 1px #ffffff94 solid;
+  transition: background-color 0.3s;
+  border-radius: 30px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: -9px;
 
-  &::before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0;
-    position: absolute;
-    will-change: opacity;
-    transition: 0.2s opacity;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.12) !important;
   }
 
-  &:hover::before {
-    opacity: 0.12;
-  }
-
-  ${({ background, foreground, type }: StyledButtonProps) => css`
+  ${({ background, foreground, type, visible }: StyledButtonProps) => css`
+    display: ${visible ? 'auto' : 'none'};
     color: ${foreground || '#fff'};
-    border: ${type === 'outlined'
-      ? `1px solid ${background || '#2196F3'}`
-      : 'unset'};
     background-color: ${type === 'outlined'
       ? 'transparent'
       : background || '#2196F3'};
-
-    &::before {
-      background-color: ${foreground || '#fff'};
-    }
   `};
 `;
 
 export const StyledLabel = styled.div`
   z-index: 1;
+  font-weight: 300 !important;
   ${button()};
 `;

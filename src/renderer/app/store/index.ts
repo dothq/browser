@@ -10,6 +10,7 @@ import { HistoryStore } from './history';
 import { FaviconsStore } from './favicons';
 import { SuggestionsStore } from './suggestions';
 import { ExtensionsStore } from './extensions';
+import { NotifsStore } from './notifications';
 import { extname } from 'path';
 import { BookmarksStore } from './bookmarks';
 import { readFileSync, writeFile } from 'fs';
@@ -18,8 +19,12 @@ import { Settings } from '../models/settings';
 import { SettingsFile } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { DownloadsStore } from './downloads';
+import { LocaleStore } from './locale';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
+import { WeatherStore } from './weather';
+import { NewsStore } from './news';
+import { UserStore } from './user';
 import { existsSync, writeFileSync } from 'fs';
 
 if (!existsSync(getPath('settings.json'))) {
@@ -55,6 +60,11 @@ export class Store {
   public downloads = new DownloadsStore();
   public adblockwindow = new AbStore();
   public options = new OptionsStore();
+  public weather = new WeatherStore();
+  public user = new UserStore();
+  public locale = new LocaleStore();
+  public news = new NewsStore();
+  public notifications = new NotifsStore();
 
   @observable
   public isFullscreen = false;
@@ -76,8 +86,7 @@ export class Store {
 
   @observable
   public settings: Settings = {
-    dialType: 'top-sites',
-    toggleDotLauncher: true,
+    dialType: 'top-sites'
   };
 
   public findInputRef = React.createRef<HTMLInputElement>();
@@ -170,7 +179,10 @@ export class Store {
         const ext = extname(path);
 
         if (ext === '.html') {
-          this.tabs.addTab({ url: `file:///${path}`, active: true });
+          setTimeout(function(this: any) {
+            this.tabs.addTab({ url: `file:///${path}`, active: true });
+          }, 4000);
+         
         }
       }
     });

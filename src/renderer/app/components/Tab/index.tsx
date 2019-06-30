@@ -4,6 +4,8 @@ import * as React from 'react';
 import { Preloader } from '~/renderer/components/Preloader';
 import { Tab } from '~/renderer/app/models';
 import store from '~/renderer/app/store';
+const emote = require("react-easy-emoji");
+const emoji = require("node-emoji");
 import {
   StyledTab,
   StyledContent,
@@ -13,11 +15,14 @@ import {
   StyledBorder,
   StyledOverlay,
   TabContainer,
+  SearchInput,
 } from './style';
 import { shadeBlendConvert } from '../../utils';
 import { transparency } from '~/renderer/constants';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
+import { resolve } from 'path';
+import console = require('console');
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -27,17 +32,31 @@ const onCloseMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
+const onDblClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
+  store.tabs.showUB()
+  console.log(store.tabs.ubVisible)
+  console.log("Toggled UB")
+}
+
 const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-  const { pageX } = e;
 
-  tab.select();
+  if(tab.isUrlVisible == false){
+    const { pageX } = e;
 
-  store.tabs.lastMouseX = 0;
-  store.tabs.isDragging = true;
-  store.tabs.mouseStartX = pageX;
-  store.tabs.tabStartX = tab.left;
+    tab.select();
+  
+    store.tabs.lastMouseX = 0;
+    store.tabs.isDragging = true;
+    store.tabs.mouseStartX = pageX;
+    store.tabs.tabStartX = tab.left;
+  
+    store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
+  
+    if(e.button == 1) {
+      tab.close()
+    } 
+  }
 
-  store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
 };
 
 const onMouseEnter = (tab: Tab) => () => {
@@ -56,7 +75,115 @@ const onClick = () => {
   }
 };
 
+const contextMenu = (tab: Tab) => () => {
+  const { tabs } = store.tabGroups.currentGroup;
+
+  const menu = remote.Menu.buildFromTemplate([
+    {
+      label: 'New tab',
+      accelerator: 'Ctrl+T',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/add.png'),
+      click: () => {
+        store.overlay.isNewTab = true;
+        store.overlay.visible = true;
+      },
+    },
+    {
+      label: 'Navigate here',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/search.png'),
+      click: () => {
+        store.overlay.show()
+        store.overlay.inputRef.current.focus();
+        store.overlay.inputRef.current.select();
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Reload',
+      accelerator: 'F5',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/refresh.png'),
+      click: () => {
+        tab.callViewMethod('webContents.reload');
+      },
+    },
+    {
+      label: 'Duplicate',
+      click: () => {
+        store.tabs.addTab({ active: true, url: tab.url });
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Close tab',
+      accelerator: 'Ctrl+W',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/close.png'),
+      click: () => {
+        tab.close();
+      },
+    },
+    {
+      label: 'Close other tabs',
+      click: () => {
+        for (const t of tabs) {
+          if (t !== tab) {
+            t.close();
+          }
+        }
+      },
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Close tabs from left',
+      enabled: store.tabs.list.length != 1,
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/left.png'),
+      click: () => {
+        for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      label: 'Close tabs from right',
+      enabled: store.tabs.list.length != 1,
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/right.png'),
+      click: () => {
+        for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
+          tabs[i].close();
+        }
+      },
+    },
+    {
+      label: 'Reopen last closed tab',
+      accelerator: 'Ctrl+Shift+T',
+      enabled: store.tabs.lastUrl != "",
+      click: () => {
+        var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
+        if(url != "") {
+          store.tabs.addTab({ url, active: true });
+          store.tabs.lastUrl.splice(-1,1)
+        }
+      },
+    },
+    {
+      type: 'separator',
+    },
+  ]);
+
+  menu.popup();
+};
+
 const Content = observer(({ tab }: { tab: Tab }) => {
+
+  var title = tab.title
+
+  var url = tab.url
+
   return (
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && tab.favicon !== '' && (
@@ -81,7 +208,8 @@ const Content = observer(({ tab }: { tab: Tab }) => {
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
-        {tab.title}
+        <SearchInput placeholder={url} visible={store.tabs.ubVisible == true} />
+        {title}
       </StyledTitle>
     </StyledContent>
   );
@@ -93,6 +221,7 @@ const Close = observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onCloseMouseDown}
       onClick={removeTab(tab)}
       visible={tab.isExpanded}
+      title="Close tab (Ctrl+W)"
     />
   );
 });
@@ -100,6 +229,10 @@ const Close = observer(({ tab }: { tab: Tab }) => {
 const Border = observer(({ tab }: { tab: Tab }) => {
   return <StyledBorder visible={tab.borderVisible} />;
 });
+
+const onMouseHover = () => {
+  
+};
 
 const Overlay = observer(({ tab }: { tab: Tab }) => {
   return (
@@ -120,8 +253,11 @@ export default observer(({ tab }: { tab: Tab }) => {
       selected={tab.isSelected}
       onMouseDown={onMouseDown(tab)}
       onMouseEnter={onMouseEnter(tab)}
+      onContextMenu={contextMenu(tab)}
       onClick={onClick}
+      title={tab.title}
       onMouseLeave={onMouseLeave}
+      onMouseOver={onMouseHover}
       visible={tab.tabGroupId === store.tabGroups.currentGroupId}
       ref={tab.ref}
     >
@@ -134,7 +270,7 @@ export default observer(({ tab }: { tab: Tab }) => {
         }}
       >
         <Content tab={tab} />
-        <Close tab={tab} />
+        <Close tab={tab}/>
 
         <Overlay tab={tab} />
         <Ripple

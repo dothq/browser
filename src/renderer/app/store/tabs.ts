@@ -2,6 +2,7 @@ import { observable, observe, action } from 'mobx';
 import * as React from 'react';
 import { TweenLite } from 'gsap';
 
+import { icons } from '~/renderer/app/constants';
 import { Tab } from '~/renderer/app/models';
 
 import {
@@ -31,12 +32,18 @@ export class TabsStore {
   public list: Tab[] = [];
 
   @observable
+  public lastUrl: any = [];
+
+  @observable
   public scrollable = false;
 
   public lastScrollLeft: number = 0;
   public lastMouseX: number = 0;
   public mouseStartX: number = 0;
   public tabStartX: number = 0;
+
+  @observable
+  public ubVisible: boolean = false;
 
   public scrollbarRef = React.createRef<HorizontalScrollbar>();
   public containerRef = React.createRef<HTMLDivElement>();
@@ -109,6 +116,26 @@ export class TabsStore {
     return 0;
   }
 
+  @action
+  public showUB() {
+    this.ubVisible = true;
+  }
+
+  @action
+  public hideUB() {
+    this.ubVisible = false;
+  }
+
+  public getHostname(url: string) {
+    var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
+    if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+      return match[2];
+    }
+    else {
+        return null;
+    }
+  }
+
   public get selectedTab() {
     return this.getTabById(store.tabGroups.currentGroup.selectedTabId);
   }
@@ -135,7 +162,26 @@ export class TabsStore {
       this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
     });
 
+    setInterval(function() {
+      if(store.tabs.selectedTab) {
+        remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
+      }
+      else {
+        remote.getCurrentWindow().setTitle(`Dot`)
+      }
+
+      if(store.tabs.list.length == 0) {
+        remote.getCurrentWindow().setTitle(`Dot`)
+      }
+    }, 250);
+
     return tab;
+  }
+
+  @action
+  public openExternalLink(options = defaultTabOptions) {
+    this.addTab(options)
+    store.overlay.visible = false;
   }
 
   public removeTab(id: number) {

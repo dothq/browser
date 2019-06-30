@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>Dot Ad-Blocker</title>
+        </head>
+        <body>
+            <script>
+                    const modal = require('electron-modal');
+                
+                    modal.getData().then((data) => {
+                    
+                        document.querySelector('#ads').innerText = `Ads blocked: ${data.totalAdsBlocked}`;
+                        modal.show()
+                
+                    });
+
+                    modal.on('blur', () => {
+                        window.close()
+                    });
+            </script>
+            <h1 id="ads">hi</h1>
+        </body>
+    </html>

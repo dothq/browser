@@ -17,6 +17,10 @@ export const Screenshot = styled.div`
   filter: blur(20px);
   margin: -20px;
   position: relative;
+
+  ${({ img }: { img: any }) => css`
+    background-image: url(${img});
+  `}
 `;
 
 export const StyledApp = styled.div`
@@ -24,3 +28,4 @@ export const StyledApp = styled.div`
   flex-flow: column;
   height: 100vh;
 `;
+

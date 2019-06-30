@@ -1,19 +1,52 @@
 import styled, { css } from 'styled-components';
 import { centerIcon, overline } from '~/shared/mixins';
+import store from '../../store'
+
 
 export const StyledCard = styled.div`
-  background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
   border-radius: 30px;
   color: white;
   overflow: hidden;
-  width: 264px;
+  width: 245px;
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
+  background-color: rgba(255,255,255,0.08);
+`;
+
+export const Offline = styled.div`
+
 `;
 
 export const Header = styled.div`
   width: 100%;
   padding: 24px;
-  background-image: linear-gradient(to bottom right, #64b5f6, #1e88e5);
+
+  ${({ time }: { time: number }) => {
+    // Day/Sunny
+    if(time == 0) {
+      return css`
+        background-image: linear-gradient(to bottom right, #64b5f6, #1e88e5)
+      `;
+    }
+    // Morning
+    if(time == 1) {
+      return css`
+        background-image: linear-gradient(to bottom right, #fe9900, #ffd079fa)
+      `;
+    }
+    // Afternoon
+    if(time == 2) {
+      return css`
+        background-image: linear-gradient(to bottom right, #646ff6, #1e64e56b)
+      `;
+    }
+    // Night
+    if(time == 3) {
+      return css`
+        background-image: linear-gradient(to bottom right, #101010, #282828b3)
+      `;
+    }
+  }}
 `;
 
 export const Title = styled.div`

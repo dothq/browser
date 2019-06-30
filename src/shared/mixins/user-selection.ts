@@ -1,5 +1,7 @@
 export const noUserSelect = () => `
   user-select: none;
+  user-drag: none;
+  app-region: no-drag;
 `;
 
 export const noTapHighlight = () => `

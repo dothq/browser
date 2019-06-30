@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Section } from '../Overlay/style';
 
@@ -18,12 +18,36 @@ export const Title = styled.h1`
   font-weight: 100
 `;
 
+export const TitleEmail = styled.h1`
+  font-weight: 100
+
+  ${({ visible }: { visible: boolean; }) => css`
+    display: ${visible ? 'none' : 'block'};
+  `};  
+`;
+
 export const Buttons = styled.div`
   float: right;
 `;
 
 export const Button = styled.a`
   
+`;
+
+export const ExtLink = styled.a`
+
+  border: 1px #42424252 solid;
+  transition: background-color 0.3s;
+  border-radius: 30px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 5px
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
 `;
 
 export const A = styled.a`
@@ -69,6 +93,7 @@ export const SettingsSection = styled.div`
   overflow: hidden;
   padding: 8px 0px;
   margin-top: 48px;
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
 `;
 
 export const ListItem = styled.div`
@@ -82,7 +107,7 @@ export const ListItem = styled.div`
   align-items: center;
   padding: 0 24px;
   height: 48px;
-  background-color: transparent;  
+  background-color: transparent;
 `;
 
 export const StyledNavigationDrawerItem = styled.div`
@@ -97,4 +122,15 @@ export const StyledNavigationDrawerItem = styled.div`
   &:hover {
     background-color: rgba(255, 255, 255, 0.12);
   }
+`;
+
+export const SettingsItem = styled.a`
+  margin-left: 32px;
+  margin-right: 32px;
+  margin-top: 24px;
+  height: 42px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.06);
+  position: relative;
+  
 `;

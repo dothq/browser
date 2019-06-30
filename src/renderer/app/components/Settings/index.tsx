@@ -2,9 +2,10 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField } from './style'
+import { InputField, ExtLink } from './style'
 import { Button } from '~/renderer/components/Button';
-import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper } from './style';
+import { Textfield } from '~/renderer/components/Textfield';
+import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
 import { icons } from '../../constants';
@@ -15,16 +16,38 @@ import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
 import console = require('console');
 import Switch from '@material-ui/core/Switch';
+import OptSwitch from '../Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
-import { DropArrow } from '../Overlay/style';
+import { DropArrow, IconButton } from '../Overlay/style';
+import { notify } from 'node-notifier';
+import { ipcRenderer, ipcMain, shell } from 'electron';
+import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
+const DataURI = require('datauri').promise;
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { openNewGitHubIssue } from 'electron-util';
+
+var modal = require('electron-modal');
+const { remote } = require('electron')
+const { Tray, app } = remote
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let allLangs = editJsonFile(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
+allLangs = allLangs.toObject();
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
+var win = remote.getCurrentWindow();
+win.webContents.session.clearCache(function(){
+  
+});
+
+store.options.currentDisplay = "profile";
+
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
+  store.bookmarks.menuVisible = false;
 };
 
 const onScroll = (e: any) => {
@@ -36,21 +59,220 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
+const logout = async () => {
+  store.user.loggedin = false;
+  store.user.username = "Guest";
+  store.user.avatar = icons.user
+  store.user.email = null;
+  localStorage.removeItem("dot_footprint")
+}
+
+const login = async () => {
+  var si = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\sign-in.html'), {
+    width: 400,
+    height: 600,
+    resizable: false,
+    center: false,
+    alwaysOnTop: false,
+    title: store.locale.uk.settings[0].my_profile[0].sign_in_btn,
+    titleBarStyle: 'hiddenInset',
+    webPreferences: {
+      nodeIntegration: true
+    },
+    frame: false
+  })
+
+  si.on('passed-details', (c: any) => {
+    store.user.username = c.customname;
+    store.user.avatar = c.avatar;
+
+    console.log(store.user.avatar + ' ' + c.avatar)
+
+    store.user.email = c.email;
+    store.user.loggedin = true;
+
+    localStorage.setItem("dot_footprint", Buffer.from(c.email + '||' + c.password).toString('base64'));
+
+    si.hide();
+  });
+
+  si.on('load-external-url', (c: any) => {
+    var url = c;
+    store.tabs.addTab({ url, active: true });
+
+    setTimeout(function() {
+      store.overlay.visible = false;
+    }, 250);
+  });
+
+  si.show();
+  
+  si.on('show', () => {
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+  
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = "blur(5px)";
+      divChildren[i].style.pointerEvents = "none";
+    }
+
+  });
+
+  si.on('closed', () => {
+
+    app.focus()
+
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = null;
+      divChildren[i].style.pointerEvents = null;
+    }
+
+    si = null;
+
+  })
+
+  si.on('hide', () => {
+
+    app.focus()
+
+    var div = document.getElementById('settings'),
+    divChildren = div.childNodes;
+
+    for (var i=0; i<divChildren.length; i++) {
+      divChildren[i].style.filter = null;
+      divChildren[i].style.pointerEvents = null;
+    }
+
+    si = null;
+  })  
+
+
+}
+
+const onMouse = () => {
+  if(store.user.loggedin == true) {
+    document.getElementById("user-avatar").style.filter = "brightness(70%)";
+  }
+};
+
+const offMouse = () => {
+  if(store.user.loggedin == true) {
+    document.getElementById("user-avatar").style.filter = null
+  }
+};
+
+const pickAvatar = () => {
+  if(store.user.loggedin == true) {
+    document.getElementById("avatar-choose").click();
+  }
+};
+
+const Email = observer(() => {
+  if(store.user.loggedin == true) {
+    return (
+      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px', color: 'rgba(220, 221, 222, 0.77)' }}>{store.user.email}</TitleEmail>
+    );
+  }
+  else {
+    return (
+      <TitleEmail visible={true} style={{ fontSize: 16, marginLeft: '4px' }}>{store.user.email}</TitleEmail>
+    );    
+  }
+});
+
+function avatarTitle() {
+  if(store.user.loggedin == true) {
+    return "Upload a new avatar"
+  }
+  else {
+    return "";
+  }
+}
+
+const formSubmit = () => {
+  return false;
+}
+
 const YourProfile = observer(() => {
+  var user = {
+    username: 'Guest',
+    avatar: icons.user,
+    email: '.'
+  };
+
+  var shouldInvert = 'invert(100%)';
+  var shouldBr = '0';
+
+  if(store.user.loggedin == true) {
+    user.username = store.user.username
+    user.avatar = store.user.avatar.split("/64")[0] + '/128'
+    user.email = store.user.email
+    shouldInvert = 'invert(0%)';
+    shouldBr = '50%';
+  }
+  else {
+
+  }
   return (
-    <SettingsSection>
+    <SettingsSection id="my-profile">
       <ListItem>
-        <Image src={icons.user} style={{ filter: 'invert(100%)', width: '30px' }}></Image>
-        <Title style={{ fontSize: 25 }}>{require("os").userInfo().username}</Title>
+        <form encType="multipart/form-data" method="post" name="fileinfo">
+          <input id="avatar-choose" onChange={avatarChange} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
+        </form>
+        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '48px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
+        <div style={{ marginTop: '-7px' }}>
+          <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
+          <Email />
+        </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign out
+          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.settings[0].my_profile[0].sign_in_btn}
+          </Button>
+          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
       </ListItem>
     </SettingsSection>
   );
 });
+
+async function avatarChange() {
+
+  var files = document.getElementById('avatar-choose').files[0];
+
+  if(files.type == "image/png") {
+    if(files.size / 1024 / 1024 <= 2) {
+
+      var content = await DataURI(files.path);
+
+      store.user.avatar = content
+
+      var form = document.forms.namedItem("fileinfo");
+    
+        var footprint = atob(localStorage.getItem("dot_footprint"));
+
+        var email = footprint.split("||")[0];
+        var password = footprint.split("||")[1];
+
+        var oData = new FormData(form);
+
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "https://dot.ender.site/api/upload/avatar", true);
+        oReq.setRequestHeader("Authorization", `DotUser ${password} at ${email}`)
+        oReq.send(oData);
+        oReq.onload = function() {
+          var body = JSON.parse(oReq.responseText);
+        };
+  
+
+    }
+  }
+
+};
 
 const wexond = () => {
   var url = "https://github.com/wexond/wexond"
@@ -76,12 +298,55 @@ const func = () => {
   store.overlay.visible = false;
 }
 
+const sky = () => {
+  var url = "https://github.com/SkyPlayzYT05"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+const dtf = () => {
+  var url = "https://github.com/DusterTheFirst"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+const blz = () => {
+  var url = "https://github.com/blizma"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+const UKFlag = observer(() => {
+  return (
+    <Image src={icons.uk} style={{ width: '14px' }}></Image>
+  )
+});
+
+const HeartEmote = observer(() => {
+  return (
+    <span style={{ color: '#ff4040' }}>❤</span>
+  );
+});
+
+const chachy = () => {
+  var url = "https://github.com/chachyyyy"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+const aboutPage = () => {
+  var url = "dot://about"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+
 const AboutDot = observer(() => {
   return (
-    <SettingsSection style={{ backgroundColor: 'transparent' }}>
+    <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot 2.0.0-beta.10</Title>
+        <Title style={{ fontSize: 20 }}>{store.locale.uk.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -89,15 +354,83 @@ const AboutDot = observer(() => {
         </Buttons>
       </ListItem>
       <AboutWrapper id="about-wrapper">
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Dot was made possible thanks to <A onClick={wexond}>Wexond</A> and ☕.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Made in <Image src={icons.uk} style={{ width: '14px' }}></Image>Great Britain with ❤.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Developers</Title>
-        <A onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev,</A>
-        <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
-        <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function</A>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.uk.settings[0].about_dot[0].wxnd_coffee}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.uk.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].developers_title}</Title>
+        <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
+        <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].beta_testers_title}</Title>
+        <ExtLink onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Oli</ExtLink>
+        <ExtLink onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Jeremy Bognon</ExtLink>
+        <ExtLink onClick={blz} title="<blizzyisheres@gmail.com>" style={{ color: '#dadada' }}>Blizma</ExtLink>
+        <ExtLink onClick={chachy} title="<shalomadecoolboy@outlook.com>" style={{ color: '#dadada' }}>Chachy</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].special_thanks_title}</Title>
+        <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>
+    </SettingsSection>
+  );
+});
+
+if(!file.get("downloadLocation")) {
+  file.set("downloadLocation", resolve(homedir()) + '\\Downloads');
+  file.save()
+  var dl = file.get("downloadLocation");
+}
+else {
+  var dl = file.get("downloadLocation");
+}
+
+const pickLocation = () => {
+  var input = document.getElementById("download-picker");
+  input.click();
+}
+
+const awaitDownloadUpdate = async () => {
+  var input = document.getElementById("download-picker")
+  dl = input.files[0].path;
+
+  setTimeout(function() {
+
+    file.set("downloadLocation", dl)
+    file.save()
+  
+    store.downloads.location = dl;
+    ipcRenderer.send('set-downloads-loc', `${dl}`);
+
+    document.getElementById("dl-l").innerText = dl;
+
+  }, 300);
+
+}
+
+const Downloads = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <div>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].downloads[0].download_loc}</Title>
+          <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
+        </div>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
+        </Buttons>
+        <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
+const Advanced = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>Show Discord Rich Presence</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <RPCSwitch />
+        </Buttons>
+      </ListItem>
     </SettingsSection>
   );
 });
@@ -127,10 +460,6 @@ const secretBoyo = () => {
 const clearSecretBoyo = () => {
   document.getElementById("maybe-click-the-arrow").style.filter = ``
 }
-
-const editJsonFile = require("edit-json-file");
- 
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 const optionsData = file.get();
 
@@ -179,14 +508,11 @@ var seMenuVisible = false;
 
 const toggleSeMenu = (e: any) => {
   e.stopPropagation();
-  var x = document.getElementById("search-engine-dp")
-  if(x.style.opacity == "0") {
-    x.style.opacity = "1";
-    x.style.pointerEvents = "all";
+  if(store.options.searchEngineCtx == true) {
+    store.options.searchEngineCtx = false
   }
   else {
-    x.style.opacity = "0";
-    x.style.pointerEvents = "none";
+    store.options.searchEngineCtx = true
   }
 }
 
@@ -267,67 +593,266 @@ if(se == "ecosia") {
   var cmICE = "#585858c7"
 }
 
+if(!file.get("tempType")) {
+  file.set("tempType", "c");
+  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  file.save()
+}
+
+export const setDTC = () => {
+  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  document.getElementById("deg-type-fah").style.backgroundColor = "";
+
+  if(!file.get("tempType")) {
+    file.set("tempType", "c")
+    file.save()
+    store.weather.load("c");
+  }
+  else {
+    file.set("tempType", "c")
+    file.save()
+    store.weather.load("c");
+  }
+  
+};
+
+export const setDTF = () => {
+  document.getElementById("deg-type-fah").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
+  document.getElementById("deg-type-cel").style.backgroundColor = "";
+
+  if(!file.get("tempType")) {
+    file.set("tempType", "F")
+    file.save()
+    store.weather.load("F");
+  }
+  else {
+    file.set("tempType", "F")
+    file.save()
+    store.weather.load("F");
+  }
+};
+
+var isC = "";
+var isF = "";
+if(file.get("tempType") == "c") {
+  isC = "#585858c7"
+}
+if(file.get("tempType") == "F") {
+  isF = "#585858c7"
+}
+
+const feedbackRef = React.createRef<Textfield>();
+
+const sendFeedback = () => {
+  var url = `https://github.com/dot-browser/desktop/issues/new?title=Enter a title&body=${feedbackRef.current.value}`
+  store.tabs.openExternalLink({ url, active: true })
+  feedbackRef.current.value = ''
+};
+
+export const Feedback = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem style={{ display: 'block' }}> 
+        <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.uk.settings[0].feedback[0].feedback_title}</Title>
+        <Textfield ref={feedbackRef} style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
+        <Buttons style={{ marginLeft: 'auto', marginTop: '-25px', padding: '7px' }}> 
+          <Button onClick={sendFeedback} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_send}
+          </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
-          <Buttons style={{ marginLeft: 'auto' }}>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].toggle_dot}</Title>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Search Engine</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
-            <ContextMenu id="search-engine-dp" visible={seMenuVisible} style={{ top: '450px', marginLeft: '-50px' }}>            
+            <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
+            <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '255px', marginLeft: '-50px' }}>            
               <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
-                Google
+                {store.locale.uk.settings[0].google_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
-                Yahoo
+                {store.locale.uk.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
-                Bing
+                {store.locale.uk.settings[0].bing_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
-                DuckDuckGo
+                {store.locale.uk.settings[0].ddg_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
-                Ecosia
+                {store.locale.uk.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
+
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].temp_type}</Title>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
+            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
+            </IconButton>
+            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
+            </IconButton>
+          </Buttons>
+        </ListItem>
+
       </SettingsSection>
     );
 });
+
+export const openDevTools = () => {
+  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
+              
+  if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+    remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+  }
+}
+
+export const testNotif = () => {
+  notify({
+      title: 'Dot',
+      appName: "Dot",
+      message: 'Testing Notification',
+      icon: resolve(app.getAppPath() + '\\static\\icon.png'),
+      sound: true,
+      wait: true
+    },
+    function(err: any, response: any) {
+      
+    }); 
+};
+
+const openLog = () => {
+  remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
+}
+
+const MenuItem = observer(
+  ({ selected, children, display, style }: { selected: boolean; children: any; display: any, style?: any }) => (
+    <NavigationDrawer.Item
+      selected={selected}
+      style={style}
+      onClick={() => (store.options.currentDisplay = display)}
+    >
+      {children}
+    </NavigationDrawer.Item>
+  ),
+);
+
+export const Experiments = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_open}
+          </Button>
+        </Buttons>
+      </ListItem>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_run}
+          </Button>
+        </Buttons>
+      </ListItem>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].open_log}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={openLog} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_run}
+          </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
+export const Languages = observer(() => {
+  return (
+    <SettingsSection>
+      {allLangs.languages.map((i: any) => {
+        return (<ListItem key={i.flag}>
+          <Title style={{ fontSize: 15 }}>{i.title}</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            <IconButton visible={true} icon={icons.down}>
+
+            </IconButton>
+          </Buttons>
+        </ListItem>);
+      })}
+    </SettingsSection>
+  );
+});
+
+export const scrollMp = () => {
+  document.getElementById("my-profile").scrollTop = 0;
+}
 
 export const Settings = observer(() => {
   return (
     <Container
       onClick={preventHiding}
       right
+      id="settings"
       visible={
         store.overlay.currentContent === 'settings' && store.overlay.visible
       }
     >
-      <Scrollable onScroll={onScroll} ref={scrollRef}>
+      <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
-          title="Settings"
+          title={store.locale.uk.settings[0].title}
           onBackClick={onBackClick}
+          search
+          onSearchInput={onInput}
         >
+          <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.uk.settings[0].my_profile[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.uk.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.uk.settings[0].downloads[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.uk.settings[0].languages[0].title}</MenuItem>
+          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.uk.settings[0].dev_tools[0].title}</MenuItem>}
+          <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.uk.settings[0].about_dot[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.uk.settings[0].feedback[0].title}</MenuItem>
         </NavigationDrawer>
         <Sections>
           <Content>
-              <Title style={{ margin: '75px -30px -25px -30px' }}>My Profile</Title>
-              <YourProfile />
+          
+              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].my_profile[0].title}</Title>}
+              {store.options.currentDisplay == 'profile' && <YourProfile />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>
-              <Appearance />
-              <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
-              <AboutDot />
+              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].appearance[0].title}</Title>}
+              {store.options.currentDisplay == 'appearance' && <Appearance />}
+
+              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].downloads[0].title}</Title>}
+              {store.options.currentDisplay == 'downloads' && <Downloads />}
+
+              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].languages[0].title}</Title>}
+              {store.options.currentDisplay == 'languages' && <Languages />}
+
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].dev_tools[0].title}</Title>}
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}
+
+              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].about_dot[0].title}</Title>}
+              {store.options.currentDisplay == 'about' && <AboutDot />}
+
+              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].feedback[0].title}</Title>}
+              {store.options.currentDisplay == 'send_feedback' && <Feedback />}
 
           </Content>
         </Sections>

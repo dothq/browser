@@ -2,11 +2,14 @@ import { ipcMain, session, webContents, app } from 'electron';
 import { makeId } from '~/shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '~/shared/utils/url';
-import { USER_AGENT } from '~/shared/constants';
+import { USER_AGENT, FALLBACK_USER_AGENT } from '~/shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
 import { appWindow } from '..';
+const editJsonFile = require("edit-json-file");
+import { homedir } from 'os';
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 import {
   FiltersEngine,
@@ -142,7 +145,7 @@ const interceptRequest = (
         continue;
       }
       const id = makeId(32);
-
+      
       ipcMain.once(
         `api-webRequest-response-${eventName}-${event.id}-${id}`,
         (e: any, res: any) => {
@@ -164,6 +167,7 @@ const interceptRequest = (
                 eventName === 'onSendHeaders')
             ) {
               const requestHeaders = arrayToObject(res.requestHeaders);
+
               return cb({ cancel: false, requestHeaders });
             }
 
@@ -217,10 +221,22 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-    details.requestHeaders['User-Agent'] = USER_AGENT;
-    details.requestHeaders['DNT'] = '1';
 
-    await onBeforeSendHeaders(details, callback);
+    var url = new URL(details.url);
+    var hn = url.hostname.split(".")[1];
+
+    var blacklisted_from_ua = ['google', 'youtube', 'www.google', 'www.youtube', 'ebay', 'www.ebay']
+
+    if(blacklisted_from_ua.includes(hn.toLowerCase()) == true) {
+      details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
+      details.requestHeaders['DNT'] = '1';
+    }
+    else {
+      details.requestHeaders['User-Agent'] = USER_AGENT;
+      details.requestHeaders['DNT'] = '1';      
+    }
+
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
   // onBeforeRequest
@@ -240,17 +256,18 @@ export const runWebRequestService = (window: AppWindow) => {
         );
 
         if (match || redirect) {
-          console.log(match, redirect, details.url);
 
-          appWindow.webContents.send(`blocked-ad-${tabId}`);
+          // if(file.get("adblockEnabled") == true) {
+            appWindow.webContents.send(`blocked-ad-${tabId}`);
 
-          if (redirect) {
-            callback({ redirectURL: redirect });
-          } else {
-            callback({ cancel: true });
-          }
-
-          return;
+            if (redirect) {
+              callback({ redirectURL: redirect });
+            } else {
+              callback({ cancel: true });
+            }
+  
+            return;
+          // }
         }
       }
 
@@ -321,6 +338,7 @@ export const runWebRequestService = (window: AppWindow) => {
 
   const onCompleted = async (details: any) => {
     const newDetails: any = getDetails(details, window, true);
+
     interceptRequest('onCompleted', newDetails);
   };
 
