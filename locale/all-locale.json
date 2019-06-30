@@ -34,5 +34,10 @@
         "flag": "de",
         "icon": "",
         "translators": "Jo"
+    }, {
+        "title": "Suomalainen",
+        "flag": "fi",
+        "icon": "",
+        "translators": "Oona"
     } ]
 }
