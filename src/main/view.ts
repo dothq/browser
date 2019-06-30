@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog, BrowserWindow } from 'electron';
 import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
@@ -9,6 +9,7 @@ import { resolve } from 'path';
 const path = require("path");
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import { Client } from 'discord-rpc';
+import { getCurrentWindow } from '~/renderer/app/utils';
 var modal = require('electron-modal');
 
 export class View extends BrowserView {
@@ -33,6 +34,20 @@ export class View extends BrowserView {
     this.homeUrl = url;
     this.tabId = id;
 
+    var truncateStr = function(str: any, length: any, ending: any) {
+      if (length == null) {
+        length = 100;
+      }
+      if (ending == null) {
+        ending = '...';
+      }
+      if (str.length > length) {
+        return str.substring(0, length - ending.length) + ending;
+      } else {
+        return str;
+      }
+    };
+
     this.webContents.on('context-menu', (e, params) => {
       let menuItems: Electron.MenuItemConstructorOptions[] = [];
 
@@ -40,6 +55,7 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open link in new tab',
+            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.linkURL,
@@ -67,11 +83,20 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open image in new tab',
+            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.srcURL,
                 active: false,
               });
+            },
+          },
+          {
+            label: 'Save image',
+            click: () => {
+              
+              this.webContents.downloadURL(params.srcURL)
+
             },
           },
           {
@@ -100,27 +125,35 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             role: 'undo',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\undo.png'),
+            accelerator: 'Ctrl+Z'
           },
           {
             role: 'redo',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\redo.png'),
+            accelerator: 'Ctrl+Y'
           },
           {
             type: 'separator',
           },
           {
             role: 'cut',
+            enabled: params.selectionText.length >= 1,
           },
           {
             role: 'copy',
-          },
-          {
-            role: 'pasteAndMatchStyle',
+            accelerator: 'Ctrl+C',
+            enabled: params.selectionText.length >= 1,
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png')
           },
           {
             role: 'paste',
+            accelerator: 'Ctrl+V',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\paste.png')
           },
           {
             role: 'selectAll',
+            accelerator: 'Ctrl+A'
           },
           {
             type: 'separator',
@@ -132,6 +165,17 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             role: 'copy',
+            accelerator: 'Ctrl+C',
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png')
+          },
+          {
+            label: `Search the web for "${truncateStr(params.selectionText, 16, '...')}"`,
+            icon: resolve(app.getAppPath() + '\\static\\app-icons\\search.png'),
+            click: () => {
+              var url = `https://google.com/search?q=${params.selectionText}`;
+
+              this.webContents.loadURL(url);
+            },
           },
         ]);
       }
@@ -175,7 +219,11 @@ export class View extends BrowserView {
         ]);
       }
      
-      menuItems.push({
+      menuItems.push(
+        {
+            type: 'separator',
+        },
+        {
         label: 'View source',
         click: () => {
 
@@ -283,18 +331,76 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener(
-      'new-window',
-      (e, url, frameName, disposition) => {
-
+      'will-navigate',
+      (e, url) => {
+        e.preventDefault();
+        appWindow.viewManager.selected.webContents.loadURL(url);     
+        
         //Discord Rich Presence
         const clientId = '565573138146918421';
 
         const rpclient = new Client({ transport: 'ipc'});
         const startTimestamp = Math.round(+new Date()/1000)
 
-        window.onbeforeunload = () => {
-          rpclient.destroy()
-        }
+        async function setActivity() {
+          if (!rpclient) {
+            return;
+          }
+          try {
+
+            var details = 'Browsing on';
+
+            if(appWindow.webContents.isCurrentlyAudible() == true) {
+              details = 'Listening to audio on'
+            }
+
+            var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
+            var arr = pattern.exec(url);
+            var state = arr[2];
+            var largeImageKey = 'dlogo';
+            var smallImageKey = 'dot-online';
+            var smallImageText = `Browsing a webpage`;
+          } catch(e) {
+            var details = 'Dot Browser';
+            var state = 'Idle';
+            var largeImageKey = 'dlogo';
+            var smallImageKey = 'dot-idle';
+            var smallImageText = 'Idle';
+          }
+          rpclient.setActivity({
+            details: details,
+            state: state,
+            startTimestamp,
+            largeImageKey,
+            smallImageKey,
+            largeImageText: `Dot Browser ${app.getVersion()}`,
+            smallImageText,
+            instance: false
+          })
+        };
+
+        rpclient.on('ready', () => {
+          setActivity();
+
+          setInterval(() => {
+            setActivity();
+          }, 3e3);
+        });
+
+        rpclient.login({ clientId }).catch(console.error);
+        //Discord Rich Presence        
+      }
+    )
+
+    this.webContents.addListener(
+      'new-window',
+      (e, url, frameName, disposition, options, referrer) => {
+
+        //Discord Rich Presence
+        const clientId = '565573138146918421';
+
+        const rpclient = new Client({ transport: 'ipc'});
+        const startTimestamp = Math.round(+new Date()/1000)
 
         async function setActivity() {
           if (!rpclient) {
@@ -347,24 +453,38 @@ export class View extends BrowserView {
         if (disposition === 'new-window') {
           console.log(frameName)
           console.log(disposition)
+          console.log(options)
           if (disposition === 'new-window') {
+            if(appWindow.viewManager.selected.title != `Dot - ${options.title}`) {
+              e.preventDefault();
+              let child = new BrowserWindow({ show: false, frame: false, title: `Dot - ${options.title}`, width: options.width, height: options.height, icon: resolve(app.getAppPath() + '/static/icon.png') })
+              child.loadURL(app.getAppPath() + '/static/pages/window.html')
+              child.once('ready-to-show', () => {
+                child.show()
+                child.webContents.send('load-url', url);
+              })
+            }
+            
+          }
+          if (frameName === 'link') {
             e.preventDefault();
-            return appWindow.webContents.send('api-tabs-create', {
-              url,
-              active: true,
-            });    
+            appWindow.viewManager.selected.webContents.loadURL(url);   
           }
           if (frameName === '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
             appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
-          } else if (frameName === '_blank') {
+          }
+          if (frameName === '_top') {
             e.preventDefault();
-            appWindow.webContents.send('api-tabs-create', {
-              url,
-              active: true,
-            });
-          } else if (frameName === 'modal') {
+            appWindow.viewManager.selected.webContents.loadURL(url);
+            appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
+          }
+          if (frameName === '_blank') {
+            e.preventDefault();
+            appWindow.viewManager.selected.webContents.loadURL(url);
+          }
+          if (frameName === 'modal') {
             e.preventDefault();
             appWindow.webContents.send('api-tabs-create', {
               url,

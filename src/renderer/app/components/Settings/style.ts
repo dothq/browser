@@ -34,6 +34,22 @@ export const Button = styled.a`
   
 `;
 
+export const ExtLink = styled.a`
+
+  border: 1px #42424252 solid;
+  transition: background-color 0.3s;
+  border-radius: 30px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 5px
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+`;
+
 export const A = styled.a`
   &:hover {
     background-color: rgba(255, 255, 255, 0.12);

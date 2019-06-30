@@ -1,10 +1,10 @@
-import { BrowserWindow, app, nativeImage } from 'electron';
+import { BrowserWindow, app, nativeImage, dialog, dialog, remote } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import store from '~/renderer/app/store';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
@@ -41,6 +41,10 @@ export class AppWindow extends BrowserWindow {
 
     const windowDataPath = getPath('window-data.json');
 
+    const errorLogPath = getPath('dot-errors.log');
+
+    var time = new Date().toUTCString();
+
     setupPushReceiver(this.webContents);
 
     let windowState: any = {};
@@ -53,6 +57,13 @@ export class AppWindow extends BrowserWindow {
         writeFileSync(windowDataPath, JSON.stringify({}));
       }
     }
+
+    if (existsSync(errorLogPath)) {
+      appendFile(errorLogPath, `// Error log effective of 2.1.0, ${time}. Running ${platform()}, started main app.\n`, function(err) {
+
+      });
+    }
+
     // Merge bounds from the last window state to the current window options.
     if (windowState) {
       this.setBounds({ ...windowState.bounds });
@@ -152,6 +163,42 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.selected.webContents.send('scroll-touch-end');
       this.webContents.send('scroll-touch-end');
     });
+
+    var oldConsole = console.log;
+    console.log = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldConsole(err);
+        }
+      });
+    };
+
+    var oldError = console.error;
+    console.error = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [ERROR] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldError(err);
+        }
+      });
+    };
+
+    var oldInfo = console.info;
+    console.info = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [INFO] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldInfo(err);
+        }
+      });
+    };
+
+    var oldWarn = console.warn;
+    console.warn = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [WARN] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldWarn(err);
+        }
+      });
+    };
 
   }
 }

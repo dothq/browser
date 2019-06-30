@@ -15,7 +15,7 @@ import { platform } from 'os';
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
 
-var tray = new Tray(resolve(app.getAppPath(), 'static/icon.png'))
+var tray = new Tray(resolve(app.getAppPath(), 'static/tray-icon.png'))
 const contextMenu = Menu.buildFromTemplate([
   { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
   { type: 'separator' },
@@ -50,7 +50,7 @@ ipcRenderer.setMaxListeners(0);
 const styleElement = document.createElement('style');
 
 ipcRenderer.on('dev-tools-opened', () => {
-  appWindow.webContents.openDevTools();
+  appWindow.webContents.openDevTools({ mode: 'detach' });
 });
 
 var reload = () => {
@@ -206,7 +206,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'Forward',
-          accelerator: 'Alt+Left',
+          accelerator: 'Alt+Right',
           click() { 
             if(store.tabs.selectedTab) {
               if(store.navigationState.canGoForward == true) {
@@ -264,15 +264,15 @@ Menu.setApplicationMenu(
               return;
             }
 
-            //  if(store.tabs.list.length != 0) {
-            //    if(store.overlay.visible == false) {
-                remote.webContents.getFocusedWebContents().openDevTools();  
+              if(store.tabs.list.length != 0) {
+                if(store.overlay.visible == false) {
+                remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
               
                 if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
                   remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
                 }
-            //    }
-            //  }
+                }
+              }
             
           } 
         },   

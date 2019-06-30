@@ -338,6 +338,7 @@ export const runWebRequestService = (window: AppWindow) => {
 
   const onCompleted = async (details: any) => {
     const newDetails: any = getDetails(details, window, true);
+
     interceptRequest('onCompleted', newDetails);
   };
 

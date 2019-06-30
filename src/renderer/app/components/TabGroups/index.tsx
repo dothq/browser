@@ -7,6 +7,8 @@ import store from '../../store';
 import { Section } from '../Overlay/style';
 import { Header, preventHiding } from '../Overlay';
 
+
+
 const onAddClick = () => {
   store.tabGroups.addGroup();
 };
@@ -14,7 +16,7 @@ const onAddClick = () => {
 export const TabGroups = observer(() => {
   return (
     <Section onClick={preventHiding}>
-      <Header>Tab groups</Header>
+      <Header>{store.locale.uk.overlay[0].tab_groups}</Header>
       <StyledTabGroups>
         {store.tabGroups.list.map(item => (
           <TabGroup data={item} key={item.id} />

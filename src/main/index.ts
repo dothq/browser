@@ -28,6 +28,9 @@ export let appWindow: AppWindow;
 
 registerProtocols();
 
+app.setAsDefaultProtocolClient('http');
+app.setAsDefaultProtocolClient('https');
+
 try {
   if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
     console.log("[SettingsStore] Notification sound exists.")
@@ -91,6 +94,16 @@ app.on('ready', async () => {
       } else {
         callback(false);
       }
+      if(permission == "media") {
+        var url = new URL(webContents.getURL());
+        var hn = url.hostname.split(".")[1];
+        if(hn == "youtube" || hn == "www.youtube") {
+          callback(true)
+        }
+        else {
+          callback(false)
+        }
+      }
     },
   );
 
@@ -153,6 +166,11 @@ app.on('ready', async () => {
 
   ipcMain.on('window-focus', () => {
     appWindow.webContents.focus();
+    
+  });
+
+  ipcMain.on('set-downloads-loc', (path: any) => {
+    appWindow.webContents.session.setDownloadPath(path);
   });
 
   const viewSession = session.fromPartition('persist:view');

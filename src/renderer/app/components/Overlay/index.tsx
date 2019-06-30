@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import store from '../../store';
-import { remote } from "electron";
+import { remote, app } from "electron";
 import { Client } from 'discord-rpc';
 import {
   StyledOverlay,
@@ -14,17 +14,18 @@ import {
   Container,
   Image,
   Dot,
-  Preloader,
   Panel,
+  DropArrow,
+  IconButton,
 } from './style';
 import { SearchBox } from '../SearchBox';
 import { TabGroups } from '../TabGroups';
 import { WeatherCard } from '../WeatherCard';
+import { NewsCard } from '../NewsCard';
 import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
-import { LoginModal } from '../Login';
 import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
@@ -35,14 +36,29 @@ import { icons } from '../../constants';
 import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
+import { Preloader } from '~/renderer/components/Preloader'
 const editJsonFile = require("edit-json-file");
+const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
 
 import console = require('console');
 
+var locale_uk = enUK.toObject()
+
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
+import { ExtLink } from '../NewsCard/style';
 
-let file = editJsonFile(`${remote.app.getPath('userData')}/dot/dot-options.json`);
+let file = editJsonFile(`${remote.app.getPath('userData')}/dot-options.json`);
+
+if(!file.get("searchEngine")) {
+  file.set("searchEngine", "google");
+  file.save()
+}
+
+if(!file.get("toggleDotLauncher")) {
+  file.set("toggleDotLauncher", true);
+  file.save()
+}
 
 const {
   START_NOTIFICATION_SERVICE,
@@ -102,22 +118,29 @@ async function setActivity() {
     return;
   }
   try {
-    var details = 'Browsing on';
+    var details = locale_uk.rich_presence[0].default_details
 
     if(store.tabs.selectedTab.audioPlaying == true) {
-      details = 'Listening to audio on'
+      details = locale_uk.rich_presence[0].audio_details
     }
+
+    // if(store.tabs.selectedTab.url.substring(0, 8) == "file:///") {
+    //   var lastDot = store.tabs.selectedTab.url.lastIndexOf('.');
+    //   var fileType = store.tabs.selectedTab.url.substring(lastDot + 1);
+    //   console.log(fileType)
+    //   details = locale_uk.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
+    // }
     
-    var state = store.tabs.getHostname(store.tabs.selectedTab.url);
+    var state = `${store.tabs.getHostname(store.tabs.selectedTab.url)}`;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-online';
-    var smallImageText = `Browsing a webpage`;
+    var smallImageText:string = locale_uk.rich_presence[0].active_small_text;
   } catch(e) {
-    var details = 'Dot Browser';
-    var state = 'Idle';
+    var details = locale_uk.rich_presence[0].idle_details;
+    var state:string = locale_uk.rich_presence[0].idle_small_text;
     var largeImageKey = 'dlogo';
     var smallImageKey = 'dot-idle';
-    var smallImageText = 'Idle';
+    var smallImageText:string = locale_uk.rich_presence[0].idle_small_text;
   }
   rpclient.setActivity({
     details: details,
@@ -125,7 +148,7 @@ async function setActivity() {
     startTimestamp,
     largeImageKey,
     smallImageKey,
-    largeImageText: `Dot Browser ${remote.app.getVersion()}`,
+    largeImageText: locale_uk.rich_presence[0].large_text.replace(/{version}/, remote.app.getVersion()),
     smallImageText,
     instance: false
   })
@@ -145,6 +168,15 @@ rpclient.login({ clientId }).catch(console.error);
 //Discord Rich Presence
 
 store.downloads.load()
+
+// remote.ipcMain.on('window-focus', async () => {
+//   if(store.overlay.visible == true) {
+//     store.notifications.hidePermissionWindow()
+//   }
+//   else {
+//     store.notifications.showPermissionWindow()
+//   }
+// })
 
 export const Header = ({ children, clickable }: any) => {
   return (
@@ -167,20 +199,48 @@ export const preventHiding = (e: any) => {
   e.stopPropagation();
   store.overlay.dialTypeMenuVisible = false;
   store.user.menuVisible = false;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
-store.user.loadProfile()
+store.user.loadProfile();
 
 const LoginSnackbar = () => {
   return (
     <Snackbar visible={store.user.loggedin == true}>
-      Welcome back, {store.user.username}
+      {locale_uk.overlay[0].welcome_snackbar.replace(/{username}/g, store.user.username)}
     </Snackbar>
   )
 };
+
+interface Props {
+  children: any;
+}
+
+const CardWrapper = observer(({ children }: Props) => {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }} onClick={preventHiding}>
+      {children}
+    </div>
+  );
+});
+
+const openExtLink = (url: string) => () => {
+  store.tabs.openExternalLink({ url, active: true })
+};
+
+const loadNews = (amount: any) => () => {
+  if(amount == 5) {
+    store.news.load();
+    store.news.shouldLoadNews = true;
+  }
+  else {
+    store.news.loadAll()
+    store.news.shouldLoadNews = true;
+  }
+}
+
+console.log(store.news.list)
 
 export const Overlay = observer(() => {
 
@@ -199,12 +259,46 @@ export const Overlay = observer(() => {
             <SearchBox />
             <Dial />
 
-            <Title>Overview</Title>
+            <Title>{locale_uk.overlay[0].overview}</Title>
             <TabGroups />
             {store.downloads.list.length > 0 && <DownloadsSection />}
             <QuickMenu />
-            <Title>World</Title>
-            <WeatherCard />
+            <Title>{locale_uk.overlay[0].world}</Title>
+            <CardWrapper>
+              <WeatherCard />
+              {store.news.list.map((item: any) => (
+                <NewsCard 
+                  key={item.key} 
+                  newsImage={item.image} 
+                  newsURL={item.url} 
+                  newsPubIcon={item.favicon} 
+                  newsPublisher={item.source} 
+                  newsTitle={item.title} 
+                  newsFullTitle={item.wholeTitle}
+                  newsOnClick={openExtLink(item.url)}
+                />
+              ))}
+            </CardWrapper>
+            <div onClick={preventHiding}>
+              <DropArrow visible={store.news.list.length == 5} style={{ textAlign: 'center', margin: '10px auto 20px auto', filter: 'invert(1)', zoom: '1.5', cursor: 'pointer' }} title="Load more articles" onClick={loadNews('more')}>
+                {store.news.shouldLoadNews == true && (
+                  <Preloader
+                      thickness={6}
+                      size={16}
+                      style={{ zoom: '2', filter: 'invert(1)' }}
+                  />
+                )}
+              </DropArrow>
+              <IconButton visible={store.news.list.length >= 6} style={{ textAlign: 'center', margin: '10px auto 20px auto', filter: 'invert(1)', zoom: '1.5', cursor: 'pointer' }} icon={icons.up} title="Load less articles" onClick={loadNews(5)}>
+                {store.news.shouldLoadNews == true && (
+                  <Preloader
+                      thickness={6}
+                      size={16}
+                      style={{ zoom: '2', filter: 'invert(1)' }}
+                  />
+                )}
+              </IconButton>
+            </div>
           </Content>
         </Scrollable>
       </Container>
@@ -212,7 +306,6 @@ export const Overlay = observer(() => {
       <Bookmarks />
       <Extensions />
       <Settings />
-      <LoginModal />
       <AdBlock />
     </StyledOverlay>
   );

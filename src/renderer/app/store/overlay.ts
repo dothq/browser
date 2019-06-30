@@ -2,6 +2,9 @@ import { observable, computed } from 'mobx';
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import store from '.';
+import { viewBm } from '../components/Toolbar';
+import { ViewManager } from '~/main/view-manager';
+import { View } from '../../../main/view';
 
 let lastSuggestion: string;
 
@@ -12,6 +15,8 @@ const autoComplete = (text: string, suggestion: string) => {
   const start = text.length;
 
   const input = store.overlay.inputRef.current;
+
+  if (input.selectionStart !== input.value.length) return;
 
   if (suggestion) {
     if (suggestion.startsWith(text.replace(regex, ''))) {
@@ -37,7 +42,13 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' | 'login' = 'preload';
+  public isAbOpen: boolean = false;
+
+  @observable
+  public abObj: any;
+
+  @observable
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
 
   @observable
   public dialTypeMenuVisible = false;
@@ -84,6 +95,10 @@ export class OverlayStore {
     if (this.currentContent === 'extensions') {
       return this.currentContent = 'default';
     }    
+    if (this.currentContent === 'adblock') {
+      ipcRenderer.send('browserview-hide');
+      return store.overlay.visible = false;
+    }
     if (this.currentContent === 'default') {
       if(store.tabs.list.length == 0) return;
       this.visible = false;
@@ -92,6 +107,7 @@ export class OverlayStore {
 
   @computed
   public get visible() {
+
     return this._visible;
   }
 

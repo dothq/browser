@@ -33,6 +33,9 @@ import unlock from '~/shared/resources/icons/unlock.svg';
 import zoom from '~/shared/resources/icons/zoom.svg';
 import music from '~/shared/resources/icons/music.svg';
 import muted from '~/shared/resources/icons/muted.svg';
+import open from '~/shared/resources/icons/open.svg';
+import not_checked from '~/shared/resources/icons/not_checked.svg';
+import checked from '~/shared/resources/icons/checked.svg';
 
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
@@ -74,4 +77,7 @@ export const icons = {
   zoom,
   music,
   muted,
+  open,
+  not_checked,
+  checked,
 };

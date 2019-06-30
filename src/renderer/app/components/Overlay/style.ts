@@ -19,6 +19,7 @@ export const OverlayScrollbarStyle = `
   ::-webkit-scrollbar {
     width: ${width()};
     height: 3px;
+    border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -27,10 +28,14 @@ export const OverlayScrollbarStyle = `
 
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.16);
+    transition: 0.5s border-radius;
+    border-radius: 15px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.48);
+    transition: 0.5s border-radius;
+    border-radius: 35px;
   }
 `;
 
@@ -52,7 +57,7 @@ export const StyledOverlay = styled.div`
   z-index: 9999;
   transition: 0.2s opacity;
   backface-visibility: hidden;
-  background-color: #1c1c1c;
+  background-color: #000000e8;
 
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
@@ -108,11 +113,15 @@ export const DropArrow = styled.div`
   background-image: url(${icons.down});
   filter: invert(100%);
   border-radius: 50%;
-  transition: 0.1s background-color;
+  transition: 0.3s background-color;
 
   &:hover {
     background-color: rgba(0,0,0,0.15);
   }
+
+  ${({ visible }: { visible?: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
+  `} 
 `;
 
 export const IconButton = styled.div`
@@ -122,13 +131,14 @@ export const IconButton = styled.div`
   width: 32px;
   filter: invert(100%);
   border-radius: 50%;
-  transition: 0.1s background-color;
+  transition: 0.3s background-color;
 
   &:hover {
     background-color: rgba(0,0,0,0.15);
   }
 
-  ${({ icon }: { icon: any }) => css`
+  ${({ icon, visible }: { icon: any; visible: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
     background-image: url(${icon});
   `}  
 `;
