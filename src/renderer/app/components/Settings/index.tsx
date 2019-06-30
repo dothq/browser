@@ -32,6 +32,8 @@ const { remote } = require('electron')
 const { Tray, app } = remote
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let allLangs = editJsonFile(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
+allLangs = allLangs.toObject();
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -782,6 +784,23 @@ export const Experiments = observer(() => {
   );
 });
 
+export const Languages = observer(() => {
+  return (
+    <SettingsSection>
+      {allLangs.languages.map((i: any) => {
+        return (<ListItem key={i.flag}>
+          <Title style={{ fontSize: 15 }}>{i.title}</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            <IconButton visible={true} icon={icons.down}>
+
+            </IconButton>
+          </Buttons>
+        </ListItem>);
+      })}
+    </SettingsSection>
+  );
+});
+
 export const scrollMp = () => {
   document.getElementById("my-profile").scrollTop = 0;
 }
@@ -806,6 +825,7 @@ export const Settings = observer(() => {
           <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.uk.settings[0].my_profile[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.uk.settings[0].appearance[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.uk.settings[0].downloads[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.uk.settings[0].languages[0].title}</MenuItem>
           {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.uk.settings[0].dev_tools[0].title}</MenuItem>}
           <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.uk.settings[0].about_dot[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.uk.settings[0].feedback[0].title}</MenuItem>
@@ -821,6 +841,9 @@ export const Settings = observer(() => {
 
               {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}
+
+              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].languages[0].title}</Title>}
+              {store.options.currentDisplay == 'languages' && <Languages />}
 
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}

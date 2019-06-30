@@ -16,6 +16,9 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
 import { remote } from 'electron'
 import { TabSearchBox } from '../TabSearchBox';
+import { resolve } from 'path';
+
+const modal = require('electron-modal');
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -40,9 +43,39 @@ class BrowserActions extends React.Component {
   }
 }
 
+const adBlockRef = React.createRef<HTMLDivElement>();
+
 export const toggleAdBlockWindow = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "adblock";
+  // if(store.overlay.isAbOpen == false) {
+  //   var rect = document.getElementById("dab").getBoundingClientRect()
+  //   var ab = modal.open(resolve(remote.app.getAppPath() + '/static/pages/adblock.html'), {
+  //     width: 300,
+  //     height: 400,
+  //     x: rect.left-260,
+  //     y: rect.top+40,
+  //     frame: false,
+  //     resizable: false,
+  //     movable: false,
+  //     alwaysOnTop: false,
+  //     modal: false
+  //   }, {
+  //     totalAdsBlocked: store.tabs.selectedTab.blockedAds.toString()
+  //   })
+  //   store.overlay.isAbOpen = true;
+  //   store.overlay.abObj = ab;
+  //   ab.on('close', () => {
+  //     store.overlay.isAbOpen = false;
+  //     store.overlay.abObj = null;
+  //   })
+  //   ab.on('hide', () => {
+  //     store.overlay.isAbOpen = false;
+  //     store.overlay.abObj = null;
+  //   })
+  // }
+  // else {
+  //   store.overlay.abObj.hide()
+  //   store.overlay.isAbOpen = false;
+  // }
 }
 
 export const viewLauncher = () => {
@@ -144,7 +177,7 @@ export const Toolbar = observer(() => {
           />          
         </AbButton>
         { store.downloads.list.length > 0 && <Separator />}
-        <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker">
+        <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker" id="dab">
           <BrowserAction
             size={18}
             style={{ marginLeft: 0 }}
