@@ -34,6 +34,9 @@ export class WeatherStore {
   public timetype?: string;
 
   @observable
+  public timeInt?: number;
+
+  @observable
   public tempindicator?: string;
 
   /** This function will be called when your app is first opened or when they need to reload the data */
@@ -67,6 +70,23 @@ export class WeatherStore {
       this.summary = json.weather;
       this.icon = json.icon;
       this.timetype = json.timetype;
+
+      if(this.timetype == "Day") {
+        this.timeInt = 0;
+      }
+      if(this.timetype == "Morning") {
+        this.timeInt = 1;
+      }
+      if(this.timetype == "Afternoon") {
+        this.timeInt = 2;
+      }
+      if(this.timetype == "Night") {
+        this.timeInt = 3;
+      }
+
+      console.log("Displaying time type ", this.timeInt, " on WeatherCard")
+      this.timeInt = 2;
+      this.loaded = true;
     }
     catch (e) {
       console.log(e)

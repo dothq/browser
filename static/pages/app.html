@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=3.0, shrink-to-fit=no">
   <meta charset="UTF-8" />
   <title>Dot</title>
+  <script src="https://twemoji.maxcdn.com/2/twemoji.min.js?12.0.4" crossorigin="anonymous"></script>
   <style>
     @font-face {
         font-family: 'Google Sans';
@@ -259,6 +260,10 @@
   $bundles
 
   <script>
+
+    var appMount = document.getElementById("app");
+
+    twemoji.parse(appMount, {"size":72});
     
     const { ipcRenderer } = require('electron')
 

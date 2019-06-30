@@ -15,6 +15,8 @@ import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
 import { setInterval } from 'timers';
+import { ClosedTabs } from './closed-tabs';
+import console = require('console');
 
 let id = 1;
 
@@ -48,6 +50,9 @@ export class Tab {
   public position = 0;
 
   @observable
+  public isUrlVisible: boolean = false;;
+
+  @observable
   public background: string = colors.blue['500'];
 
   @observable
@@ -69,7 +74,13 @@ export class Tab {
   public f = 0;
 
   @observable
+  public closedTabs: ClosedTabs[] = [];
+
+  @observable
   public zoomAmount: number = 1;  
+
+  @observable
+  public screenshot: any = "";
 
   @computed
   public get findVisible() {
@@ -145,7 +156,7 @@ export class Tab {
 
   public left = 0;
   public tempPosition = 0;
-  public lastUrl = '';
+  public lastUrl: any = [];
   public isClosing = false;
   public ref = React.createRef<HTMLDivElement>();
   public lastHistoryId: string;
@@ -275,9 +286,11 @@ export class Tab {
     });
 
     ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
-      this.originalTitle = this.title;
-      this.title = `🔊 • ${this.title}`
-      this.audioPlaying = true;
+      if(this.title.includes("🔊 • ") == false) {
+        this.originalTitle = this.title;
+        this.title = `🔊 • ${this.title}`
+        this.audioPlaying = true;
+      }
     });
 
     ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
@@ -405,6 +418,8 @@ export class Tab {
     const tabGroup = this.tabGroup;
     const tabs = tabGroup.tabs.slice().sort((a, b) => a.position - b.position);
 
+    store.tabs.lastUrl.push(this.url);
+
     const selected = tabGroup.selectedTabId === this.id;
 
     ipcRenderer.send('browserview-destroy', this.id);
@@ -446,9 +461,9 @@ export class Tab {
       }
     }
 
-    //setTimeout(() => {
+    setTimeout(() => {
       store.tabs.removeTab(this.id);
-    //}, TAB_ANIMATION_DURATION * 1000);
+    }, TAB_ANIMATION_DURATION * 1000);
   }
 
   public emitOnUpdated = (data: any) => {

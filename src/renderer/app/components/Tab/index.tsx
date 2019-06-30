@@ -15,6 +15,7 @@ import {
   StyledBorder,
   StyledOverlay,
   TabContainer,
+  SearchInput,
 } from './style';
 import { shadeBlendConvert } from '../../utils';
 import { transparency } from '~/renderer/constants';
@@ -31,21 +32,31 @@ const onCloseMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
+const onDblClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
+  store.tabs.showUB()
+  console.log(store.tabs.ubVisible)
+  console.log("Toggled UB")
+}
+
 const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-  const { pageX } = e;
 
-  tab.select();
+  if(tab.isUrlVisible == false){
+    const { pageX } = e;
 
-  store.tabs.lastMouseX = 0;
-  store.tabs.isDragging = true;
-  store.tabs.mouseStartX = pageX;
-  store.tabs.tabStartX = tab.left;
+    tab.select();
+  
+    store.tabs.lastMouseX = 0;
+    store.tabs.isDragging = true;
+    store.tabs.mouseStartX = pageX;
+    store.tabs.tabStartX = tab.left;
+  
+    store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
+  
+    if(e.button == 1) {
+      tab.close()
+    } 
+  }
 
-  store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
-
-  if(e.button == 1) {
-    tab.close()
-  } 
 };
 
 const onMouseEnter = (tab: Tab) => () => {
@@ -75,6 +86,15 @@ const contextMenu = (tab: Tab) => () => {
       click: () => {
         store.overlay.isNewTab = true;
         store.overlay.visible = true;
+      },
+    },
+    {
+      label: 'Navigate here',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/search.png'),
+      click: () => {
+        store.overlay.show()
+        store.overlay.inputRef.current.focus();
+        store.overlay.inputRef.current.select();
       },
     },
     {
@@ -120,6 +140,7 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Close tabs from left',
+      enabled: store.tabs.list.length != 1,
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/left.png'),
       click: () => {
         for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
@@ -129,10 +150,23 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Close tabs from right',
+      enabled: store.tabs.list.length != 1,
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/right.png'),
       click: () => {
         for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
           tabs[i].close();
+        }
+      },
+    },
+    {
+      label: 'Reopen last closed tab',
+      accelerator: 'Ctrl+Shift+T',
+      enabled: store.tabs.lastUrl != "",
+      click: () => {
+        var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
+        if(url != "") {
+          store.tabs.addTab({ url, active: true });
+          store.tabs.lastUrl.splice(-1,1)
         }
       },
     },
@@ -147,6 +181,8 @@ const contextMenu = (tab: Tab) => () => {
 const Content = observer(({ tab }: { tab: Tab }) => {
 
   var title = tab.title
+
+  var url = tab.url
 
   return (
     <StyledContent collapsed={tab.isExpanded}>
@@ -172,6 +208,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
+        <SearchInput placeholder={url} visible={store.tabs.ubVisible == true} />
         {title}
       </StyledTitle>
     </StyledContent>
@@ -192,6 +229,10 @@ const Close = observer(({ tab }: { tab: Tab }) => {
 const Border = observer(({ tab }: { tab: Tab }) => {
   return <StyledBorder visible={tab.borderVisible} />;
 });
+
+const onMouseHover = () => {
+  
+};
 
 const Overlay = observer(({ tab }: { tab: Tab }) => {
   return (
@@ -216,6 +257,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       onClick={onClick}
       title={tab.title}
       onMouseLeave={onMouseLeave}
+      onMouseOver={onMouseHover}
       visible={tab.tabGroupId === store.tabGroups.currentGroupId}
       ref={tab.ref}
     >

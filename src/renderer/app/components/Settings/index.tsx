@@ -2,8 +2,9 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField } from './style'
+import { InputField, ExtLink } from './style'
 import { Button } from '~/renderer/components/Button';
+import { Textfield } from '~/renderer/components/Textfield';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
@@ -20,15 +21,19 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow, IconButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
-import { ipcRenderer, ipcMain } from 'electron';
+import { ipcRenderer, ipcMain, shell } from 'electron';
 import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { openNewGitHubIssue } from 'electron-util';
 
 var modal = require('electron-modal');
 const { remote } = require('electron')
-const { Menu, MenuItem, Tray, app } = remote
+const { Tray, app } = remote
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let allLangs = editJsonFile(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
+allLangs = allLangs.toObject();
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -37,10 +42,11 @@ win.webContents.session.clearCache(function(){
   
 });
 
+store.options.currentDisplay = "profile";
+
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
@@ -68,7 +74,7 @@ const login = async () => {
     resizable: false,
     center: false,
     alwaysOnTop: false,
-    title: 'Sign in',
+    title: store.locale.uk.settings[0].my_profile[0].sign_in_btn,
     titleBarStyle: 'hiddenInset',
     webPreferences: {
       nodeIntegration: true
@@ -167,7 +173,7 @@ const pickAvatar = () => {
 const Email = observer(() => {
   if(store.user.loggedin == true) {
     return (
-      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px' }}>{store.user.email}</TitleEmail>
+      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px', color: 'rgba(220, 221, 222, 0.77)' }}>{store.user.email}</TitleEmail>
     );
   }
   else {
@@ -202,7 +208,7 @@ const YourProfile = observer(() => {
 
   if(store.user.loggedin == true) {
     user.username = store.user.username
-    user.avatar = store.user.avatar
+    user.avatar = store.user.avatar.split("/64")[0] + '/128'
     user.email = store.user.email
     shouldInvert = 'invert(0%)';
     shouldBr = '50%';
@@ -216,17 +222,17 @@ const YourProfile = observer(() => {
         <form encType="multipart/form-data" method="post" name="fileinfo">
           <input id="avatar-choose" onChange={avatarChange} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
         </form>
-        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '45px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
+        <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '48px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <div style={{ marginTop: '-7px' }}>
           <Title style={{ fontSize: 25, marginLeft: '4px' }}>{user.username}</Title>
           <Email />
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign in
+          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.settings[0].my_profile[0].sign_in_btn}
           </Button>
-          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Sign out
+          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
       </ListItem>
@@ -310,13 +316,37 @@ const blz = () => {
   store.overlay.visible = false;
 }
 
+const UKFlag = observer(() => {
+  return (
+    <Image src={icons.uk} style={{ width: '14px' }}></Image>
+  )
+});
+
+const HeartEmote = observer(() => {
+  return (
+    <span style={{ color: '#ff4040' }}>❤</span>
+  );
+});
+
+const chachy = () => {
+  var url = "https://github.com/chachyyyy"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
+const aboutPage = () => {
+  var url = "dot://about"
+  store.tabs.addTab({url, active: true });
+  store.overlay.visible = false;
+}
+
 
 const AboutDot = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>Dot Browser 2.1.0</Title>
+        <Title style={{ fontSize: 20 }}>{store.locale.uk.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -324,19 +354,20 @@ const AboutDot = observer(() => {
         </Buttons>
       </ListItem>
       <AboutWrapper id="about-wrapper">
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Dot was made possible thanks to <A onClick={wexond}>Wexond</A> and ☕.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>Made in <Image src={icons.uk} style={{ width: '14px' }}></Image>Great Britain with <span style={{ color: '#ff4040' }}>❤</span>.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Developers</Title>
-        <A onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev,</A>
-        <A onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Geek (Jake Ward)</A>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Beta Testers</Title>
-        <A onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>function, </A>
-        <A onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Sky, </A>
-        <A onClick={blz} title="<>" style={{ color: '#dadada' }}>Blizma</A>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>Special Thanks</Title>
-        <A onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>DusterTheFirst</A>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>Loaded FCM Notification services</Title>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>&copy; 2019 Ender And Fire Development</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.uk.settings[0].about_dot[0].wxnd_coffee}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.uk.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].developers_title}</Title>
+        <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
+        <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].beta_testers_title}</Title>
+        <ExtLink onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Oli</ExtLink>
+        <ExtLink onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Jeremy Bognon</ExtLink>
+        <ExtLink onClick={blz} title="<blizzyisheres@gmail.com>" style={{ color: '#dadada' }}>Blizma</ExtLink>
+        <ExtLink onClick={chachy} title="<shalomadecoolboy@outlook.com>" style={{ color: '#dadada' }}>Chachy</ExtLink>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].special_thanks_title}</Title>
+        <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>
     </SettingsSection>
   );
@@ -366,8 +397,9 @@ const awaitDownloadUpdate = async () => {
     file.save()
   
     store.downloads.location = dl;
+    ipcRenderer.send('set-downloads-loc', `${dl}`);
 
-    document.getElementById("dl-l").innerText = store.downloads.location;
+    document.getElementById("dl-l").innerText = dl;
 
   }, 300);
 
@@ -378,11 +410,11 @@ const Downloads = observer(() => {
     <SettingsSection>
       <ListItem>
         <div>
-          <Title style={{ fontSize: 15 }}>Downloads Location</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].downloads[0].download_loc}</Title>
           <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <IconButton onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
+          <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
         </Buttons>
         <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
       </ListItem>
@@ -476,14 +508,11 @@ var seMenuVisible = false;
 
 const toggleSeMenu = (e: any) => {
   e.stopPropagation();
-  var x = document.getElementById("search-engine-dp")
-  if(x.style.opacity == "0") {
-    x.style.opacity = "1";
-    x.style.pointerEvents = "all";
+  if(store.options.searchEngineCtx == true) {
+    store.options.searchEngineCtx = false
   }
   else {
-    x.style.opacity = "0";
-    x.style.pointerEvents = "none";
+    store.options.searchEngineCtx = true
   }
 }
 
@@ -612,47 +641,71 @@ if(file.get("tempType") == "F") {
   isF = "#585858c7"
 }
 
+const feedbackRef = React.createRef<Textfield>();
+
+const sendFeedback = () => {
+  var url = `https://github.com/dot-browser/desktop/issues/new?title=Enter a title&body=${feedbackRef.current.value}`
+  store.tabs.openExternalLink({ url, active: true })
+  feedbackRef.current.value = ''
+};
+
+export const Feedback = observer(() => {
+  return (
+    <SettingsSection>
+      <ListItem style={{ display: 'block' }}> 
+        <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.uk.settings[0].feedback[0].feedback_title}</Title>
+        <Textfield ref={feedbackRef} style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
+        <Buttons style={{ marginLeft: 'auto', marginTop: '-25px', padding: '7px' }}> 
+          <Button onClick={sendFeedback} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_send}
+          </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Toggle Dot button</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].toggle_dot}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Search Engine</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <DropArrow onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
-            <ContextMenu id="search-engine-dp" visible={seMenuVisible} style={{ top: '450px', marginLeft: '-50px' }}>            
+            <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
+            <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '255px', marginLeft: '-50px' }}>            
               <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
-                Google
+                {store.locale.uk.settings[0].google_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
-                Yahoo
+                {store.locale.uk.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
-                Bing
+                {store.locale.uk.settings[0].bing_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
-                DuckDuckGo
+                {store.locale.uk.settings[0].ddg_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
-                Ecosia
+                {store.locale.uk.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>Temperature Type</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].temp_type}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
-            <IconButton icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
             </IconButton>
-            <IconButton id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
             </IconButton>
           </Buttons>
@@ -663,7 +716,7 @@ export const Appearance = observer(() => {
 });
 
 export const openDevTools = () => {
-  remote.webContents.getFocusedWebContents().openDevTools();  
+  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
               
   if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
     remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
@@ -684,25 +737,66 @@ export const testNotif = () => {
     }); 
 };
 
+const openLog = () => {
+  remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
+}
+
+const MenuItem = observer(
+  ({ selected, children, display, style }: { selected: boolean; children: any; display: any, style?: any }) => (
+    <NavigationDrawer.Item
+      selected={selected}
+      style={style}
+      onClick={() => (store.options.currentDisplay = display)}
+    >
+      {children}
+    </NavigationDrawer.Item>
+  ),
+);
+
 export const Experiments = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>Chromium Developer Tools</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Open
+          <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_open}
           </Button>
         </Buttons>
       </ListItem>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>Send test notification</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: '#f3f3f3', color: '#1e1e1e' }}>
-            Run
+          <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_run}
           </Button>
         </Buttons>
       </ListItem>
+      <ListItem>
+        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].open_log}</Title>
+        <Buttons style={{ marginLeft: 'auto' }}>
+          <Button visible={store.user.experiments == true} onClick={openLog} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+            {store.locale.uk.standard[0].button_run}
+          </Button>
+        </Buttons>
+      </ListItem>
+    </SettingsSection>
+  );
+});
+
+export const Languages = observer(() => {
+  return (
+    <SettingsSection>
+      {allLangs.languages.map((i: any) => {
+        return (<ListItem key={i.flag}>
+          <Title style={{ fontSize: 15 }}>{i.title}</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            <IconButton visible={true} icon={icons.down}>
+
+            </IconButton>
+          </Buttons>
+        </ListItem>);
+      })}
     </SettingsSection>
   );
 });
@@ -723,31 +817,42 @@ export const Settings = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
-          title="Settings"
+          title={store.locale.uk.settings[0].title}
           onBackClick={onBackClick}
           search
           onSearchInput={onInput}
         >
+          <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.uk.settings[0].my_profile[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.uk.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.uk.settings[0].downloads[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.uk.settings[0].languages[0].title}</MenuItem>
+          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.uk.settings[0].dev_tools[0].title}</MenuItem>}
+          <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.uk.settings[0].about_dot[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.uk.settings[0].feedback[0].title}</MenuItem>
         </NavigationDrawer>
         <Sections>
           <Content>
-              <Title style={{ margin: '75px -30px -25px -30px' }}>My Profile</Title>
-              <YourProfile />
+          
+              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].my_profile[0].title}</Title>}
+              {store.options.currentDisplay == 'profile' && <YourProfile />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Appearance</Title>
-              <Appearance />
+              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].appearance[0].title}</Title>}
+              {store.options.currentDisplay == 'appearance' && <Appearance />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Downloads</Title>
-              <Downloads />
+              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].downloads[0].title}</Title>}
+              {store.options.currentDisplay == 'downloads' && <Downloads />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>Advanced</Title>
-              <Advanced />
+              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].languages[0].title}</Title>}
+              {store.options.currentDisplay == 'languages' && <Languages />}
 
-              {store.user.experiments == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Developer Experiments</Title>}
-              {store.user.experiments == true && <Experiments />}
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].dev_tools[0].title}</Title>}
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}
 
-              <Title style={{ margin: '75px -30px -25px -30px' }}>About Dot</Title>
-              <AboutDot />
+              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].about_dot[0].title}</Title>}
+              {store.options.currentDisplay == 'about' && <AboutDot />}
+
+              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].feedback[0].title}</Title>}
+              {store.options.currentDisplay == 'send_feedback' && <Feedback />}
 
           </Content>
         </Sections>

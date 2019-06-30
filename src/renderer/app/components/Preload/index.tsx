@@ -14,18 +14,19 @@ import { Content, Container, Scrollable } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
 import console = require('console');
-import Switch from '@material-ui/core/Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { DropArrow } from '../Overlay/style';
+import { appWindow } from '../..';
+import { BrowserView, shell, remote } from 'electron';
+import { ViewManager } from '~/main/view-manager';
 const editJsonFile = require("edit-json-file");
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
-  document.getElementById("search-engine-dp").style.opacity = "0";
-  document.getElementById("search-engine-dp").style.pointerEvents = "none";
+  store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
@@ -38,10 +39,32 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
+// setInterval(function() {
+//   if(store.overlay.currentContent == "default") {
+//     if(require('electron').remote.BrowserView.getAllViews().length <= 1) {
+//       if(store.overlay.visible == true) {
+//         if(store.tabs.list.length == 0) {
+//           console.warn("ABORT: BrowserView active while reloading")
+//         }
+//       }
+//     }
+//   }
+// }, 500);
+
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 setTimeout(function() {
   store.overlay.currentContent = "default"
+  
+  // if(platform() == "win32") {
+  //   remote.app.setAsDefaultProtocolClient('http');
+  //   var url = "ms-settings:defaultapps";
+  //   var tab = store.tabs.addTab({
+  //     url,
+  //     active: true
+  //   });
+  //   tab.close();
+  // }
 }, 800); 
 
 export const Preload = observer(() => {

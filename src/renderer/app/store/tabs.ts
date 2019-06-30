@@ -32,12 +32,18 @@ export class TabsStore {
   public list: Tab[] = [];
 
   @observable
+  public lastUrl: any = [];
+
+  @observable
   public scrollable = false;
 
   public lastScrollLeft: number = 0;
   public lastMouseX: number = 0;
   public mouseStartX: number = 0;
   public tabStartX: number = 0;
+
+  @observable
+  public ubVisible: boolean = false;
 
   public scrollbarRef = React.createRef<HorizontalScrollbar>();
   public containerRef = React.createRef<HTMLDivElement>();
@@ -110,6 +116,16 @@ export class TabsStore {
     return 0;
   }
 
+  @action
+  public showUB() {
+    this.ubVisible = true;
+  }
+
+  @action
+  public hideUB() {
+    this.ubVisible = false;
+  }
+
   public getHostname(url: string) {
     var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
     if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
@@ -139,6 +155,13 @@ export class TabsStore {
 
     this.emitEvent('onCreated', tab.getApiTab());
 
+    requestAnimationFrame(() => {
+      tab.setLeft(tab.getLeft(), false);
+      this.updateTabsBounds(true);
+
+      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
+    });
+
     setInterval(function() {
       if(store.tabs.selectedTab) {
         remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
@@ -152,15 +175,13 @@ export class TabsStore {
       }
     }, 250);
 
-
-    requestAnimationFrame(() => {
-      tab.setLeft(tab.getLeft(), false);
-      this.updateTabsBounds(true);
-
-      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
-    });
-
     return tab;
+  }
+
+  @action
+  public openExternalLink(options = defaultTabOptions) {
+    this.addTab(options)
+    store.overlay.visible = false;
   }
 
   public removeTab(id: number) {
