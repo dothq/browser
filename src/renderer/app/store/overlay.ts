@@ -42,6 +42,12 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
+  public isAbOpen: boolean = false;
+
+  @observable
+  public abObj: any;
+
+  @observable
   public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
 
   @observable

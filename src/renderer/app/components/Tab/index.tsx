@@ -230,6 +230,10 @@ const Border = observer(({ tab }: { tab: Tab }) => {
   return <StyledBorder visible={tab.borderVisible} />;
 });
 
+const onMouseHover = () => {
+  
+};
+
 const Overlay = observer(({ tab }: { tab: Tab }) => {
   return (
     <StyledOverlay
@@ -253,6 +257,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       onClick={onClick}
       title={tab.title}
       onMouseLeave={onMouseLeave}
+      onMouseOver={onMouseHover}
       visible={tab.tabGroupId === store.tabGroups.currentGroupId}
       ref={tab.ref}
     >

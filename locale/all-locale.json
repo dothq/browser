@@ -1,0 +1,38 @@
+{ 
+    "languages": [ {
+        "title": "English",
+        "flag": "en",
+        "icon": "",
+        "translators": "EnderDev, Geek"
+    }, {
+        "title": "Gaeilge",
+        "flag": "ir",
+        "icon": "",
+        "translators": "Geek"
+    }, {
+        "title": "Español",
+        "flag": "es",
+        "icon": "",
+        "translators": "EnderDev"
+    }, {
+        "title": "Français",
+        "flag": "fr",
+        "icon": "",
+        "translators": "Chachy, SkyPlayz"
+    }, {
+        "title": "Norsk",
+        "flag": "no",
+        "icon": "",
+        "translators": "Systemless"
+    }, {
+        "title": "Pусский",
+        "flag": "ru",
+        "icon": "",
+        "translators": "SkyPlayz"
+    }, {
+        "title": "Deutsche",
+        "flag": "de",
+        "icon": "",
+        "translators": "Jo"
+    } ]
+}

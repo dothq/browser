@@ -131,6 +131,11 @@
                     "feedback_title": "Send feedback to developers",
                     "bug_report_title": "Open a bug report"
                 }
+            ],
+            "languages": [
+                {
+                    "title": "Languages"
+                }
             ]
         }
     ],
