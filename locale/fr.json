@@ -3,8 +3,8 @@
         {
             "dot": "Dot",
             "dot_with_version": "Dot {appVersion}",
-            "dot_full": "Navigateur Dot",
-            "dot_full_with_version": "Navigateur de points {appVersion}",
+            "dot_full": "Dot Browser",
+            "dot_full_with_version": "Dot Browser {appVersion}",
             "button_open": "Ouvert",
             "button_run": "Exécuter",
             "button_send": "Envoyer",
@@ -21,8 +21,8 @@
             "file_details": "Affichage d'un fichier {fileType}",
             "active_small_text": "Parcourir une page web",
             "idle_small_text": "Inutile",
-            "idle_details": "Navigateur Dot",
-            "large_text": "Navigateur de points {version}"
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
         }
     ],
     "overlay": [
