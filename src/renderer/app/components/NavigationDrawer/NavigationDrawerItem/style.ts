@@ -9,6 +9,13 @@ export const StyledNavigationDrawerItem = styled.div`
   align-items: center;
   position: relative;
   cursor: pointer;
+  transition: 0.3s background-color, opacity;
+  border-radius: 30px;
+
+  &:hover {
+    background-color: #0000003d;
+  }
+
   &:before {
     content: '';
     position: absolute;
@@ -16,11 +23,16 @@ export const StyledNavigationDrawerItem = styled.div`
     width: 2px;
     height: 16px;
     background-color: white;
+    transition: 0.2s opacity;
     ${({ selected }: { selected?: boolean }) => css`
+
       opacity: ${selected ? 1 : 0};
+
     `};
-  }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.12)
+    }
   }
 `;
+

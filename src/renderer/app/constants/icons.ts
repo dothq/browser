@@ -25,9 +25,18 @@ import fire from '~/shared/resources/icons/fire.svg';
 import trash from '~/shared/resources/icons/delete.svg';
 import up from '~/shared/resources/icons/up.svg';
 import shield from '~/shared/resources/icons/shield.svg';
-import logo from '~/shared/resources/icons/logo.svg';
+import logo from '~/shared/resources/icons/logo.png';
 import user from '~/shared/resources/icons/user.svg';
 import uk from '~/shared/resources/icons/uk.png';
+import lock from '~/shared/resources/icons/lock.svg';
+import unlock from '~/shared/resources/icons/unlock.svg';
+import zoom from '~/shared/resources/icons/zoom.svg';
+import music from '~/shared/resources/icons/music.svg';
+import muted from '~/shared/resources/icons/muted.svg';
+import open from '~/shared/resources/icons/open.svg';
+import not_checked from '~/shared/resources/icons/not_checked.svg';
+import checked from '~/shared/resources/icons/checked.svg';
+
 
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
@@ -63,4 +72,12 @@ export const icons = {
   logo,
   user,
   uk,
+  lock,
+  unlock,
+  zoom,
+  music,
+  muted,
+  open,
+  not_checked,
+  checked,
 };

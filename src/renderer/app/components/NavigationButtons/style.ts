@@ -14,6 +14,7 @@ export const DotLauncher = styled.img`
     margin-left: 10px;
     filter: invert(100%);
     height: 38px;
+    margin-top: 1.6px;
 `;
 
 export const DotLauncherWrapper = styled.div`

@@ -49,6 +49,7 @@ export const Icon = styled.div`
   &:hover {
     opacity: 1;
   }
+
 `;
 
 export const Input = styled.input`
@@ -58,4 +59,5 @@ export const Input = styled.input`
   color: white;
   font-size: 14px;
   width: 100%;
+  font-family: Roboto;
 `;

@@ -9,3 +9,7 @@ export const Sections = styled.div`
   flex-flow: column;
   align-items: center;
 `;
+
+export const Image = styled.img`
+
+`;

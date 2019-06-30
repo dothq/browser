@@ -3,6 +3,11 @@ node_modules
 *.log*
 build
 dist
+.idea
+.vs
+.vscode
 .DS_Store
 .fusebox
 filters
+*.code-workspace
+electron-builder.json

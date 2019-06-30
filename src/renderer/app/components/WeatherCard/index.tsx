@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import {
-  Content,
   StyledCard,
   Icon,
   Header,
@@ -13,17 +12,34 @@ import {
   SmallIcon,
   Degrees,
   SmallDegrees,
+  Offline,
 } from './style';
 import { icons } from '../../constants';
+import console = require('console');
+const fetch = require("node-fetch");
+import store from '../../store';
+import { resolve } from 'path';
+import { homedir } from 'os';
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+if(!file.get("tempType")) {
+  file.set("tempType", "c");
+  file.save()
+  store.weather.tempindicator = "c"
+}
+else {
+  store.weather.tempindicator = file.get("tempType")
+}
 
 export const WeatherCard = observer(() => {
   return (
     <StyledCard>
-      <Header>
+      <Header time={store.weather.timeInt}>
         <Left>
           <div>
-            <Title>Warsaw</Title>
-            <Degrees>20°</Degrees>
+            <Title>{store.weather.location}</Title>
+            <Degrees>{store.weather.temp}°</Degrees>
             <div
               style={{
                 fontSize: 16,
@@ -32,9 +48,9 @@ export const WeatherCard = observer(() => {
                 marginTop: 8,
               }}
             >
-              Few clouds
+              {store.weather.summary}
             </div>
-            <div style={{ fontSize: 16, fontWeight: 300 }}>Day</div>
+            <div style={{ fontSize: 16, fontWeight: 300 }}>{store.weather.timetype}</div>
           </div>
           <div>
             <Icon style={{ backgroundImage: `url(${icons.fewClouds})` }} />

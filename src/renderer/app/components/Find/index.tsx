@@ -66,10 +66,26 @@ const onInput = async () => {
     store.tabs.addTab({url, active: true });
   } 
 
-  if(value.toLocaleLowerCase() === "lets play pickle") {
-    var url = "https://www.youtube.com/watch?v=ihZKUUxKWYA"
+  if(value.toLocaleLowerCase() === "take me home country roads") {
+    var url = "https://www.youtube.com/watch?v=1vrEljMfXYo"
     store.tabs.addTab({url, active: true });
   }
+  
+  if(value.toLocaleLowerCase() === "avengers endgame spoilers") {
+    var url = "https://www.youtube.com/watch?v=HzyZYhit-sg"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "shooting stars") {
+    var url = "https://www.youtube.com/watch?v=O-MQC_G9jTU"
+    store.tabs.addTab({url, active: true });
+  }
+
+  if(value.toLocaleLowerCase() === "burger king foot lettuce") {
+    var url = "https://www.youtube.com/watch?v=zpWbXltP43o"
+    store.tabs.addTab({url, active: true });
+  }
+
 
   const requestId = await selectedTab.callViewMethod(
     'webContents.findInPage',
@@ -98,6 +114,15 @@ const move = (forward: boolean) => async () => {
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.key === 'Enter') {
     move(true)();
+
+    var regex = /(http|https):\/\/(\w+:{0,1}\w*)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%!\-\/]))?/;
+
+    if(regex.test(store.findInputRef.current.value)) {
+      var url = store.findInputRef.current.value
+      store.tabs.addTab({url, active: true });
+      close();
+    }
+
   }
 };
 
@@ -128,7 +153,7 @@ export const Find = observer(() => {
         onKeyPress={onKeyPress}
         onChange={onInput}
         ref={store.findInputRef}
-        placeholder="Find in page"
+        placeholder={store.locale.uk.window[0].find_in_page}
         id="find"
       />
       <Occurrences>{selectedTab && selectedTab.findOccurrences}</Occurrences>

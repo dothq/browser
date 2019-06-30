@@ -7,8 +7,11 @@ import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
+import { ContextMenu, ContextMenuItem } from '../ContextMenu';
+import UserIcon from '../UserButton';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
+import { Bookmark } from '../../models/bookmark';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -29,7 +32,7 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     var searchengine = file.get("searchEngine");
 
     if(searchengine == "google") {
-      var searchurl = `https://www.google.com/search?q=`;
+      var searchurl = `https://www.google.com/search?hl=en&q=`;
     }
     if(searchengine == "yahoo") {
       var searchurl = `https://search.yahoo.com/search?p=`;
@@ -111,19 +114,47 @@ const onInput = (e: any) => {
   store.overlay.show();
   store.overlay.suggest();
   store.overlay.scrollRef.current.scrollTop = 0;
-  store.overlay.searchBoxValue = e.currentTarget.value;
 };
 
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
-  await store.bookmarks.addItem({
-    title: selectedTab.title,
-    url: store.overlay.inputRef.current.value,
-    parent: null,
-    type: 'item',
-    favicon: selectedTab.favicon,
-  });
+  var foundBkm = store.bookmarks.list.find(
+    x => x.url === store.tabs.selectedTab.url,
+  );
+
+  if(!foundBkm) {
+
+    if(store.overlay.inputRef.current.value) {
+      await store.bookmarks.addItem({
+        title: selectedTab.title,
+        url: store.overlay.inputRef.current.value,
+        parent: null,
+        type: 'item',
+        favicon: selectedTab.favicon,
+      });
+    }
+
+  }
+
+  else {
+
+    // It already exists, so delete it.
+    store.bookmarks.removeItem(foundBkm._id)
+
+  }
+};
+
+const onUserClick = () => {
+  if(store.suggestions.list.length <= 1) {
+    store.suggestions
+  }
+  if(store.user.menuVisible == true) {
+    store.user.menuVisible = false
+  }
+  else {
+    store.user.menuVisible = true
+  }
 };
 
 export const SearchBox = observer(() => {
@@ -135,13 +166,35 @@ export const SearchBox = observer(() => {
     height += 48;
   }
 
+  var today = new Date()
+  var curHr = today.getHours()
+
+  if (curHr < 12) {
+    var timeType = store.locale.uk.search_bar[0].timeTypes[0].morning
+  } else if (curHr < 18) {
+    var timeType = store.locale.uk.search_bar[0].timeTypes[0].afternoon
+  } else {
+    var timeType = store.locale.uk.search_bar[0].timeTypes[0].evening
+  }
+  if(store.user.loggedin == true) {
+    // Personalized messages
+
+    var sBV = [store.locale.uk.search_bar[0].logged_in[0].message_1, store.locale.uk.search_bar[0].logged_in[0].message_2.replace(/{username}/g, store.user.username), store.locale.uk.search_bar[0].logged_in[0].message_3, store.locale.uk.search_bar[0].logged_in[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
+    var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];    
+  }
+  else {
+    var sBV = [store.locale.uk.search_bar[0].guest[0].message_1, store.locale.uk.search_bar[0].guest[0].message_2, store.locale.uk.search_bar[0].guest[0].message_3, store.locale.uk.search_bar[0].guest[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
+    var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
+  }
+
+
   return (
     <StyledSearchBox style={{ height }} onClick={onClick}>
       <InputContainer>
         <SearchIcon />
         <Input
           autoFocus
-          placeholder="Enter a search term or URL"
+          placeholder={searchBoxValue}
           onKeyPress={onKeyPress}
           onFocus={onInputFocus}
           onChange={onInput}
@@ -152,6 +205,7 @@ export const SearchBox = observer(() => {
           invert
           icon={store.overlay.isBookmarked ? icons.starFilled : icons.star}
           onClick={onStarClick}
+          id="star-bkm"
           style={{
             marginRight: 8,
             display:
@@ -159,6 +213,16 @@ export const SearchBox = observer(() => {
               store.tabs.selectedTab.url === store.overlay.searchBoxValue
                 ? 'block'
                 : 'none',
+          }}
+        />
+        <UserIcon
+          icon={store.user.avatar}
+          title={`${store.user.username} <${store.user.email}>`}
+          onClick={onUserClick}
+          visible={store.user.loggedin}
+          style={{
+            marginRight: 8,
+            width: '38px'
           }}
         />
       </InputContainer>

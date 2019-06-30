@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        
+            body {
+                padding: 20px;
+            }
+
+            #notifications {
+                border-radius: 10px;
+                background-color: rgba(255, 255, 255, 0.96);
+                height: 104px;
+                padding: 15px;
+                transition: 0.09s opacity;
+                box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
+                opacity: 0;
+                width: 285px;
+                user-select: none;
+            }
+
+            .close {
+                float: right;
+                transition: 0.5s all;
+                border-radius: 50%;
+                margin: -5px;
+                height: 30px;
+                width: 30px;
+                cursor: pointer;
+            }
+            .close:hover {
+                background-color: rgb(177, 177, 177);
+                padding: -5px;
+            }
+
+            .close img {
+                padding: 6px;
+            }
+
+            .buttons {
+                display: inline-block;
+                margin-top: 30px;
+                float: right;
+            }
+
+            #notifications h1 {
+                font-family: Roboto;
+                font-size: 17px;
+                margin: 0px;
+                font-weight: 500;
+            }
+
+            #notifications h3 {
+                font-family: Roboto;
+                font-size: 15px;
+                margin: 0px;
+                font-weight: 400;
+                margin: 3px;
+            }
+
+            .subtitle-wrapper {
+                display: flex;
+                margin-top: 5px;
+            }
+
+            .allow-btn {
+                font-family: Roboto;
+                border: 1px #42424252 solid;
+                transition: background-color 0.3s;
+                border-radius: 30px;
+                padding-top: 7px;
+                padding-bottom: 7px;
+                padding-left: 20px;
+                padding-right: 20px;
+                cursor: pointer;
+            }
+
+            .deny-btn {
+                font-family: Roboto;
+                border: 1px #42424252 solid;
+                transition: background-color 0.3s;
+                border-radius: 30px;
+                padding-top: 7px;
+                padding-bottom: 7px;
+                padding-left: 20px;
+                padding-right: 20px;
+                cursor: pointer;
+            }
+
+            .allow-btn:hover {
+                background-color: #cdcdcdfa;
+            }
+
+            .deny-btn:hover {
+                background-color: #cdcdcdfa;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div id="notifications">
+            <a class="close" onclick="hide()">
+                <img src="../app-icons/close.png"></img>
+            </a>
+            <h1 id="title"></h1>
+            <div class="subtitle-wrapper">
+                <img id="sub-icon" src=""></img>
+                <h3 id="subtitle"></h3>
+            </div>
+            <div class="buttons">
+                <a class="allow-btn">Allow</a>
+                <a class="deny-btn">Deny</a>
+            </div>
+            
+        </div>
+        <script>
+
+                window.onload = function() {
+                    var ipc = require('electron').ipcRenderer;
+    
+                    ipc.on('new-notification', (event, message) => {
+                        document.getElementById("title").innerText = `${message.split("||")[0]} wants access to`
+
+                        if(message.split("||")[1] == "Microphone") {
+                            document.getElementById("subtitle").innerText = `Your microphone`
+                            document.getElementById("sub-icon").src = "../app-icons/mic.svg"
+                        }
+
+                        if(message.split("||")[1] == "Location") {
+                            document.getElementById("subtitle").innerText = `Your location`
+                            document.getElementById("sub-icon").src = "../app-icons/location.svg"
+                        }
+
+                        if(message.split("||")[1] == "Camera") {
+                            document.getElementById("subtitle").innerText = `Your webcam or camera`
+                            document.getElementById("sub-icon").src = "../app-icons/camera.svg"
+                        }
+
+                        setTimeout(function() {
+                            document.getElementById("notifications").style.opacity = 1;
+                        }, 950);
+                    })
+                }
+
+                function hide() {
+                        document.getElementById("notifications").style.opacity = 0;
+                        setTimeout(function() {
+                            window.close();
+                        }, 550);
+                        
+                }
+
+                document.getElementsByClassName("allow-btn")[0].addEventListener('click', function() {
+                    document.getElementById("notifications").style.opacity = 0;
+                    setTimeout(function() {
+                        window.close();
+                    }, 550);
+                })
+
+                document.getElementsByClassName("deny-btn")[0].addEventListener('click', function() {
+                    document.getElementById("notifications").style.opacity = 0;
+                    setTimeout(function() {
+                        window.close();
+                    }, 550);
+                })
+            
+        </script>
+    </body>
+</html>

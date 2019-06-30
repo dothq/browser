@@ -17,6 +17,22 @@ const onDialTitleClick = (e: any) => {
   store.overlay.dialTypeMenuVisible = !store.overlay.dialTypeMenuVisible;
 };
 
+const logout = async (e: any) => {
+  e.stopPropagation();
+  store.user.loggedin = false;
+  store.user.username = "Guest";
+  store.user.avatar = icons.user
+  store.user.email = null;
+  localStorage.removeItem("dot_footprint")
+  store.user.menuVisible = false;
+}
+
+const settings = async (e: any) => {
+  e.stopPropagation();
+  store.overlay.currentContent = 'settings'
+  store.user.menuVisible = false;
+};
+
 export const Dial = observer(() => {
   const { dialType } = store.settings;
 
@@ -29,8 +45,8 @@ export const Dial = observer(() => {
             onClick={onDialTitleClick}
             style={{ marginBottom: 24, cursor: 'pointer' }}
           >
-            {dialType === 'bookmarks' ? 'Bookmarks' : 'Top Sites'}
-            <DropArrow />
+            {dialType === 'bookmarks' ? store.locale.uk.overlay[0].dial_bookmarks : store.locale.uk.overlay[0].dial_top_sites}
+            <DropArrow visible={true} />
             <ContextMenu
               style={{ top: 42 }}
               visible={store.overlay.dialTypeMenuVisible}
@@ -40,14 +56,22 @@ export const Dial = observer(() => {
                 selected={dialType === 'top-sites'}
                 onClick={changeDialType('top-sites')}
               >
-                Top Sites
+                {store.locale.uk.overlay[0].dial_top_sites}
               </ContextMenuItem>
               <ContextMenuItem
                 icon={icons.bookmarks}
                 selected={dialType === 'bookmarks'}
                 onClick={changeDialType('bookmarks')}
               >
-                Bookmarks
+                {store.locale.uk.overlay[0].dial_bookmarks}
+              </ContextMenuItem>
+            </ContextMenu>
+            <ContextMenu visible={store.user.menuVisible == true} style={{ top: '-20px', right: 0 }}>
+              <ContextMenuItem icon={icons.user} onClick={settings}>
+                  {store.locale.uk.settings[0].my_profile[0].title}
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.close} onClick={logout}>
+                  {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
               </ContextMenuItem>
             </ContextMenu>
           </Title>

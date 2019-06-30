@@ -1,7 +1,8 @@
 import { observable, computed, action } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, webContents } from 'electron';
 import * as Vibrant from 'node-vibrant';
+import { remote } from 'electron';
 
 import store from '~/renderer/app/store';
 import {
@@ -14,6 +15,8 @@ import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
 import { setInterval } from 'timers';
+import { ClosedTabs } from './closed-tabs';
+import console = require('console');
 
 let id = 1;
 
@@ -29,6 +32,9 @@ export class Tab {
   public title: string = 'New tab';
 
   @observable
+  public originalTitle: string = 'New tab';
+
+  @observable
   public loading: boolean = false;
 
   @observable
@@ -42,6 +48,9 @@ export class Tab {
 
   @observable
   public position = 0;
+
+  @observable
+  public isUrlVisible: boolean = false;;
 
   @observable
   public background: string = colors.blue['500'];
@@ -64,9 +73,29 @@ export class Tab {
   @observable
   public f = 0;
 
+  @observable
+  public closedTabs: ClosedTabs[] = [];
+
+  @observable
+  public zoomAmount: number = 1;  
+
+  @observable
+  public screenshot: any = "";
+
   @computed
   public get findVisible() {
     return this._findVisible;
+  }
+
+  public muteTab() {
+    if(this.audioPlaying == true) {
+      ipcRenderer.send('audio-pause');
+      this.audioPlaying = false;
+    }
+    else {
+      ipcRenderer.send('audio-resume');
+      this.audioPlaying = true;
+    }
   }
 
   public set findVisible(val: boolean) {
@@ -83,6 +112,7 @@ export class Tab {
       }
     });
   }
+
 
   @computed
   public get isSelected() {
@@ -126,13 +156,15 @@ export class Tab {
 
   public left = 0;
   public tempPosition = 0;
-  public lastUrl = '';
+  public lastUrl: any = [];
   public isClosing = false;
   public ref = React.createRef<HTMLDivElement>();
   public lastHistoryId: string;
   public hasThemeColor = false;
   public webContentsId: number;
   public findRequestId: number;
+  public isWindow: boolean = false;
+  public audioPlaying: boolean = false;
 
   constructor({ url, active } = defaultTabOptions, tabGroupId: number) {
     this.tabGroupId = tabGroupId;
@@ -155,6 +187,7 @@ export class Tab {
         let updated = null;
 
         if (url !== this.url) {
+          this.title.replace(/🔊 • /g, "");
           this.lastHistoryId = await store.history.addItem({
             title: this.title,
             url,
@@ -250,6 +283,19 @@ export class Tab {
       this.emitOnUpdated({
         status: loading ? 'loading' : 'complete',
       });
+    });
+
+    ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
+      if(this.title.includes("🔊 • ") == false) {
+        this.originalTitle = this.title;
+        this.title = `🔊 • ${this.title}`
+        this.audioPlaying = true;
+      }
+    });
+
+    ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
+      this.audioPlaying = false;
+      this.title = this.originalTitle;
     });
 
     const { defaultBrowserActions, browserActions } = store.extensions;
@@ -372,6 +418,8 @@ export class Tab {
     const tabGroup = this.tabGroup;
     const tabs = tabGroup.tabs.slice().sort((a, b) => a.position - b.position);
 
+    store.tabs.lastUrl.push(this.url);
+
     const selected = tabGroup.selectedTabId === this.id;
 
     ipcRenderer.send('browserview-destroy', this.id);
@@ -407,7 +455,7 @@ export class Tab {
         const prevTab = tabs[index - 1];
         prevTab.select();
       } else if (store.tabGroups.list.length === 1) {
-        closeWindow();
+        store.overlay.visible = true;
       } else if (this.tabGroup.tabs.length === 0) {
         store.overlay.visible = true;
       }

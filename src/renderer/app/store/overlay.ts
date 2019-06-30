@@ -2,6 +2,9 @@ import { observable, computed } from 'mobx';
 import * as React from 'react';
 import { ipcRenderer } from 'electron';
 import store from '.';
+import { viewBm } from '../components/Toolbar';
+import { ViewManager } from '~/main/view-manager';
+import { View } from '../../../main/view';
 
 let lastSuggestion: string;
 
@@ -12,6 +15,8 @@ const autoComplete = (text: string, suggestion: string) => {
   const start = text.length;
 
   const input = store.overlay.inputRef.current;
+
+  if (input.selectionStart !== input.value.length) return;
 
   if (suggestion) {
     if (suggestion.startsWith(text.replace(regex, ''))) {
@@ -37,13 +42,22 @@ export class OverlayStore {
   public isNewTab = true;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' = 'default';
+  public isAbOpen: boolean = false;
+
+  @observable
+  public abObj: any;
+
+  @observable
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
 
   @observable
   public dialTypeMenuVisible = false;
 
   @observable
   public _searchBoxValue = '';
+
+  @observable
+  public panelVisible:boolean = false;
 
   private timeout: any;
 
@@ -54,7 +68,12 @@ export class OverlayStore {
 
   public set searchBoxValue(val: string) {
     this._searchBoxValue = val;
-    this.inputRef.current.value = val;
+    if(this._searchBoxValue.substring(0, 8) == "file:///") {
+      this.inputRef.current.value = val.split("file:///")[1];;
+    }
+    else {
+      this.inputRef.current.value = val;
+    }
   }
 
   constructor() {
@@ -65,14 +84,30 @@ export class OverlayStore {
     if (!this._visible || e.keyCode !== 27) return; // Escape
 
     if (this.currentContent === 'history') {
-      this.currentContent = 'default';
-    } else if (this.currentContent === 'default') {
-      this._visible = false;
+      return this.currentContent = 'default';
+    }    
+    if (this.currentContent === 'bookmarks') {
+      return this.currentContent = 'default';
+    } 
+    if (this.currentContent === 'settings') {
+      return this.currentContent = 'default';
+    }
+    if (this.currentContent === 'extensions') {
+      return this.currentContent = 'default';
+    }    
+    if (this.currentContent === 'adblock') {
+      ipcRenderer.send('browserview-hide');
+      return store.overlay.visible = false;
+    }
+    if (this.currentContent === 'default') {
+      if(store.tabs.list.length == 0) return;
+      this.visible = false;
     }
   };
 
   @computed
   public get visible() {
+
     return this._visible;
   }
 
@@ -93,6 +128,7 @@ export class OverlayStore {
     }
 
     ipcRenderer.send('browserview-hide');
+    
 
     this._visible = true;
   }
@@ -102,9 +138,17 @@ export class OverlayStore {
 
     if (!val) {
       clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
+
+      setTimeout(function() {
         ipcRenderer.send('browserview-show');
-      }, 200);
+      }, 100)
+      
+      // this.timeout = setTimeout(() => {
+      //   if (store.tabs.selectedTab) {
+      //     if (store.tabs.selectedTab.isWindow) store.tabs.selectedTab.select();
+      //     else ipcRenderer.send('browserview-show');
+      //   }
+      // }, 200);
 
       store.suggestions.list = [];
       lastSuggestion = undefined;

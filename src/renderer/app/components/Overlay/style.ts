@@ -1,11 +1,25 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
+import { appWindow } from '../../'
+import console = require('console');
+import { remote } from 'electron';
+
+function width() {
+  console.log(appWindow)
+  if(remote.screen.getPrimaryDisplay().size.width >= 1720) {
+    return "6px"
+  }
+  else {
+    return "13px"
+  }
+}
 
 export const OverlayScrollbarStyle = `
   ::-webkit-scrollbar {
-    width: 6px;
+    width: ${width()};
     height: 3px;
+    border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
@@ -14,11 +28,20 @@ export const OverlayScrollbarStyle = `
 
   ::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.16);
+    transition: 0.5s border-radius;
+    border-radius: 15px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.48);
+    transition: 0.5s border-radius;
+    border-radius: 35px;
   }
+`;
+
+export const Panel = styled.div`
+  height: 100%;
+  background-color: #00000079
 `;
 
 export const StyledOverlay = styled.div`
@@ -34,7 +57,7 @@ export const StyledOverlay = styled.div`
   z-index: 9999;
   transition: 0.2s opacity;
   backface-visibility: hidden;
-  background-color: #1c1c1c;
+  background-color: #000000e8;
 
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
@@ -90,11 +113,34 @@ export const DropArrow = styled.div`
   background-image: url(${icons.down});
   filter: invert(100%);
   border-radius: 50%;
-  transition: 0.1s background-color;
+  transition: 0.3s background-color;
 
   &:hover {
     background-color: rgba(0,0,0,0.15);
   }
+
+  ${({ visible }: { visible?: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
+  `} 
+`;
+
+export const IconButton = styled.div`
+  ${centerIcon(24)};
+  margin-left: 8px;
+  height: 32px;
+  width: 32px;
+  filter: invert(100%);
+  border-radius: 50%;
+  transition: 0.3s background-color;
+
+  &:hover {
+    background-color: rgba(0,0,0,0.15);
+  }
+
+  ${({ icon, visible }: { icon: any; visible: any }) => css`
+    display: ${visible ? 'auto' : 'none'}
+    background-image: url(${icon});
+  `}  
 `;
 
 export const Separator = styled.div`
@@ -110,6 +156,7 @@ export const Section = styled.div`
   border-radius: 30px;
   color: white;
   overflow: hidden;
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
 `;
 
 export const Actions = styled.div`
@@ -171,4 +218,20 @@ export const Container = styled.div`
 export const Content = styled.div`
   width: calc(100% - 64px);
   max-width: 800px;
+`;
+
+export const Preloader = styled.div`
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+`;
+
+export const Dot = styled.img`
+  width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  transition: opacity 0.8s;
 `;

@@ -46,6 +46,12 @@ export class ViewManager {
       },
     );
 
+    ipcMain.on('capture-page', (tabId: number) => {
+      View.fromId(tabId).webContents.capturePage(img => {
+        return img.toDataURL();
+      });
+    })
+
     ipcMain.on(
       'browserview-destroy',
       (e: Electron.IpcMessageEvent, id: number) => {

@@ -1,10 +1,12 @@
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, nativeImage, dialog, dialog, remote } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
-import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
+import store from '~/renderer/app/store';
+const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 
 export class AppWindow extends BrowserWindow {
@@ -19,8 +21,9 @@ export class AppWindow extends BrowserWindow {
       height: 700,
       show: false,
       backgroundColor: '#1c1c1c',
-      title: 'Dot',
-      titleBarStyle: 'hidden',
+      title: 'Dot Browser',
+      titleBarStyle: 'hiddenInset',
+      maximizable: false,
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
@@ -29,7 +32,7 @@ export class AppWindow extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), 'static/app-icons/icon.png'),
+      icon: resolve(app.getAppPath(), '/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
@@ -37,6 +40,12 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('no-proxy-server')
 
     const windowDataPath = getPath('window-data.json');
+
+    const errorLogPath = getPath('dot-errors.log');
+
+    var time = new Date().toUTCString();
+
+    setupPushReceiver(this.webContents);
 
     let windowState: any = {};
 
@@ -48,6 +57,13 @@ export class AppWindow extends BrowserWindow {
         writeFileSync(windowDataPath, JSON.stringify({}));
       }
     }
+
+    if (existsSync(errorLogPath)) {
+      appendFile(errorLogPath, `// Error log effective of 2.1.0, ${time}. Running ${platform()}, started main app.\n`, function(err) {
+
+      });
+    }
+
     // Merge bounds from the last window state to the current window options.
     if (windowState) {
       this.setBounds({ ...windowState.bounds });
@@ -62,6 +78,10 @@ export class AppWindow extends BrowserWindow {
       }
     }
 
+    // systemPreferences.on('accent-color-changed', (event: any, newColor: string) => {
+    //   console.log(newColor)
+    // });
+
     // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
       if (!this.isMaximized()) {
@@ -73,6 +93,11 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
     });
+
+    if(this.webContents.getURL() != "https://dot.ender.site/api/session/l") {
+      this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
+    }
+    
 
     const resize = () => {
       this.viewManager.fixBounds();
@@ -94,7 +119,12 @@ export class AppWindow extends BrowserWindow {
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
 
+    this.webContents.on('crashed', (event: any, crashed: boolean) => {
+      this.loadURL(app.getAppPath() + 'static\\pages\\crash.html')
+    });   
+
     if (process.env.ENV === 'dev') {
+      this.setIcon(nativeImage.createFromPath(resolve(app.getAppPath() + '\\static\\icon.png')))
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
@@ -133,5 +163,42 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.selected.webContents.send('scroll-touch-end');
       this.webContents.send('scroll-touch-end');
     });
+
+    var oldConsole = console.log;
+    console.log = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldConsole(err);
+        }
+      });
+    };
+
+    var oldError = console.error;
+    console.error = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [ERROR] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldError(err);
+        }
+      });
+    };
+
+    var oldInfo = console.info;
+    console.info = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [INFO] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldInfo(err);
+        }
+      });
+    };
+
+    var oldWarn = console.warn;
+    console.warn = function(msg: any) {
+      appendFile(errorLogPath, `[${time}] [App] [WARN] ` + msg + '\n', function(err) {
+        if(err) {
+            return oldWarn(err);
+        }
+      });
+    };
+
   }
 }
