@@ -129,7 +129,8 @@
                 {
                     "title": "Send feedback",
                     "feedback_title": "Send feedback to developers",
-                    "bug_report_title": "Open a bug report"
+                    "bug_report_title": "Open a bug report",
+                    "describe_issue": "Describe your issue"
                 }
             ],
             "languages": [

@@ -19,7 +19,7 @@ import Switch from '@material-ui/core/Switch';
 import OptSwitch from '../Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
-import { DropArrow, IconButton } from '../Overlay/style';
+import { DropArrow, IconButton, LanguageButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
 import { ipcRenderer, ipcMain, shell } from 'electron';
 import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
@@ -74,7 +74,7 @@ const login = async () => {
     resizable: false,
     center: false,
     alwaysOnTop: false,
-    title: store.locale.uk.settings[0].my_profile[0].sign_in_btn,
+    title: store.locale.lang.settings[0].my_profile[0].sign_in_btn,
     titleBarStyle: 'hiddenInset',
     webPreferences: {
       nodeIntegration: true
@@ -229,10 +229,10 @@ const YourProfile = observer(() => {
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.settings[0].my_profile[0].sign_in_btn}
+            {store.locale.lang.settings[0].my_profile[0].sign_in_btn}
           </Button>
           <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.settings[0].my_profile[0].sign_out_btn}
+            {store.locale.lang.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
       </ListItem>
@@ -346,7 +346,7 @@ const AboutDot = observer(() => {
     <SettingsSection>
       <ListItem>
         <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
-        <Title style={{ fontSize: 20 }}>{store.locale.uk.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
+        <Title style={{ fontSize: 20 }}>{store.locale.lang.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
@@ -354,20 +354,20 @@ const AboutDot = observer(() => {
         </Buttons>
       </ListItem>
       <AboutWrapper id="about-wrapper">
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.uk.settings[0].about_dot[0].wxnd_coffee}</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.uk.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.uk.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].developers_title}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.lang.settings[0].about_dot[0].wxnd_coffee}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.lang.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].developers_title}</Title>
         <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
         <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].beta_testers_title}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].beta_testers_title}</Title>
         <ExtLink onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Oli</ExtLink>
         <ExtLink onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Jeremy Bognon</ExtLink>
         <ExtLink onClick={blz} title="<blizzyisheres@gmail.com>" style={{ color: '#dadada' }}>Blizma</ExtLink>
         <ExtLink onClick={chachy} title="<shalomadecoolboy@outlook.com>" style={{ color: '#dadada' }}>Chachy</ExtLink>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.uk.settings[0].about_dot[0].special_thanks_title}</Title>
+        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].special_thanks_title}</Title>
         <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.uk.settings[0].about_dot[0].copyright_notice}</Title>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
+        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>
     </SettingsSection>
   );
@@ -410,7 +410,7 @@ const Downloads = observer(() => {
     <SettingsSection>
       <ListItem>
         <div>
-          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].downloads[0].download_loc}</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].downloads[0].download_loc}</Title>
           <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
@@ -653,11 +653,11 @@ export const Feedback = observer(() => {
   return (
     <SettingsSection>
       <ListItem style={{ display: 'block' }}> 
-        <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.uk.settings[0].feedback[0].feedback_title}</Title>
-        <Textfield ref={feedbackRef} style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder="Describe your issue"></Textfield>
+        <Title style={{ fontSize: 15, marginBottom: '18px' }}>{store.locale.lang.settings[0].feedback[0].feedback_title}</Title>
+        <Textfield ref={feedbackRef} style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '121px', width: '395px' }} fontColor="white" color="white" type="name" placeholder={store.locale.lang.settings[0].feedback[0].describe_issue}></Textfield>
         <Buttons style={{ marginLeft: 'auto', marginTop: '-25px', padding: '7px' }}> 
           <Button onClick={sendFeedback} visible={store.options.currentDisplay == 'send_feedback'} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.standard[0].button_send}
+            {store.locale.lang.standard[0].button_send}
           </Button>
         </Buttons>
       </ListItem>
@@ -669,38 +669,38 @@ export const Appearance = observer(() => {
     return (
       <SettingsSection>
         <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].toggle_dot}</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].toggle_dot}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].search_engine}</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
             <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
             <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '255px', marginLeft: '-50px' }}>            
               <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
-                {store.locale.uk.settings[0].google_searchEngine}
+                {store.locale.lang.settings[0].google_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
-                {store.locale.uk.settings[0].yahoo_searchEngine}
+                {store.locale.lang.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
-                {store.locale.uk.settings[0].bing_searchEngine}
+                {store.locale.lang.settings[0].bing_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
-                {store.locale.uk.settings[0].ddg_searchEngine}
+                {store.locale.lang.settings[0].ddg_searchEngine}
               </ContextMenuItem>
               <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
-                {store.locale.uk.settings[0].ecosia_searchEngine}
+                {store.locale.lang.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].appearance[0].temp_type}</Title>
+          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
             <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
               <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
@@ -757,26 +757,26 @@ export const Experiments = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].chromium_dt}</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].dev_tools[0].chromium_dt}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={openDevTools} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.standard[0].button_open}
+            {store.locale.lang.standard[0].button_open}
           </Button>
         </Buttons>
       </ListItem>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].send_test_notif}</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].dev_tools[0].send_test_notif}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={testNotif} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.standard[0].button_run}
+            {store.locale.lang.standard[0].button_run}
           </Button>
         </Buttons>
       </ListItem>
       <ListItem>
-        <Title style={{ fontSize: 15 }}>{store.locale.uk.settings[0].dev_tools[0].open_log}</Title>
+        <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].dev_tools[0].open_log}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <Button visible={store.user.experiments == true} onClick={openLog} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-            {store.locale.uk.standard[0].button_run}
+            {store.locale.lang.standard[0].button_run}
           </Button>
         </Buttons>
       </ListItem>
@@ -785,21 +785,41 @@ export const Experiments = observer(() => {
 });
 
 export const Languages = observer(() => {
+  var itemChecked = file.get("language");
   return (
     <SettingsSection>
       {allLangs.languages.map((i: any) => {
+
+        if(itemChecked == i.flag) {
+          i.icon = icons.checked
+        }
+        else {
+          i.icon = icons.not_checked
+        }
+
+        i.id = `lang-btn-${i.flag}`
+
         return (<ListItem key={i.flag}>
           <Title style={{ fontSize: 15 }}>{i.title}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <IconButton visible={true} icon={icons.down}>
-
-            </IconButton>
+            <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image' }}>
+              ----
+            </LanguageButton>
           </Buttons>
         </ListItem>);
       })}
     </SettingsSection>
   );
 });
+
+function setLanguage(l: any) {
+  var ol = file.get("language");
+  file.set("language", l)
+  file.save()
+  document.getElementById(`lang-btn-${ol}`).style.backgroundImage = `url(${icons.not_checked})`
+  document.getElementById(`lang-btn-${l}`).style.backgroundImage = `url(${icons.checked})`
+  store.locale.setLanguage(l)
+}
 
 export const scrollMp = () => {
   document.getElementById("my-profile").scrollTop = 0;
@@ -817,41 +837,41 @@ export const Settings = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
-          title={store.locale.uk.settings[0].title}
+          title={store.locale.lang.settings[0].title}
           onBackClick={onBackClick}
           search
           onSearchInput={onInput}
         >
-          <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.uk.settings[0].my_profile[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.uk.settings[0].appearance[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.uk.settings[0].downloads[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.uk.settings[0].languages[0].title}</MenuItem>
-          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.uk.settings[0].dev_tools[0].title}</MenuItem>}
-          <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.uk.settings[0].about_dot[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.uk.settings[0].feedback[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
+          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.lang.settings[0].dev_tools[0].title}</MenuItem>}
+          <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.lang.settings[0].about_dot[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.lang.settings[0].feedback[0].title}</MenuItem>
         </NavigationDrawer>
         <Sections>
           <Content>
           
-              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].my_profile[0].title}</Title>}
+              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].my_profile[0].title}</Title>}
               {store.options.currentDisplay == 'profile' && <YourProfile />}
 
-              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].appearance[0].title}</Title>}
+              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].appearance[0].title}</Title>}
               {store.options.currentDisplay == 'appearance' && <Appearance />}
 
-              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].downloads[0].title}</Title>}
+              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}
 
-              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].languages[0].title}</Title>}
+              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].languages[0].title}</Title>}
               {store.options.currentDisplay == 'languages' && <Languages />}
 
-              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].dev_tools[0].title}</Title>}
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}
 
-              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].about_dot[0].title}</Title>}
+              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].about_dot[0].title}</Title>}
               {store.options.currentDisplay == 'about' && <AboutDot />}
 
-              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.uk.settings[0].feedback[0].title}</Title>}
+              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].feedback[0].title}</Title>}
               {store.options.currentDisplay == 'send_feedback' && <Feedback />}
 
           </Content>

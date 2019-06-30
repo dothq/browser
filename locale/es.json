@@ -129,7 +129,8 @@
                 {
                     "title": "Enviar comentarios",
                     "feedback_title": "Enviar comentarios a los desarrolladores",
-                    "bug_report_title": "Abrir un informe de error"
+                    "bug_report_title": "Abrir un informe de error",
+                    "describe_issue": "Describe tu problema"
                 }
             ],
             "languages": [

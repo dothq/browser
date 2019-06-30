@@ -107,19 +107,19 @@ export const History = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <NavigationDrawer
-          title={store.locale.uk.history[0].title}
+          title={store.locale.lang.history[0].title}
           search
           onSearchInput={onInput}
           onBackClick={onBackClick}
         >
-          <MenuItem range="all">{store.locale.uk.history[0].sort[0].range_all}</MenuItem>
-          <MenuItem range="today">{store.locale.uk.history[0].sort[0].range_today}</MenuItem>
-          <MenuItem range="yesterday">{store.locale.uk.history[0].sort[0].range_yesterday}</MenuItem>
-          <MenuItem range="last-week">{store.locale.uk.history[0].sort[0].range_last_week}</MenuItem>
-          <MenuItem range="last-month">{store.locale.uk.history[0].sort[0].range_last_month}</MenuItem>
-          <MenuItem range="older">{store.locale.uk.history[0].sort[0].range_older}</MenuItem>
+          <MenuItem range="all">{store.locale.lang.history[0].sort[0].range_all}</MenuItem>
+          <MenuItem range="today">{store.locale.lang.history[0].sort[0].range_today}</MenuItem>
+          <MenuItem range="yesterday">{store.locale.lang.history[0].sort[0].range_yesterday}</MenuItem>
+          <MenuItem range="last-week">{store.locale.lang.history[0].sort[0].range_last_week}</MenuItem>
+          <MenuItem range="last-month">{store.locale.lang.history[0].sort[0].range_last_month}</MenuItem>
+          <MenuItem range="older">{store.locale.lang.history[0].sort[0].range_older}</MenuItem>
           <NavigationDrawer.Item icon={icons.trash} style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} onClick={onClearClick}>
-            {store.locale.uk.history[0].clear_browsing_history}
+            {store.locale.lang.history[0].clear_browsing_history}
           </NavigationDrawer.Item>
         </NavigationDrawer>
         <HistorySections />

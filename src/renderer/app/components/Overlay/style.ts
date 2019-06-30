@@ -143,6 +143,24 @@ export const IconButton = styled.div`
   `}  
 `;
 
+export const LanguageButton = styled.a`
+  ${centerIcon(24)};
+  margin-left: 8px;
+  height: 32px;
+  width: 32px;
+  filter: invert(100%);
+  border-radius: 50%;
+  transition: 0.3s background-color;
+
+  &:hover {
+    background-color: rgba(0,0,0,0.15);
+  }
+
+  ${({ icon }: { icon: any }) => css`
+    background-image: url(${icon});
+  `}  
+`;
+
 export const Separator = styled.div`
   background-color: rgba(0, 0, 0, 0.12);
   height: 1px;
