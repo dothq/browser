@@ -5,74 +5,74 @@
             "dot_with_version": "Dot {appVersion}",
             "dot_full": "Dot Browser",
             "dot_full_with_version": "Dot Browser {appVersion}",
-            "button_open": "Open",
-            "button_run": "Run",
-            "button_send": "Send",
-            "search_placeholder": "Search",
-            "quit": "Quit",
-            "quit_dot": "Quit Dot",
-            "quit_dot_with_version": "Quit Dot {appVersion}"
+            "button_open": "Ouvert",
+            "button_run": "Exécuter",
+            "button_send": "Envoyer",
+            "search_placeholder": "Recherche",
+            "quit": "Quitter",
+            "quit_dot": "Quitter Dot",
+            "quit_dot_with_version": "Quitter Dot {appVersion}"
         }
     ],
     "rich_presence": [
         {
-            "default_details": "Browsing on",
-            "audio_details": "Listening to audio on",
-            "file_details": "Viewing a {fileType} file",
-            "active_small_text": "Browsing a webpage",
-            "idle_small_text": "Idle",
+            "default_details": "Naviguer sur",
+            "audio_details": "Écouter l'audio sur",
+            "file_details": "Affichage d'un fichier {fileType}",
+            "active_small_text": "Parcourir une page web",
+            "idle_small_text": "Inutile",
             "idle_details": "Dot Browser",
             "large_text": "Dot Browser {version}"
         }
     ],
     "overlay": [
         {
-            "dial_top_sites": "Top Sites",
-            "dial_bookmarks": "Bookmarks",
-            "overview": "Overview",
-            "tab_groups": "Tab groups",
-            "default_tab_group": "New group",
-            "world": "World",
-            "history_bubble": "History",
-            "bookmarks_bubble": "Bookmarks",
-            "downloads_bubble": "Downloads",
-            "settings_bubble": "Settings",
+            "dial_top_sites": "Sites haut de gamme",
+            "dial_bookmarks": "Signet",
+            "overview": "Vue d'ensemble",
+            "tab_groups": "Groupes d'onglets",
+            "default_tab_group": "Nouveaux groupes",
+            "world": "Monde",
+            "history_bubble": "Histoire",
+            "bookmarks_bubble": "Signets",
+            "downloads_bubble": "Télécharger",
+            "settings_bubble": "Paramètres",
             "extensions_bubble": "Extensions",
-            "find_bubble": "Find",
-            "more_tools_bubble": "More tools",
-            "welcome_snackbar": "Welcome back, {username}"
+            "find_bubble": "Trouver",
+            "more_tools_bubble": "Plus d'outils",
+            "welcome_snackbar": "Bienvenue à nouveau, {username}"
         }
     ],
     "search_bar": [
         {
             "logged_in": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind {username}?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Où veux-tu aller aujourd'hui?",
+                    "message_2": "Qu'y a-t-il dans votre esprit {username}?",
+                    "message_3": "Entrez un terme de recherche ou une URL pour commencer.",
                     "message_4": "{currentTimeType}, {username}"
                 }
             ],
             "guest": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Où veux-tu aller aujourd'hui?",
+                    "message_2": "Qu'y a-t-il dans votre esprit?",
+                    "message_3": "Entrez un terme de recherche ou une URL pour commencer.",
                     "message_4": "{currentTimeType}"
                 }
             ],
             "timeTypes": [
                 {
-                    "morning": "Good morning",
-                    "afternoon": "Good afternoon",
-                    "evening": "Good evening"
+                    "morning": "Bonjour",
+                    "afternoon": "Bonne Après-midi",
+                    "evening": "Bonsoir"
                 }
             ]
         }
     ],
     "settings": [
         {
-            "title": "Settings",
+            "title": "Paramètres",
             "google_searchEngine": "Google",
             "bing_searchEngine": "Bing",
             "yahoo_searchEngine": "Yahoo",
@@ -80,87 +80,88 @@
             "ecosia_searchEngine": "Ecosia",
             "my_profile": [
                 {
-                    "title": "My Profile",
-                    "sign_in_btn": "Sign in",
-                    "sign_out_btn": "Sign out",
-                    "guest_user": "Guest"
+                    "title": "Mon profil",
+                    "sign_in_btn": "Connectez-vous",
+                    "sign_out_btn": "Déconnexion",
+                    "guest_user": "Invités"
                 }
             ],
             "appearance": [
                 {
-                    "title": "Appearance",
-                    "toggle_dot": "Toggle Dot button",
-                    "search_engine": "Search Engine",
-                    "temp_type": "Temperature type",
-                    "guest_user": "Guest"
+                    "title": "Apparence",
+                    "toggle_dot": "Bouton Dot toggle",
+                    "search_engine": "Rechercher Moteur",
+                    "temp_type": "Type de température",
+                    "guest_user": "Invités"
                 }
             ],
             "downloads": [
                 {
-                    "title": "Downloads",
-                    "download_loc": "Downloads Location"
+                    "title": "Télécharger",
+                    "download_loc": "Emplacement des téléchargeurs"
                 }
             ],
             "dev_tools": [
                 {
-                    "title": "Developer Experiments",
-                    "chromium_dt": "Chromium Developer Tools",
-                    "send_test_notif": "Send test notification",
-                    "open_log": "Open log file"
+                    "title": "Expériences de développeurs",
+                    "chromium_dt": "Chromium Outils de développement",
+                    "send_test_notif": "Envoyer la notification de test",
+                    "open_log": "Ouvrez le fichier journal
+"
                 }
             ],
             "about_dot": [
                 {
-                    "title": "About Dot",
-                    "thanks_message": "Dot was made possible thanks to",
-                    "wxnd_coffee": "and ☕.",
-                    "made_in": "Made in",
-                    "gb_with": "Great Britain with ",
+                    "title": "À propos de Dot",
+                    "thanks_message": "Dot a été rendu possible grâce à",
+                    "wxnd_coffee": "et ☕.",
+                    "made_in": "Fabriqué en",
+                    "gb_with": "La Grande-Bretagne avec ",
                     "end": ".",
-                    "developers_title": "Developers",
-                    "beta_testers_title": "Beta Testers",
-                    "special_thanks_title": "Special Thanks",
-                    "verbose_loaded_fcm": "Loaded FCM Notification services",
-                    "about_page_btn": "Visit the debug page",
-                    "copyright_notice": "© 2019 Ender And Fire Development"
+                    "developers_title": "Équipe de développeurs",
+                    "beta_testers_title": "Bêta-testeurs",
+                    "special_thanks_title": "Remerciements spéciaux",
+                    "verbose_loaded_fcm": "Services de notification FCM chargés",
+                    "about_page_btn": "Visitez la page débogage",
+                    "copyright_notice": "© 2019 Ender et Fire Développement"
                 }
             ],
             "feedback": [
                 {
-                    "title": "Send feedback",
-                    "feedback_title": "Send feedback to developers",
-                    "bug_report_title": "Open a bug report"
+                    "title": "Envoyer des commentaires",
+                    "feedback_title": "Envoyer vos commentaires aux développeurs",
+                    "bug_report_title": "Ouvrez un rapport de bogue"
                 }
             ],
             "languages": [
                 {
-                    "title": "Languages"
+                    "title": "La langue"
                 }
             ]
         }
     ],
     "history": [
         {
-            "title": "History",
-            "clear_browsing_history": "Clear browsing data",
+            "title": "Histoire",
+            "clear_browsing_history": "Données de navigation claires",
             "sort": [
                 {
-                    "range_all": "All",
-                    "range_today": "Today",
+                    "range_all": "Tout le",
+                    "range_today": "Aujourd'hui",
                     "range_yesterday": "Yesterday",
-                    "range_last_week": "Last week",
-                    "range_last_month": "Last month",
-                    "range_older": "Older"
+                    "range_last_week": "La semaine dernière",
+                    "range_last_month": "Mois dernier",
+                    "range_older": "Plus"
                 }
             ]
         }
     ],
     "bookmarks": [
         {
-            "title": "Bookmarks",
-            "import": "Import Bookmarks",
-            "export": "Export Bookmarks",
-            "add_bookmark": "New Bookmark"
+            "title": "Signets",
+            "import": "Signets d'importation",
+            "export": "Livres d'exportation",
+            "add_bookmark": "Nouveau signet"
         }
     ],
     "extensions": [
@@ -170,11 +171,11 @@
     ],
     "window": [
         {
-            "find_on_page": "Find in page",
-            "navigate_back": "Back",
-            "navigate_forward": "Forward",
-            "navigate_refresh": "Refresh (F5)",
-            "open_dot": "Open Dot Launcher"
+            "find_on_page": "Trouver dans la page",
+            "navigate_back": "Précédent",
+            "navigate_forward": "En avant",
+            "navigate_refresh": "Rafraîchir (F5)",
+            "open_dot": "Ouvrez Dot Launcher"
         }
     ]
 }
