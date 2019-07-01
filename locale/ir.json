@@ -3,16 +3,16 @@
         {
             "dot": "Dot",
             "dot_with_version": "Dot {appVersion}",
-            "dot_full": "Dot Browser",
-            "dot_full_with_version": "Dot Browser {appVersion}",
-            "button_open": "Open",
-            "button_run": "Run",
-            "button_send": "Send",
-            "button_download": "Download",
-            "search_placeholder": "Search",
-            "quit": "Quit",
-            "quit_dot": "Quit Dot",
-            "quit_dot_with_version": "Quit Dot {appVersion}"
+            "dot_full": "Dot Brabhsálaí",
+            "dot_full_with_version": "Dot Brabhsálaí {appVersion}",
+            "button_open": "Oscailte",
+            "button_run": "Rith",
+            "button_send": "Seol",
+            "button_download": "Íoslódáil",
+            "search_placeholder": "Cuardaigh",
+            "quit": "Scoir",
+            "quit_dot": "Scoir Dot",
+            "quit_dot_with_version": "Scoir Dot {appVersion}"
         }
     ],
     "languages": [
@@ -29,64 +29,64 @@
     ],
     "rich_presence": [
         {
-            "default_details": "Browsing on",
-            "audio_details": "Listening to audio on",
-            "file_details": "Viewing a {fileType} file",
-            "active_small_text": "Browsing a webpage",
-            "idle_small_text": "Idle",
-            "idle_details": "Dot Browser",
-            "large_text": "Dot Browser {version}"
+            "default_details": "Ag brabhsáil air",
+            "audio_details": "Éisteacht le fuaim ar",
+            "file_details": "Ag féachaint ar chomhad {fileType}",
+            "active_small_text": "Brabhsáil leathanach gréasáin",
+            "idle_small_text": "Díomhaoin",
+            "idle_details": "Dot Brabhsálaí",
+            "large_text": "Dot Brabhsálaí {version}"
         }
     ],
     "overlay": [
         {
-            "dial_top_sites": "Top Sites",
-            "dial_bookmarks": "Bookmarks",
-            "overview": "Overview",
-            "menu": "Menu",
-            "tab_groups": "Tab groups",
-            "default_tab_group": "New group",
-            "world": "World",
-            "history_bubble": "History",
-            "bookmarks_bubble": "Bookmarks",
-            "downloads_bubble": "Downloads",
-            "settings_bubble": "Settings",
-            "extensions_bubble": "Extensions",
-            "find_bubble": "Find",
-            "more_tools_bubble": "More tools",
-            "welcome_snackbar": "Welcome back, {username}"
+            "dial_top_sites": "Suíomhanna Barr",
+            "dial_bookmarks": "Leabharmharcanna",
+            "overview": "Forbhreathnú",
+            "menu": "Clár",
+            "tab_groups": "Grúpaí Tab",
+            "default_tab_group": "Grúpa nua",
+            "world": "Domhain",
+            "history_bubble": "Stair",
+            "bookmarks_bubble": "Leabharmharcanna",
+            "downloads_bubble": "Íoslódálacha",
+            "settings_bubble": "Socruithe",
+            "extensions_bubble": "Eisínteachtaí",
+            "find_bubble": "Aimsigh",
+            "more_tools_bubble": "Tuilleadh uirlisí",
+            "welcome_snackbar": "Fáilte ar ais, {username}"
         }
     ],
     "search_bar": [
         {
             "logged_in": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind {username}?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Cá bhfuil tú ag iarraidh dul inniu?",
+                    "message_2": "Cad ar d'intinn {username}?",
+                    "message_3": "Cuir isteach téarma cuardaigh nó URL chun tús a chur leis.",
                     "message_4": "{currentTimeType}, {username}"
                 }
             ],
             "guest": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Cá bhfuil tú ag iarraidh dul inniu?",
+                    "message_2": "Cad ar d'intinn?",
+                    "message_3": "Cuir isteach téarma cuardaigh nó URL chun tús a chur leis.",
                     "message_4": "{currentTimeType}"
                 }
             ],
             "timeTypes": [
                 {
-                    "morning": "Good morning",
-                    "afternoon": "Good afternoon",
-                    "evening": "Good evening"
+                    "morning": "Maidin mhaith",
+                    "afternoon": "Tráthnóna maith",
+                    "evening": "Tráthnóna maith"
                 }
             ]
         }
     ],
     "settings": [
         {
-            "title": "Settings",
+            "title": "Socruithe",
             "google_searchEngine": "Google",
             "bing_searchEngine": "Bing",
             "yahoo_searchEngine": "Yahoo",
@@ -94,62 +94,62 @@
             "ecosia_searchEngine": "Ecosia",
             "my_profile": [
                 {
-                    "title": "My Profile",
-                    "sign_in_btn": "Sign in",
-                    "sign_out_btn": "Sign out",
-                    "guest_user": "Guest"
+                    "title": "Mo Phróifíl",
+                    "sign_in_btn": "Sínigh isteach",
+                    "sign_out_btn": "Sínigh amach",
+                    "guest_user": "Aoi"
                 }
             ],
             "appearance": [
                 {
-                    "title": "Appearance",
-                    "toggle_dot": "Toggle Dot button",
-                    "search_engine": "Search Engine",
-                    "temp_type": "Temperature type",
-                    "guest_user": "Guest"
+                    "title": "Dealramh",
+                    "toggle_dot": "Toggle cnaipe Dot",
+                    "search_engine": "Inneall Cuardaigh",
+                    "temp_type": "Cineál teochta",
+                    "guest_user": "Aoi"
                 }
             ],
             "downloads": [
                 {
-                    "title": "Downloads",
-                    "download_loc": "Downloads Location"
+                    "title": "Íoslódálacha",
+                    "download_loc": "Íoslódálacha Suíomh"
                 }
             ],
             "dev_tools": [
                 {
-                    "title": "Developer Experiments",
-                    "chromium_dt": "Chromium Developer Tools",
-                    "send_test_notif": "Send test notification",
-                    "open_log": "Open log file"
+                    "title": "Turgnaimh Fhorbróirí",
+                    "chromium_dt": "Uirlisí an Fhorbróra Chromium",
+                    "send_test_notif": "Seol fógra tástála",
+                    "open_log": "Oscail comhad loga"
                 }
             ],
             "about_dot": [
                 {
-                    "title": "About Dot",
-                    "thanks_message": "Dot was made possible thanks to",
-                    "wxnd_coffee": "and ☕.",
-                    "made_in": "Made in",
-                    "gb_with": "Great Britain with ",
+                    "title": "Faoi Dot",
+                    "thanks_message": "Dot bhíothas in ann a bhuíochas sin do",
+                    "wxnd_coffee": "agus ☕.",
+                    "made_in": "A rinneadh i",
+                    "gb_with": "An Bhreatain Mhór le ",
                     "end": ".",
-                    "developers_title": "Developers",
-                    "beta_testers_title": "Beta Testers",
-                    "special_thanks_title": "Special Thanks",
-                    "verbose_loaded_fcm": "Loaded FCM Notification services",
-                    "translators_title": "Tar éis",
-                    "about_page_btn": "Visit the debug page",
+                    "developers_title": "Forbróirí",
+                    "beta_testers_title": "Tástálaithe Béite",
+                    "special_thanks_title": "Go raibh maith agat",
+                    "verbose_loaded_fcm": "Seirbhísí fógraithe FCM luchtaithe",
+                    "translators_title": "Aistritheoirí",
+                    "about_page_btn": "Tabhair cuairt ar an leathanach dífhabhtaithe",
                     "copyright_notice": "© 2019 Ender And Fire Development"
                 }
             ],
             "feedback": [
                 {
-                    "title": "Send feedback",
-                    "feedback_title": "Send feedback to developers",
-                    "bug_report_title": "Open a bug report"
+                    "title": "Seol Aiseolas",
+                    "feedback_title": "Seol aiseolas chuig forbróirí",
+                    "bug_report_title": "Oscail tuairisc fabht"
                 }
             ],
             "languages": [
                 {
-                    "title": "Languages",
+                    "title": "Teangacha",
                     "download_languages": "Íoslódáil an pacáiste teanga is déanaí"
                 }
             ]
@@ -157,40 +157,40 @@
     ],
     "history": [
         {
-            "title": "History",
-            "clear_browsing_history": "Clear browsing data",
+            "title": "Stair",
+            "clear_browsing_history": "Sonraí brabhsála soiléire",
             "sort": [
                 {
-                    "range_all": "All",
-                    "range_today": "Today",
-                    "range_yesterday": "Yesterday",
-                    "range_last_week": "Last week",
-                    "range_last_month": "Last month",
-                    "range_older": "Older"
+                    "range_all": "Gach",
+                    "range_today": "Inniu",
+                    "range_yesterday": "Inné",
+                    "range_last_week": "An tseachtain seo caite",
+                    "range_last_month": "An mhí seo caite",
+                    "range_older": "Níos sine"
                 }
             ]
         }
     ],
     "bookmarks": [
         {
-            "title": "Bookmarks",
-            "import": "Import Bookmarks",
-            "export": "Export Bookmarks",
-            "add_bookmark": "New Bookmark"
+            "title": "Leabharmharcanna",
+            "import": "Iompórtáil Leabharmharcanna",
+            "export": "Leabharmharcanna Onnmhairithe",
+            "add_bookmark": "Leabharmharc Nua"
         }
     ],
     "extensions": [
         {
-            "title": "Extensions"
+            "title": "Eisínteachtaí"
         }
     ],
     "window": [
         {
-            "find_on_page": "Find in page",
-            "navigate_back": "Back",
-            "navigate_forward": "Forward",
-            "navigate_refresh": "Refresh (F5)",
-            "open_dot": "Open Dot Launcher"
+            "find_on_page": "Faigh sa leathanach",
+            "navigate_back": "Ar ais",
+            "navigate_forward": "Ar aghaidh",
+            "navigate_refresh": "Athnuachan (F5)",
+            "open_dot": "Tosaitheoir Dot Oscailte"
         }
     ]
 }
