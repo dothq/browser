@@ -41,7 +41,7 @@ Please head over to our Wiki page for build instructions if you are planning to 
 
 For support, join our support discord server.
 
-[![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2)](https://discordbots.org/servers/525056817399726102)
+[![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2)](https://discord.gg/wAh7thM)
 
 ## 🧱 Built With
 
