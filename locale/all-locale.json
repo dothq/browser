@@ -47,5 +47,11 @@
         "flag": "fi",
         "flag_icon": "1f1eb-1f1ee.png",
         "translators": "Oona"
+    }, {
+        "title": "Svenska",
+        "en_title": "Swedish",
+        "flag": "se",
+        "flag_icon": "1f1f8-1f1ea.png",
+        "translators": "HVENetworks"
     } ]
 }
