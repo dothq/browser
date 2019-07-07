@@ -24,7 +24,8 @@
       "fi": "Finska",
       "ru": "Ryska",
       "no": "Norksa",
-      "ir": "Irländska"
+      "ie": "Irländska",
+      "se": "Svenska"
     }
   ],
   "rich_presence": [
@@ -191,6 +192,7 @@
       "navigate_back": "Tillbaka",
       "navigate_forward": "Framåt",
       "navigate_refresh": "Ladda om (F5)",
+      "navigate_close": "Stäng flik (Ctrl+W)",
       "open_dot": "Öppna Dot Launcher"
     }
   ]

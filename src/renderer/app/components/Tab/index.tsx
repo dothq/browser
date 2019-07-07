@@ -225,7 +225,7 @@ const Close = observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onCloseMouseDown}
       onClick={removeTab(tab)}
       visible={tab.isExpanded}
-      title="Close tab (Ctrl+W)"
+      title={store.locale.lang.window[0].navigate_close}
     />
   );
 });

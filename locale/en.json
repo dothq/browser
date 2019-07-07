@@ -24,7 +24,8 @@
             "fi": "Finnish",
             "ru": "Russian",
             "no": "Norweigan",
-            "ir": "Irish"
+            "ie": "Irish",
+            "se": "Swedish"
         }
     ],
     "rich_presence": [
@@ -191,6 +192,7 @@
             "navigate_back": "Back",
             "navigate_forward": "Forward",
             "navigate_refresh": "Refresh (F5)",
+            "navigate_close": "Close tab (Ctrl+W)",
             "open_dot": "Open Dot Launcher"
         }
     ]

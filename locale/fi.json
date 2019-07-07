@@ -24,7 +24,8 @@
             "fi": "Suomalainen",
             "ru": "Venäjän kieli",
             "no": "Norjan kieli",
-            "ir": "Irlantilainen"
+            "ie": "Irlantilainen",
+            "se": "Ruotsin kieli"
         }
     ],
     "rich_presence": [
@@ -191,6 +192,7 @@
             "navigate_back": "Takaisin",
             "navigate_forward": "Eteenpäin",
             "navigate_refresh": "Päivitä sivu (F5)",
+            "navigate_close": "Sulje välilehti (Ctrl+W)",
             "open_dot": "Avaa Dot Launcher"
         }
     ]

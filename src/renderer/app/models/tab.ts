@@ -410,6 +410,11 @@ export class Tab {
   }
 
   @action
+  public hardReload() {
+    ipcRenderer.send('browserview-destroy', this.id);
+  }
+
+  @action
   public close() {
     const tabGroup = this.tabGroup;
     const tabs = tabGroup.tabs.slice().sort((a, b) => a.position - b.position);

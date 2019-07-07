@@ -1,4 +1,4 @@
-import { ipcMain, app, nativeImage } from 'electron';
+import { ipcMain, app, nativeImage, ipcRenderer } from 'electron';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { appWindow } from '.';
 import { View } from './view';
@@ -45,6 +45,18 @@ export class ViewManager {
         const view = this.views[id];
         this.select(id);
         view.updateNavigationState();
+      },
+    );
+
+    ipcMain.on(
+      'browserview-hardreload',
+      (e: Electron.IpcMessageEvent, id: number) => {
+        const view = this.views[id];
+        ipcRenderer.send('browserview-call', {
+          id,
+          scope: 'webContents.reload',
+        });
+        view.webContents.reloadIgnoringCache()
       },
     );
 

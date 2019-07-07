@@ -109,6 +109,7 @@ const rpclient = new Client({ transport: 'ipc'});
 const startTimestamp = Math.round(+new Date()/1000)
 
 window.onbeforeunload = () => {
+  ipcRenderer.send('browserview-clear');
   rpclient.destroy()
 }
 
