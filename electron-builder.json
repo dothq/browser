@@ -48,7 +48,7 @@
     "category": "Network",
     "target": [
       {
-        "target": ["AppImage", "pacman", "deb"],
+        "target": "AppImage",
         "arch": ["ia32", "x64"]
       }
     ]
