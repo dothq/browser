@@ -1,4 +1,4 @@
-import { ipcMain, app, nativeImage, ipcRenderer } from 'electron';
+import { ipcMain, app, nativeImage } from 'electron';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { appWindow } from '.';
 import { View } from './view';
@@ -48,22 +48,8 @@ export class ViewManager {
       },
     );
 
-    ipcMain.on(
-      'browserview-hardreload',
-      (e: Electron.IpcMessageEvent, id: number) => {
-        const view = this.views[id];
-        ipcRenderer.send('browserview-call', {
-          id,
-          scope: 'webContents.reload',
-        });
-        view.webContents.reloadIgnoringCache()
-      },
-    );
-
     ipcMain.on('capture-page', (tabId: number) => {
-      View.fromId(tabId).webContents.capturePage(img => {
-        return img.toDataURL();
-      });
+     
     })
 
     ipcMain.on(
@@ -74,29 +60,36 @@ export class ViewManager {
     );
 
     ipcMain.on('browserview-call', async (e: any, data: any) => {
-      const view = this.views[data.tabId];
+      const view = this.views[data.tabId]
       let scope: any = view;
 
       if (data.scope && data.scope.trim() !== '') {
         const scopes = data.scope.split('.');
-        for (const s of scopes) {
-          scope = scope[s];
+        try {
+          for (const s of scopes) {
+            scope = scope[s];
+          }
+
+          let result = scope.apply(view.webContents, data.args);
+
+          if (result instanceof Promise) {
+            result = await result;
+          }
+    
+          if (data.callId) {
+            appWindow.webContents.send(
+              `browserview-call-result-${data.callId}`,
+              result,
+            );
+          }
+
+        }
+        catch (e) {
+
         }
       }
-
-      let result = scope.apply(view.webContents, data.args);
-
-      if (result instanceof Promise) {
-        result = await result;
-      }
-
-      if (data.callId) {
-        appWindow.webContents.send(
-          `browserview-call-result-${data.callId}`,
-          result,
-        );
-      }
     });
+
 
     ipcMain.on('browserview-hide', () => {
       this.hideView();
