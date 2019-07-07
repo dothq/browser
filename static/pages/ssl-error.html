@@ -34,6 +34,7 @@
                 color: #0000004f;
                 font-weight: 700;
                 font-size: 16px;
+                margin-left: 20px;
             }
 
             svg[data-is-warning="true"] {
@@ -60,6 +61,33 @@
                 margin: 70px 0px 25px 0px;
                 user-select: none;
             }
+
+            p {
+                line-height: 21px;
+                color: #545454;
+                margin-left: 20px;
+                width: 750px;
+            }
+
+            .advanced {
+                user-select: none;
+                opacity: 0; 
+                transition: 0.1s all;
+            }
+
+            #reload {
+                cursor: pointer;
+                font-weight: 600;
+                border-bottom: 1px gray solid;
+            }
+
+            #proceed {
+                cursor: pointer;
+                font-weight: 400;
+                color: #80808038;
+                border-bottom: 1px #80808038 solid;
+                margin-left: 20px;
+            }
         </style>
     </head>
     <body>
@@ -75,28 +103,66 @@
                 <a class="button">Advanced</a>
                 <a class="button">Back to safety</a>
             </div>
+
+            <div class="advanced">
+                <p>The server could not prove that it is <strong id="attack-url"></strong>. This could be caused by a misconfiguration or an attacker intercepting your connection. Your computer's clock is currently set to <strong id="date"></strong>. Does this look correct to you? If not, change your computer's clock and <a id="reload">click here</a>.</p>
+                <br><br>
+                <code></code>
+                <br><br>
+                <a id="proceed"></a>
+            </div>
         </div>
         <script>
+
+                function subdomain(url) {
+                    url = url.replace(new RegExp(/^\s+/),"");
+                    url = url.replace(new RegExp(/\s+$/),"");
+                    url = url.replace(new RegExp(/\\/g),"/");
+                    url = url.replace(new RegExp(/^www\./i),"");
+                    url = url.replace(new RegExp(/\/(.*)/),"");
+                    if (url.match(new RegExp(/\.[a-z]{2,3}\.[a-z]{2}$/i))) {
+                        url = url.replace(new RegExp(/\.[a-z]{2,3}\.[a-z]{2}$/i),"");
+                    } else if (url.match(new RegExp(/\.[a-z]{2,4}$/i))) {
+                        url = url.replace(new RegExp(/\.[a-z]{2,4}$/i),"");
+                    }
+                    var subDomain = (url.match(new RegExp(/\./g))) ? true : false;
+                    return(subDomain);
+                }
 
                 var error = {};
                 error.url = new URL(window.location.href).searchParams.get("du");
                 error.hostname = new URL(error.url).hostname;
+                error.host = new URL(error.url).hostname.substring(new URL(error.url).hostname.lastIndexOf(".", new URL(error.url).hostname.lastIndexOf(".") - 1) + 1);;
                 error.code = new URL(window.location.href).searchParams.get("err")
     
                 document.title = error.hostname;
-    
+
                 document.getElementById("attacker-url").innerHTML = error.hostname
+                document.getElementById("attack-url").innerHTML = error.hostname
+                document.getElementById("proceed").innerHTML = `Proceed to ${error.hostname} (unsafe)`
+                document.getElementById("date").innerHTML = new Date().toString().split(' ' + new Date().getHours())[0]
+                document.getElementsByTagName("code")[0].innerHTML = error.code;
                 
                 document.getElementsByTagName("a")[0].addEventListener("click", function() {
-
+                    if(document.getElementsByClassName("advanced")[0].style.opacity == 1) {
+                        document.getElementsByClassName("advanced")[0].style.opacity = 0;
+                    }
+                    else {
+                        document.getElementsByClassName("advanced")[0].style.opacity = 1;
+                    }
                 })
 
                 document.getElementsByTagName("a")[1].addEventListener("click", function() {
-                    if (document.referrer == "") {
-                        window.close()
-                    } else {
+                    if(subdomain(error.hostname) == true) {
+                        window.location.replace(`https://${error.host}`)  
+                    }
+                    else {
                         window.history.back()
                     }
+                })
+
+                document.getElementsByTagName("a")[2].addEventListener("click", function() {
+                    window.location.replace(error.url)
                 })
         </script>
     </body>
