@@ -66,6 +66,28 @@ let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 var tdl = file.get("toggleDotLauncher");
 
+const refreshContextMenu = () => {
+  const menu = remote.Menu.buildFromTemplate([
+    {
+      label: 'Normal reload',
+      accelerator: 'F5',
+      click: () => {
+        store.tabs.selectedTab.callViewMethod('webContents.reload');
+      },
+    },
+    {
+      label: 'Hard reload',
+      click: () => {
+        var url = store.tabs.selectedTab.url;
+        store.tabs.addTab({ url, active: true });
+        store.tabs.selectedTab.close()
+      },
+    },
+  ]);
+
+  menu.popup();
+};
+
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
@@ -96,6 +118,7 @@ export const NavigationButtons = observer(() => {
             ? icons.close
             : icons.refresh
         }
+        onContextMenu={refreshContextMenu}
         onClick={onRefreshClick}
         style={{ height: '42px' }}
       />

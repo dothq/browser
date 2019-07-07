@@ -24,7 +24,8 @@
             "fi": "Finnisch",
             "ru": "Russisch",
             "no": "Norwegisch",
-            "ir": "Irisch"
+            "ie": "Irisch",
+            "se": "Schwedisch"
         }
     ],
     "rich_presence": [
@@ -191,6 +192,7 @@
             "navigate_back": "Zurück",
             "navigate_forward": "Vor",
             "navigate_refresh": "Neu Laden (F5)",
+            "navigate_close": "Tab schließen (Ctrl+W)",
             "open_dot": "Dot Launcher öffnen"
         }
     ]

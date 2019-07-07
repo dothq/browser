@@ -24,7 +24,8 @@
             "fi": "Finsk",
             "ru": "Russisk",
             "no": "Norsk",
-            "ir": "Irsk"
+            "ie": "Irsk",
+            "se": "Svensk"
         }
     ],
     "rich_presence": [
@@ -191,6 +192,7 @@
             "navigate_back": "Tilbake",
             "navigate_forward": "Framover",
             "navigate_refresh": "Oppdater siden (F5)",
+            "navigate_close": "Lukk kategorien (Ctrl+W)",
             "open_dot": "Åpne Dot Launcher"
         }
     ]

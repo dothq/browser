@@ -580,8 +580,8 @@ export class View extends BrowserView {
         certificate: Electron.Certificate,
         callback: Function,
       ) => {
-        console.log(certificate, error, url);
-        // TODO: properly handle insecure websites.
+        console.log(error);
+        this.webContents.loadURL(app.getAppPath() + '/static/pages/ssl-error.html?du=' + url + '&err=' + error);
         event.preventDefault();
         callback(true);
       },

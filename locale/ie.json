@@ -24,7 +24,8 @@
             "fi": "Fionlainnis",
             "ru": "Rúisis",
             "no": "Ioruais",
-            "ir": "Gaeilge"
+            "ie": "Gaeilge",
+            "se": "Sualainnis"
         }
     ],
     "rich_presence": [
@@ -190,6 +191,7 @@
             "navigate_back": "Ar ais",
             "navigate_forward": "Ar aghaidh",
             "navigate_refresh": "Athnuachan (F5)",
+            "navigate_close": "Dún an cluaisín (Ctrl+W)",
             "open_dot": "Tosaitheoir Dot Oscailte"
         }
     ]

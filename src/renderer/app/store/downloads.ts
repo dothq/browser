@@ -8,6 +8,7 @@ import { resolve } from 'path';
 import { rename } from 'fs'; 
 
 const editJsonFile = require("edit-json-file");
+const PIXI = require("pixi-sound");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 const app = remote.app;
 
@@ -40,6 +41,8 @@ export class DownloadsStore {
       const i = this.list.find(x => x.id === id);
       i.savePath = resolve(file.get("downloadLocation") + '\\' + i.fileName);
       i.completed = true;
+      const sound = PIXI.sound.Sound.from(app.getAppPath() + '/static/notification.mp3');
+      sound.play();
 
       rename(
         resolve(app.getPath('temp') + '\\' + i.fileName), 

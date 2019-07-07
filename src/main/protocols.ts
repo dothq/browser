@@ -104,8 +104,27 @@ export const registerProtocols = () => {
       (request, callback: any) => {
         const parsed = parse(request.url);
 
+        if (applets.indexOf(parsed.hostname) !== -1) {
+          if (parsed.path === '/') {
+            return callback({
+              path: join(app.getAppPath(), 'static/pages', 'about.html'),
+            });
+          }
+
+          return callback({
+            path: join(app.getAppPath(), 'build', parsed.path),
+          });
+        }
+
+        if (parsed.path === '/') {
+          console.log('file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname)
+          return callback({
+            path: 'file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname
+          });
+        }
+
         return callback({
-          path: join(app.getAppPath(), `static/theme/${parsed.path}`),
+          path: 'file:///' + join(encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":"), 'static/app-icons', parsed.path),
         });
       },
       error => {

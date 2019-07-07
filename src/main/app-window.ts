@@ -181,41 +181,43 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('scroll-touch-end');
     });
 
-    var oldConsole = console.log;
-    console.log = function(msg: any) {
-      appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
-        if(err) {
-            return oldConsole(err);
-        }
-      });
-    };
-
-    var oldError = console.error;
-    console.error = function(msg: any) {
-      appendFile(errorLogPath, `[${time}] [App] [ERROR] ` + msg + '\n', function(err) {
-        if(err) {
-            return oldError(err);
-        }
-      });
-    };
-
-    var oldInfo = console.info;
-    console.info = function(msg: any) {
-      appendFile(errorLogPath, `[${time}] [App] [INFO] ` + msg + '\n', function(err) {
-        if(err) {
-            return oldInfo(err);
-        }
-      });
-    };
-
-    var oldWarn = console.warn;
-    console.warn = function(msg: any) {
-      appendFile(errorLogPath, `[${time}] [App] [WARN] ` + msg + '\n', function(err) {
-        if(err) {
-            return oldWarn(err);
-        }
-      });
-    };
+    if(process.env.ENV != "dev") {
+      var oldConsole = console.log;
+      console.log = function(msg: any) {
+        appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
+          if(err) {
+              return oldConsole(err);
+          }
+        });
+      };
+  
+      var oldError = console.error;
+      console.error = function(msg: any) {
+        appendFile(errorLogPath, `[${time}] [App] [ERROR] ` + msg + '\n', function(err) {
+          if(err) {
+              return oldError(err);
+          }
+        });
+      };
+  
+      var oldInfo = console.info;
+      console.info = function(msg: any) {
+        appendFile(errorLogPath, `[${time}] [App] [INFO] ` + msg + '\n', function(err) {
+          if(err) {
+              return oldInfo(err);
+          }
+        });
+      };
+  
+      var oldWarn = console.warn;
+      console.warn = function(msg: any) {
+        appendFile(errorLogPath, `[${time}] [App] [WARN] ` + msg + '\n', function(err) {
+          if(err) {
+              return oldWarn(err);
+          }
+        });
+      };
+    }
 
   }
 }

@@ -8,6 +8,7 @@ import { Button, Icon, Circle } from './style';
 interface Props {
   onClick?: (e?: React.SyntheticEvent<HTMLDivElement>) => void;
   onMouseDown?: (e?: React.SyntheticEvent<HTMLDivElement>) => void;
+  onContextMenu?: (e?: React.SyntheticEvent<HTMLDivElement>) => void;
   size?: number;
   style?: any;
   icon: string;
@@ -64,6 +65,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
       opacity,
       invert,
       title,
+      onContextMenu,
     } = this.props;
 
     let { style } = this.props;
@@ -74,6 +76,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
       <Button
         onMouseDown={this.onMouseDown}
         onClick={onClick}
+        onContextMenu={onContextMenu}
         className={className}
         style={style}
         invert={invert}

@@ -24,7 +24,8 @@
             "fi": "финский",
             "ru": "Pусский",
             "no": "норвежский язык",
-            "ir": "ирландскийh"
+            "ie": "ирландскийh",
+            "se": "шведский"
         }
     ],
     "rich_presence": [
@@ -190,6 +191,7 @@
             "navigate_back": "Back",
             "navigate_forward": "Forward",
             "navigate_refresh": "Refresh (F5)",
+            "navigate_close": "Закрыть вкладку (Ctrl+W)",
             "open_dot": "Open Dot Launcher"
         }
     ]

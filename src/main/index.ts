@@ -148,6 +148,10 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
+  app.on('certificate-error', (event, webContents, link, error, certificate, callback) => {
+    console.log(`CERIFCATE ERROR ON ${link} with ERROR ${error}`)
+  });
+
   ipcMain.on('dev-tools-open', () => {
     appWindow.webContents.inspectElement(0, 0);
 
