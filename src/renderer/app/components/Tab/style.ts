@@ -8,6 +8,10 @@ interface CloseProps {
   visible: boolean;
 }
 
+export const Image = styled.img`
+
+`;
+
 export const SearchInput = styled.input`
   color: #000;
   font-size: 13px;

@@ -51,6 +51,40 @@ export class View extends BrowserView {
     this.webContents.on('context-menu', (e, params) => {
       let menuItems: Electron.MenuItemConstructorOptions[] = [];
 
+      if (params.mediaType == 'video' || params.mediaType == 'audio') {
+        menuItems = menuItems.concat([
+          {
+            label: 'Open ' + params.mediaType + ' in new tab',
+            enabled: params.srcURL.includes("blob:") == false,
+            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
+            click: () => {
+              appWindow.webContents.send('api-tabs-create', {
+                url: params.srcURL,
+                active: false,
+              });
+            },
+          },
+          {
+            label: 'Save ' + params.mediaType,
+            enabled: params.srcURL.includes("blob:") == false,
+            click: () => {
+              this.webContents.downloadURL(params.srcURL)
+            },
+          },
+          {
+            label: 'Copy link',
+            enabled: params.srcURL.includes("blob:") == false,
+            click: () => {
+              clipboard.clear();
+              clipboard.writeText(params.srcURL);
+            },
+          },
+          {
+            type: 'separator',
+          },
+        ]);
+      }
+
       if (params.linkURL !== '') {
         menuItems = menuItems.concat([
           {

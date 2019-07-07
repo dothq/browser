@@ -392,7 +392,10 @@
                         var a = MD5(document.getElementById("login-password").value);
                         var b = document.getElementById("login-email").value
 
-                        http.open('PUT', `https://dot.ender.site/api/options/username/${document.getElementById("usn").value}`, true)
+                        const modal = require('electron-modal');
+                        var data = modal.getData();
+
+                        http.open('PUT', `https://dot.ender.site/api/v${data.apiVersion}/options/username/${document.getElementById("usn").value}`, true)
                         http.setRequestHeader('Content-type', 'application/json')
                         http.setRequestHeader('Authorization', `DotUser ${a} at ${b}`)
                         http.send(null);
@@ -492,7 +495,10 @@
         
                     const http = new XMLHttpRequest()
 
-                    http.open('POST', 'https://dot.ender.site/api/session/l')
+                    const modal = require('electron-modal');
+                    var data = modal.getData();
+
+                    http.open('POST', `https://dot.ender.site/api/session/l`)
                     http.setRequestHeader('Content-type', 'application/json')
                     http.setRequestHeader('X-Dot-Version', '2.1.0')
                     http.send(JSON.stringify(loginData))
@@ -539,7 +545,10 @@
                                 var int = setInterval(function() {
                                     const req = new XMLHttpRequest()
 
-                                    req.open('GET', `https://dot.ender.site/api/verified/endercraftergaming@gmail.com`, true)
+                                    const modal = require('electron-modal');
+                                    var data = modal.getData();
+
+                                    req.open('GET', `https://dot.ender.site/api/v${data.apiVersion}/verified/${email}`, true)
                                     req.setRequestHeader('Content-type', 'application/json')
                                     req.send(null);
                                     req.onload = function() {

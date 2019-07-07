@@ -38,7 +38,7 @@ try {
 }
 catch (e) {
   const notifFile = createWriteStream(app.getPath("userData") + "\\notification_sound.mp3");
-  const request = get("https://dot.ender.site/api/static/notification.mp3", function(response: any) {
+  const request = get(`https://dot.ender.site/api/v0/static/notification.mp3`, function(response: any) {
     response.pipe(notifFile);
   });
 }

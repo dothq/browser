@@ -45,6 +45,7 @@ import console = require('console');
 // FCM Notifcation Handler
 import { ipcRenderer } from 'electron';
 import { ExtLink } from '../NewsCard/style';
+import { checkLightMode } from '../App';
 
 let file = editJsonFile(`${remote.app.getPath('userData')}/dot-options.json`);
 
@@ -239,6 +240,10 @@ const loadNews = (amount: any) => () => {
 }
 
 console.log(store.news.list)
+
+setInterval(function() {
+  checkLightMode()
+}, 1500);
 
 export const Overlay = observer(() => {
 
