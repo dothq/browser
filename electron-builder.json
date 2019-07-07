@@ -6,7 +6,21 @@
     "output": "dist",
     "buildResources": "static"
   },
-  "files": ["build/**/*", "package.json", "filters", "static/app-icons", "static/pages", "static/icon.icns", "static/icon.png", "static/icon.ico"],
+  "files": [
+    "build/**/*", 
+    "package.json", 
+    "filters", 
+    "static/app-icons", 
+    "static/pages", 
+    "static/icon.icns", 
+    "static/icon.png", 
+    "static/icon.ico",
+    "locale",
+    "locale/**/*",
+    "static/icon-inverted.png",
+    "static/notification.mp3",
+    "static/tray-icon.png"
+  ],
   "publish": "github",
   "nsis": {
     "oneClick": false,
