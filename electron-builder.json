@@ -48,7 +48,7 @@
     "category": "Network",
     "target": [
       {
-        "target": ["AppImage", "pacman", "deb"],
+        "target": "AppImage",
         "arch": ["ia32", "x64"]
       }
     ]
@@ -64,13 +64,37 @@
       "name": "Document",
       "description": "Dot",
       "role": "Viewer",
+      "ext": "htm"
+    },
+    {
+      "name": "Document",
+      "description": "Dot",
+      "role": "Viewer",
       "ext": "html"
     },
     {
-      "name": "Image",
+      "name": "Document",
       "description": "Dot",
       "role": "Viewer",
-      "ext": "png"
+      "ext": "shtml"
+    },
+    {
+      "name": "Document",
+      "description": "Dot",
+      "role": "Viewer",
+      "ext": "webp"
+    },
+    {
+      "name": "Document",
+      "description": "Dot",
+      "role": "Viewer",
+      "ext": "xht"
+    },
+    {
+      "name": "Document",
+      "description": "Dot",
+      "role": "Viewer",
+      "ext": "xhtml"
     }
   ]
 }
