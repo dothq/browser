@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable, computed } from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 import { TabsStore } from './tabs';
 import { TabGroupsStore } from './tab-groups';
@@ -26,6 +26,7 @@ import { WeatherStore } from './weather';
 import { NewsStore } from './news';
 import { UserStore } from './user';
 import { existsSync, writeFileSync } from 'fs';
+import console = require('console');
 
 if (!existsSync(getPath('settings.json'))) {
   writeFileSync(
@@ -89,9 +90,26 @@ export class Store {
     dialType: 'top-sites'
   };
 
+  public async init() {
+    const data = await fetch('https://dot.ender.site/api/v0/version');
+    const json = await data.json();
+
+    this.api = json.api;
+
+    this.weather.load()
+    this.news.load();
+    this.notifications.loadAll();
+    this.notifications.showPermissionWindow();
+  }
+
+  public api: number;
+
   public findInputRef = React.createRef<HTMLInputElement>();
 
   public canToggleMenu = false;
+
+  @observable
+  public theme: number = 1 | 0;
 
   public mouse = {
     x: 0,
@@ -99,6 +117,9 @@ export class Store {
   };
 
   constructor() {
+
+    this.init()
+
     ipcRenderer.on(
       'update-navigation-state',
       (e: IpcMessageEvent, data: any) => {

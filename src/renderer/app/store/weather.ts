@@ -62,7 +62,7 @@ export class WeatherStore {
         dt = file.get("tempType");
       }
 
-      const data = await fetch(`https://dot.ender.site/weather?d=${dt}`);
+      const data = await fetch(`https://dot.ender.site/v${store.api}/weather?d=${dt}`);
       const json = await data.json();
 
       this.location = json.city;

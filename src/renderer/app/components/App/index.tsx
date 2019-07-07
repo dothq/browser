@@ -15,20 +15,38 @@ import console = require('console');
 import { writeFileSync, readFileSync, existsSync, appendFile } from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { ViewManager } from '~/main/view-manager';
+import { appWindow } from '~/main';
+import { resolve } from 'path';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
-store.weather.load()
-store.news.load();
-store.notifications.loadAll();
-store.notifications.showPermissionWindow();
+store.init()
 
 // Locale loader
+
+export function checkLightMode() {
+  var exec = require('child_process').exec;
+  exec('reg query HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -v SystemUsesLightTheme',
+    function (err: any, stdout: any, stderr: any) {
+      if (err) {
+          console.debug("\n"+stderr);
+      } else {
+          if(stdout.split("0x")[1] == 1) {
+            ipcRenderer.send('is-light-mode');
+          }
+          if(stdout.split("0x")[1] == 0) {
+            ipcRenderer.send('is-dark-mode');
+          }
+      }
+  });
+}
+checkLightMode()
 
 store.locale.load()
 
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');
+  checkLightMode()
 };
 
 const errorLogPath = getPath('dot-errors.log');

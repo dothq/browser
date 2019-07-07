@@ -6,19 +6,19 @@ import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import store from '~/renderer/app/store';
+import console = require('console');
 const { setup: setupPushReceiver } = require('electron-push-receiver');
-
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
-
+  
   constructor() {
     super({
       frame: false,
       minWidth: 400,
       minHeight: 450,
-      width: 900,
-      height: 700,
+      width: 1280,
+      height: 720,
       show: false,
       backgroundColor: '#1c1c1c',
       title: 'Dot Browser',
@@ -38,6 +38,22 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('no-proxy-server')
+
+    let pluginName
+    switch (process.platform) {
+      case 'win32':
+        pluginName = 'pepflashplayer.dll'
+        break
+      case 'darwin':
+        pluginName = 'PepperFlashPlayer.plugin'
+        break
+      case 'linux':
+        pluginName = 'libpepflashplayer.so'
+        break
+    }
+
+    // Adobe Flash Player will be deprecated January 2020
+    app.commandLine.appendSwitch('ppapi-flash-path', join(__dirname, pluginName))
 
     const windowDataPath = getPath('window-data.json');
 
@@ -94,7 +110,7 @@ export class AppWindow extends BrowserWindow {
       }
     });
 
-    if(this.webContents.getURL() != "https://dot.ender.site/api/session/l") {
+    if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
     }
     
@@ -128,6 +144,7 @@ export class AppWindow extends BrowserWindow {
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
+      this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
     }
 

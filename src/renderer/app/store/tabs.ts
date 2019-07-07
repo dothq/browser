@@ -17,6 +17,7 @@ import HorizontalScrollbar from '~/renderer/app/components/HorizontalScrollbar';
 import store from '.';
 import { ipcRenderer, remote } from 'electron';
 import { extname } from 'path';
+import { checkLightMode } from '../components/App';
 
 export class TabsStore {
   @observable
@@ -163,6 +164,7 @@ export class TabsStore {
     });
 
     setInterval(function() {
+
       if(store.tabs.selectedTab) {
         remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
       }

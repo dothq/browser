@@ -11,39 +11,63 @@ import { AppWindow } from './app-window';
 import { resolve, join } from 'path';
 import console = require('console');
 import { platform } from 'os';
+import { icons } from './constants/icons';
 
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
 
 var tray = new Tray(resolve(app.getAppPath(), 'static/tray-icon.png'))
 const contextMenu = Menu.buildFromTemplate([
-  { label: `Dot ${app.getVersion()}`, type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
+  { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
   { type: 'separator' },
-  { label: 'History', type: 'normal', click() {
+  { label: store.locale.lang.history[0].title, type: 'normal', click() {
       ipcRenderer.send('window-focus');
       store.overlay.visible = true;
       store.overlay.currentContent = "history";
       store.overlay.scrollRef.current.scrollTop = 0;   
   } },
-  { label: 'Bookmarks', type: 'normal', click() {
+  { label: store.locale.lang.bookmarks[0].title, type: 'normal', click() {
     ipcRenderer.send('window-focus');
     store.overlay.visible = true;
     store.overlay.currentContent = "bookmarks";
     store.overlay.scrollRef.current.scrollTop = 0;   
   } },
-  { label: 'Settings', type: 'normal', click() {
+  { label: store.locale.lang.settings[0].title, type: 'normal', click() {
     ipcRenderer.send('window-focus');
     store.overlay.visible = true;
     store.overlay.currentContent = "settings";
     store.overlay.scrollRef.current.scrollTop = 0;   
   } },
   { type: 'separator' },
-  { label: `Quit Dot ${app.getVersion()}`, type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'static/app-icons/tray-close.png') },
+  { label: store.locale.lang.settings[0].my_profile[0].title, type: 'normal', click() {
+    ipcRenderer.send('window-focus');
+    store.overlay.visible = true;
+    store.overlay.currentContent = "settings";
+    store.options.currentDisplay = "profile";
+    store.overlay.scrollRef.current.scrollTop = 0;   
+  } },
+  { label: store.locale.lang.settings[0].my_profile[0].sign_out_btn, type: 'normal', click() {
+    ipcRenderer.send('window-focus');
+    store.overlay.visible = true;
+    store.user.loggedin = false;
+    store.user.username = "Guest";
+    store.user.avatar = icons.user
+    store.user.email = null;
+    localStorage.removeItem("dot_footprint")
+    store.user.menuVisible = false;
+  } },
+  { type: 'separator' },
+  { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'static/app-icons/tray-close.png') },
 ])
-tray.setToolTip(`Dot ${app.getVersion()}`)
+
+tray.setToolTip(store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()))
 tray.on('click', () => {
   ipcRenderer.send('window-focus');
 }) 
+
+setInterval(function() {
+  tray.setContextMenu(contextMenu)
+}, 250)
 
 ipcRenderer.setMaxListeners(0);
 
@@ -105,10 +129,6 @@ document.head.appendChild(styleElement);
 store.tabGroups.addGroup();
 
 export let appWindow: AppWindow;
-
-setInterval(function() {
-  tray.setContextMenu(contextMenu)
-}, 250);
 
 Menu.setApplicationMenu(
   Menu.buildFromTemplate([

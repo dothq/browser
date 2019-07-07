@@ -187,7 +187,6 @@ export class Tab {
         let updated = null;
 
         if (url !== this.url) {
-          this.title.replace(/🔊 • /g, "");
           this.lastHistoryId = await store.history.addItem({
             title: this.title,
             url,
@@ -286,11 +285,8 @@ export class Tab {
     });
 
     ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
-      if(this.title.includes("🔊 • ") == false) {
         this.originalTitle = this.title;
-        this.title = `🔊 • ${this.title}`
         this.audioPlaying = true;
-      }
     });
 
     ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {

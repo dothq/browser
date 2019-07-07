@@ -1,8 +1,10 @@
-import { ipcMain } from 'electron';
+import { ipcMain, app, nativeImage } from 'electron';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { appWindow } from '.';
 import { View } from './view';
 import { sendToAllExtensions } from './extensions';
+import { resolve, join } from 'path';
+import console = require('console');
 
 declare const global: any;
 
@@ -111,6 +113,26 @@ export class ViewManager {
 
     ipcMain.on('browserview-clear', () => {
       this.clear();
+    });
+
+    ipcMain.on('is-light-mode', () => {
+      try {
+        var path = nativeImage.createFromPath(resolve(app.getAppPath() + '/static/icon-inverted.png'));
+        appWindow.setIcon(path)
+      }
+      catch(e) {
+        console.debug(e)
+      }
+    });
+
+    ipcMain.on('is-dark-mode', () => {
+      try {
+        var path = nativeImage.createFromPath(resolve(app.getAppPath() + '/static/icon.png'));
+        appWindow.setIcon(path)
+      }
+      catch(e) {
+        console.debug(e)
+      }
     });
   }
 

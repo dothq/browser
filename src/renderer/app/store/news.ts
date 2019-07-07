@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import { ipcRenderer, remote } from 'electron';
 import console = require('console');
+import store from '.';
 const editJsonFile = require("edit-json-file");
 
 export class NewsStore {
@@ -15,7 +16,8 @@ export class NewsStore {
   public shouldLoadNews: boolean = false;
 
   public async load() {
-    const data = await fetch(`https://dot.ender.site/news`);
+    console.debug("news", store.api)
+    const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
     const json = await data.json();
 
     console.log(data)
@@ -69,7 +71,7 @@ export class NewsStore {
   }
 
   public async loadAll() {
-    const data = await fetch(`https://dot.ender.site/news`);
+    const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
     const json = await data.json();
 
     this.shouldLoadNews = false;

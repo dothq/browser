@@ -26,6 +26,7 @@ import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
 const DataURI = require('datauri').promise;
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { openNewGitHubIssue } from 'electron-util';
+import { Preloader } from '~/renderer/components/Preloader';
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -35,6 +36,7 @@ const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 let allLangs = editJsonFile(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
 allLangs = allLangs.toObject();
+const prettyBytes = require('pretty-bytes');
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -81,7 +83,9 @@ const login = async () => {
       nodeIntegration: true
     },
     frame: false
-  })
+  });
+
+  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
 
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
@@ -262,7 +266,7 @@ async function avatarChange() {
         var oData = new FormData(form);
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", "https://dot.ender.site/api/upload/avatar", true);
+        oReq.open("POST", `https://dot.ender.site/api/v${store.api}/upload/avatar`, true);
         oReq.setRequestHeader("Authorization", `DotUser ${password} at ${email}`)
         oReq.send(oData);
         oReq.onload = function() {
@@ -363,6 +367,10 @@ const AboutDot = observer(() => {
       <AboutWrapper id="about-wrapper">
         <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.lang.settings[0].about_dot[0].wxnd_coffee}</Title>
         <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.lang.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
+        <div>
+          <Preloader></Preloader>
+          <Title style={{ fontSize: 14, marginLeft: '40px' }}>Checking for updates</Title>
+        </div>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].developers_title}</Title>
         <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
         <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
@@ -794,12 +802,9 @@ export const Experiments = observer(() => {
 });
 
 const downloadLatestLangs = () => {
-
-  request.download({
-    url: 'https://github.com/dot-browser/desktop/archive/master.zip',
-    destPath: resolve(homedir() + '/AppData/Local/master.zip')
-  }, function(err, res, body, destpath) { });
-
+  store.locale.languagePacksToInstall.forEach((element: any) => {
+      console.debug(element.download_url)
+  });
 }
 
 export const Languages = observer(() => {
@@ -834,14 +839,17 @@ export const Languages = observer(() => {
   );
 });
 
+var showLanguagePacks = false;
+
 export const DownloadLanguages = observer(() => {
+
   return (
     <SettingsSection style={{ marginTop: '50px' }}>
       <ListItem>
         <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].languages[0].download_languages}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
             <Button onClick={downloadLatestLangs} visible={true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
-              {store.locale.lang.standard[0].button_download}
+              {store.locale.lang.standard[0].button_download} ({store.locale.languagePackSize})
             </Button>
         </Buttons>
       </ListItem>

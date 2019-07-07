@@ -16,6 +16,7 @@ import {
   StyledOverlay,
   TabContainer,
   SearchInput,
+  Image,
 } from './style';
 import { shadeBlendConvert } from '../../utils';
 import { transparency } from '~/renderer/constants';
@@ -23,6 +24,7 @@ import { ipcRenderer, remote } from 'electron';
 import Ripple from '~/renderer/components/Ripple';
 import { resolve } from 'path';
 import console = require('console');
+import { icons } from '../../constants/icons';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -192,6 +194,9 @@ const Content = observer(({ tab }: { tab: Tab }) => {
           style={{ backgroundImage: `url(${tab.favicon})` }}
         />
       )}
+      {tab.audioPlaying == true && (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style={{ height: '24px', width: '24px', marginLeft: '7px' }}><path fill="none" d="M0 0h24v24H0z"></path><path fill={tab.isSelected ? tab.background : `rgba(0, 0, 0, ${transparency.text.high})`} d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path></svg>
+      )}
       {tab.loading && (
         <Preloader
           color={tab.background}
@@ -208,7 +213,6 @@ const Content = observer(({ tab }: { tab: Tab }) => {
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
-        <SearchInput placeholder={url} visible={store.tabs.ubVisible == true} />
         {title}
       </StyledTitle>
     </StyledContent>
