@@ -10,4 +10,3 @@ dist
 .fusebox
 filters
 *.code-workspace
-electron-builder.json
