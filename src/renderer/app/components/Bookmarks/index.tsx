@@ -121,9 +121,9 @@ export const Bookmarks = observer(() => {
           onBackClick={onBackClick}
         >
           <MenuItem selected={store.bookmarks.currentDisplay == 'default'} display="default">{store.locale.lang.bookmarks[0].title}</MenuItem>
-          <MenuItem selected={store.bookmarks.currentDisplay == 'new_bookmark'} display="new_bookmark">{store.locale.lang.bookmarks[0].add_bookmark}</MenuItem>
+          {/* <MenuItem selected={store.bookmarks.currentDisplay == 'new_bookmark'} display="new_bookmark">{store.locale.lang.bookmarks[0].add_bookmark}</MenuItem>
           <MenuItem selected={store.bookmarks.currentDisplay == 'import'} display="import">{store.locale.lang.bookmarks[0].import}</MenuItem>
-          <MenuItem selected={store.bookmarks.currentDisplay == 'export'} display="export">{store.locale.lang.bookmarks[0].export}</MenuItem>
+          <MenuItem selected={store.bookmarks.currentDisplay == 'export'} display="export">{store.locale.lang.bookmarks[0].export}</MenuItem> */}
         </NavigationDrawer>
         {store.bookmarks.currentDisplay == 'default' && store.bookmarks.visibleItems.length > 0 && <BookmarksList />}
         <SelectionDialog
