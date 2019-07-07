@@ -25,20 +25,22 @@ store.init()
 // Locale loader
 
 export function checkLightMode() {
-  var exec = require('child_process').exec;
-  exec('reg query HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -v SystemUsesLightTheme',
-    function (err: any, stdout: any, stderr: any) {
-      if (err) {
-          console.debug("\n"+stderr);
-      } else {
-          if(stdout.split("0x")[1] == 1) {
-            ipcRenderer.send('is-light-mode');
-          }
-          if(stdout.split("0x")[1] == 0) {
-            ipcRenderer.send('is-dark-mode');
-          }
-      }
-  });
+  if (platform() === 'win32') {
+    var exec = require('child_process').exec;
+    exec('reg query HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -v SystemUsesLightTheme',
+      function (err: any, stdout: any, stderr: any) {
+        if (err) {
+            console.debug("\n"+stderr);
+        } else {
+            if(stdout.split("0x")[1] == 1) {
+              ipcRenderer.send('is-light-mode');
+            }
+            if(stdout.split("0x")[1] == 0) {
+              ipcRenderer.send('is-dark-mode');
+            }
+        }
+    });
+  }
 }
 checkLightMode()
 
