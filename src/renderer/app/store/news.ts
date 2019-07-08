@@ -16,7 +16,6 @@ export class NewsStore {
   public shouldLoadNews: boolean = false;
 
   public async load() {
-    console.debug("news", store.api)
     const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
     const json = await data.json();
 

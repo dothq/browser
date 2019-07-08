@@ -20,6 +20,11 @@ const onFindClick = () => {
   }, 200);
 };
 
+const sendFeedback = () => {
+  store.overlay.currentContent = 'settings';
+  store.options.changeDisplay = 'send_feedback';
+}
+
 export const QuickMenu = observer(() => {
   return (
     <Section onClick={preventHiding}>
@@ -41,7 +46,7 @@ export const QuickMenu = observer(() => {
         <Bubble onClick={changeContent('settings')} invert icon={icons.settings}>
           {store.locale.lang.overlay[0].settings_bubble}
         </Bubble>
-        <Bubble onClick={changeContent('extensions')} invert icon={icons.extensions}>
+        <Bubble onClick={changeContent('extensions')} disabled invert icon={icons.extensions}>
           {store.locale.lang.overlay[0].extensions_bubble}
         </Bubble>
         <Bubble
@@ -52,8 +57,8 @@ export const QuickMenu = observer(() => {
         >
           {store.locale.lang.overlay[0].find_bubble}
         </Bubble>
-        <Bubble disabled invert icon={icons.more}>
-          {store.locale.lang.overlay[0].more_tools_bubble}
+        <Bubble onClick={sendFeedback} invert icon={icons.starFilled}>
+          {store.locale.lang.settings[0].feedback[0].title}
         </Bubble>
       </Actions>
     </Section>

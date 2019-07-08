@@ -1,10 +1,23 @@
 import * as React from 'react';
 import { StyledBubble, Title, Icon } from './style';
+import store from '../../store';
+import console = require('console');
 
 export const getSize = (i: number) => {
   const width = 800;
   return (width - 48 - (i - 1)) / i;
 };
+
+const ieTextOverflow = (children: any) => {
+  if(children == store.locale.lang.bookmarks[0].title) {
+    if(store.locale.currentLanguage == 'ie') {
+      return "12px"
+    }
+    else {
+      return "13px"
+    }
+  }
+}
 
 export const Bubble = ({
   children,
@@ -46,6 +59,7 @@ export const Bubble = ({
       <Title
         style={{
           WebkitLineClamp: maxLines,
+          fontSize: `${ieTextOverflow(children)}`
         }}
       >
         {children}

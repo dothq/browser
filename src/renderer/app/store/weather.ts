@@ -83,8 +83,7 @@ export class WeatherStore {
       if(this.timetype == "Night") {
         this.timeInt = 3;
       }
-
-      console.log("Displaying time type ", this.timeInt, " on WeatherCard")
+      
       this.timeInt = 2;
       this.loaded = true;
     }

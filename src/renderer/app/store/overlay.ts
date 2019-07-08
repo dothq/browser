@@ -52,6 +52,9 @@ export class OverlayStore {
   public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
 
   @observable
+  public searchingChip: 'google' | 'bing' | 'yahoo' | 'ddg' | 'ecosia';
+
+  @observable
   public dialTypeMenuVisible = false;
 
   @observable

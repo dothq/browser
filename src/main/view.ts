@@ -583,7 +583,6 @@ export class View extends BrowserView {
         certificate: Electron.Certificate,
         callback: Function,
       ) => {
-        console.debug("url", this.webContents.getURL())
         if(`${this.webContents.getURL()}`.includes("#ise") == false) {
           console.log(error);
           this.webContents.loadURL(app.getAppPath() + '/static/pages/ssl-error.html?du=' + url + '&err=' + error);

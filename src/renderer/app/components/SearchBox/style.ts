@@ -16,6 +16,24 @@ export const StyledSearchBox = styled.div`
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
 `;
 
+export const SearchChip = styled.div`
+  width: 150px;
+  border-radius: 50px;
+  background-color: rgba(255, 255, 255, 0.08);
+  position: relative;
+  height: 35px;
+  margin-left: 10px;
+`;
+
+export const ChipImage = styled.img`
+  height: 21px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  margin-left: 7px
+`;
+
 export const SearchIcon = styled.div`
   ${centerIcon()};
   background-image: url(${icons.search});

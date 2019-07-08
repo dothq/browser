@@ -10,7 +10,7 @@ var Mousetrap = require('mousetrap');
 import { AppWindow } from './app-window';
 import { resolve, join } from 'path';
 import console = require('console');
-import { platform } from 'os';
+import { platform, homedir } from 'os';
 import { icons } from './constants/icons';
 
 const { remote } = require('electron')

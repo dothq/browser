@@ -3,7 +3,7 @@ import * as React from 'react';
 import store from '../../store';
 import { isURL } from '~/shared/utils/url';
 import { observer } from 'mobx-react';
-import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
+import { StyledSearchBox, InputContainer, SearchIcon, Input, SearchChip, ChipImage } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
@@ -13,6 +13,9 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Bookmark } from '../../models/bookmark';
 import { remote } from 'electron';
+import { Image } from 'react-native';
+import { Dash } from '../Suggestion/style';
+import { Title } from '../Overlay/style';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -120,36 +123,35 @@ const onInput = (e: any) => {
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
-  var dotURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/");
+  var dotURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"));
 
-  if(selectedTab.url.includes(dotURL) == true) {
-    return false;
-  }
+  if(selectedTab.url.includes(dotURL) == false) {
+    var foundBkm = store.bookmarks.list.find(
+      x => x.url === store.tabs.selectedTab.url,
+    );
   
-  var foundBkm = store.bookmarks.list.find(
-    x => x.url === store.tabs.selectedTab.url,
-  );
-
-  if(!foundBkm) {
-
-    if(store.overlay.inputRef.current.value) {
-      await store.bookmarks.addItem({
-        title: selectedTab.title,
-        url: store.overlay.inputRef.current.value,
-        parent: null,
-        type: 'item',
-        favicon: selectedTab.favicon,
-      });
+    if(!foundBkm) {
+  
+      if(store.overlay.inputRef.current.value) {
+        await store.bookmarks.addItem({
+          title: selectedTab.title,
+          url: store.overlay.inputRef.current.value,
+          parent: null,
+          type: 'item',
+          favicon: selectedTab.favicon,
+        });
+      }
+  
     }
-
+  
+    else {
+  
+      // It already exists, so delete it.
+      store.bookmarks.removeItem(foundBkm._id)
+  
+    }
   }
 
-  else {
-
-    // It already exists, so delete it.
-    store.bookmarks.removeItem(foundBkm._id)
-
-  }
 };
 
 const onUserClick = () => {
@@ -162,6 +164,32 @@ const onUserClick = () => {
   else {
     store.user.menuVisible = true
   }
+};
+
+const chipImage = () => {
+
+  const editJsonFile = require("edit-json-file");
+
+  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  var searchurl = `https://google.com`
+
+  if(searchengine == "yahoo") {
+    searchurl = `https://yahoo.com`;
+  }
+  if(searchengine == "bing") {
+    searchurl = `https://bing.com`;
+  }
+  if(searchengine == "ddg") {
+    searchurl = `https://duckduckgo.com/`;
+  }
+  if(searchengine == "ecosia") {
+    searchurl = `https://ecosia.org`;
+  }
+
+  return `https://f1.allesedv.com/${searchurl}`
 };
 
 export const SearchBox = observer(() => {

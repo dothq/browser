@@ -69,7 +69,7 @@ const {
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => {
-  console.log(`[FCMNS] The Firebase Cloud Messaging service has been launched using token ${token}`)
+  // console.log(`[FCMNS] The Firebase Cloud Messaging service has been launched using token ${token}`)
   ipcRenderer.send('fcm-ready', { token: token })
 })
 

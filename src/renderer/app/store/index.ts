@@ -4,7 +4,7 @@ import { observable, computed, action } from 'mobx';
 import { TabsStore } from './tabs';
 import { TabGroupsStore } from './tab-groups';
 import { AddTabStore } from './add-tab';
-import { ipcRenderer, IpcMessageEvent, remote } from 'electron';
+import { ipcRenderer, IpcMessageEvent, remote, app } from 'electron';
 import { OverlayStore } from './overlay';
 import { HistoryStore } from './history';
 import { FaviconsStore } from './favicons';
@@ -100,6 +100,8 @@ export class Store {
     this.news.load();
     this.notifications.loadAll();
     this.notifications.showPermissionWindow();
+
+    console.log("\x1b[0mdot \x1b[32msuccess \x1b[0m Loaded Dot APIs. API v" + `${this.api} on app v${remote.app.getVersion()}\x1b[0m`)
   }
 
   public api: number;
