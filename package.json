@@ -42,8 +42,8 @@
     "url": "https://github.com/dot-browser/desktop/issues"
   },
   "scripts": {
-    "dev": "npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
-    "build": "npm run download-filters && node fuse.js",
+    "dev": "npm run node-ver && npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
+    "build": "npm run node-ver && npm run download-filters && node fuse.js",
     "start": "cross-env ENV='dev' electron --no-proxy-server .",
     "compile-win32": "npm run build && electron-builder -w -p always",
     "compile-darwin": "npm run build && electron-builder -m -p always",
@@ -51,7 +51,8 @@
     "lint": "tslint \"src/**/*.ts*\"",
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
-    "download-filters": "node tools/download-filters.js"
+    "download-filters": "node tools/download-filters.js",
+    "node-ver": "node tools/build-preload.js"
   },
   "pre-commit": [
     "lint-fix"
