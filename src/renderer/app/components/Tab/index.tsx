@@ -211,9 +211,6 @@ const Content = observer(({ tab }: { tab: Tab }) => {
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
-        {tab.audioPlaying == true && (
-            <Title style={{ display: 'contents', fontSize: '16px' }}>🔊</Title>
-        )}
         <span>{title}</span>
       </StyledTitle>
     </StyledContent>
