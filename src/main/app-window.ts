@@ -144,7 +144,6 @@ export class AppWindow extends BrowserWindow {
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
-      this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
     }
 
