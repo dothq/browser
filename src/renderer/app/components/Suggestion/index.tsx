@@ -12,6 +12,10 @@ import {
   SecondaryText,
   Icon,
 } from './style';
+import console = require('console');
+import { resolve } from 'path';
+import { homedir } from 'os';
+import { isURL } from '~/shared/utils/url';
 
 interface Props {
   suggestion: Suggestion;
@@ -23,6 +27,52 @@ const onMouseEnter = (suggestion: Suggestion) => () => {
 
 const onMouseLeave = (suggestion: Suggestion) => () => {
   suggestion.hovered = false;
+};
+
+const loadURL = (suggestion: Suggestion) => () => {
+
+  var text = "";
+
+  if(isURL(suggestion.secondaryText)) {
+    text = suggestion.secondaryText;
+  }
+  else {
+    text = suggestion.primaryText;
+  }
+
+  var url = text;
+
+  const editJsonFile = require("edit-json-file");
+ 
+  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  if(searchengine == "google") {
+    var searchurl = `https://www.google.com/search?hl=en&q=`;
+  }
+  if(searchengine == "yahoo") {
+    var searchurl = `https://search.yahoo.com/search?p=`;
+  }
+  if(searchengine == "bing") {
+    var searchurl = `https://www.bing.com/search?q=`;
+  }
+  if(searchengine == "ddg") {
+    var searchurl = `https://duckduckgo.com/?q=`;
+  }
+  if(searchengine == "ecosia") {
+    var searchurl = `https://www.ecosia.org/search?q=`;
+  }
+
+
+  if (isURL(text) && !text.includes('://')) {
+    url = `http://${text}`;
+  } else if (!text.includes('://')) {
+    url = `${searchurl}${text}`;
+  }
+
+  store.tabs.addTab({ url, active: true });
+  store.overlay.visible = false;
 };
 
 export const SuggestionComponent = observer(({ suggestion }: Props) => {
@@ -45,6 +95,7 @@ export const SuggestionComponent = observer(({ suggestion }: Props) => {
       hovered={hovered}
       onMouseEnter={onMouseEnter(suggestion)}
       onMouseLeave={onMouseLeave(suggestion)}
+      onClick={loadURL(suggestion)}
     >
       <Icon
         style={{

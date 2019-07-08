@@ -187,16 +187,18 @@ export class Tab {
         let updated = null;
 
         if (url !== this.url) {
-          this.lastHistoryId = await store.history.addItem({
-            title: this.title,
-            url,
-            favicon: this.favicon,
-            date: new Date().toString(),
-          });
-
-          updated = {
-            url,
-          };
+          if(url.includes("ssl-error.html?du=") == false) {
+            this.lastHistoryId = await store.history.addItem({
+              title: this.title,
+              url,
+              favicon: this.favicon,
+              date: new Date().toString(),
+            });
+  
+            updated = {
+              url,
+            };
+          }
         }
 
         if (title !== this.title) {

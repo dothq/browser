@@ -1,10 +1,11 @@
 import { observable, computed } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import store from '.';
 import { viewBm } from '../components/Toolbar';
 import { ViewManager } from '~/main/view-manager';
 import { View } from '../../../main/view';
+import console = require('console');
 
 let lastSuggestion: string;
 
@@ -68,11 +69,18 @@ export class OverlayStore {
 
   public set searchBoxValue(val: string) {
     this._searchBoxValue = val;
+
     if(this._searchBoxValue.substring(0, 8) == "file:///") {
       this.inputRef.current.value = val.split("file:///")[1];;
     }
     else {
       this.inputRef.current.value = val;
+    }
+    
+    var cleanURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"))
+    
+    if(this.inputRef.current.value.includes(cleanURL) == true) {
+      this.inputRef.current.value = 'dot://' + this.inputRef.current.value.split(cleanURL)[1].split("/")[1].split(".html")[0]
     }
   }
 
