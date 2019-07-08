@@ -496,6 +496,9 @@ export class View extends BrowserView {
               child.once('ready-to-show', () => {
                 child.show()
                 child.webContents.send('load-url', url);
+                if(process.env.ENV == "dev") {
+                  child.webContents.toggleDevTools()
+                }
               })
             }
             
@@ -580,10 +583,17 @@ export class View extends BrowserView {
         certificate: Electron.Certificate,
         callback: Function,
       ) => {
-        console.log(error);
-        this.webContents.loadURL(app.getAppPath() + '/static/pages/ssl-error.html?du=' + url + '&err=' + error);
-        event.preventDefault();
-        callback(true);
+        console.debug("url", this.webContents.getURL())
+        if(`${this.webContents.getURL()}`.includes("#ise") == false) {
+          console.log(error);
+          this.webContents.loadURL(app.getAppPath() + '/static/pages/ssl-error.html?du=' + url + '&err=' + error);
+          event.preventDefault();
+          callback(true);
+        }
+        if(`${this.webContents.getURL()}`.includes("#ise") == true) {
+          this.webContents.loadURL(this.webContents.getURL().split("#ise")[0]);
+          callback(true);
+        }
       },
     );
 

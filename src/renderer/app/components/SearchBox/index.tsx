@@ -12,6 +12,7 @@ import UserIcon from '../UserButton';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Bookmark } from '../../models/bookmark';
+import { remote } from 'electron';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
@@ -119,6 +120,12 @@ const onInput = (e: any) => {
 const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
+  var dotURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/");
+
+  if(selectedTab.url.includes(dotURL) == true) {
+    return false;
+  }
+  
   var foundBkm = store.bookmarks.list.find(
     x => x.url === store.tabs.selectedTab.url,
   );

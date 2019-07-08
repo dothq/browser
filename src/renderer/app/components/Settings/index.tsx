@@ -905,7 +905,7 @@ export const Settings = observer(() => {
 
               {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].languages[0].title}</Title>}
               {store.options.currentDisplay == 'languages' && <Languages />}
-              {store.options.currentDisplay == 'languages' && <DownloadLanguages />}
+              {/* {store.options.currentDisplay == 'languages' && <DownloadLanguages />} */}
 
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}

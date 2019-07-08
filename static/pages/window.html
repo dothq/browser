@@ -17,12 +17,15 @@
             </style>
             <div id="titleBar" style="-webkit-app-region: drag;width: 100%;float: right;height: 38px;">
                 <img draggable="false" src="../icon.png" style="filter: invert(1);width: 37px;margin-left: 9px;">
-                <a id="close" style="float: right;-webkit-app-region: no-drag;padding: 10px;">
+                <a id="close" title="Close ???" onclick="window.close()" style="float: right;-webkit-app-region: no-drag;padding: 10px;cursor: pointer">
                     <img src="../app-icons/tray-close.png" draggable="false">
                 </a>
-                <a id="back" onclick="back()" style="float: right;-webkit-app-region: no-drag;padding: 10px;cursor: default;">
-                    <img src="../app-icons/back.png" id="back-src" style="filter: invert(0.6); width: 18px" draggable="false">
+                <!-- <a id="back" onclick="back()" style="float: right;-webkit-app-region: no-drag;padding: 10px;cursor: default;transform:rotate(180)">
+                    <img src="../app-icons/fwd.png" id="back-src" style="filter: invert(0.6); width: 18px" draggable="false">
                 </a>
+                <a id="forward" onclick="forward()" style="float: right;-webkit-app-region: no-drag;padding: 10px;cursor: default;">
+                    <img src="../app-icons/bck.png" id="back-src" style="filter: invert(0.6); width: 18px" draggable="false">
+                </a> -->
                 <div style="
                     background-color: #e5e5e5;
                     height: 1px;
@@ -53,6 +56,7 @@
     
                             setInterval(function() {
                                 document.title = `Dot - ${webview.getTitle()}`
+                                document.getElementById("close").setAttribute("title", `Close ${webview.getTitle()}`)
                             }, 1)
                             
                         });
