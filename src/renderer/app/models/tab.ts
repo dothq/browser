@@ -287,11 +287,13 @@ export class Tab {
     });
 
     ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
+        this.select()
         this.originalTitle = this.title;
         this.audioPlaying = true;
     });
 
     ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
+      this.select()
       this.audioPlaying = false;
       this.title = this.originalTitle;
     });

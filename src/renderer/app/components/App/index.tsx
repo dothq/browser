@@ -20,8 +20,6 @@ import { resolve } from 'path';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
-store.init()
-
 // Locale loader
 
 export function checkLightMode() {
