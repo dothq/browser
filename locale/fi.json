@@ -25,7 +25,8 @@
             "ru": "Venäjän kieli",
             "no": "Norjan kieli",
             "ie": "Irlantilainen",
-            "se": "Ruotsin kieli"
+            "se": "Ruotsin kieli",
+            "pt": "Portugalin kieli"
         }
     ],
     "rich_presence": [

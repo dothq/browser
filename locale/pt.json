@@ -1,0 +1,200 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Browser",
+            "dot_full_with_version": "Dot Browser {appVersion}",
+            "button_open": "Abrir",
+            "button_run": "Executar",
+            "button_send": "Enviar",
+            "button_download": "Baixar",
+            "search_placeholder": "Procurar",
+            "quit": "Sair",
+            "quit_dot": "Sair do Dot",
+            "quit_dot_with_version": "Sair do Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Inglês",
+            "es": "Espanhol",
+            "de": "Alemão",
+            "fr": "Francês",
+            "fi": "Finlandês",
+            "ru": "Russo",
+            "no": "Norueguês",
+            "ie": "Irlandês",
+            "se": "Sueco",
+            "pt": "Português"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Navegando em",
+            "audio_details": "Ouvindo áudio em",
+            "file_details": "Visualizando um arquivo {fileType}",
+            "active_small_text": "Navegando em uma página web",
+            "idle_small_text": "Ausente",
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Melhores Sites",
+            "dial_bookmarks": "Favoritos",
+            "overview": "Geral",
+            "menu": "Menu",
+            "tab_groups": "Grupos de guias",
+            "default_tab_group": "Novo grupo",
+            "world": "Mundo",
+            "history_bubble": "Histórico",
+            "bookmarks_bubble": "Favoritos",
+            "downloads_bubble": "Downloads",
+            "settings_bubble": "Configurações",
+            "extensions_bubble": "Extensões",
+            "find_bubble": "Encontrar",
+            "more_tools_bubble": "Mais ferramentas",
+            "welcome_snackbar": "Bem-vindo de volta, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Onde você quer ir hoje?",
+                    "message_2": "O que você tem em mente, {username}?",
+                    "message_3": "Digite um termo de pesquisa ou URL para começar.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Onde você quer ir hoje?",
+                    "message_2": "O que está em sua mente?",
+                    "message_3": "Digite um termo de pesquisa ou URL para começar.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Bom dia",
+                    "afternoon": "Boa tarde",
+                    "evening": "Boa noite"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Configurações",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "my_profile": [
+                {
+                    "title": "Meu Perfil",
+                    "sign_in_btn": "Entrar",
+                    "sign_out_btn": "Sair",
+                    "guest_user": "Convidado"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Aparência",
+                    "toggle_dot": "Mostrar botão Dot",
+                    "search_engine": "Motor de Pesquisa",
+                    "temp_type": "Tipo de temperatura",
+                    "guest_user": "Convidado"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Downloads",
+                    "download_loc": "Local de downloads"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Experimentos para Desenvolvedores",
+                    "chromium_dt": "Ferramentas de Desenvolvedor do Chromium",
+                    "send_test_notif": "Enviar notificação de teste",
+                    "open_log": "Abrir arquivo de registros"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Sobre Dot",
+                    "thanks_message": "Dot foi possível graças a",
+                    "wxnd_coffee": "e ☕.",
+                    "made_in": "Feito em",
+                    "gb_with": "Grã Bretanha com ",
+                    "end": ".",
+                    "developers_title": "Desenvolvedores",
+                    "beta_testers_title": "Testadores Beta",
+                    "special_thanks_title": "Agradecimentos Especiais",
+                    "translators_title": "Tradutores",
+                    "verbose_loaded_fcm": "Serviços de notificação FCM carregados",
+                    "about_page_btn": "Visite a página de depuração",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Enviar comentários",
+                    "feedback_title": "Enviar comentários para os desenvolvedores",
+                    "bug_report_title": "Abrir um relatório de bug",
+                    "describe_issue": "Descreva seu problema"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Idiomas",
+                    "download_languages": "Baixar o pacote de idiomas mais recente"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Histórico",
+            "clear_browsing_history": "Limpar dados do navegador",
+            "sort": [
+                {
+                    "range_all": "Tudo",
+                    "range_today": "Hoje",
+                    "range_yesterday": "Ontem",
+                    "range_last_week": "Semana passada",
+                    "range_last_month": "Mês passado",
+                    "range_older": "Mais velho"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Favoritos",
+            "import": "Importar Favoritos",
+            "export": "Exportar Favoritos",
+            "add_bookmark": "Novo Favorito"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Extensões"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Encontrar na página",
+            "navigate_back": "Voltar",
+            "navigate_forward": "Avançar",
+            "navigate_refresh": "Recarregar (F5)",
+            "navigate_close": "Fechar guia (Ctrl+W)",
+            "open_dot": "Abrir Dot Launcher"
+        }
+    ]
+}

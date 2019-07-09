@@ -25,7 +25,8 @@
             "ru": "Russe",
             "no": "Norvégien",
             "ie": "Irlandais",
-            "se": "Suédois"
+            "se": "Suédois",
+            "pt": "Portugais"
         }
     ],
     "rich_presence": [

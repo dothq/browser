@@ -25,7 +25,8 @@
             "ru": "Russisk",
             "no": "Norsk",
             "ie": "Irsk",
-            "se": "Svensk"
+            "se": "Svensk",
+            "pt": "Portugisisk"
         }
     ],
     "rich_presence": [
