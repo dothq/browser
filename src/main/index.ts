@@ -77,6 +77,9 @@ app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
 // Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
+
+import { ExtensibleSession } from 'electron-extensions';
+
 // Fixes any proxy bypass settings
 
 ipcMain.on('online-status-changed', (event: any, status: any) => {
@@ -86,6 +89,9 @@ ipcMain.on('online-status-changed', (event: any, status: any) => {
 app.on('ready', async () => {
 
   modal.setup();
+
+  // const extensions = new ExtensibleSession(session.defaultSession);
+  // extensions.loadExtension(app.getAppPath() + '/extensions/a.crx');
 
   session.defaultSession.setPermissionRequestHandler(
     (webContents, permission, callback) => {
@@ -192,6 +198,7 @@ app.on('ready', async () => {
         fileName,
         receivedBytes: 0,
         totalBytes: item.getTotalBytes(),
+        downloadedFrom: item.getURL(),
         savePath,
         id,
       });
@@ -206,6 +213,7 @@ app.on('ready', async () => {
             appWindow.webContents.send('download-progress', {
               id,
               receivedBytes: item.getReceivedBytes(),
+              downloadedFrom: item.getURL(),
             });
           }
         }

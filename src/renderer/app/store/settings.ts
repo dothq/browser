@@ -21,10 +21,13 @@ if(!opts.get("toggleDotLauncher")) {
 
 export class OptionsStore {
   @observable
-  public currentDisplay: 'profile' | 'appearance' | 'languages' | 'search_engine' | 'downloads' | 'dev' | 'about' | 'send_feedback' = 'profile';
+  public currentDisplay: 'profile' | 'appearance' | 'languages' | 'search_engine' | 'downloads' | 'dev' | 'about' | 'send_feedback' | 'passwords' = 'profile';
 
   @observable
   public searchEngineCtx: boolean = false;
+
+  @observable
+  public authorized: boolean = false;
 
   public set changeDisplay(dis: any) {
     this.currentDisplay = dis;

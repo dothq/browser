@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
 
@@ -12,7 +12,7 @@ export const StyledSearchBox = styled.div`
   flex-flow: column;
   overflow: hidden;
   min-height: 48px;
-  transition: 0.2s height;
+  transition: 0.4s height cubic-bezier(0.65, 0.05, 0.36, 1);
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
 `;
 
@@ -36,11 +36,15 @@ export const ChipImage = styled.img`
 
 export const SearchIcon = styled.div`
   ${centerIcon()};
-  background-image: url(${icons.search});
   height: 18px;
-  filter: invert(100%);
   min-width: 18px;
   margin-left: 16px;
+
+  ${({ type }: { type: any }) => css`
+    background-image: url(${type});
+    filter: ${type == icons.search ? 'invert(100%)' : 'none'};
+  `};
+
 `;
 
 export const Input = styled.input`

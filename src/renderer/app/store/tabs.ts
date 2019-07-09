@@ -138,6 +138,9 @@ export class TabsStore {
   }
 
   public get selectedTab() {
+    if(!store.tabGroups.currentGroup.selectedTabId) {
+      return null;
+    }
     return this.getTabById(store.tabGroups.currentGroup.selectedTabId);
   }
 

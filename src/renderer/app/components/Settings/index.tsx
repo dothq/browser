@@ -85,8 +85,6 @@ const login = async () => {
     frame: false
   });
 
-  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
-
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
     store.user.avatar = c.avatar;
@@ -433,6 +431,45 @@ const Downloads = observer(() => {
       </ListItem>
     </SettingsSection>
   );
+});
+
+const Passwords = observer(() => {
+
+  if(store.user.loggedin == true) {
+
+    if(store.options.authorized == false) {
+      return (
+        <SettingsSection style={{ height: '70px', paddingTop: '12px' }}>
+          <ListItem style={{ display: 'block' }}> 
+            <div style={{ display: 'flex', marginLeft: '-8px' }}>
+              <InputField style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '45px', paddingLeft: '20px', fontSize: '19px', width: '230px' }} fontColor="white" color="white" type="password"></InputField>
+              <Button visible={store.options.currentDisplay == 'passwords'} style={{ backgroundColor: 'transparent', color: '#fff', margin: '4px 4px 4px 10px' }}>
+                {store.locale.lang.settings[0].my_profile[0].sign_in_btn}
+              </Button>
+            </div>
+          </ListItem>
+        </SettingsSection>
+      )
+    }
+    if(store.options.authorized == true) {
+      return (
+        <SettingsSection>
+          <ListItem>
+            <div>
+              <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].downloads[0].download_loc}</Title>
+              <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
+            </div>
+            <Buttons style={{ marginLeft: 'auto' }}>
+              <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
+            </Buttons>
+            <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
+          </ListItem>
+        </SettingsSection>
+      )
+    }
+
+  }
+
 });
 
 const Advanced = observer(() => {
@@ -885,6 +922,7 @@ export const Settings = observer(() => {
         >
           <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'passwords'} display="passwords">Passwords</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
           {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.lang.settings[0].dev_tools[0].title}</MenuItem>}
@@ -899,6 +937,10 @@ export const Settings = observer(() => {
 
               {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].appearance[0].title}</Title>}
               {store.options.currentDisplay == 'appearance' && <Appearance />}
+
+              {store.options.currentDisplay == 'passwords' && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}>Verify your password</Title>}
+              {store.options.currentDisplay == 'passwords' && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Passwords</Title>}
+              {store.options.currentDisplay == 'passwords' && <Passwords />}
 
               {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}

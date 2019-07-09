@@ -7,15 +7,15 @@ import { popUp } from './keyframes';
 export const Root = styled.div`
   height: 48px;
   width: 280px;
-  box-shadow: ${shadows(6)};
+  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
   position: absolute;
   z-index: 9999;
   bottom: 16px
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50px;
-  background-color: rgba(226, 226, 226, 1);
-  color: rgba(33,33,33,1);
+  background-color: rgba(24, 24, 24, 0.97);
+  color: rgb(198, 198, 198);
   will-change: transition, bottom;
   justify-content: center;
   align-items: center;

@@ -259,6 +259,7 @@ export class View extends BrowserView {
         },
         {
         label: 'View source',
+        enabled: this.webContents.getURL().includes("static/pages/") == false,
         click: () => {
 
           if(this.webContents.getURL().substr(0, 12) != "view-source:") {
@@ -272,10 +273,12 @@ export class View extends BrowserView {
       {
         label: 'Inspect',
         accelerator: 'F12',
+        enabled: this.webContents.getURL().includes("static/pages/") == false,
         icon: resolve(app.getAppPath() + '\\static\\app-icons\\dev.png'),
         click: () => {
 
             if(this.webContents.getURL()) {
+
               this.webContents.inspectElement(params.x, params.y);
 
               if (this.webContents.isDevToolsOpened()) {

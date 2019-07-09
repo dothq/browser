@@ -33,6 +33,7 @@ const autoComplete = (text: string, suggestion: string) => {
 export class OverlayStore {
   public scrollRef = React.createRef<HTMLDivElement>();
   public inputRef = React.createRef<HTMLInputElement>();
+  public iconRef = React.createRef<HTMLDivElement>();
 
   public canSuggest = false;
 
@@ -80,7 +81,8 @@ export class OverlayStore {
       this.inputRef.current.value = val;
     }
     
-    var cleanURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"))
+    var cleanURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"));
+    console.debug(cleanURL)
     
     if(this.inputRef.current.value.includes(cleanURL) == true) {
       this.inputRef.current.value = 'dot://' + this.inputRef.current.value.split(cleanURL)[1].split("/")[1].split(".html")[0]

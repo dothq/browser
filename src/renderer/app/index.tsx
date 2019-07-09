@@ -284,6 +284,14 @@ Menu.setApplicationMenu(
               return;
             }
 
+            if(remote.webContents.getFocusedWebContents().getURL().includes("static/pages/") == true) {
+              return;
+            }
+
+            if(remote.webContents.getFocusedWebContents().getURL().includes("dot://") == true) {
+              return;
+            }
+
               if(store.tabs.list.length != 0) {
                 if(store.overlay.visible == false) {
                 remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  

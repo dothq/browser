@@ -20,6 +20,7 @@ import { SettingsFile } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { DownloadsStore } from './downloads';
 import { LocaleStore } from './locale';
+import { AutofillStore } from './autofill';
 import { AbStore } from './adblockwindow';
 import { OptionsStore } from './settings';
 import { WeatherStore } from './weather';
@@ -66,6 +67,7 @@ export class Store {
   public locale = new LocaleStore();
   public news = new NewsStore();
   public notifications = new NotifsStore();
+  public autofill = new AutofillStore();
 
   @observable
   public isFullscreen = false;

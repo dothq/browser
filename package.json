@@ -95,7 +95,7 @@
     "dot-extension-manager": "^1.0.0",
     "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.2.1",
-    "electron-extensions": "^1.0.0",
+    "electron-extensions": "^1.0.2",
     "electron-modal": "^1.0.0",
     "electron-push-receiver": "^2.1.2",
     "electron-updater": "^4.0.6",

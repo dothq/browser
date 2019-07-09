@@ -22,6 +22,32 @@ const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
 };
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
+  const editJsonFile = require("edit-json-file");
+ 
+  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  var searchurl = `https://www.google.com/search?hl=en&q=`;
+  var iconSearchURL = `https://www.google.com/search`;
+  if(searchengine == "yahoo") {
+    searchurl = `https://search.yahoo.com/search?p=`;
+    iconSearchURL = `https://search.yahoo.com/search`;
+  }
+  if(searchengine == "bing") {
+    searchurl = `https://www.bing.com/search?q=`;
+    iconSearchURL = `https://www.bing.com/search`;
+  }
+  if(searchengine == "ddg") {
+    searchurl = `https://duckduckgo.com/?q=`;
+    iconSearchURL = `https://duckduckgo.com/?q=`;
+  }
+  if(searchengine == "ecosia") {
+    searchurl = `https://www.ecosia.org/search?q=`;
+    iconSearchURL = `https://www.ecosia.org/search`;
+  }
+
   if (e.which === 13) {
     // Enter.
     e.preventDefault();
@@ -29,28 +55,19 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
     let url = text;
 
-    const editJsonFile = require("edit-json-file");
- 
-    let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
-
-    var searchengine = file.get("searchEngine");
-
-    if(searchengine == "google") {
-      var searchurl = `https://www.google.com/search?hl=en&q=`;
-    }
+    var searchurl = `https://www.google.com/search?hl=en&q=`;
     if(searchengine == "yahoo") {
-      var searchurl = `https://search.yahoo.com/search?p=`;
+      searchurl = `https://search.yahoo.com/search?p=`;
     }
     if(searchengine == "bing") {
-      var searchurl = `https://www.bing.com/search?q=`;
+      searchurl = `https://www.bing.com/search?q=`;
     }
     if(searchengine == "ddg") {
-      var searchurl = `https://duckduckgo.com/?q=`;
+      searchurl = `https://duckduckgo.com/?q=`;
     }
     if(searchengine == "ecosia") {
-      var searchurl = `https://www.ecosia.org/search?q=`;
+      searchurl = `https://www.ecosia.org/search?q=`;
     }
-
 
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
@@ -83,6 +100,38 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   const { suggestions } = store;
   const { list } = suggestions;
   const input = store.overlay.inputRef.current;
+
+  const editJsonFile = require("edit-json-file");
+ 
+  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  var searchurl = `https://www.google.com/search?hl=en&q=`;
+  var iconSearchURL = `https://www.google.com/search`;
+  if(searchengine == "yahoo") {
+    searchurl = `https://search.yahoo.com/search?p=`;
+    iconSearchURL = `https://search.yahoo.com/search`;
+  }
+  if(searchengine == "bing") {
+    searchurl = `https://www.bing.com/search?q=`;
+    iconSearchURL = `https://www.bing.com/search`;
+  }
+  if(searchengine == "ddg") {
+    searchurl = `https://duckduckgo.com/?q=`;
+    iconSearchURL = `https://duckduckgo.com/?q=`;
+  }
+  if(searchengine == "ecosia") {
+    searchurl = `https://www.ecosia.org/search?q=`;
+    iconSearchURL = `https://www.ecosia.org/search`;
+  }
+
+  if(store.overlay.inputRef.current.value.includes(iconSearchURL) == true) {
+    store.overlay.iconRef.current.style.backgroundImage = `url(https://api.faviconkit.com/${iconSearchURL}/32)`
+  }
+  else {
+    store.overlay.iconRef.current.style.backgroundImage = `url(${icons.search})`
+  }
 
   if (
     key !== 8 && // backspace
@@ -117,7 +166,7 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 const onInput = (e: any) => {
   store.overlay.show();
   store.overlay.suggest();
-  store.overlay.scrollRef.current.scrollTop = 0;
+  // store.overlay.scrollRef.current.scrollTop = 0;
 };
 
 const onStarClick = async () => {
@@ -226,7 +275,7 @@ export const SearchBox = observer(() => {
   return (
     <StyledSearchBox style={{ height }} onClick={onClick}>
       <InputContainer>
-        <SearchIcon />
+        <SearchIcon ref={store.overlay.iconRef} type={icons.search}></SearchIcon>
         <Input
           autoFocus
           placeholder={searchBoxValue}
