@@ -42,7 +42,7 @@
     ],
     "overlay": [
         {
-            "dial_top_sites": "Melhores Sites",
+            "dial_top_sites": "Sites mais acessados",
             "dial_bookmarks": "Favoritos",
             "overview": "Geral",
             "menu": "Menu",
