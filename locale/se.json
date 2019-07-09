@@ -137,6 +137,8 @@
                     "beta_testers_title": "Beta Testare",
                     "special_thanks_title": "Speciella Tack",
                     "translators_title": "Översättare",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
                     "verbose_loaded_fcm": "Laddade FCM Notifikations tjänster",
                     "about_page_btn": "Besök felsöknings sidan",
                     "copyright_notice": "© 2019 Ender And Fire Development"
