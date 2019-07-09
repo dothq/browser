@@ -25,7 +25,8 @@
             "ru": "Russe",
             "no": "Norvégien",
             "ie": "Irlandais",
-            "se": "Suédois"
+            "se": "Suédois",
+            "pt": "Portugais"
         }
     ],
     "rich_presence": [
@@ -135,8 +136,10 @@
                     "developers_title": "Développeurs",
                     "beta_testers_title": "Bêta-testeurs",
                     "special_thanks_title": "Remerciements spéciaux",
-                    "verbose_loaded_fcm": "Services de notification FCM activés",
                     "translators_title": "Traducteurs",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
+                    "verbose_loaded_fcm": "Services de notification FCM activés",
                     "about_page_btn": "Visitez la page débogage",
                     "copyright_notice": "© 2019 Ender et Fire Développement"
                 }

@@ -1,199 +1,202 @@
 {
-  "standard": [
-    {
-      "dot": "Dot",
-      "dot_with_version": "Dot {appVersion}",
-      "dot_full": "Dot Webbläsare",
-      "dot_full_with_version": "Dot Webbläsare {appVersion}",
-      "button_open": "Öppna",
-      "button_run": "Kör",
-      "button_send": "Skicka",
-      "button_download": "Ladda ner",
-      "search_placeholder": "Sök",
-      "quit": "Stäng",
-      "quit_dot": "Stäng Dot",
-      "quit_dot_with_version": "Stäng Dot {appVersion}"
-    }
-  ],
-  "languages": [
-    {
-      "en": "Engelska",
-      "es": "Spanska",
-      "de": "Tyska",
-      "fr": "Franska",
-      "fi": "Finska",
-      "ru": "Ryska",
-      "no": "Norksa",
-      "ie": "Irländska",
-      "se": "Svenska"
-    }
-  ],
-  "rich_presence": [
-    {
-      "default_details": "Bläddrar på",
-      "audio_details": "Lyssnar på ljud på",
-      "file_details": "Kollar på en {fileType} fil",
-      "active_small_text": "Bläddrar en webbplats",
-      "idle_small_text": "Inaktiv",
-      "idle_details": "Dot Webbläsare",
-      "large_text": "Dot Webbläsare {version}"
-    }
-  ],
-  "overlay": [
-    {
-      "dial_top_sites": "Topp sidor",
-      "dial_bookmarks": "Bokmärken",
-      "overview": "Översikt",
-      "menu": "Meny",
-      "tab_groups": "Flik grupper",
-      "default_tab_group": "Ny grup",
-      "world": "Värld",
-      "history_bubble": "Historik",
-      "bookmarks_bubble": "Bokmärken",
-      "downloads_bubble": "Nedladdningar",
-      "settings_bubble": "Inställningar",
-      "extensions_bubble": "Tillägg",
-      "find_bubble": "Hitta",
-      "more_tools_bubble": "Fler verktyg",
-      "welcome_snackbar": "Välkommen tillbaka, {username}"
-    }
-  ],
-  "search_bar": [
-    {
-      "logged_in": [
+    "standard": [
         {
-          "message_1": "Var vill du gå idag?",
-          "message_2": "Vad är på dina tankar {username}?",
-          "message_3": "Skriv en sök term eller URL för att starta.",
-          "message_4": "{currentTimeType}, {username}"
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Webbläsare",
+            "dot_full_with_version": "Dot Webbläsare {appVersion}",
+            "button_open": "Öppna",
+            "button_run": "Kör",
+            "button_send": "Skicka",
+            "button_download": "Ladda ner",
+            "search_placeholder": "Sök",
+            "quit": "Stäng",
+            "quit_dot": "Stäng Dot",
+            "quit_dot_with_version": "Stäng Dot {appVersion}"
         }
-      ],
-      "guest": [
+    ],
+    "languages": [
         {
-          "message_1": "Var vill du gå idag?",
-          "message_2": "Vad är på dina tankar?",
-          "message_3": "Skriv en sök term eller URL för att starta.",
-          "message_4": "{currentTimeType}"
+            "en": "Engelska",
+            "es": "Spanska",
+            "de": "Tyska",
+            "fr": "Franska",
+            "fi": "Finska",
+            "ru": "Ryska",
+            "no": "Norksa",
+            "ie": "Irländska",
+            "se": "Svenska",
+            "pt": "Portugisiska"
         }
-      ],
-      "timeTypes": [
+    ],
+    "rich_presence": [
         {
-          "morning": "God morgon",
-          "afternoon": "God eftermiddag",
-          "evening": "God kväll"
+            "default_details": "Bläddrar på",
+            "audio_details": "Lyssnar på ljud på",
+            "file_details": "Kollar på en {fileType} fil",
+            "active_small_text": "Bläddrar en webbplats",
+            "idle_small_text": "Inaktiv",
+            "idle_details": "Dot Webbläsare",
+            "large_text": "Dot Webbläsare {version}"
         }
-      ]
-    }
-  ],
-  "settings": [
-    {
-      "title": "Inställningar",
-      "google_searchEngine": "Google",
-      "bing_searchEngine": "Bing",
-      "yahoo_searchEngine": "Yahoo",
-      "ddg_searchEngine": "DuckDuckGo",
-      "ecosia_searchEngine": "Ecosia",
-      "my_profile": [
+    ],
+    "overlay": [
         {
-          "title": "Min Profil",
-          "sign_in_btn": "Logga in",
-          "sign_out_btn": "Logga ut",
-          "guest_user": "Gäst"
+            "dial_top_sites": "Topp sidor",
+            "dial_bookmarks": "Bokmärken",
+            "overview": "Översikt",
+            "menu": "Meny",
+            "tab_groups": "Flik grupper",
+            "default_tab_group": "Ny grup",
+            "world": "Värld",
+            "history_bubble": "Historik",
+            "bookmarks_bubble": "Bokmärken",
+            "downloads_bubble": "Nedladdningar",
+            "settings_bubble": "Inställningar",
+            "extensions_bubble": "Tillägg",
+            "find_bubble": "Hitta",
+            "more_tools_bubble": "Fler verktyg",
+            "welcome_snackbar": "Välkommen tillbaka, {username}"
         }
-      ],
-      "appearance": [
+    ],
+    "search_bar": [
         {
-          "title": "Utseende",
-          "toggle_dot": "Toggla Dot knappen",
-          "search_engine": "Sökmotor",
-          "temp_type": "Temperatur typ",
-          "guest_user": "Gäst"
+            "logged_in": [
+                {
+                    "message_1": "Var vill du gå idag?",
+                    "message_2": "Vad är på dina tankar {username}?",
+                    "message_3": "Skriv en sök term eller URL för att starta.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Var vill du gå idag?",
+                    "message_2": "Vad är på dina tankar?",
+                    "message_3": "Skriv en sök term eller URL för att starta.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "God morgon",
+                    "afternoon": "God eftermiddag",
+                    "evening": "God kväll"
+                }
+            ]
         }
-      ],
-      "downloads": [
+    ],
+    "settings": [
         {
-          "title": "Nedladdningar",
-          "download_loc": "Nedladdnings plats"
+            "title": "Inställningar",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "my_profile": [
+                {
+                    "title": "Min Profil",
+                    "sign_in_btn": "Logga in",
+                    "sign_out_btn": "Logga ut",
+                    "guest_user": "Gäst"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Utseende",
+                    "toggle_dot": "Toggla Dot knappen",
+                    "search_engine": "Sökmotor",
+                    "temp_type": "Temperatur typ",
+                    "guest_user": "Gäst"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Nedladdningar",
+                    "download_loc": "Nedladdnings plats"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Utvecklar Experiment",
+                    "chromium_dt": "Chromium Utvecklar Verktyg",
+                    "send_test_notif": "Skicka test notifikation",
+                    "open_log": "Öppna logg fil"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Om Dot",
+                    "thanks_message": "Dot var gjord möjlig tack vare",
+                    "wxnd_coffee": "och ☕.",
+                    "made_in": "Tillverkad i",
+                    "gb_with": "Storbritannien med ",
+                    "end": ".",
+                    "developers_title": "Utvecklare",
+                    "beta_testers_title": "Beta Testare",
+                    "special_thanks_title": "Speciella Tack",
+                    "translators_title": "Översättare",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
+                    "verbose_loaded_fcm": "Laddade FCM Notifikations tjänster",
+                    "about_page_btn": "Besök felsöknings sidan",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Skicka feedback",
+                    "feedback_title": "Skicka feedback till utvecklare",
+                    "bug_report_title": "Öppna en bugg rapport",
+                    "describe_issue": "Beskriv ditt problem"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Languages",
+                    "download_languages": "Ladda ner det senaste språk paketet"
+                }
+            ]
         }
-      ],
-      "dev_tools": [
+    ],
+    "history": [
         {
-          "title": "Utvecklar Experiment",
-          "chromium_dt": "Chromium Utvecklar Verktyg",
-          "send_test_notif": "Skicka test notifikation",
-          "open_log": "Öppna logg fil"
+            "title": "Historik",
+            "clear_browsing_history": "Rensa bläddring historik",
+            "sort": [
+                {
+                    "range_all": "Allt",
+                    "range_today": "Idag",
+                    "range_yesterday": "Igår",
+                    "range_last_week": "Senaste veckan",
+                    "range_last_month": "Senaste månaden",
+                    "range_older": "Äldre"
+                }
+            ]
         }
-      ],
-      "about_dot": [
+    ],
+    "bookmarks": [
         {
-          "title": "Om Dot",
-          "thanks_message": "Dot var gjord möjlig tack vare",
-          "wxnd_coffee": "och ☕.",
-          "made_in": "Tillverkad i",
-          "gb_with": "Storbritannien med ",
-          "end": ".",
-          "developers_title": "Utvecklare",
-          "beta_testers_title": "Beta Testare",
-          "special_thanks_title": "Speciella Tack",
-          "translators_title": "Översättare",
-          "verbose_loaded_fcm": "Laddade FCM Notifikations tjänster",
-          "about_page_btn": "Besök felsöknings sidan",
-          "copyright_notice": "© 2019 Ender And Fire Development"
+            "title": "Bokmärken",
+            "import": "Importera Bokmärken",
+            "export": "Exportera Bokmärken",
+            "add_bookmark": "Nytt Bokmärke"
         }
-      ],
-      "feedback": [
+    ],
+    "extensions": [
         {
-          "title": "Skicka feedback",
-          "feedback_title": "Skicka feedback till utvecklare",
-          "bug_report_title": "Öppna en bugg rapport",
-          "describe_issue": "Beskriv ditt problem"
+            "title": "Tillägg"
         }
-      ],
-      "languages": [
+    ],
+    "window": [
         {
-          "title": "Languages",
-          "download_languages": "Ladda ner det senaste språk paketet"
+            "find_on_page": "Hitta i en sida",
+            "navigate_back": "Tillbaka",
+            "navigate_forward": "Framåt",
+            "navigate_refresh": "Ladda om (F5)",
+            "navigate_close": "Stäng flik (Ctrl+W)",
+            "open_dot": "Öppna Dot Launcher"
         }
-      ]
-    }
-  ],
-  "history": [
-    {
-      "title": "Historik",
-      "clear_browsing_history": "Rensa bläddring historik",
-      "sort": [
-        {
-          "range_all": "Allt",
-          "range_today": "Idag",
-          "range_yesterday": "Igår",
-          "range_last_week": "Senaste veckan",
-          "range_last_month": "Senaste månaden",
-          "range_older": "Äldre"
-        }
-      ]
-    }
-  ],
-  "bookmarks": [
-    {
-      "title": "Bokmärken",
-      "import": "Importera Bokmärken",
-      "export": "Exportera Bokmärken",
-      "add_bookmark": "Nytt Bokmärke"
-    }
-  ],
-  "extensions": [
-    {
-      "title": "Tillägg"
-    }
-  ],
-  "window": [
-    {
-      "find_on_page": "Hitta i en sida",
-      "navigate_back": "Tillbaka",
-      "navigate_forward": "Framåt",
-      "navigate_refresh": "Ladda om (F5)",
-      "navigate_close": "Stäng flik (Ctrl+W)",
-      "open_dot": "Öppna Dot Launcher"
-    }
-  ]
+    ]
 }
