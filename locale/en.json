@@ -25,7 +25,8 @@
             "ru": "Russian",
             "no": "Norweigan",
             "ie": "Irish",
-            "se": "Swedish"
+            "se": "Swedish",
+            "pt": "Portuguese"
         }
     ],
     "rich_presence": [
@@ -136,6 +137,8 @@
                     "beta_testers_title": "Beta Testers",
                     "special_thanks_title": "Special Thanks",
                     "translators_title": "Translators",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
                     "verbose_loaded_fcm": "Loaded FCM Notification services",
                     "about_page_btn": "Visit the debug page",
                     "copyright_notice": "© 2019 Ender And Fire Development"

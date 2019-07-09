@@ -376,7 +376,7 @@ const AboutDot = observer(() => {
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].special_thanks_title}</Title>
         <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
         <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].translators_title}</Title>
-        <ExtLink onClick={translators} title="View all contributors on GitHub.com" style={{ marginLeft: '60px', color: '#dadada' }}>View translators</ExtLink>
+        <ExtLink onClick={translators} title={store.locale.lang.settings[0].about_dot[0].view_translators_github} style={{ marginLeft: '60px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].view_translators}</ExtLink>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
         <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Title>
       </AboutWrapper>

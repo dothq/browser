@@ -25,7 +25,8 @@
             "ru": "Rúisis",
             "no": "Ioruais",
             "ie": "Gaeilge",
-            "se": "Sualainnis"
+            "se": "Sualainnis",
+            "pt": "Portaingéilis"
         }
     ],
     "rich_presence": [
@@ -137,6 +138,8 @@
                     "special_thanks_title": "Go raibh maith agat",
                     "verbose_loaded_fcm": "Seirbhísí fógraithe FCM luchtaithe",
                     "translators_title": "Aistritheoirí",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
                     "about_page_btn": "Tabhair cuairt ar an leathanach dífhabhtaithe",
                     "copyright_notice": "© 2019 Ender And Fire Development"
                 }
