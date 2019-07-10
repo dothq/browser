@@ -23,9 +23,9 @@ const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
-  const editJsonFile = require("edit-json-file");
+  const json = require("edit-json-file");
  
-  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+  let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
   var searchengine = file.get("searchEngine");
 
@@ -101,9 +101,9 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   const { list } = suggestions;
   const input = store.overlay.inputRef.current;
 
-  const editJsonFile = require("edit-json-file");
+  const json = require("edit-json-file");
  
-  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+  let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
   var searchengine = file.get("searchEngine");
 
@@ -217,9 +217,9 @@ const onUserClick = () => {
 
 const chipImage = () => {
 
-  const editJsonFile = require("edit-json-file");
+  const json = require("edit-json-file");
 
-  let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+  let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
   var searchengine = file.get("searchEngine");
 

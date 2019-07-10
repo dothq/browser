@@ -20,7 +20,7 @@ import { DropArrow } from '../Overlay/style';
 import { appWindow } from '../..';
 import { BrowserView, shell, remote } from 'electron';
 import { ViewManager } from '~/main/view-manager';
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -51,7 +51,7 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
 //   }
 // }, 500);
 
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 setTimeout(function() {
   store.overlay.currentContent = "default"

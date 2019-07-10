@@ -24,7 +24,7 @@ export const ContextMenuItem = styled.div`
   font-weight: 400;
   font-size: 14px;
 
-  ${({ icon, selected }: { icon?: string; selected?: boolean }) => css`
+  ${({ icon, selected, invert, opacity }: { icon?: string; selected?: boolean; invert?: boolean; opacity?: boolean; }) => css`
     background-color: ${selected ? 'rgba(255, 255, 255, 0.15)' : 'none'};
 
     &:hover {
@@ -36,8 +36,8 @@ export const ContextMenuItem = styled.div`
       padding-left: ${24 + 16 + 8}px;
       &:before {
         content: '';
-        filter: invert(100%);
-        opacity: 0.54;
+        filter: ${invert ? 'invert(0)' : 'invert(100%)'};
+        opacity: ${opacity ? '1' : '0.54'};
         ${centerIcon()};
         width: 16px;
         height: 16px;

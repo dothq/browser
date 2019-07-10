@@ -4,8 +4,8 @@ import Switch from '@material-ui/core/Switch';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+const json = require("edit-json-file");
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 // if(!file.get("discordRPCEnabled")) {
 //     file.set("discordRPCEnabled", true);

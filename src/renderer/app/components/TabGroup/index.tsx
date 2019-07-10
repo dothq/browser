@@ -5,6 +5,11 @@ import { StyledTabGroup, Content, Icons, Icon, Input } from './style';
 import { icons } from '../../constants';
 import { TabGroup } from '../../models';
 import store from '../../store';
+import { resolve } from 'path';
+import { homedir } from 'os';
+
+var json = require("edit-json-file");
+var file = json(resolve(homedir()) + '/dot/session/tab-groups.json');
 
 const onClick = (item: TabGroup) => (e: any) => {
   e.stopPropagation();

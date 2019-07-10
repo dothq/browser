@@ -20,8 +20,8 @@ const fetch = require("node-fetch");
 import store from '../../store';
 import { resolve } from 'path';
 import { homedir } from 'os';
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+const json = require("edit-json-file");
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 if(!file.get("tempType")) {
   file.set("tempType", "c");

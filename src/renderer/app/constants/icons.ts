@@ -37,7 +37,12 @@ import open from '~/shared/resources/icons/open.svg';
 import not_checked from '~/shared/resources/icons/not_checked.svg';
 import checked from '~/shared/resources/icons/checked.svg';
 
-
+import thumbs_up_default from '~/shared/resources/icons/emojis/thumbs_up_default.png';
+import thumbs_up_pale from '~/shared/resources/icons/emojis/thumbs_up_pale.png';
+import thumbs_up_dark from '~/shared/resources/icons/emojis/thumbs_up_dark.png';
+import thumbs_up_medium from '~/shared/resources/icons/emojis/thumbs_up_medium.png';
+import thumbs_up_medium_pale from '~/shared/resources/icons/emojis/thumbs_up_medium_pale.png';
+import thumbs_up_medium_dark from '~/shared/resources/icons/emojis/thumbs_up_medium_dark.png';
 import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
 
 export const icons = {
@@ -80,4 +85,10 @@ export const icons = {
   open,
   not_checked,
   checked,
+  thumbs_up_dark,
+  thumbs_up_default,
+  thumbs_up_medium,
+  thumbs_up_medium_dark,
+  thumbs_up_medium_pale,
+  thumbs_up_pale,
 };

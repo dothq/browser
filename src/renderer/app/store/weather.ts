@@ -8,8 +8,8 @@ import { string } from 'prop-types';
 import { checkServerIdentity } from 'tls';
 import console = require('console');
 import { homedir } from 'os';
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+const json = require("edit-json-file");
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 // Special thanks to DusterTheFirst for this neat bit of code 😊
 

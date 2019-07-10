@@ -16,9 +16,9 @@ import console = require('console');
 import { get } from 'http';
 const nativeImage = require("electron").nativeImage;
 const modal = require('electron-modal');
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
 
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 ipcMain.setMaxListeners(0);
 
@@ -69,6 +69,19 @@ catch (e) {
       toggleDotLauncher: true,
       searchEngine: 'google'
     } as DotOptions),
+  );
+}
+
+try {
+  if (existsSync(getPath('tab-groups.json'))) { console.log("[SessionStore] Checked for tab-groups.json, exists.") }
+}
+catch (e) {
+  console.log(e)
+  writeFileSync(
+    getPath('tab-groups.json'),
+    JSON.stringify({
+      "tab-groups": {}
+    })
   );
 }
 

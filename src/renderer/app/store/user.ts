@@ -9,8 +9,8 @@ import store from '.';
 import { countVisitedTimes } from '../utils';
 import console = require('console');
 import { remote } from 'electron';
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+const json = require("edit-json-file");
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 const fetch = require("node-fetch");
 
 export class UserStore {

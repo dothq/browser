@@ -30,9 +30,9 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
     let url = text;
 
-    const editJsonFile = require("edit-json-file");
+    const json = require("edit-json-file");
  
-    let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+    let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
     var searchengine = file.get("searchEngine");
 

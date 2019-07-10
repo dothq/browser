@@ -60,9 +60,9 @@ const dotLauncherCtm = () => () => {
   menu.popup();
 };
 
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
  
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 var tdl = file.get("toggleDotLauncher");
 

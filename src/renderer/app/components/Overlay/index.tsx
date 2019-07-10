@@ -37,8 +37,8 @@ import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Preloader } from '~/renderer/components/Preloader'
-const editJsonFile = require("edit-json-file");
-const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
+const json = require("edit-json-file");
+const enUK = json(`${remote.app.getAppPath()}/locale/en.json`);
 
 import console = require('console');
 
@@ -47,7 +47,7 @@ import { ipcRenderer } from 'electron';
 import { ExtLink } from '../NewsCard/style';
 import { checkLightMode } from '../App';
 
-let file = editJsonFile(`${remote.app.getPath('userData')}/dot-options.json`);
+let file = json(`${remote.app.getPath('userData')}/dot-options.json`);
 
 if(!file.get("searchEngine")) {
   file.set("searchEngine", "google");
@@ -201,6 +201,9 @@ export const preventHiding = (e: any) => {
   store.user.menuVisible = false;
   store.options.searchEngineCtx = false;
   store.bookmarks.menuVisible = false;
+  if(store.options.emojiCtx = true) {
+    store.options.emojiCtx = false;
+  }
 };
 
 store.user.loadProfile();

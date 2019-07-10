@@ -7,9 +7,9 @@ import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
 import { appWindow } from '..';
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
 import { homedir } from 'os';
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 import {
   FiltersEngine,

@@ -32,9 +32,9 @@ var request = require('ajax-request');
 var modal = require('electron-modal');
 const { remote } = require('electron')
 const { Tray, app } = remote
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
-let allLangs = editJsonFile(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
+const json = require("edit-json-file");
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
+let allLangs = json(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
 allLangs = allLangs.toObject();
 const prettyBytes = require('pretty-bytes');
 
@@ -50,6 +50,7 @@ store.options.currentDisplay = "profile";
 const onBackClick = () => {
   scrollRef.current.scrollTop = 0;
   store.options.searchEngineCtx = false;
+  store.options.emojiCtx = false;
   store.bookmarks.menuVisible = false;
 };
 
@@ -557,12 +558,14 @@ export default ToggleSwitchDL;
 var seMenuVisible = false;
 
 const toggleSeMenu = (e: any) => {
-  e.stopPropagation();
-  if(store.options.searchEngineCtx == true) {
-    store.options.searchEngineCtx = false
-  }
-  else {
-    store.options.searchEngineCtx = true
+  if(store.options.emojiCtx == false) {
+    e.stopPropagation();
+    if(store.options.searchEngineCtx == true) {
+      store.options.searchEngineCtx = false
+    }
+    else {
+      store.options.searchEngineCtx = true
+    }
   }
 }
 
@@ -715,6 +718,31 @@ export const Feedback = observer(() => {
   );
 });
 
+var skin = icons.thumbs_up_default
+if(store.options.emojiSkinTone == 'pale') {
+  skin = icons.thumbs_up_pale
+} else if(store.options.emojiSkinTone == 'medium_pale') {
+  skin = icons.thumbs_up_medium_pale
+} else if(store.options.emojiSkinTone == 'medium') {
+  skin = icons.thumbs_up_medium
+} else if(store.options.emojiSkinTone == 'medium_dark') {
+  skin = icons.thumbs_up_medium_dark
+} else if(store.options.emojiSkinTone == 'dark') {
+  skin = icons.thumbs_up_dark
+}
+
+const toggleEmojiCtx = (e: any) => {
+  if(store.options.searchEngineCtx == false) {
+    e.stopPropagation();
+    if(store.options.emojiCtx == true) {
+      store.options.emojiCtx = false;
+    }
+    else {
+      store.options.emojiCtx = true;
+    }
+  }
+}
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
@@ -722,6 +750,33 @@ export const Appearance = observer(() => {
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].toggle_dot}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
             <ToggleSwitchDL />
+          </Buttons>
+        </ListItem>
+
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>Emoji skin tone</Title>
+          <Buttons style={{ marginLeft: 'auto' }}>
+            <IconButton visible={true} onClick={toggleEmojiCtx} icon={skin} style={{ cursor: 'pointer', filter: 'invert(0)', backgroundSize: '20px' }} />
+            <ContextMenu visible={store.options.emojiCtx == true} style={{ filter: 'invert(0)', width: '50px' }}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkinTone = 'default'} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkinTone = 'pale'} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkinTone = 'medium_pale'} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkinTone = 'medium'} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkinTone = 'medium_dark'} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkinTone = 'dark'} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+
+              </ContextMenuItem>
+            </ContextMenu>
           </Buttons>
         </ListItem>
 

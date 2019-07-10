@@ -69,6 +69,13 @@ export class Store {
   public notifications = new NotifsStore();
   public autofill = new AutofillStore();
 
+  // Special stores
+  public app = require("electron").app;
+  public remoteApp = require("electron").remote.app;
+  public remote = require("electron").remote;
+  public ipcMsg = require("electron").ipcRenderer;
+  public ipcRec = require("electron").ipcMain;
+
   @observable
   public isFullscreen = false;
 

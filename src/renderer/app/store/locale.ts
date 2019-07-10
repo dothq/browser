@@ -3,8 +3,8 @@ import { ipcRenderer, remote } from 'electron';
 import { resolve } from 'path';
 import { homedir } from 'os';
 import store from '.';
-const editJsonFile = require("edit-json-file");
-const opts = editJsonFile(resolve(homedir() + '/dot/dot-options.json'));
+const json = require("edit-json-file");
+const opts = json(resolve(homedir() + '/dot/dot-options.json'));
 
 if(!opts.get("language")) {
   opts.set("language", "en");
@@ -41,12 +41,12 @@ export class LocaleStore {
   }
 
   public load() {
-    const languageJSON = editJsonFile(`${remote.app.getAppPath()}/locale/${this.currentLanguage}.json`);
+    const languageJSON = json(`${remote.app.getAppPath()}/locale/${this.currentLanguage}.json`);
     this.lang = languageJSON.toObject()
   }
 
   public loadUK() {
-    const enUK = editJsonFile(`${remote.app.getAppPath()}/locale/en.json`);
+    const enUK = json(`${remote.app.getAppPath()}/locale/en.json`);
     this.uk = enUK.toObject()
     throw new Error("This resource is deprecated.")
   }

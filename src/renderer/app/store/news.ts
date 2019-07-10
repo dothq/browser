@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import { ipcRenderer, remote } from 'electron';
 import console = require('console');
 import store from '.';
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
 
 export class NewsStore {
 

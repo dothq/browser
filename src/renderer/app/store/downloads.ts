@@ -7,9 +7,9 @@ import { homedir } from 'os';
 import { resolve } from 'path';
 import { rename } from 'fs'; 
 
-const editJsonFile = require("edit-json-file");
+const json = require("edit-json-file");
 const PIXI = require("pixi-sound");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+let file = json(resolve(homedir()) + '/dot/dot-options.json');
 const app = remote.app;
 
 export class DownloadsStore {
