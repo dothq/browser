@@ -17,6 +17,7 @@
 * **🚩 Tab Groups** - Organize your tabs in a breeze.
 * **🎨 Customization** - Edit your Dot experience to what you want.
 * **🔖 Bookmarks & History** - Keep track of your favourite pages and your browsing history.
+* **😀 Clean Emojis** - We use Twitter's emojiset in Dot, instead of those boring native emojis.
 * **🌥 Weather Updates** - A little card on the overlay telling you about the weather in your location.
 * **⚪ Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
 
