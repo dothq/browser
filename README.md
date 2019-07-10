@@ -4,6 +4,9 @@
 
 <h1 align="center">Dot</h1>
 <h3 align="center">A beautiful browser with material UI, with built-in adblock, based on Wexond.</h3>
+<h3 align="center">
+  <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>     <img src="https://img.shields.io/discord/525056817399726102.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>
+  <img src="https://img.shields.io/circleci/build/github/dot-browser/desktop/master.svg?token=0d055a2032dbb812b31678366d549a3919379f70" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>     <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/></h3>
 
 ## 👾 Features
 
@@ -56,6 +59,7 @@ For support, join our support discord server.
 ## 🖋 Authors
 
 * **Ender** *aka EnderDev* - *Main Developer* - [EnderDev](https://github.com/EnderDev)
+* **Jared** *aka LOHT03* - *Main Developer* - [LOHT03](https://github.com/LOHT03)
 * **Geek** *aka GamingGeek* - *Main Developer* - [GamingGeek](https://github.com/GamingGeek)
 
 ## 🤵 License
