@@ -261,22 +261,23 @@
 
   <script>
 
-    var appMount = document.getElementById("app");
+    setInterval(function() {
+      var elementList = document.getElementsByTagName("*");
 
-    twemoji.parse(appMount, {"size":72});
-    
-    const { ipcRenderer } = require('electron')
+      for(var i = 0; i < elementList.length; i++) {
 
-    ipcRenderer.on('ready', (event) => {
-      console.log(`%c Dot Browser %c Loaded `,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
-    })
+        twemoji.parse(elementList[i], {
+          callback: function(icon, options, variant) {
+            return `https://twemoji.maxcdn.com/${options.size}/${icon}.png`;
+          },
+          size: 16
+        });
 
-    ipcRenderer.on('reload-webpage', (event) => {
+      }
+    }, 200);
+
+    require("electron").ipcRenderer.on('reload-webpage', (event) => {
       window.location.reload()
-    })
-
-    ipcRenderer.on('fcm-ready', (event, token) => {
-      console.log(`%c Dot Browser %c FCM Client loaded with token ${token}`,"background: #424242; color: #e8e8e8; border-radius: 3px 0 0 3px;", "background: rgba(33,150,243,1); color: #e8e8e8; border-radius: 0px 3px 3px 0px;");
     })
   </script>
 
