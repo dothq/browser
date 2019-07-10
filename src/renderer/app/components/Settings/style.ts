@@ -56,6 +56,36 @@ export const A = styled.a`
   }
 `;
 
+export const DialogPopup = styled.div`
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+  display: flex;
+  max-height: calc(100% - 96px);
+  flex-direction: column;
+  margin: 48px;
+  position: relative;
+  overflow-y: auto;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 200px;
+  width: 500px;
+  z-index: 9999;
+`;
+
+export const DialogBackground = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 999%;
+  width: 999%;
+  background-color: #00000078;
+  z-index: 100;
+`;
+
 export const AboutWrapper = styled.div`
 
 `;

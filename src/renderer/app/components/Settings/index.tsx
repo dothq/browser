@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField, ExtLink } from './style'
+import { InputField, ExtLink, DialogPopup, DialogBackground } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Textfield } from '~/renderer/components/Textfield';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
@@ -27,6 +27,7 @@ const DataURI = require('datauri').promise;
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { openNewGitHubIssue } from 'electron-util';
 import { Preloader } from '~/renderer/components/Preloader';
+import { Line } from '../App/style';
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -800,12 +801,18 @@ export const Appearance = observer(() => {
               <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
+              <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '5px' }} />
               <ContextMenuItem icon={icons.add}>
                 {store.locale.lang.settings[0].create_new}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
+
+        <DialogPopup>
+          <Title>Create a custom search engine</Title>
+        </DialogPopup>
+        <DialogBackground />
 
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
