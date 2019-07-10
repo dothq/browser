@@ -94,6 +94,7 @@
             "yahoo_searchEngine": "Yahoo",
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
+            "create_new": "Add new",
             "my_profile": [
                 {
                     "title": "Meu Perfil",

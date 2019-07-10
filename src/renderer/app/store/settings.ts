@@ -5,6 +5,7 @@ import store from '.';
 import { ipcRenderer, remote } from 'electron';
 import { extname, resolve } from 'path';
 import { homedir } from 'os';
+import { icons } from '../constants/icons';
 
 const json = require("edit-json-file");
 const opts = json(resolve(homedir() + '/dot/dot-options.json'));
@@ -38,10 +39,30 @@ export class OptionsStore {
   public authorized: boolean = false;
 
   @observable
-  public emojiSkinTone: 'default' | 'pale' | 'medium_pale' | 'medium' | 'medium_dark' | 'dark' = opts.get("skinTone");
+  public emojiSkinTone: string = opts.get("skinTone");
 
-  public set emojiSkin(tone: 'default' | 'pale' | 'medium_pale' | 'medium' | 'medium_dark' | 'dark') {
+  @observable
+  public skin: any;
+
+  @action
+  public emojiSkin(tone: string) {
     this.emojiSkinTone = tone;
+    
+    opts.set("skinTone", tone);
+    opts.save()
+
+    this.skin = icons.thumbs_up_default
+    if(this.emojiSkinTone == 'pale') {
+      this.skin = icons.thumbs_up_pale
+    } else if(this.emojiSkinTone == 'medium_pale') {
+      this.skin = icons.thumbs_up_medium_pale
+    } else if(this.emojiSkinTone == 'medium') {
+      this.skin = icons.thumbs_up_medium
+    } else if(this.emojiSkinTone == 'medium_dark') {
+      this.skin = icons.thumbs_up_medium_dark
+    } else if(this.emojiSkinTone == 'dark') {
+      this.skin = icons.thumbs_up_dark
+    }    
   }
 
   public set changeDisplay(dis: any) {

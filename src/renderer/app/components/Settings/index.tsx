@@ -718,17 +718,17 @@ export const Feedback = observer(() => {
   );
 });
 
-var skin = icons.thumbs_up_default
+store.options.skin = icons.thumbs_up_default
 if(store.options.emojiSkinTone == 'pale') {
-  skin = icons.thumbs_up_pale
+  store.options.skin = icons.thumbs_up_pale
 } else if(store.options.emojiSkinTone == 'medium_pale') {
-  skin = icons.thumbs_up_medium_pale
+  store.options.skin = icons.thumbs_up_medium_pale
 } else if(store.options.emojiSkinTone == 'medium') {
-  skin = icons.thumbs_up_medium
+  store.options.skin = icons.thumbs_up_medium
 } else if(store.options.emojiSkinTone == 'medium_dark') {
-  skin = icons.thumbs_up_medium_dark
+  store.options.skin = icons.thumbs_up_medium_dark
 } else if(store.options.emojiSkinTone == 'dark') {
-  skin = icons.thumbs_up_dark
+  store.options.skin = icons.thumbs_up_dark
 }
 
 const toggleEmojiCtx = (e: any) => {
@@ -756,24 +756,24 @@ export const Appearance = observer(() => {
         <ListItem>
           <Title style={{ fontSize: 15 }}>Emoji skin tone</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
-            <IconButton visible={true} onClick={toggleEmojiCtx} icon={skin} style={{ cursor: 'pointer', filter: 'invert(0)', backgroundSize: '20px' }} />
+            <IconButton visible={true} onClick={toggleEmojiCtx} icon={store.options.skin} style={{ cursor: 'pointer', filter: 'invert(0)', backgroundSize: '20px', transition: '0.3s all' }} />
             <ContextMenu visible={store.options.emojiCtx == true} style={{ filter: 'invert(0)', width: '50px' }}>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkinTone = 'default'} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkin('default')} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkinTone = 'pale'} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkin('pale')} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkinTone = 'medium_pale'} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkin('medium_pale')} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkinTone = 'medium'} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkin('medium')} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkinTone = 'medium_dark'} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkin('medium_dark')} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkinTone = 'dark'} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkin('dark')} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
 
               </ContextMenuItem>
             </ContextMenu>
@@ -784,21 +784,24 @@ export const Appearance = observer(() => {
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto' }}>
             <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
-            <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '255px', marginLeft: '-50px' }}>            
-              <ContextMenuItem icon={icons.search} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g">
+            <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '280px', marginLeft: '-50px' }}>            
+              <ContextMenuItem icon={'https://api.faviconkit.com/google.com/144'} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].google_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem onClick={setEngineYahoo} icon={icons.search} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y">
+              <ContextMenuItem onClick={setEngineYahoo} icon={'https://api.faviconkit.com/yahoo.com/144'} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={icons.search} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b">
+              <ContextMenuItem icon={'https://api.faviconkit.com/bing.com/144'} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].bing_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={icons.search} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d">
+              <ContextMenuItem icon={'https://api.faviconkit.com/duckduckgo.com/144'} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ddg_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={icons.search} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e">
+              <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e" invert={true} opacity={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ecosia_searchEngine}
+              </ContextMenuItem>
+              <ContextMenuItem icon={icons.add}>
+                {store.locale.lang.settings[0].create_new}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>

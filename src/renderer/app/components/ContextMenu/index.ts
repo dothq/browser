@@ -24,7 +24,7 @@ export const ContextMenuItem = styled.div`
   font-weight: 400;
   font-size: 14px;
 
-  ${({ icon, selected, invert, opacity }: { icon?: string; selected?: boolean; invert?: boolean; opacity?: boolean; }) => css`
+  ${({ icon, selected, invert, opacity, borderRadius }: { icon?: string; selected?: boolean; invert?: boolean; opacity?: boolean; borderRadius?: boolean; }) => css`
     background-color: ${selected ? 'rgba(255, 255, 255, 0.15)' : 'none'};
 
     &:hover {
@@ -43,6 +43,7 @@ export const ContextMenuItem = styled.div`
         height: 16px;
         left: 16px;
         position: absolute;
+        border-radius: ${borderRadius ? '50%' : '0px'};
         background-image: url(${icon});
       }
     `}
