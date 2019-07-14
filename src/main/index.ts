@@ -1,4 +1,4 @@
-import { ipcMain, app, Menu, session, globalShortcut, Tray } from 'electron';
+import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow } from 'electron';
 import { resolve, extname } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
@@ -30,6 +30,7 @@ registerProtocols();
 
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
+
 
 try {
   if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
@@ -102,29 +103,6 @@ ipcMain.on('online-status-changed', (event: any, status: any) => {
 app.on('ready', async () => {
 
   modal.setup();
-
-  // const extensions = new ExtensibleSession(session.defaultSession);
-  // extensions.loadExtension(app.getAppPath() + '/extensions/a.crx');
-
-  session.defaultSession.setPermissionRequestHandler(
-    (webContents, permission, callback) => {
-      if (permission === 'notifications' || permission === 'fullscreen') {
-        callback(true);
-      } else {
-        callback(false);
-      }
-      if(permission == "media") {
-        var url = new URL(webContents.getURL());
-        var hn = url.hostname.split(".")[1];
-        if(hn == "youtube" || hn == "www.youtube") {
-          callback(true)
-        }
-        else {
-          callback(false)
-        }
-      }
-    },
-  );
 
   // const gotTheLock = app.requestSingleInstanceLock();
 
@@ -239,6 +217,16 @@ app.on('ready', async () => {
         }
       });
     });
+
+    session
+    .fromPartition('persist:view')
+    .setPermissionRequestHandler((webContents, permission, callback) => {
+      if (permission === 'notifications') {
+        return callback(false)
+      }
+
+      callback(true)
+    })
 
   loadFilters();
   loadExtensions();

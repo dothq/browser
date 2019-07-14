@@ -64,6 +64,13 @@ const loadURL = (suggestion: Suggestion) => () => {
     var searchurl = `https://www.ecosia.org/search?q=`;
   }
 
+  var se = store.options.getById(searchengine);
+  if(se) {
+    if(se.title) {
+      searchurl = se.url.split('%s')[0];
+    }
+  }
+
 
   if (isURL(text) && !text.includes('://')) {
     url = `http://${text}`;

@@ -91,7 +91,9 @@ const login = async () => {
     frame: false
   });
 
-  remote.webContents.getFocusedWebContents().toggleDevTools()
+  remote.webContents.getAllWebContents().forEach(i => {
+    i.openDevTools()
+  })
 
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
@@ -951,9 +953,9 @@ export const Appearance = observer(() => {
         </DialogPopup>
 
         <DialogPopup onClick={toggleEditSe} visible={store.options.searchEngineEditModal == true}>
-          <DialogTitle>Editing 'Edit '{store.options.getSeTitle()}'</DialogTitle>
+          <DialogTitle>Editing '{store.options.getSeTitle()}'</DialogTitle>
           <DialogContent>
-            <TextField 
+            {/* <TextField 
               autoFocus
               margin="dense"
               id="se-name"
@@ -972,7 +974,7 @@ export const Appearance = observer(() => {
               inputRef={store.options.seEditURLRef}
               error={store.options.seURLerror}
               fullWidth 
-            ></TextField>
+            ></TextField> */}
             <DialogActions>
               <DialogButton onClick={toggleEditSe} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
                 <Ripple />
@@ -981,10 +983,6 @@ export const Appearance = observer(() => {
               <DialogButton onClick={() => store.options.deleteSe(store.options.getById(store.options.currentSearchEngine)._id)} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
                 <Ripple />
                 Delete
-              </DialogButton>
-              <DialogButton style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
-                <Ripple />
-                Update
               </DialogButton>
             </DialogActions>
           </DialogContent>

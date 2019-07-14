@@ -4,7 +4,7 @@ import * as ReactDOM from 'react-dom';
 import { App } from './components/App';
 import { fonts } from '../constants';
 import store from './store';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, dialog, ipcMain } from 'electron';
 import { Settings } from 'react-native';
 var Mousetrap = require('mousetrap');
 import { AppWindow } from './app-window';
@@ -12,6 +12,7 @@ import { resolve, join } from 'path';
 import console = require('console');
 import { platform, homedir } from 'os';
 import { icons } from './constants/icons';
+var modal = require('electron-modal');
 
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
@@ -161,6 +162,26 @@ Menu.setApplicationMenu(
             }
           },
         },
+        {
+          accelerator: 'Ctrl+P',
+          label: 'Print webpage (Native)',
+          click() {
+            remote.webContents.getFocusedWebContents().print()
+          },
+        },
+        {
+          accelerator: 'Ctrl+S',
+          label: 'Save page',
+          click() {
+            if(store.tabs.selectedTab) {
+              remote.dialog.showSaveDialog(appWindow, { filters: [ { name: 'HTML file', extensions: ['html'] } ], }, (callback) => {
+                remote.webContents.getFocusedWebContents().savePage(callback, 'HTMLComplete', (error) => {
+                  if (!error) console.log('Save page successfully')
+                })
+              })
+            }
+          },
+        },
         { 
           label: 'Reload Page',
           accelerator: 'F5',
@@ -173,15 +194,6 @@ Menu.setApplicationMenu(
         { 
           label: 'Reload Webpage',
           accelerator: 'Ctrl+R',
-          click() { 
-            if(store.tabs.selectedTab) {
-              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
-            }
-          } 
-        },
-        { 
-          label: 'Save Page',
-          accelerator: 'Ctrl+S',
           click() { 
             if(store.tabs.selectedTab) {
               store.tabs.selectedTab.callViewMethod('webContents.reload'); 
@@ -304,10 +316,62 @@ Menu.setApplicationMenu(
             
           } 
         },   
+        { 
+          label: 'Task Manager',
+          accelerator: 'Shift+Esc',
+          async click() {
+            tskManager()
+          }
+        }, 
       ],
     },
   ]),
 );
+
+async function tskManager() {
+  var data: any = [];
+
+  remote.webContents.getAllWebContents().forEach(i => {
+
+    var obj: any = {};
+    obj.url = i.getURL();
+    obj.task = i.getTitle();
+    obj.id = i.id;
+
+    data.push(obj);
+    
+  })
+
+  console.log(data)
+
+  var tm = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\tskmgr.html'), {
+    width: 820,
+    height: 300,
+    resizable: true,
+    center: true,
+    title: 'Dot - Task Manager',
+    icon: resolve(app.getAppPath() + '/static/app-icons/dev.png'),
+    titleBarStyle: 'hiddenInset',
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true
+    },
+    frame: true
+  }, { data: data } )
+
+  tm.show();
+
+  remote.webContents.getFocusedWebContents().toggleDevTools()
+
+  tm.on('close', (id: number) => {
+    remote.webContents.fromId(id).loadURL('about:blank')
+  })
+
+  tm.on('reload', () => {
+    tskManager()
+  })
+
+}
 
 
 

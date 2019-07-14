@@ -52,6 +52,32 @@ export class AppWindow extends BrowserWindow {
         break
     }
 
+      // Init the permission window.
+      var permissionHandler = new BrowserWindow({ 
+        width: 400,
+        height: 300,
+        x: 10,
+        y: 50,
+        resizable: false,
+        movable: false,
+        frame: false,
+        parent: this,
+        transparent: true,
+        alwaysOnTop: true
+      })
+
+
+      permissionHandler.on('closed', () => {
+        permissionHandler = null;
+      })
+
+      permissionHandler.loadURL(app.getAppPath() + '/static/pages/notification.html')
+
+      permissionHandler.webContents.on('did-finish-load', async () => {
+        permissionHandler.webContents.send("new-notification", 'example.com||Location');
+        permissionHandler.webContents.openDevTools()
+      });
+
     // Adobe Flash Player will be deprecated January 2020
     app.commandLine.appendSwitch('ppapi-flash-path', join(__dirname, pluginName))
 
@@ -109,6 +135,12 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
     });
+    this.on('blur', () => {
+      permissionHandler.setOpacity(0)
+    })
+    this.on('focus', () => {
+      permissionHandler.setOpacity(1)
+    })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
@@ -118,6 +150,12 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
+      if(this.isMinimized() == true) {
+        permissionHandler.setOpacity(0)
+      }
+      else {
+        permissionHandler.setOpacity(1)
+      }
     };
 
     this.on('maximize', resize);
