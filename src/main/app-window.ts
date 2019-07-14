@@ -74,8 +74,8 @@ export class AppWindow extends BrowserWindow {
       permissionHandler.loadURL(app.getAppPath() + '/static/pages/notification.html')
 
       permissionHandler.webContents.on('did-finish-load', async () => {
-        permissionHandler.webContents.send("new-notification", 'example.com||Location');
-        permissionHandler.webContents.openDevTools()
+        // permissionHandler.webContents.send("new-notification", 'example.com||Location');
+        // permissionHandler.webContents.openDevTools()
       });
 
     // Adobe Flash Player will be deprecated January 2020

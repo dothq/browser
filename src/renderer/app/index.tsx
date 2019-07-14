@@ -361,8 +361,6 @@ async function tskManager() {
 
   tm.show();
 
-  remote.webContents.getFocusedWebContents().toggleDevTools()
-
   tm.on('close', (id: number) => {
     remote.webContents.fromId(id).loadURL('about:blank')
   })

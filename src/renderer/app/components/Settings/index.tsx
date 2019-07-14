@@ -91,9 +91,6 @@ const login = async () => {
     frame: false
   });
 
-  remote.webContents.getAllWebContents().forEach(i => {
-    i.openDevTools()
-  })
 
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
