@@ -8,6 +8,13 @@
             "translators": "EnderDev, Geek"
         },
         {
+            "title": "Čeština",
+            "en_title": "Czech",
+            "flag": "cz",
+            "flag_icon": "1f1e8-1f1ff.png",
+            "translators": "Daniel Bulant"
+        },
+        {
             "title": "Gaeilge",
             "en_title": "Ireland",
             "flag": "ie",
