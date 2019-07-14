@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField, ExtLink, DialogPopup, DialogBackground } from './style'
+import { InputField, ExtLink } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Textfield } from '~/renderer/components/Textfield';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
@@ -28,6 +28,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { openNewGitHubIssue } from 'electron-util';
 import { Preloader } from '~/renderer/components/Preloader';
 import { Line } from '../App/style';
+import { DialogPopup } from '../DialogPopup';
+import { DialogTitle, DialogP, DialogContent, DialogButton } from '../DialogPopup/style';
+import { TextField, ButtonBase, DialogActions } from '@material-ui/core';
+import Ripple from '~/renderer/components/Ripple';
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -86,6 +90,8 @@ const login = async () => {
     },
     frame: false
   });
+
+  remote.webContents.getFocusedWebContents().toggleDevTools()
 
   si.on('passed-details', (c: any) => {
     store.user.username = c.customname;
@@ -570,16 +576,16 @@ const toggleSeMenu = (e: any) => {
   }
 }
 
+const setSearchEngine = () => {
+
+}
+
 const setEngineGoogle = () => {
   file.set("searchEngine", "google");
   console.info(`[SettingsStore] Set searchEngine to custom string google`)
   file.save(); 
   seMenuVisible = false   
-  document.getElementById("ctx-item-g").style.backgroundColor = "#585858c7";
-  document.getElementById("ctx-item-b").style.backgroundColor = "";
-  document.getElementById("ctx-item-y").style.backgroundColor = "";
-  document.getElementById("ctx-item-d").style.backgroundColor = "";
-  document.getElementById("ctx-item-e").style.backgroundColor = "";
+  store.options.currentSearchEngine
 }
 
 const setEngineBing = () => {
@@ -744,6 +750,98 @@ const toggleEmojiCtx = (e: any) => {
   }
 }
 
+const createNew = (e: any) => {
+  store.options.searchEngineCtx = false;
+  store.options.seURLRef.current.value = '';
+  store.options.seNameRef.current.value = '';
+  store.options.seNameerror = false;
+  store.options.seURLerror = false;
+  e.stopPropagation();
+  if(store.options.searchEngineNewModal == true) {
+    store.options.searchEngineNewModal = false;
+  }
+  else {
+    store.options.searchEngineNewModal = true;
+  }
+}
+
+const toggleEditSe = (e: any) => {
+  store.options.searchEngineCtx = false;
+  store.options.seURLRef.current.value = '';
+  store.options.seNameRef.current.value = '';
+  store.options.seNameerror = false;
+  store.options.seURLerror = false;
+  e.stopPropagation();
+  if(store.options.searchEngineEditModal == true) {
+    store.options.searchEngineEditModal = false;
+  }
+  else {
+    store.options.searchEngineEditModal = true;
+  }
+}
+
+const createSearchEngine = (e: any) => {
+
+  var pattern = new RegExp('^(https?:\\/\\/)?'+
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+
+    '(\\#[-a-z\\d_]*)?$','i');
+
+  if(store.options.seNameRef.current.value.length == 0) {
+    return store.options.seNameerror = true;
+  }
+  else {
+    store.options.seNameerror = false;
+  }
+
+  if(store.options.seURLRef.current.value.length == 0) {
+    return store.options.seURLerror = true;
+  }
+  else {
+    store.options.seURLerror = false;
+  }
+
+  if(store.options.seURLRef.current.value.includes("%s") == false) {
+    return store.options.seURLerror = true;
+  }
+  else {
+    store.options.seURLerror = false;
+  }
+
+  if(pattern.test(store.options.seURLRef.current.value) == true) {
+    store.options.seURLerror = false;
+
+    var searchEngine = {
+      title: store.options.seNameRef.current.value,
+      url: store.options.seURLRef.current.value,
+      favicon: `${`https://api.faviconkit.com/${new URL(store.options.seURLRef.current.value).hostname}/144`}`
+    }
+  
+    store.options.searchEngineCtx = false;
+    e.stopPropagation();
+    store.options.searchEngineNewModal = false;
+
+    store.options.addSe(searchEngine)
+
+    console.log(store.options.seList)
+  }
+  else {
+    store.options.seURLerror = true;
+  }
+
+};
+
+const isCustom = () => {
+  if(store.options.seIsCustom == true) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
@@ -759,22 +857,22 @@ export const Appearance = observer(() => {
           <Buttons style={{ marginLeft: 'auto' }}>
             <IconButton visible={true} onClick={toggleEmojiCtx} icon={store.options.skin} style={{ cursor: 'pointer', filter: 'invert(0)', backgroundSize: '20px', transition: '0.3s all' }} />
             <ContextMenu visible={store.options.emojiCtx == true} style={{ filter: 'invert(0)', width: '50px' }}>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkin('default')} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkin('default')} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkin('pale')} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkin('pale')} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkin('medium_pale')} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkin('medium_pale')} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkin('medium')} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkin('medium')} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkin('medium_dark')} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkin('medium_dark')} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkin('dark')} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opacity={true}>
+              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkin('dark')} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
 
               </ContextMenuItem>
             </ContextMenu>
@@ -783,36 +881,114 @@ export const Appearance = observer(() => {
 
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].search_engine}</Title>
-          <Buttons style={{ marginLeft: 'auto' }}>
+          <Buttons style={{ marginLeft: 'auto', marginRight: `${store.options.seIsCustom ? '-17px' : '0px'}`, display: 'inline-flex' }}>
+            <IconButton style={{ backgroundSize: '18px', cursor: 'pointer' }} icon={icons.edit} onClick={toggleEditSe} visible={store.options.seIsCustom} />
             <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
             <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '280px', marginLeft: '-50px' }}>            
-              <ContextMenuItem icon={'https://api.faviconkit.com/google.com/144'} onClick={setEngineGoogle} style={{ backgroundColor: `${cmICG}` }} id="ctx-item-g" invert={true} opacity={true} borderRadius={true}>
+              <ContextMenuItem icon={'https://api.faviconkit.com/google.com/144'} onClick={() => store.options.setSearchEngine('google')} selected={store.options.currentSearchEngine == 'google'} id="ctx-item-g" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].google_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem onClick={setEngineYahoo} icon={'https://api.faviconkit.com/yahoo.com/144'} style={{ backgroundColor: `${cmICY}` }} id="ctx-item-y" invert={true} opacity={true} borderRadius={true}>
+              <ContextMenuItem onClick={() => store.options.setSearchEngine('yahoo')} icon={'https://api.faviconkit.com/yahoo.com/144'} selected={store.options.currentSearchEngine == 'yahoo'} id="ctx-item-y" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].yahoo_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/bing.com/144'} onClick={setEngineBing} style={{ backgroundColor: `${cmICB}` }} id="ctx-item-b" invert={true} opacity={true} borderRadius={true}>
+              <ContextMenuItem icon={'https://api.faviconkit.com/bing.com/144'} onClick={() => store.options.setSearchEngine('bing')} selected={store.options.currentSearchEngine == 'bing'} id="ctx-item-b" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].bing_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/duckduckgo.com/144'} onClick={setEngineDdg} style={{ backgroundColor: `${cmICD}` }}  id="ctx-item-d" invert={true} opacity={true} borderRadius={true}>
+              <ContextMenuItem icon={'https://api.faviconkit.com/duckduckgo.com/144'} onClick={() => store.options.setSearchEngine('ddg')} selected={store.options.currentSearchEngine == 'ddg'} id="ctx-item-d" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ddg_searchEngine}
               </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={setEngineEcosia} style={{ backgroundColor: `${cmICE}` }} id="ctx-item-e" invert={true} opacity={true} borderRadius={true}>
+              <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={() => store.options.setSearchEngine('ecosia')} selected={store.options.currentSearchEngine == 'ecosia'} id="ctx-item-e" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
+              {store.options.seList.length != 0 && <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '5px' }} />}
+              {store.options.seList.length != 0 && store.options.seList.map((e: any) => (
+                <ContextMenuItem key={e._id} icon={e.favicon} onClick={() => store.options.setSearchEngine(e._id, e.url)} selected={store.options.currentSearchEngine == e._id} invert={true} opac={true} borderRadius={true}>
+                  {e.title}
+                </ContextMenuItem>
+              ))}
               <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '5px' }} />
-              <ContextMenuItem icon={icons.add}>
+              <ContextMenuItem icon={icons.add} onClick={createNew}>
                 {store.locale.lang.settings[0].create_new}
               </ContextMenuItem>
             </ContextMenu>
           </Buttons>
         </ListItem>
 
-        <DialogPopup>
-          <Title>Create a custom search engine</Title>
+        <DialogPopup onClick={createNew} visible={store.options.searchEngineNewModal == true}>
+          <DialogTitle>Add search engine</DialogTitle>
+          <DialogContent>
+            <TextField 
+              autoFocus
+              margin="dense"
+              id="se-name"
+              label="Name of search engine"
+              type="name"
+              inputRef={store.options.seNameRef}
+              error={store.options.seNameerror}
+              fullWidth 
+            ></TextField>
+            <TextField 
+              autoFocus
+              margin="dense"
+              id="se-url"
+              label="URL with %s as search term"
+              type="url"
+              inputRef={store.options.seURLRef}
+              error={store.options.seURLerror}
+              fullWidth 
+            ></TextField>
+            <DialogActions>
+              <DialogButton onClick={createNew} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
+                <Ripple />
+                Cancel
+              </DialogButton>
+              <DialogButton onClick={createSearchEngine} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
+                <Ripple />
+                Create
+              </DialogButton>
+            </DialogActions>
+          </DialogContent>
         </DialogPopup>
-        <DialogBackground />
+
+        <DialogPopup onClick={toggleEditSe} visible={store.options.searchEngineEditModal == true}>
+          <DialogTitle>Editing 'Edit '{store.options.getSeTitle()}'</DialogTitle>
+          <DialogContent>
+            <TextField 
+              autoFocus
+              margin="dense"
+              id="se-name"
+              label="New name"
+              type="name"
+              inputRef={store.options.seEditNameRef}
+              error={store.options.seNameerror}
+              fullWidth 
+            ></TextField>
+            <TextField 
+              autoFocus
+              margin="dense"
+              id="se-url"
+              label="New URL with %s as search term"
+              type="url"
+              inputRef={store.options.seEditURLRef}
+              error={store.options.seURLerror}
+              fullWidth 
+            ></TextField>
+            <DialogActions>
+              <DialogButton onClick={toggleEditSe} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
+                <Ripple />
+                Cancel
+              </DialogButton>
+              <DialogButton onClick={() => store.options.deleteSe(store.options.getById(store.options.currentSearchEngine)._id)} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
+                <Ripple />
+                Delete
+              </DialogButton>
+              <DialogButton style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
+                <Ripple />
+                Update
+              </DialogButton>
+            </DialogActions>
+          </DialogContent>
+        </DialogPopup>
 
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
@@ -987,7 +1163,7 @@ export const Settings = observer(() => {
         >
           <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'passwords'} display="passwords">Passwords</MenuItem>
+          {store.user.loggedin == true && <MenuItem selected={store.options.currentDisplay == 'passwords'} display="passwords">Passwords</MenuItem>}
           <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
           {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.lang.settings[0].dev_tools[0].title}</MenuItem>}
@@ -1003,9 +1179,9 @@ export const Settings = observer(() => {
               {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].appearance[0].title}</Title>}
               {store.options.currentDisplay == 'appearance' && <Appearance />}
 
-              {store.options.currentDisplay == 'passwords' && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}>Verify your password</Title>}
-              {store.options.currentDisplay == 'passwords' && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Passwords</Title>}
-              {store.options.currentDisplay == 'passwords' && <Passwords />}
+              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}>Verify your password</Title>}
+              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Passwords</Title>}
+              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && <Passwords />}
 
               {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}

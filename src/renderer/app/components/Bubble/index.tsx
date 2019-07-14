@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyledBubble, Title, Icon } from './style';
 import store from '../../store';
 import console = require('console');
+import { icons } from '../../constants/icons';
 
 export const getSize = (i: number) => {
   const width = 800;

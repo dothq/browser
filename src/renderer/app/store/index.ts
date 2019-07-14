@@ -110,10 +110,14 @@ export class Store {
     this.notifications.loadAll();
     this.notifications.showPermissionWindow();
 
+    this.loadedAPI = true;
+
     console.log("\x1b[0mdot \x1b[32msuccess \x1b[0m Loaded Dot APIs. API v" + `${this.api} on app v${remote.app.getVersion()}\x1b[0m`)
   }
 
   public api: number;
+
+  public loadedAPI: boolean;
 
   public findInputRef = React.createRef<HTMLInputElement>();
 

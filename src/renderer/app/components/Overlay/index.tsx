@@ -249,11 +249,34 @@ setInterval(function() {
   checkLightMode()
 }, 1500);
 
+import Confetti from 'react-confetti';
+var canRef = React.createRef<HTMLCanvasElement>();
+var opac = 1;
+
+setTimeout(function() {
+  opac = 0;
+}, 4000);
+
+// export const Birthday = () => {
+//   const { width, height } = screen;
+//   return (
+//     <Confetti
+//       width={width}
+//       height={height}
+//       canvasRef={canRef}
+//       numberOfPieces={300}
+//       recycle={false}
+//       style={{ zIndex: -1 }}
+//     />
+//   )
+// }
+
 export const Overlay = observer(() => {
 
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
-      <Preload/>
+      <Preload />
+      {/* {store.loadedAPI == true && <Birthday />} */}
       {store.user.loggedin == true && <LoginSnackbar />}
       <Container
         visible={

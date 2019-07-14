@@ -52,20 +52,14 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
 // }, 500);
 
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
+var int: any;
 
-setTimeout(function() {
-  store.overlay.currentContent = "default"
-  
-  // if(platform() == "win32") {
-  //   remote.app.setAsDefaultProtocolClient('http');
-  //   var url = "ms-settings:defaultapps";
-  //   var tab = store.tabs.addTab({
-  //     url,
-  //     active: true
-  //   });
-  //   tab.close();
-  // }
-}, 800); 
+int = setInterval(function() {
+  if(store.loadedAPI == true) {
+    store.overlay.currentContent = "default"
+    clearInterval(int)
+  }
+}, 800);
 
 export const Preload = observer(() => {
   return (

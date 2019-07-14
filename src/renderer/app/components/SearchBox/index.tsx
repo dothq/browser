@@ -69,6 +69,13 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
       searchurl = `https://www.ecosia.org/search?q=`;
     }
 
+    var data = store.options.getById(searchengine);
+    if(data) {
+      if(data.title) {
+        searchurl = data.url.split("%s")[0];
+      }
+    }
+
     if (isURL(text) && !text.includes('://')) {
       url = `http://${text}`;
     } else if (!text.includes('://')) {

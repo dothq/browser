@@ -38,6 +38,17 @@ export class SuggestionsStore {
       if(searchengine == "ddg") {
         searchengine = "DuckDuckGo"
       }
+
+      var data = store.options.getById(searchengine);
+      if(data) {
+        if(data.title) {
+          searchengine = data.title;
+        }
+      }
+      else {
+        searchengine = 'google'
+      }
+
       var cse = searchengine.charAt(0).toUpperCase() + searchengine.slice(1);
 
       if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {

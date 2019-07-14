@@ -36,6 +36,7 @@ import muted from '~/shared/resources/icons/muted.svg';
 import open from '~/shared/resources/icons/open.svg';
 import not_checked from '~/shared/resources/icons/not_checked.svg';
 import checked from '~/shared/resources/icons/checked.svg';
+import pageInverted from '~/shared/resources/icons/pageInverted.svg';
 
 import thumbs_up_default from '~/shared/resources/icons/emojis/thumbs_up_default.png';
 import thumbs_up_pale from '~/shared/resources/icons/emojis/thumbs_up_pale.png';
@@ -91,4 +92,5 @@ export const icons = {
   thumbs_up_medium_dark,
   thumbs_up_medium_pale,
   thumbs_up_pale,
+  pageInverted,
 };
