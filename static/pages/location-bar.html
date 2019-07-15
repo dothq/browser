@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                font-family: Roboto;
+                opacity: 0;
+                transition: 0.1s opacity cubic-bezier(0.6, 0.04, 0.98, 0.335);
+                transition-delay: 0.2s;
+            }
+            p {
+                font-family: Roboto;
+                font-size: 10px;
+                color: #000;
+            }
+        </style>
+        <script>
+            require("electron").ipcRenderer.on('target-url-changed', (e, url) => {
+                document.body.style.opacity = 1;
+                document.getElementsByClassName("p")[0].innerHTML = url;
+            })
+        </script>
+    </head>
+   <body style="overflow-y: hidden;width: 400px;opacity: 1;left: 0;bottom: 0;position: absolute;">
+        <div style="
+           background-color: #ffffff;
+           height: 16px;
+           border: 1px solid #878787;
+           border-radius: 3px;
+           ">
+           <p></p>
+        </div>
+    
+    </body>
+</html>

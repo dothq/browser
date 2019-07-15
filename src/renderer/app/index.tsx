@@ -306,7 +306,8 @@ Menu.setApplicationMenu(
 
               if(store.tabs.list.length != 0) {
                 if(store.overlay.visible == false) {
-                remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
+                remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });
+                remote.webContents.getFocusedWebContents().debugger.
               
                 if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
                   remote.webContents.getFocusedWebContents().devToolsWebContents.focus();

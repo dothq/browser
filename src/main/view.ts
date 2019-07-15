@@ -1,5 +1,5 @@
 import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog, BrowserWindow } from 'electron';
-import { appWindow } from '.';
+import { appWindow, locationBar } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
@@ -597,6 +597,10 @@ export class View extends BrowserView {
         `browserview-theme-color-updated-${this.tabId}`,
         color,
       );
+    });
+
+    this.webContents.addListener('update-target-url', (e, url) => {
+      locationBar.webContents.send('target-url-changed', url);
     });
 
     (this.webContents as any).addListener(

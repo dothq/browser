@@ -7,6 +7,7 @@ import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import store from '~/renderer/app/store';
 import console = require('console');
+import { locationBar } from '.';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
@@ -51,32 +52,6 @@ export class AppWindow extends BrowserWindow {
         pluginName = 'libpepflashplayer.so'
         break
     }
-
-      // Init the permission window.
-      var permissionHandler = new BrowserWindow({ 
-        width: 400,
-        height: 300,
-        x: 10,
-        y: 50,
-        resizable: false,
-        movable: false,
-        frame: false,
-        parent: this,
-        transparent: true,
-        alwaysOnTop: true
-      })
-
-
-      permissionHandler.on('closed', () => {
-        permissionHandler = null;
-      })
-
-      permissionHandler.loadURL(app.getAppPath() + '/static/pages/notification.html')
-
-      permissionHandler.webContents.on('did-finish-load', async () => {
-        // permissionHandler.webContents.send("new-notification", 'example.com||Location');
-        // permissionHandler.webContents.openDevTools()
-      });
 
     // Adobe Flash Player will be deprecated January 2020
     app.commandLine.appendSwitch('ppapi-flash-path', join(__dirname, pluginName))
@@ -135,12 +110,12 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
     });
-    this.on('blur', () => {
-      permissionHandler.setOpacity(0)
-    })
-    this.on('focus', () => {
-      permissionHandler.setOpacity(1)
-    })
+    // this.on('blur', () => {
+    //   permissionHandler.setOpacity(0)
+    // })
+    // this.on('focus', () => {
+    //   permissionHandler.setOpacity(1)
+    // })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
@@ -150,17 +125,24 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
-      if(this.isMinimized() == true) {
-        permissionHandler.setOpacity(0)
-      }
-      else {
-        permissionHandler.setOpacity(1)
-      }
     };
 
+    const fixLocationBar = () => {
+      var parentBounds = this.getBounds()
+      console.log(parentBounds);
+      locationBar.setBounds({
+        x: parentBounds.x,
+        y: parentBounds.y + parentBounds.height - 32,
+        width: parentBounds.width,
+        height: 32
+      })
+    }
+
+    this.on('resize', fixLocationBar)
     this.on('maximize', resize);
     this.on('restore', resize);
     this.on('unmaximize', resize);
+    this.on('move', fixLocationBar);
 
     process.on('uncaughtException', error => {
       console.error(error);

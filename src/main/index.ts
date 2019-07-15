@@ -1,5 +1,5 @@
-import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow } from 'electron';
-import { resolve, extname } from 'path';
+import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow, screen } from 'electron';
+import { resolve, extname, join } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
@@ -25,6 +25,7 @@ ipcMain.setMaxListeners(0);
 app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
+export let locationBar: LocationBar;
 
 registerProtocols();
 
@@ -93,6 +94,7 @@ app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 
 import { ExtensibleSession } from 'electron-extensions';
+import { LocationBar } from './location-bar';
 
 // Fixes any proxy bypass settings
 
@@ -136,6 +138,7 @@ app.on('ready', async () => {
   });
 
   appWindow = new AppWindow();
+  locationBar = new LocationBar();
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);
@@ -148,6 +151,15 @@ app.on('ready', async () => {
   app.on('certificate-error', (event, webContents, link, error, certificate, callback) => {
     console.log(`CERIFCATE ERROR ON ${link} with ERROR ${error}`)
   });
+
+  appWindow.webContents.on('devtools-opened', () => {
+    if(appWindow.webContents.getURL().includes("file://") == true) {
+      return;
+    }
+    else {
+      appWindow.webContents.devToolsWebContents.executeJavaScript('')
+    }
+  })
 
   ipcMain.on('dev-tools-open', () => {
     appWindow.webContents.inspectElement(0, 0);
