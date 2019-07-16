@@ -132,9 +132,9 @@ export class AppWindow extends BrowserWindow {
       console.log(parentBounds);
       locationBar.setBounds({
         x: parentBounds.x,
-        y: parentBounds.y + parentBounds.height - 32,
-        width: parentBounds.width,
-        height: 32
+        y: parentBounds.y + parentBounds.height - 48,
+        width: 450,
+        height: 22
       })
     }
 

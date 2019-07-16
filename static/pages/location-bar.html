@@ -4,30 +4,39 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
             body {
-                font-family: Roboto;
                 opacity: 0;
-                transition: 0.1s opacity cubic-bezier(0.6, 0.04, 0.98, 0.335);
+                transition: 0.2s opacity cubic-bezier(0.6, 0.04, 0.98, 0.335);
                 transition-delay: 0.2s;
             }
             p {
-                font-family: Roboto;
-                font-size: 10px;
-                color: #000;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
+                font-size: 12px;
+                color: #535353;
+                margin-left: 6px;
+                margin-top: 9px;
+                line-height: 0px;
+                user-select: none;
             }
         </style>
         <script>
-            require("electron").ipcRenderer.on('target-url-changed', (e, url) => {
-                document.body.style.opacity = 1;
-                document.getElementsByClassName("p")[0].innerHTML = url;
+
+            require("electron").ipcRenderer.on('target-url-changed', (event, url) => {
+                if(url) {
+                    document.getElementsByTagName('body')[0].style.opacity = 1;
+                    document.getElementsByTagName("p")[0].innerText = url;
+                }
+                else {
+                    document.getElementsByTagName('body')[0].style.opacity = 0;
+                }
             })
         </script>
     </head>
-   <body style="overflow-y: hidden;width: 400px;opacity: 1;left: 0;bottom: 0;position: absolute;">
+   <body style="overflow-y: hidden;width: 400px;left: 3px;bottom: -8px;position: absolute">
         <div style="
-           background-color: #ffffff;
-           height: 16px;
-           border: 1px solid #878787;
-           border-radius: 3px;
+            background-color: #ffffff;
+            height: 19px;
+            border: 1px solid #878787;
+            border-radius: 3px;
            ">
            <p></p>
         </div>

@@ -599,7 +599,7 @@ export class View extends BrowserView {
       );
     });
 
-    this.webContents.addListener('update-target-url', (e, url) => {
+    this.webContents.on('update-target-url', (e, url) => {
       locationBar.webContents.send('target-url-changed', url);
     });
 
