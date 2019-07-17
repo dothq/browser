@@ -16,7 +16,7 @@ export class AppWindow extends BrowserWindow {
   constructor() {
     super({
       frame: false,
-      minWidth: 400,
+      minWidth: 500,
       minHeight: 450,
       width: 1280,
       height: 720,
@@ -127,22 +127,9 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('tabs-resize');
     };
 
-    const fixLocationBar = () => {
-      var parentBounds = this.getBounds()
-      console.log(parentBounds);
-      locationBar.setBounds({
-        x: parentBounds.x,
-        y: parentBounds.y + parentBounds.height - 48,
-        width: 450,
-        height: 22
-      })
-    }
-
-    this.on('resize', fixLocationBar)
     this.on('maximize', resize);
     this.on('restore', resize);
     this.on('unmaximize', resize);
-    this.on('move', fixLocationBar);
 
     process.on('uncaughtException', error => {
       console.error(error);

@@ -600,6 +600,24 @@ export class View extends BrowserView {
     });
 
     this.webContents.on('update-target-url', (e, url) => {
+      var parentBounds = appWindow.getBounds()
+      if(appWindow.isMaximized() == true) {
+        locationBar.setBounds({
+          x: parentBounds.x + 5,
+          y: parentBounds.y + parentBounds.height - 35,
+          width: parentBounds.width,
+          height: 22
+        })
+      }
+      else {
+        locationBar.setBounds({
+          x: parentBounds.x - 5,
+          y: parentBounds.y + parentBounds.height - 26,
+          width: parentBounds.width,
+          height: 22
+        })
+      }
+
       locationBar.webContents.send('target-url-changed', url);
     });
 

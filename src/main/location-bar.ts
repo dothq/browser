@@ -12,6 +12,7 @@ export class LocationBar extends BrowserWindow {
       frame: false,
       resizable: false,
       maximizable: false,
+      movable: false,
       show: true,
       alwaysOnTop: true,
       fullscreenable: false,
@@ -37,7 +38,10 @@ export class LocationBar extends BrowserWindow {
 
     this.setIgnoreMouseEvents(true);
     this.webContents.loadURL(app.getAppPath() + '/static/pages/location-bar.html')
-    this.webContents.openDevTools({ mode: 'detach'  })
+
+    if(process.env.ENV == 'dev') {
+      this.webContents.openDevTools({ mode: 'detach'  })
+    }
 
   }
 }
