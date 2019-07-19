@@ -37,6 +37,7 @@ export class AppWindow extends BrowserWindow {
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('no-proxy-server')
 

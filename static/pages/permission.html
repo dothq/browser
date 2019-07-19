@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        notification {
+            border-radius: 4px;
+            box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+            color: rgba(0, 0, 0, 0.87);
+            transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+            background-color: #fff;
+            max-width: 600px;
+            display: flex;
+            max-height: calc(100% - 96px);
+            flex-direction: column;
+            margin: 48px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-family: Roboto;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <notification>
+            <h1>
+                <span id="host">permission.site</span> <span>wants to</span>
+            </h1>
+        </notification>
+    </div>
+</body>
+</html>

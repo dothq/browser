@@ -26,6 +26,7 @@ app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
 export let locationBar: LocationBar;
+export let permissionWindow: PermissionDialog;
 
 registerProtocols();
 
@@ -89,12 +90,14 @@ catch (e) {
 
 
 app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+app.commandLine.appendSwitch('--enable-transparent-visuals');
 // Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 
 import { ExtensibleSession } from 'electron-extensions';
 import { LocationBar } from './location-bar';
+import { PermissionDialog } from './permissions';
 
 // Fixes any proxy bypass settings
 
@@ -139,6 +142,7 @@ app.on('ready', async () => {
 
   appWindow = new AppWindow();
   locationBar = new LocationBar();
+  permissionWindow = new PermissionDialog();
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);

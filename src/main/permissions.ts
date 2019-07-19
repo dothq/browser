@@ -2,25 +2,21 @@ import { BrowserWindow, app, nativeImage, screen } from 'electron';
 import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
 
-export class LocationBar extends BrowserWindow {
+export class PermissionDialog extends BrowserWindow {
   
   constructor() {
 
     super({
       width: 450,
-      height: 22,
-      frame: false,
+      height: 400,
+      frame: true,
       resizable: false,
       maximizable: false,
-      movable: false,
       show: true,
       alwaysOnTop: true,
       fullscreenable: false,
-      transparent: true,
-      skipTaskbar: true,
       minHeight: 0,
-      acceptFirstMouse: true,
-      title: 'Dot Location Tooltip Handler',
+      title: 'Dot Permission Dialog',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,
@@ -33,12 +29,11 @@ export class LocationBar extends BrowserWindow {
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
-    app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
+    app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('no-proxy-server')
 
-    this.setIgnoreMouseEvents(true);
-    this.webContents.loadURL(app.getAppPath() + '/static/pages/location-bar.html')
+    this.webContents.loadURL(app.getAppPath() + '/static/pages/permission.html')
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })
