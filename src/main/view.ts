@@ -603,7 +603,7 @@ export class View extends BrowserView {
       var parentBounds = appWindow.getBounds()
       if(appWindow.isMaximized() == true) {
         locationBar.setBounds({
-          x: parentBounds.x + 5,
+          x: parentBounds.x + 3,
           y: parentBounds.y + parentBounds.height - 35,
           width: parentBounds.width,
           height: 22
