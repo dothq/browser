@@ -1,11 +1,12 @@
 import { observable, computed } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, webContents } from 'electron';
 import store from '.';
 import { viewBm } from '../components/Toolbar';
 import { ViewManager } from '~/main/view-manager';
 import { View } from '../../../main/view';
 import console = require('console');
+import { appWindow } from '..';
 
 let lastSuggestion: string;
 
@@ -62,13 +63,25 @@ export class OverlayStore {
   public _searchBoxValue = '';
 
   @observable
+  public screenshot: any;
+
+  @observable
   public panelVisible:boolean = false;
 
   private timeout: any;
 
   @computed
   public get searchBoxValue() {
+
+    this.getScreenshot()
+
     return this._searchBoxValue;
+  }
+
+  public getScreenshot() {
+    if(store.tabs.selectedTab) {
+      ipcRenderer.send('capture-page', store.tabs.selectedTab.id);
+    }
   }
 
   public set searchBoxValue(val: string) {
@@ -91,6 +104,7 @@ export class OverlayStore {
 
   constructor() {
     window.addEventListener('keydown', this.onWindowKeyDown);
+    
   }
 
   public onWindowKeyDown = (e: KeyboardEvent) => {

@@ -103,7 +103,7 @@ export const App = observer(() => {
           <GlobalStyle />
           <Toolbar />
           <Line />
-          <Screenshot/>
+          <Screenshot img={store.overlay.screenshot} />
           <Overlay />
           {platform() !== 'darwin' && <WindowsButtons />}
       </StyledApp>

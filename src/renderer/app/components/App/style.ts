@@ -6,7 +6,8 @@ export const Line = styled.div`
   height: 1px;
   width: 100%;
   z-index: 2;
-  position: relative;
+  position: absolute;
+  margin-top: 38px;
 `;
 
 export const Screenshot = styled.div`
@@ -14,8 +15,8 @@ export const Screenshot = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   flex: 1;
-  filter: blur(20px);
-  margin: -20px;
+  filter: blur(4px);
+  margin: -40px;
   position: relative;
 
   ${({ img }: { img: any }) => css`

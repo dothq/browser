@@ -188,6 +188,17 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('scroll-touch-end');
     });
 
+    this.on('app-command', (e, cmd) => {
+      if (cmd === 'browser-backward' && this.viewManager.selected.webContents.canGoBack()) {
+        this.viewManager.selected.webContents.goBack()
+      }
+
+      if (cmd === 'browser-forward' && this.viewManager.selected.webContents.canGoBack()) {
+        this.viewManager.selected.webContents.goBack()
+      }
+
+    });
+
     if(process.env.ENV != "dev") {
       var oldConsole = console.log;
       console.log = function(msg: any) {

@@ -13,7 +13,7 @@ import store from '../../store';
 
 export const WindowsButtons = observer(() => {
   return (
-    <Buttons>
+    <Buttons isHTMLFullscreen={store.isHTMLFullscreen}>
       <WindowsButton
         isDark={store.overlay.visible}
         icon={icons.windowsMinimize}

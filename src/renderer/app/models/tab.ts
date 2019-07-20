@@ -87,6 +87,10 @@ export class Tab {
     return this._findVisible;
   }
 
+  public webContents() {
+    return remote.webContents.fromId(this.webContentsId)
+  }
+
   public muteTab() {
     if(this.audioPlaying == true) {
       ipcRenderer.send('audio-pause');

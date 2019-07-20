@@ -1,4 +1,4 @@
-import { ipcMain, app, nativeImage } from 'electron';
+import { ipcMain, app, nativeImage, clipboard } from 'electron';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { appWindow } from '.';
 import { View } from './view';
@@ -49,7 +49,16 @@ export class ViewManager {
     );
 
     ipcMain.on('capture-page', (tabId: number) => {
-     
+
+      console.log("got capture event")
+
+      const view = this.views[tabId]
+
+      view.webContents.capturePage(function(image: any) {
+        clipboard.writeText(image.toDataURL())
+        return image.toDataURL()
+      });
+
     })
 
     ipcMain.on(

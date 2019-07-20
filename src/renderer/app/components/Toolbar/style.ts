@@ -15,6 +15,8 @@ export const StyledToolbar = styled.div`
   height: ${TOOLBAR_HEIGHT}px;
   -webkit-app-region: drag;
   padding-right: ${platform() !== 'darwin' ? 138 : 0}px;
+  transition: 0.3s margin-top;
+  transition-delay: 0.2s;
 
   ${({ isHTMLFullscreen }: { isHTMLFullscreen: boolean }) => css`
     margin-top: ${isHTMLFullscreen ? -TOOLBAR_HEIGHT : 0}px;

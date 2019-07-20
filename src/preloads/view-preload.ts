@@ -30,7 +30,10 @@ const tabId = parseInt(
 );
 
 const goBack = () => {
-  ipcRenderer.send('browserview-call', { registerSchemesAsPrivilegedabId, scope: 'webContents.goBack' });
+  ipcRenderer.send('browserview-call', {
+    tabId,
+    scope: 'webContents.goBack',
+  });
 };
 
 const goForward = () => {
