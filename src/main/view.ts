@@ -295,12 +295,6 @@ export class View extends BrowserView {
       menu.popup();
     });
 
-    async function captureWebpage(this: any) {
-      this.webContents.capturePage(function(image: any) {
-        return image.toDataURL()
-      })
-    }
-
     this.webContents.addListener('found-in-page', (e, result) => {
       appWindow.webContents.send('found-in-page', result);
     });
@@ -390,7 +384,7 @@ export class View extends BrowserView {
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
-        screenshot: captureWebpage()
+        screenshot: this.getScreenshot()
       });
 
     });

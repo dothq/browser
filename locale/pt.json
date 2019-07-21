@@ -18,6 +18,7 @@
     "languages": [
         {
             "en": "Inglês",
+            "cz": "Tcheco",
             "es": "Espanhol",
             "de": "Alemão",
             "fr": "Francês",
@@ -95,6 +96,7 @@
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
             "create_new": "Add new",
+            "add_new": "Adicionar mecanismo de pesquisa",
             "my_profile": [
                 {
                     "title": "Meu Perfil",

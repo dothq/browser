@@ -214,6 +214,26 @@ export const Title = styled.div`
   }
 `;
 
+export const TitleWithDropArrow = styled.div`
+  font-size: 24px;
+  margin-left: 24px;
+  font-weight: 300;
+  margin-bottom: 16px;
+  margin-top: 24px;
+  color: white;
+  position: relative;
+  display: flex;
+  padding-right: 42px;
+  padding: 7px 2px 7px 12px;
+  border-radius: 50px;
+  width: min-content;
+  transition: 0.3s background-color;
+
+  &:hover {
+    background-color: #373737;
+  }
+`;
+
 export const Container = styled.div`
   position: absolute;
   transition: 0.2s transform, 0.2s opacity, 0.2s visibility;

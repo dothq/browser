@@ -60,6 +60,9 @@ export class OverlayStore {
   public dialTypeMenuVisible = false;
 
   @observable
+  public worldTypeMenuVisible = false;
+
+  @observable
   public _searchBoxValue = '';
 
   @observable

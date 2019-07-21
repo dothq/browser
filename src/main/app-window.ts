@@ -1,4 +1,4 @@
-import { BrowserWindow, app, nativeImage, dialog, dialog, remote } from 'electron';
+import { BrowserWindow, app, nativeImage, dialog, remote } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
@@ -8,11 +8,14 @@ import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import store from '~/renderer/app/store';
 import console = require('console');
 import { locationBar } from '.';
+import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
+import { PermissionDialog } from './permissions';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
-  
+  public permissionWindow = new PermissionDialog(this);
+
   constructor() {
     super({
       frame: false,
@@ -100,6 +103,23 @@ export class AppWindow extends BrowserWindow {
     //   console.log(newColor)
     // });
 
+    // Update modal bounds (permission window) on resize and move
+    this.on('resize', () => {
+      if (!this.isMaximized()) {
+        windowState.bounds = this.getBounds();
+      }
+
+      this.permissionWindow.rearrange();
+    });
+
+    this.on('move', () => {
+      if (!this.isMaximized()) {
+        windowState.bounds = this.getBounds();
+      }
+
+      this.permissionWindow.rearrange();
+    });
+
     // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
       if (!this.isMaximized()) {
@@ -126,7 +146,29 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
+      // fixPerm()
     };
+
+    // const fixPerm = () => {
+    //   if(this.isMinimized() == true) {
+    //     permissionWindow.setOpacity(0)
+    //     permissionWindow.setIgnoreMouseEvents(true)
+        
+    //     // const cBounds: any = this.getContentBounds();
+    //     // permissionWindow.setBounds({ 
+    //     //   x: cBounds.x, 
+    //     //   y: cBounds.y + TOOLBAR_HEIGHT, 
+    //     //   height: permissionWindow.getBounds().height, 
+    //     //   width: permissionWindow.getBounds().width 
+    //     // });
+
+    //   }
+    //   else {
+    //     permissionWindow.setOpacity(1)
+    //     permissionWindow.setIgnoreMouseEvents(false)
+
+    //   }
+    // };
 
     this.on('maximize', resize);
     this.on('restore', resize);

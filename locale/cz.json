@@ -18,16 +18,17 @@
     ],
     "languages": [
         {
-            "en": "English",
-            "es": "Spanish",
-            "de": "German",
-            "fr": "French",
-            "fi": "Finnish",
-            "ru": "Russian",
-            "no": "Norweigan",
-            "ie": "Irish",
-            "se": "Swedish",
-            "pt": "Portuguese"
+            "en": "Angličtina",
+            "cz": "Čeština",
+            "es": "Španělština",
+            "de": "Němčina",
+            "fr": "Francouzština",
+            "fi": "Finština",
+            "ru": "Ruština",
+            "no": "Norština",
+            "ie": "Irština",
+            "se": "Švédština",
+            "pt": "Portugalština"
         }
     ],
     "rich_presence": [
@@ -96,6 +97,7 @@
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
             "create_new": "Přidat",
+            "add_new": "Přidat vyhledávač",
             "my_profile": [
                 {
                     "title": "Můj profil",

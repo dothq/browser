@@ -1,12 +1,15 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/fians/Waves/dist/waves.min.css" rel="stylesheet">
     <style>
         notification {
             border-radius: 4px;
-            box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2), 0px 24px 38px 3px rgba(0,0,0,0.14), 0px 9px 46px 8px rgba(0,0,0,0.12);
+            box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
             color: rgba(0, 0, 0, 0.87);
             transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
             background-color: #fff;
@@ -14,23 +17,303 @@
             display: flex;
             max-height: calc(100% - 96px);
             flex-direction: column;
-            margin: 48px;
+            margin: 20px;
             position: relative;
             overflow-y: auto;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        
+        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+        
+        body {
+            overflow: hidden;
+        }
+        
+        .close {
+            position: absolute;
+            left: calc(100% - 12%);
+            margin: 5px;
+            transform: scale(0.9);
+            user-select: none;
+            border-radius: 50px;
+            padding: 3px;
+            border: 1px #90909003 solid;
         }
 
-        h1 {
-            font-family: Roboto;
+        .close:hover {
+            border: 1px #909090 solid;
+        }
+
+        .button {
+            cursor: default !important;
+            transition: 0.2s background-color, 0.6s border;
+        }
+        .button:hover {
+            background-color: #8080801f;
         }
     </style>
+    <script>
+
+        /* 
+            Template to recieve permission events.
+            Copyright 2019, The Wexond Authors, Ender And Fire Development
+        */
+
+        var permissions = [];
+        var domain = ''
+
+        function allow() {
+            require("electron").ipcRenderer.send('request-permission-result', true);
+            permissions.shift()
+            if(!permissions[0]) {
+                require("electron").ipcRenderer.send('pls-hide');
+                document.getElementById("app").style.opacity = 0;
+            }
+        }
+
+        function deny() {
+            require("electron").ipcRenderer.send('request-permission-result', false);
+            permissions.shift()
+            if(!permissions[0]) {
+                require("electron").ipcRenderer.send('pls-hide');
+                document.getElementById("app").style.opacity = 0;
+            }
+        }
+
+        const getText = (permission) => {
+            if (permission === 'notifications') {
+                return 'Send you notifications';
+            }
+
+            if (permission === 'microphone') {
+                return 'Use your microphone';
+            }
+
+            if (permission === 'camera') {
+                return 'Use your camera';
+            }
+
+            if (permission === 'geolocation') {
+                return 'Know your location';
+            }
+
+            if (permission === 'midiSysex') {
+                return 'Use your MIDI devices';
+            }
+
+            if (permission === 'pointerLock') {
+                return 'Keep your pointer locked';
+            }
+
+            if (permission === 'fullscreen') {
+                return 'Go fullscreen';
+            }
+
+            if (permission === 'openExternal') {
+                return 'Open popup windows';
+            }
+
+            return '';
+        };
+
+        const getIcon = (permission) => {
+            if (permission === 'notifications') {
+                return 'notifications';
+            }
+
+            if (permission === 'microphone') {
+                return 'mic';
+            }
+
+            if (permission === 'camera') {
+                return 'camera';
+            }
+
+            if (permission === 'geolocation') {
+                return 'location_on';
+            }
+
+            if (permission === 'midiSysex') {
+                return 'music_note';
+            }
+
+            if (permission === 'pointerLock') {
+                return 'mouse';
+            }
+
+            if (permission === 'fullscreen') {
+                return 'fullscreen';
+            }
+
+            if (permission === 'openExternal') {
+                return 'open_in_new';
+            }
+
+            return '';
+        };
+
+        /* 
+            Here we recieve the permission event from the main process
+        */
+        require("electron").ipcRenderer.on(
+            'request-permission',
+            (e, { url, name, details }) => {
+                document.getElementById("app").style.opacity = 1;
+                document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
+                domain = document.querySelector("#host").textContent;
+
+                if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen' || name === 'openExternal') {
+                permissions.push(name);
+                } else if (name === 'media') {
+                if (details.mediaTypes.includes('audio')) {
+                    permissions.push('microphone');
+                }
+
+                if (details.mediaTypes.includes('video')) {
+                    permissions.push('camera');
+                }
+                }
+            },
+        );
+
+        setInterval(function() {
+            document.querySelector("#mode").textContent = getText(permissions[0]);
+            document.querySelector("#mode-icon").textContent = getIcon(permissions[0]);
+        }, 1);
+
+    //     require("electron").ipcRenderer.on('permission', (e, permissionObj) => {
+
+    //         var validPerms = [
+    //             'notifications',
+    //             'microphone',
+    //             'geolocation',
+    //             'midiSysex',
+    //             'media',
+    //             'pointerLock',
+    //             'fullscreen',
+    //             'openExternal'
+    //         ]
+
+    //         document.querySelector("#app").style.opacity = 1;
+    //         document.querySelector("#host").textContent = new URL(permissionObj.url).hostname;
+    //         window.permission = permissionObj;
+
+    //         if (permissionObj.permissionNode == 'notifications') {
+    //             document.querySelector("#mode").textContent = `Send you notifications`;
+    //             document.querySelector("#mode-icon").textContent = 'notifications';
+    //         }
+    //         if (permissionObj.permissionNode == 'microphone') {
+    //             document.querySelector("#mode").textContent = `Use your microphone`;
+    //             document.querySelector("#mode-icon").textContent = 'mic';
+    //         }
+    //         if (permissionObj.permissionNode == 'geolocation') {
+    //             document.querySelector("#mode").textContent = `Know your location`;
+    //             document.querySelector("#mode-icon").textContent = 'location_on';
+    //         }
+    //         if (permissionObj.permissionNode == 'midiSysex') {
+    //             document.querySelector("#mode").textContent = `Use MIDI devices`;
+    //             document.querySelector("#mode-icon").textContent = 'music_note';
+    //         }
+    //         if (permissionObj.permissionNode == 'media') {
+    //             document.querySelector("#mode").textContent = `Use your microphone`;
+    //             document.querySelector("#mode-icon").textContent = 'mic';
+    //         }
+    //         if (permissionObj.permissionNode == 'pointerLock') {
+    //             document.querySelector("#mode").textContent = `Lock your cursor`;
+    //             document.querySelector("#mode-icon").textContent = 'mouse';
+    //         }
+    //         if (permissionObj.permissionNode == 'fullscreen') {
+    //             document.querySelector("#mode").textContent = `Go fullscreen`;
+    //             document.querySelector("#mode-icon").textContent = 'fullscreen';
+    //         }
+    //         if (permissionObj.permissionNode == 'openExternal') {
+    //             document.querySelector("#mode").textContent = `Open a popup window`;
+    //             document.querySelector("#mode-icon").textContent = 'open_in_new';
+    //         }
+
+    //         if (validPerms.includes(permissionObj.permissionNode) == false) {
+    //             document.querySelector("#mode").textContent = `Perform an unknown activity`;
+    //             document.querySelector("#mode-icon").textContent = 'radio_button_unchecked';
+    //         }
+
+    //     })
+    </script>
 </head>
+
 <body>
-    <div id="app">
-        <notification>
-            <h1>
-                <span id="host">permission.site</span> <span>wants to</span>
+    <div id="app" style="height: 240px;opacity: 0">
+        <notification style="
+            height: 135px;
+            width: 335px;
+            ">
+            <a onclick="window.close()" class="close button">
+                <i class="material-icons" style="margin-right: 10px;font-size: 21px;color: #8e8e8e;vertical-align: middle;display: table-cell;">close</i>
+            </a>
+            <h1 style="
+               font-size: 16px;
+               margin: 16px;
+               user-select: none;
+               margin-bottom: -8px;
+               ">
+               <span id="host" style="
+                  font-weight: 600;
+                  ">an unknown site</span> <span style="
+                  font-weight: 400;
+                  ">wants to</span>
             </h1>
+            <h1 style="
+               font-size: 16;
+               margin: 16px;
+               line-height: 0px;
+               font-weight: 400;
+               user-select: none;
+               vertical-align: top;
+               display: table;
+               ">
+               <i id="mode-icon" class="material-icons" style="margin-right: 10px;color: #8e8e8e;vertical-align: middle;display: table-cell;">radio_button_unchecked</i><span style="
+                  vertical-align: middle;
+                  display: table-cell;
+                  " id="mode">Perform an unknown activity</span>
+            </h1>
+            <div style="
+               position: absolute;
+               bottom: 11px;
+               left: 175px;
+               ">
+                <a onclick="deny()" class="button" id="deny-perm" style="
+               padding: 3px 13px 3px 13px;
+               border-radius: 4px;
+               color: #000;
+               line-height: 25px;
+               margin-right: 10px;
+               border: 1px #909090 solid;
+               user-select: none;
+               ">Deny</a>
+                <a onclick="allow()"  class="button" id="allow-perm" style="
+               padding: 3px 13px 3px 13px;
+               border-radius: 4px;
+               color: #000;
+               line-height: 25px;
+               margin-right: 10px;
+               user-select: none;
+               border: 1px #909090 solid;
+               ">
+               Allow</a>
+            </div>
         </notification>
+        <script src="https://cdn.jsdelivr.net/gh/fians/Waves/dist/waves.min.js"></script>
+        <script type="text/javascript">
+
+            var config = {
+                duration: 500,
+            };
+
+            Waves.init(config);
+            Waves.attach('.button');
+        </script>
     </div>
 </body>
+
 </html>

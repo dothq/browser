@@ -18,6 +18,11 @@ if(!opts.get("searchEngine")) {
   opts.save();
 }
 
+if(!opts.get("uiTheme")) {
+  opts.set("uiTheme", "dark");
+  opts.save();
+}
+
 if(!opts.get("toggleDotLauncher")) {
   opts.set("toggleDotLauncher", true);
   opts.save();
@@ -25,6 +30,11 @@ if(!opts.get("toggleDotLauncher")) {
 
 if(!opts.get("skinTone")) {
   opts.set("skinTone", 'default');
+  opts.save();
+}
+
+if(!opts.get("worldType")) {
+  opts.set("worldType", 'weather');
   opts.save();
 }
 
@@ -85,6 +95,15 @@ export class OptionsStore {
 
   @observable
   public emojiSkinTone: string = opts.get("skinTone");
+
+  @observable
+  public themeSelect: boolean = false;
+
+  @observable
+  public theme: 'dark' | 'light' = opts.get("uiTheme");
+
+  @observable
+  public worldType: any = opts.get("worldType");
 
   @observable
   public skin: any;

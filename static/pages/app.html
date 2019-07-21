@@ -269,19 +269,29 @@
 
   <script>
 
-    setInterval(function() {
-      var elementList = document.getElementsByTagName("*");
+    var int;
+    int = setInterval(function() {
 
-      for(var i = 0; i < elementList.length; i++) {
+      try {
 
-        twemoji.parse(elementList[i], {
-          callback: function(icon, options, variant) {
-            return `https://twemoji.maxcdn.com/${options.size}/${icon}.png`;
-          },
-          size: 16
-        });
+        var elementList = document.getElementsByTagName("*");
+
+        for(var i = 0; i < elementList.length; i++) {
+
+          twemoji.parse(elementList[i], {
+            callback: function(icon, options, variant) {
+              return `https://twemoji.maxcdn.com/${options.size}/${icon}.png`;
+            },
+            size: 16
+          });
+
+        }
 
       }
+      catch (e) {
+        clearInterval(int)
+      }
+
     }, 200);
 
     require("electron").ipcRenderer.on('reload-webpage', (event) => {

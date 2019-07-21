@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField, ExtLink } from './style'
+import { InputField, ExtLink, FakeSelect } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Textfield } from '~/renderer/components/Textfield';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
@@ -30,7 +30,7 @@ import { Preloader } from '~/renderer/components/Preloader';
 import { Line } from '../App/style';
 import { DialogPopup } from '../DialogPopup';
 import { DialogTitle, DialogP, DialogContent, DialogButton } from '../DialogPopup/style';
-import { TextField, ButtonBase, DialogActions } from '@material-ui/core';
+import { TextField, ButtonBase, DialogActions, Select } from '@material-ui/core';
 import Ripple from '~/renderer/components/Ripple';
 var request = require('ajax-request');
 
@@ -844,6 +844,22 @@ const isCustom = () => {
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
+{/* 
+        <ListItem>
+          <Title style={{ fontSize: 15 }}>UI Theme</Title>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
+            <DropArrow visible={true} onClick={() => store.options.themeSelect = true} style={{ cursor: 'pointer' }} />
+            <ContextMenu visible={store.options.themeSelect == true}>
+              <ContextMenuItem selected={store.options.theme == 'dark'} onClick={() => store.options.theme = 'dark'}>
+                Dark
+              </ContextMenuItem>
+              <ContextMenuItem selected={store.options.theme == 'light'} onClick={() => store.options.theme = 'light'}>
+                Light
+              </ContextMenuItem>
+            </ContextMenu>
+          </Buttons>
+        </ListItem> */}
+
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].toggle_dot}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
@@ -899,13 +915,13 @@ export const Appearance = observer(() => {
               <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={() => store.options.setSearchEngine('ecosia')} selected={store.options.currentSearchEngine == 'ecosia'} id="ctx-item-e" invert={true} opac={true} borderRadius={true}>
                 {store.locale.lang.settings[0].ecosia_searchEngine}
               </ContextMenuItem>
-              {store.options.seList.length != 0 && <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '5px' }} />}
+              {store.options.seList.length != 0 && <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '0px' }} />}
               {store.options.seList.length != 0 && store.options.seList.map((e: any) => (
                 <ContextMenuItem key={e._id} icon={e.favicon} onClick={() => store.options.setSearchEngine(e._id, e.url)} selected={store.options.currentSearchEngine == e._id} invert={true} opac={true} borderRadius={true}>
                   {e.title}
                 </ContextMenuItem>
               ))}
-              <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '5px' }} />
+              <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '0px' }} />
               <ContextMenuItem icon={icons.add} onClick={createNew}>
                 {store.locale.lang.settings[0].create_new}
               </ContextMenuItem>

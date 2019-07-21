@@ -1,20 +1,24 @@
-import { BrowserWindow, app, nativeImage, screen } from 'electron';
-import { appWindow } from '~/renderer/app';
+import { BrowserWindow, app, nativeImage, screen, session, ipcMain, ipcRenderer } from 'electron';
 import { resolve } from 'path';
+import { appWindow } from '.';
+import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 
 export class PermissionDialog extends BrowserWindow {
   
-  constructor() {
+  constructor(public appWindow: any) {
 
     super({
-      width: 450,
-      height: 400,
-      frame: true,
+      width: 405,
+      height: 200,
+      frame: false,
       resizable: false,
       maximizable: false,
-      show: true,
+      show: false,
       alwaysOnTop: true,
       fullscreenable: false,
+      skipTaskbar: true,
+      transparent: true,
+      closable: false,
       minHeight: 0,
       title: 'Dot Permission Dialog',
       webPreferences: {
@@ -39,5 +43,49 @@ export class PermissionDialog extends BrowserWindow {
       this.webContents.openDevTools({ mode: 'detach'  })
     }
 
+
   }
+
+  public async requestPermission(
+    name: string,
+    url: string,
+    details: any,
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (
+        name === 'unknown' ||
+        (name === 'media' && details.mediaTypes.length === 0) ||
+        name === 'midiSysex'
+      ) {
+        return reject('Unknown permission');
+      }
+
+      this.rearrange();
+      this.show();
+
+      this.webContents.send('request-permission', { name, url, details });
+
+      ipcRenderer.once('request-permission-result', (e: any, r: boolean) => {
+        resolve(r);
+        this.hide();
+      });
+
+      ipcRenderer.once('pls-show', (e: any) => {
+        console.log("Showing permission window")
+        this.show();
+      });
+  
+      ipcRenderer.once('pls-hide', (e: any) => {
+        console.log("Hiding permission window")
+        this.hide();
+      });
+
+    });
+  }
+
+  public rearrange() {
+    const cBounds = this.appWindow.getContentBounds();
+    this.setBounds({ x: cBounds.x, y: cBounds.y + TOOLBAR_HEIGHT } as any);
+  }
+
 }

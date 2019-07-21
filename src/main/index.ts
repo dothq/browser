@@ -26,7 +26,6 @@ app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
 export let locationBar: LocationBar;
-export let permissionWindow: PermissionDialog;
 
 registerProtocols();
 
@@ -98,6 +97,7 @@ app.commandLine.appendSwitch('no-proxy-server')
 import { ExtensibleSession } from 'electron-extensions';
 import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
+import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
 
 // Fixes any proxy bypass settings
 
@@ -142,7 +142,6 @@ app.on('ready', async () => {
 
   appWindow = new AppWindow();
   locationBar = new LocationBar();
-  permissionWindow = new PermissionDialog();
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);
@@ -190,6 +189,7 @@ app.on('ready', async () => {
     appWindow.webContents.session.setDownloadPath(path);
   });
 
+
   const viewSession = session.fromPartition('persist:view');
 
   session
@@ -234,15 +234,72 @@ app.on('ready', async () => {
       });
     });
 
-    session
-    .fromPartition('persist:view')
-    .setPermissionRequestHandler((webContents, permission, callback) => {
-      if (permission === 'notifications') {
-        return callback(false)
-      }
+    viewSession.setPermissionRequestHandler(
+      async (webContents, permission, callback, details) => {
+        if (permission === 'fullscreen') {
+          callback(true);
+        } else {
+          try {
+            const response = await appWindow.permissionWindow.requestPermission(
+              permission,
+              webContents.getURL(),
+              details,
+            );
+            callback(response);
+          } catch (e) {
+            callback(false);
+          }
+        }
+      },
+    );
 
-      callback(true)
-    })
+    // session
+    // .fromPartition('persist:view')
+    // .setPermissionRequestHandler((webContents, permission, callback) => {
+    //   if(new URL(webContents.getURL()).protocol == 'https:') {
+
+    //     var permissionObj = {
+    //       url: webContents.getURL(),
+    //       permissionNode: permission
+    //     }
+
+    //     try {
+    //       permissionWindow.webContents.send('permission', permissionObj);
+    //       permissionWindow.setOpacity(1)
+    //       permissionWindow.setIgnoreMouseEvents(false)
+
+    //       // const cBounds: any = appWindow.getContentBounds();
+    //       // permissionWindow.setBounds({ 
+    //       //   x: cBounds.x, 
+    //       //   y: cBounds.y + TOOLBAR_HEIGHT, 
+    //       //   height: permissionWindow.getBounds().height, 
+    //       //   width: permissionWindow.getBounds().width 
+    //       // });
+
+    //     } catch(e) {
+    //       permissionWindow = new PermissionDialog();
+
+    //       permissionWindow.webContents.on('dom-ready', () => {
+    //         permissionWindow.webContents.send('permission', permissionObj);
+    //         permissionWindow.setOpacity(1)
+    //         permissionWindow.setIgnoreMouseEvents(false)
+
+    //         // const cBounds: any = appWindow.getContentBounds();
+    //         // permissionWindow.setBounds({ 
+    //         //   x: cBounds.x, 
+    //         //   y: cBounds.y + TOOLBAR_HEIGHT, 
+    //         //   height: permissionWindow.getBounds().height, 
+    //         //   width: permissionWindow.getBounds().width 
+    //         // });
+
+    //       })
+
+    //     }
+    //   }
+    //   else {
+    //     return callback(false)
+    //   }
+    // })
 
   loadFilters();
   loadExtensions();
@@ -267,3 +324,4 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+

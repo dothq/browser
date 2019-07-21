@@ -1,12 +1,20 @@
 import { observable, computed, action } from 'mobx';
 
+import * as Datastore from 'nedb';
 import { TabGroup } from '~/renderer/app/models';
 import store from '.';
 import { ipcRenderer, remote } from 'electron';
 import { colors } from '~/renderer/constants';
 import { closeWindow } from '../utils';
+import { getPath } from '~/shared/utils/paths';
 
 export class TabGroupsStore {
+
+  public db = new Datastore({
+    filename: getPath('storage/tab-groups.db'),
+    autoload: true,
+  });
+
   @observable
   public list: TabGroup[] = [];
 
@@ -78,6 +86,11 @@ export class TabGroupsStore {
     if (this.list.length === 0) {
       return this.addGroup();
     }
+
+    this.db.remove({ id: group.id }, err => {
+      if (err) return console.warn(err);
+    });
+
   }
 
   public getGroupById(id: number) {
@@ -95,5 +108,35 @@ export class TabGroupsStore {
       store.overlay.searchBoxValue = '';
       current.focus();
     }
+
+    return new Promise((resolve: (id: string) => void) => {
+      this.db.insert(tabGroup, (err: any, doc: TabGroup) => {
+        if (err) return console.error(err);
+        resolve(`${doc.id}`);
+      });
+    });
+
   }
+
+  @action
+  public async load() {
+    await this.db.find({}).exec(async (err: any, items: TabGroup[]) => {
+      if (err) return console.warn(err);
+
+      this.list = items;
+    });
+  }
+
+
+  @action
+  public editGroupName(name: string, id: number) {
+    const group = this.getGroupById(id);
+
+    group.name = name;
+
+    this.db.update(group, (err: any, doc: TabGroup) => {
+      if (err) return console.error(err);
+    });
+  }
+
 }

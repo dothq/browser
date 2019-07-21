@@ -30,6 +30,10 @@ export const Buttons = styled.div`
   float: right;
 `;
 
+export const FakeSelect = styled.div`
+  padding: 10px;
+`;
+
 export const Button = styled.a`
   
 `;

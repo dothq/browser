@@ -13,10 +13,6 @@ export const TopSites = observer(() => {
 
         var favicon = store.favicons.favicons[item.favicon]
 
-        if(favicon == undefined) {
-          favicon = icons.pageInverted
-        }
-
         return (
           <Bubble
             itemsPerRow={6}

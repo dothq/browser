@@ -20,6 +20,7 @@ import { DropArrow } from '../Overlay/style';
 import { appWindow } from '../..';
 import { BrowserView, shell, remote } from 'electron';
 import { ViewManager } from '~/main/view-manager';
+import { Snackbar } from '../Snackbar';
 const json = require("edit-json-file");
 
 const scrollRef = React.createRef<HTMLDivElement>();
@@ -59,6 +60,9 @@ int = setInterval(function() {
     store.overlay.currentContent = "default"
     clearInterval(int)
   }
+  else {
+    store.loadedAPI == false
+  }
 }, 800);
 
 export const Preload = observer(() => {
@@ -71,7 +75,9 @@ export const Preload = observer(() => {
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
         <Image src={icons.logo} style={{width: '250px',position: 'absolute',top: '50%',left: '50%',transform: 'translate(-50%, -50%)', opacity: 1,transition: 'opacity 0.8s',transitionDelay: '0.7s'}}/>
-        <Panel visible={store.overlay.panelVisible} id="setup" style={{width: '100%',position: 'absolute'}} />
+        <Snackbar visible={store.loadedAPI == false}>
+          No internet connection
+        </Snackbar>
       </Scrollable>
     </Container>
   );

@@ -48,19 +48,6 @@ export class ViewManager {
       },
     );
 
-    ipcMain.on('capture-page', (tabId: number) => {
-
-      console.log("got capture event")
-
-      const view = this.views[tabId]
-
-      view.webContents.capturePage(function(image: any) {
-        clipboard.writeText(image.toDataURL())
-        return image.toDataURL()
-      });
-
-    })
-
     ipcMain.on(
       'browserview-destroy',
       (e: Electron.IpcMessageEvent, id: number) => {

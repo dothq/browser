@@ -43,6 +43,7 @@ export function checkLightMode() {
 checkLightMode()
 
 store.locale.load()
+store.tabGroups.addGroup();
 
 window.onbeforeunload = () => {
   ipcRenderer.send('browserview-clear');

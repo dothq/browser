@@ -18,6 +18,7 @@
     "languages": [
         {
             "en": "Béarla",
+            "cz": "Seicis",
             "es": "Spainnis",
             "de": "Gearmáinis",
             "fr": "Fraincis",
@@ -95,6 +96,7 @@
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
             "create_new": "Add new",
+            "add_new": "Cuir inneall cuardaigh leis",
             "my_profile": [
                 {
                     "title": "Mo Phróifíl",

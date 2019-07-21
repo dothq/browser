@@ -18,6 +18,7 @@
     "languages": [
         {
             "en": "Englanti",
+            "cz": "Tšekki",
             "es": "Espanja",
             "de": "Saksan kieli",
             "fr": "Ranskan kieli",
@@ -95,6 +96,7 @@
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
             "create_new": "Add new",
+            "add_new": "Lisää hakukone",
             "my_profile": [
                 {
                     "title": "Minun profiilini",

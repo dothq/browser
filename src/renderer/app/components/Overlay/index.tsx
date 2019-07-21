@@ -204,6 +204,9 @@ export const preventHiding = (e: any) => {
   if(store.options.emojiCtx = true) {
     store.options.emojiCtx = false;
   }
+  if(store.options.themeSelect = true) {
+    store.options.themeSelect = false;
+  }
 };
 
 store.user.loadProfile();

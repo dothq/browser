@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import store from '../../store';
 import { icons } from '../../constants';
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
-import { DropArrow, Title } from '../Overlay/style';
+import { DropArrow, Title, TitleWithDropArrow } from '../Overlay/style';
 import { BookmarksDial } from '../BookmarksDial';
 import { TopSites } from '../TopSites';
 
