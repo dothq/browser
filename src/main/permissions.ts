@@ -65,17 +65,17 @@ export class PermissionDialog extends BrowserWindow {
 
       this.webContents.send('request-permission', { name, url, details });
 
-      ipcRenderer.once('request-permission-result', (e: any, r: boolean) => {
+      ipcMain.once('request-permission-result', (e: any, r: boolean) => {
         resolve(r);
         this.hide();
       });
 
-      ipcRenderer.once('pls-show', (e: any) => {
+      ipcMain.on('pls-show', (e: any) => {
         console.log("Showing permission window")
         this.show();
       });
   
-      ipcRenderer.once('pls-hide', (e: any) => {
+      ipcMain.on('pls-hide', (e: any) => {
         console.log("Hiding permission window")
         this.hide();
       });
