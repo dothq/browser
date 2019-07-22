@@ -111,8 +111,15 @@
                 return 'Go fullscreen';
             }
 
-            if (permission === 'openExternal') {
-                return 'Open popup windows';
+            if (`${permission}`.includes('proto_') == true) {
+                console.log(permission)
+                var basicProtocol = permission.split("proto_")[1].split(":")[0];
+                if(permission.split("proto_")[1].split(":")[1]) {
+                    return `Email ${permission.split("proto_")[1].split(":")[1]}`
+                }
+
+                return `Open ${basicProtocol} links`
+
             }
 
             return '';
@@ -147,7 +154,7 @@
                 return 'fullscreen';
             }
 
-            if (permission === 'openExternal') {
+            if (`${permission}`.includes('proto_') == true) {
                 return 'open_in_new';
             }
 
@@ -164,7 +171,7 @@
                 document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
                 domain = document.querySelector("#host").textContent;
 
-                if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen' || name === 'openExternal') {
+                if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen') {
                 permissions.push(name);
                 } else if (name === 'media') {
                 if (details.mediaTypes.includes('audio')) {
@@ -174,7 +181,24 @@
                 if (details.mediaTypes.includes('video')) {
                     permissions.push('camera');
                 }
+
+
                 }
+
+                if (details.externalURL) {
+                    var protocol = details.externalURL.split(':')[0]
+                    if(details.externalURL.split(':')[0] == 'mailto') {
+                        protocol = 'mail'
+                    }
+
+                    if(protocol != 'mail') {
+                        permissions.push(`proto_${protocol}`);
+                    }
+                    else {
+                        permissions.push(`proto_${details.externalURL}`);
+                    }
+                }
+
             },
         );
 
@@ -248,7 +272,7 @@
             height: 135px;
             width: 335px;
             ">
-            <a onclick="window.close()" class="close button">
+            <a onclick="deny()" class="close button">
                 <i class="material-icons" style="margin-right: 10px;font-size: 21px;color: #8e8e8e;vertical-align: middle;display: table-cell;">close</i>
             </a>
             <h1 style="
