@@ -70,13 +70,11 @@ export class PermissionDialog extends BrowserWindow {
         this.hide();
       });
 
-      ipcMain.on('pls-show', (e: any) => {
-        console.log("Showing permission window")
+      ipcMain.once('pls-show', (e: any) => {
         this.show();
       });
   
-      ipcMain.on('pls-hide', (e: any) => {
-        console.log("Hiding permission window")
+      ipcMain.once('pls-hide', (e: any) => {
         this.hide();
       });
 

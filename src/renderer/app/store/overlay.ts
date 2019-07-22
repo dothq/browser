@@ -157,6 +157,7 @@ export class OverlayStore {
       this.scrollRef.current.scrollTop = 0;
     }
 
+    ipcRenderer.send('pls-hide');
     ipcRenderer.send('browserview-hide');
     
 

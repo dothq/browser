@@ -3,9 +3,10 @@ import styled, { css } from 'styled-components';
 export const StyledBrowserAction = styled.div`
   position: relative;
   margin-left: 8px;
+  transition: 0.2s opacity;
 
   ${({ visible }: { visible: boolean }) => css`
-    display: ${visible ? 'auto' : 'none'};
+    opacity: ${visible ? '1' : '0'};
   `};
 `;
 

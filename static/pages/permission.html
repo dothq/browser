@@ -108,7 +108,7 @@
             }
 
             if (permission === 'fullscreen') {
-                return 'Go fullscreen';
+                return 'Enter fullscreen mode';
             }
 
             if (`${permission}`.includes('proto_') == true) {
@@ -167,6 +167,8 @@
         require("electron").ipcRenderer.on(
             'request-permission',
             (e, { url, name, details }) => {
+                permissions.shift()
+                console.log("Recieved permission event", name)
                 document.getElementById("app").style.opacity = 1;
                 document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
                 domain = document.querySelector("#host").textContent;

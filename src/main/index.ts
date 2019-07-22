@@ -236,9 +236,6 @@ app.on('ready', async () => {
 
     viewSession.setPermissionRequestHandler(
       async (webContents, permission, callback, details) => {
-        if (permission === 'fullscreen') {
-          callback(true);
-        } else {
           try {
             const response = await appWindow.permissionWindow.requestPermission(
               permission,
@@ -249,7 +246,6 @@ app.on('ready', async () => {
           } catch (e) {
             callback(false);
           }
-        }
       },
     );
 

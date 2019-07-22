@@ -80,6 +80,7 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   e.stopPropagation()
   if(e.currentTarget.value.length != 0) {
     e.stopPropagation()
+    ipcRenderer.send('pls-hide');
     ipcRenderer.send('browserview-hide');
   }
   else {
@@ -91,6 +92,7 @@ const onInput = (e: any) => {
   e.stopPropagation()
   if(e.currentTarget.value.length != 0) {
     e.stopPropagation()
+    ipcRenderer.send('pls-hide');
     ipcRenderer.send('browserview-hide');
   }
   else {
