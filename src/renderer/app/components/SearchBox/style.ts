@@ -12,7 +12,7 @@ export const StyledSearchBox = styled.div`
   flex-flow: column;
   overflow: hidden;
   min-height: 48px;
-  transition: 0.4s height cubic-bezier(0.65, 0.05, 0.36, 1);
+  transition: 0.4s height;
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21);
 `;
 

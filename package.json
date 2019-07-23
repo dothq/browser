@@ -73,6 +73,7 @@
     "cross-env": "5.2.0",
     "electron": "^4.1.4",
     "electron-builder": "20.39.0",
+    "electron-nightly": "^7.0.0-nightly.20190721",
     "fuse-box": "3.7.1",
     "log-update": "3.2.0",
     "prettier": "1.17.0",

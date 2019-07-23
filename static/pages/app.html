@@ -297,6 +297,10 @@
     require("electron").ipcRenderer.on('reload-webpage', (event) => {
       window.location.reload()
     })
+
+    require("electron").ipcRenderer.on('log-message', (event, message) => {
+      console.warn('%cDot Log Message\n', 'font-weight: bold;', message);
+    })
   </script>
 
 </body>

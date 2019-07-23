@@ -1,21 +1,29 @@
 import { app, protocol } from 'electron';
 import { readFile } from 'fs';
-import { join } from 'path';
+import { join, resolve, normalize } from 'path';
 import { parse } from 'url';
 import { extensions } from './extensions';
+import { sendLogEvent } from './services/debug-log'
+import console = require('console');
 
 const applets = ['newtab'];
 
 export const registerProtocols = () => {
-  protocol.registerStandardSchemes(['dot', 'extension', 'theme']);
 
+  /*
+    These methods are now deprecated.
+  */
+
+  // protocol.registerStandardSchemes(['dot', 'extension', 'theme']);
+
+  // protocol.registerFileProtocol('dot')
   // protocol.registerSchemesAsPrivileged([
   //   {
   //     scheme: 'dot',
   //     privileges: { bypassCSP: true, secure: true },
   //   },
   //   {
-  //     scheme: 'dot-extension',
+  //     scheme: 'extension',
   //     privileges: { bypassCSP: true, secure: true },
   //   },
   // ]);
@@ -63,73 +71,109 @@ export const registerProtocols = () => {
         }
       },
     );
-    sess.protocol.registerFileProtocol(
-      'dot',
-      (request, callback: any) => {
-        const parsed = parse(request.url);
 
-        if (applets.indexOf(parsed.hostname) !== -1) {
-          if (parsed.path === '/') {
-            return callback({
-              path: join(app.getAppPath(), 'static/pages', 'about.html'),
-            });
-          }
+    /*
+      Dot Protocol is for JUST recieving html files.
+    */
 
-          return callback({
-            path: join(app.getAppPath(), 'build', parsed.path),
-          });
-        }
+    sess.protocol.registerFileProtocol('dot', (request, callback: any) => {
+      const url = new URL(request.url)
+      sendLogEvent('Dot Protocol is working.')
 
-        if (parsed.path === '/') {
-          return callback({
-            path: join(
-              app.getAppPath(),
-              'static/pages',
-              `${parsed.hostname}.html`,
-            ),
-          });
-        }
+      var filetype = 'html';
+      if(url.hostname.split('.')[1]) {
+        filetype = url.hostname.split('.')[1].split(".")[0];
+        url.hostname = url.hostname.split(".")[0];
+      }
 
-        return callback({
-          path: join(app.getAppPath(), 'static/pages', parsed.path),
-        });
-      },
-      error => {
-        if (error) console.error('Failed to register protocol');
-      },
-    );
+      callback({ path: normalize(`${app.getAppPath()}/static/pages/${url.hostname}.${filetype}`) })
+    }, (error) => {
+      if (error) sendLogEvent('Failed to register the Dot protocol.')
+    })
 
-    sess.protocol.registerFileProtocol(
-      'theme',
-      (request, callback: any) => {
-        const parsed = parse(request.url);
+    /*
+      Theme Protocol for getting static assets, such as logos, html files etc.
+    */
 
-        if (applets.indexOf(parsed.hostname) !== -1) {
-          if (parsed.path === '/') {
-            return callback({
-              path: join(app.getAppPath(), 'static/pages', 'about.html'),
-            });
-          }
+    sess.protocol.registerFileProtocol('theme', (request, callback: any) => {
+      const url = new URL(request.url)
+      sendLogEvent('Theme Protocol is working.')
 
-          return callback({
-            path: join(app.getAppPath(), 'build', parsed.path),
-          });
-        }
+      var path = url.href.split("theme://")[1];
+      sendLogEvent(normalize(`${app.getAppPath()}/static/${path}`))
 
-        if (parsed.path === '/') {
-          console.log('file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname)
-          return callback({
-            path: 'file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname
-          });
-        }
+      callback({ path: normalize(`${app.getAppPath()}/static/${path}`) })
+    }, (error) => {
+      if (error) sendLogEvent('Failed to register the Theme protocol.')
+    })
 
-        return callback({
-          path: 'file:///' + join(encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":"), 'static/app-icons', parsed.path),
-        });
-      },
-      error => {
-        if (error) console.error('Failed to register protocol');
-      },
-    );    
+    // sess.protocol.registerFileProtocol(
+    //   'dot',
+    //   (request, callback: any) => {
+    //     const parsed = parse(request.url);
+
+    //     if (applets.indexOf(parsed.hostname) !== -1) {
+    //       if (parsed.path === '/') {
+    //         return callback({
+    //           path: join(app.getAppPath(), 'static/pages', 'about.html'),
+    //         });
+    //       }
+
+    //       return callback({
+    //         path: resolve(app.getAppPath(), 'build', parsed.path),
+    //       });
+    //     }
+
+    //     if (parsed.path === '/') {
+    //       return callback({
+    //         path: join(
+    //           app.getAppPath(),
+    //           'static/pages',
+    //           `${parsed.hostname}.html`,
+    //         ),
+    //       });
+    //     }
+
+    //     return callback({
+    //       path: join(app.getAppPath(), 'static/pages', parsed.path),
+    //     });
+    //   },
+    //   error => {
+    //     if (error) console.error('Failed to register protocol');
+    //   },
+    // );
+
+    // sess.protocol.registerFileProtocol(
+    //   'theme',
+    //   (request, callback: any) => {
+    //     const parsed = parse(request.url);
+
+    //     if (applets.indexOf(parsed.hostname) !== -1) {
+    //       if (parsed.path === '/') {
+    //         return callback({
+    //           path: join(app.getAppPath(), 'static/pages', 'about.html'),
+    //         });
+    //       }
+
+    //       return callback({
+    //         path: join(app.getAppPath(), 'build', parsed.path),
+    //       });
+    //     }
+
+    //     if (parsed.path === '/') {
+    //       console.log('file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname)
+    //       return callback({
+    //         path: 'file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname
+    //       });
+    //     }
+
+    //     return callback({
+    //       path: 'file:///' + join(encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":"), 'static/app-icons', parsed.path),
+    //     });
+    //   },
+    //   error => {
+    //     if (error) console.error('Failed to register protocol');
+    //   },
+    // );    
   });
 };

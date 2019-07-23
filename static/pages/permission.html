@@ -9,7 +9,7 @@
     <style>
         notification {
             border-radius: 4px;
-            box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 7px 20px 6px rgba(0, 0, 0, 0.2);
             color: rgba(0, 0, 0, 0.87);
             transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
             background-color: #fff;
@@ -108,7 +108,7 @@
             }
 
             if (permission === 'fullscreen') {
-                return 'Enter fullscreen mode';
+                return 'Go fullscreen';
             }
 
             if (`${permission}`.includes('proto_') == true) {
@@ -167,8 +167,6 @@
         require("electron").ipcRenderer.on(
             'request-permission',
             (e, { url, name, details }) => {
-                permissions.shift()
-                console.log("Recieved permission event", name)
                 document.getElementById("app").style.opacity = 1;
                 document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
                 domain = document.querySelector("#host").textContent;
