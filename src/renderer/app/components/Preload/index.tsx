@@ -56,13 +56,8 @@ let file = json(resolve(homedir()) + '/dot/dot-options.json');
 var int: any;
 
 int = setInterval(function() {
-  if(store.loadedAPI == true) {
     store.overlay.currentContent = "default"
     clearInterval(int)
-  }
-  else {
-    store.loadedAPI == false
-  }
 }, 800);
 
 export const Preload = observer(() => {

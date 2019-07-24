@@ -4,6 +4,8 @@ import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
+import { ExtensibleSession } from 'electron-extensions';
+
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
 import { existsSync, writeFileSync, rename, promises, createWriteStream } from 'fs';
@@ -17,6 +19,7 @@ import { get } from 'http';
 const nativeImage = require("electron").nativeImage;
 const modal = require('electron-modal');
 const json = require("edit-json-file");
+const LifeguardSession = require("lifeguard-api");
 
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
@@ -305,9 +308,23 @@ app.on('ready', async () => {
     //   }
     // })
 
-  loadFilters();
-  loadExtensions();
-  runWebRequestService(appWindow);
+    const extensions = new ExtensibleSession(viewSession);
+    extensions.addWindow(appWindow);
+  
+    const extensionsPath = getPath('extensions');
+    const dirs = await promises.readdir(extensionsPath);
+  
+    for (const dir of dirs) {
+      const extension = await extensions.loadExtension(
+        resolve(extensionsPath, dir),
+      );
+      extension.backgroundPage.webContents.openDevTools();
+    }
+
+
+    loadFilters();
+    // loadExtensions();
+    runWebRequestService(appWindow);
 
   
 

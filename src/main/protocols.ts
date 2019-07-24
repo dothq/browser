@@ -107,6 +107,18 @@ export const registerProtocols = () => {
       if (error) sendLogEvent('Failed to register the Theme protocol.')
     })
 
+    sess.protocol.registerFileProtocol('error', (request, callback: any) => {
+      const url = new URL(request.url)
+      sendLogEvent('Error Protocol is working.')
+
+      var path = url.href.split("error://")[1];
+      sendLogEvent(normalize(`${app.getAppPath()}/static/pages/error/${path}`))
+
+      callback({ path: normalize(`${app.getAppPath()}/static/pages/error/${path}`) })
+    }, (error) => {
+      if (error) sendLogEvent('Failed to register the Error protocol.')
+    })
+
     // sess.protocol.registerFileProtocol(
     //   'dot',
     //   (request, callback: any) => {

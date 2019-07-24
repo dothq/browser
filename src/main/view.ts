@@ -532,17 +532,17 @@ export class View extends BrowserView {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);   
           }
-          if (frameName === '_self') {
+          if (frameName === '_self' || options.title == '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
             appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
           }
-          if (frameName === '_top') {
+          if (frameName === '_top' || options.title == '_top') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
             appWindow.viewManager.selected.webContents.setUserAgent(appWindow.viewManager.selected.webContents.getUserAgent() + " Dot Browser/getdot.js.org");
           }
-          if (frameName === '_blank') {
+          if (frameName === '_blank' || options.title == '_blank') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
           }

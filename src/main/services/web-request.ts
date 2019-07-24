@@ -350,6 +350,7 @@ export const runWebRequestService = (window: AppWindow) => {
 
   const onErrorOccurred = async (details: any) => {
     const newDetails: any = getDetails(details, window, true);
+    console.log(details)
     interceptRequest('onErrorOccurred', newDetails);
   };
 
