@@ -308,6 +308,10 @@ app.on('ready', async () => {
     //   }
     // })
 
+    /**
+     * @todo Work on Extensions
+     * @body electron-extensions doesn't seem to work with Electron 5.0, this is a priority.
+   */
     const extensions = new ExtensibleSession(viewSession);
     extensions.addWindow(appWindow);
   
