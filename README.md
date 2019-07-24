@@ -60,7 +60,7 @@ For support, join our support discord server.
 ## 🖋 Authors
 
 * **Ender** *aka EnderDev* - *Main Developer* - [EnderDev](https://github.com/EnderDev)
-* **Jared** *aka LOHT03* - *Main Developer* - [LOHT03](https://github.com/LOHT03)
+* **Lee** *aka LOHT03* - *Main Developer* - [LOHT03](https://github.com/LOHT03)
 * **Geek** *aka GamingGeek* - *Main Developer* - [GamingGeek](https://github.com/GamingGeek)
 
 ## 🤵 License
