@@ -94,7 +94,6 @@ app.commandLine.appendSwitch('--enable-transparent-visuals');
 app.commandLine.appendSwitch('auto-detect', 'false')
 app.commandLine.appendSwitch('no-proxy-server')
 
-import { ExtensibleSession } from 'electron-extensions';
 import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
@@ -237,12 +236,21 @@ app.on('ready', async () => {
     viewSession.setPermissionRequestHandler(
       async (webContents, permission, callback, details) => {
           try {
-            const response = await appWindow.permissionWindow.requestPermission(
-              permission,
-              webContents.getURL(),
-              details,
-            );
-            callback(response);
+            if(new URL(webContents.getURL()).protocol == 'https:') {
+              const response = await appWindow.permissionWindow.requestPermission(
+                permission,
+                webContents.getURL(),
+                details,
+              );
+              callback(response);
+            }
+            else {
+              const response = await appWindow.permissionWindow.requestPermission(
+                'http_permission',
+                webContents.getURL(),
+                details,
+              );
+            }
           } catch (e) {
             callback(false);
           }

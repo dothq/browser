@@ -65,7 +65,7 @@
         var domain = ''
 
         function allow() {
-            require("electron").ipcRenderer.send('request-permission-result', true);
+            require("electron").ipcRenderer.send('request-permission-result', true, permissions[0]);
             permissions.shift()
             if(!permissions[0]) {
                 require("electron").ipcRenderer.send('pls-hide');
@@ -74,7 +74,7 @@
         }
 
         function deny() {
-            require("electron").ipcRenderer.send('request-permission-result', false);
+            require("electron").ipcRenderer.send('request-permission-result', false, permissions[0]);
             permissions.shift()
             if(!permissions[0]) {
                 require("electron").ipcRenderer.send('pls-hide');
@@ -108,7 +108,11 @@
             }
 
             if (permission === 'fullscreen') {
-                return 'Go fullscreen';
+                return 'Enter fullscreen mode';
+            }
+
+            if (permission === 'http_permission') {
+                return 'Request permissions insecurely';
             }
 
             if (`${permission}`.includes('proto_') == true) {
@@ -122,7 +126,7 @@
 
             }
 
-            return '';
+            return 'Perform an unknown activity';
         };
 
         const getIcon = (permission) => {
@@ -154,11 +158,15 @@
                 return 'fullscreen';
             }
 
+            if (permission === 'http_permission') {
+                return 'http';
+            }
+
             if (`${permission}`.includes('proto_') == true) {
                 return 'open_in_new';
             }
 
-            return '';
+            return 'radio_button_unchecked';
         };
 
         /* 
@@ -169,9 +177,10 @@
             (e, { url, name, details }) => {
                 document.getElementById("app").style.opacity = 1;
                 document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
+                window.permDomain = url;
                 domain = document.querySelector("#host").textContent;
 
-                if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen') {
+                if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen' || name === 'http_permission') {
                 permissions.push(name);
                 } else if (name === 'media') {
                 if (details.mediaTypes.includes('audio')) {

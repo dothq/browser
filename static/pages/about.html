@@ -182,8 +182,10 @@
          
          
          window.onload = function() {
-         document.getElementById("about").innerHTML = `<strong>Version:</strong> 2.1.0<br>
+         document.getElementById("about").innerHTML = `<strong>Version:</strong> ${navigator.userAgent.split("dot/")[1].split(" ")[0]}<br>
          <strong>Chromium Version:</strong> ${jscd.browserVersion}<br>
+         <strong>Electron Version:</strong> ${navigator.userAgent.split("Electron/")[1].split(" ")[0]}<br>
+         <strong>Web-Kit Version:</strong> ${navigator.userAgent.split("AppleWebKit/")[1].split(" ")[0]}<br>
          <strong>OS:</strong> ${jscd.os} ${jscd.osVersion}<br>
          <strong>Screen Size:</strong> ${jscd.screen}<br>
          <strong>UA:</strong> ${navigator.userAgent}<br>
@@ -193,28 +195,35 @@
       </script>
    </head>
    <body>
-      <style>
-         strong {
-         display: contents;
-         }
-         #about {
-         padding: 5px;
-         font-family: Roboto;
-         display: inline-grid;
-         font-size: 21px;
-         }
+    <style>
+       strong {
+       display: contents;
+       }
+       #about {
+       padding: 5px;
+       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+       display: inline-grid;
+       font-size: 21px;
+       position: fixed;
+       }
 
-         #details {
-             user-select: none;
-         }
-      </style>
-      <div id="details" style="float: right;display: inline-flex;">
-         <img src="https://getdot.js.org/src/icon.png" style="width: 50px;filter: invert(1);height:50px" draggable="false">
-         <h1 style="margin-top: 6px;font-family: Roboto;">Dot Browser</h1>
-         <div id="copyright" style="float: right;position: absolute;margin-top: 40px;margin-left: 10px;color: gray;">
-            <h3 style="margin-top: 6px;font-family: Roboto;">Copyright © 2019 Dot Inc.</h3>
-         </div>
+       #details {
+           user-select: none;
+       }
+    </style>
+    <div id="details" style="float: right;display: inline-flex;box-shadow: -20px 2px 20px 20px rgba(255,255,255,1);background-color: white;">
+      <img src="https://getdot.js.org/src/icon.png" style="width: 50px;filter: invert(1);height:50px" draggable="false">
+      <h1 style="margin-top: 6px;font-family: Roboto;">Dot Browser</h1>
+      <div id="copyright" style="float: right;position: absolute;margin-top: 40px;margin-left: 10px;color: gray;">
+         <h3 style="margin-top: 6px;font-family: Roboto;">Copyright © 2019 Dot Inc.</h3>
       </div>
-      <div id="about">
-      </div>
-   </body>
+   </div><div id="about"><strong>Version:</strong> 2.1.0<br>
+       <strong>Chromium Version:</strong> 77.0.3848.0<br>
+       <strong>Electron Version:</strong> 7.0.0-nightly.20190721<br>
+       <strong>Web-Kit Version:</strong> 537.36<br>
+       <strong>OS:</strong> Windows 10<br>
+       <strong>Screen Size:</strong> 1920 x 1080<br>
+       <strong>UA:</strong> Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) dot/2.1.0 Chrome/77.0.3848.0 Electron/7.0.0-nightly.20190721 Safari/537.36<br>
+       </div>
+    
+    </body>

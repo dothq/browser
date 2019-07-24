@@ -318,7 +318,9 @@ Menu.setApplicationMenu(
           label: 'Task Manager',
           accelerator: 'Shift+Esc',
           async click() {
-            tskManager()
+            const { openProcessManager } = require('electron-process-manager');
+
+            openProcessManager({ how: 'descending', path: 'cpu.percentCPUUsage' });
           }
         }, 
       ],

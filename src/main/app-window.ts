@@ -131,12 +131,13 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
     });
-    // this.on('blur', () => {
-    //   permissionHandler.setOpacity(0)
-    // })
-    // this.on('focus', () => {
-    //   permissionHandler.setOpacity(1)
-    // })
+
+    this.on('blur', () => {
+      this.permissionWindow.setOpacity(0)
+    })
+    this.on('focus', () => {
+      this.permissionWindow.setOpacity(1)
+    })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);

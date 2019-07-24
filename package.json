@@ -52,7 +52,8 @@
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
     "download-filters": "node tools/download-filters.js",
-    "node-ver": "node tools/build-preload.js"
+    "node-ver": "node tools/build-preload.js",
+    "tree-shake": "npm prune"
   },
   "pre-commit": [
     "lint-fix"
@@ -96,8 +97,10 @@
     "dot-extension-manager": "^1.0.0",
     "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.2.1",
+    "electron-chrome-extension": "^3.0.0",
     "electron-extensions": "^1.0.2",
     "electron-modal": "^1.0.0",
+    "electron-process-manager": "^0.7.1",
     "electron-push-receiver": "^2.1.2",
     "electron-updater": "^4.0.6",
     "electron-util": "^0.12.1",
@@ -108,6 +111,7 @@
     "is-online": "^8.2.0",
     "leveldown": "5.0.1",
     "levelup": "4.0.1",
+    "lifeguard-api": "^1.0.4",
     "lru-cache": "^5.1.1",
     "material-ui": "^0.20.2",
     "mobx": "5.9.4",
