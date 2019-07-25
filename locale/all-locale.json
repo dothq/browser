@@ -36,6 +36,13 @@
             "translators": "Chachy, SkyPlayz"
         },
         {
+            "title": "Dansk",
+            "en_title": "Danish",
+            "flag": "dk",
+            "flag_icon": "1f1e9-1f1f0.png",
+            "translators": "Tacaly"
+        },
+        {
             "title": "Norsk",
             "en_title": "Norwegian",
             "flag": "no",
