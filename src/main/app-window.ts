@@ -189,7 +189,7 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.webContents.on('crashed', (event: any, crashed: boolean) => {
-      this.loadURL(app.getAppPath() + 'static\\pages\\crash.html')
+      this.loadURL(app.getAppPath() + 'static\\pages\\util\\crash.html')
     });   
 
     if (process.env.ENV === 'dev') {

@@ -517,7 +517,7 @@ export class View extends BrowserView {
             if(appWindow.viewManager.selected.title != `Dot - ${options.title}`) {
               e.preventDefault();
               let child = new BrowserWindow({ show: false, frame: false, title: `Dot - ${options.title}`, width: options.width, height: options.height, icon: resolve(app.getAppPath() + '/static/icon.png') })
-              child.loadURL(app.getAppPath() + '/static/pages/window.html')
+              child.loadURL(app.getAppPath() + '/static/pages/util/window.html')
               child.once('ready-to-show', () => {
                 child.show()
                 child.webContents.send('load-url', url);
@@ -634,7 +634,7 @@ export class View extends BrowserView {
         if(`${this.webContents.getURL()}`.includes("#ise") == false) {
           console.log(error);
           event.preventDefault();
-          this.webContents.loadURL(app.getAppPath() + '/static/pages/ssl-error.html?du=' + url + '&err=' + error);
+          this.webContents.loadURL(app.getAppPath() + '/static/pages/error/ssl-error.html?du=' + url + '&err=' + error);
           callback(true);
         }
         if(`${this.webContents.getURL()}`.includes("#ise") == true) {

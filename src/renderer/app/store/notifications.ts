@@ -44,7 +44,7 @@ export class NotifsStore {
 
     // win.quit()
 
-    // win.loadURL(resolve(remote.app.getAppPath() + '\\static\\pages\\notification.html'));
+    // win.loadURL(resolve(remote.app.getAppPath() + '\\static\\pages\\dialog\\notification.html'));
 
     // // win.webContents.toggleDevTools();
 

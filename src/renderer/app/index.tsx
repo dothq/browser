@@ -342,7 +342,7 @@ async function tskManager() {
 
   console.log(data)
 
-  var tm = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\tskmgr.html'), {
+  var tm = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\util\\tskmgr.html'), {
     width: 820,
     height: 300,
     resizable: true,

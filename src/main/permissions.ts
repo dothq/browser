@@ -37,7 +37,7 @@ export class PermissionDialog extends BrowserWindow {
     app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('no-proxy-server')
 
-    this.webContents.loadURL(app.getAppPath() + '/static/pages/permission.html')
+    this.webContents.loadURL(app.getAppPath() + '/static/pages/dialog/permission.html')
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })

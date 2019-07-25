@@ -38,7 +38,7 @@ export class LocationBar extends BrowserWindow {
     app.commandLine.appendSwitch('no-proxy-server')
 
     this.setIgnoreMouseEvents(true);
-    this.webContents.loadURL(app.getAppPath() + '/static/pages/location-bar.html')
+    this.webContents.loadURL(app.getAppPath() + '/static/pages/util/location-bar.html')
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })

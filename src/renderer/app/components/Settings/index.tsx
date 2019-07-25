@@ -77,7 +77,7 @@ const logout = async () => {
 }
 
 const login = async () => {
-  var si = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\sign-in.html'), {
+  var si = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\verification\\sign-in.html'), {
     width: 400,
     height: 600,
     resizable: false,
