@@ -8,13 +8,12 @@ import { NavigationButtons } from '../NavigationButtons';
 import { Tabbar } from '../Tabbar';
 import ToolbarButton from '../ToolbarButton';
 import { icons } from '../../constants';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, Menu, remote } from 'electron';
 import BrowserAction from '../BrowserAction';
 import { Find } from '../Find';
 import { AbButton } from '../ToolbarButton/style';
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
-import { remote } from 'electron'
 import { TabSearchBox } from '../TabSearchBox';
 import { resolve } from 'path';
 
@@ -126,6 +125,43 @@ export const audioVisible = () => {
   }
 }
 
+export const onMoreClick = () => {
+  const contextMenu = remote.Menu.buildFromTemplate([
+    { label: 'New tab            ', accelerator: 'CmdOrCtrl+T', type: 'normal' },
+    { label: 'New window         ', accelerator: 'CmdOrCtrl+N', type: 'normal' },
+    { type: 'separator' },
+    { label: 'History             ', type: 'normal' },
+    { label: 'Downloads                ', accelerator: 'CmdOrCtrl+J', type: 'normal' },
+    { label: 'Bookmarks                   ', type: 'normal' },
+    { type: 'separator' },
+    { label: 'Zoom in', role: 'zoomin', accelerator: 'CmdOrCtrl+Shift+=', type: 'normal' },
+    { label: 'Zoom out', role: 'zoomout', accelerator: 'CmdOrCtrl+Shift+-', type: 'normal' },
+    { type: 'separator' },
+    { label: 'Print', accelerator: 'CmdOrCtrl+P', type: 'normal' },
+    { label: 'Find', accelerator: 'CmdOrCtrl+F', type: 'normal' },
+    { label: 'More tools', submenu: [
+      { label: 'Task Manager', accelerator: 'Shift+Esc', type: 'normal' },
+      { type: 'separator' },
+      { label: 'Developer Tools', accelerator: 'F12', role: 'toggledevtools', type: 'normal' }
+    ] },
+    { type: 'separator' },
+    { label: 'Edit', submenu: [
+      { label: 'Cut', role: 'cut', type: 'normal' },
+      { label: 'Copy', role: 'copy', type: 'normal' },
+      { label: 'Paste', role: 'paste', type: 'normal' },
+      { label: 'Fullscreen', role: 'togglefullscreen', type: 'normal' }
+    ] },
+    { type: 'separator' },
+    { label: 'Settings', type: 'normal' },
+    { label: 'Send feedback', type: 'normal' },
+    { label: 'About Dot', role: 'about', type: 'normal' },
+    { type: 'separator' },
+    { label: 'Quit', role: 'close' },
+  ]);
+
+  contextMenu.popup()
+}
+
 export const Toolbar = observer(() => {
   return (
     <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
@@ -192,6 +228,26 @@ export const Toolbar = observer(() => {
                   : ''
                 : '',
               icon: icons.shield,
+              badgeTextColor: 'white',
+            }}
+          />
+        </AbButton>
+        <Separator />
+        <AbButton title="View more options" onClick={onMoreClick}>
+          <BrowserAction
+            size={21}
+            style={{ marginLeft: 0 }}
+            opacity={0.54}
+            title="View more options"
+            visible={true}
+            data={{
+              badgeBackgroundColor: 'gray',
+              badgeText: store.tabs.selectedTab
+                ? ''
+                  ? ''
+                  : ''
+                : '',
+              icon: icons.more,
               badgeTextColor: 'white',
             }}
           />
