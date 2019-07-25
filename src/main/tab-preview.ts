@@ -30,15 +30,7 @@ export class TabPreview extends BrowserWindow {
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('no-proxy-server')
 
-    this.webContents.loadURL(app.getAppPath() + '/static/pages/tab-preview.html')
-
-    var parentBounds = appWindow.getBounds()
-    this.setBounds({
-        x: parentBounds.x + 3,
-        y: parentBounds.y + parentBounds.height - 35,
-        width: parentBounds.width,
-        height: 180
-    })
+    this.webContents.loadURL(app.getAppPath() + '/static/pages/tabs/tab-preview.html')
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })

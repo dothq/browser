@@ -101,7 +101,7 @@ import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
 
-// Fixes any proxy bypass settings
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 ipcMain.on('online-status-changed', (event: any, status: any) => {
   console.log("Dot is OFFLINE", status)
@@ -110,31 +110,6 @@ ipcMain.on('online-status-changed', (event: any, status: any) => {
 app.on('ready', async () => {
 
   modal.setup();
-
-  // const gotTheLock = app.requestSingleInstanceLock();
-
-  // if (!gotTheLock) {
-  //   app.quit();
-  // } else {
-  //   app.on('second-instance', (e, argv) => {
-  //     if (appWindow) {
-  //       if (appWindow.isMinimized()) appWindow.restore();
-  //       appWindow.focus();
-  
-  //       if (process.env.ENV !== 'dev') {
-  //         const path = argv[argv.length - 1];
-  //         const ext = extname(path);
-  
-  //         if (ext === '.html') {
-  //           appWindow.webContents.send('api-tabs-create', {
-  //             url: `file:///${path}`,
-  //             active: true,
-  //           });
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
 
   app.on('activate', () => {
     if (appWindow === null) {
