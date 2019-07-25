@@ -55,7 +55,7 @@ const errorLogPath = getPath('dot-errors.log');
 var time = new Date().toUTCString();
 
 if (existsSync(errorLogPath)) {
-  appendFile(errorLogPath, `// Error log effective of 2.1.0, ${time}. Running ${platform()}, started renderer app.\n`, function(err) {
+  appendFile(errorLogPath, `// Error log effective of 2.2.0, ${time}. Running ${platform()}, started renderer app.\n`, function(err) {
 
   });
 }

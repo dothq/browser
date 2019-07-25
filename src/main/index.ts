@@ -312,18 +312,18 @@ app.on('ready', async () => {
      * @todo Work on Extensions
      * @body electron-extensions doesn't seem to work with Electron 5.0, this is a priority.
    */
-    const extensions = new ExtensibleSession(viewSession);
-    extensions.addWindow(appWindow);
+    // const extensions = new ExtensibleSession(viewSession);
+    // extensions.addWindow(appWindow);
   
-    const extensionsPath = getPath('extensions');
-    const dirs = await promises.readdir(extensionsPath);
+    // const extensionsPath = getPath('extensions');
+    // const dirs = await promises.readdir(extensionsPath);
   
-    for (const dir of dirs) {
-      const extension = await extensions.loadExtension(
-        resolve(extensionsPath, dir),
-      );
-      extension.backgroundPage.webContents.openDevTools();
-    }
+    // for (const dir of dirs) {
+    //   const extension = await extensions.loadExtension(
+    //     resolve(extensionsPath, dir),
+    //   );
+    //   extension.backgroundPage.webContents.openDevTools();
+    // }
 
 
     loadFilters();

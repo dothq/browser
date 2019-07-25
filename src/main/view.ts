@@ -160,12 +160,12 @@ export class View extends BrowserView {
           {
             role: 'undo',
             icon: resolve(app.getAppPath() + '\\static\\app-icons\\undo.png'),
-            accelerator: 'Ctrl+Z'
+            accelerator: 'CmdOrCtrl+Z'
           },
           {
             role: 'redo',
             icon: resolve(app.getAppPath() + '\\static\\app-icons\\redo.png'),
-            accelerator: 'Ctrl+Y'
+            accelerator: 'CmdOrCtrl+Y'
           },
           {
             type: 'separator',
@@ -176,18 +176,18 @@ export class View extends BrowserView {
           },
           {
             role: 'copy',
-            accelerator: 'Ctrl+C',
+            accelerator: 'CmdOrCtrl+C',
             enabled: params.selectionText.length >= 1,
             icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png')
           },
           {
             role: 'paste',
-            accelerator: 'Ctrl+V',
+            accelerator: 'CmdOrCtrl+V',
             icon: resolve(app.getAppPath() + '\\static\\app-icons\\paste.png')
           },
           {
             role: 'selectAll',
-            accelerator: 'Ctrl+A'
+            accelerator: 'CmdOrCtrl+A'
           },
           {
             type: 'separator',
@@ -199,7 +199,7 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             role: 'copy',
-            accelerator: 'Ctrl+C',
+            accelerator: 'CmdOrCtrl+C',
             icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png')
           },
           {

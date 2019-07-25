@@ -10,11 +10,13 @@ import console = require('console');
 import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
+import { TabPreview } from './tab-preview';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
-  public permissionWindow = new PermissionDialog(this);
+  public permissionWindow: PermissionDialog = new PermissionDialog(this);
+  public tabPreview: TabPreview = new TabPreview(this);
 
   constructor() {
     super({
@@ -80,7 +82,7 @@ export class AppWindow extends BrowserWindow {
     }
 
     if (existsSync(errorLogPath)) {
-      appendFile(errorLogPath, `// Error log effective of 2.1.0, ${time}. Running ${platform()}, started main app.\n`, function(err) {
+      appendFile(errorLogPath, `// Error log effective of 2.2.0, ${time}. Running ${platform()}, started main app.\n`, function(err) {
 
       });
     }

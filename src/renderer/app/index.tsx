@@ -144,9 +144,9 @@ Menu.setApplicationMenu(
         { role: 'delete' },
         { role: 'selectall' },
         { role: 'quit' },
-        { role: 'reload', accelerator: 'Ctrl+Shift+Alt+R' },
+        { role: 'reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
         {
-          accelerator: 'Ctrl+F',
+          accelerator: 'CmdOrCtrl+F',
           label: 'Find in page',
           click() {
             if(store.tabs.selectedTab) {
@@ -161,14 +161,14 @@ Menu.setApplicationMenu(
           },
         },
         {
-          accelerator: 'Ctrl+P',
+          accelerator: 'CmdOrCtrl+P',
           label: 'Print webpage (Native)',
           click() {
             remote.webContents.getFocusedWebContents().print()
           },
         },
         {
-          accelerator: 'Ctrl+S',
+          accelerator: 'CmdOrCtrl+S',
           label: 'Save page',
           click() {
             if(store.tabs.selectedTab) {
@@ -191,7 +191,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'Reload Webpage',
-          accelerator: 'Ctrl+R',
+          accelerator: 'CmdOrCtrl+R',
           click() { 
             if(store.tabs.selectedTab) {
               store.tabs.selectedTab.callViewMethod('webContents.reload'); 
@@ -200,7 +200,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'Close tab',
-          accelerator: 'Ctrl+W',
+          accelerator: 'CmdOrCtrl+W',
           click() { 
             if(store.tabs.selectedTab) {
               if (store.tabs.selectedTab.loading) {
@@ -216,7 +216,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'New tab',
-          accelerator: 'Ctrl+T',
+          accelerator: 'CmdOrCtrl+T',
           click() { 
             store.overlay.isNewTab = true;
             store.overlay.visible = true;
@@ -248,14 +248,14 @@ Menu.setApplicationMenu(
         { type: 'separator' },
         { 
           label: 'Launcher',
-          accelerator: 'Ctrl+Space',
+          accelerator: 'CmdOrCtrl+Space',
           click() { 
             store.overlay.visible = true;
           } 
         },
         { 
           label: 'History',
-          accelerator: 'Ctrl+H',
+          accelerator: 'CmdOrCtrl+H',
           click() { 
             store.overlay.visible = true;
             store.overlay.currentContent = "history";
@@ -264,7 +264,7 @@ Menu.setApplicationMenu(
         },   
         { 
           label: 'Bookmarks',
-          accelerator: 'Ctrl+B',
+          accelerator: 'CmdOrCtrl+B',
           click() { 
             store.overlay.visible = true;
             store.overlay.currentContent = "bookmarks";
@@ -273,7 +273,7 @@ Menu.setApplicationMenu(
         },
         { 
           label: 'Settings',
-          accelerator: 'Ctrl+Shift+P',
+          accelerator: 'CmdOrCtrl+Shift+P',
           click() { 
             store.overlay.visible = true;
             store.overlay.currentContent = "settings";
@@ -318,9 +318,7 @@ Menu.setApplicationMenu(
           label: 'Task Manager',
           accelerator: 'Shift+Esc',
           async click() {
-            const { openProcessManager } = require('electron-process-manager');
-
-            openProcessManager({ how: 'descending', path: 'cpu.percentCPUUsage' });
+            tskManager()
           }
         }, 
       ],

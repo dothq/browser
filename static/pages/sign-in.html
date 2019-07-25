@@ -319,7 +319,7 @@
     font-family: "Google Sans";
     ">
     <img src="theme://icon.png" style="width: 15px; filter: invert(1);transform: translateY(19%);">
-    <span>Dot Browser 2.1.0</span></p>
+    <span>Dot Browser 2.2.0</span></p>
 
     <script>
 
@@ -500,7 +500,7 @@
 
                     http.open('POST', `https://dot.ender.site/api/session/l`)
                     http.setRequestHeader('Content-type', 'application/json')
-                    http.setRequestHeader('X-Dot-Version', '2.1.0')
+                    http.setRequestHeader('X-Dot-Version', '2.2.0')
                     http.send(JSON.stringify(loginData))
                     http.onload = function() {
                         var body = JSON.parse(http.responseText);

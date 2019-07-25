@@ -84,7 +84,7 @@ const contextMenu = (tab: Tab) => () => {
   const menu = remote.Menu.buildFromTemplate([
     {
       label: 'New tab',
-      accelerator: 'Ctrl+T',
+      accelerator: 'CmdOrCtrl+T',
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/add.png'),
       click: () => {
         store.overlay.isNewTab = true;
@@ -122,7 +122,7 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Close tab',
-      accelerator: 'Ctrl+W',
+      accelerator: 'CmdOrCtrl+W',
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/close.png'),
       click: () => {
         tab.close();
@@ -163,7 +163,7 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Reopen last closed tab',
-      accelerator: 'Ctrl+Shift+T',
+      accelerator: 'CmdOrCtrl+Shift+T',
       enabled: store.tabs.lastUrl != "",
       click: () => {
         var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
