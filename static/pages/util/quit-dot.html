@@ -4,8 +4,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=3.0, shrink-to-fit=no">
   <meta charset="UTF-8" />
-  <title>Are you sure?</title>
-  <link rel="stylesheet" href="https://dot.ender.site/style">
+  <title>Quit Dot</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
   <style>
     @font-face {
         font-family: 'Google Sans';
@@ -250,17 +250,26 @@
 </head>
 
 <body ondragstart="return false">
-  <div id="app" style="opacity: 0; transition: opacity 0.4s; transition-delay: 0.5s"> 
-    <div id="titleBar" style="-webkit-app-region: drag;width: 100%;float: right;">
-        <a id="close" style="float: right;-webkit-app-region: no-drag;padding: 20px;">
-            <img src=".../app-icons/tray-close.png" draggable="false">
-        </a>
+    <div id="app" style="opacity: 1;transition: opacity 0.4s ease 3s;font-family: Roboto;margin-left: 13px;margin-top: -9px;user-select: none;">
+        <h1 style="color: #424242;font-family: 'Google Sans';">Quit Dot?</h1>
+        <p style="margin-top: -12px;font-weight: 400;margin-bottom: 17px;">You are about to close <span id="tabs" style="font-weight: 800;">0</span> tabs. Are you sure you want to quit?</p>
+        <a id="close" style="margin-left: 245px;background-color: #e4e4e4;padding: 8px 13px 8px 13px;border-radius: 50px;color: #242424;cursor: pointer;">Close Dot</a>
+        <a id="cancel" style="background-color: #e4e4e4;padding: 8px 13px 8px 13px;border-radius: 50px;margin-left: 10px;color: #242424;cursor: pointer;">Cancel</a>
     </div>
 
     <script>
     
+        document.getElementById("app").style.opacity = 1;
         document.getElementById("close").addEventListener('click', function() {
+            require('electron-modal').emit('window-close')
+            // window.close()
+        });
+        document.getElementById("cancel").addEventListener('click', function() {
             window.close()
+        });
+
+        require('electron-modal').getData().then((data) => {
+            document.getElementById("tabs").innerText = data.tabs
         });
 
     </script>
