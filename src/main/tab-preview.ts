@@ -8,7 +8,7 @@ export class TabPreview extends BrowserWindow {
 
     super({
       width: 450,
-      height: 22,
+      height: 180,
       show: true,
       alwaysOnTop: true,
       minHeight: 0,
@@ -31,6 +31,14 @@ export class TabPreview extends BrowserWindow {
     app.commandLine.appendSwitch('no-proxy-server')
 
     this.webContents.loadURL(app.getAppPath() + '/static/pages/tab-preview.html')
+
+    var parentBounds = appWindow.getBounds()
+    this.setBounds({
+        x: parentBounds.x + 3,
+        y: parentBounds.y + parentBounds.height - 35,
+        width: parentBounds.width,
+        height: 180
+    })
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })
