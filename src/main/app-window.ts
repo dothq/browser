@@ -135,10 +135,14 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.on('blur', () => {
-      this.permissionWindow.setOpacity(0)
+      if(this.permissionWindow.isVisible() == false) {
+        this.permissionWindow.setOpacity(0)
+      }
     })
     this.on('focus', () => {
-      this.permissionWindow.setOpacity(1)
+      if(this.permissionWindow.isVisible() == false) {
+        this.permissionWindow.setOpacity(1)
+      }
     })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {

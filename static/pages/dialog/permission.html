@@ -61,28 +61,48 @@
             Copyright 2019, The Wexond Authors, Ender And Fire Development
         */
 
-        var permissions = [];
+        const sendLogEvent = (message) => {
+
+            message = message + '\n\nFor more information on this warning,\nopen an issue here https://github.com/dot-browser/desktop.'
+
+            console.warn('%cDot Log Message\n', 'font-weight: bold;', message);
+
+        };
+
+
+        var permissions = '';
         var domain = ''
 
         function allow() {
-            require("electron").ipcRenderer.send('request-permission-result', true, permissions[0]);
-            permissions.shift()
-            if(!permissions[0]) {
+            require("electron").ipcRenderer.send('request-permission-result', true, permissions);
+            permissions = undefined;
+            console.warn('%cDot Log Message\n', 'font-weight: bold;', "shifted new [0]", permissions)
+            document.querySelector("#mode").textContent = getText(permissions);
+            document.querySelector("#mode-icon").textContent = getIcon(permissions);
+            if(!permissions) {
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "cannot do anything, nothing in [0]")
                 require("electron").ipcRenderer.send('pls-hide');
                 document.getElementById("app").style.opacity = 0;
             }
         }
 
         function deny() {
-            require("electron").ipcRenderer.send('request-permission-result', false, permissions[0]);
-            permissions.shift()
-            if(!permissions[0]) {
+            require("electron").ipcRenderer.send('request-permission-result', false, permissions);
+            permissions = undefined
+            console.warn('%cDot Log Message\n', 'font-weight: bold;', "shifted new [0]", permissions)
+            document.querySelector("#mode").textContent = getText(permissions);
+            document.querySelector("#mode-icon").textContent = getIcon(permissions);
+            if(!permissions) {
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "cannot do anything, nothing in [0]")
                 require("electron").ipcRenderer.send('pls-hide');
                 document.getElementById("app").style.opacity = 0;
             }
         }
 
         const getText = (permission) => {
+
+            console.warn('%cDot Log Message\n', 'font-weight: bold;', "requested permission text for", permission)
+
             if (permission === 'notifications') {
                 return 'Send you notifications';
             }
@@ -116,7 +136,7 @@
             }
 
             if (`${permission}`.includes('proto_') == true) {
-                console.log(permission)
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', permission)
                 var basicProtocol = permission.split("proto_")[1].split(":")[0];
                 if(permission.split("proto_")[1].split(":")[1]) {
                     return `Email ${permission.split("proto_")[1].split(":")[1]}`
@@ -130,6 +150,9 @@
         };
 
         const getIcon = (permission) => {
+
+            console.warn('%cDot Log Message\n', 'font-weight: bold;', "requested permission icon for", permission)
+
             if (permission === 'notifications') {
                 return 'notifications';
             }
@@ -175,103 +198,60 @@
         require("electron").ipcRenderer.on(
             'request-permission',
             (e, { url, name, details }) => {
-                document.getElementById("app").style.opacity = 1;
+                require("electron").ipcRenderer.send('pls-show');
+                if(document.getElementById("app").style.opacity == 0) {
+                    document.getElementById("app").style.opacity = 1;
+                }
                 document.querySelector("#host").textContent = new URL(url).hostname.replace(/www./g, "")
                 window.permDomain = url;
                 domain = document.querySelector("#host").textContent;
 
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "host", new URL(url).hostname.replace(/www./g, ""), "permDomain", window.permDomain, "domain var", document.querySelector("#host").textContent)
+
                 if (name === 'notifications' || name === 'geolocation' || name === 'midiSysex' || name === 'pointerLock' || name === 'fullscreen' || name === 'http_permission') {
-                permissions.push(name);
+                permissions = name
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "pushed generic permission", name)
                 } else if (name === 'media') {
+                    console.warn('%cDot Log Message\n', 'font-weight: bold;', "is media type")
                 if (details.mediaTypes.includes('audio')) {
-                    permissions.push('microphone');
+                    console.warn('%cDot Log Message\n', 'font-weight: bold;', "pushed special mic")
+                    permissions = 'microphone'
                 }
 
                 if (details.mediaTypes.includes('video')) {
-                    permissions.push('camera');
+                    console.warn('%cDot Log Message\n', 'font-weight: bold;', "pushed special video")
+                    permissions = 'camera'
                 }
 
 
                 }
 
                 if (details.externalURL) {
+                    console.warn('%cDot Log Message\n', 'font-weight: bold;', "protocol special used")
                     var protocol = details.externalURL.split(':')[0]
                     if(details.externalURL.split(':')[0] == 'mailto') {
+                        console.warn('%cDot Log Message\n', 'font-weight: bold;', "mail protocol")
                         protocol = 'mail'
                     }
 
                     if(protocol != 'mail') {
-                        permissions.push(`proto_${protocol}`);
+                        console.warn('%cDot Log Message\n', 'font-weight: bold;', "pushed generic protocol", protocol)
+                        permissions = `proto_${protocol}`
                     }
                     else {
-                        permissions.push(`proto_${details.externalURL}`);
+                        console.warn('%cDot Log Message\n', 'font-weight: bold;', "pushded mailto", details.externalURL)
+                        permissions = `proto_${details.externalURL}`
                     }
                 }
+
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "set mode to", getText(permissions))
+                document.querySelector("#mode").textContent = getText(permissions);
+                console.warn('%cDot Log Message\n', 'font-weight: bold;', "set mode icon to", getIcon(permissions))
+                document.querySelector("#mode-icon").textContent = getIcon(permissions);
 
             },
         );
 
-        setInterval(function() {
-            document.querySelector("#mode").textContent = getText(permissions[0]);
-            document.querySelector("#mode-icon").textContent = getIcon(permissions[0]);
-        }, 1);
-
-    //     require("electron").ipcRenderer.on('permission', (e, permissionObj) => {
-
-    //         var validPerms = [
-    //             'notifications',
-    //             'microphone',
-    //             'geolocation',
-    //             'midiSysex',
-    //             'media',
-    //             'pointerLock',
-    //             'fullscreen',
-    //             'openExternal'
-    //         ]
-
-    //         document.querySelector("#app").style.opacity = 1;
-    //         document.querySelector("#host").textContent = new URL(permissionObj.url).hostname;
-    //         window.permission = permissionObj;
-
-    //         if (permissionObj.permissionNode == 'notifications') {
-    //             document.querySelector("#mode").textContent = `Send you notifications`;
-    //             document.querySelector("#mode-icon").textContent = 'notifications';
-    //         }
-    //         if (permissionObj.permissionNode == 'microphone') {
-    //             document.querySelector("#mode").textContent = `Use your microphone`;
-    //             document.querySelector("#mode-icon").textContent = 'mic';
-    //         }
-    //         if (permissionObj.permissionNode == 'geolocation') {
-    //             document.querySelector("#mode").textContent = `Know your location`;
-    //             document.querySelector("#mode-icon").textContent = 'location_on';
-    //         }
-    //         if (permissionObj.permissionNode == 'midiSysex') {
-    //             document.querySelector("#mode").textContent = `Use MIDI devices`;
-    //             document.querySelector("#mode-icon").textContent = 'music_note';
-    //         }
-    //         if (permissionObj.permissionNode == 'media') {
-    //             document.querySelector("#mode").textContent = `Use your microphone`;
-    //             document.querySelector("#mode-icon").textContent = 'mic';
-    //         }
-    //         if (permissionObj.permissionNode == 'pointerLock') {
-    //             document.querySelector("#mode").textContent = `Lock your cursor`;
-    //             document.querySelector("#mode-icon").textContent = 'mouse';
-    //         }
-    //         if (permissionObj.permissionNode == 'fullscreen') {
-    //             document.querySelector("#mode").textContent = `Go fullscreen`;
-    //             document.querySelector("#mode-icon").textContent = 'fullscreen';
-    //         }
-    //         if (permissionObj.permissionNode == 'openExternal') {
-    //             document.querySelector("#mode").textContent = `Open a popup window`;
-    //             document.querySelector("#mode-icon").textContent = 'open_in_new';
-    //         }
-
-    //         if (validPerms.includes(permissionObj.permissionNode) == false) {
-    //             document.querySelector("#mode").textContent = `Perform an unknown activity`;
-    //             document.querySelector("#mode-icon").textContent = 'radio_button_unchecked';
-    //         }
-
-    //     })
     </script>
 </head>
 

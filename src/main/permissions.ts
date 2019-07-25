@@ -60,13 +60,11 @@ export class PermissionDialog extends BrowserWindow {
       }
 
       this.rearrange();
-      this.show();
 
       this.webContents.send('request-permission', { name, url, details });
 
       ipcMain.once('request-permission-result', (e: any, r: boolean, permission: any) => {
         resolve(r);
-        this.hide();
         if(permission == 'http_permission') {
           appWindow.viewManager.selected.webContents.loadURL(`https://${appWindow.viewManager.selected.webContents.getURL().split("://")[1]}`)
         }
