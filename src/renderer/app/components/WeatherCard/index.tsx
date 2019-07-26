@@ -55,8 +55,8 @@ export const WeatherCard = observer(() => {
             </div>
             <div style={{ fontSize: 16, fontWeight: 300 }}>{store.weather.timetype}</div>
           </div>
-          <div style={{ marginLeft: '-400px' }}>
-            <Icon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
+          <div style={{ marginLeft: '-400px', marginTop: '-40px' }}>
+            <Icon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           </div>
         </Left>
       </Header>
