@@ -32,6 +32,15 @@
             "pt": "Portugalština"
         }
     ],
+    "days": {
+      "1": "Po",
+      "2": "Út",
+      "3": "St",
+      "4": "Čt",
+      "5": "Pa",
+      "6": "So",
+      "0": "Ne"
+    },
     "rich_presence": [
         {
             "default_details": "Surfuje na",
