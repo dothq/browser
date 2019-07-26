@@ -11,6 +11,8 @@ import { homedir } from 'os';
 import { FORECAST_KEY } from '../constants';//Need to add FORECAST_KEY constant => darksky API key needed
 const editJsonFile = require("edit-json-file");
 let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
+//New class by Daniel Bulant
 //New class, for easier day storing
 export class WeatherStoreDay{
 
