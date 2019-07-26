@@ -10,13 +10,13 @@ import console = require('console');
 import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
-import { TabPreview } from './tab-preview';
+import { PasswordManager } from './password-manager';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
-  public tabPreview: TabPreview = new TabPreview(this);
+  public passwordManager: PasswordManager = new PasswordManager(this);
 
   constructor() {
     super({
@@ -138,11 +138,13 @@ export class AppWindow extends BrowserWindow {
       if(this.permissionWindow.isVisible() == false) {
         this.permissionWindow.setOpacity(0)
       }
+      locationBar.hide()
     })
     this.on('focus', () => {
       if(this.permissionWindow.isVisible() == false) {
         this.permissionWindow.setOpacity(1)
       }
+      locationBar.show()
     })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {

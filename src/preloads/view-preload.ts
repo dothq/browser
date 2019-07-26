@@ -5,6 +5,7 @@ import { getAPI } from '~/shared/utils/extensions';
 import { format, parse } from 'url';
 import { IpcExtension } from '~/shared/models';
 import { runInThisContext } from 'vm';
+import console = require('console');
 
 /* Deprecated */
 // webFrame.registerURLSchemeAsPrivileged('extension');
@@ -272,3 +273,5 @@ process.once('loaded', () => {
     }
   });
 });
+
+console.log('view-preload', window.location.href)

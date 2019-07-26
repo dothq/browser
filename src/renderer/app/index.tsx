@@ -286,31 +286,7 @@ Menu.setApplicationMenu(
           accelerator: 'F12',
           click() { 
 
-            if(remote.webContents.getFocusedWebContents().getURL() == "http://localhost:4444/app.html") {
-              return;
-            }
-
-            if(remote.webContents.getFocusedWebContents().getURL() == join('file://', app.getAppPath(), 'build/app.html')) {
-              return;
-            }
-
-            if(remote.webContents.getFocusedWebContents().getURL().includes("static/pages/") == true) {
-              return;
-            }
-
-            if(remote.webContents.getFocusedWebContents().getURL().includes("dot://") == true) {
-              return;
-            }
-
-              if(store.tabs.list.length != 0) {
-                if(store.overlay.visible == false) {
-                remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });
-              
-                if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
-                  remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
-                }
-                }
-              }
+            openDeveloperTools()
             
           } 
         },   
@@ -326,7 +302,35 @@ Menu.setApplicationMenu(
   ]),
 );
 
-async function tskManager() {
+export function openDeveloperTools() {
+  if(remote.webContents.getFocusedWebContents().getURL() == "http://localhost:4444/app.html") {
+    return;
+  }
+
+  if(remote.webContents.getFocusedWebContents().getURL() == join('file://', app.getAppPath(), 'build/app.html')) {
+    return;
+  }
+
+  if(remote.webContents.getFocusedWebContents().getURL().includes("static/pages/") == true) {
+    return;
+  }
+
+  if(remote.webContents.getFocusedWebContents().getURL().includes("dot://") == true) {
+    return;
+  }
+
+  if(store.tabs.list.length != 0) {
+    if(store.overlay.visible == false) {
+    remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });
+  
+    if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+      remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+    }
+    }
+  }
+}
+
+export async function tskManager() {
   var data: any = [];
 
   remote.webContents.getAllWebContents().forEach(i => {

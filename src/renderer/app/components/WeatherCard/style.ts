@@ -27,23 +27,22 @@ export const Header = styled.div`
       return css`
         background-image: linear-gradient(to bottom right, #64b5f6, #1e88e5)
       `;
-    }
-    // Morning
-    if(time == 1) {
+    } else if(time == 1) {
       return css`
         background-image: linear-gradient(to bottom right, #fe9900, #ffd079fa)
       `;
-    }
-    // Afternoon
-    if(time == 2) {
+    } else if(time == 2) {
       return css`
         background-image: linear-gradient(to bottom right, #646ff6, #1e64e56b)
       `;
-    }
-    // Night
-    if(time == 3) {
+    } else if(time == 3) {
       return css`
         background-image: linear-gradient(to bottom right, #101010, #282828b3)
+      `;
+    }
+    else {
+      return css`
+        background-image: linear-gradient(to bottom right, #64b5f6, #1e88e5)
       `;
     }
   }}

@@ -16,6 +16,7 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import console = require('console');
 import { TabSearchBox } from '../TabSearchBox';
 import { resolve } from 'path';
+import { tskManager, openDeveloperTools } from '../..';
 
 const modal = require('electron-modal');
 
@@ -130,31 +131,34 @@ export const onMoreClick = () => {
     { label: 'New tab            ', accelerator: 'CmdOrCtrl+T', type: 'normal' },
     { label: 'New window         ', accelerator: 'CmdOrCtrl+N', type: 'normal' },
     { type: 'separator' },
-    { label: 'History             ', type: 'normal' },
-    { label: 'Downloads                ', accelerator: 'CmdOrCtrl+J', type: 'normal' },
-    { label: 'Bookmarks                   ', type: 'normal' },
+    { label: 'History             ', click: () => {store.overlay.visible = true; store.overlay.currentContent = 'history'}, type: 'normal' },
+    { label: 'Downloads                ', click: () => {store.overlay.visible = true}, enabled: store.downloads.list.length > 0, type: 'normal' },
+    { label: 'Bookmarks                   ', click: () => {store.overlay.visible = true; store.overlay.currentContent = 'bookmarks'}, type: 'normal' },
     { type: 'separator' },
-    { label: 'Zoom in', role: 'zoomin', accelerator: 'CmdOrCtrl+Shift+=', type: 'normal' },
-    { label: 'Zoom out', role: 'zoomout', accelerator: 'CmdOrCtrl+Shift+-', type: 'normal' },
-    { type: 'separator' },
-    { label: 'Print', accelerator: 'CmdOrCtrl+P', type: 'normal' },
-    { label: 'Find', accelerator: 'CmdOrCtrl+F', type: 'normal' },
-    { label: 'More tools', submenu: [
-      { label: 'Task Manager', accelerator: 'Shift+Esc', type: 'normal' },
+    { label: 'Zoom', submenu: [
+      { label: 'Zoom in', role: 'zoomin', accelerator: 'CmdOrCtrl+Shift+=', type: 'normal' },
+      { label: 'Zoom out', role: 'zoomout', accelerator: 'CmdOrCtrl+Shift+-', type: 'normal' },
       { type: 'separator' },
-      { label: 'Developer Tools', accelerator: 'F12', role: 'toggledevtools', type: 'normal' }
+      { label: 'Toggle fullscreen mode', click: () => ipcRenderer.send('enter-html-full-screen'), accelerator: 'F11', type: 'normal' },
+    ] },
+    { type: 'separator' },
+    { label: 'Print', click: () => remote.webContents.getFocusedWebContents().print(), accelerator: 'CmdOrCtrl+P', type: 'normal' },
+    { label: 'Find', click: () => {store.overlay.visible = false; store.tabs.selectedTab.findVisible = true}, accelerator: 'CmdOrCtrl+F', type: 'normal' },
+    { label: 'More tools', submenu: [
+      { label: 'Task Manager', click: () => tskManager(), accelerator: 'Shift+Esc', type: 'normal' },
+      { type: 'separator' },
+      { label: 'Developer Tools', click: () => openDeveloperTools(), accelerator: 'F12', role: 'toggledevtools', type: 'normal' }
     ] },
     { type: 'separator' },
     { label: 'Edit', submenu: [
       { label: 'Cut', role: 'cut', type: 'normal' },
       { label: 'Copy', role: 'copy', type: 'normal' },
-      { label: 'Paste', role: 'paste', type: 'normal' },
-      { label: 'Fullscreen', role: 'togglefullscreen', type: 'normal' }
+      { label: 'Paste', role: 'paste', type: 'normal' }
     ] },
     { type: 'separator' },
-    { label: 'Settings', type: 'normal' },
-    { label: 'Send feedback', type: 'normal' },
-    { label: 'About Dot', role: 'about', type: 'normal' },
+    { label: 'Settings', click: () => {store.overlay.visible = true; store.overlay.currentContent = 'settings'; store.options.currentDisplay = 'profile'}, type: 'normal' },
+    { label: 'Send feedback', click: () => {store.overlay.visible = true; store.overlay.currentContent = 'settings'; store.options.currentDisplay = 'send_feedback'}, type: 'normal' },
+    { label: 'About Dot', click: () => {store.overlay.visible = true; store.overlay.currentContent = 'settings'; store.options.currentDisplay = 'about'}, type: 'normal' },
     { type: 'separator' },
     { label: 'Quit', role: 'close' },
   ]);

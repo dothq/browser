@@ -44,7 +44,43 @@ import thumbs_up_dark from '~/shared/resources/icons/emojis/thumbs_up_dark.png';
 import thumbs_up_medium from '~/shared/resources/icons/emojis/thumbs_up_medium.png';
 import thumbs_up_medium_pale from '~/shared/resources/icons/emojis/thumbs_up_medium_pale.png';
 import thumbs_up_medium_dark from '~/shared/resources/icons/emojis/thumbs_up_medium_dark.png';
-import fewClouds from '~/shared/resources/icons/weather/few-clouds.png';
+
+import blizzard from '~/shared/resources/icons/weather/blizzard.svg'
+import blizzard_night from '~/shared/resources/icons/weather/blizzard_night.svg'
+import breezy from '~/shared/resources/icons/weather/breezy.svg'
+import breezy_snow from '~/shared/resources/icons/weather/breezy_snow.svg'
+import clear_night from '~/shared/resources/icons/weather/clear_night.svg'
+import drizzle from '~/shared/resources/icons/weather/drizzle.svg'
+import drizzle_night from '~/shared/resources/icons/weather/drizzle_night.svg'
+import dust from '~/shared/resources/icons/weather/dust.svg'
+import fog from '~/shared/resources/icons/weather/fog.svg'
+import fog_night from '~/shared/resources/icons/weather/fog_night.svg'
+import hail from '~/shared/resources/icons/weather/hail.svg'
+import hail_night from '~/shared/resources/icons/weather/hail_night.svg'
+import haze from '~/shared/resources/icons/weather/haze.svg'
+import heavy_rain from '~/shared/resources/icons/weather/heavy_rain.svg'
+import heavy_rain_night from '~/shared/resources/icons/weather/heavy_rain_night.svg'
+import mix_rainful from '~/shared/resources/icons/weather/mix_rainful.svg'
+import mix_rainful_night from '~/shared/resources/icons/weather/mix_rainful_night.svg'
+import mostly_cloudy from '~/shared/resources/icons/weather/mostly_cloudy.svg'
+import mostly_cloudy_night from '~/shared/resources/icons/weather/mostly_cloudy_night.svg'
+import mostly_sunny from '~/shared/resources/icons/weather/mostly_sunny.svg'
+import partly_cloudy from '~/shared/resources/icons/weather/partly_cloudy.svg'
+import partly_cloudy_night from '~/shared/resources/icons/weather/partly_cloudy_night.svg'
+import rain from '~/shared/resources/icons/weather/rain.svg'
+import rain_night from '~/shared/resources/icons/weather/rain_night.svg'
+import scattered_showers from '~/shared/resources/icons/weather/scattered_showers.svg'
+import scattered_showers_night from '~/shared/resources/icons/weather/scattered_showers_night.svg'
+import scattered_thunderstorm from '~/shared/resources/icons/weather/scattered_thunderstorm.svg'
+import scattered_thunderstorm_night from '~/shared/resources/icons/weather/scattered_thunderstorm_night.svg'
+import severe_thunderstorm from '~/shared/resources/icons/weather/severe_thunderstorm.svg'
+import severe_thunderstorm_night from '~/shared/resources/icons/weather/severe_thunderstorm_night.svg'
+import sleet from '~/shared/resources/icons/weather/sleet.svg'
+import sleet_night from '~/shared/resources/icons/weather/sleet_night.svg'
+import smoke from '~/shared/resources/icons/weather/smoke.svg'
+import snow from '~/shared/resources/icons/weather/snow.svg'
+import snow_night from '~/shared/resources/icons/weather/snow_night.svg'
+import tornado from '~/shared/resources/icons/weather/tornado.svg'
 
 export const icons = {
   windowsClose,
@@ -67,7 +103,6 @@ export const icons = {
   find,
   edit,
   down,
-  fewClouds,
   arrowBack,
   star,
   starFilled,
@@ -93,4 +128,40 @@ export const icons = {
   thumbs_up_medium_pale,
   thumbs_up_pale,
   pageInverted,
+  blizzard,
+  blizzard_night,
+  breezy,
+  breezy_snow,
+  clear_night,
+  drizzle,
+  drizzle_night,
+  dust,
+  fog,
+  fog_night,
+  hail,
+  hail_night,
+  haze,
+  heavy_rain,
+  heavy_rain_night,
+  mix_rainful,
+  mix_rainful_night,
+  mostly_cloudy,
+  mostly_cloudy_night,
+  mostly_sunny,
+  partly_cloudy,
+  partly_cloudy_night,
+  rain,
+  rain_night,
+  scattered_showers,
+  scattered_showers_night,
+  scattered_thunderstorm,
+  scattered_thunderstorm_night,
+  severe_thunderstorm,
+  severe_thunderstorm_night,
+  sleet,
+  sleet_night,
+  smoke,
+  snow,
+  snow_night,
+  tornado,
 };

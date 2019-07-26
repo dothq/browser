@@ -1,0 +1,49 @@
+<svg id="scattered_thunderstorm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="438.438" height="416.281" viewBox="0 0 438.438 416.281">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #f2ba1a;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        filter: url(#filter);
+      }
+
+      .cls-2 {
+        filter: url(#filter-2);
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+
+      .cls-4 {
+        fill: #d9e9f7;
+        filter: url(#filter-3);
+      }
+    </style>
+    <filter id="filter" x="266.844" y="42.719" width="170.187" height="170.343" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="266.844" y="42.7188" width="170.187" height="170.343" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTcwLjE4NyIgaGVpZ2h0PSIxNzAuMzQzIiB2aWV3Qm94PSIwIDAgMTcwLjE4NyAxNzAuMzQzIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeTE9IjE3MC4yNjUiIHgyPSIxNzAuMTg3IiB5Mj0iMC4wNzgiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjNiMDFjIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZDg0YiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iMTcwLjE4NyIgaGVpZ2h0PSIxNzAuMzQzIi8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="145.469" y="285.031" width="144.156" height="173.969" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="145.469" y="285.031" width="144.156" height="173.969" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTQ0LjE1NiIgaGVpZ2h0PSIxNzMuOTY5IiB2aWV3Qm94PSIwIDAgMTQ0LjE1NiAxNzMuOTY5Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeTE9IjE1OS4wNjIiIHgyPSIxNDQuMTU2IiB5Mj0iMTQuOTA2IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2YzYjAxYyIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNmZmQ4NGIiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjE0NC4xNTYiIGhlaWdodD0iMTczLjk2OSIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-3" x="233.969" y="160.656" width="235.531" height="150.656" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="233.969" y="160.656" width="235.531" height="150.656" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjM1LjUzMSIgaGVpZ2h0PSIxNTAuNjU2IiB2aWV3Qm94PSIwIDAgMjM1LjUzMSAxNTAuNjU2Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeDE9IjQyLjQzOCIgeTE9IjE1MC42NTYiIHgyPSIxOTMuMDk0IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTRmNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkZmU5ZjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjIzNS41MzEiIGhlaWdodD0iMTUwLjY1NiIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="sun-small" class="cls-1" d="M437.041,127.891A85.091,85.091,0,1,1,351.95,42.72,85.13,85.13,0,0,1,437.041,127.891Z" transform="translate(-31.063 -42.719)"/>
+  <path id="lightning" class="cls-2" d="M212.093,285.046c-10.866-.01-24.2,7.7-29.634,17.136l-34.682,60.229c-5.433,9.436-1.011,16.5,9.825,15.7l28.331-2.089c10.836-.8,15.458,6.381,10.27,15.954l-31.511,58.144c-5.188,9.573-2.567,11.743,5.826,4.823l113.935-93.952c8.391-6.92,6.38-12.127-4.472-11.57l-43.536,2.234c-10.851.556-15.285-6.708-9.852-16.142l19.16-33.275c5.433-9.435.988-17.163-9.878-17.173Z" transform="translate(-31.063 -42.719)"/>
+  <path id="cloud-large" class="cls-3" d="M333.943,311.1c38.777,0,70.211-30.93,70.211-69.083s-31.434-69.082-70.211-69.082c-0.242,0-.475.033-0.718,0.036-6.245-55.089-53.711-97.928-111.368-97.928a112.174,112.174,0,0,0-102.239,65.1c-0.555-.01-1.1-0.041-1.661-0.041-47.992,0-86.9,38.28-86.9,85.5s38.906,85.5,86.9,85.5" transform="translate(-31.063 -42.719)"/>
+  <path id="cloud-small-dark" class="cls-4" d="M425.187,311.327a44.09,44.09,0,1,0,0-88.179c-0.153,0-.3.021-0.454,0.023a70.845,70.845,0,0,0-134.854-20.954c-0.349-.006-0.7-0.026-1.048-0.026a54.569,54.569,0,1,0,0,109.136" transform="translate(-31.063 -42.719)"/>
+</svg>

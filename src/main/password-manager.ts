@@ -2,18 +2,18 @@ import { BrowserWindow, app, nativeImage, screen } from 'electron';
 import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
 
-export class TabPreview extends BrowserWindow {
+export class PasswordManager extends BrowserWindow {
   
    constructor(public appWindow: any) {
 
     super({
       width: 450,
-      height: 180,
+      height: 380,
       show: true,
       alwaysOnTop: true,
       minHeight: 0,
       acceptFirstMouse: true,
-      title: 'Dot Tab Preview',
+      title: 'Dot Credentials Manager',
       webPreferences: {
         plugins: true,
         nodeIntegration: true,

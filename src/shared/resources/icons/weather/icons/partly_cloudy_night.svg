@@ -1,0 +1,60 @@
+<svg id="partly_cloudy_night" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="438.438" height="288.188" viewBox="0 0 438.438 288.188">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #25ace3;
+        filter: url(#filter);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5 {
+        fill-rule: evenodd;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #f3bb1a;
+      }
+
+      .cls-2 {
+        filter: url(#filter-2);
+      }
+
+      .cls-3 {
+        filter: url(#filter-3);
+      }
+
+      .cls-4 {
+        fill: #d1e7f7;
+        filter: url(#filter-4);
+      }
+
+      .cls-5 {
+        fill: #fff;
+      }
+    </style>
+    <filter id="filter" x="279.656" y="105.906" width="189.438" height="189.625" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="279.656" y="105.906" width="189.438" height="189.625" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMTg5LjQzOCIgaGVpZ2h0PSIxODkuNjI1IiB2aWV3Qm94PSIwIDAgMTg5LjQzOCAxODkuNjI1Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeTE9IjE4OS41MzEiIHgyPSIxODkuNDM4IiB5Mj0iMC4wOTQiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMzRhNmRlIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iIzRmYzJlZiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iMTg5LjQzOCIgaGVpZ2h0PSIxODkuNjI1Ii8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-2" x="411.719" y="110.375" width="48.469" height="48.563" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="411.719" y="110.375" width="48.469" height="48.563" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNDguNDY5IiBoZWlnaHQ9IjQ4LjU2MyIgdmlld0JveD0iMCAwIDQ4LjQ2OSA0OC41NjMiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQogICAgPC9zdHlsZT4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB5MT0iNDguNTE2IiB4Mj0iNDguNDY5IiB5Mj0iMC4wNDciIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjRiMTFjIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZDg0YiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNDguNDY5IiBoZWlnaHQ9IjQ4LjU2MyIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-3" x="55.219" y="138.031" width="37" height="37.031" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="55.2188" y="138.031" width="37" height="37.031" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzciIGhlaWdodD0iMzcuMDMxIiB2aWV3Qm94PSIwIDAgMzcgMzcuMDMxIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeTE9IjM3LjAxNiIgeDI9IjM3IiB5Mj0iMC4wMTYiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KICAgICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjZjRiMTFjIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI2ZmZDg0YiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iMzciIGhlaWdodD0iMzcuMDMxIi8+Cjwvc3ZnPgo="/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+    <filter id="filter-4" x="31.188" y="157.781" width="373.094" height="236.063" filterUnits="userSpaceOnUse">
+      <feImage preserveAspectRatio="none" x="31.1875" y="157.781" width="373.094" height="236.063" result="image" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzczLjA5NCIgaGVpZ2h0PSIyMzYuMDYzIiB2aWV3Qm94PSIwIDAgMzczLjA5NCAyMzYuMDYzIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudCk7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudCIgeDE9IjY4LjUxNSIgeTE9IjIzNi4wNjMiIHgyPSIzMDQuNTc4IiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iI2NmZTRmNiIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiNkZmU5ZjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDxyZWN0IGNsYXNzPSJjbHMtMSIgd2lkdGg9IjM3My4wOTQiIGhlaWdodD0iMjM2LjA2MyIvPgo8L3N2Zz4K"/>
+      <feComposite result="composite" operator="in" in2="SourceGraphic"/>
+      <feBlend result="blend" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  <path id="moon-small" class="cls-1" d="M376.183,295.516a96.59,96.59,0,0,1-26.647-189.411,5.058,5.058,0,0,1,6.255,6.261,86.251,86.251,0,0,0,106.851,106.95,5.058,5.058,0,0,1,6.251,6.262A96.909,96.909,0,0,1,376.183,295.516Z" transform="translate(-31.188 -105.906)"/>
+  <path id="star-01" class="cls-2" d="M439.31,153.8c-1.855,6.822-4.889,6.822-6.744,0s-8.948-13.922-15.764-15.778-6.815-4.894,0-6.75,13.91-8.956,15.764-15.778,4.889-6.822,6.744,0,8.948,13.922,15.763,15.778,6.815,4.894,0,6.75S441.164,146.976,439.31,153.8Z" transform="translate(-31.188 -105.906)"/>
+  <path id="star-03" class="cls-3" d="M76.278,171.147c-1.415,5.2-3.731,5.2-5.145,0s-6.826-10.622-12.026-12.037-5.2-3.734,0-5.15,10.611-6.833,12.026-12.036,3.73-5.205,5.145,0S83.1,152.544,88.3,153.96s5.2,3.733,0,5.15S77.693,165.942,76.278,171.147Z" transform="translate(-31.188 -105.906)"/>
+  <path id="cloud-large-night" class="cls-4" d="M334.063,393.85c38.776,0,70.21-30.929,70.21-69.082s-31.434-69.082-70.21-69.082c-0.242,0-.476.032-0.719,0.035-6.245-55.089-53.711-97.928-111.367-97.928a112.174,112.174,0,0,0-102.239,65.1c-0.554-.01-1.1-0.041-1.661-0.041-47.992,0-86.9,38.28-86.9,85.5s38.905,85.5,86.9,85.5" transform="translate(-31.188 -105.906)"/>
+  <path id="cloud-small" class="cls-5" d="M425.306,394.081a44.09,44.09,0,1,0,0-88.179c-0.153,0-.3.022-0.454,0.023A70.844,70.844,0,0,0,290,284.971c-0.35-.006-0.7-0.026-1.048-0.026a54.569,54.569,0,1,0,0,109.136" transform="translate(-31.188 -105.906)"/>
+</svg>

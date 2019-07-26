@@ -20,8 +20,9 @@ const fetch = require("node-fetch");
 import store from '../../store';
 import { resolve } from 'path';
 import { homedir } from 'os';
-const json = require("edit-json-file");
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
+const editJsonFile = require("edit-json-file");
+let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
+
 
 if(!file.get("tempType")) {
   file.set("tempType", "c");
@@ -31,6 +32,7 @@ if(!file.get("tempType")) {
 else {
   store.weather.tempindicator = file.get("tempType")
 }
+
 
 export const WeatherCard = observer(() => {
   return (
@@ -46,41 +48,42 @@ export const WeatherCard = observer(() => {
                 fontWeight: 400,
                 marginBottom: 4,
                 marginTop: 8,
+                width: '520px'
               }}
             >
               {store.weather.summary}
             </div>
             <div style={{ fontSize: 16, fontWeight: 300 }}>{store.weather.timetype}</div>
           </div>
-          <div>
+          <div style={{ marginLeft: '-400px' }}>
             <Icon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
           </div>
         </Left>
       </Header>
       <Items>
-        <Item>
-          <Overline>WED</Overline>
+        <Item title={store.weather.day1.summary}>
+          <Overline>{store.weather.day1.name}</Overline>
           <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
-          <SmallDegrees>20°</SmallDegrees>
-          <SmallDegrees night>12°</SmallDegrees>
+          <SmallDegrees>{store.weather.day1.maxTemp}°</SmallDegrees>
+          <SmallDegrees night>{store.weather.day1.minTemp}°</SmallDegrees>
         </Item>
-        <Item>
-          <Overline>THU</Overline>
+        <Item title={store.weather.day2.summary}>
+          <Overline>{store.weather.day2.name}</Overline>
           <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
-          <SmallDegrees>20°</SmallDegrees>
-          <SmallDegrees night>12°</SmallDegrees>
+          <SmallDegrees>{store.weather.day2.maxTemp}°</SmallDegrees>
+          <SmallDegrees night>{store.weather.day2.minTemp}°</SmallDegrees>
         </Item>
-        <Item>
-          <Overline>FRI</Overline>
+        <Item title={store.weather.day3.summary}>
+          <Overline>{store.weather.day3.name}</Overline>
           <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
-          <SmallDegrees>20°</SmallDegrees>
-          <SmallDegrees night>12°</SmallDegrees>
+          <SmallDegrees>{store.weather.day3.maxTemp}°</SmallDegrees>
+          <SmallDegrees night>{store.weather.day3.minTemp}°</SmallDegrees>
         </Item>
-        <Item>
-          <Overline>SAT</Overline>
+        <Item title={store.weather.day4.summary}>
+          <Overline>{store.weather.day4.name}</Overline>
           <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
-          <SmallDegrees>20°</SmallDegrees>
-          <SmallDegrees night>12°</SmallDegrees>
+          <SmallDegrees>{store.weather.day4.maxTemp}°</SmallDegrees>
+          <SmallDegrees night>{store.weather.day4.minTemp}°</SmallDegrees>
         </Item>
       </Items>
     </StyledCard>
