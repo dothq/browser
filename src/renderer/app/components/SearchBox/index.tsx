@@ -19,6 +19,9 @@ import { Title } from '../Overlay/style';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
+  setInterval(() => {
+    store.overlay.inputRef.current.select();
+  }, 1)
 };
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -133,13 +136,6 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     iconSearchURL = `https://www.ecosia.org/search`;
   }
 
-  if(store.overlay.inputRef.current.value.includes(iconSearchURL) == true) {
-    store.overlay.iconRef.current.style.backgroundImage = `url(https://api.faviconkit.com/${iconSearchURL}/32)`
-  }
-  else {
-    store.overlay.iconRef.current.style.backgroundImage = `url(${icons.search})`
-  }
-
   if (
     key !== 8 && // backspace
     key !== 13 && // enter
@@ -173,7 +169,7 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 const onInput = (e: any) => {
   store.overlay.show();
   store.overlay.suggest();
-  // store.overlay.scrollRef.current.scrollTop = 0;
+  store.overlay.scrollRef.current.scrollTop = 0;
 };
 
 const onStarClick = async () => {

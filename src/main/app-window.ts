@@ -135,15 +135,17 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.on('blur', () => {
-      if(this.permissionWindow.isVisible() == false) {
-        this.permissionWindow.setOpacity(0)
-      }
+      // if(this.permissionWindow.isVisible() == false) {
+      //   this.permissionWindow.hide()
+      //   this.permissionWindow.setIgnoreMouseEvents(true)
+      // }
       locationBar.hide()
     })
     this.on('focus', () => {
-      if(this.permissionWindow.isVisible() == false) {
-        this.permissionWindow.setOpacity(1)
-      }
+      // if(this.permissionWindow.isVisible() == false) {
+      //   this.permissionWindow.show()
+      //   this.permissionWindow.setIgnoreMouseEvents(false)
+      // }
       locationBar.show()
     })
 

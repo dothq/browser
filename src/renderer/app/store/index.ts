@@ -126,6 +126,9 @@ export class Store {
   @observable
   public theme: number = 1 | 0;
 
+  @observable
+  public isMaximized: boolean;
+
   public mouse = {
     x: 0,
     y: 0,

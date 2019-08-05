@@ -72,10 +72,14 @@ export class PermissionDialog extends BrowserWindow {
 
       ipcMain.once('pls-show', (e: any) => {
         this.show();
+        this.setIgnoreMouseEvents(false);
+        this.setOpacity(1)
       });
   
       ipcMain.once('pls-hide', (e: any) => {
         this.hide();
+        this.setIgnoreMouseEvents(false);
+        this.setOpacity(0)
       });
 
     });

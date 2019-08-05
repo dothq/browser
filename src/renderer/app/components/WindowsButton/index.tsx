@@ -7,10 +7,11 @@ interface Props {
   isClose?: boolean;
   onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
   isDark?: boolean;
+  visible?: boolean;
 }
 
-export const WindowsButton = ({ icon, onClick, isClose, isDark }: Props) => (
-  <Button isClose={isClose} icon={icon} onClick={onClick}>
+export const WindowsButton = ({ icon, onClick, isClose, isDark, visible }: Props) => (
+  <Button visible={visible} isClose={isClose} icon={icon} onClick={onClick}>
     <Icon isDark={isDark} isClose={isClose} icon={icon} />
   </Button>
 );

@@ -601,6 +601,7 @@ export class View extends BrowserView {
 
     this.webContents.on('update-target-url', (e, url) => {
       var parentBounds = appWindow.getBounds()
+      locationBar.show()
       if(appWindow.isMaximized() == true) {
         locationBar.setBounds({
           x: parentBounds.x + 3,

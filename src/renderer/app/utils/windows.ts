@@ -1,6 +1,7 @@
 import { remote } from 'electron';
 import store from '../store';
 import { resolve } from 'path';
+import console = require('console');
 var modal = require('electron-modal');
 
 async function areYouSure(tabSize: number) {
@@ -56,4 +57,18 @@ export const maximizeWindow = () => {
   } else {
     currentWindow.maximize();
   }
+
+  isMaximized()
+
+};
+
+export const isMaximized = () => {
+  const currentWindow = getCurrentWindow();
+
+  if (currentWindow.isMaximized()) {
+    store.isMaximized = false;
+  } else {
+    store.isMaximized = true;
+  }
+
 };

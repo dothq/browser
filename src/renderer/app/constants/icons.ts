@@ -1,5 +1,6 @@
 import windowsClose from '~/shared/resources/icons/windows/close.svg';
 import windowsMaximize from '~/shared/resources/icons/windows/maximize.svg';
+import windowsRestore from '~/shared/resources/icons/windows/restore.svg';
 import windowsMinimize from '~/shared/resources/icons/windows/minimize.svg';
 import add from '~/shared/resources/icons/add.svg';
 import back from '~/shared/resources/icons/back.svg';
@@ -85,6 +86,7 @@ import tornado from '~/shared/resources/icons/weather/tornado.svg'
 export const icons = {
   windowsClose,
   windowsMaximize,
+  windowsRestore,
   windowsMinimize,
   add,
   back,

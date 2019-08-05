@@ -5,6 +5,7 @@ import { centerIcon } from '~/shared/mixins';
 interface ButtonProps {
   icon: string;
   isClose?: boolean;
+  visible?: boolean;
 }
 
 export const Button = styled.div`
@@ -22,6 +23,11 @@ export const Button = styled.div`
     background-color: ${({ isClose }: ButtonProps) =>
       !isClose ? 'rgba(196, 196, 196, 0.4)' : '#e81123'};
   }
+
+  ${({ visible }: ButtonProps) => css`
+    display: ${visible ? 'auto' : 'none'}
+  `};
+
 `;
 
 interface IconProps {

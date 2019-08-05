@@ -99,7 +99,7 @@ export class WeatherStore {
       var ip_url = 'http://ip-api.com/json/';
       var ip_loc = await fetch(ip_url);
       ip_loc = await ip_loc.json();
-      console.log("Ip location found: "+ip_loc.lat + " " + ip_loc.lon);
+
       //CORS anywhere needed, darksky API don't have CORS headers
       var api_url = "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/"+FORECAST_KEY+"/"+ ip_loc.lat + "," + ip_loc.lon +"/?exclude=flags,hourly,alerts&lang=" + store.locale.currentLanguage + "&units="+indicator;
       const data = await fetch(api_url);
@@ -159,8 +159,7 @@ export class WeatherStore {
       this.loaded = true;
     }
     catch (e) {
-      console.warn("Error in weather store while executing:");
-      console.error(e)
+      
     }
   }
 

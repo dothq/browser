@@ -273,5 +273,3 @@ process.once('loaded', () => {
     }
   });
 });
-
-console.log('view-preload', window.location.href)

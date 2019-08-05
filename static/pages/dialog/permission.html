@@ -29,6 +29,8 @@
         
         body {
             overflow: hidden;
+            transition: 0.1s opacity;
+            opacity: 0;
         }
         
         .close {
@@ -82,7 +84,7 @@
             if(!permissions) {
                 console.warn('%cDot Log Message\n', 'font-weight: bold;', "cannot do anything, nothing in [0]")
                 require("electron").ipcRenderer.send('pls-hide');
-                document.getElementById("app").style.opacity = 0;
+                document.body.style.opacity = 0;
             }
         }
 
@@ -95,7 +97,7 @@
             if(!permissions) {
                 console.warn('%cDot Log Message\n', 'font-weight: bold;', "cannot do anything, nothing in [0]")
                 require("electron").ipcRenderer.send('pls-hide');
-                document.getElementById("app").style.opacity = 0;
+                document.body.style.opacity = 0;
             }
         }
 
@@ -199,6 +201,7 @@
             'request-permission',
             (e, { url, name, details }) => {
                 require("electron").ipcRenderer.send('pls-show');
+                document.body.style.opacity = 1;
                 if(document.getElementById("app").style.opacity == 0) {
                     document.getElementById("app").style.opacity = 1;
                 }
