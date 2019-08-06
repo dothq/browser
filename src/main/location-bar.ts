@@ -35,7 +35,6 @@ export class LocationBar extends BrowserWindow {
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('auto-detect', 'false')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
-    app.commandLine.appendSwitch('no-proxy-server')
 
     this.setIgnoreMouseEvents(true);
     this.webContents.loadURL(app.getAppPath() + '/static/pages/util/location-bar.html')

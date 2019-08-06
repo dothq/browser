@@ -162,6 +162,15 @@ export class Store {
     );
 
     ipcRenderer.on(
+      'url-arguments-applied',
+      (e: IpcMessageEvent, url: string) => {
+        console.log("added", url)
+        this.tabs.addTab({ url, active: true })
+        this.overlay.visible = false;
+      },
+    );
+
+    ipcRenderer.on(
       'api-tabs-query',
       (e: IpcMessageEvent, webContentsId: number) => {
         const sender = remote.webContents.fromId(webContentsId);

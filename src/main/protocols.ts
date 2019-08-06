@@ -10,10 +10,7 @@ const applets = ['newtab'];
 
 export const registerProtocols = () => {
 
-  /*
-    These methods are now deprecated.
-  */
-
+  /** @deprecated */
   // protocol.registerStandardSchemes(['dot', 'extension', 'theme']);
 
   // protocol.registerFileProtocol('dot')

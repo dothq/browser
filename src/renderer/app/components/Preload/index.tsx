@@ -55,9 +55,8 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 var int: any;
 
-int = setInterval(function() {
+setTimeout(function() {
     store.overlay.currentContent = "default"
-    clearInterval(int)
 }, 800);
 
 export const Preload = observer(() => {

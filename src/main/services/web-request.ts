@@ -350,7 +350,11 @@ export const runWebRequestService = (window: AppWindow) => {
 
   const onErrorOccurred = async (details: any) => {
     const newDetails: any = getDetails(details, window, true);
-    console.log(details)
+    /**
+     * @todo Add Error Handling pages
+     * @body Use the `details` object to grab the error code to produce an error page.
+     */
+    // console.log(details)
     interceptRequest('onErrorOccurred', newDetails);
   };
 

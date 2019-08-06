@@ -11,6 +11,11 @@ const {
 const { spawn } = require('child_process');
 
 const production = process.env.NODE_ENV === 'dev' ? false : true;
+var startURI = ''
+
+process.argv.forEach(i => { if(new URL(i).hostname) { startURI = i } });
+
+console.log(startURI)
 
 const getConfig = (target, name) => {
   return {
@@ -98,7 +103,7 @@ const renderer = (name, port) => {
 
     if (name === 'app') {
       return fuse.run().then(() => {
-        const child = spawn('npm', ['start'], {
+        const child = spawn('npm', ['start', startURI], {
           shell: true,
           stdio: 'inherit',
         });

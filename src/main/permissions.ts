@@ -35,7 +35,6 @@ export class PermissionDialog extends BrowserWindow {
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false')
-    app.commandLine.appendSwitch('no-proxy-server')
 
     this.webContents.loadURL(app.getAppPath() + '/static/pages/dialog/permission.html')
 
@@ -71,13 +70,13 @@ export class PermissionDialog extends BrowserWindow {
       });
 
       ipcMain.once('pls-show', (e: any) => {
-        this.show();
+        // this.show();
         this.setIgnoreMouseEvents(false);
         this.setOpacity(1)
       });
   
       ipcMain.once('pls-hide', (e: any) => {
-        this.hide();
+        // this.hide();
         this.setIgnoreMouseEvents(false);
         this.setOpacity(0)
       });

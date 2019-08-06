@@ -19,9 +19,6 @@ import { Title } from '../Overlay/style';
 
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
-  setInterval(() => {
-    store.overlay.inputRef.current.select();
-  }, 1)
 };
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -111,6 +108,8 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   const { list } = suggestions;
   const input = store.overlay.inputRef.current;
 
+  input.select();
+
   const json = require("edit-json-file");
  
   let file = json(resolve(homedir()) + '/dot/dot-options.json');
@@ -170,6 +169,7 @@ const onInput = (e: any) => {
   store.overlay.show();
   store.overlay.suggest();
   store.overlay.scrollRef.current.scrollTop = 0;
+  store.overlay.inputRef.current.select();
 };
 
 const onStarClick = async () => {

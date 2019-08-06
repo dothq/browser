@@ -107,7 +107,6 @@ export class OverlayStore {
 
   constructor() {
     window.addEventListener('keydown', this.onWindowKeyDown);
-    
   }
 
   public onWindowKeyDown = (e: KeyboardEvent) => {

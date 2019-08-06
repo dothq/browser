@@ -55,7 +55,7 @@ export const WeatherCard = observer(() => {
             </div>
             <div style={{ fontSize: 16, fontWeight: 300 }}>{store.weather.timetype}</div>
           </div>
-          <div style={{ marginLeft: '-400px', marginTop: '-40px' }}>
+          <div style={{ marginLeft: '-400px' }}>
             <Icon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           </div>
         </Left>
@@ -63,25 +63,25 @@ export const WeatherCard = observer(() => {
       <Items>
         <Item title={store.weather.day1.summary}>
           <Overline>{store.weather.day1.name}</Overline>
-          <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
+          <SmallIcon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           <SmallDegrees>{store.weather.day1.maxTemp}°</SmallDegrees>
           <SmallDegrees night>{store.weather.day1.minTemp}°</SmallDegrees>
         </Item>
         <Item title={store.weather.day2.summary}>
           <Overline>{store.weather.day2.name}</Overline>
-          <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
+          <SmallIcon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           <SmallDegrees>{store.weather.day2.maxTemp}°</SmallDegrees>
           <SmallDegrees night>{store.weather.day2.minTemp}°</SmallDegrees>
         </Item>
         <Item title={store.weather.day3.summary}>
           <Overline>{store.weather.day3.name}</Overline>
-          <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
+          <SmallIcon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           <SmallDegrees>{store.weather.day3.maxTemp}°</SmallDegrees>
           <SmallDegrees night>{store.weather.day3.minTemp}°</SmallDegrees>
         </Item>
         <Item title={store.weather.day4.summary}>
           <Overline>{store.weather.day4.name}</Overline>
-          <SmallIcon style={{ backgroundImage: `url(${icons.fewClouds})` }} />
+          <SmallIcon style={{ backgroundImage: `url(${icons.scattered_thunderstorm_night})` }} />
           <SmallDegrees>{store.weather.day4.maxTemp}°</SmallDegrees>
           <SmallDegrees night>{store.weather.day4.minTemp}°</SmallDegrees>
         </Item>

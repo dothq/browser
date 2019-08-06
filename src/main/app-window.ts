@@ -10,13 +10,11 @@ import console = require('console');
 import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
-import { PasswordManager } from './password-manager';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
-  public passwordManager: PasswordManager = new PasswordManager(this);
 
   constructor() {
     super({
@@ -44,7 +42,6 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false')
-    app.commandLine.appendSwitch('no-proxy-server')
 
     let pluginName
     switch (process.platform) {
@@ -59,6 +56,7 @@ export class AppWindow extends BrowserWindow {
         break
     }
 
+    /** @almost_deprecated */
     // Adobe Flash Player will be deprecated January 2020
     app.commandLine.appendSwitch('ppapi-flash-path', join(__dirname, pluginName))
 
@@ -133,21 +131,6 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
     });
-
-    this.on('blur', () => {
-      // if(this.permissionWindow.isVisible() == false) {
-      //   this.permissionWindow.hide()
-      //   this.permissionWindow.setIgnoreMouseEvents(true)
-      // }
-      locationBar.hide()
-    })
-    this.on('focus', () => {
-      // if(this.permissionWindow.isVisible() == false) {
-      //   this.permissionWindow.show()
-      //   this.permissionWindow.setIgnoreMouseEvents(false)
-      // }
-      locationBar.show()
-    })
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);

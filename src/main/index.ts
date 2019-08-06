@@ -95,7 +95,6 @@ app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
 app.commandLine.appendSwitch('--enable-transparent-visuals');
 // Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false')
-app.commandLine.appendSwitch('no-proxy-server')
 
 import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
@@ -109,16 +108,37 @@ ipcMain.on('online-status-changed', (event: any, status: any) => {
 
 app.on('ready', async () => {
 
+  /**
+   * Create the main process and location bar sub-process.
+  */
+
   modal.setup();
+
+  appWindow = new AppWindow();
+  locationBar = new LocationBar();
+
+  /**
+    
+    * If the application is initiated with a URL argument, set a property in the AppWindow for easier access.
+    @example $ dot.exe "https://google.com"
+
+  */
+  if(process.argv[4]) {
+    if(new URL(process.argv[4]).hostname) {
+      setTimeout(() => {
+        appWindow.webContents.send('url-arguments-applied', process.argv[4]);
+        process.argv[4] = null;
+        console.log(`\x1b[0mdot \x1b[36mnotice \x1b[0m Dot has been loaded with URI arguments, ${process.argv[4]}.`);
+      }, 9000);
+
+    }
+  }
 
   app.on('activate', () => {
     if (appWindow === null) {
       appWindow = new AppWindow();
     }
   });
-
-  appWindow = new AppWindow();
-  locationBar = new LocationBar();
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);

@@ -44,7 +44,8 @@
   "scripts": {
     "dev": "npm run node-ver && npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
     "build": "npm run node-ver && npm run download-filters && node fuse.js",
-    "start": "cross-env ENV='dev' electron --no-proxy-server --remote-debugging-port=9222 .",
+    "start": "cross-env ENV='dev' electron --remote-debugging-port=9222 .",
+    "start-with-url": "npm run dev -- https://google.com",
     "compile-win32": "npm run build && electron-builder -w -p always",
     "compile-darwin": "npm run build && electron-builder -m -p always",
     "compile-linux": "npm run build && electron-builder -l -p always",

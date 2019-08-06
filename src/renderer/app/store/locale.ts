@@ -51,7 +51,7 @@ export class LocaleStore {
     throw new Error("This resource is deprecated.")
   }
 
-  // Deprecated
+  /** @deprecated */
   public uk: any;
 
 }

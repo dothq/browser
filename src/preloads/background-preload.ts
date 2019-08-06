@@ -3,7 +3,7 @@ import { IpcExtension } from '~/shared/models';
 import { getAPI } from '~/shared/utils/extensions';
 import { parse } from 'url';
 
-/* Deprecated */
+/** @deprecated */
 // webFrame.registerURLSchemeAsPrivileged('extension');
 
 ipcRenderer.setMaxListeners(0);
