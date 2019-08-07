@@ -6,7 +6,6 @@ import { viewBm } from '../components/Toolbar';
 import { ViewManager } from '~/main/view-manager';
 import { View } from '../../../main/view';
 import console = require('console');
-import { appWindow } from '..';
 
 let lastSuggestion: string;
 

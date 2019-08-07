@@ -38,7 +38,7 @@ export default class HorizontalScrollbar extends React.Component<Props, State> {
 
     window.addEventListener('mouseup', this.onMouseUp);
     window.addEventListener('mousemove', this.onMouseMove);
-    this.container.addEventListener('wheel', this.onWheel);
+    this.container.addEventListener('wheel', this.onWheel, { passive: true });
     this.unmounted = false;
 
     this.resizeScrollbar();
