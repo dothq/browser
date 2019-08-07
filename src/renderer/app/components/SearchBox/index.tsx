@@ -1,18 +1,23 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
 
-import { StyledSearchBox, InputContainer, SearchIcon, Input } from './style';
-import { Suggestions } from '../Suggestions';
-import { isURL } from '~/shared/utils/url';
 import store from '../../store';
-import { resolve } from 'path';
-import { homedir } from 'os';
+import { isURL } from '~/shared/utils/url';
+import { observer } from 'mobx-react';
+import { StyledSearchBox, InputContainer, SearchIcon, Input, SearchChip, ChipImage } from './style';
+import { Suggestions } from '../Suggestions';
+import { icons } from '../../constants';
 import ToolbarButton from '../ToolbarButton';
-import { icons } from '../../constants/icons';
+import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import UserIcon from '../UserButton';
-import console = require('console');
+import { resolve } from 'path';
+import { platform, homedir } from 'os';
+import { Bookmark } from '../../models/bookmark';
+import { remote } from 'electron';
+import { Image } from 'react-native';
+import { Dash } from '../Suggestion/style';
+import { Title } from '../Overlay/style';
 
-const onClick = async (e: React.MouseEvent<HTMLDivElement>) => {
+const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
 
@@ -91,17 +96,45 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   }
 };
 
-const onInputFocus = () => {
+const onInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
   if (store.overlay.inputRef.current) {
     store.overlay.inputRef.current.select();
   }
 };
 
 const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
+  console.log("Pressed key", e.key, store.overlay.inputRef.current.value)
+
   const key = e.keyCode;
   const { suggestions } = store;
   const { list } = suggestions;
   const input = store.overlay.inputRef.current;
+
+  const json = require("edit-json-file");
+ 
+  let file = json(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  var searchurl = `https://www.google.com/search?hl=en&q=`;
+  var iconSearchURL = `https://www.google.com/search`;
+  if(searchengine == "yahoo") {
+    searchurl = `https://search.yahoo.com/search?p=`;
+    iconSearchURL = `https://search.yahoo.com/search`;
+  }
+  if(searchengine == "bing") {
+    searchurl = `https://www.bing.com/search?q=`;
+    iconSearchURL = `https://www.bing.com/search`;
+  }
+  if(searchengine == "ddg") {
+    searchurl = `https://duckduckgo.com/?q=`;
+    iconSearchURL = `https://duckduckgo.com/?q=`;
+  }
+  if(searchengine == "ecosia") {
+    searchurl = `https://www.ecosia.org/search?q=`;
+    iconSearchURL = `https://www.ecosia.org/search`;
+  }
 
   if (
     key !== 8 && // backspace
@@ -129,40 +162,51 @@ const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
     const suggestion = list.find(x => x.id === suggestions.selected);
 
-    // input.value = '-' + suggestion.primaryText.split(input.value)[1];
+    input.value = suggestion.primaryText;
   }
 };
 
 const onInput = (e: any) => {
-
-  const input = store.overlay.inputRef.current;
-
   store.overlay.show();
   store.overlay.suggest();
+
   store.overlay.scrollRef.current.scrollTop = 0;
 
-  input.focus()
+  store.overlay.searchBoxValue = e.currentTarget.value;
 };
 
-const onStarClick = async (e: React.MouseEvent<HTMLDivElement>) => {
-  e.stopPropagation();
-
-  if (store.addBookmark.visible) {
-    return store.addBookmark.hide();
-  }
-
+const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
-  if (!store.overlay.isBookmarked) {
-    await store.bookmarks.addItem({
-      title: selectedTab.title,
-      url: store.overlay.inputRef.current.value,
-      parent: store.bookmarks.folders.find(r => r.static === 'main')._id,
-      favicon: selectedTab.favicon,
-    });
+  var dotURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"));
+
+  if(selectedTab.url.includes(dotURL) == false) {
+    var foundBkm = store.bookmarks.list.find(
+      x => x.url === store.tabs.selectedTab.url,
+    );
+  
+    if(!foundBkm) {
+  
+      if(store.overlay.inputRef.current.value) {
+        await store.bookmarks.addItem({
+          title: selectedTab.title,
+          url: store.overlay.inputRef.current.value,
+          parent: null,
+          type: 'item',
+          favicon: selectedTab.favicon,
+        });
+      }
+  
+    }
+  
+    else {
+  
+      // It already exists, so delete it.
+      store.bookmarks.removeItem(foundBkm._id)
+  
+    }
   }
 
-  store.addBookmark.show();
 };
 
 const onUserClick = () => {
@@ -175,6 +219,32 @@ const onUserClick = () => {
   else {
     store.user.menuVisible = true
   }
+};
+
+const chipImage = () => {
+
+  const json = require("edit-json-file");
+
+  let file = json(resolve(homedir()) + '/dot/dot-options.json');
+
+  var searchengine = file.get("searchEngine");
+
+  var searchurl = `https://google.com`
+
+  if(searchengine == "yahoo") {
+    searchurl = `https://yahoo.com`;
+  }
+  if(searchengine == "bing") {
+    searchurl = `https://bing.com`;
+  }
+  if(searchengine == "ddg") {
+    searchurl = `https://duckduckgo.com/`;
+  }
+  if(searchengine == "ecosia") {
+    searchurl = `https://ecosia.org`;
+  }
+
+  return `https://f1.allesedv.com/${searchurl}`
 };
 
 export const SearchBox = observer(() => {
@@ -206,6 +276,7 @@ export const SearchBox = observer(() => {
     var sBV = [store.locale.lang.search_bar[0].guest[0].message_1, store.locale.lang.search_bar[0].guest[0].message_2, store.locale.lang.search_bar[0].guest[0].message_3, store.locale.lang.search_bar[0].guest[0].message_4.replace(/{currentTimeType}/g, timeType).replace(/{username}/g, store.user.username)]
     var searchBoxValue = sBV[Math.floor(Math.random() * sBV.length)];
   }
+
 
   return (
     <StyledSearchBox style={{ height }} onClick={onClick}>

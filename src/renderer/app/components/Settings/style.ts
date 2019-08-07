@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { Section } from '../Overlay/style';
+import { centerIcon } from '~/shared/mixins';
 
 export const Sections = styled.div`
   margin-left: 300px;
@@ -16,6 +17,22 @@ export const Image = styled.img`
 
 export const Title = styled.h1`
   font-weight: 100
+  font-family: 'Google Sans';
+  display: flex;
+`;
+
+export const Subtitle = styled.h1`
+  font-weight: 100
+  font-family: 'Roboto';
+`;
+
+export const Icon = styled.div`
+  height: 40px;
+  width: 40px;
+  opacity: 1;
+  filter: invert(100%);
+  margin-right: 10px;
+  ${centerIcon(40)};
 `;
 
 export const TitleEmail = styled.h1`

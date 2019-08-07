@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyledNavigationDrawerItem } from './style';
+import { StyledNavigationDrawerItem, Icon } from './style';
 
 export const NavigationDrawerItem = ({
   children,
@@ -15,7 +15,8 @@ export const NavigationDrawerItem = ({
   icon?: any;
 }) => {
   return (
-    <StyledNavigationDrawerItem selected={selected} onClick={onClick} style={style} icon={icon}>
+    <StyledNavigationDrawerItem selected={selected} onClick={onClick} style={style}>
+      {icon && <Icon style={{ backgroundImage: `url(${icon})` }} />}
       {children}
     </StyledNavigationDrawerItem>
   );

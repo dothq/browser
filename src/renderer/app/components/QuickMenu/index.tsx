@@ -57,7 +57,7 @@ export const QuickMenu = observer(() => {
         >
           {store.locale.lang.overlay[0].find_bubble}
         </Bubble>
-        <Bubble onClick={sendFeedback} invert icon={icons.starFilled}>
+        <Bubble onClick={sendFeedback} invert icon={icons.feedback}>
           {store.locale.lang.settings[0].feedback[0].title}
         </Bubble>
       </Actions>

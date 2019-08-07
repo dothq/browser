@@ -81,6 +81,10 @@ function getScrollStartPoint(x: number, y: number) {
   return { left, right };
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.write(`Hola! ${window.location.href}`)
+});
+
 document.addEventListener('wheel', e => {
   verticalMouseMove += e.deltaY;
   horizontalMouseMove += e.deltaX;
@@ -273,5 +277,3 @@ process.once('loaded', () => {
     }
   });
 });
-
-console.log('view-preload', window.location.href)

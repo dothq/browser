@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField, ExtLink, FakeSelect } from './style'
+import { InputField, ExtLink, FakeSelect, Icon, Subtitle } from './style'
 import { Button } from '~/renderer/components/Button';
 import { Textfield } from '~/renderer/components/Textfield';
 import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
@@ -370,22 +370,22 @@ const AboutDot = observer(() => {
         </Buttons>
       </ListItem>
       <AboutWrapper id="about-wrapper">
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.lang.settings[0].about_dot[0].wxnd_coffee}</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.lang.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Title>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].developers_title}</Title>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].thanks_message} <ExtLink onClick={wexond}>Wexond</ExtLink> {store.locale.lang.settings[0].about_dot[0].wxnd_coffee}</Subtitle>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px' }}>{store.locale.lang.settings[0].about_dot[0].made_in} <Image src={icons.uk} style={{ width: '14px' }}></Image>{store.locale.lang.settings[0].about_dot[0].gb_with} <span style={{ color: '#ff4040' }}>❤</span>.</Subtitle>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].developers_title}</Subtitle>
         <ExtLink onClick={enderdev} title="<endercraftergaming@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>EnderDev</ExtLink>
         <ExtLink onClick={geek} title="<thegaminggeek362@gmail.com>" style={{ marginLeft: '5px', color: '#dadada' }}>Jake Ward</ExtLink>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].beta_testers_title}</Title>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].beta_testers_title}</Subtitle>
         <ExtLink onClick={func} title="<oli.loversss@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Oli</ExtLink>
         <ExtLink onClick={sky} title="<bognonjeremy05@gmail.com>" style={{ color: '#dadada' }}>Jeremy Bognon</ExtLink>
         <ExtLink onClick={blz} title="<blizzyisheres@gmail.com>" style={{ color: '#dadada' }}>Blizma</ExtLink>
         <ExtLink onClick={chachy} title="<shalomadecoolboy@outlook.com>" style={{ color: '#dadada' }}>Chachy</ExtLink>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].special_thanks_title}</Title>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].special_thanks_title}</Subtitle>
         <ExtLink onClick={dtf} title="<dusterthefirst@gmail.com>" style={{ marginLeft: '60px', color: '#dadada' }}>Zachary Kohnen</ExtLink>
-        <Title style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].translators_title}</Title>
+        <Subtitle style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].translators_title}</Subtitle>
         <ExtLink onClick={translators} title={store.locale.lang.settings[0].about_dot[0].view_translators_github} style={{ marginLeft: '60px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].view_translators}</ExtLink>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Title>
-        <Title style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Title>
+        <Subtitle style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Subtitle>
+        <Subtitle style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Subtitle>
       </AboutWrapper>
     </SettingsSection>
   );
@@ -1044,10 +1044,11 @@ const openLog = () => {
 }
 
 const MenuItem = observer(
-  ({ selected, children, display, style }: { selected: boolean; children: any; display: any, style?: any }) => (
+  ({ selected, children, display, style, icon }: { selected: boolean; children: any; display: any, style?: any; icon?: any }) => (
     <NavigationDrawer.Item
       selected={selected}
       style={style}
+      icon={icon}
       onClick={() => (store.options.currentDisplay = display)}
     >
       {children}
@@ -1112,7 +1113,6 @@ export const Languages = observer(() => {
         return (<ListItem key={i.flag}>
           <Title style={{ fontSize: 15 }}> {i.title}</Title>
           <Buttons style={{ marginLeft: 'auto', display: 'flex' }}>
-            <Title style={{ color: '#72767d', fontSize: '17px', margin: '0px', height: '22px', marginTop: '3px' }}>{lang}</Title>
             <img style={{ width: '28px', height: '28px', marginLeft: '10px' }} src={`https://twemoji.maxcdn.com/2/72x72/` + i.flag_icon}></img>
             <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image', cursor: 'pointer' }}>
               ----
@@ -1172,42 +1172,42 @@ export const Settings = observer(() => {
           search
           onSearchInput={onInput}
         >
-          <MenuItem selected={store.options.currentDisplay == 'profile'} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'appearance'} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
-          {store.user.loggedin == true && <MenuItem selected={store.options.currentDisplay == 'passwords'} display="passwords">Passwords</MenuItem>}
-          <MenuItem selected={store.options.currentDisplay == 'downloads'} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'languages'} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
-          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} display="dev">{store.locale.lang.settings[0].dev_tools[0].title}</MenuItem>}
-          <MenuItem selected={store.options.currentDisplay == 'about'} display="about">{store.locale.lang.settings[0].about_dot[0].title}</MenuItem>
-          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.lang.settings[0].feedback[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'profile'} icon={icons.user} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'appearance'} icon={icons.palette} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
+          {store.user.loggedin == true && <MenuItem selected={store.options.currentDisplay == 'passwords'} icon={icons.unlock} display="passwords">Passwords</MenuItem>}
+          <MenuItem selected={store.options.currentDisplay == 'downloads'} icon={icons.download} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'languages'} icon={icons.translate} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
+          {store.user.experiments == true && <MenuItem selected={store.options.currentDisplay == 'dev'} icon={icons.extensions} display="dev">{store.locale.lang.settings[0].dev_tools[0].title}</MenuItem>}
+          <MenuItem selected={store.options.currentDisplay == 'about'} icon={icons.info} display="about">{store.locale.lang.settings[0].about_dot[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'send_feedback'} icon={icons.feedback} display="send_feedback" style={{ bottom: 0, position: 'absolute', marginBottom: '16px' }} >{store.locale.lang.settings[0].feedback[0].title}</MenuItem>
         </NavigationDrawer>
         <Sections>
           <Content>
           
-              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].my_profile[0].title}</Title>}
+              {store.options.currentDisplay == 'profile' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.user})` }} /> {store.locale.lang.settings[0].my_profile[0].title}</Title>}
               {store.options.currentDisplay == 'profile' && <YourProfile />}
 
-              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].appearance[0].title}</Title>}
+              {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.palette})` }} /> {store.locale.lang.settings[0].appearance[0].title}</Title>}
               {store.options.currentDisplay == 'appearance' && <Appearance />}
 
-              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}>Verify your password</Title>}
-              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}>Passwords</Title>}
+              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.lock})` }} /> Verify your password</Title>}
+              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.key})` }} /> Passwords</Title>}
               {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && <Passwords />}
 
-              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].downloads[0].title}</Title>}
+              {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.download})` }} /> {store.locale.lang.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}
 
-              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].languages[0].title}</Title>}
+              {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.translate})` }} /> {store.locale.lang.settings[0].languages[0].title}</Title>}
               {store.options.currentDisplay == 'languages' && <Languages />}
               {/* {store.options.currentDisplay == 'languages' && <DownloadLanguages />} */}
 
-              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].dev_tools[0].title}</Title>}
+              {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.extensions})` }} /> {store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}
 
-              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].about_dot[0].title}</Title>}
+              {store.options.currentDisplay == 'about' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.info})` }} /> {store.locale.lang.settings[0].about_dot[0].title}</Title>}
               {store.options.currentDisplay == 'about' && <AboutDot />}
 
-              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.settings[0].feedback[0].title}</Title>}
+              {store.options.currentDisplay == 'send_feedback' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.feedback})` }} /> {store.locale.lang.settings[0].feedback[0].title}</Title>}
               {store.options.currentDisplay == 'send_feedback' && <Feedback />}
 
           </Content>
