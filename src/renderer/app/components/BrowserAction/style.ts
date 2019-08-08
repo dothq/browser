@@ -6,7 +6,7 @@ export const StyledBrowserAction = styled.div`
   transition: 0.2s opacity;
 
   ${({ visible }: { visible: boolean }) => css`
-    opacity: ${visible ? '1' : '0'};
+    display: ${visible ? 'auto' : 'none'};
   `};
 `;
 

@@ -259,7 +259,7 @@ export class Tab {
           }
         } catch (e) {
           this.favicon = '';
-          console.error(e);
+          this.background = colors.blue['500'];
         }
         this.updateData();
       },

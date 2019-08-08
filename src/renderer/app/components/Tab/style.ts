@@ -108,11 +108,7 @@ export const StyledTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: 0.2s margin-left;
-  margin-left: 8px;
-
-  ${({ isIcon }: TitleProps) => css`
-    margin-left: ${!isIcon ? 0 : 12}px;
-  `};
+  margin-left: 12px;
 `;
 
 export const StyledIcon = styled.div`
@@ -121,8 +117,7 @@ export const StyledIcon = styled.div`
   transition: 0.2s opacity, 0.2s min-width;
   ${centerIcon()};
   ${({ isIconSet }: { isIconSet: boolean }) => css`
-    min-width: ${isIconSet ? 0 : 16},
-    opacity: ${isIconSet ? 0 : 1};
+    opacity: ${isIconSet ? 1 : 0.6};
   `};
 `;
 
@@ -165,6 +160,7 @@ export const TabContainer = styled.div`
   display: flex;
   align-items: center;
   backface-visibility: hidden;
+  transition: 0.5s background-color;
   ${({ selected }: TabProps) => css`
     background-color: ${selected ? 'rgba(33, 150, 243, 0.15)' : 'transparent'};
   `};

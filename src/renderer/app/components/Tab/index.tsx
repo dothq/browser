@@ -189,10 +189,10 @@ const Content = observer(({ tab }: { tab: Tab }) => {
 
   return (
     <StyledContent collapsed={tab.isExpanded}>
-      {!tab.loading && tab.favicon !== '' && (
+      {!tab.loading && (
         <StyledIcon
           isIconSet={tab.favicon !== ''}
-          style={{ backgroundImage: `url(${tab.favicon})` }}
+          style={{ backgroundImage: `url(${tab.favicon == '' ? icons.globe : tab.favicon})` }}
         />
       )}
       {tab.loading && (
@@ -204,7 +204,6 @@ const Content = observer(({ tab }: { tab: Tab }) => {
         />
       )}
       <StyledTitle
-        isIcon={tab.isIconSet}
         style={{
           color: tab.isSelected
             ? tab.background
