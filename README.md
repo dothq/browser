@@ -4,6 +4,7 @@
 
 <h1 align="center">Dot</h1>
 <h3 align="center">A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.</h3>
+<h4 align="center"></h4>
 <h3 align="center">
   <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>  <img src="http://hits.dwyl.io/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>   <img src="https://img.shields.io/discord/525056817399726102.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>
   <img src="https://img.shields.io/circleci/build/github/dot-browser/desktop/master.svg?token=0d055a2032dbb812b31678366d549a3919379f70" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>     <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/></h3>
