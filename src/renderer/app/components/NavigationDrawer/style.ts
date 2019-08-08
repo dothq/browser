@@ -24,7 +24,8 @@ export const Header = styled.div`
 
 export const Title = styled.div`
   font-size: 24px;
-  font-weight: 300;
+  font-weight: 100;
+  font-family: 'Google Sans';
 `;
 
 export const Back = styled.div`

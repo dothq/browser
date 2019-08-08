@@ -10,21 +10,21 @@ import console = require('console');
 /* Deprecated */
 // webFrame.registerURLSchemeAsPrivileged('extension');
 
-webFrame.executeJavaScript('window', false, w => {
-  w.chrome = {
-    webstorePrivate: {
-      install: () => {},
-    },
-    app: {
-      isInstalled: false,
-      getIsInstalled: () => {
-        return false;
-      },
-      getDetails: () => {},
-      installState: () => {},
-    },
-  };
-});
+// webFrame.executeJavaScript('window', false, w => {
+//   w.chrome = {
+//     webstorePrivate: {
+//       install: () => {},
+//     },
+//     app: {
+//       isInstalled: false,
+//       getIsInstalled: () => {
+//         return false;
+//       },
+//       getDetails: () => {},
+//       installState: () => {},
+//     },
+//   };
+// });
 
 const tabId = parseInt(
   process.argv.find(x => x.startsWith('--tab-id=')).split('=')[1],
@@ -81,10 +81,6 @@ function getScrollStartPoint(x: number, y: number) {
   return { left, right };
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.write(`Hola! ${window.location.href}`)
-});
-
 document.addEventListener('wheel', e => {
   verticalMouseMove += e.deltaY;
   horizontalMouseMove += e.deltaX;
@@ -118,162 +114,118 @@ ipcRenderer.on('scroll-touch-end', () => {
   resetCounters();
 });
 
-const matchesPattern = (pattern: string, url: string) => {
-  if (pattern === '<all_urls>') {
-    return true;
-  }
 
-  const regexp = new RegExp(`^${pattern.replace(/\*/g, '.*')}$`);
-  return url.match(regexp);
-};
+// const runStylesheet = (url: string, code: string) => {
+//   const wrapper = `((code) => {
+//     function init() {
+//       const styleElement = document.createElement('style');
+//       styleElement.textContent = code;
+//       document.head.append(styleElement);
+//     }
+//     document.addEventListener('DOMContentLoaded', init);
+//   })`;
 
-const runContentScript = (
-  url: string,
-  code: string,
-  extension: IpcExtension,
-  worldId: number,
-) => {
-  const parsed = parse(url);
-  const context = getAPI(extension, tabId);
+//   const compiledWrapper = runInThisContext(wrapper, {
+//     filename: url,
+//     lineOffset: 1,
+//     displayErrors: true,
+//   });
 
-  webFrame.setIsolatedWorldHumanReadableName(worldId, name);
-  webFrame.executeJavaScriptInIsolatedWorld(
-    worldId,
-    [
-      {
-        code: 'window',
-      },
-    ],
-    false,
-    (window: any) => {
-      window.chrome = window.wexond = window.browser = context;
-    },
-  );
+//   return compiledWrapper.call(window, code);
+// };
 
-  webFrame.executeJavaScriptInIsolatedWorld(worldId, [
-    {
-      code,
-      url: format({
-        protocol: parsed.protocol,
-        slashes: true,
-        hostname: extension.id,
-        pathname: parsed.pathname,
-      }),
-    },
-  ]);
-};
+// const injectContentScript = (script: any, extension: IpcExtension) => {
+//   if (
+//     !script.matches.some((x: string) =>
+//       matchesPattern(
+//         x,
+//         `${location.protocol}//${location.host}${location.pathname}`,
+//       ),
+//     )
+//   ) {
+//     return;
+//   }
 
-const runStylesheet = (url: string, code: string) => {
-  const wrapper = `((code) => {
-    function init() {
-      const styleElement = document.createElement('style');
-      styleElement.textContent = code;
-      document.head.append(styleElement);
-    }
-    document.addEventListener('DOMContentLoaded', init);
-  })`;
+//   process.setMaxListeners(0);
 
-  const compiledWrapper = runInThisContext(wrapper, {
-    filename: url,
-    lineOffset: 1,
-    displayErrors: true,
-  });
+//   if (script.js) {
+//     script.js.forEach((js: any) => {
+//       const fire = runContentScript.bind(
+//         window,
+//         js.url,
+//         js.code,
+//         extension,
+//         getIsolatedWorldId(extension.id),
+//       );
 
-  return compiledWrapper.call(window, code);
-};
+//       if (script.runAt === 'document_start') {
+//         (process as any).once('document-start', fire);
+//       } else if (script.runAt === 'document_end') {
+//         (process as any).once('document-end', fire);
+//       } else {
+//         document.addEventListener('DOMContentLoaded', fire);
+//       }
+//     });
+//   }
 
-const injectContentScript = (script: any, extension: IpcExtension) => {
-  if (
-    !script.matches.some((x: string) =>
-      matchesPattern(
-        x,
-        `${location.protocol}//${location.host}${location.pathname}`,
-      ),
-    )
-  ) {
-    return;
-  }
+//   if (script.css) {
+//     script.css.forEach((css: any) => {
+//       const fire = runStylesheet.bind(window, css.url, css.code);
+//       if (script.runAt === 'document_start') {
+//         (process as any).once('document-start', fire);
+//       } else if (script.runAt === 'document_end') {
+//         (process as any).once('document-end', fire);
+//       } else {
+//         document.addEventListener('DOMContentLoaded', fire);
+//       }
+//     });
+//   }
+// };
 
-  process.setMaxListeners(0);
+// let nextIsolatedWorldId = 1000;
+// const isolatedWorldsRegistry: any = {};
 
-  if (script.js) {
-    script.js.forEach((js: any) => {
-      const fire = runContentScript.bind(
-        window,
-        js.url,
-        js.code,
-        extension,
-        getIsolatedWorldId(extension.id),
-      );
+// const getIsolatedWorldId = (id: string) => {
+//   if (isolatedWorldsRegistry[id]) {
+//     return isolatedWorldsRegistry[id];
+//   }
+//   nextIsolatedWorldId++;
+//   return (isolatedWorldsRegistry[id] = nextIsolatedWorldId);
+// };
 
-      if (script.runAt === 'document_start') {
-        (process as any).once('document-start', fire);
-      } else if (script.runAt === 'document_end') {
-        (process as any).once('document-end', fire);
-      } else {
-        document.addEventListener('DOMContentLoaded', fire);
-      }
-    });
-  }
+// const setImmediateTemp: any = setImmediate;
 
-  if (script.css) {
-    script.css.forEach((css: any) => {
-      const fire = runStylesheet.bind(window, css.url, css.code);
-      if (script.runAt === 'document_start') {
-        (process as any).once('document-start', fire);
-      } else if (script.runAt === 'document_end') {
-        (process as any).once('document-end', fire);
-      } else {
-        document.addEventListener('DOMContentLoaded', fire);
-      }
-    });
-  }
-};
+// process.once('loaded', () => {
+//   global.setImmediate = setImmediateTemp;
 
-let nextIsolatedWorldId = 1000;
-const isolatedWorldsRegistry: any = {};
+//   const extensions: { [key: string]: IpcExtension } = ipcRenderer.sendSync(
+//     'get-extensions',
+//   );
 
-const getIsolatedWorldId = (id: string) => {
-  if (isolatedWorldsRegistry[id]) {
-    return isolatedWorldsRegistry[id];
-  }
-  nextIsolatedWorldId++;
-  return (isolatedWorldsRegistry[id] = nextIsolatedWorldId);
-};
+//   Object.keys(extensions).forEach(key => {
+//     const extension = extensions[key];
+//     const { manifest } = extension;
 
-const setImmediateTemp: any = setImmediate;
+//     if (manifest.content_scripts) {
+//       const readArrayOfFiles = (relativePath: string) => ({
+//         url: `extension://${extension.id}/${relativePath}`,
+//         code: readFileSync(join(extension.path, relativePath), 'utf8'),
+//       });
 
-process.once('loaded', () => {
-  global.setImmediate = setImmediateTemp;
+//       try {
+//         manifest.content_scripts.forEach(script => {
+//           const newScript = {
+//             matches: script.matches,
+//             js: script.js ? script.js.map(readArrayOfFiles) : [],
+//             css: script.css ? script.css.map(readArrayOfFiles) : [],
+//             runAt: script.run_at || 'document_idle',
+//           };
 
-  const extensions: { [key: string]: IpcExtension } = ipcRenderer.sendSync(
-    'get-extensions',
-  );
-
-  Object.keys(extensions).forEach(key => {
-    const extension = extensions[key];
-    const { manifest } = extension;
-
-    if (manifest.content_scripts) {
-      const readArrayOfFiles = (relativePath: string) => ({
-        url: `extension://${extension.id}/${relativePath}`,
-        code: readFileSync(join(extension.path, relativePath), 'utf8'),
-      });
-
-      try {
-        manifest.content_scripts.forEach(script => {
-          const newScript = {
-            matches: script.matches,
-            js: script.js ? script.js.map(readArrayOfFiles) : [],
-            css: script.css ? script.css.map(readArrayOfFiles) : [],
-            runAt: script.run_at || 'document_idle',
-          };
-
-          injectContentScript(newScript, extension);
-        });
-      } catch (readError) {
-        console.error('Failed to read content scripts', readError);
-      }
-    }
-  });
-});
+//           injectContentScript(newScript, extension);
+//         });
+//       } catch (readError) {
+//         console.error('Failed to read content scripts', readError);
+//       }
+//     }
+//   });
+// });
