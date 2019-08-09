@@ -174,7 +174,7 @@ Menu.setApplicationMenu(
             if(store.tabs.selectedTab) {
               remote.dialog.showSaveDialog(appWindow, { filters: [ { name: 'HTML file', extensions: ['html'] } ], }, (callback) => {
                 remote.webContents.getFocusedWebContents().savePage(callback, 'HTMLComplete', (error) => {
-                  if (!error) console.log('Save page successfully')
+                  if (!error) 
                 })
               })
             }
@@ -343,8 +343,6 @@ export async function tskManager() {
     data.push(obj);
     
   })
-
-  console.log(data)
 
   var tm = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\util\\tskmgr.html'), {
     width: 820,

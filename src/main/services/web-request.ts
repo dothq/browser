@@ -354,7 +354,7 @@ export const runWebRequestService = (window: AppWindow) => {
      * @todo Add Error Handling pages
      * @body Use the `details` object to grab the error code to produce an error page.
      */
-    // console.log(details)
+    // 
     interceptRequest('onErrorOccurred', newDetails);
   };
 

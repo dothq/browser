@@ -19,8 +19,6 @@ export class NewsStore {
     const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
     const json = await data.json();
 
-    console.log(data)
-
     this.shouldLoadNews = false;
 
     this.list = [];
@@ -76,8 +74,6 @@ export class NewsStore {
     this.shouldLoadNews = false;
 
     this.list = [];
-
-    console.log(data)
 
     if(json.status == "ok") {
 

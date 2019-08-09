@@ -61,8 +61,8 @@ if (existsSync(errorLogPath)) {
 }
 
 if(process.env.ENV != "dev") {
-  var oldConsole = console.log;
-  console.log = function(msg: any) {
+  var oldConsole = 
+  
     appendFile(errorLogPath, `[${time}] [Renderer] [DEBUG] ` + msg + '\n', function(err) {
       if(err) {
           return oldConsole(err);

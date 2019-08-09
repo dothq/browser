@@ -15,8 +15,6 @@ var startURI = ''
 
 process.argv.forEach(i => { if(new URL(i).hostname) { startURI = i } });
 
-console.log(startURI)
-
 const getConfig = (target, name) => {
   return {
     homeDir: 'src/',
@@ -83,35 +81,44 @@ const main = () => {
 };
 
 const renderer = (name, port) => {
-  const cfg = getRendererConfig('electron', name);
+  const cfg = getRendererConfig('electron');
 
   cfg.plugins.push(getWebIndexPlugin(name));
+
   cfg.plugins.push(JSONPlugin());
   cfg.plugins.push(getCopyPlugin());
   cfg.plugins.push(StyledComponentsPlugin());
 
   const fuse = FuseBox.init(cfg);
 
-  if (!production) {
-    fuse.dev({ httpServer: true, port, socketURI: `ws://localhost:${port}` });
-  }
-
-  const app = fuse.bundle(name).instructions(`> [renderer/${name}/index.tsx]`);
+  const app = fuse
+    .bundle(name)
+    .instructions(`> [${name == 'app' ? '/renderer' : '/renderer/externals'}/${name}/index.tsx]`);
 
   if (!production) {
-    app.hmr({ port, socketURI: `ws://localhost:${port}` }).watch();
-
     if (name === 'app') {
-      return fuse.run().then(() => {
-        const child = spawn('npm', ['start', startURI], {
+      fuse.dev({ httpServer: true }, server => {
+        const app = server.httpServer.app;
+        app.get("/undefined", function(req, res) {
+          res.send("undefined");
+        });
+      });
+
+      app.hmr().watch();
+
+      fuse.run().then(() => {
+        spawn('npm', ['start'], {
           shell: true,
           stdio: 'inherit',
         });
       });
+    } else {
+      app.watch();
+      fuse.run();
     }
+  } else {
+    fuse.run();
   }
-
-  fuse.run();
 };
 
 const preload = name => {
@@ -129,6 +136,7 @@ const preload = name => {
 };
 
 renderer('app', 4444);
+renderer('menu', 4444);
 preload('view-preload');
 preload('background-preload');
 main();

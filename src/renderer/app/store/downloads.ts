@@ -49,7 +49,7 @@ export class DownloadsStore {
         resolve(file.get("downloadLocation") + '\\' + i.fileName), 
         function (err) {
           if (err) {
-            console.log(err)
+            
           }
         }
       );

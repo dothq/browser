@@ -83,6 +83,9 @@ export class Store {
   public isHTMLFullscreen = false;
 
   @observable
+  public quickMenuVisible: boolean = false;
+
+  @observable
   public updateInfo = {
     available: false,
     version: '',
@@ -112,7 +115,7 @@ export class Store {
 
     this.loadedAPI = true;
 
-    console.log("\x1b[0mdot \x1b[32msuccess \x1b[0m Loaded Dot APIs. API v" + `${this.api} on app v${remote.app.getVersion()}\x1b[0m`)
+    
   }
 
   public api: number;
@@ -145,6 +148,10 @@ export class Store {
       },
     );
 
+    ipcRenderer.once('visible', (e: IpcMessageEvent, flag: any) => {
+      this.quickMenuVisible = flag;
+    });
+
     ipcRenderer.on('fullscreen', (e: any, fullscreen: boolean) => {
       this.isFullscreen = fullscreen;
     });
@@ -164,7 +171,7 @@ export class Store {
     ipcRenderer.on(
       'url-arguments-applied',
       (e: IpcMessageEvent, url: string) => {
-        console.log("added", url)
+        
         this.tabs.addTab({ url, active: true })
         this.overlay.visible = false;
       },

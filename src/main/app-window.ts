@@ -1,4 +1,4 @@
-import { BrowserWindow, app, nativeImage, dialog, remote } from 'electron';
+import { BrowserWindow, app, nativeImage, dialog, remote, ipcMain } from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
@@ -10,11 +10,13 @@ import console = require('console');
 import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
+import { MenuList } from './menu';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
+  public menu: MenuList = new MenuList(this);
 
   constructor() {
     super({
@@ -100,7 +102,7 @@ export class AppWindow extends BrowserWindow {
     }
 
     // systemPreferences.on('accent-color-changed', (event: any, newColor: string) => {
-    //   console.log(newColor)
+    //   
     // });
 
     // Update modal bounds (permission window) on resize and move
@@ -109,7 +111,8 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
-      this.permissionWindow.rearrange();
+      // this.permissionWindow.rearrange();
+      // this.menu.hideWindow()
     });
 
     this.on('move', () => {
@@ -117,7 +120,8 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
-      this.permissionWindow.rearrange();
+      // this.permissionWindow.rearrange();
+      // this.menu.rearrange();
     });
 
     // Update window bounds on resize and on move when window is not maximized.
@@ -125,11 +129,13 @@ export class AppWindow extends BrowserWindow {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
+      this.menu.hideWindow()
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
+      this.menu.hideWindow()
     });
 
     if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
@@ -140,26 +146,25 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
-      // fixPerm()
     };
 
     // const fixPerm = () => {
     //   if(this.isMinimized() == true) {
-    //     permissionWindow.setOpacity(0)
-    //     permissionWindow.setIgnoreMouseEvents(true)
+    //     this.permissionWindow.setOpacity(0)
+    //     this.permissionWindow.setIgnoreMouseEvents(true)
         
-    //     // const cBounds: any = this.getContentBounds();
-    //     // permissionWindow.setBounds({ 
-    //     //   x: cBounds.x, 
-    //     //   y: cBounds.y + TOOLBAR_HEIGHT, 
-    //     //   height: permissionWindow.getBounds().height, 
-    //     //   width: permissionWindow.getBounds().width 
-    //     // });
+    //     const cBounds: any = this.getContentBounds();
+    //     this.permissionWindow.setBounds({ 
+    //       x: cBounds.x, 
+    //       y: cBounds.y + TOOLBAR_HEIGHT, 
+    //       height: this.permissionWindow.getBounds().height, 
+    //       width: this.permissionWindow.getBounds().width 
+    //     });
 
     //   }
     //   else {
-    //     permissionWindow.setOpacity(1)
-    //     permissionWindow.setIgnoreMouseEvents(false)
+    //     this.permissionWindow.setOpacity(1)
+    //     this.permissionWindow.setIgnoreMouseEvents(false)
 
     //   }
     // };
@@ -236,8 +241,8 @@ export class AppWindow extends BrowserWindow {
     });
 
     if(process.env.ENV != "dev") {
-      var oldConsole = console.log;
-      console.log = function(msg: any) {
+      var oldConsole = 
+      
         appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
           if(err) {
               return oldConsole(err);

@@ -6,7 +6,7 @@ const startSpinner = text => {
   const frames = ['-', '\\', '|', '/'];
   let i = 0;
 
-  console.log('');
+  
 
   logUpdate(`${frames[0]} ${text}`);
 

@@ -69,7 +69,7 @@ const {
 
 // Listen for service successfully started
 ipcRenderer.on(NOTIFICATION_SERVICE_STARTED, (_: any, token: any) => {
-  // console.log(`[FCMNS] The Firebase Cloud Messaging service has been launched using token ${token}`)
+  // 
   ipcRenderer.send('fcm-ready', { token: token })
 })
 
@@ -80,7 +80,7 @@ ipcRenderer.on(NOTIFICATION_SERVICE_ERROR, (_: any, error: any) => {
 
 // Send FCM token to backend
 ipcRenderer.on(TOKEN_UPDATED, (_: any, token: any) => {
-  console.log(`[FCMNS] Token has been updated ${token}`)
+  
 })
 
 // Display notification
@@ -88,17 +88,17 @@ ipcRenderer.on(NOTIFICATION_RECEIVED, (_: any, serverNotificationPayload: any) =
   // check to see if payload contains a body string, if it doesn't consider it a silent push
   if (serverNotificationPayload.notification.body){
     // payload has a body, so show it to the user
-    console.log(`[FCMNS] Recieved a notification from ${serverNotificationPayload.from}`, serverNotificationPayload)
+    
     let myNotification = new Notification(serverNotificationPayload.notification.title, {
       body: serverNotificationPayload.notification.body
     })
     
     myNotification.onclick = () => {
-      console.log('Notification clicked')
+      
     }  
   } else {
     // payload has no body, so consider it silent (and just consider the data portion)
-    console.log('do something with the key/value pairs in the data', serverNotificationPayload.data)
+    
   }
 })
 
@@ -127,7 +127,7 @@ async function setActivity() {
     // if(store.tabs.selectedTab.url.substring(0, 8) == "file:///") {
     //   var lastDot = store.tabs.selectedTab.url.lastIndexOf('.');
     //   var fileType = store.tabs.selectedTab.url.substring(lastDot + 1);
-    //   console.log(fileType)
+    //   
     //   details = store.locale.lang.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
     // }
     
@@ -246,7 +246,7 @@ const loadNews = (amount: any) => () => {
   }
 }
 
-console.log(store.news.list)
+
 
 setInterval(function() {
   checkLightMode()
@@ -345,5 +345,4 @@ export const Overlay = observer(() => {
 });
 
 const senderId = '534960319282'
-console.log("[FCMNS] Started service");
 ipcRenderer.send(START_NOTIFICATION_SERVICE, senderId)

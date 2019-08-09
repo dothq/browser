@@ -170,7 +170,7 @@ export const registerProtocols = () => {
     //     }
 
     //     if (parsed.path === '/') {
-    //       console.log('file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname)
+    //       
     //       return callback({
     //         path: 'file:///' + encodeURIComponent(app.getAppPath()).replace(/%5C/g, "\\").replace(/%3A/g, ":") + '\\static\\app-icons\\' + parsed.hostname
     //       });

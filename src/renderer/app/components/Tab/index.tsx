@@ -37,8 +37,8 @@ const onCloseMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
 
 const onDblClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
   store.tabs.showUB()
-  console.log(store.tabs.ubVisible)
-  console.log("Toggled UB")
+  
+  
 }
 
 const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {

@@ -1,4 +1,4 @@
-import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow, screen } from 'electron';
+import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow, screen, IpcMessageEvent } from 'electron';
 import { resolve, extname, join } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
@@ -38,7 +38,7 @@ app.setAsDefaultProtocolClient('https');
 
 try {
   if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
-    console.log("[SettingsStore] Notification sound exists.")
+    
   }
 }
 catch (e) {
@@ -50,10 +50,12 @@ catch (e) {
 
 // Check for settings
 try {
-  if (existsSync(getPath('settings.json'))) { console.log("[SettingsStore] Checked for settings.json, exists.") }
+  if (existsSync(getPath('settings.json'))) { 
+
+  }
 }
 catch (e) {
-  console.log(e)
+  
   writeFileSync(
     getPath('settings.json'),
     JSON.stringify({
@@ -64,10 +66,12 @@ catch (e) {
 
 // Check for dot-options
 try {
-  if (existsSync(getPath('dot-options.json'))) { console.log("[OptionsStore] Checked for dot-options.json, exists.") }
+  if (existsSync(getPath('dot-options.json'))) { 
+
+  }
 }
 catch (e) {
-  console.log(e)
+  
   writeFileSync(
     getPath('dot-options.json'),
     JSON.stringify({
@@ -78,10 +82,12 @@ catch (e) {
 }
 
 try {
-  if (existsSync(getPath('tab-groups.json'))) { console.log("[SessionStore] Checked for tab-groups.json, exists.") }
+  if (existsSync(getPath('tab-groups.json'))) { 
+
+  }
 }
 catch (e) {
-  console.log(e)
+  
   writeFileSync(
     getPath('tab-groups.json'),
     JSON.stringify({
@@ -101,10 +107,6 @@ import { PermissionDialog } from './permissions';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
-
-ipcMain.on('online-status-changed', (event: any, status: any) => {
-  console.log("Dot is OFFLINE", status)
-})
 
 app.on('ready', async () => {
 
@@ -128,7 +130,7 @@ app.on('ready', async () => {
       setTimeout(() => {
         appWindow.webContents.send('url-arguments-applied', process.argv[4]);
         process.argv[4] = null;
-        console.log(`\x1b[0mdot \x1b[36mnotice \x1b[0m Dot has been loaded with URI arguments, ${process.argv[4]}.`);
+        
       }, 9000);
 
     }
@@ -149,7 +151,7 @@ app.on('ready', async () => {
   });
 
   app.on('certificate-error', (event, webContents, link, error, certificate, callback) => {
-    console.log(`CERIFCATE ERROR ON ${link} with ERROR ${error}`)
+    
   });
 
   appWindow.webContents.on('devtools-opened', () => {
@@ -175,6 +177,16 @@ app.on('ready', async () => {
     if (process.env.ENV !== 'dev') {
       autoUpdater.checkForUpdates();
     }
+  });
+
+  ipcMain.on('menu-view', (e: IpcMessageEvent, name: boolean) => {
+      
+      if(name == true) {
+        appWindow.menu.showWindow()
+      }
+      else {
+        appWindow.menu.hideWindow()
+      }
   });
 
   ipcMain.on('window-focus', () => {
@@ -209,10 +221,10 @@ app.on('ready', async () => {
 
       item.on('updated', (event, state) => {
         if (state === 'interrupted') {
-          console.log('Download is interrupted but can be resumed');
+          
         } else if (state === 'progressing') {
           if (item.isPaused()) {
-            console.log('Download is paused');
+            
           } else {
             appWindow.webContents.send('download-progress', {
               id,
@@ -226,7 +238,7 @@ app.on('ready', async () => {
         if (state === 'completed') {
           appWindow.webContents.send('download-completed', id);
         } else {
-          console.log(`Download failed: ${state}`);
+          
         }
       });
     });

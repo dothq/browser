@@ -1,4 +1,4 @@
-import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog, BrowserWindow } from 'electron';
+import { BrowserView, app, Menu, nativeImage, clipboard, Tray, remote, dialog, BrowserWindow, shell } from 'electron';
 import { appWindow, locationBar } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
@@ -375,7 +375,7 @@ export class View extends BrowserView {
 // }
 // `, true)
 //       .then((result) => {
-//         console.log(result)
+//         
 //       })
 
       this.emitWebNavigationEvent('onCompleted', {
@@ -510,12 +510,12 @@ export class View extends BrowserView {
         //Discord Rich Presence
 
         if (disposition === 'new-window') {
-          console.log(frameName)
-          console.log(disposition)
-          console.log(options)
           if (disposition === 'new-window') {
             if(appWindow.viewManager.selected.title != `Dot - ${options.title}`) {
               e.preventDefault();
+              if(url.split("://")[0] != 'http' || url.split("://")[0] != 'https') {
+                return shell.openExternal(url);
+              }
               let child = new BrowserWindow({ show: false, frame: false, title: `Dot - ${options.title}`, width: options.width, height: options.height, icon: resolve(app.getAppPath() + '/static/icon.png') })
               child.loadURL(app.getAppPath() + '/static/pages/util/window.html')
               child.once('ready-to-show', () => {
@@ -631,9 +631,9 @@ export class View extends BrowserView {
         certificate: Electron.Certificate,
         callback: Function,
       ) => {
-        console.log("contains", `${this.webContents.getURL()}`.includes("#ise"))
+        
         if(`${this.webContents.getURL()}`.includes("#ise") == false) {
-          console.log(error);
+          
           event.preventDefault();
           this.webContents.loadURL(app.getAppPath() + '/static/pages/error/ssl-error.html?du=' + url + '&err=' + error);
           callback(true);

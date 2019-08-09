@@ -104,8 +104,6 @@ const onInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
 
 const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
-  console.log("Pressed key", e.key, store.overlay.inputRef.current.value)
-
   const key = e.keyCode;
   const { suggestions } = store;
   const { list } = suggestions;

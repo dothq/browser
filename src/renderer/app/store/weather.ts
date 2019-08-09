@@ -74,7 +74,7 @@ export class WeatherStore {
   public async load(deg?: string) {
 
     try {
-      console.log(`\x1b[0mdot \x1b[36mnotice \x1b[0m Doing some weathery magic...`);
+      
       if(!file.get("tempType")) {
         file.set("tempType", "c");
         file.save()
@@ -151,16 +151,16 @@ export class WeatherStore {
       this.day2.summary = json.daily.data[2].summary;
       this.day3.summary = json.daily.data[3].summary;
       this.day4.summary = json.daily.data[4].summary;
-      console.log(this.day1.name + ": " + this.day1.minTemp + " - " + this.day1.maxTemp);
-      console.log(this.day2.name + ": " + this.day2.minTemp + " - " + this.day2.maxTemp);
-      console.log(this.day3.name + ": " + this.day3.minTemp + " - " + this.day3.maxTemp);
-      console.log(this.day4.name + ": " + this.day4.minTemp + " - " + this.day4.maxTemp);
+      
+      
+      
+      
 
       /**
        * Loaded the weather ✨ magic
       */
       this.loaded = true;
-      console.log(`\x1b[0mdot \x1b[33mfinished \x1b[0m Finished the super cool weather shiz.`);
+      
 
     }
     catch (e) {

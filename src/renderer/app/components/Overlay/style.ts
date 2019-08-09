@@ -6,7 +6,7 @@ import console = require('console');
 import { remote } from 'electron';
 
 function width() {
-  console.log(appWindow)
+  
   if(remote.screen.getPrimaryDisplay().size.width >= 1720) {
     return "6px"
   }

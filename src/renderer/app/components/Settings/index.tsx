@@ -96,7 +96,7 @@ const login = async () => {
     store.user.username = c.customname;
     store.user.avatar = c.avatar;
 
-    console.log(store.user.avatar + ' ' + c.avatar)
+    
 
     store.user.email = c.email;
     store.user.loggedin = true;
@@ -824,7 +824,7 @@ const createSearchEngine = (e: any) => {
 
     store.options.addSe(searchEngine)
 
-    console.log(store.options.seList)
+    
   }
   else {
     store.options.seURLerror = true;
