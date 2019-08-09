@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://bot.ender.site/img/dot.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://bot.ender.site/img/dot.png" width="200" height="200" align="center"/>
+  <img src="https://i.postimg.cc/B6BHBnWW/image.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.postimg.cc/B6BHBnWW/image.png" width="200" height="200" align="center"/>
 </p>
 
 <h1 align="center">Dot</h1>
