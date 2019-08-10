@@ -32,6 +32,8 @@ import { DialogPopup } from '../DialogPopup';
 import { DialogTitle, DialogP, DialogContent, DialogButton } from '../DialogPopup/style';
 import { TextField, ButtonBase, DialogActions, Select } from '@material-ui/core';
 import Ripple from '~/renderer/components/Ripple';
+import SelectList from '../SelectList';
+import { SelectOption } from '../SelectList/style';
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -844,21 +846,13 @@ const isCustom = () => {
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
-{/* 
+ 
         <ListItem>
-          <Title style={{ fontSize: 15 }}>UI Theme</Title>
+          <Title style={{ fontSize: 15 }}>Interface theme</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
-            <DropArrow visible={true} onClick={() => store.options.themeSelect = true} style={{ cursor: 'pointer' }} />
-            <ContextMenu visible={store.options.themeSelect == true}>
-              <ContextMenuItem selected={store.options.theme == 'dark'} onClick={() => store.options.theme = 'dark'}>
-                Dark
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.theme == 'light'} onClick={() => store.options.theme = 'light'}>
-                Light
-              </ContextMenuItem>
-            </ContextMenu>
+            <SelectList value={store.options.theme == 'dark' ? 'Dark' : 'Light'} children={store.options.themes} />
           </Buttons>
-        </ListItem> */}
+        </ListItem>
 
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].toggle_dot}</Title>

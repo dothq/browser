@@ -103,6 +103,9 @@ export class OptionsStore {
   public theme: 'dark' | 'light' = opts.get("uiTheme");
 
   @observable
+  public themes: any = ['Dark', 'Light'];
+
+  @observable
   public worldType: any = opts.get("worldType");
 
   @observable

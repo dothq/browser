@@ -90,6 +90,7 @@
     "@cliqz/adblocker": "0.8.0",
     "@material-ui/core": "^3.9.3",
     "@types/discord-rpc": "^3.0.1",
+    "@types/react-onclickoutside": "^6.7.3",
     "ajax-request": "^1.2.3",
     "braces": "^3.0.2",
     "datauri": "^2.0.0",
@@ -136,6 +137,7 @@
     "react-dom": "16.8.6",
     "react-easy-emoji": "^1.2.0",
     "react-native": "^0.60.3",
+    "react-onclickoutside": "^6.8.0",
     "react-switch": "^4.1.0",
     "react-twemoji": "^0.1.0",
     "register-scheme": "0.0.2",
@@ -144,6 +146,7 @@
     "styled-components": "4.2.0",
     "tldts": "4.0.6",
     "unirest": "^0.6.0",
+    "wexond-ui": "^1.1.7",
     "ws": "^7.0.0"
   }
 }
