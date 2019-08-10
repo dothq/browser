@@ -2,7 +2,7 @@
   <img src="https://i.postimg.cc/B6BHBnWW/image.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.postimg.cc/B6BHBnWW/image.png" width="200" height="200" align="center"/>
 
 <h1 align="center">Dot</h1>
-<h3 align="center">A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.</h3>
+A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.
 
 [![Downloads](https://img.shields.io/github/downloads/dot-browser/desktop/total.svg)](/releases)
 [![Hits](http://hits.dwyl.io/dot-browser/desktop.svg)](/releases)
