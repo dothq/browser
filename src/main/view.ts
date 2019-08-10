@@ -544,7 +544,7 @@ export class View extends BrowserView {
           }
           if (frameName === '_blank' || options.title == '_blank') {
             e.preventDefault();
-            appWindow.viewManager.selected.webContents.loadURL(url);
+            appWindow.webContents.send('api-tabs-create', { url, active: true });
           }
           if (frameName === 'modal') {
             e.preventDefault();
@@ -559,6 +559,16 @@ export class View extends BrowserView {
         } else if (disposition === 'background-tab') {
           e.preventDefault();
           appWindow.webContents.send('api-tabs-create', { url, active: false });
+        } else if (frameName == '_blank') {
+          e.preventDefault();
+          appWindow.webContents.send('api-tabs-create', { url, active: true });
+        }
+
+        console.log(frameName)
+    
+        if (frameName == '_blank') {
+          e.preventDefault();
+          appWindow.webContents.send('api-tabs-create', { url, active: true });
         }
 
         this.emitWebNavigationEvent('onCreatedNavigationTarget', {
