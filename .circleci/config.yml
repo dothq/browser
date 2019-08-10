@@ -4,7 +4,7 @@ orbs:
   win: circleci/windows@1.0.0
 
 jobs:
-  compile-linux:
+  build:
     docker: 
       - image: circleci/node:11
     steps:
