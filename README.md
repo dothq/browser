@@ -2,12 +2,38 @@
   <img src="https://i.postimg.cc/B6BHBnWW/image.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.postimg.cc/B6BHBnWW/image.png" width="200" height="200" align="center"/>
 </p>
 
+
+<div align="center">
+
 <h1 align="center">Dot</h1>
-<h3 align="center">A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.</h3>
-<h4 align="center"></h4>
-<h3 align="center">
-  <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>  <img src="http://hits.dwyl.io/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>   <img src="https://img.shields.io/discord/525056817399726102.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>
-  <img src="https://img.shields.io/circleci/build/github/dot-browser/desktop/master.svg?token=0d055a2032dbb812b31678366d549a3919379f70" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>     <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/>    <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" style="display: block;margin-left: auto;margin-right: auto;" align="center"/></h3>
+
+<p align="center">
+    <a href="/releases">
+        <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
+    </a>
+    <a href="/releases">
+        <img src="http://hits.dwyl.io/dot-browser/desktop.svg" alt="Hits">
+    </a>
+    <a href="https://invite.gg/dot">
+        <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
+    </a>
+    <a href="/">
+        <img src="https://img.shields.io/circleci/build/github/dot-browser/desktop/master.svg?token=0d055a2032dbb812b31678366d549a3919379f70" alt="CircleCI">
+    </a>
+    <a href="/issues">
+        <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" alt="Issues Open">
+    </a>
+    <a href="/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
+        <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" alt="Issues Closed">
+    </a>
+    <a href="/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
+    </a>
+</p>
+
+A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
+
+</div>
 
 ## 👾 Features
 
