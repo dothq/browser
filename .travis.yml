@@ -7,7 +7,7 @@ env:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 install:
-  - npm ci
+  - npm i
 cache:
   directories:
     - node_modules
