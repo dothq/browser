@@ -34,7 +34,7 @@ class SelectList extends React.Component<Props, {}> {
         } = this.props;
 
         return (
-            <StyledSelect onClick={() => this.toggleView()} onBlur={() => this.toggleView()}>
+            <StyledSelect onClick={() => this.toggleView()}>
                 <Icon src={icons.down} white={true} isOpen={this.view}/>
                 <Container isOpen={this.view} canBeHovered={false}>
                     <SelectOption>{this.value}</SelectOption>
