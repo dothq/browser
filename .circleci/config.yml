@@ -1,2 +1,8 @@
-# Config Translation Error
-# Could not find stored inference data.  Please run a build and try again.
+version: 2.1
+jobs:
+  build:
+    docker: 
+      - image: circleci/node:4.8.2
+    steps:
+      - checkout
+      - run: echo "hello world"
