@@ -18,7 +18,7 @@
         <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
     </a>
     <a href="/">
-        <img src="https://img.shields.io/circleci/build/github/dot-browser/desktop/master.svg?token=0d055a2032dbb812b31678366d549a3919379f70" alt="CircleCI">
+        <img src="https://travis-ci.org/dot-browser/desktop.svg?branch=master" alt="Travis">
     </a>
     <a href="/issues">
         <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" alt="Issues Open">
