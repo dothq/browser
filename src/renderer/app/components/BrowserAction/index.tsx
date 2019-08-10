@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import { BrowserAction } from '../../models';
 import { StyledBrowserAction, Badge } from './style';
-import ToolbarButton from '../ToolbarButton';
+import ToolbarButton from "../ToolbarButton";
 
 interface Props {
   data: BrowserAction;

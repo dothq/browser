@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import { StyledSearchBox, InputContainer, SearchIcon, Input, SearchChip, ChipImage } from './style';
 import { Suggestions } from '../Suggestions';
 import { icons } from '../../constants';
-import ToolbarButton from '../ToolbarButton';
+import ToolbarButton from "../ToolbarButton";
 import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import UserIcon from '../UserButton';
 import { resolve } from 'path';

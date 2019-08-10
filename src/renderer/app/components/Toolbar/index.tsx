@@ -6,7 +6,7 @@ import store from '~/renderer/app/store';
 import { StyledToolbar, Buttons, Separator } from './style';
 import { NavigationButtons } from '../NavigationButtons';
 import { Tabbar } from '../Tabbar';
-import ToolbarButton from '../ToolbarButton';
+import ToolbarButton from "../ToolbarButton";
 import { icons } from '../../constants';
 import { ipcRenderer, Menu, remote } from 'electron';
 import BrowserAction from '../BrowserAction';
