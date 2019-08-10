@@ -31,7 +31,7 @@
     </a>
 </p>
 
-A privacy-based web browser, with an effortless UI, and built-in ad blocker for anonymity.
+A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
 
 </div>
 
