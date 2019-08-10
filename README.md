@@ -6,7 +6,6 @@
 <div align="center">
 
 <h1 align="center">Dot</h1>
-A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.
 
 <p align="center">
     <a href="/releases">
@@ -31,6 +30,8 @@ A privacy-based web browser, with an effortless UI, built-in ad blocker for anon
         <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
     </a>
 </p>
+
+A privacy-based web browser, with an effortless UI, built-in ad blocker for anonymity.
 
 </div>
 
