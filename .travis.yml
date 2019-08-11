@@ -18,20 +18,6 @@ os:
   - linux
   - osx
   - windows
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - libc6-dev-i386
-      - gcc-multilib
-      - g++-multilib
-      - ninja-build
-      - linux-libc-dev:i386
-      - linux-libc-dev
-      - icnsutils
-      - graphicsmagick
-      - libsecret-1-dev
 
 script:
   - npm run compile
