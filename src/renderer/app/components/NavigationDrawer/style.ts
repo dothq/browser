@@ -6,7 +6,7 @@ import { icons } from '../../constants';
 export const StyledNavigationDrawer = styled.div`
   width: 300px;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--navigation-bar-background);
   position: fixed;
   left: 0;
 `;
@@ -35,7 +35,7 @@ export const Back = styled.div`
   width: 24px;
   opacity: 0.54;
   margin-right: 24px;
-  filter: invert(100%);
+  filter: var(--general-element);;
 
   &:hover {
     opacity: 1;
@@ -45,7 +45,7 @@ export const Back = styled.div`
 export const Input = styled.input`
   border: none;
   outline: none;
-  color: white;
+  color: var(--general-title);
   width: 100%;
   padding-left: 42px;
   background-color: transparent;
@@ -53,7 +53,7 @@ export const Input = styled.input`
   font-size: 14px;
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.54);
+    color: var(--navigation-bar-search-text-color);
   }
 `;
 
@@ -77,6 +77,6 @@ export const Search = styled.div`
     height: 16px;
     ${centerIcon(16)};
     background-image: url(${icons.search});
-    filter: invert(100%);
+    filter: var(--general-element);;
   }
 `;

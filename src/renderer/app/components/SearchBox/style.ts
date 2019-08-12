@@ -39,10 +39,10 @@ export const SearchIcon = styled.div`
   height: 18px;
   min-width: 18px;
   margin-left: 16px;
+  filter: var(--general-element);
 
   ${({ type }: { type: any }) => css`
     background-image: url(${type});
-    filter: ${type == icons.search ? 'invert(100%)' : 'none'};
   `};
 
 `;
@@ -54,14 +54,14 @@ export const Input = styled.input`
   background-color: transparent;
   border: none;
   outline: none;
-  color: white;
+  color: var(--omnibox-text-color);
   font-size: 16px;
   margin-left: 12px;
   margin-right: 16px;
   font-family: Roboto
 
   &::placeholder {
-    color: rgba(255, 255, 255, 0.54);
+    color: var(--omnibox-placeholder-color);
     font-family: Roboto
   }
 `;

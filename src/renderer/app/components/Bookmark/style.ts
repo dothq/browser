@@ -9,7 +9,7 @@ export const More = styled.div`
   width: 24px;
   background-image: url(${icons.more});
   opacity: 0.54;
-  filter: invert(100%);
+  filter: var(--general-element);
 
   &:hover {
     opacity: 1;

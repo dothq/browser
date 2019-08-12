@@ -9,7 +9,7 @@ export const Remove = styled.div`
   width: 16px;
   background-image: url(${icons.close});
   opacity: 0.54;
-  filter: invert(100%);
+  filter: var(--general-element);;
 
   &:hover {
     opacity: 1;
