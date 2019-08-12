@@ -555,7 +555,7 @@ class ToggleSwitchDL extends React.Component {
         checked={this.state.dotLauncherToggle}
         onChange={this.handleChange('dotLauncherToggle')}
         value="checkedA"
-        color="primary"
+        color="default"
       />
     );
   }
@@ -861,12 +861,13 @@ export const Appearance = observer(() => {
             <SelectList 
               value={store.options.theme == 'dark' ? 'Dark' : 'Light'} 
               parentRef={uiRef}
+              icon={store.options.theme == 'dark' ? icons.dark : icons.light}
             >
-              <SelectListItem onClick={() => setTheme('dark')} parentRef={uiRef}>
+              <SelectListItem onClick={() => setTheme('dark')} parentRef={uiRef} icon={icons.dark}>
                 Dark
               </SelectListItem>
 
-              <SelectListItem onClick={() => setTheme('light')} parentRef={uiRef}>
+              <SelectListItem onClick={() => setTheme('light')} parentRef={uiRef} icon={icons.light}>
                 Light
               </SelectListItem>
 

@@ -37,6 +37,8 @@ export const Button = styled.a`
 `;
 
 export const A = styled.a`
+  filter: var(--a-filter);
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.12);
   }

@@ -43,7 +43,7 @@ class RPCSwitch extends React.Component {
                 checked={this.state.rpcCheckedAlready}
                 onChange={this.rpcHandleChange('rpcCheckedAlready')}
                 value="checkedA"
-                color="primary"
+                color="default"
                 />
             );
         }

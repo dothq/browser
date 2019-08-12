@@ -59,6 +59,7 @@ export const StyledOverlay = styled.div`
   backface-visibility: hidden;
   background-color: var(--overlay-default);
   margin-top: 38px;
+  outline: transparent auto 1px !important;
 
   &:focus {
     outline: none;

@@ -30,6 +30,7 @@ export const Bubble = ({
   onClick,
   itemsPerRow,
   disabled,
+  isFavicon,
 }: {
   children?: any;
   icon?: string;
@@ -40,6 +41,7 @@ export const Bubble = ({
   onClick?: (e?: React.MouseEvent<HTMLDivElement>) => void;
   itemsPerRow?: number;
   disabled?: boolean;
+  isFavicon?: boolean;
 }) => {
   const width = getSize(itemsPerRow);
 
@@ -52,6 +54,7 @@ export const Bubble = ({
       <Icon
         invert={invert}
         light={light}
+        isFavicon={isFavicon}
         style={{
           backgroundImage: `url(${icon})`,
           backgroundSize: `${iconSize}px`,

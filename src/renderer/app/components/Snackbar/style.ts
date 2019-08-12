@@ -14,8 +14,8 @@ export const Root = styled.div`
   left: 50%;
   transform: translateX(-50%);
   border-radius: 50px;
-  background-color: rgba(24, 24, 24, 0.97);
-  color: rgb(198, 198, 198);
+  background-color: var(--snackbar-background);
+  color: var(--snackbar-color);
   will-change: transition, bottom;
   justify-content: center;
   align-items: center;

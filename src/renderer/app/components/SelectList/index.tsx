@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { observer, inject } from "mobx-react";
-import { StyledSelect, SelectOption, SelectContainer, Icon, Selection, SelectItems } from "./style";
+import { StyledSelect, SelectOption, SelectContainer, Icon, Selection, SelectItems, ItemIcon } from "./style";
 import { icons } from '../../constants';
 import onClickOutside from "react-onclickoutside";
 import console = require('console');
@@ -10,12 +10,14 @@ interface Props {
     children: any;
     value: any;
     parentRef: any;
+    icon: any;
 }
 
 interface ItemProps {
     children: any;
     onClick: any;
     parentRef: any;
+    icon: any;
 }
 
 class SelectList extends React.Component<Props, {}> {
@@ -41,15 +43,19 @@ class SelectList extends React.Component<Props, {}> {
         let {
             children,
             parentRef,
+            icon,
         } = this.props;
 
         console.log(store.options.theme)
 
         return (
-            <StyledSelect onClick={() => this.toggleView()}>
+            <StyledSelect onClick={() => this.toggleView()} isOpen={this.view}>
                 <Icon src={icons.down} white={true} isOpen={this.view}/>
                 <SelectContainer isOpen={this.view} canBeHovered={false}>
-                    <SelectOption ref={parentRef}>{this.value}</SelectOption>
+                    <SelectOption>
+                        <ItemIcon src={icon} />
+                        <span ref={parentRef}>{this.value}</span>
+                    </SelectOption>
                 </SelectContainer>
                 <SelectItems visible={this.view}>
                     {children}
@@ -67,7 +73,8 @@ export class SelectListItem extends React.Component<ItemProps, {}> {
 
         const {
             onClick,
-            parentRef
+            parentRef,
+            icon,
         } = this.props;
 
         var clickEvent = () => {
@@ -80,7 +87,10 @@ export class SelectListItem extends React.Component<ItemProps, {}> {
                 canBeHovered={true}
                 onClick={clickEvent}
             >
-                <SelectOption>{this.props.children}</SelectOption>
+                <SelectOption>
+                    <ItemIcon src={icon} />
+                    {this.props.children}
+                </SelectOption>
             </SelectContainer>
         )
     }

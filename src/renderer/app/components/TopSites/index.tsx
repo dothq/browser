@@ -21,6 +21,7 @@ export const TopSites = observer(() => {
             maxLines={1}
             iconSize={20}
             light
+            isFavicon={true}
             icon={favicon}
           >
             {item.title}

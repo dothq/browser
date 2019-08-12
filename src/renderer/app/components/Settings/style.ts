@@ -76,8 +76,10 @@ export const ExtLink = styled.a`
 `;
 
 export const A = styled.a`
+  filter: var(--a-filter);
+
   &:hover {
-    background-color: var(--ext-link-hover);
+    background-color: var(--a-hover);
   }
 `;
 

@@ -69,7 +69,7 @@ export const ExtLink = styled.a`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--ext-link-hover);
   }
 `;
 

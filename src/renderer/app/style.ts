@@ -56,6 +56,8 @@ export const Style = css`
     --bubble-background: #21212121;
     --bubble-should-invert: invert(100%);
     --bubble-hover: rgba(255,255,255,0.08);
+    --bubble-icon-background: #e2e2e2c2;
+    --bubble-icon-background-if-favicon: #202020;
 
     --navigation-bar-background: rgba(255, 255, 255, 0.08);
     --navigation-bar-search-text-color: rgba(255, 255, 255, 0.54);
@@ -74,12 +76,19 @@ export const Style = css`
 
     --select-list-background: rgba(255,255,255,0.1);
     --select-list-icon-filter: invert(100%);
-    --select-list-items-color: #3f3f3f;
+    --select-list-items-color: #3e3e3e;
     --select-list-items-text-color: white;
+    --select-list-item-hover: rgba(213,213,213,0.06);
 
     --send-feedback-placeholder-color: white;
 
     --ext-link-hover: rgba(255,255,255,0.12);
+
+    --a-filter: invert(0%);
+    --a-hover: rgba(255,255,255,0.12);
+
+    --snackbar-background: rgba(24,24,24,0.97);
+    --snackbar-color: rgb(198,198,198);
   }
 
   .theme-light {
@@ -117,6 +126,8 @@ export const Style = css`
     --bubble-background: #cecece;
     --bubble-should-invert: invert(0%);
     --bubble-hover: rgba(0, 0, 0, 0.08);
+    --bubble-icon-background: #fefefe;
+    --bubble-icon-background-if-favicon: #fefefe;
 
     --navigation-bar-background: rgba(0, 0, 0, 0.07);
     --navigation-bar-search-text-color: rgba(74, 74, 74, 1);
@@ -135,11 +146,18 @@ export const Style = css`
 
     --select-list-background: rgba(0, 0, 0, 0.08);
     --select-list-icon-filter: invert(0%);
-    --select-list-items-color: rgb(167, 167, 167);
+    --select-list-items-color: #d0d0d0;
     --select-list-items-text-color: black;
+    --select-list-item-hover: rgba(0, 0, 0, 0.06);
 
     --send-feedback-placeholder-color: black;
 
     --ext-link-hover: rgba(0, 0, 0, 0.12);
+
+    --a-filter: invert(100%);
+    --a-hover: rgba(255, 255, 255, 0.15);
+
+    --snackbar-background: rgba(247, 247, 247, 0.97);
+    --snackbar-color: rgb(20, 20, 20);
   }
 `;

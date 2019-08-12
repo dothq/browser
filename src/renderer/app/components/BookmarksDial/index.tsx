@@ -16,6 +16,7 @@ export const BookmarksDial = observer(() => {
           maxLines={1}
           iconSize={20}
           light
+          isFavicon={true}
           icon={store.favicons.favicons[item.favicon]}
         >
           {item.title}

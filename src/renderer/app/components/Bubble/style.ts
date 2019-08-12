@@ -26,11 +26,24 @@ export const Icon = styled.div`
   opacity: 1;
   width: 56px;
   height: 56px;
-  background-color: #ffffffc2;
+  background-color: var(--bubble-icon-background);
   border-radius: 50%;
   margin-bottom: 16px;
-  filter: var(--bubble-should-invert);
   ${centerIcon(32)};
+
+  ${({ isFavicon }: { isFavicon: boolean }) => {
+    if(isFavicon == true) {
+      return css`
+        filter: none;
+        background-color: var(--bubble-icon-background-if-favicon) !important;
+      `;
+    }
+    else {
+      return css`
+        filter: var(--bubble-should-invert);
+      `;
+    }
+  }};
 `;
 
 export const Title = styled.div`
