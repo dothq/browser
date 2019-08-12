@@ -90,7 +90,7 @@ export const StyledOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  transition: 0.1s opacity;
+  transition: 0.3s opacity;
   background-color: rgba(0, 0, 0, 0.04);
   ${({ hovered }: { hovered: boolean }) => css`
     opacity: ${hovered ? 1 : 0};

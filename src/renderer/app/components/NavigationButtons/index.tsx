@@ -95,7 +95,7 @@ export const NavigationButtons = observer(() => {
         <DotLauncher src={icons.logo}></DotLauncher>
       </DotLauncherWrapper>
       <ToolbarButton
-        disabled={!store.navigationState.canGoBack}
+        disabled={store.tabs.list.length == 0 && !store.navigationState.canGoBack}
         size={24}
         icon={icons.back}
         title={store.locale.lang.window[0].navigate_back}
@@ -103,7 +103,7 @@ export const NavigationButtons = observer(() => {
         onClick={onBackClick}
       />
       <ToolbarButton
-        disabled={!store.navigationState.canGoForward}
+        disabled={store.tabs.list.length == 0 && !store.navigationState.canGoForward}
         size={24}
         icon={icons.forward}
         onClick={onForwardClick}
@@ -112,6 +112,7 @@ export const NavigationButtons = observer(() => {
       />
       <ToolbarButton
         size={20}
+        disabled={store.tabs.list.length == 0}
         title={store.locale.lang.window[0].navigate_refresh}
         icon={
           store.tabs.selectedTab && store.tabs.selectedTab.loading
