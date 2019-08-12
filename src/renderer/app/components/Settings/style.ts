@@ -22,7 +22,8 @@ export const Title = styled.h1`
 `;
 
 export const Subtitle = styled.h1`
-  font-weight: 100
+  font-weight: 100;
+  color: var(--general-title);
   font-family: 'Roboto';
 `;
 
@@ -30,13 +31,15 @@ export const Icon = styled.div`
   height: 40px;
   width: 40px;
   opacity: 1;
-  filter: invert(100%);
+  filter: var(--general-element);
   margin-right: 10px;
   ${centerIcon(40)};
 `;
 
 export const TitleEmail = styled.h1`
   font-weight: 100
+  opacity: 0.5;
+  filter: var(--email-text-color);
 
   ${({ visible }: { visible: boolean; }) => css`
     display: ${visible ? 'none' : 'block'};
@@ -64,16 +67,17 @@ export const ExtLink = styled.a`
   padding-bottom: 3px;
   padding-left: 10px;
   padding-right: 10px;
-  margin-right: 5px
+  margin-right: 5px;
+  color: var(--general-title) !important;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--ext-link-hover);
   }
 `;
 
 export const A = styled.a`
   &:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--ext-link-hover);
   }
 `;
 
@@ -140,7 +144,7 @@ export const SettingsSection = styled.div`
   background-color: rgba(255,255,255,0.08);
   margin-bottom: 24px;
   border-radius: 30px;
-  color: white;
+  color: var(--general-title);
   overflow: hidden;
   padding: 8px 0px;
   margin-top: 48px;

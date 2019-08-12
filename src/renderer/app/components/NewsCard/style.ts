@@ -6,7 +6,7 @@ export const StyledCard = styled.div`
   background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
   border-radius: 30px;
-  color: white;
+  color: var(--general-title);
   overflow: hidden;
   width: 245px;
   height: 359px;
