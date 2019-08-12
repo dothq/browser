@@ -18,7 +18,7 @@ export const StyledToolbar = styled.div`
 
   ${({ isHTMLFullscreen, isDisabled }: { isHTMLFullscreen: boolean; isDisabled: boolean }) => css`
     margin-top: ${isHTMLFullscreen ? -TOOLBAR_HEIGHT : 0}px;
-    background-color: ${isDisabled ? '#000000e8' : '#353535'}
+    background-color: ${isDisabled ? 'var(--active-toolbar-color)' : 'var(--inactive-toolbar-color)'}
   `};
 `;
 
@@ -38,7 +38,7 @@ export const ToolbarWrap = styled.div`
 export const Separator = styled.div`
   height: 16px;
   width: 1px;
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: var(--toolbar-separator-color);
   margin-left: 8px;
   margin-right: 8px;
 `;

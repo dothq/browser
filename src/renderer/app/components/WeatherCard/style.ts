@@ -98,6 +98,7 @@ export const Item = styled.div`
 
 export const SmallDegrees = styled.div`
   font-size: 14px;
+  color: var(--general-title);
 
   ${({ night }: { night?: boolean }) => css`
     margin-top: ${night ? 4 : 16}px;
@@ -107,4 +108,5 @@ export const SmallDegrees = styled.div`
 
 export const Overline = styled.div`
   ${overline()};
+  color: var(--general-title);
 `;

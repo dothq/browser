@@ -54,7 +54,7 @@ export const Textarea = styled.textarea`
   width: 100%;
   height: 48px;
   font-size: 16px;
-  color: #000;
+  color: var(--send-feedback-placeholder-color);
   padding-left: 12px;
   border: none;
   outline: none;
@@ -65,12 +65,12 @@ export const Textarea = styled.textarea`
     padding-top: ${hasLabel ? 12 : 0}px;
     padding-right: ${hasIcon ? 48 : 12}px;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0px 0px 0px ${fontColor};
+    text-shadow: 0px 0px 0px var(--send-feedback-placeholder-color);
 
-    color: ${color};
+    color: var(--send-feedback-placeholder-color);
 
     &::placeholder {
-      text-shadow: 0px 0px 0px ${fontColor};
+      text-shadow: 0px 0px 0px var(--send-feedback-placeholder-color);
       opacity: 0.4;
     }
     &[type='number']::-webkit-inner-spin-button,

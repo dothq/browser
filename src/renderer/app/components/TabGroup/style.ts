@@ -43,7 +43,7 @@ export const Icon = styled.div`
   width: 16px;
   height: 16px;
   margin-left: 4px;
-  filter: invert(100%);
+  filter: var(--general-element);
   opacity: 0.54;
 
   &:hover {
@@ -56,7 +56,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   background-color: transparent;
-  color: white;
+  color: var(--general-title);
   font-size: 14px;
   width: 100%;
   font-family: Roboto;

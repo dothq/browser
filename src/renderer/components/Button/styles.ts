@@ -17,7 +17,7 @@ export const StyledButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px #ffffff94 solid;
+  border: 1px var(--button-border) solid;
   transition: background-color 0.3s;
   border-radius: 30px;
   padding-top: 3px;
@@ -25,9 +25,10 @@ export const StyledButton = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   margin-right: -9px;
+  color: var(--button-text-color) !important;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.12) !important;
+    background-color: var(--button-hover) !important;
   }
 
   ${({ background, foreground, type, visible, icon }: StyledButtonProps) => css`

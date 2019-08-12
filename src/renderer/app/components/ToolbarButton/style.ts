@@ -35,7 +35,7 @@ export const Button = styled.div`
 `;
 
 export const AbButton = styled.a`
-
+  filter: var(--toolbar-browser-action-filter)
 `;
 
 export const Circle = styled.div`

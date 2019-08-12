@@ -40,9 +40,9 @@ export const Icon = styled.div`
   width: 100%;
   height: 100%;
   transition: 0.2s filter;
+  filter: var(--windows-controls-color);
   ${centerIcon(11)};
   ${({ icon, isClose, isDark }: IconProps) => css`
-    filter: ${isDark ? 'invert(100%)' : 'none'};
     background-image: url(${icon});
     &:hover {
       filter: ${isClose && 'invert(100%)'};
