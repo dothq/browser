@@ -31,6 +31,13 @@
             "pt": "Portuguese"
         }
     ],
+    "themes": [
+        {
+            "dark": "Dark",
+            "light": "Light",
+            "ui_theme": "Interface theme"
+        }
+    ],
     "rich_presence": [
         {
             "default_details": "Browsing on",

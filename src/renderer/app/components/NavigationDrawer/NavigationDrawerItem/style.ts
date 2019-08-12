@@ -14,7 +14,7 @@ export const StyledNavigationDrawerItem = styled.div`
   border-radius: 30px;
 
   &:hover {
-    background-color: #0000003d;
+    background-color: var(--navigation-bar-item-hover);
   }
 
   &:before {
@@ -23,7 +23,7 @@ export const StyledNavigationDrawerItem = styled.div`
     left: 0;
     width: 2px;
     height: 16px;
-    background-color: white;
+    background-color: var(--navigation-bar-before-color);
     transition: 0.2s opacity;
     ${({ selected }: { selected?: boolean }) => css`
 
@@ -42,7 +42,7 @@ export const Icon = styled.div`
   width: 24px;
   opacity: 0.6;
   margin-right: 16px;
-  filter: invert(100%);
+  filter: var(--general-element);
   ${centerIcon(20)};
 `;
 
