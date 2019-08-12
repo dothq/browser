@@ -40,7 +40,7 @@ if(!opts.get("worldType")) {
 
 export class OptionsStore {
   @observable
-  public currentDisplay: 'profile' | 'appearance' | 'languages' | 'search_engine' | 'downloads' | 'dev' | 'about' | 'send_feedback' | 'passwords' = 'profile';
+  public currentDisplay: 'profile' | 'appearance' | 'languages' | 'search' | 'downloads' | 'dev' | 'about' | 'send_feedback' | 'passwords' = 'profile';
 
   public searchEnginesDB = new Datastore({
     filename: getPath('storage/engines.db'),

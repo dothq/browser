@@ -910,6 +910,64 @@ export const Appearance = observer(() => {
         </ListItem>
 
         <ListItem>
+          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
+          <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
+            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
+            </IconButton>
+            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
+              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
+            </IconButton>
+          </Buttons>
+        </ListItem>
+
+      </SettingsSection>
+    );
+});
+
+export const openDevTools = () => {
+  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
+              
+  if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
+    remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
+  }
+}
+
+export const testNotif = () => {
+  notify({
+      title: 'Dot',
+      appName: "Dot",
+      message: 'Testing Notification',
+      icon: resolve(app.getAppPath() + '\\static\\icon.png'),
+      sound: true,
+      wait: true
+    },
+    function(err: any, response: any) {
+      
+    }); 
+};
+
+const openLog = () => {
+  remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
+}
+
+const MenuItem = observer(
+  ({ selected, children, display, style, icon }: { selected: boolean; children: any; display: any, style?: any; icon?: any }) => (
+    <NavigationDrawer.Item
+      selected={selected}
+      style={style}
+      icon={icon}
+      onClick={() => (store.options.currentDisplay = display)}
+    >
+      {children}
+    </NavigationDrawer.Item>
+  ),
+);
+
+export const Search = observer(() => {
+  return (
+    <SettingsSection>
+        <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: `${store.options.seIsCustom ? '-17px' : '0px'}`, display: 'inline-flex' }}>
             <IconButton style={{ backgroundSize: '18px', cursor: 'pointer' }} icon={icons.edit} onClick={toggleEditSe} visible={store.options.seIsCustom} />
@@ -1015,61 +1073,9 @@ export const Appearance = observer(() => {
             </DialogActions>
           </DialogContent>
         </DialogPopup>
-
-        <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
-          <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
-            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
-              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
-            </IconButton>
-            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
-              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
-            </IconButton>
-          </Buttons>
-        </ListItem>
-
-      </SettingsSection>
-    );
+    </SettingsSection>
+  )
 });
-
-export const openDevTools = () => {
-  remote.webContents.getFocusedWebContents().openDevTools({ mode: 'detach' });  
-              
-  if (remote.webContents.getFocusedWebContents().isDevToolsOpened()) {
-    remote.webContents.getFocusedWebContents().devToolsWebContents.focus();
-  }
-}
-
-export const testNotif = () => {
-  notify({
-      title: 'Dot',
-      appName: "Dot",
-      message: 'Testing Notification',
-      icon: resolve(app.getAppPath() + '\\static\\icon.png'),
-      sound: true,
-      wait: true
-    },
-    function(err: any, response: any) {
-      
-    }); 
-};
-
-const openLog = () => {
-  remote.shell.openItem(remote.app.getPath('userData') + '\\dot-errors.log')
-}
-
-const MenuItem = observer(
-  ({ selected, children, display, style, icon }: { selected: boolean; children: any; display: any, style?: any; icon?: any }) => (
-    <NavigationDrawer.Item
-      selected={selected}
-      style={style}
-      icon={icon}
-      onClick={() => (store.options.currentDisplay = display)}
-    >
-      {children}
-    </NavigationDrawer.Item>
-  ),
-);
 
 export const Experiments = observer(() => {
   return (
@@ -1189,6 +1195,7 @@ export const Settings = observer(() => {
         >
           <MenuItem selected={store.options.currentDisplay == 'profile'} icon={icons.user} display="profile">{store.locale.lang.settings[0].my_profile[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'appearance'} icon={icons.palette} display="appearance">{store.locale.lang.settings[0].appearance[0].title}</MenuItem>
+          <MenuItem selected={store.options.currentDisplay == 'search'} icon={icons.search} display="search">{store.locale.lang.settings[0].appearance[0].search_engine}</MenuItem>
           {store.user.loggedin == true && <MenuItem selected={store.options.currentDisplay == 'passwords'} icon={icons.unlock} display="passwords">Passwords</MenuItem>}
           <MenuItem selected={store.options.currentDisplay == 'downloads'} icon={icons.download} display="downloads">{store.locale.lang.settings[0].downloads[0].title}</MenuItem>
           <MenuItem selected={store.options.currentDisplay == 'languages'} icon={icons.translate} display="languages">{store.locale.lang.settings[0].languages[0].title}</MenuItem>
@@ -1204,6 +1211,9 @@ export const Settings = observer(() => {
 
               {store.options.currentDisplay == 'appearance' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.palette})` }} /> {store.locale.lang.settings[0].appearance[0].title}</Title>}
               {store.options.currentDisplay == 'appearance' && <Appearance />}
+
+              {store.options.currentDisplay == 'search' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.search})` }} /> {store.locale.lang.settings[0].appearance[0].search_engine}</Title>}
+              {store.options.currentDisplay == 'search' && <Search />}
 
               {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.lock})` }} /> Verify your password</Title>}
               {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.key})` }} /> Passwords</Title>}
