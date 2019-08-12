@@ -28,7 +28,7 @@ export const PrimaryText = styled.div`
   ${body2()};
   margin-left: 16px;
   white-space: nowrap;
-  color: white;
+  color: var(--omnibox-text-color);
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 13px;
@@ -40,7 +40,7 @@ export const SecondaryText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: white;
+  color: var(--omnibox-text-color);
   padding-right: 16px;
   font-size: 13px;
   opacity: ${transparency.text.medium};
@@ -51,12 +51,29 @@ export const Icon = styled.div`
   width: 16px;
   min-width: 16px;
   height: 16px;
+  filter: var(--omnibox-icon);
   ${centerIcon()};
+
+  ${({ isCustomIcon }: { isCustomIcon: boolean }) => {
+    if(isCustomIcon == true) {
+      return css`
+        filter: invert(0%);
+        opacity: 1;
+      `;
+    } 
+    else {
+      return css`
+        opacity: ${transparency.icons.inactive}
+        filter: var(--omnibox-search-icons)
+      `;
+    }
+
+  }};
 `;
 
 export const Dash = styled.div`
   margin-left: 4px;
   margin-right: 4px;
-  color: white;
+  color: var(--omnibox-text-color);
   opacity: ${transparency.text.medium};
 `;

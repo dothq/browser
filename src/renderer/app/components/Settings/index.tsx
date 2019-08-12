@@ -32,8 +32,8 @@ import { DialogPopup } from '../DialogPopup';
 import { DialogTitle, DialogP, DialogContent, DialogButton } from '../DialogPopup/style';
 import { TextField, ButtonBase, DialogActions, Select } from '@material-ui/core';
 import Ripple from '~/renderer/components/Ripple';
-import SelectList from '../SelectList';
-import { SelectOption } from '../SelectList/style';
+import SelectList, { SelectListItem } from '../SelectList';
+import { SelectOption, SelectContainer } from '../SelectList/style';
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -185,7 +185,7 @@ const pickAvatar = () => {
 const Email = observer(() => {
   if(store.user.loggedin == true) {
     return (
-      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px', color: 'rgba(220, 221, 222, 0.77)' }}>{store.user.email}</TitleEmail>
+      <TitleEmail visible={false} style={{ fontSize: 16, marginLeft: '4px', marginTop: '-20px' }}>{store.user.email}</TitleEmail>
     );
   }
   else {
@@ -363,7 +363,7 @@ const AboutDot = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s' }}></Image>
+        <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s', filter: 'var(--overlay-logo-filter)' }}></Image>
         <Title style={{ fontSize: 20 }}>{store.locale.lang.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
           <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
@@ -387,7 +387,7 @@ const AboutDot = observer(() => {
         <Subtitle style={{ fontSize: 14, marginLeft: '40px', fontWeight: 450 }}>{store.locale.lang.settings[0].about_dot[0].translators_title}</Subtitle>
         <ExtLink onClick={translators} title={store.locale.lang.settings[0].about_dot[0].view_translators_github} style={{ marginLeft: '60px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].view_translators}</ExtLink>
         <Subtitle style={{ fontSize: 12, marginLeft: '40px', marginTop: '30px', color: '#dadada' }}><ExtLink onClick={aboutPage} style={{ color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].about_page_btn}</ExtLink></Subtitle>
-        <Subtitle style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: '#dadada' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Subtitle>
+        <Subtitle style={{ fontSize: 12, marginLeft: '40px', marginTop: '10px', color: 'var(--general-subtitle)' }}>{store.locale.lang.settings[0].about_dot[0].copyright_notice}</Subtitle>
       </AboutWrapper>
     </SettingsSection>
   );
@@ -502,7 +502,7 @@ const secretBoyo = () => {
   var x = document.getElementById("about-wrapper");
   if (x.style.display === "none") {
     x.style.display = null;
-    document.getElementById("maybe-click-the-arrow").style.filter = ``
+    document.getElementById("maybe-click-the-arrow").style.filter = `var(--overlay-logo-filter)`
   } else {
     x.style.display = "none";
     const eggies = [
@@ -517,7 +517,7 @@ const secretBoyo = () => {
 }
 
 const clearSecretBoyo = () => {
-  document.getElementById("maybe-click-the-arrow").style.filter = ``
+  document.getElementById("maybe-click-the-arrow").style.filter = `var(--overlay-logo-filter)`
 }
 
 const optionsData = file.get();
@@ -696,10 +696,10 @@ export const setDTF = () => {
 var isC = "";
 var isF = "";
 if(file.get("tempType") == "c") {
-  isC = "#585858c7"
+  isC = "var(--degrees-button-color)"
 }
 if(file.get("tempType") == "F") {
-  isF = "#585858c7"
+  isF = "var(--degrees-button-color)"
 }
 
 const feedbackRef = React.createRef<Textfield>();
@@ -843,6 +843,13 @@ const isCustom = () => {
   }
 }
 
+const setTheme = (theme: 'dark' | 'light') => {
+  store.options.setTheme(theme)
+  store.options.theme = theme
+}
+
+const uiRef = React.createRef<HTMLDivElement>();
+
 export const Appearance = observer(() => {
     return (
       <SettingsSection>
@@ -850,7 +857,20 @@ export const Appearance = observer(() => {
         <ListItem>
           <Title style={{ fontSize: 15 }}>Interface theme</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
-            <SelectList value={store.options.theme == 'dark' ? 'Dark' : 'Light'} children={store.options.themes} />
+
+            <SelectList 
+              value={store.options.theme == 'dark' ? 'Dark' : 'Light'} 
+              parentRef={uiRef}
+            >
+              <SelectListItem onClick={() => setTheme('dark')} parentRef={uiRef}>
+                Dark
+              </SelectListItem>
+
+              <SelectListItem onClick={() => setTheme('light')} parentRef={uiRef}>
+                Light
+              </SelectListItem>
+
+            </SelectList>
           </Buttons>
         </ListItem>
 

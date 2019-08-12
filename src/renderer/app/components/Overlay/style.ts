@@ -45,7 +45,7 @@ export const Panel = styled.div`
 `;
 
 export const StyledOverlay = styled.div`
-  color: white;
+  color: var(--overlay-text-color);
   position: absolute;
   display: flex;
   flex-flow: column;
@@ -57,8 +57,12 @@ export const StyledOverlay = styled.div`
   z-index: 9999;
   transition: 0.2s opacity;
   backface-visibility: hidden;
-  background-color: #000000e8;
+  background-color: var(--overlay-default);
   margin-top: 38px;
+
+  &:focus {
+    outline: none;
+  }
 
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
@@ -103,7 +107,7 @@ export const HeaderArrow = styled.div`
   height: 18px;
   width: 18px;
   background-image: url(${icons.forward});
-  filter: invert(100%);
+  filter: var(--general-element);;
 `;
 
 export const DropArrow = styled.div`
@@ -112,7 +116,7 @@ export const DropArrow = styled.div`
   height: 32px;
   width: 32px;
   background-image: url(${icons.down});
-  filter: invert(100%);
+  filter: var(--general-element);;
   border-radius: 50%;
   transition: 0.3s background-color;
 
@@ -130,7 +134,7 @@ export const IconButton = styled.div`
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  filter: invert(100%);
+  filter: var(--general-element);;
   border-radius: 50%;
   transition: 0.3s background-color;
 
@@ -149,7 +153,7 @@ export const LanguageButton = styled.a`
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  filter: invert(100%);
+  filter: var(--general-element);;
   border-radius: 50%;
   transition: 0.3s background-color;
 
@@ -173,7 +177,7 @@ export const Section = styled.div`
   background-color: rgba(255, 255, 255, 0.08);
   margin-bottom: 24px;
   border-radius: 30px;
-  color: white;
+  color: var(--general-title);
   overflow: hidden;
   box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
 `;
@@ -203,7 +207,7 @@ export const Title = styled.div`
   font-weight: 300;
   margin-bottom: 16px;
   margin-top: 24px;
-  color: white;
+  color: var(--general-title);
   position: relative;
   display: flex;
   padding-right: 42px;
@@ -221,7 +225,7 @@ export const TitleWithDropArrow = styled.div`
   font-weight: 300;
   margin-bottom: 16px;
   margin-top: 24px;
-  color: white;
+  color: var(--general-title);
   position: relative;
   display: flex;
   padding-right: 42px;

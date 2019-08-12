@@ -75,7 +75,7 @@ export const SettingsSection = styled.div`
   background-color: rgba(255,255,255,0.08);
   margin-bottom: 24px;
   border-radius: 30px;
-  color: white;
+  color: var(--general-title);
   overflow: hidden;
   padding: 8px 0px;
   margin-top: 48px;

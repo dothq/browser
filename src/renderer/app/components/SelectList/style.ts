@@ -3,7 +3,7 @@ import { centerIcon } from "~/shared/mixins";
 
 export const StyledSelect = styled.div`
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--select-list-background);
     width: 250px;
     height: 36px;
     cursor: pointer;
@@ -11,13 +11,12 @@ export const StyledSelect = styled.div`
 
 export const SelectItems = styled.div`
     border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.1);
     width: 250px;
     cursor: pointer;
     transition: 0.1s all;
     position: relative;
     z-index: 999999999 !important;
-    background-color: #3f3f3f;
+    background-color: var(--select-list-items-color);
 
     ${({ visible }: { visible: boolean }) => css`
         opacity: ${visible ? 1 : 0};
@@ -35,12 +34,12 @@ export const SelectOption = styled.div`
     vertical-align: middle;
     font-size: 13px;
     pointer-events: none;
-    color: rgb(255, 255, 255);
+    color: var(--select-list-items-text-color);
     display: table-cell;
     padding-left: 20px;
 `;
 
-export const Container = styled.div`
+export const SelectContainer = styled.div`
     vertical-align: middle;
     width: 100%;
     height: 36px;
@@ -65,10 +64,10 @@ export const Icon = styled.div`
   border-radius: 50px;
   ${centerIcon(24)};
   transition: 0.3s transform;
+  filter: var(--select-list-icon-filter);
 
   ${({ src, white, isOpen }: { src: any; white: boolean; isOpen: boolean }) => css`
     background-image: url(${src});
-    filter: invert(${white ? '100%' : '0%'});
     transform: ${isOpen ? 'rotate(180deg)' : ''};
   `}
 `;

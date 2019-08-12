@@ -107,9 +107,8 @@ export const SuggestionComponent = observer(({ suggestion }: Props) => {
       <Icon
         style={{
           backgroundImage: `url(${favicon})`,
-          opacity: customFavicon ? 1 : transparency.icons.inactive,
-          filter: customFavicon ? 'none' : 'invert(100%)',
         }}
+        isCustomIcon={customFavicon ? true : false}
       />
       <PrimaryText>{primaryText}</PrimaryText>
       {primaryText != null && secondaryText != null && <Dash>&mdash;</Dash>}
