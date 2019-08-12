@@ -40,24 +40,8 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
 
-// setInterval(function() {
-//   if(store.overlay.currentContent == "default") {
-//     if(require('electron').remote.BrowserView.getAllViews().length <= 1) {
-//       if(store.overlay.visible == true) {
-//         if(store.tabs.list.length == 0) {
-//           console.warn("ABORT: BrowserView active while reloading")
-//         }
-//       }
-//     }
-//   }
-// }, 500);
-
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 var int: any;
-
-setTimeout(function() {
-    store.overlay.currentContent = "default"
-}, 800);
 
 export const Preload = observer(() => {
   return (
@@ -68,7 +52,7 @@ export const Preload = observer(() => {
       }
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
-        <Image src={icons.logo} style={{width: '250px',position: 'absolute',top: '50%',left: '50%',transform: 'translate(-50%, -50%)', opacity: 1,transition: 'opacity 0.8s',transitionDelay: '0.7s'}}/>
+        <Image src={icons.logo} style={{width: '250px',position: 'absolute',top: '50%',left: '50%',transform: 'translate(-50%, -50%)', opacity: 1,transition: 'opacity 0.8s',transitionDelay: '0.7s',filter: 'var(--overlay-logo-filter)'}}/>
         <Snackbar visible={store.loadedAPI == false}>
           No internet connection
         </Snackbar>
