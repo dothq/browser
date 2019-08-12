@@ -26,7 +26,7 @@ export const Icon = styled.div`
   opacity: 1;
   width: 56px;
   height: 56px;
-  background-color: #ffffff29;
+  background-color: #ffffffc2;
   border-radius: 50%;
   margin-bottom: 16px;
   filter: var(--bubble-should-invert);
