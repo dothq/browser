@@ -13,7 +13,7 @@ export const StyledBubble = styled.div`
   overflow: hidden;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: var(--bubble-hover);
   }
 
   ${({ disabled }: { disabled: boolean }) => css`
@@ -26,23 +26,17 @@ export const Icon = styled.div`
   opacity: 1;
   width: 56px;
   height: 56px;
-  background-color: #212121;
+  background-color: #ffffff29;
   border-radius: 50%;
   margin-bottom: 16px;
+  filter: var(--bubble-should-invert);
   ${centerIcon(32)};
-
-  ${({ invert, light }: { invert: boolean; light: boolean }) => css`
-    filter: ${invert ? 'invert(100%)' : 'none'};
-    background-color: ${light
-      ? 'rgba(255, 255, 255, 0.12)'
-      : 'rgba(0, 0, 0, 0.12)'};
-  `}
 `;
 
 export const Title = styled.div`
   font-size: 13px;
   text-align: center;
-  color: white;
+  color: var(--general-title);
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;

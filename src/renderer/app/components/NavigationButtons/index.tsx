@@ -99,7 +99,7 @@ export const NavigationButtons = observer(() => {
         size={24}
         icon={icons.back}
         title={store.locale.lang.window[0].navigate_back}
-        style={{ marginLeft: 8, height: '42px' }}
+        style={{ marginLeft: 8, height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
         onClick={onBackClick}
       />
       <ToolbarButton
@@ -108,7 +108,7 @@ export const NavigationButtons = observer(() => {
         icon={icons.forward}
         onClick={onForwardClick}
         title={store.locale.lang.window[0].navigate_forward}
-        style={{ height: '42px' }}
+        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
       />
       <ToolbarButton
         size={20}
@@ -120,7 +120,7 @@ export const NavigationButtons = observer(() => {
         }
         onContextMenu={refreshContextMenu}
         onClick={onRefreshClick}
-        style={{ height: '42px' }}
+        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
       />
     </StyledContainer>
   );

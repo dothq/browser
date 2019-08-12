@@ -9,7 +9,7 @@ export const ContextMenu = styled.div`
   padding: 8px 0;
   z-index: 9999;
   box-shadow: ${shadows(8)};
-  background-color: #303030;
+  background-color: var(--context-menu-color);
   border-radius: 8px;
 
   ${({ visible }: { visible: boolean }) => css`
@@ -23,12 +23,13 @@ export const ContextMenuItem = styled.div`
   padding: 12px 24px;
   font-weight: 400;
   font-size: 14px;
+  color: var(--context-menu-item-color);
 
   ${({ icon, selected, invert, opac, borderRadius }: { icon?: string; selected?: boolean; invert?: boolean; opac?: boolean; borderRadius?: boolean; }) => css`
-    background-color: ${selected ? 'rgba(255, 255, 255, 0.15)' : 'none'};
+    background-color: ${selected ? 'var(--context-menu-selected)' : 'none'};
 
     &:hover {
-      background-color: rgba(255, 255, 255, ${selected ? 0.15 : 0.08});
+      background-color: var(--context-menu-hover);
     }
 
     ${icon &&
@@ -36,7 +37,7 @@ export const ContextMenuItem = styled.div`
       padding-left: ${24 + 16 + 8}px;
       &:before {
         content: '';
-        filter: ${invert ? 'invert(0)' : 'invert(100%)'};
+        filter: var(--context-menu-icon-filter);
         opacity: ${opac ? 1 : 0.54};
         ${centerIcon()};
         width: 16px;

@@ -38,7 +38,7 @@ export const Icon = styled.div`
   margin-left: 16px;
   margin-right: 16px;
   background-image: url(${icons.page});
-  filter: invert(100%);
+  filter: var(--general-element);;
 `;
 
 export const Name = styled.div`
