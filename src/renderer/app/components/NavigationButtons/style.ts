@@ -12,7 +12,7 @@ export const StyledContainer = styled.div`
 export const DotLauncher = styled.img`
     width: 40px;
     margin-left: 10px;
-    filter: invert(100%);
+    filter: var(--toolbar-logo-filter);
     height: 38px;
     margin-top: 1.6px;
 `;
