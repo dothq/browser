@@ -18,25 +18,21 @@ export const WindowsButtons = observer(() => {
   return (
     <Buttons isHTMLFullscreen={store.isHTMLFullscreen}>
       <WindowsButton
-        isDark={store.overlay.visible}
         visible={true}
         icon={icons.windowsMinimize}
         onClick={minimizeWindow}
       />
       <WindowsButton
-        isDark={store.overlay.visible}
         visible={store.isMaximized == true}
         icon={icons.windowsMaximize}
         onClick={maximizeWindow}
       />
       <WindowsButton
-        isDark={store.overlay.visible}
         visible={store.isMaximized == false}
         icon={icons.windowsRestore}
         onClick={maximizeWindow}
       />
       <WindowsButton
-        isDark={store.overlay.visible}
         visible={true}
         icon={icons.windowsClose}
         onClick={closeWindow}

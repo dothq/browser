@@ -158,6 +158,16 @@ export class OptionsStore {
   }
 
   @action
+  public setTheme(theme: 'dark' | 'light') {
+    opts.set("uiTheme", theme);
+    opts.save()
+    this.theme = theme;
+    document.getElementById("app").classList.remove("theme-dark");
+    document.getElementById("app").classList.remove("theme-light");
+    document.getElementById("app").classList.add(`theme-${theme}`);
+  }
+
+  @action
   public emojiSkin(tone: string) {
     this.emojiSkinTone = tone;
     

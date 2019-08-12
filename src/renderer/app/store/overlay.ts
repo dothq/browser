@@ -50,7 +50,7 @@ export class OverlayStore {
   public abObj: any;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'preload';
+  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'default';
 
   @observable
   public searchingChip: 'google' | 'bing' | 'yahoo' | 'ddg' | 'ecosia';
