@@ -88,7 +88,6 @@ const keyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     }
     else {
       store.overlay.currentContent = "default";
-      store.overlay.visible = false;
     }
   }
 };
