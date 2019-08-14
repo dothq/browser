@@ -198,6 +198,7 @@ export const Scrollable = styled.div`
   display: flex;
   flex-flow: column;
   align-items: center;
+  outline: transparent auto 5px !important;
 
   ${OverlayScrollbarStyle};
 `;
@@ -257,6 +258,10 @@ export const Container = styled.div`
     opacity: ${visible ? 1 : 0};
     pointer-events: ${visible ? 'auto' : 'none'};
   `};
+
+  &:focus {
+    outline: transparent auto 5px;
+  }
 `;
 
 export const Content = styled.div`

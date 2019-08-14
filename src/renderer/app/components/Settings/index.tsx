@@ -964,115 +964,31 @@ const MenuItem = observer(
   ),
 );
 
+const searchRef = React.createRef<HTMLDivElement>();
+
 export const Search = observer(() => {
   return (
     <SettingsSection>
         <ListItem>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].search_engine}</Title>
           <Buttons style={{ marginLeft: 'auto', marginRight: `${store.options.seIsCustom ? '-17px' : '0px'}`, display: 'inline-flex' }}>
-            <IconButton style={{ backgroundSize: '18px', cursor: 'pointer' }} icon={icons.edit} onClick={toggleEditSe} visible={store.options.seIsCustom} />
-            <DropArrow visible={true} onClick={toggleSeMenu} style={{ cursor: 'pointer' }} />
-            <ContextMenu id="search-engine-dp" visible={store.options.searchEngineCtx == true} style={{ top: '280px', marginLeft: '-50px' }}>            
-              <ContextMenuItem icon={'https://api.faviconkit.com/google.com/144'} onClick={() => store.options.setSearchEngine('google')} selected={store.options.currentSearchEngine == 'google'} id="ctx-item-g" invert={true} opac={true} borderRadius={true}>
-                {store.locale.lang.settings[0].google_searchEngine}
-              </ContextMenuItem>
-              <ContextMenuItem onClick={() => store.options.setSearchEngine('yahoo')} icon={'https://api.faviconkit.com/yahoo.com/144'} selected={store.options.currentSearchEngine == 'yahoo'} id="ctx-item-y" invert={true} opac={true} borderRadius={true}>
-                {store.locale.lang.settings[0].yahoo_searchEngine}
-              </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/bing.com/144'} onClick={() => store.options.setSearchEngine('bing')} selected={store.options.currentSearchEngine == 'bing'} id="ctx-item-b" invert={true} opac={true} borderRadius={true}>
-                {store.locale.lang.settings[0].bing_searchEngine}
-              </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/duckduckgo.com/144'} onClick={() => store.options.setSearchEngine('ddg')} selected={store.options.currentSearchEngine == 'ddg'} id="ctx-item-d" invert={true} opac={true} borderRadius={true}>
-                {store.locale.lang.settings[0].ddg_searchEngine}
-              </ContextMenuItem>
-              <ContextMenuItem icon={'https://api.faviconkit.com/ecosia.org/144'} onClick={() => store.options.setSearchEngine('ecosia')} selected={store.options.currentSearchEngine == 'ecosia'} id="ctx-item-e" invert={true} opac={true} borderRadius={true}>
-                {store.locale.lang.settings[0].ecosia_searchEngine}
-              </ContextMenuItem>
-              {store.options.seList.length != 0 && <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '0px' }} />}
-              {store.options.seList.length != 0 && store.options.seList.map((e: any) => (
-                <ContextMenuItem key={e._id} icon={e.favicon} onClick={() => store.options.setSearchEngine(e._id, e.url)} selected={store.options.currentSearchEngine == e._id} invert={true} opac={true} borderRadius={true}>
-                  {e.title}
-                </ContextMenuItem>
-              ))}
-              <Line style={{ backgroundColor: '#80808030', marginBottom: '5px', marginTop: '0px' }} />
-              <ContextMenuItem icon={icons.add} onClick={createNew}>
-                {store.locale.lang.settings[0].create_new}
-              </ContextMenuItem>
-            </ContextMenu>
-          </Buttons>
+
+            <SelectList 
+              value={store.options.theme == 'dark' ? 'Dsdfgsdfgsdfgark' : 'Lighfsdfasdt'} 
+              parentRef={searchRef}
+              icon={store.options.theme == 'dark' ? icons.dark : icons.light}
+            >
+              <SelectListItem onClick={() => setTheme('dark')} parentRef={searchRef} icon={icons.dark}>
+                Darkfxgbc
+              </SelectListItem>
+
+              <SelectListItem onClick={() => setTheme('light')} parentRef={searchRef} icon={icons.light}>
+                Lightsdfgsdfgdfgsdfg
+              </SelectListItem>
+
+            </SelectList>
+            </Buttons>
         </ListItem>
-
-        <DialogPopup onClick={createNew} visible={store.options.searchEngineNewModal == true}>
-          <DialogTitle>Add search engine</DialogTitle>
-          <DialogContent>
-            <TextField 
-              autoFocus
-              margin="dense"
-              id="se-name"
-              label="Name of search engine"
-              type="name"
-              inputRef={store.options.seNameRef}
-              error={store.options.seNameerror}
-              fullWidth 
-            ></TextField>
-            <TextField 
-              autoFocus
-              margin="dense"
-              id="se-url"
-              label="URL with %s as search term"
-              type="url"
-              inputRef={store.options.seURLRef}
-              error={store.options.seURLerror}
-              fullWidth 
-            ></TextField>
-            <DialogActions>
-              <DialogButton onClick={createNew} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
-                <Ripple />
-                Cancel
-              </DialogButton>
-              <DialogButton onClick={createSearchEngine} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
-                <Ripple />
-                Create
-              </DialogButton>
-            </DialogActions>
-          </DialogContent>
-        </DialogPopup>
-
-        <DialogPopup onClick={toggleEditSe} visible={store.options.searchEngineEditModal == true}>
-          <DialogTitle>Editing '{store.options.getSeTitle()}'</DialogTitle>
-          <DialogContent>
-            {/* <TextField 
-              autoFocus
-              margin="dense"
-              id="se-name"
-              label="New name"
-              type="name"
-              inputRef={store.options.seEditNameRef}
-              error={store.options.seNameerror}
-              fullWidth 
-            ></TextField>
-            <TextField 
-              autoFocus
-              margin="dense"
-              id="se-url"
-              label="New URL with %s as search term"
-              type="url"
-              inputRef={store.options.seEditURLRef}
-              error={store.options.seURLerror}
-              fullWidth 
-            ></TextField> */}
-            <DialogActions>
-              <DialogButton onClick={toggleEditSe} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
-                <Ripple />
-                Cancel
-              </DialogButton>
-              <DialogButton onClick={() => store.options.deleteSe(store.options.getById(store.options.currentSearchEngine)._id)} style={{ margin: '5px 6px', padding: '4px 10px', borderRadius: '4px' }}>
-                <Ripple />
-                Delete
-              </DialogButton>
-            </DialogActions>
-          </DialogContent>
-        </DialogPopup>
     </SettingsSection>
   )
 });
