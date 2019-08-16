@@ -10,32 +10,34 @@ interface Props {
     children: any;
     value: any;
     parentRef: any;
-    icon: any;
+    icon?: any;
 }
 
 interface ItemProps {
     children: any;
     onClick: any;
     parentRef: any;
-    icon: any;
+    icon?: any;
 }
 
 class SelectList extends React.Component<Props, {}> {
 
-    public view: boolean = false;
-
-    public value = this.props.value;
+    public state = {
+        visible: false,
+        value: this.props.value
+    }
 
     public toggleView() { 
-        this.view = this.view == false ? this.view = true : this.view = false; 
+        console.log("Called from StyledSelect", this.props.parentRef.current)
+        this.state.visible = this.state.visible == false ? this.state.visible = true : this.state.visible = false; 
     }
 
     public changeValue(newValue: any) {
-        this.value = newValue;
+        this.state.value = newValue;
     }
 
     handleClickOutside = (e: any) => {
-        this.view = false;
+        this.state.visible = false;
     }
 
     public render() {
@@ -46,18 +48,16 @@ class SelectList extends React.Component<Props, {}> {
             icon,
         } = this.props;
 
-        console.log(store.options.theme)
-
         return (
-            <StyledSelect onClick={() => this.toggleView()} isOpen={this.view}>
-                <Icon src={icons.down} white={true} isOpen={this.view}/>
-                <SelectContainer isOpen={this.view} canBeHovered={false}>
+            <StyledSelect onClick={() => this.toggleView()} isOpen={this.state.visible}>
+                <Icon src={icons.down} white={true} isOpen={this.state.visible}/>
+                <SelectContainer isOpen={this.state.visible} canBeHovered={false}>
                     <SelectOption>
-                        <ItemIcon src={icon} />
-                        <span ref={parentRef}>{this.value}</span>
+                        {icon && ( <ItemIcon src={icon} /> )}
+                        <span ref={parentRef}>{this.state.value}</span>
                     </SelectOption>
                 </SelectContainer>
-                <SelectItems visible={this.view}>
+                <SelectItems visible={this.state.visible == true}>
                     {children}
                 </SelectItems>
             </StyledSelect>
@@ -69,26 +69,25 @@ export default onClickOutside(SelectList);
 
 export class SelectListItem extends React.Component<ItemProps, {}> {
 
+    public clickEvent = () => {
+        this.props.onClick()
+        this.props.parentRef.current.innerText = this.props.children
+        console.log("Called from SelectListItem", this.props.parentRef.current)
+    }
+
     public render() {
 
         const {
-            onClick,
-            parentRef,
             icon,
         } = this.props;
-
-        var clickEvent = () => {
-            onClick()
-            parentRef.current.innerText = this.props.children
-        }
 
         return (
             <SelectContainer 
                 canBeHovered={true}
-                onClick={clickEvent}
+                onClick={this.clickEvent}
             >
                 <SelectOption>
-                    <ItemIcon src={icon} />
+                    {icon && ( <ItemIcon src={icon} /> )}
                     {this.props.children}
                 </SelectOption>
             </SelectContainer>

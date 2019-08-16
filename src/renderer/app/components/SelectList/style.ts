@@ -25,12 +25,17 @@ export const SelectItems = styled.div`
     background-color: var(--select-list-items-color);
     box-shadow: 5px 5px 33px 0px rgba(0,0,0,0.21);
     padding: 8px 0;
+    position: absolute;
 
-    ${({ visible }: { visible: boolean }) => css`
-        border-radius: ${visible ? '0px 0px 5px 5px' : '5px'};
-        opacity: ${visible ? 1 : 0};
-        pointer-events: ${visible ? 'auto' : 'none'};
-    `}
+    ${({ visible, k }: { visible: boolean; k: any }) => {
+        console.log(visible)
+        return css`
+            --id: ${k};
+            border-radius: ${visible ? '0px 0px 5px 5px' : '5px'};
+            opacity: ${visible ? 1 : 0};
+            pointer-events: ${visible ? 'auto' : 'none'};
+        `
+    }}
 `;
 
 export const Selection = styled.div`

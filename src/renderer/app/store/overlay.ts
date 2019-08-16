@@ -170,7 +170,7 @@ export class OverlayStore {
 
       setTimeout(function() {
         ipcRenderer.send('browserview-show');
-      }, 200)
+      }, 100)
       
       // this.timeout = setTimeout(() => {
       //   if (store.tabs.selectedTab) {

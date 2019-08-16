@@ -74,7 +74,13 @@ const onMouseLeave = () => {
 
 const onClick = () => {
   if (store.canToggleMenu) {
-    store.overlay.visible = true;
+    if(store.overlay.visible == false) {
+      store.overlay.visible = true;
+    } else {
+      store.overlay.visible = false;
+
+    }
+
   }
 };
 
