@@ -90,6 +90,7 @@
 		"@cliqz/adblocker": "0.8.0",
 		"@material-ui/core": "^3.9.3",
 		"@types/discord-rpc": "^3.0.1",
+		"@types/react-onclickoutside": "^6.7.3",
 		"ajax-request": "^1.2.3",
 		"braces": "^3.0.2",
 		"datauri": "^2.0.0",
