@@ -73,7 +73,7 @@
 		"axios": "0.19.0",
 		"concurrently": "4.1.0",
 		"cross-env": "5.2.0",
-		"electron": "^5.0.8",
+		"electron": "^6.0.2",
 		"electron-builder": "20.39.0",
 		"electron-nightly": "^7.0.0-nightly.20190721",
 		"fuse-box": "3.7.1",
