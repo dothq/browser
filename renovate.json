@@ -1,6 +1,8 @@
-"packageRules": [
-  {
-    "packagePatterns": ["electron"],
-    "groupName": "Electron Update"
-  }
-]
+{
+  "packageRules": [
+    {
+      "packagePatterns": ["electron"],
+      "groupName": "Electron Update"
+    }
+  ]
+}
