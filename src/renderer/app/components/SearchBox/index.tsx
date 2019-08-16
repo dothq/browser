@@ -297,10 +297,7 @@ export const SearchBox = observer(() => {
           style={{
             marginRight: 8,
             display:
-              store.tabs.selectedTab &&
-              store.tabs.selectedTab.url === store.overlay.searchBoxValue
-                ? 'block'
-                : 'none',
+              store.tabs.selectedTab ? 'block' : 'none'
           }}
         />
         <UserIcon

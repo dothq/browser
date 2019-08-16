@@ -89,6 +89,10 @@ export const Style = css`
 
     --snackbar-background: rgba(24,24,24,0.97);
     --snackbar-color: rgb(198,198,198);
+
+    --tab-text-color: rgb(255, 255, 255, 0.87);
+    --tab-text-color-selected: rgb(0, 0, 0, 0.87);
+    --tab-icon-filter: invert(100%);
   }
 
   .theme-light {
@@ -159,5 +163,9 @@ export const Style = css`
 
     --snackbar-background: rgba(247, 247, 247, 0.97);
     --snackbar-color: rgb(20, 20, 20);
+
+    --tab-text-color: rgb(0, 0, 0, 0.87);
+    --tab-text-color-selected: rgb(0, 0, 0, 0.87);
+    --tab-icon-filter: invert(0%);
   }
 `;

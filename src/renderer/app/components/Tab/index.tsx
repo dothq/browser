@@ -82,6 +82,7 @@ const onClick = () => {
     }
 
   }
+  store.overlay.inputRef.current.value = store.tabs.selectedTab.url;
 };
 
 const contextMenu = (tab: Tab) => () => {
@@ -198,7 +199,8 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       {!tab.loading && (
         <StyledIcon
           isIconSet={tab.favicon !== ''}
-          style={{ backgroundImage: `url(${tab.favicon == '' ? icons.globe : tab.favicon})` }}
+          style={{ backgroundImage: `url(${tab.favicon == '' ? icons.globe : tab.favicon})`, filter: `${
+            tab.isSelected ? '' : tab.favicon == '' ? 'var(--tab-icon-filter)' : '' }` }}
         />
       )}
       {tab.loading && (
@@ -213,10 +215,10 @@ const Content = observer(({ tab }: { tab: Tab }) => {
         style={{
           color: tab.isSelected
             ? tab.background
-            : `rgba(0, 0, 0, ${transparency.text.high})`,
+            : `var(--tab-text-color)`,
         }}
       >
-        <span>{title}</span>
+        <span style={{ color: tab.isSelected ? 'var(--tab-text-color-selected)' : 'var(--tab-text-color)' }}>{title}</span>
       </StyledTitle>
     </StyledContent>
   );
