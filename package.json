@@ -95,7 +95,7 @@
 		"datauri": "^2.0.0",
 		"discord-rich-presence": "0.0.8",
 		"discord-rpc": "^3.0.2",
-		"dot-extension-manager": "^1.0.0",
+		"dot-extension-manager": "^1.0.2",
 		"download-git-repo": "^2.0.0",
 		"edit-json-file": "^1.2.1",
 		"electron-chrome-extension": "^3.0.0",
