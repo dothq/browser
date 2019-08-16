@@ -70,7 +70,7 @@ tray.on('click', () => {
 
 setInterval(function() {
   tray.setContextMenu(contextMenu)
-}, 250)
+}, 10000)
 
 ipcRenderer.setMaxListeners(0);
 

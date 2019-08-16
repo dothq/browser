@@ -246,12 +246,6 @@ const loadNews = (amount: any) => () => {
   }
 }
 
-
-
-setInterval(function() {
-  checkLightMode()
-}, 1500);
-
 import Confetti from 'react-confetti';
 var canRef = React.createRef<HTMLCanvasElement>();
 var opac = 1;

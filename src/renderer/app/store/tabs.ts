@@ -163,22 +163,8 @@ export class TabsStore {
       tab.setLeft(tab.getLeft(), false);
       this.updateTabsBounds(true);
 
-      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
+      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 200);
     });
-
-    setInterval(function() {
-
-      if(store.tabs.selectedTab) {
-        remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
-      }
-      else {
-        remote.getCurrentWindow().setTitle(`Dot`)
-      }
-
-      if(store.tabs.list.length == 0) {
-        remote.getCurrentWindow().setTitle(`Dot`)
-      }
-    }, 250);
 
     return tab;
   }

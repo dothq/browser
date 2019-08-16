@@ -183,12 +183,24 @@ export class Tab {
       if (active) {
         this.select();
       }
+      this.updateWindowTitle();
+    });
+
+    ipcRenderer.on(`view-title-updated-${this.id}`, (e, title: string) => {
+      this.title = title === 'about:blank' ? 'New tab' : title;
+      this.updateData();
+
+      if (this.isSelected) {
+        this.updateWindowTitle();
+      }
     });
 
     ipcRenderer.on(
       `browserview-data-updated-${this.id}`,
       async (e: any, { title, url }: any) => {
         let updated = null;
+
+        this.updateWindowTitle();
 
         if (url !== this.url) {
           if(url.includes("ssl-error.html?du=") == false) {
@@ -243,6 +255,8 @@ export class Tab {
         try {
           this.favicon = favicon;
 
+          this.updateWindowTitle();
+
           const fav = await store.favicons.addFavicon(favicon);
           const buf = Buffer.from(fav.split('base64,')[1], 'base64');
 
@@ -288,6 +302,8 @@ export class Tab {
       this.emitOnUpdated({
         status: loading ? 'loading' : 'complete',
       });
+
+      this.updateWindowTitle();
     });
 
     ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
@@ -311,12 +327,22 @@ export class Tab {
     }
   }
 
+  public updateWindowTitle() {
+    if(store.tabs.list.length == 0) {
+      remote.getCurrentWindow().setTitle(`Dot`);
+    } else {
+      remote.getCurrentWindow().setTitle(`${this.title} - Dot Browser`);
+    }
+  }
+
   @action
   public updateData() {
     if (this.lastHistoryId) {
       const { title, url, favicon } = this;
 
       const item = store.history.getById(this.lastHistoryId);
+
+      this.updateWindowTitle();
 
       if (item) {
         item.title = title;
@@ -360,6 +386,8 @@ export class Tab {
       requestAnimationFrame(() => {
         store.tabs.updateTabsBounds(true);
       });
+
+      this.updateWindowTitle();
     }
   }
 
@@ -472,7 +500,8 @@ export class Tab {
 
     setTimeout(() => {
       store.tabs.removeTab(this.id);
-    }, TAB_ANIMATION_DURATION * 1000);
+      this.updateWindowTitle();
+    }, TAB_ANIMATION_DURATION * 100);
   }
 
   public emitOnUpdated = (data: any) => {

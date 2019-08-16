@@ -299,6 +299,13 @@ export class View extends BrowserView {
       appWindow.webContents.send('found-in-page', result);
     });
 
+    this.webContents.addListener('page-title-updated', (e, title) => {
+      appWindow.webContents.send(
+        `view-title-updated-${this.webContents.id}`,
+        title,
+      );
+    });
+
     this.webContents.on('media-started-playing', (listener: any) => {
       appWindow.webContents.send(`audio-playing-${this.tabId}`);
     });
