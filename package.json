@@ -128,7 +128,7 @@
 		"notistack": "^0.8.9",
 		"phin": "^3.4.0",
 		"pixi-sound": "^3.0.3",
-		"pretty-bytes": "^5.1.0",
+		"pretty-bytes": "^5.3.0",
 		"psl": "^1.1.31",
 		"pusher-js": "^4.4.0",
 		"react": "16.8.6",
