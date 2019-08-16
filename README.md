@@ -4,7 +4,6 @@
 
 
 <div align="center">
-
 <h1 align="center">Dot</h1>
 
 <p align="center">
