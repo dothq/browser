@@ -1,5 +1,6 @@
-{
-  "extends": [
-    "config:base"
-  ]
-}
+"packageRules": [
+  {
+    "packagePatterns": ["electron"],
+    "groupName": "Electron Update"
+  }
+]
