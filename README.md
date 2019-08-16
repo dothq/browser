@@ -26,6 +26,9 @@
     <a href="/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
         <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" alt="Issues Closed">
     </a>
+    <a href="https://depfu.com/repos/dot-browser/desktop?project_id=8779">
+        <img src="https://depfu.com/badges/836035fc1904bd3d40649259c0788daf/stats.svg" alt="Dependencies">
+    </a>
     <a href="/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
     </a>
