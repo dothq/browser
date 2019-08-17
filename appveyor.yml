@@ -1,18 +1,21 @@
-os: unstable
 environment:
   matrix:
     - nodejs_version: '11'
-platform:
-  - x64
 install:
-  - ps: Install-Product node $env:nodejs_version x64
-  - set CI=true
-  - npm ci
+  - ps: Install-Product node $env:nodejs_version
+  - npm install --global npm@latest
+  - set PATH=%APPDATA%\npm;%PATH%
+  - npm install
+  - npm install -g node-gyp
+  - npm install --global --production windows-build-tools
 matrix:
   fast_finish: true
 build: off
-version: '{build}'
 shallow_clone: true
-clone_depth: 1
 test_script:
-  - yarn run compile-win32
+  - node --version
+  - npm --version
+  - npm run compile
+cache:
+  - '%APPDATA%\npm-cache'
+  - 'node_modules'
