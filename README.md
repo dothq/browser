@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.postimg.cc/B6BHBnWW/image.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.postimg.cc/B6BHBnWW/image.png" width="200" height="200" align="center"/>
+  <img src="https://electronjs.org/app-img/dot/dot-icon-256.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://electronjs.org/app-img/dot/dot-icon-256.png" width="200" height="200" align="center"/>
 </p>
 
 
