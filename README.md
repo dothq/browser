@@ -60,13 +60,13 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 ## 🖼 Screenshots
 
 ### Browsing a webpage
-[![Browsing](https://i.imgur.com/kw8f5KB.png)]()
+![](https://i.imgur.com/kw8f5KB.png)
 
 ### The Launcher
-[![Launcher](https://i.imgur.com/ZMVBnNm.png)]()
+![](https://i.imgur.com/ZMVBnNm.png)
 
 ### Rich Presence
-[![RP](https://i.imgur.com/Nsekr6W.png)]()
+![](https://i.imgur.com/Nsekr6W.png)
 
 ## ⚙ Build Information
 
