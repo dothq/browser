@@ -44,7 +44,7 @@
 	"scripts": {
 		"dev": "npm run node-ver && npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
 		"build": "npm run node-ver && npm run download-filters && node fuse.js",
-		"start": "cross-env ENV='dev' electron --remote-debugging-port=9222 .",
+		"start": "cross-env ENV='dev' electron --enable-transparent-visuals --disable-gpu .",
 		"start-with-url": "npm run dev -- https://google.com",
 		"compile": "node tools/ci.js",
 		"compile-win32": "npm run build && electron-builder -w -p always",
@@ -104,6 +104,7 @@
 		"electron-modal": "^1.0.0",
 		"electron-process-manager": "^0.7.1",
 		"electron-push-receiver": "^2.1.2",
+		"electron-spellchecker": "^2.2.0",
 		"electron-updater": "^4.1.2",
 		"electron-util": "^0.12.1",
 		"file-type": "10.11.0",

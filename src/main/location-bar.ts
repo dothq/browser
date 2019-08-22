@@ -1,6 +1,7 @@
 import { BrowserWindow, app, nativeImage, screen } from 'electron';
 import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
+import console = require('console');
 
 export class LocationBar extends BrowserWindow {
   
@@ -32,12 +33,13 @@ export class LocationBar extends BrowserWindow {
       icon: resolve(app.getAppPath(), '/static/icon.png'),
     });
 
-    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
-    app.commandLine.appendSwitch('auto-detect', 'false')
-    app.commandLine.appendSwitch('--enable-transparent-visuals');
+    // app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    // app.commandLine.appendSwitch('auto-detect', 'false')
+    // app.commandLine.appendSwitch('--enable-transparent-visuals');
 
-    this.setIgnoreMouseEvents(true);
+    // this.setIgnoreMouseEvents(true);
     this.webContents.loadURL(app.getAppPath() + '/static/pages/util/location-bar.html')
+    console.log(app.getAppPath() + '/static/pages/util/location-bar.html')
 
     if(process.env.ENV == 'dev') {
       this.webContents.openDevTools({ mode: 'detach'  })

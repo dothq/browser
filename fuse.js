@@ -8,14 +8,12 @@ const {
   StyledComponentsPlugin,
 } = require('fuse-box');
 
+const { platform } = require('os');
+
 const { spawn } = require('child_process');
 
 const production = process.env.NODE_ENV === 'dev' ? false : true;
 var startURI = ''
-
-// if(process.argv[0]) {
-//   process.argv.forEach(i => { if(new URL(i).hostname) { startURI = i } });
-// }
 
 const getConfig = (target, name) => {
   return {

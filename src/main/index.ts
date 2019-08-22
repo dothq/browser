@@ -117,7 +117,13 @@ app.on('ready', async () => {
   modal.setup();
 
   appWindow = new AppWindow();
-  locationBar = new LocationBar();
+
+  /**
+   * https://stackoverflow.com/questions/53538215/cant-succeed-in-making-transparent-window-in-electron-javascript
+   */
+  setTimeout(() => {
+    locationBar = new LocationBar();
+  });
 
   /**
     

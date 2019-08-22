@@ -37,13 +37,15 @@ export class AppWindow extends BrowserWindow {
         experimentalFeatures: true,
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
+        sandbox: platform() == 'linux' ? false : true /* This is a known issue on Linux machines, see https://github.com/dot-browser/desktop/issues/116 */
       },
       icon: resolve(app.getAppPath(), '/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
-    app.commandLine.appendSwitch('auto-detect', 'false')
+    app.commandLine.appendSwitch('auto-detect', 'false');
+    app.commandLine.appendSwitch('--enable-transparent-visuals');
 
     let pluginName
     switch (process.platform) {

@@ -89,6 +89,9 @@ export const Style = css`
 
     --snackbar-background: rgba(24,24,24,0.97);
     --snackbar-color: rgb(198,198,198);
+
+    --scrollbar-default: rgba(255, 255, 255, 0.16);
+    --scrollbar-hovered: rgba(255, 255, 255, 0.48);
   }
 
   .theme-light {
@@ -159,5 +162,8 @@ export const Style = css`
 
     --snackbar-background: rgba(247, 247, 247, 0.97);
     --snackbar-color: rgb(20, 20, 20);
+
+    --scrollbar-default: rgba(0, 0, 0, 0.16);
+    --scrollbar-hovered: rgba(0, 0, 0, 0.48);
   }
 `;

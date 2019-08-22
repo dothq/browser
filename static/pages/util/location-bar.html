@@ -24,6 +24,7 @@
         <script>
 
             require("electron").ipcRenderer.on('target-url-changed', (event, url) => {
+                console.log(url)
                 if(url) {
                     document.getElementsByTagName('body')[0].style.opacity = 1;
                     document.getElementsByTagName("p")[0].innerText = url;
