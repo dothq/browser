@@ -112,7 +112,7 @@
 		"gsap": "2.1.3",
 		"icojs": "0.13.1",
 		"is-online": "^8.2.0",
-		"leveldown": "5.0.1",
+		"leveldown": "5.1.1",
 		"levelup": "4.0.1",
 		"lifeguard-api": "^1.0.4",
 		"lru-cache": "^5.1.1",
