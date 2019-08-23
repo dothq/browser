@@ -134,37 +134,31 @@ export let appWindow: AppWindow;
 Menu.setApplicationMenu(
   Menu.buildFromTemplate([
     {
-      label: 'Edit',
+      label: 'File',
       submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'pasteandmatchstyle' },
-        { role: 'delete' },
-        { role: 'selectall' },
-        { role: 'quit' },
-        { role: 'reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
         {
-          accelerator: 'CmdOrCtrl+F',
-          label: 'Find in page',
+          label: 'New tab',
+          accelerator: 'CmdOrCtrl+T',
           click() {
-            if(store.tabs.selectedTab) {
-              store.overlay.visible = false;
-
-              store.tabs.selectedTab.findVisible = true;
-            
-              setTimeout(() => {
-                store.tabs.selectedTab.findVisible = true;
-              }, 200);
-            }
-          },
+            store.overlay.visible = true;
+            store.overlay.isNewTab = true;
+          }
         },
         {
+          label: 'Reopen closed tab',
+          accelerator: 'CmdOrCtrl+T',
+          click() {
+            var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
+            if(url != "") {
+              store.tabs.addTab({ url, active: true });
+              store.tabs.lastUrl.splice(-1,1)
+            }
+          }
+        },
+        { type: 'separator' },
+        {
           accelerator: 'CmdOrCtrl+P',
-          label: 'Print webpage (Native)',
+          label: 'Print',
           click() {
             remote.webContents.getFocusedWebContents().print()
           },
@@ -182,8 +176,53 @@ Menu.setApplicationMenu(
             }
           },
         },
+        { type: 'separator' },
         { 
-          label: 'Reload Page',
+          label: 'Task Manager',
+          accelerator: 'Shift+Esc',
+          async click() {
+            tskManager()
+          }
+        }, 
+        { role: 'reload', label: 'Restart browser', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
+        { role: 'quit', label: 'Quit Dot' },
+      ]
+    },
+    {
+      label: 'Edit',
+      submenu: [
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' },
+        { type: 'separator' },
+        {
+          accelerator: 'CmdOrCtrl+F',
+          label: 'Find in page',
+          click() {
+            if(store.tabs.selectedTab) {
+              store.overlay.visible = false;
+
+              store.tabs.selectedTab.findVisible = true;
+            
+              setTimeout(() => {
+                store.tabs.selectedTab.findVisible = true;
+              }, 200);
+            }
+          },
+        },
+      ]
+    },
+    {
+      label: 'Navigation',
+      submenu: [
+        { 
+          label: 'Reload',
           accelerator: 'F5',
           click() { 
             if(store.tabs.selectedTab) {
@@ -194,6 +233,8 @@ Menu.setApplicationMenu(
         { 
           label: 'Reload Webpage',
           accelerator: 'CmdOrCtrl+R',
+          visible: false,
+          acceleratorWorksWhenHidden: true,
           click() { 
             if(store.tabs.selectedTab) {
               store.tabs.selectedTab.callViewMethod('webContents.reload'); 
@@ -201,7 +242,7 @@ Menu.setApplicationMenu(
           } 
         },
         { 
-          label: 'Close tab',
+          label: 'Close',
           accelerator: 'CmdOrCtrl+W',
           click() { 
             if(store.tabs.selectedTab) {
@@ -214,14 +255,6 @@ Menu.setApplicationMenu(
               }
             }
             
-          } 
-        },
-        { 
-          label: 'New tab',
-          accelerator: 'CmdOrCtrl+T',
-          click() { 
-            store.overlay.isNewTab = true;
-            store.overlay.visible = true;
           } 
         },
         { type: 'separator' },
@@ -249,42 +282,7 @@ Menu.setApplicationMenu(
         },
         { type: 'separator' },
         { 
-          label: 'Launcher',
-          accelerator: 'CmdOrCtrl+Space',
-          click() { 
-            store.overlay.visible = true;
-          } 
-        },
-        { 
-          label: 'History',
-          accelerator: 'CmdOrCtrl+H',
-          click() { 
-            store.overlay.visible = true;
-            store.overlay.currentContent = "history";
-            store.overlay.scrollRef.current.scrollTop = 0;
-          } 
-        },   
-        { 
-          label: 'Bookmarks',
-          accelerator: 'CmdOrCtrl+B',
-          click() { 
-            store.overlay.visible = true;
-            store.overlay.currentContent = "bookmarks";
-            store.overlay.scrollRef.current.scrollTop = 0;
-          } 
-        },
-        { 
-          label: 'Settings',
-          accelerator: 'CmdOrCtrl+Shift+P',
-          click() { 
-            store.overlay.visible = true;
-            store.overlay.currentContent = "settings";
-            store.overlay.scrollRef.current.scrollTop = 0;
-          } 
-        },
-        { type: 'separator' },
-        { 
-          label: 'Dev Tools',
+          label: 'Developer tools',
           accelerator: 'F12',
           click() { 
 
@@ -292,13 +290,6 @@ Menu.setApplicationMenu(
             
           } 
         },   
-        { 
-          label: 'Task Manager',
-          accelerator: 'Shift+Esc',
-          async click() {
-            tskManager()
-          }
-        }, 
       ],
     },
   ]),
