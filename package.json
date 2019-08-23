@@ -140,7 +140,7 @@
 		"react-native": "^0.60.3",
 		"react-onclickoutside": "^6.9.0",
 		"react-switch": "^4.1.0",
-		"react-twemoji": "^0.1.0",
+		"react-twemoji": "^0.2.3",
 		"register-scheme": "0.0.2",
 		"semantic-ui-react": "^0.86.0",
 		"styled-components": "4.2.0",
