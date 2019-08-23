@@ -74,6 +74,14 @@ export class AppWindow extends BrowserWindow {
 
     let windowState: any = {};
 
+    let possibleURI: string[] = [];
+
+    process.argv.forEach(specimen => {
+      if(specimen.startsWith("http") == true) {
+        possibleURI.push(specimen);
+      }
+    });
+
     if (existsSync(windowDataPath)) {
       try {
         // Read the last window state from file.
@@ -192,7 +200,6 @@ export class AppWindow extends BrowserWindow {
 
     if (process.env.ENV === 'dev') {
       this.setIcon(nativeImage.createFromPath(resolve(app.getAppPath() + '\\static\\icon.png')))
-      this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
@@ -200,6 +207,12 @@ export class AppWindow extends BrowserWindow {
 
     this.once('ready-to-show', () => {
       this.show();
+
+      if(possibleURI) {
+        setTimeout(() => {
+          this.webContents.send('load-url-command', possibleURI);
+        }, 1000);
+      }
     });
 
     this.on('enter-full-screen', () => {

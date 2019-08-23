@@ -76,6 +76,17 @@ export class TabsStore {
       this.updateTabsBounds(false);
     });
 
+    ipcRenderer.on('load-url-command', (e: any, uri: string[]) => {
+      uri.forEach(i => {
+        if(!new URL(i).hostname) {
+          return false;
+        } else {
+          let url = i;
+          this.addTab({ url, active: true })
+        }
+      });
+    });
+
     ipcRenderer.on(
       'api-tabs-create',
       (e: any, options: chrome.tabs.CreateProperties) => {
