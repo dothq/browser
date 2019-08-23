@@ -113,7 +113,7 @@
 		"icojs": "0.12.3",
 		"is-online": "^8.2.0",
 		"leveldown": "5.0.1",
-		"levelup": "4.0.1",
+		"levelup": "4.1.0",
 		"lifeguard-api": "^1.0.4",
 		"lru-cache": "^5.1.1",
 		"material-ui": "^0.20.2",
