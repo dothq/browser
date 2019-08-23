@@ -107,7 +107,7 @@
 		"electron-spellchecker": "^2.2.0",
 		"electron-updater": "^4.1.2",
 		"electron-util": "^0.12.1",
-		"file-type": "10.11.0",
+		"file-type": "12.2.0",
 		"folder-delete": "^1.0.4",
 		"gsap": "2.1.2",
 		"icojs": "0.12.3",
