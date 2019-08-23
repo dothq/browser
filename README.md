@@ -1,10 +1,9 @@
 <p align="center">
-  <img src="https://electronjs.org/app-img/dot/dot-icon-256.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://electronjs.org/app-img/dot/dot-icon-256.png" width="200" height="200" align="center"/>
+  <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;margin-bottom: -100px" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
 </p>
 
 
 <div align="center">
-<h1 align="center">Dot</h1>
 
 <p align="center">
     <a href="/releases">
