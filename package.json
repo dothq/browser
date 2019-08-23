@@ -143,7 +143,7 @@
 		"react-twemoji": "^0.1.0",
 		"register-scheme": "0.0.2",
 		"semantic-ui-react": "^0.86.0",
-		"styled-components": "4.2.0",
+		"styled-components": "4.3.2",
 		"tldts": "4.0.6",
 		"unirest": "^0.6.0",
 		"ws": "^7.1.2"
