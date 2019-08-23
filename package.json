@@ -117,7 +117,7 @@
 		"lifeguard-api": "^1.0.4",
 		"lru-cache": "^5.1.1",
 		"material-ui": "^0.20.2",
-		"mobx": "5.9.4",
+		"mobx": "5.13.0",
 		"mobx-react": "5.4.3",
 		"mousetrap": "^1.6.3",
 		"mui-simple-snackbars": "^0.6.0",
