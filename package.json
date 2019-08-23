@@ -85,7 +85,7 @@
 		"tslint-config-airbnb": "5.11.1",
 		"tslint-config-prettier": "1.18.0",
 		"typescript": "3.3.3",
-		"typescript-plugin-styled-components": "1.4.2"
+		"typescript-plugin-styled-components": "1.4.3"
 	},
 	"dependencies": {
 		"@cliqz/adblocker": "0.8.0",
