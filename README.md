@@ -39,9 +39,6 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
 </div>
 
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop?ref=badge_large)
-
 ## 👾 Features
 
 * **🚫 Built in ad-blocker** - We all hate ads, so we releave the pain by having a ad-blocker built in. No downloads, nothing.
@@ -100,6 +97,8 @@ For support, join our support discord server.
 ## 🤵 License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop?ref=badge_large)
 
 ## 💝 Acknowledgments
 
