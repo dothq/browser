@@ -97,6 +97,8 @@ For support, join our support discord server.
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop?ref=badge_large)
+
 ## 💝 Acknowledgments
 
 * Thanks to the authors of Wexond for this wonderful piece of kit.
