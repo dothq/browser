@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { hot } from 'react-hot-loader/root';
 
 import { Style } from '~/renderer/app/style';
 import { Toolbar } from '../Toolbar';
@@ -98,7 +97,7 @@ if(process.env.ENV != "dev") {
   };
 }
 
-const App = observer(() => {
+export default const App = observer(() => {
   return (
       <StyledApp>
           <GlobalStyle />
@@ -110,5 +109,3 @@ const App = observer(() => {
       </StyledApp>
   );
 });
-
-export default hot(App)
