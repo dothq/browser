@@ -84,5 +84,12 @@
             "flag_icon": "1f1e7-1f1f7.png",
             "translators": "Bruno Henrique Paiva"
         }
+        {
+            "title": "Polski",
+            "en_title": "Polish",
+            "flag": "pl",
+            "flag_icon": "1f1f5-1f1f1.png",
+            "translators": "Madiator2011"
+        
     ]
 }
