@@ -59,45 +59,7 @@ if (existsSync(errorLogPath)) {
   });
 }
 
-if(process.env.ENV != "dev") {
-  var oldConsole = 
-  
-    appendFile(errorLogPath, `[${time}] [Renderer] [DEBUG] ` + msg + '\n', function(err) {
-      if(err) {
-          return oldConsole(err);
-      }
-    });
-  };
-  
-  var oldError = console.error;
-  console.error = function(msg: any) {
-    appendFile(errorLogPath, `[${time}] [Renderer] [ERROR] ` + msg + '\n', function(err) {
-      if(err) {
-          return oldError(err);
-      }
-    });
-  };
-  
-  var oldInfo = console.info;
-  console.info = function(msg: any) {
-    appendFile(errorLogPath, `[${time}] [Renderer] [INFO] ` + msg + '\n', function(err) {
-      if(err) {
-          return oldInfo(err);
-      }
-    });
-  };
-  
-  var oldWarn = console.warn;
-  console.warn = function(msg: any) {
-    appendFile(errorLogPath, `[${time}] [Renderer] [WARN] ` + msg + '\n', function(err) {
-      if(err) {
-          return oldWarn(err);
-      }
-    });
-  };
-}
-
-export default const App = observer(() => {
+export const App = observer(() => {
   return (
       <StyledApp>
           <GlobalStyle />
