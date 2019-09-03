@@ -10,3 +10,4 @@ dist
 .fusebox
 filters
 *.code-workspace
+.cache

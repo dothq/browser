@@ -10,7 +10,7 @@ class Context {
       homeDir: "src/main",
       entry: "index.ts",
       useSingleBundle: true,
-      dependencies: { ignoreAllExternal: false },
+      dependencies: { ignoreAllExternal: false, ignorePackages: ['react-native', 'electron'] },
       logging: { level: "succinct" },
       cache: {
         enabled: true,
@@ -30,7 +30,7 @@ class Context {
       homeDir: "src/renderer/app",
       entry: "index.tsx",
       useSingleBundle: true,
-      dependencies: { include: ["tslib"] },
+      dependencies: { include: ["tslib"], ignorePackages: ['react-native', 'electron'] },
       logging: { level: "succinct" },
       webIndex: {
         publicPath: "./",
