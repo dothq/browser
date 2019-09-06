@@ -4,9 +4,6 @@
 
 <div align="center">
 <p align="center">
-    <p align="center">
-      <h1>Canary</h1>
-    </p>
     <a href="/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
     </a>
