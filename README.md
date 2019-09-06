@@ -1,10 +1,8 @@
 <p align="center">
   <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
-</p><br>
-
+</p>
 
 <div align="center">
-
 <p align="center">
     <a href="/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
@@ -55,6 +53,13 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
    ### ✔ Latest Release
    #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+   
+   ### 🐦 Canary Release
+   #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/tree/canary)
+   
+   ### 🕒 Next Release
+   #### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+   #### 
 
 ## 🖼 Screenshots
 
