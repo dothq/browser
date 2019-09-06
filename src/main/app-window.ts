@@ -1,4 +1,11 @@
-import { BrowserWindow, app, nativeImage, dialog, remote, ipcMain } from 'electron';
+import {
+  BrowserWindow,
+  app,
+  nativeImage,
+  dialog,
+  remote,
+  ipcMain,
+} from 'electron';
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
@@ -37,38 +44,20 @@ export class AppWindow extends BrowserWindow {
         experimentalFeatures: true,
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
-        sandbox: platform() == 'linux' ? false : true /* This is a known issue on Linux machines, see https://github.com/dot-browser/desktop/issues/116 */
+        sandbox:
+          platform() == 'linux'
+            ? false
+            : true /* This is a known issue on Linux machines, see https://github.com/dot-browser/desktop/issues/116 */,
       },
       icon: resolve(app.getAppPath(), '/icon.png'),
     });
 
-    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
 
-    let pluginName
-    switch (process.platform) {
-      case 'win32':
-        pluginName = 'pepflashplayer.dll'
-        break
-      case 'darwin':
-        pluginName = 'PepperFlashPlayer.plugin'
-        break
-      case 'linux':
-        pluginName = 'libpepflashplayer.so'
-        break
-    }
-
-    /** @almost_deprecated */
-    // Adobe Flash Player will be deprecated January 2020
-    app.commandLine.appendSwitch('ppapi-flash-path', join(__dirname, pluginName))
-
     const windowDataPath = getPath('window-data.json');
-
-    const errorLogPath = getPath('dot-errors.log');
-
-    var time = new Date().toUTCString();
 
     setupPushReceiver(this.webContents);
 
@@ -77,7 +66,7 @@ export class AppWindow extends BrowserWindow {
     let possibleURI: string[] = [];
 
     process.argv.forEach(specimen => {
-      if(specimen.startsWith("http") == true) {
+      if (specimen.startsWith('http') == true) {
         possibleURI.push(specimen);
       }
     });
@@ -89,12 +78,6 @@ export class AppWindow extends BrowserWindow {
       } catch (e) {
         writeFileSync(windowDataPath, JSON.stringify({}));
       }
-    }
-
-    if (existsSync(errorLogPath)) {
-      appendFile(errorLogPath, `// Error log effective of 2.2.0, ${time}. Running ${platform()}, started main app.\n`, function(err) {
-
-      });
     }
 
     // Merge bounds from the last window state to the current window options.
@@ -111,73 +94,42 @@ export class AppWindow extends BrowserWindow {
       }
     }
 
-    // systemPreferences.on('accent-color-changed', (event: any, newColor: string) => {
-    //   
-    // });
-
-    // Update modal bounds (permission window) on resize and move
     this.on('resize', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-
-      // this.permissionWindow.rearrange();
-      // this.menu.hideWindow()
     });
 
     this.on('move', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-
-      // this.permissionWindow.rearrange();
-      // this.menu.rearrange();
     });
 
-    // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-      this.menu.hideWindow()
+      this.menu.hideWindow();
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-      this.menu.hideWindow()
+      this.menu.hideWindow();
     });
 
-    if(this.webContents.getURL().split("https://dot.ender.site/api/")[0] != `https://dot.ender.site/api/`) {
+    if (
+      this.webContents.getURL().split('https://dot.ender.site/api/')[0] !=
+      `https://dot.ender.site/api/`
+    ) {
       this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
     }
-    
 
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
     };
-
-    // const fixPerm = () => {
-    //   if(this.isMinimized() == true) {
-    //     this.permissionWindow.setOpacity(0)
-    //     this.permissionWindow.setIgnoreMouseEvents(true)
-        
-    //     const cBounds: any = this.getContentBounds();
-    //     this.permissionWindow.setBounds({ 
-    //       x: cBounds.x, 
-    //       y: cBounds.y + TOOLBAR_HEIGHT, 
-    //       height: this.permissionWindow.getBounds().height, 
-    //       width: this.permissionWindow.getBounds().width 
-    //     });
-
-    //   }
-    //   else {
-    //     this.permissionWindow.setOpacity(1)
-    //     this.permissionWindow.setIgnoreMouseEvents(false)
-
-    //   }
-    // };
 
     this.on('maximize', resize);
     this.on('restore', resize);
@@ -187,7 +139,6 @@ export class AppWindow extends BrowserWindow {
       console.error(error);
     });
 
-    // Save current window state to file.
     this.on('close', () => {
       windowState.maximized = this.isMaximized();
       windowState.fullscreen = this.isFullScreen();
@@ -195,11 +146,15 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.webContents.on('crashed', (event: any, crashed: boolean) => {
-      this.loadURL(app.getAppPath() + 'static\\pages\\util\\crash.html')
-    });   
+      this.loadURL(app.getAppPath() + 'static\\pages\\util\\crash.html');
+    });
 
     if (process.env.ENV === 'dev') {
-      this.setIcon(nativeImage.createFromPath(resolve(app.getAppPath() + '\\static\\icon.png')))
+      this.setIcon(
+        nativeImage.createFromPath(
+          resolve(app.getAppPath() + '\\static\\icon.png'),
+        ),
+      );
       this.loadURL('http://localhost:4444/app.html');
     } else {
       this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
@@ -208,7 +163,7 @@ export class AppWindow extends BrowserWindow {
     this.once('ready-to-show', () => {
       this.show();
 
-      if(possibleURI) {
+      if (possibleURI) {
         setTimeout(() => {
           this.webContents.send('load-url-command', possibleURI);
         }, 1000);
@@ -245,53 +200,19 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.on('app-command', (e, cmd) => {
-      if (cmd === 'browser-backward' && this.viewManager.selected.webContents.canGoBack()) {
-        this.viewManager.selected.webContents.goBack()
+      if (
+        cmd === 'browser-backward' &&
+        this.viewManager.selected.webContents.canGoBack()
+      ) {
+        this.viewManager.selected.webContents.goBack();
       }
 
-      if (cmd === 'browser-forward' && this.viewManager.selected.webContents.canGoBack()) {
-        this.viewManager.selected.webContents.goBack()
+      if (
+        cmd === 'browser-forward' &&
+        this.viewManager.selected.webContents.canGoBack()
+      ) {
+        this.viewManager.selected.webContents.goBack();
       }
-
     });
-
-    if(process.env.ENV != "dev") {
-      var oldConsole = 
-      
-        appendFile(errorLogPath, `[${time}] [App] [DEBUG] ` + msg + '\n', function(err) {
-          if(err) {
-              return oldConsole(err);
-          }
-        });
-      };
-  
-      var oldError = console.error;
-      console.error = function(msg: any) {
-        appendFile(errorLogPath, `[${time}] [App] [ERROR] ` + msg + '\n', function(err) {
-          if(err) {
-              return oldError(err);
-          }
-        });
-      };
-  
-      var oldInfo = console.info;
-      console.info = function(msg: any) {
-        appendFile(errorLogPath, `[${time}] [App] [INFO] ` + msg + '\n', function(err) {
-          if(err) {
-              return oldInfo(err);
-          }
-        });
-      };
-  
-      var oldWarn = console.warn;
-      console.warn = function(msg: any) {
-        appendFile(errorLogPath, `[${time}] [App] [WARN] ` + msg + '\n', function(err) {
-          if(err) {
-              return oldWarn(err);
-          }
-        });
-      };
-    }
-
   }
 }
