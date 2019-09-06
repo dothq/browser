@@ -55,6 +55,10 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
    ### ✔ Latest Release
    #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+   
+   ### 🕒 Next Release
+   #### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+   #### 
 
 ## 🖼 Screenshots
 
