@@ -89,7 +89,7 @@
   },
   "dependencies": {
     "@cliqz/adblocker": "0.8.0",
-    "@material-ui/core": "^4.3.3",
+    "@material-ui/core": "^4.4.0",
     "@types/discord-rpc": "^3.0.1",
     "ajax-request": "^1.2.3",
     "braces": "^3.0.2",
