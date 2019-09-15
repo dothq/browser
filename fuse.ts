@@ -1,8 +1,8 @@
 import { fusebox, sparky } from 'fuse-box';
 
 class Context {
-  isProduction: any;
-  runServer: any;
+  isProduction;
+  runServer;
   getMainConfig() {
     return fusebox({
       output: 'dist/main/$name-$hash',
@@ -10,10 +10,7 @@ class Context {
       homeDir: 'src/main',
       entry: 'index.ts',
       useSingleBundle: true,
-      dependencies: {
-        ignoreAllExternal: false,
-        ignorePackages: ['react-native', 'electron'],
-      },
+      dependencies: { ignoreAllExternal: true },
       logging: { level: 'succinct' },
       cache: {
         enabled: true,
@@ -22,23 +19,17 @@ class Context {
     });
   }
   launch(handler) {
-    handler.onComplete(
-      (output: { electron: { handleMainProcess: () => void } }) => {
-        output.electron.handleMainProcess();
-      },
-    );
+    handler.onComplete(output => {
+      output.electron.handleMainProcess();
+    });
   }
   getRendererConfig() {
     return fusebox({
       output: 'dist/renderer/$name-$hash',
       target: 'electron',
-      homeDir: 'src/renderer/app',
+      homeDir: 'src',
       entry: 'index.tsx',
-      useSingleBundle: true,
-      dependencies: {
-        include: ['tslib'],
-        ignorePackages: ['react-native', 'electron'],
-      },
+      dependencies: { include: ['tslib'] },
       logging: { level: 'succinct' },
       webIndex: {
         publicPath: './',
@@ -50,7 +41,7 @@ class Context {
       },
       devServer: {
         httpServer: false,
-        hmrServer: { port: 4444 },
+        hmrServer: { port: 7878 },
       },
     });
   }

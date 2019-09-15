@@ -7,6 +7,7 @@ import store from './store';
 import { ipcRenderer, dialog, ipcMain } from 'electron';
 import { Settings } from 'react-native';
 var Mousetrap = require('mousetrap');
+import { AppWindow } from './app-window';
 import { resolve, join } from 'path';
 import console = require('console');
 import { platform, homedir } from 'os';
