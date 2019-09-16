@@ -1,0 +1,213 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot browser",
+            "dot_full_with_version": "Dot browser {appVersion}",
+            "button_open": "Open",
+            "button_run": "Start",
+            "button_send": "Versturen",
+            "button_download": "Download",
+            "search_placeholder": "Zoeken",
+            "quit": "Afsluiten",
+            "quit_dot": "Sluit Dot af",
+            "quit_dot_with_version": "Sluit Dot {appVersion} af"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Engels",
+            "cz": "Tsjechisch",
+            "es": "Spaans",
+            "de": "Duits",
+            "fr": "Frans",
+            "fi": "Fins",
+            "ru": "Russisch",
+            "dk": "Deens",
+            "no": "Noors",
+            "ie": "Iers",
+            "se": "Zweeds",
+            "pt": "Portugees"
+        }
+    ],
+    "themes": [
+        {
+            "dark": "Donker",
+            "light": "Licht",
+            "ui_theme": "Interface thema"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Browsing op",
+            "audio_details": "Luisteren naar audio op",
+            "file_details": "een {fileType}-bestand bekijken",
+            "active_small_text": "Een webpagina aan het bekijken",
+            "idle_small_text": "Afwezig",
+            "idle_details": "Dot browser",
+            "large_text": "Dot browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Top websites",
+            "dial_bookmarks": "Bladwijzers",
+            "overview": "Overzicht",
+            "menu": "Menu",
+            "tab_groups": "Tab groepen",
+            "default_tab_group": "Nieuwe groep",
+            "world": "Wereld",
+            "history_bubble": "Geschiedenis",
+            "bookmarks_bubble": "Bladwijzers",
+            "downloads_bubble": "Downloads",
+            "settings_bubble": "Instellingen",
+            "extensions_bubble": "Extensies",
+            "find_bubble": "Zoek",
+            "more_tools_bubble": "Meer hulpmiddelen",
+            "welcome_snackbar": "Welkom terug, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Waar wilt u vandaag naartoe?",
+                    "message_2": "Waar denkt u aan {username}?",
+                    "message_3": "Voer een zoekterm in om te beginnen.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Waar wilt u vandaag naartoe?",
+                    "message_2": "Waar denkt u aan?",
+                    "message_3": "Voer een zoekterm in om te beginnen.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Goedemorgen",
+                    "afternoon": "Goedenmiddag",
+                    "evening": "Goedenavond"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Instellingen",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Voeg nieuwe toe",
+            "add_new": "Zoekmachine toevoegen",
+            "my_profile": [
+                {
+                    "title": "Mijn profiel",
+                    "sign_in_btn": "Inloggen",
+                    "sign_out_btn": "Uitloggen",
+                    "guest_user": "Gast"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Vormgeving",
+                    "toggle_dot": "Toggle Dot button",
+                    "search_engine": "Zoekmachine",
+                    "temp_type": "temperatuur type",
+                    "guest_user": "Gast"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Downloads",
+                    "download_loc": "Downloads locatie"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Ontwikkelaar experimenten",
+                    "chromium_dt": "Chromium ontwikkelaar-hulpmiddelen",
+                    "send_test_notif": "Verstuur test notificatie",
+                    "open_log": "Open log bestand"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Over Dot",
+                    "thanks_message": "Dot is mogelijk gemaakt dankzij",
+                    "wxnd_coffee": "En ☕.",
+                    "made_in": "Gemaakt in",
+                    "gb_with": "Groot Brittanië met ",
+                    "end": ".",
+                    "developers_title": "Ontwikkelaars",
+                    "beta_testers_title": "Bètatesters",
+                    "special_thanks_title": "Speciale dank",
+                    "translators_title": "Vertalers",
+                    "view_translators_github": "Toon alle vertalingen op GitHub.com",
+                    "view_translators": "Toon vertalers",
+                    "verbose_loaded_fcm": "Geladen FCM-meldingsservices",
+                    "about_page_btn": "Ga naar de debug pagina",
+                    "copyright_notice": "© 2019 Ender en Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Feedback verzenden",
+                    "feedback_title": "Stuur feedback naar de ontwikkelaars",
+                    "bug_report_title": "Open een bugrapport",
+                    "describe_issue": "Omschrijf uw probleem"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Talen",
+                    "download_languages": "Download nieuwste taalpakket"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "History",
+            "clear_browsing_history": "Browsergeschiedenis verwijderen",
+            "sort": [
+                {
+                    "range_all": "Alle",
+                    "range_today": "Vandaag",
+                    "range_yesterday": "Gisteren",
+                    "range_last_week": "Afgelopen week",
+                    "range_last_month": "Afgelopen maand",
+                    "range_older": "Ouder"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bladwijzers",
+            "import": "Importeer bladwijzers",
+            "export": "Exporteer bladwijzers",
+            "add_bookmark": "Nieuwe bladwijzer"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Extensies"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Vind op pagina",
+            "navigate_back": "Terug",
+            "navigate_forward": "Vooruit",
+            "navigate_refresh": "Vernieuwen (F5)",
+            "navigate_close": "Sluit tabblad (Ctrl+W)",
+            "open_dot": "Open Dot Launcher"
+        }
+    ]
+}
