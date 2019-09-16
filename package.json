@@ -144,7 +144,7 @@
     "react-switch": "^5.0.1",
     "react-twemoji": "^0.2.3",
     "register-scheme": "0.0.2",
-    "semantic-ui-react": "^0.87.3",
+    "semantic-ui-react": "^0.88.1",
     "styled-components": "4.3.2",
     "tldts": "5.3.2",
     "unirest": "^0.6.0",
