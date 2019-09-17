@@ -81,7 +81,7 @@
     "prettier": "1.18.2",
     "terser": "4.2.0",
     "ts-node": "^8.3.0",
-    "tslint": "5.19.0",
+    "tslint": "5.20.0",
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.5.3",
