@@ -102,7 +102,7 @@
     "dot-extension-manager": "^1.0.2",
     "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.3.1",
-    "electron-chrome-extension": "^3.0.2",
+    "electron-chrome-extension": "^4.0.3",
     "electron-extensions": "^2.0.2",
     "electron-modal": "^1.0.0",
     "electron-process-manager": "^0.7.1",
