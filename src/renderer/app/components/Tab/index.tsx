@@ -4,8 +4,8 @@ import * as React from 'react';
 import { Preloader } from '~/renderer/components/Preloader';
 import { Tab } from '~/renderer/app/models';
 import store from '~/renderer/app/store';
-const emote = require("react-easy-emoji");
-const emoji = require("node-emoji");
+const emote = require('react-easy-emoji');
+const emoji = require('node-emoji');
 import {
   StyledTab,
   StyledContent,
@@ -36,30 +36,26 @@ const onCloseMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
 };
 
 const onDblClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-  store.tabs.showUB()
-  
-  
-}
+  store.tabs.showUB();
+};
 
 const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-
-  if(tab.isUrlVisible == false){
+  if (tab.isUrlVisible == false) {
     const { pageX } = e;
 
     tab.select();
-  
+
     store.tabs.lastMouseX = 0;
     store.tabs.isDragging = true;
     store.tabs.mouseStartX = pageX;
     store.tabs.tabStartX = tab.left;
-  
-    store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
-  
-    if(e.button == 1) {
-      tab.close()
-    } 
-  }
 
+    store.tabs.lastScrollLeft = store.tabs.containerRef.current.scrollLeft;
+
+    if (e.button == 1) {
+      tab.close();
+    }
+  }
 };
 
 const onMouseEnter = (tab: Tab) => () => {
@@ -73,8 +69,10 @@ const onMouseLeave = () => {
 };
 
 const onClick = () => {
-  if (store.canToggleMenu) {
+  if (store.overlay.visible == false) {
     store.overlay.visible = true;
+  } else {
+    store.overlay.visible = false;
   }
 };
 
@@ -95,7 +93,7 @@ const contextMenu = (tab: Tab) => () => {
       label: 'Navigate here',
       icon: resolve(remote.app.getAppPath(), 'static/app-icons/search.png'),
       click: () => {
-        store.overlay.show()
+        store.overlay.show();
         store.overlay.inputRef.current.focus();
         store.overlay.inputRef.current.select();
       },
@@ -164,12 +162,12 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'Reopen last closed tab',
       accelerator: 'CmdOrCtrl+Shift+T',
-      enabled: store.tabs.lastUrl != "",
+      enabled: store.tabs.lastUrl != '',
       click: () => {
-        var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
-        if(url != "") {
+        var url = store.tabs.lastUrl[store.tabs.lastUrl.length - 1];
+        if (url != '') {
           store.tabs.addTab({ url, active: true });
-          store.tabs.lastUrl.splice(-1,1)
+          store.tabs.lastUrl.splice(-1, 1);
         }
       },
     },
@@ -182,17 +180,20 @@ const contextMenu = (tab: Tab) => () => {
 };
 
 const Content = observer(({ tab }: { tab: Tab }) => {
+  var title = tab.title;
 
-  var title = tab.title
-
-  var url = tab.url
+  var url = tab.url;
 
   return (
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && (
         <StyledIcon
           isIconSet={tab.favicon !== ''}
-          style={{ backgroundImage: `url(${tab.favicon == '' ? icons.globe : tab.favicon})` }}
+          style={{
+            backgroundImage: `url(${
+              tab.favicon == '' ? icons.globe : tab.favicon
+            })`,
+          }}
         />
       )}
       {tab.loading && (
@@ -231,9 +232,7 @@ const Border = observer(({ tab }: { tab: Tab }) => {
   return <StyledBorder visible={tab.borderVisible} />;
 });
 
-const onMouseHover = () => {
-  
-};
+const onMouseHover = () => {};
 
 const Overlay = observer(({ tab }: { tab: Tab }) => {
   return (
@@ -271,7 +270,7 @@ export default observer(({ tab }: { tab: Tab }) => {
         }}
       >
         <Content tab={tab} />
-        <Close tab={tab}/>
+        <Close tab={tab} />
 
         <Overlay tab={tab} />
         <Ripple

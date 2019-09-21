@@ -2,12 +2,16 @@ import styled, { css } from 'styled-components';
 import { transparency } from '~/renderer/constants';
 
 export const Line = styled.div`
-  background-color: #e5e5e5;
+  background-color: var(--line-color);
   height: 1px;
   width: 100%;
   z-index: 2;
   position: absolute;
   margin-top: 38px;
+
+  ${({ overlay }: { overlay: boolean }) => css`
+    display: ${overlay ? 'none' : 'block'};
+  `}
 `;
 
 export const Screenshot = styled.div`
@@ -29,4 +33,3 @@ export const StyledApp = styled.div`
   flex-flow: column;
   height: 100vh;
 `;
-

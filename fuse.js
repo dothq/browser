@@ -11,7 +11,7 @@ const {
 const { spawn } = require('child_process');
 
 const production = process.env.NODE_ENV === 'dev' ? false : true;
-var startURI = '';
+var startURI = ''
 
 // if(process.argv[0]) {
 //   process.argv.forEach(i => { if(new URL(i).hostname) { startURI = i } });
@@ -95,18 +95,14 @@ const renderer = (name, port) => {
 
   const app = fuse
     .bundle(name)
-    .instructions(
-      `> [${
-        name == 'app' ? '/renderer' : '/renderer/externals'
-      }/${name}/index.tsx]`,
-    );
+    .instructions(`> [${name == 'app' ? '/renderer' : '/renderer/externals'}/${name}/index.tsx]`);
 
   if (!production) {
     if (name === 'app') {
       fuse.dev({ httpServer: true }, server => {
         const app = server.httpServer.app;
-        app.get('/undefined', function(req, res) {
-          res.send('undefined');
+        app.get("/undefined", function(req, res) {
+          res.send("undefined");
         });
       });
 

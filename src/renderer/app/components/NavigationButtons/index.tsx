@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 
 import store from '~/renderer/app/store';
-import ToolbarButton from "~/renderer/app/components/ToolbarButton";
+import ToolbarButton from '~/renderer/app/components/ToolbarButton';
 import { icons } from '~/renderer/app/constants/icons';
 import { StyledContainer, DotLauncher, DotLauncherWrapper } from './style';
 import { Button } from 'react-native';
@@ -28,43 +28,70 @@ const onRefreshClick = () => {
 
 const launcherOpen = () => {
   store.overlay.visible = true;
-}
+};
 
 const dotLauncherCtm = () => () => {
-
   const menu = remote.Menu.buildFromTemplate([
-    { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, remote.app.getVersion()), type: 'normal', enabled: false, icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-icon.png') },
+    {
+      label: store.locale.lang.standard[0].dot_with_version.replace(
+        /{appVersion}/g,
+        remote.app.getVersion(),
+      ),
+      type: 'normal',
+      enabled: false,
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-icon.png'),
+    },
     { type: 'separator' },
-    { label: store.locale.lang.history[0].title, type: 'normal', click() {
+    {
+      label: store.locale.lang.history[0].title,
+      type: 'normal',
+      click() {
         ipcRenderer.send('window-focus');
         store.overlay.visible = true;
-        store.overlay.currentContent = "history";
-        store.overlay.scrollRef.current.scrollTop = 0;   
-    } },
-    { label: store.locale.lang.bookmarks[0].title, type: 'normal', click() {
-      ipcRenderer.send('window-focus');
-      store.overlay.visible = true;
-      store.overlay.currentContent = "bookmarks";
-      store.overlay.scrollRef.current.scrollTop = 0;   
-    } },
-    { label: store.locale.lang.settings[0].title, type: 'normal', click() {
-      ipcRenderer.send('window-focus');
-      store.overlay.visible = true;
-      store.overlay.currentContent = "settings";
-      store.overlay.scrollRef.current.scrollTop = 0;   
-    } },
+        store.overlay.currentContent = 'history';
+        store.overlay.scrollRef.current.scrollTop = 0;
+      },
+    },
+    {
+      label: store.locale.lang.bookmarks[0].title,
+      type: 'normal',
+      click() {
+        ipcRenderer.send('window-focus');
+        store.overlay.visible = true;
+        store.overlay.currentContent = 'bookmarks';
+        store.overlay.scrollRef.current.scrollTop = 0;
+      },
+    },
+    {
+      label: store.locale.lang.settings[0].title,
+      type: 'normal',
+      click() {
+        ipcRenderer.send('window-focus');
+        store.overlay.visible = true;
+        store.overlay.currentContent = 'settings';
+        store.overlay.scrollRef.current.scrollTop = 0;
+      },
+    },
     { type: 'separator' },
-    { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, remote.app.getVersion()), type: 'normal', role: 'quit', icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-close.png') },
+    {
+      label: store.locale.lang.standard[0].quit_dot_with_version.replace(
+        /{appVersion}/g,
+        remote.app.getVersion(),
+      ),
+      type: 'normal',
+      role: 'quit',
+      icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-close.png'),
+    },
   ]);
 
   menu.popup();
 };
 
-const json = require("edit-json-file");
- 
+const json = require('edit-json-file');
+
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
-var tdl = file.get("toggleDotLauncher");
+var tdl = file.get('toggleDotLauncher');
 
 const refreshContextMenu = () => {
   const menu = remote.Menu.buildFromTemplate([
@@ -80,7 +107,7 @@ const refreshContextMenu = () => {
       click: () => {
         var url = store.tabs.selectedTab.url;
         store.tabs.addTab({ url, active: true });
-        store.tabs.selectedTab.close()
+        store.tabs.selectedTab.close();
       },
     },
   ]);
@@ -91,19 +118,38 @@ const refreshContextMenu = () => {
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
-      <DotLauncherWrapper title={store.locale.lang.window[0].open_dot} id="dot" onClick={launcherOpen} onContextMenu={dotLauncherCtm()} visible={tdl} style={{ height: '42px' }}>
-        <DotLauncher src={icons.logo}></DotLauncher>
+      <DotLauncherWrapper
+        title={store.locale.lang.window[0].open_dot}
+        id="dot"
+        onClick={launcherOpen}
+        onContextMenu={dotLauncherCtm()}
+        visible={tdl}
+        style={{ height: '42px' }}
+      >
+        <DotLauncher src={icons.logo} />
       </DotLauncherWrapper>
       <ToolbarButton
-        disabled={store.tabs.list.length == 0 && !store.navigationState.canGoBack}
+        disabled={
+          store.tabs.list.length == 0 ||
+          store.overlay.visible == true ||
+          !store.navigationState.canGoBack
+        }
         size={24}
         icon={icons.back}
         title={store.locale.lang.window[0].navigate_back}
-        style={{ marginLeft: 8, height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
+        style={{
+          marginLeft: 8,
+          height: '42px',
+          filter: 'var(--toolbar-navigation-filter)',
+        }}
         onClick={onBackClick}
       />
       <ToolbarButton
-        disabled={store.tabs.list.length == 0 && !store.navigationState.canGoForward}
+        disabled={
+          store.tabs.list.length == 0 ||
+          store.overlay.visible == true ||
+          !store.navigationState.canGoForward
+        }
         size={24}
         icon={icons.forward}
         onClick={onForwardClick}
@@ -112,7 +158,7 @@ export const NavigationButtons = observer(() => {
       />
       <ToolbarButton
         size={20}
-        disabled={store.tabs.list.length == 0}
+        disabled={store.tabs.list.length == 0 || store.overlay.visible == true}
         title={store.locale.lang.window[0].navigate_refresh}
         icon={
           store.tabs.selectedTab && store.tabs.selectedTab.loading

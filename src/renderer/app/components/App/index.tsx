@@ -2,6 +2,7 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
+
 import { Style } from '~/renderer/app/style';
 import { Toolbar } from '../Toolbar';
 import { ipcRenderer, remote } from 'electron';
@@ -59,12 +60,50 @@ if (existsSync(errorLogPath)) {
   });
 }
 
+if(process.env.ENV != "dev") {
+  var oldConsole = 
+  
+    appendFile(errorLogPath, `[${time}] [Renderer] [DEBUG] ` + msg + '\n', function(err) {
+      if(err) {
+          return oldConsole(err);
+      }
+    });
+  };
+  
+  var oldError = console.error;
+  console.error = function(msg: any) {
+    appendFile(errorLogPath, `[${time}] [Renderer] [ERROR] ` + msg + '\n', function(err) {
+      if(err) {
+          return oldError(err);
+      }
+    });
+  };
+  
+  var oldInfo = console.info;
+  console.info = function(msg: any) {
+    appendFile(errorLogPath, `[${time}] [Renderer] [INFO] ` + msg + '\n', function(err) {
+      if(err) {
+          return oldInfo(err);
+      }
+    });
+  };
+  
+  var oldWarn = console.warn;
+  console.warn = function(msg: any) {
+    appendFile(errorLogPath, `[${time}] [Renderer] [WARN] ` + msg + '\n', function(err) {
+      if(err) {
+          return oldWarn(err);
+      }
+    });
+  };
+}
+
 export const App = observer(() => {
   return (
       <StyledApp>
           <GlobalStyle />
           <Toolbar />
-          <Line />
+          <Line overlay={store.overlay.visible} />
           <Screenshot img={store.overlay.screenshot} />
           <Overlay />
           {platform() !== 'darwin' && <WindowsButtons />}

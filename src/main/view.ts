@@ -26,7 +26,7 @@ export class View extends BrowserView {
         additionalArguments: [`--tab-id=${id}`],
         contextIsolation: true,
         partition: 'persist:view',
-        plugins: true
+        plugins: true,
       },
     });
     
@@ -610,7 +610,6 @@ export class View extends BrowserView {
     });
 
     this.webContents.on('update-target-url', (e, url) => {
-      console.log(url)
       var parentBounds = appWindow.getBounds()
       locationBar.show()
       if(appWindow.isMaximized() == true) {

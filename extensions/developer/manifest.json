@@ -1,0 +1,13 @@
+{
+  "name": "Dot Browser Dev Tools",
+  "version": "1.0.0",
+  "description": "Custom Chromium Dev Tools theme",
+  "devtools_page": "devtools.html",
+  "homepage_url": "https://github.com/dot-browser/dev-tools-theme",
+  "manifest_version": 2,
+  "icons": {
+    "16": "shared/app-icons/icon-16dp.png",
+    "48": "shared/app-icons/icon-48dp.png",
+    "128": "shared/app-icons/icon-128dp.png"
+  }
+}

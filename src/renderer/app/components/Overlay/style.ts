@@ -27,13 +27,13 @@ export const OverlayScrollbarStyle = `
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-default);
+    background: rgba(255, 255, 255, 0.16);
     transition: 0.5s border-radius;
     border-radius: 15px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-hovered);
+    background: rgba(255, 255, 255, 0.48);
     transition: 0.5s border-radius;
     border-radius: 35px;
   }

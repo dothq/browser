@@ -50,7 +50,14 @@ export class OverlayStore {
   public abObj: any;
 
   @observable
-  public currentContent: 'default' | 'history' | 'bookmarks' | 'adblock' | 'extensions' | 'settings' | 'preload' = 'default';
+  public currentContent:
+    | 'default'
+    | 'history'
+    | 'bookmarks'
+    | 'adblock'
+    | 'extensions'
+    | 'settings'
+    | 'preload' = 'default';
 
   @observable
   public searchingChip: 'google' | 'bing' | 'yahoo' | 'ddg' | 'ecosia';
@@ -68,20 +75,19 @@ export class OverlayStore {
   public screenshot: any;
 
   @observable
-  public panelVisible:boolean = false;
+  public panelVisible: boolean = false;
 
   private timeout: any;
 
   @computed
   public get searchBoxValue() {
-
-    this.getScreenshot()
+    this.getScreenshot();
 
     return this._searchBoxValue;
   }
 
   public getScreenshot() {
-    if(store.tabs.selectedTab) {
+    if (store.tabs.selectedTab) {
       ipcRenderer.send('capture-page', store.tabs.selectedTab.id);
     }
   }
@@ -89,18 +95,25 @@ export class OverlayStore {
   public set searchBoxValue(val: string) {
     this._searchBoxValue = val;
 
-    if(this._searchBoxValue.substring(0, 8) == "file:///") {
-      this.inputRef.current.value = val.split("file:///")[1];;
-    }
-    else {
+    if (this._searchBoxValue.substring(0, 8) == 'file:///') {
+      this.inputRef.current.value = val.split('file:///')[1];
+    } else {
       this.inputRef.current.value = val;
     }
-    
-    var cleanURL = encodeURI(remote.app.getAppPath().replace(/\\/g, "/") + '\\static\\pages'.replace(/\\/g, "/"));
-    console.debug(cleanURL)
-    
-    if(this.inputRef.current.value.includes(cleanURL) == true) {
-      this.inputRef.current.value = 'dot://' + this.inputRef.current.value.split(cleanURL)[1].split("/")[1].split(".html")[0]
+
+    var cleanURL = encodeURI(
+      remote.app.getAppPath().replace(/\\/g, '/') +
+        '\\static\\pages'.replace(/\\/g, '/'),
+    );
+    console.debug(cleanURL);
+
+    if (this.inputRef.current.value.includes(cleanURL) == true) {
+      this.inputRef.current.value =
+        'dot://' +
+        this.inputRef.current.value
+          .split(cleanURL)[1]
+          .split('/')[1]
+          .split('.html')[0];
     }
   }
 
@@ -112,30 +125,29 @@ export class OverlayStore {
     if (!this._visible || e.keyCode !== 27) return; // Escape
 
     if (this.currentContent === 'history') {
-      return this.currentContent = 'default';
-    }    
+      return (this.currentContent = 'default');
+    }
     if (this.currentContent === 'bookmarks') {
-      return this.currentContent = 'default';
-    } 
+      return (this.currentContent = 'default');
+    }
     if (this.currentContent === 'settings') {
-      return this.currentContent = 'default';
+      return (this.currentContent = 'default');
     }
     if (this.currentContent === 'extensions') {
-      return this.currentContent = 'default';
-    }    
+      return (this.currentContent = 'default');
+    }
     if (this.currentContent === 'adblock') {
       ipcRenderer.send('browserview-hide');
-      return store.overlay.visible = false;
+      return (store.overlay.visible = false);
     }
     if (this.currentContent === 'default') {
-      if(store.tabs.list.length == 0) return;
+      if (store.tabs.list.length == 0) return;
       this.visible = false;
     }
   };
 
   @computed
   public get visible() {
-
     return this._visible;
   }
 
@@ -157,7 +169,6 @@ export class OverlayStore {
 
     ipcRenderer.send('pls-hide');
     ipcRenderer.send('browserview-hide');
-    
 
     this._visible = true;
   }
@@ -170,8 +181,8 @@ export class OverlayStore {
 
       setTimeout(function() {
         ipcRenderer.send('browserview-show');
-      }, 200)
-      
+      }, 200);
+
       // this.timeout = setTimeout(() => {
       //   if (store.tabs.selectedTab) {
       //     if (store.tabs.selectedTab.isWindow) store.tabs.selectedTab.select();

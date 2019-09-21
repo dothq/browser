@@ -10,11 +10,11 @@ export const StyledContainer = styled.div`
 `;
 
 export const DotLauncher = styled.img`
-    width: 40px;
-    margin-left: 10px;
-    filter: var(--toolbar-logo-filter);
-    height: 38px;
-    margin-top: 1.6px;
+  width: 40px;
+  margin-left: 10px;
+  filter: var(--toolbar-logo-filter);
+  height: 38px;
+  margin-top: 1.6px;
 `;
 
 export const DotLauncherWrapper = styled.div`

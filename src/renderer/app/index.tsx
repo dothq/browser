@@ -7,6 +7,7 @@ import store from './store';
 import { ipcRenderer, dialog, ipcMain } from 'electron';
 import { Settings } from 'react-native';
 var Mousetrap = require('mousetrap');
+import { AppWindow } from './app-window';
 import { resolve, join } from 'path';
 import console = require('console');
 import { platform, homedir } from 'os';
@@ -133,31 +134,37 @@ export let appWindow: AppWindow;
 Menu.setApplicationMenu(
   Menu.buildFromTemplate([
     {
-      label: 'File',
+      label: 'Edit',
       submenu: [
-        {
-          label: 'New tab',
-          accelerator: 'CmdOrCtrl+T',
-          click() {
-            store.overlay.visible = true;
-            store.overlay.isNewTab = true;
-          }
-        },
-        {
-          label: 'Reopen closed tab',
-          accelerator: 'CmdOrCtrl+T',
-          click() {
-            var url = store.tabs.lastUrl[store.tabs.lastUrl.length-1];
-            if(url != "") {
-              store.tabs.addTab({ url, active: true });
-              store.tabs.lastUrl.splice(-1,1)
-            }
-          }
-        },
+        { role: 'undo' },
+        { role: 'redo' },
         { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'pasteandmatchstyle' },
+        { role: 'delete' },
+        { role: 'selectall' },
+        { role: 'quit' },
+        { role: 'reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
+        {
+          accelerator: 'CmdOrCtrl+F',
+          label: 'Find in page',
+          click() {
+            if(store.tabs.selectedTab) {
+              store.overlay.visible = false;
+
+              store.tabs.selectedTab.findVisible = true;
+            
+              setTimeout(() => {
+                store.tabs.selectedTab.findVisible = true;
+              }, 200);
+            }
+          },
+        },
         {
           accelerator: 'CmdOrCtrl+P',
-          label: 'Print',
+          label: 'Print webpage (Native)',
           click() {
             remote.webContents.getFocusedWebContents().print()
           },
@@ -175,53 +182,8 @@ Menu.setApplicationMenu(
             }
           },
         },
-        { type: 'separator' },
         { 
-          label: 'Task Manager',
-          accelerator: 'Shift+Esc',
-          async click() {
-            tskManager()
-          }
-        }, 
-        { role: 'reload', label: 'Restart browser', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
-        { role: 'quit', label: 'Quit Dot' },
-      ]
-    },
-    {
-      label: 'Edit',
-      submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
-        { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'pasteandmatchstyle' },
-        { role: 'delete' },
-        { role: 'selectall' },
-        { type: 'separator' },
-        {
-          accelerator: 'CmdOrCtrl+F',
-          label: 'Find in page',
-          click() {
-            if(store.tabs.selectedTab) {
-              store.overlay.visible = false;
-
-              store.tabs.selectedTab.findVisible = true;
-            
-              setTimeout(() => {
-                store.tabs.selectedTab.findVisible = true;
-              }, 200);
-            }
-          },
-        },
-      ]
-    },
-    {
-      label: 'Navigation',
-      submenu: [
-        { 
-          label: 'Reload',
+          label: 'Reload Page',
           accelerator: 'F5',
           click() { 
             if(store.tabs.selectedTab) {
@@ -232,8 +194,6 @@ Menu.setApplicationMenu(
         { 
           label: 'Reload Webpage',
           accelerator: 'CmdOrCtrl+R',
-          visible: false,
-          acceleratorWorksWhenHidden: true,
           click() { 
             if(store.tabs.selectedTab) {
               store.tabs.selectedTab.callViewMethod('webContents.reload'); 
@@ -241,7 +201,7 @@ Menu.setApplicationMenu(
           } 
         },
         { 
-          label: 'Close',
+          label: 'Close tab',
           accelerator: 'CmdOrCtrl+W',
           click() { 
             if(store.tabs.selectedTab) {
@@ -254,6 +214,16 @@ Menu.setApplicationMenu(
               }
             }
             
+          } 
+        },
+        { 
+          label: 'New tab',
+          accelerator: 'CmdOrCtrl+T',
+          click() { 
+            store.isHTMLFullscreen = false;
+            store.isFullscreen = false;
+            store.overlay.isNewTab = true;
+            store.overlay.visible = true;
           } 
         },
         { type: 'separator' },
@@ -281,7 +251,42 @@ Menu.setApplicationMenu(
         },
         { type: 'separator' },
         { 
-          label: 'Developer tools',
+          label: 'Launcher',
+          accelerator: 'CmdOrCtrl+Space',
+          click() { 
+            store.overlay.visible = true;
+          } 
+        },
+        { 
+          label: 'History',
+          accelerator: 'CmdOrCtrl+H',
+          click() { 
+            store.overlay.visible = true;
+            store.overlay.currentContent = "history";
+            store.overlay.scrollRef.current.scrollTop = 0;
+          } 
+        },   
+        { 
+          label: 'Bookmarks',
+          accelerator: 'CmdOrCtrl+B',
+          click() { 
+            store.overlay.visible = true;
+            store.overlay.currentContent = "bookmarks";
+            store.overlay.scrollRef.current.scrollTop = 0;
+          } 
+        },
+        { 
+          label: 'Settings',
+          accelerator: 'CmdOrCtrl+Shift+P',
+          click() { 
+            store.overlay.visible = true;
+            store.overlay.currentContent = "settings";
+            store.overlay.scrollRef.current.scrollTop = 0;
+          } 
+        },
+        { type: 'separator' },
+        { 
+          label: 'Dev Tools',
           accelerator: 'F12',
           click() { 
 
@@ -289,6 +294,13 @@ Menu.setApplicationMenu(
             
           } 
         },   
+        { 
+          label: 'Task Manager',
+          accelerator: 'Shift+Esc',
+          async click() {
+            tskManager()
+          }
+        }, 
       ],
     },
   ]),

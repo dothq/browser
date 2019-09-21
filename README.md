@@ -1,8 +1,11 @@
 <p align="center">
-  <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
+  <img src="https://electronjs.org/app-img/dot/dot-icon-256.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://electronjs.org/app-img/dot/dot-icon-256.png" width="200" height="200" align="center"/>
 </p>
 
+
 <div align="center">
+<h1 align="center">Dot</h1>
+
 <p align="center">
     <a href="/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
@@ -38,7 +41,7 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
 ## 👾 Features
 
-* **🚫 Built in ad-blocker** - We all hate ads, so we relieve the pain by having an ad-blocker built in. No downloads, nothing.
+* **🚫 Built in ad-blocker** - We all hate ads, so we releave the pain by having a ad-blocker built in. No downloads, nothing.
 * **💬 Fancy Discord Rich Presence** - Tell your Discord Friends what page you're looking at, or if you're just Idle on the home screen...
 * **💻 Minimalistic UI** - Forget Chrome, bye bye Firefox, see you later IE and Edge. Our UI beats all of them.
 * **🖼 Dot Overlay** - A neat little overlay, which has bookmarks, a search box, downloads and more.
@@ -53,24 +56,17 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
    ### ✔ Latest Release
    #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
-   
-   ### 🐦 Canary Release
-   #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/tree/canary)
-   
-   ### 🕒 Next Release
-   #### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
-   #### 
 
 ## 🖼 Screenshots
 
 ### Browsing a webpage
-![](https://i.imgur.com/kw8f5KB.png)
+[![Browsing](https://i.imgur.com/kw8f5KB.png)]()
 
 ### The Launcher
-![](https://i.imgur.com/ZMVBnNm.png)
+[![Launcher](https://i.imgur.com/ZMVBnNm.png)]()
 
 ### Rich Presence
-![](https://i.imgur.com/Nsekr6W.png)
+[![RP](https://i.imgur.com/Nsekr6W.png)]()
 
 ## ⚙ Build Information
 
@@ -101,8 +97,6 @@ For support, join our support discord server.
 ## 🤵 License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
-
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop?ref=badge_large)
 
 ## 💝 Acknowledgments
 

@@ -114,6 +114,7 @@ ipcRenderer.on('scroll-touch-end', () => {
   resetCounters();
 });
 
+
 // const runStylesheet = (url: string, code: string) => {
 //   const wrapper = `((code) => {
 //     function init() {

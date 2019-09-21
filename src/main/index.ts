@@ -1,4 +1,14 @@
-import { ipcMain, app, Menu, session, globalShortcut, Tray, BrowserWindow, screen, IpcMessageEvent } from 'electron';
+import {
+  ipcMain,
+  app,
+  Menu,
+  session,
+  globalShortcut,
+  Tray,
+  BrowserWindow,
+  screen,
+  IpcMessageEvent,
+} from 'electron';
 import { resolve, extname, join } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
@@ -8,18 +18,24 @@ import { ExtensibleSession } from 'electron-extensions';
 
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
-import { existsSync, writeFileSync, rename, promises, createWriteStream } from 'fs';
+import {
+  existsSync,
+  writeFileSync,
+  rename,
+  promises,
+  createWriteStream,
+} from 'fs';
 import { getPath } from '~/shared/utils/paths';
 import { Settings } from '~/renderer/app/models/settings';
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { makeId } from '~/shared/utils/string';
-import store from '~/renderer/app/store'
+import store from '~/renderer/app/store';
 import console = require('console');
 import { get } from 'http';
-const nativeImage = require("electron").nativeImage;
+const nativeImage = require('electron').nativeImage;
 const modal = require('electron-modal');
-const json = require("edit-json-file");
-const LifeguardSession = require("lifeguard-api");
+const json = require('edit-json-file');
+const LifeguardSession = require('lifeguard-api');
 
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
@@ -35,72 +51,66 @@ registerProtocols();
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
 
-
 try {
-  if (existsSync(getPath(app.getPath("userData") + "\\notification_sound.mp3"))) {
-    
+  if (
+    existsSync(getPath(app.getPath('userData') + '\\notification_sound.mp3'))
+  ) {
   }
-}
-catch (e) {
-  const notifFile = createWriteStream(app.getPath("userData") + "\\notification_sound.mp3");
-  const request = get(`https://dot.ender.site/api/v0/static/notification.mp3`, function(response: any) {
-    response.pipe(notifFile);
-  });
+} catch (e) {
+  const notifFile = createWriteStream(
+    app.getPath('userData') + '\\notification_sound.mp3',
+  );
+  const request = get(
+    `https://dot.ender.site/api/v0/static/notification.mp3`,
+    function(response: any) {
+      response.pipe(notifFile);
+    },
+  );
 }
 
 // Check for settings
 try {
-  if (existsSync(getPath('settings.json'))) { 
-
+  if (existsSync(getPath('settings.json'))) {
   }
-}
-catch (e) {
-  
+} catch (e) {
   writeFileSync(
     getPath('settings.json'),
     JSON.stringify({
-      dialType: 'top-sites'
+      dialType: 'top-sites',
     } as Settings),
   );
 }
 
 // Check for dot-options
 try {
-  if (existsSync(getPath('dot-options.json'))) { 
-
+  if (existsSync(getPath('dot-options.json'))) {
   }
-}
-catch (e) {
-  
+} catch (e) {
   writeFileSync(
     getPath('dot-options.json'),
     JSON.stringify({
       toggleDotLauncher: true,
-      searchEngine: 'google'
+      searchEngine: 'google',
     } as DotOptions),
   );
 }
 
 try {
-  if (existsSync(getPath('tab-groups.json'))) { 
-
+  if (existsSync(getPath('tab-groups.json'))) {
   }
-}
-catch (e) {
-  
+} catch (e) {
   writeFileSync(
     getPath('tab-groups.json'),
     JSON.stringify({
-      "tab-groups": {}
-    })
+      'tab-groups': {},
+    }),
   );
 }
 
-
-app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
 app.commandLine.appendSwitch('--enable-transparent-visuals');
 // Adds the sexy scrollbar
-app.commandLine.appendSwitch('auto-detect', 'false')
+app.commandLine.appendSwitch('auto-detect', 'false');
 
 import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
@@ -109,21 +119,18 @@ import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 app.on('ready', async () => {
-
   /**
    * Create the main process and location bar sub-process.
-  */
+   */
+
+  const dir = `${app.getAppPath()}/extensions/developer`;
+  console.log(dir);
+  BrowserWindow.addDevToolsExtension(dir);
 
   modal.setup();
 
   appWindow = new AppWindow();
-
-  /**
-   * https://stackoverflow.com/questions/53538215/cant-succeed-in-making-transparent-window-in-electron-javascript
-   */
-  setTimeout(() => {
-    locationBar = new LocationBar();
-  });
+  locationBar = new LocationBar();
 
   /**
     
@@ -131,14 +138,12 @@ app.on('ready', async () => {
     @example $ dot.exe "https://google.com"
 
   */
-  if(process.argv[4]) {
-    if(new URL(process.argv[4]).hostname) {
+  if (process.argv[4]) {
+    if (new URL(process.argv[4]).hostname) {
       setTimeout(() => {
         appWindow.webContents.send('url-arguments-applied', process.argv[4]);
         process.argv[4] = null;
-        
       }, 9000);
-
     }
   }
 
@@ -156,28 +161,26 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
-  app.on('certificate-error', (event, webContents, link, error, certificate, callback) => {
-    
-  });
+  app.on(
+    'certificate-error',
+    (event, webContents, link, error, certificate, callback) => {},
+  );
 
   appWindow.webContents.on('devtools-opened', () => {
-    if(appWindow.webContents.getURL().includes("file://") == true) {
+    if (appWindow.webContents.getURL().includes('file://') == true) {
       return;
+    } else {
+      appWindow.webContents.devToolsWebContents.executeJavaScript('');
     }
-    else {
-      appWindow.webContents.devToolsWebContents.executeJavaScript('')
-    }
-  })
+  });
 
   ipcMain.on('dev-tools-open', () => {
     appWindow.webContents.inspectElement(0, 0);
 
     if (appWindow.webContents.isDevToolsOpened()) {
       appWindow.webContents.devToolsWebContents.focus();
-    }  
+    }
   });
-  
-  
 
   ipcMain.on('update-check', () => {
     if (process.env.ENV !== 'dev') {
@@ -186,24 +189,20 @@ app.on('ready', async () => {
   });
 
   ipcMain.on('menu-view', (e: IpcMessageEvent, name: boolean) => {
-      
-      if(name == true) {
-        appWindow.menu.showWindow()
-      }
-      else {
-        appWindow.menu.hideWindow()
-      }
+    if (name == true) {
+      appWindow.menu.showWindow();
+    } else {
+      appWindow.menu.hideWindow();
+    }
   });
 
   ipcMain.on('window-focus', () => {
     appWindow.webContents.focus();
-    
   });
 
   ipcMain.on('set-downloads-loc', (path: any) => {
     appWindow.webContents.session.setDownloadPath(path);
   });
-
 
   const viewSession = session.fromPartition('persist:view');
 
@@ -211,7 +210,7 @@ app.on('ready', async () => {
     .fromPartition('persist:view')
     .on('will-download', (event, item, webContents) => {
       const fileName = item.getFilename();
-      const savePath = resolve(app.getPath("temp"), fileName);
+      const savePath = resolve(app.getPath('temp'), fileName);
       const id = makeId(32);
 
       item.setSavePath(savePath);
@@ -227,10 +226,8 @@ app.on('ready', async () => {
 
       item.on('updated', (event, state) => {
         if (state === 'interrupted') {
-          
         } else if (state === 'progressing') {
           if (item.isPaused()) {
-            
           } else {
             appWindow.webContents.send('download-progress', {
               id,
@@ -244,106 +241,101 @@ app.on('ready', async () => {
         if (state === 'completed') {
           appWindow.webContents.send('download-completed', id);
         } else {
-          
         }
       });
     });
 
-    viewSession.setPermissionRequestHandler(
-      async (webContents, permission, callback, details) => {
-          try {
-            if(new URL(webContents.getURL()).protocol == 'https:') {
-              const response = await appWindow.permissionWindow.requestPermission(
-                permission,
-                webContents.getURL(),
-                details,
-              );
-              callback(response);
-            }
-            else {
-              const response = await appWindow.permissionWindow.requestPermission(
-                'http_permission',
-                webContents.getURL(),
-                details,
-              );
-            }
-          } catch (e) {
-            callback(false);
-          }
-      },
-    );
+  viewSession.setPermissionRequestHandler(
+    async (webContents, permission, callback, details) => {
+      try {
+        if (new URL(webContents.getURL()).protocol == 'https:') {
+          const response = await appWindow.permissionWindow.requestPermission(
+            permission,
+            webContents.getURL(),
+            details,
+          );
+          callback(response);
+        } else {
+          const response = await appWindow.permissionWindow.requestPermission(
+            'http_permission',
+            webContents.getURL(),
+            details,
+          );
+        }
+      } catch (e) {
+        callback(false);
+      }
+    },
+  );
 
-    // session
-    // .fromPartition('persist:view')
-    // .setPermissionRequestHandler((webContents, permission, callback) => {
-    //   if(new URL(webContents.getURL()).protocol == 'https:') {
+  // session
+  // .fromPartition('persist:view')
+  // .setPermissionRequestHandler((webContents, permission, callback) => {
+  //   if(new URL(webContents.getURL()).protocol == 'https:') {
 
-    //     var permissionObj = {
-    //       url: webContents.getURL(),
-    //       permissionNode: permission
-    //     }
+  //     var permissionObj = {
+  //       url: webContents.getURL(),
+  //       permissionNode: permission
+  //     }
 
-    //     try {
-    //       permissionWindow.webContents.send('permission', permissionObj);
-    //       permissionWindow.setOpacity(1)
-    //       permissionWindow.setIgnoreMouseEvents(false)
+  //     try {
+  //       permissionWindow.webContents.send('permission', permissionObj);
+  //       permissionWindow.setOpacity(1)
+  //       permissionWindow.setIgnoreMouseEvents(false)
 
-    //       // const cBounds: any = appWindow.getContentBounds();
-    //       // permissionWindow.setBounds({ 
-    //       //   x: cBounds.x, 
-    //       //   y: cBounds.y + TOOLBAR_HEIGHT, 
-    //       //   height: permissionWindow.getBounds().height, 
-    //       //   width: permissionWindow.getBounds().width 
-    //       // });
+  //       // const cBounds: any = appWindow.getContentBounds();
+  //       // permissionWindow.setBounds({
+  //       //   x: cBounds.x,
+  //       //   y: cBounds.y + TOOLBAR_HEIGHT,
+  //       //   height: permissionWindow.getBounds().height,
+  //       //   width: permissionWindow.getBounds().width
+  //       // });
 
-    //     } catch(e) {
-    //       permissionWindow = new PermissionDialog();
+  //     } catch(e) {
+  //       permissionWindow = new PermissionDialog();
 
-    //       permissionWindow.webContents.on('dom-ready', () => {
-    //         permissionWindow.webContents.send('permission', permissionObj);
-    //         permissionWindow.setOpacity(1)
-    //         permissionWindow.setIgnoreMouseEvents(false)
+  //       permissionWindow.webContents.on('dom-ready', () => {
+  //         permissionWindow.webContents.send('permission', permissionObj);
+  //         permissionWindow.setOpacity(1)
+  //         permissionWindow.setIgnoreMouseEvents(false)
 
-    //         // const cBounds: any = appWindow.getContentBounds();
-    //         // permissionWindow.setBounds({ 
-    //         //   x: cBounds.x, 
-    //         //   y: cBounds.y + TOOLBAR_HEIGHT, 
-    //         //   height: permissionWindow.getBounds().height, 
-    //         //   width: permissionWindow.getBounds().width 
-    //         // });
+  //         // const cBounds: any = appWindow.getContentBounds();
+  //         // permissionWindow.setBounds({
+  //         //   x: cBounds.x,
+  //         //   y: cBounds.y + TOOLBAR_HEIGHT,
+  //         //   height: permissionWindow.getBounds().height,
+  //         //   width: permissionWindow.getBounds().width
+  //         // });
 
-    //       })
+  //       })
 
-    //     }
-    //   }
-    //   else {
-    //     return callback(false)
-    //   }
-    // })
+  //     }
+  //   }
+  //   else {
+  //     return callback(false)
+  //   }
+  // })
 
-    /**
-     * @todo Work on Extensions
-     * @body electron-extensions doesn't seem to work with Electron 5.0, this is a priority.
+  /**
+   * @todo Work on Extensions
+   * @body electron-extensions doesn't seem to work with Electron 5.0, this is a priority.
    */
-    // const extensions = new ExtensibleSession(viewSession);
-    // extensions.addWindow(appWindow);
-  
-    // const extensionsPath = getPath('extensions');
-    // const dirs = await promises.readdir(extensionsPath);
-  
-    // for (const dir of dirs) {
-    //   const extension = await extensions.loadExtension(
-    //     resolve(extensionsPath, dir),
-    //   );
-    //   extension.backgroundPage.webContents.openDevTools();
-    // }
+  // const extensions = new ExtensibleSession(viewSession);
+  // extensions.addWindow(appWindow);
 
+  // const extensionsPath = getPath('extensions');
+  // const dirs = await promises.readdir(extensionsPath);
 
-    loadFilters();
-    // loadExtensions();
-    runWebRequestService(appWindow);
+  // for (const dir of dirs) {
+  //   const extension = await extensions.loadExtension(
+  //     resolve(extensionsPath, dir),
+  //   );
+  //   extension.backgroundPage.webContents.openDevTools();
+  // }
 
-  
+  loadFilters();
+  // loadExtensions();
+  runWebRequestService(appWindow);
 
   // extensionsMain.setSession(viewSession);
 
@@ -354,7 +346,6 @@ app.on('ready', async () => {
   // for (const dir of dirs) {
   //   extensionsMain.load(resolve(extensionsPath, dir));
   // }
-
 });
 
 app.on('window-all-closed', () => {
@@ -362,4 +353,3 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-

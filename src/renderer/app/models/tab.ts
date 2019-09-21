@@ -20,7 +20,6 @@ import console = require('console');
 
 let id = 1;
 
-
 export class Tab {
   @observable
   public id: number = id++;
@@ -50,7 +49,7 @@ export class Tab {
   public position = 0;
 
   @observable
-  public isUrlVisible: boolean = false;;
+  public isUrlVisible: boolean = false;
 
   @observable
   public background: string = colors.blue['500'];
@@ -77,10 +76,10 @@ export class Tab {
   public closedTabs: ClosedTabs[] = [];
 
   @observable
-  public zoomAmount: number = 1;  
+  public zoomAmount: number = 1;
 
   @observable
-  public screenshot: any = "";
+  public screenshot: any = '';
 
   @computed
   public get findVisible() {
@@ -88,15 +87,14 @@ export class Tab {
   }
 
   public webContents() {
-    return remote.webContents.fromId(this.webContentsId)
+    return remote.webContents.fromId(this.webContentsId);
   }
 
   public muteTab() {
-    if(this.audioPlaying == true) {
+    if (this.audioPlaying == true) {
       ipcRenderer.send('audio-pause');
       this.audioPlaying = false;
-    }
-    else {
+    } else {
       ipcRenderer.send('audio-resume');
       this.audioPlaying = true;
     }
@@ -116,7 +114,6 @@ export class Tab {
       }
     });
   }
-
 
   @computed
   public get isSelected() {
@@ -191,14 +188,14 @@ export class Tab {
         let updated = null;
 
         if (url !== this.url) {
-          if(url.includes("ssl-error.html?du=") == false) {
+          if (url.includes('ssl-error.html?du=') == false) {
             this.lastHistoryId = await store.history.addItem({
               title: this.title,
               url,
               favicon: this.favicon,
               date: new Date().toString(),
             });
-  
+
             updated = {
               url,
             };
@@ -252,6 +249,7 @@ export class Tab {
             if (!palette.Vibrant) return;
 
             if (getColorBrightness(palette.Vibrant.hex) < 170) {
+              console.log(palette);
               this.background = palette.Vibrant.hex;
             } else {
               this.background = colors.blue['500'];
@@ -291,13 +289,13 @@ export class Tab {
     });
 
     ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
-        this.select()
-        this.originalTitle = this.title;
-        this.audioPlaying = true;
+      this.select();
+      this.originalTitle = this.title;
+      this.audioPlaying = true;
     });
 
     ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
-      this.select()
+      this.select();
       this.audioPlaying = false;
       this.title = this.originalTitle;
     });
