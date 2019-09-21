@@ -78,7 +78,7 @@
 		"electron-builder": "20.39.0",
 		"electron-nightly": "^7.0.0-nightly.20190721",
 		"fuse-box": "3.7.1",
-		"log-update": "3.2.0",
+		"log-update": "3.3.0",
 		"prettier": "1.17.0",
 		"terser": "3.17.0",
 		"tslint": "5.15.0",
