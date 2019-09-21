@@ -103,7 +103,7 @@
 		"electron-extensions": "^1.0.2",
 		"electron-modal": "^1.0.0",
 		"electron-process-manager": "^0.7.1",
-		"electron-push-receiver": "^2.1.2",
+		"electron-push-receiver": "^2.1.3",
 		"electron-updater": "^4.1.2",
 		"electron-util": "^0.12.1",
 		"file-type": "10.11.0",
