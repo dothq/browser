@@ -20,6 +20,10 @@ os:
 - windows
 script:
 - npm run compile
+before_deploy:
+  - git config --local user.name "DotDeploy"
+   - git tag -m "Automated Dot Build."
+  - "git push https://$GH_TOKEN@github.com/dot-browser/desktop.git HEAD:master --follow-tags"
 deploy:
   provider: releases
   file_glob: true
@@ -28,3 +32,4 @@ deploy:
   file: dist/*
   on:
     repo: dot-browser/desktop
+    prerelease: true
