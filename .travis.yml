@@ -33,4 +33,4 @@ deploy:
   file: dist/*
   on:
     repo: dot-browser/desktop
-    prerelease: true
+    draft: true
