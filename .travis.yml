@@ -23,7 +23,7 @@ script:
 before_deploy:
   - git config --local user.name "DotDeploy"
   - git config --local user.email "dotdeploy@gmail.com"
-  - git tag -a $TRAVIS_BUILD_NUMBER -m "Automated Dot Build. It's recommended that you wait for a full release. We won't provide full support if you're using these builds"
+  - git tag -a v2.0.0-rev$TRAVIS_BUILD_NUMBER -m "Built from $TRAVIS_COMMIT_MESSAGE"
   - "git push https://$GH_TOKEN@github.com/dot-browser/desktop.git HEAD:master --follow-tags"
 deploy:
   provider: releases
