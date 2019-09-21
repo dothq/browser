@@ -27,6 +27,5 @@ deploy:
   file:
     - "dist/Dot Setup 2.2.0.exe"
     - "dist/Dot-2.2.0.dmg"
-  file: 'dist/Dot Setup 2.2.0.exe'
   on:
     repo: dot-browser/desktop
