@@ -31,17 +31,3 @@ os:
 - windows
 script:
 - npm run compile
-before_deploy:
-  - git config --local user.name "DotDeploy"
-  - git config --local user.email "dotdeploy@gmail.com"
-  - git tag -a v2.0.0-rev$TRAVIS_BUILD_NUMBER -m "Built from `$TRAVIS_COMMIT_MESSAGE`. It's recommended that you don't use any builds listed here and wait for a release. We will not provide support for these builds."
-  - "git push https://$GH_TOKEN@github.com/dot-browser/desktop.git HEAD:master --follow-tags"
-deploy:
-  provider: releases
-  file_glob: true
-  api_key:
-    secure: dYwiBWVeHMJHY36EVQQffJbyQfmCTtzUnMBboNgnTdnaWLN1CJbhuaubmoFdk35trKBZSeCUWVDOrpzsglBgYGpsa1TA+0aygY/cfWzBJ9SnPtTN3miygmZ4GaYtN4k6pOZFIGIB9st+bK2k7y/v4tRLcYdclw7Vc8tB/njqUHossXy4/k18IYacBZqw4tDslZa21PU8ROq+48Ghhr/vtO5ofVxAimgFHQNKnvWJZVFn9Uv0Cz7jZGI+uwRqOvz7MWXjw5wjZngnE/rowR8e5UButZn0f4eE8WyWeYTJx4pwgGM+90y0mljMIUiK740f60YZc2xw+4Eeie3Hpxcc5kj7jvDLtEFylZyHOTNdjNLUBpoJDSus4s5Td5olv5JxA8bGERIplyIPyJfzeBUNOKjBopG8oxE8gcAhXaOwgkutJPWJQtvxhnUrRaTpMC1lcXkHN9f/V/zkRVm1R7f7Vlt7vg+2BncJoNPO42yTpnYo6LOj5arV3ry4ply6lPvPFB1KiBeQAfFV+OlOy6m/hfsUtoMi8L4wX9yvcqq2WqdE6gUmiaWl54UrchYE8DZaK1LKyHR6OgwsfyxMo7vhap5WIS1SqwA1dh7xIXGM5phXtqbTE9zu8VpQCplmPmh1jKBFWQAqQgHn4cLaRT9g+hh9LV6io+iIHZkIPutPJpM=
-  file: dist/*
-  on:
-    repo: dot-browser/travis-builds
-    prerelease: true
