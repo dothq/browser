@@ -4,20 +4,29 @@ sudo: enabled
 dist: trusty
 env:
   global:
-    - ELECTRON_CACHE=$HOME/.cache/electron
-    - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+  - ELECTRON_CACHE=$HOME/.cache/electron
+  - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 install:
-  - npm i
+- npm i
 cache:
   directories:
-    - node_modules
-    - $HOME/.cache/electron
-    - $HOME/.cache/electron-builder
-    - $HOME/.npm/_prebuilds
+  - node_modules
+  - "$HOME/.cache/electron"
+  - "$HOME/.cache/electron-builder"
+  - "$HOME/.npm/_prebuilds"
 os:
-  - linux
-  - osx
-  - windows
-
+- linux
+- osx
+- windows
 script:
-  - npm run compile
+- npm run compile
+deploy:
+  provider: releases
+  api_key:
+    secure: dYwiBWVeHMJHY36EVQQffJbyQfmCTtzUnMBboNgnTdnaWLN1CJbhuaubmoFdk35trKBZSeCUWVDOrpzsglBgYGpsa1TA+0aygY/cfWzBJ9SnPtTN3miygmZ4GaYtN4k6pOZFIGIB9st+bK2k7y/v4tRLcYdclw7Vc8tB/njqUHossXy4/k18IYacBZqw4tDslZa21PU8ROq+48Ghhr/vtO5ofVxAimgFHQNKnvWJZVFn9Uv0Cz7jZGI+uwRqOvz7MWXjw5wjZngnE/rowR8e5UButZn0f4eE8WyWeYTJx4pwgGM+90y0mljMIUiK740f60YZc2xw+4Eeie3Hpxcc5kj7jvDLtEFylZyHOTNdjNLUBpoJDSus4s5Td5olv5JxA8bGERIplyIPyJfzeBUNOKjBopG8oxE8gcAhXaOwgkutJPWJQtvxhnUrRaTpMC1lcXkHN9f/V/zkRVm1R7f7Vlt7vg+2BncJoNPO42yTpnYo6LOj5arV3ry4ply6lPvPFB1KiBeQAfFV+OlOy6m/hfsUtoMi8L4wX9yvcqq2WqdE6gUmiaWl54UrchYE8DZaK1LKyHR6OgwsfyxMo7vhap5WIS1SqwA1dh7xIXGM5phXtqbTE9zu8VpQCplmPmh1jKBFWQAqQgHn4cLaRT9g+hh9LV6io+iIHZkIPutPJpM=
+  file:
+    - "dist/Dot Setup 2.2.0.exe"
+    - "dist/Dot-2.2.0.dmg"
+  file: 'dist/Dot Setup 2.2.0.exe'
+  on:
+    repo: dot-browser/desktop
