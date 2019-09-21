@@ -50,7 +50,7 @@
     "category": "Network",
     "target": [
       {
-        "target": "AppImage",
+        "target": ["deb", "rpm", "tar.gz"],
         "arch": ["ia32", "x64"]
       }
     ]
