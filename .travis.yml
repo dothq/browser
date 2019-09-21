@@ -7,10 +7,6 @@ env:
   - ELECTRON_CACHE=$HOME/.cache/electron
   - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 after_success:
-  - echo "NPM DEBUG LOG BELOW"
-  - echo "--------------------------------------------------------------------"
-  - cat $HOME/.npm/*-debug.log
-  - echo "--------------------------------------------------------------------"
   - wget https://raw.githubusercontent.com/k3rn31p4nic/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
   - ./send.sh success $DISCORD_HOOK
@@ -18,6 +14,9 @@ after_failure:
   - wget https://raw.githubusercontent.com/k3rn31p4nic/travis-ci-discord-webhook/master/send.sh
   - chmod +x send.sh
   - ./send.sh failure $DISCORD_HOOK
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y libc6-dev-i386
 install:
 - npm i
 cache:
