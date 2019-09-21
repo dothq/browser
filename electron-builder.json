@@ -50,9 +50,17 @@
     "category": "Network",
     "target": [
       {
-        "target": ["deb", "rpm", "tar.gz"],
+        "target": "deb",
         "arch": ["ia32", "x64"]
-      }
+      },
+      {
+        "target": "rpm",
+        "arch": ["ia32", "x64"]
+      },
+      {
+        "target": "tar.gz",
+        "arch": ["ia32", "x64"]
+      },
     ]
   },
   "win": {
