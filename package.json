@@ -143,7 +143,7 @@
 		"register-scheme": "0.0.2",
 		"semantic-ui-react": "^0.86.0",
 		"styled-components": "4.2.0",
-		"tldts": "4.0.6",
+		"tldts": "5.4.0",
 		"unirest": "^0.6.0",
 		"ws": "^7.1.2"
 	}
