@@ -1,11 +1,8 @@
 <p align="center">
-  <img src="https://electronjs.org/app-img/dot/dot-icon-256.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://electronjs.org/app-img/dot/dot-icon-256.png" width="200" height="200" align="center"/>
+  <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
 </p>
 
-
 <div align="center">
-<h1 align="center">Dot</h1>
-
 <p align="center">
     <a href="/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
@@ -41,32 +38,46 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
 ## 👾 Features
 
-* **🚫 Built in ad-blocker** - We all hate ads, so we releave the pain by having a ad-blocker built in. No downloads, nothing.
-* **💬 Fancy Discord Rich Presence** - Tell your Discord Friends what page you're looking at, or if you're just Idle on the home screen...
-* **💻 Minimalistic UI** - Forget Chrome, bye bye Firefox, see you later IE and Edge. Our UI beats all of them.
-* **🖼 Dot Overlay** - A neat little overlay, which has bookmarks, a search box, downloads and more.
-* **🚩 Tab Groups** - Organize your tabs in a breeze.
-* **🎨 Customization** - Edit your Dot experience to what you want.
-* **🔖 Bookmarks & History** - Keep track of your favourite pages and your browsing history.
-* **😀 Clean Emojis** - We use Twitter's emojiset in Dot, instead of those boring native emojis.
-* **🌥 Weather Updates** - A little card on the overlay telling you about the weather in your location.
-* **⚪ Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
+- **🚫 Built in ad-blocker** - We all hate ads, so we relieve the pain by having an ad-blocker built in. No downloads, nothing.
+- **💬 Fancy Discord Rich Presence** - Tell your Discord Friends what page you're looking at, or if you're just Idle on the home screen...
+- **💻 Minimalistic UI** - Forget Chrome, bye bye Firefox, see you later IE and Edge. Our UI beats all of them.
+- **🖼 Dot Overlay** - A neat little overlay, which has bookmarks, a search box, downloads and more.
+- **🚩 Tab Groups** - Organize your tabs in a breeze.
+- **🎨 Customization** - Edit your Dot experience to what you want.
+- **🔖 Bookmarks & History** - Keep track of your favourite pages and your browsing history.
+- **😀 Clean Emojis** - We use Twitter's emojiset in Dot, instead of those boring native emojis.
+- **🌥 Weather Updates** - A little card on the overlay telling you about the weather in your location.
+- **⚪ Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
 
 ## 💻 Downloads
 
-   ### ✔ Latest Release
-   #### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+### ✔ Latest Release
+
+#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+
+### 🐦 Canary Release
+
+#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/tree/canary)
+
+### 🕒 Next Release
+
+#### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+
+####
 
 ## 🖼 Screenshots
 
 ### Browsing a webpage
-[![Browsing](https://i.imgur.com/kw8f5KB.png)]()
+
+![](https://i.imgur.com/kw8f5KB.png)
 
 ### The Launcher
-[![Launcher](https://i.imgur.com/ZMVBnNm.png)]()
+
+![](https://i.imgur.com/ZMVBnNm.png)
 
 ### Rich Presence
-[![RP](https://i.imgur.com/Nsekr6W.png)]()
+
+![](https://i.imgur.com/Nsekr6W.png)
 
 ## ⚙ Build Information
 
@@ -80,24 +91,26 @@ For support, join our support discord server.
 
 ## 🧱 Built With
 
-* [NodeJS](https://nodejs.org/en/) - The server environment
-* [Electron](https://electronjs.org/) - Desktop App environment
-* [Wexond](https://github.com/wexond/wexond) - Software used to create browser
-* [npm](https://npmjs.org) - Installing packages
-* [mobx-react](https://github.com/mobxjs/mobx-react) - For building observers
-* [Material UI Icons](https://material.io/) - For the icons
-* [nersent-ui](https://github.com/nersent/nersent-ui) - Material design framework
+- [NodeJS](https://nodejs.org/en/) - The server environment
+- [Electron](https://electronjs.org/) - Desktop App environment
+- [Wexond](https://github.com/wexond/wexond) - Software used to create browser
+- [npm](https://npmjs.org) - Installing packages
+- [mobx-react](https://github.com/mobxjs/mobx-react) - For building observers
+- [Material UI Icons](https://material.io/) - For the icons
+- [nersent-ui](https://github.com/nersent/nersent-ui) - Material design framework
 
 ## 🖋 Authors
 
-* **Ender** *aka EnderDev* - *Main Developer* - [EnderDev](https://github.com/EnderDev)
-* **Lee** *aka LOHT03* - *Main Developer* - [LOHT03](https://github.com/LOHT03)
-* **Geek** *aka GamingGeek* - *Main Developer* - [GamingGeek](https://github.com/GamingGeek)
+- **Ender** _aka EnderDev_ - _Main Developer_ - [EnderDev](https://github.com/EnderDev)
+- **Lee** _aka LOHT03_ - _Main Developer_ - [LOHT03](https://github.com/LOHT03)
+- **Geek** _aka GamingGeek_ - _Main Developer_ - [GamingGeek](https://github.com/GamingGeek)
 
 ## 🤵 License
 
 This project is licensed under the GPL-3.0 License - see the [LICENSE](LICENSE) file for details
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdot-browser%2Fdesktop?ref=badge_large)
+
 ## 💝 Acknowledgments
 
-* Thanks to the authors of Wexond for this wonderful piece of kit.
+- Thanks to the authors of Wexond for this wonderful piece of kit.
