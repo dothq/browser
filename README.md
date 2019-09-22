@@ -25,14 +25,11 @@
     <a href="/blob/master/LICENSE">
         <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
     </a>
-    <p align="center">
-      <a href="https://depfu.com/repos/dot-browser/desktop?project_id=8779">
-          <img src="https://depfu.com/badges/836035fc1904bd3d40649259c0788daf/stats.svg" alt="Dependencies">
-      </a>
-    </p>
 </p>
 
 A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
+
+![](https://i.imgur.com/kw8f5KB.png)
 
 </div>
 

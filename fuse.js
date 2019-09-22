@@ -11,7 +11,7 @@ const {
 const { spawn } = require('child_process');
 
 const production = process.env.NODE_ENV === 'dev' ? false : true;
-var startURI = ''
+var startURI = '';
 
 // if(process.argv[0]) {
 //   process.argv.forEach(i => { if(new URL(i).hostname) { startURI = i } });
@@ -95,14 +95,18 @@ const renderer = (name, port) => {
 
   const app = fuse
     .bundle(name)
-    .instructions(`> [${name == 'app' ? '/renderer' : '/renderer/externals'}/${name}/index.tsx]`);
+    .instructions(
+      `> [${
+        name == 'app' ? '/renderer' : '/renderer/externals'
+      }/${name}/index.tsx]`,
+    );
 
   if (!production) {
     if (name === 'app') {
       fuse.dev({ httpServer: true }, server => {
         const app = server.httpServer.app;
-        app.get("/undefined", function(req, res) {
-          res.send("undefined");
+        app.get('/undefined', function(req, res) {
+          res.send('undefined');
         });
       });
 
@@ -137,8 +141,30 @@ const preload = name => {
   fuse.run();
 };
 
+const web = name => {
+  const cfg = getRendererConfig('browser@es5');
+
+  cfg.plugins.push(getWebIndexPlugin(name));
+
+  cfg.plugins.push(JSONPlugin());
+  cfg.plugins.push(getCopyPlugin());
+  cfg.plugins.push(StyledComponentsPlugin());
+
+  const fuse = FuseBox.init(cfg);
+
+  const app = fuse
+    .bundle(name)
+    .instructions(`> [/renderer/externals/${name}/app/index.tsx]`);
+
+  if (!production) {
+    app.watch();
+    fuse.run();
+  }
+};
+
 renderer('app', 4444);
 renderer('menu', 4444);
+web('newtab');
 preload('view-preload');
 preload('background-preload');
 main();

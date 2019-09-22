@@ -13,10 +13,13 @@ import { PermissionDialog } from './permissions';
 import { MenuList } from './menu';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
+console.log(JSON.parse(readFileSync(getPath('dot-options.json'), 'utf8')))
+
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
   public menu: MenuList = new MenuList(this);
+  public theme: 'dark' | 'light' = JSON.parse(readFileSync(getPath('dot-options.json'), 'utf8')).theme;
 
   constructor() {
     super({
@@ -26,7 +29,6 @@ export class AppWindow extends BrowserWindow {
       width: 1280,
       height: 720,
       show: false,
-      backgroundColor: '#1c1c1c',
       title: 'Dot Browser',
       titleBarStyle: 'hiddenInset',
       maximizable: false,
@@ -40,6 +42,8 @@ export class AppWindow extends BrowserWindow {
       },
       icon: resolve(app.getAppPath(), '/icon.png'),
     });
+
+    this.setBackgroundColor(this.theme == 'dark' ? '#171717' : '#e4e4e4')
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
     app.commandLine.appendSwitch('--enable-transparent-visuals');
