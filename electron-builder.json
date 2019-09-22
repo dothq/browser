@@ -58,7 +58,7 @@
         "arch": ["ia32", "x64"]
       },
       {
-        "target": "tar.gz",
+        "target": "tar.xz",
         "arch": ["ia32", "x64"]
       }
     ]
