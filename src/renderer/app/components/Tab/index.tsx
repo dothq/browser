@@ -69,10 +69,8 @@ const onMouseLeave = () => {
 };
 
 const onClick = () => {
-  if (store.overlay.visible == false) {
+  if (store.canToggleMenu) {
     store.overlay.visible = true;
-  } else {
-    store.overlay.visible = false;
   }
 };
 
@@ -198,7 +196,11 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       )}
       {tab.loading && (
         <Preloader
-          color={tab.background}
+          color={
+            store.options.theme == 'dark'
+              ? shadeBlendConvert(0.8, tab.background)
+              : tab.background
+          }
           thickness={6}
           size={16}
           style={{ minWidth: 16 }}
@@ -207,7 +209,9 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       <StyledTitle
         style={{
           color: tab.isSelected
-            ? tab.background
+            ? store.options.theme == 'dark'
+              ? shadeBlendConvert(0.8, tab.background)
+              : tab.background
             : `rgba(0, 0, 0, ${transparency.text.high})`,
         }}
       >
@@ -240,7 +244,10 @@ const Overlay = observer(({ tab }: { tab: Tab }) => {
       hovered={tab.isHovered}
       style={{
         backgroundColor: tab.isSelected
-          ? shadeBlendConvert(0.8, tab.background)
+          ? shadeBlendConvert(
+              store.options.theme == 'light' ? 0.8 : 0.5,
+              tab.background,
+            )
           : 'rgba(0, 0, 0, 0.04)',
       }}
     />
@@ -265,7 +272,10 @@ export default observer(({ tab }: { tab: Tab }) => {
         selected={tab.isSelected}
         style={{
           backgroundColor: tab.isSelected
-            ? shadeBlendConvert(0.85, tab.background)
+            ? shadeBlendConvert(
+                store.options.theme == 'light' ? 0.85 : 0.3,
+                tab.background,
+              )
             : 'transparent',
         }}
       >

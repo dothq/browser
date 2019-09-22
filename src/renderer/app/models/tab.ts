@@ -173,6 +173,12 @@ export class Tab {
     this.position = this.tabGroup.nextPosition++;
     this.tempPosition = this.position;
 
+    if (new URL(url).hostname === 'localhost') {
+      const newURL = new URL(url);
+      newURL.hostname = '127.0.0.1';
+      url = newURL.href;
+    }
+
     ipcRenderer.send('browserview-create', { tabId: this.id, url });
 
     ipcRenderer.once(`browserview-created-${this.id}`, (e: any, id: number) => {
@@ -249,8 +255,11 @@ export class Tab {
             if (!palette.Vibrant) return;
 
             if (getColorBrightness(palette.Vibrant.hex) < 170) {
-              console.log(palette);
-              this.background = palette.Vibrant.hex;
+              console.log(palette.DarkVibrant.hex, palette.Vibrant.hex);
+              this.background =
+                store.options.theme == 'light'
+                  ? palette.Vibrant.hex
+                  : palette.DarkVibrant.hex;
             } else {
               this.background = colors.blue['500'];
             }

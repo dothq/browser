@@ -48,6 +48,7 @@ export class View extends BrowserView {
       }
     };
 
+
     this.webContents.on('context-menu', (e, params) => {
       let menuItems: Electron.MenuItemConstructorOptions[] = [];
 
