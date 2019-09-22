@@ -66,7 +66,7 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
 ### Browsing a webpage
 
-
+![](https://i.imgur.com/kw8f5KB.png)
 
 ### The Launcher
 
