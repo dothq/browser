@@ -31,7 +31,8 @@
     "installerIcon": "icon.ico",
     "uninstallerIcon": "icon.ico",
     "installerHeader": "./app-icons/dot-header.bmp",
-    "installerHeaderIcon": "icon.ico"
+    "installerHeaderIcon": "icon.ico",
+    "include": "static/setup.nsh"
   },
   "nsisWeb": {
     "oneClick": false,
@@ -42,7 +43,8 @@
     "installerIcon": "icon.ico",
     "uninstallerIcon": "icon.ico",
     "installerHeader": "./app-icons/dot-header.bmp",
-    "installerHeaderIcon": "icon.ico"
+    "installerHeaderIcon": "icon.ico",
+    "include": "static/setup.nsh"
   },
   "linux": {
     "category": "Network",
