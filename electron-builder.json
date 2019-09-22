@@ -54,6 +54,10 @@
       {
         "target": "rpm",
         "arch": ["ia32", "x64"]
+      },
+      {
+        "target": "tar.gz",
+        "arch": ["ia32", "x64"]
       }
     ]
   },
