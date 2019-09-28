@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
-  [dotbrowser.me](https://dotbrowser.me)
+  <a href="https://dotbrowser.me">dotbrowser.me</a>
 </p>
 
 <div align="center">
