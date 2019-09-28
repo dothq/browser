@@ -30,7 +30,7 @@
 
 A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
 
-![](https://dotbrowser.me/static/Dot-youtube-dark.png)
+![](https://dotbrowser.me/static/Dot-landing.png)
 
 </div>
 
