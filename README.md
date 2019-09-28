@@ -46,19 +46,11 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 - **🌥 Weather Updates** - A little card on the overlay telling you about the weather in your location.
 - **⚪ Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
 
-## 💻 Downloads
+## 🦄 Downloads
 
-### ✔ Latest Release
-
-#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
-
-### 🐦 Canary Release
-
-#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/tree/canary)
-
-### 🕒 Next Release
-
-#### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+|  [<img src="https://i.imgur.com/POJjnum.png" alt="Windows" width="24px" height="24px" />]()</br> Windows  |          [<img src="https://i.imgur.com/V0YkvU5.png" alt="Mac" width="24px" height="24px" />]()</br> Mac          |         [<img src="https://i.imgur.com/khCS5Ll.png" alt="Linux" width="24px" height="24px" />]()</br> Linux         |
+|:---------:|:---------------------:|:---------------------:|
+| [Download](https://edge.dotbrowser.me/stable/download/windows) | [Download](https://edge.dotbrowser.me/stable/download/mac) | [Download](https://edge.dotbrowser.me/stable/download/linux) |
 
 ####
 
