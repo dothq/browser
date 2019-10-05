@@ -5,25 +5,25 @@
 
 <div align="center">
 <p align="center">
-    <a href="/releases">
+    <a href="https://github.com/dot-browser/desktop/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
     </a>
-    <a href="/releases">
+    <a href="https://github.com/dot-browser/desktop/releases">
         <img src="http://hits.dwyl.io/dot-browser/desktop.svg" alt="Hits">
     </a>
     <a href="https://invite.gg/dot">
         <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
     </a>
-    <a href="/">
+    <a href="https://github.com/dot-browser/desktop">
         <img src="https://travis-ci.org/dot-browser/desktop.svg?branch=master" alt="Travis">
     </a>
-    <a href="/issues">
+    <a href="https://github.com/dot-browser/desktop/issues">
         <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" alt="Issues Open">
     </a>
-    <a href="/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
+    <a href="https://github.com/dot-browser/desktop/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
         <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" alt="Issues Closed">
     </a>
-    <a href="/blob/master/LICENSE">
+    <a href="/LICENSE">
         <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
     </a>
 </p>
