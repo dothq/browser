@@ -11,9 +11,21 @@ import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
 import { MenuList } from './menu';
+import { DotOptions } from '~/renderer/app/models/dotoptions';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
-console.log(JSON.parse(readFileSync(getPath('dot-options.json'), 'utf8')))
+try {
+  if (existsSync(getPath('dot-options.json'))) {
+  }
+} catch (e) {
+  writeFileSync(
+    getPath('dot-options.json'),
+    JSON.stringify({
+      toggleDotLauncher: true,
+      searchEngine: 'google',
+    } as DotOptions),
+  );
+}
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
