@@ -110,7 +110,7 @@
     "electron-process-manager": "^0.7.1",
     "electron-push-receiver": "^2.1.2",
     "electron-updater": "^4.1.2",
-    "electron-util": "^0.12.1",
+    "electron-util": "^0.12.2",
     "express": "^4.17.1",
     "file-loader": "^4.2.0",
     "file-type": "10.11.0",
