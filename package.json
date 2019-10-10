@@ -158,7 +158,7 @@
     "register-scheme": "0.0.2",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "4.2.0",
-    "tldts": "4.0.6",
+    "tldts": "5.5.0",
     "ts-loader": "^6.2.0",
     "unirest": "^0.6.0",
     "url-loader": "^2.2.0",
