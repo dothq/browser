@@ -62,7 +62,7 @@
   ],
   "devDependencies": {
     "@types/axios": "0.14.0",
-    "@types/chrome": "0.0.82",
+    "@types/chrome": "0.0.89",
     "@types/gsap": "1.20.2",
     "@types/leveldown": "4.0.0",
     "@types/levelup": "3.1.0",
