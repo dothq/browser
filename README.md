@@ -1,35 +1,36 @@
 <p align="center">
   <img src="https://i.imgur.com/Gdko6yP.png" style="display: block;margin-left: auto;margin-right: auto;" data-canonical-src="https://i.imgur.com/Gdko6yP.png" width="300" height="50" align="center"/>
+  <br><a href="https://dotbrowser.me">dotbrowser.me</a>
 </p>
 
 <div align="center">
 <p align="center">
-    <a href="/releases">
+    <a href="https://github.com/dot-browser/desktop/releases">
         <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
     </a>
-    <a href="/releases">
+    <a href="https://github.com/dot-browser/desktop/releases">
         <img src="http://hits.dwyl.io/dot-browser/desktop.svg" alt="Hits">
     </a>
     <a href="https://invite.gg/dot">
         <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
     </a>
-    <a href="/">
+    <a href="https://github.com/dot-browser/desktop">
         <img src="https://travis-ci.org/dot-browser/desktop.svg?branch=master" alt="Travis">
     </a>
-    <a href="/issues">
+    <a href="https://github.com/dot-browser/desktop/issues">
         <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" alt="Issues Open">
     </a>
-    <a href="/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
+    <a href="https://github.com/dot-browser/desktop/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
         <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" alt="Issues Closed">
     </a>
-    <a href="/blob/master/LICENSE">
+    <a href="/LICENSE">
         <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
     </a>
 </p>
 
 A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
 
-![](https://i.imgur.com/kw8f5KB.png)
+![](https://dotbrowser.me/static/Dot-landing.png)
 
 </div>
 
@@ -46,19 +47,11 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 - **🌥 Weather Updates** - A little card on the overlay telling you about the weather in your location.
 - **⚪ Dot Account** - Login to your Dot Account to keep your bookmarks, history, settings and location saved.
 
-## 💻 Downloads
+## 🦄 Downloads
 
-### ✔ Latest Release
-
-#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
-
-### 🐦 Canary Release
-
-#### [![](https://img.shields.io/github/release/dot-browser/desktop.svg?style=flat-square)](https://github.com/dot-browser/desktop/tree/canary)
-
-### 🕒 Next Release
-
-#### [![](https://img.shields.io/static/v1?label=next%20release&message=v3.0.0&color=blue&style=flat-square)](https://github.com/dot-browser/desktop/releases/latest)
+|  [<img src="https://i.imgur.com/POJjnum.png" alt="Windows" width="24px" height="24px" />]()</br> Windows  |          [<img src="https://i.imgur.com/V0YkvU5.png" alt="Mac" width="24px" height="24px" />]()</br> Mac          |         [<img src="https://i.imgur.com/khCS5Ll.png" alt="Linux" width="24px" height="24px" />]()</br> Linux         |
+|:---------:|:---------------------:|:---------------------:|
+| [Download](https://edge.dotbrowser.me/stable/download/windows) | [Download](https://edge.dotbrowser.me/stable/download/mac) | [Download](https://edge.dotbrowser.me/stable/download/linux) |
 
 ####
 

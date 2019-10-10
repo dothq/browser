@@ -22,6 +22,21 @@ import { Omnibox } from './essentials/omnibox';
 import { LocationBar } from './location-bar';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 
+import { DotOptions } from '~/renderer/app/models/dotoptions';
+
+try {
+  if (existsSync(getPath('dot-options.json'))) {
+  }
+} catch (e) {
+  writeFileSync(
+    getPath('dot-options.json'),
+    JSON.stringify({
+      toggleDotLauncher: true,
+      searchEngine: 'google',
+    } as DotOptions),
+  );
+}
+
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
