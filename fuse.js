@@ -49,7 +49,7 @@ const getWebConfig = name => {
   return {
     homeDir: `src/`,
     cache: !production,
-    target: 'server@esnext',
+    target: 'browser@es6',
     output: `build/$name.js`,
     modulesFolder: [
       'node_modules/react',

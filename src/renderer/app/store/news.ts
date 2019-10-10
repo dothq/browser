@@ -16,7 +16,7 @@ export class NewsStore {
   public shouldLoadNews: boolean = false;
 
   public async load() {
-    const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
+    const data = await fetch(`https://api.dotbrowser.me/v${store.api}/news`);
     const json = await data.json();
 
     this.shouldLoadNews = false;
@@ -68,7 +68,7 @@ export class NewsStore {
   }
 
   public async loadAll() {
-    const data = await fetch(`https://dot.ender.site/v${store.api}/news`);
+    const data = await fetch(`https://api.dotbrowser.me/v${store.api}/news`);
     const json = await data.json();
 
     this.shouldLoadNews = false;

@@ -1,17 +1,15 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '../../constants';
-import { appWindow } from '../../'
+import { appWindow } from '../../';
 import console = require('console');
 import { remote } from 'electron';
 
 function width() {
-  
-  if(remote.screen.getPrimaryDisplay().size.width >= 1720) {
-    return "6px"
-  }
-  else {
-    return "13px"
+  if (remote.screen.getPrimaryDisplay().size.width >= 1720) {
+    return '6px';
+  } else {
+    return '13px';
   }
 }
 
@@ -41,7 +39,7 @@ export const OverlayScrollbarStyle = `
 
 export const Panel = styled.div`
   height: 100%;
-  background-color: #00000079
+  background-color: #00000079;
 `;
 
 export const StyledOverlay = styled.div`
@@ -51,7 +49,7 @@ export const StyledOverlay = styled.div`
   flex-flow: column;
   align-items: center;
   left: 0;
-  top: 0;
+  top: 1px;
   bottom: 0;
   right: 0;
   z-index: 9999;
@@ -108,7 +106,7 @@ export const HeaderArrow = styled.div`
   height: 18px;
   width: 18px;
   background-image: url(${icons.forward});
-  filter: var(--general-element);;
+  filter: var(--general-element);
 `;
 
 export const DropArrow = styled.div`
@@ -117,17 +115,17 @@ export const DropArrow = styled.div`
   height: 32px;
   width: 32px;
   background-image: url(${icons.down});
-  filter: var(--general-element);;
+  filter: var(--general-element);
   border-radius: 50%;
   transition: 0.3s background-color;
 
   &:hover {
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
   }
 
   ${({ visible }: { visible?: any }) => css`
-    display: ${visible ? 'auto' : 'none'}
-  `} 
+    display: ${visible ? 'auto' : 'none'};
+  `}
 `;
 
 export const IconButton = styled.div`
@@ -135,18 +133,18 @@ export const IconButton = styled.div`
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  filter: var(--general-element);;
+  filter: var(--general-element);
   border-radius: 50%;
   transition: 0.3s background-color;
 
   &:hover {
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
   }
 
   ${({ icon, visible }: { icon: any; visible: any }) => css`
     display: ${visible ? 'auto' : 'none'}
     background-image: url(${icon});
-  `}  
+  `}
 `;
 
 export const LanguageButton = styled.a`
@@ -154,17 +152,17 @@ export const LanguageButton = styled.a`
   margin-left: 8px;
   height: 32px;
   width: 32px;
-  filter: var(--general-element);;
+  filter: var(--general-element);
   border-radius: 50%;
   transition: 0.3s background-color;
 
   &:hover {
-    background-color: rgba(0,0,0,0.15);
+    background-color: rgba(0, 0, 0, 0.15);
   }
 
   ${({ icon }: { icon: any }) => css`
     background-image: url(${icon});
-  `}  
+  `}
 `;
 
 export const Separator = styled.div`
@@ -180,7 +178,7 @@ export const Section = styled.div`
   border-radius: 30px;
   color: var(--general-title);
   overflow: hidden;
-  box-shadow: 5px 5px 33px 10px rgba(0,0,0,0.21)
+  box-shadow: 5px 5px 33px 10px rgba(0, 0, 0, 0.21);
 `;
 
 export const Actions = styled.div`

@@ -6,6 +6,7 @@ import { viewBm } from '../components/Toolbar';
 import { ViewManager } from '~/main/view-manager';
 import { View } from '../../../main/view';
 import console = require('console');
+import { defaultTabOptions } from './../constants/tabs';
 
 let lastSuggestion: string;
 
@@ -38,7 +39,7 @@ export class OverlayStore {
   public canSuggest = false;
 
   @observable
-  private _visible = true;
+  private _visible = false;
 
   @observable
   public isNewTab = true;
@@ -119,6 +120,10 @@ export class OverlayStore {
 
   constructor() {
     window.addEventListener('keydown', this.onWindowKeyDown);
+
+    setTimeout(() => {
+      store.tabs.addTab(defaultTabOptions);
+    }, 1000);
   }
 
   public onWindowKeyDown = (e: KeyboardEvent) => {

@@ -8,10 +8,7 @@ export const Line = styled.div`
   z-index: 2;
   position: absolute;
   margin-top: 38px;
-
-  ${({ overlay }: { overlay: boolean }) => css`
-    display: ${overlay ? 'none' : 'block'};
-  `}
+  display: block;
 `;
 
 export const Screenshot = styled.div`

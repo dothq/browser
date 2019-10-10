@@ -48,7 +48,7 @@ export class UserStore {
         email,
         password
       }
-      const data = await fetch(`https://dot.ender.site/api/session/l`, {
+      const data = await fetch(`https://api.dotbrowser.me/api/session/l`, {
         method: 'post',
         body: JSON.stringify(body),
         headers: { 'content-type': 'application/json', 'X-Dot-Version': `${remote.app.getVersion()}`, 'X-Operating-System': `${platform()}` }
@@ -62,7 +62,7 @@ export class UserStore {
           this.avatar = json.credentials.avatar
           this.loggedin = true;
 
-          const experiments = await fetch(`https://dot.ender.site/api/v${store.api}/experiments/users`, {
+          const experiments = await fetch(`https://api.dotbrowser.me/api/v${store.api}/experiments/users`, {
             method: 'get',
             headers: { 'content-type': 'application/json' }
           });

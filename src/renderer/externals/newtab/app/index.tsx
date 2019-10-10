@@ -25,7 +25,6 @@ import {
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { SearchBox } from './components/SearchBox';
-import { icons } from '../../../constants/icons';
 import Dropdown from './components/Dropdown';
 import { DropdownItem } from './components/Dropdown/style';
 import { DropdownSeperator } from './components/Dropdown/style';
@@ -40,6 +39,7 @@ import Skeleton from 'react-skeleton-loader';
 const moment = require('moment');
 import SimpleStorage from 'react-simple-storage';
 import store from '~/renderer/app/store';
+import { icons } from '~/renderer/app/constants';
 
 const openCustomizeModal = () => {};
 

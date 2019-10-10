@@ -103,7 +103,7 @@ export class Store {
   };
 
   public async init() {
-    const data = await fetch('https://dot.ender.site/api/v0/version');
+    const data = await fetch('https://api.dotbrowser.me/api/v0/version');
     const json = await data.json();
 
     this.api = json.api;

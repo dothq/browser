@@ -36,7 +36,7 @@ export class LocaleStore {
   }
 
   public async loadLangPacks() {
-    const data = await fetch(`https://dot.ender.site/api/v${store.api}/languages/packs/latest`);
+    const data = await fetch(`https://api.dotbrowser.me/api/v${store.api}/languages/packs/latest`);
     const json = await data.json();
   }
 

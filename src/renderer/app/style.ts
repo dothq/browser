@@ -97,9 +97,9 @@ export const Style = css`
 
   .theme-light {
     --inactive-toolbar-color: #bababa;
-    --active-toolbar-color: #e4e4e4;
+    --active-toolbar-color: #ffffff;
 
-    --overlay-default: #e4e4e4;
+    --overlay-default: #ffffff;
     --overlay-text-color: rgba(0,0,0,0.8);
     --overlay-logo-filter: invert(100%);
 

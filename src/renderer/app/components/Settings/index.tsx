@@ -273,7 +273,7 @@ async function avatarChange() {
         var oData = new FormData(form);
 
         var oReq = new XMLHttpRequest();
-        oReq.open("POST", `https://dot.ender.site/api/v${store.api}/upload/avatar`, true);
+        oReq.open("POST", `https://api.dotbrowser.me/api/v${store.api}/upload/avatar`, true);
         oReq.setRequestHeader("Authorization", `DotUser ${password} at ${email}`)
         oReq.send(oData);
         oReq.onload = function() {
