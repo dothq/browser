@@ -133,7 +133,7 @@
     "nersent-ui": "^3.5.3",
     "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.0",
-    "node-notifier": "^5.4.1",
+    "node-notifier": "^6.0.0",
     "node-vibrant": "3.2.0-alpha",
     "notistack": "^0.8.9",
     "phin": "^3.4.0",
