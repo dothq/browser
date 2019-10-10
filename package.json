@@ -84,7 +84,7 @@
     "tslint": "5.15.0",
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
-    "typescript": "3.3.3",
+    "typescript": "3.6.3",
     "typescript-plugin-styled-components": "1.4.2",
     "webpack-messages": "^2.0.4"
   },
