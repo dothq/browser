@@ -164,6 +164,10 @@ app.on('ready', async () => {
     appWindow.omnibox.open();
   });
 
+  ipcMain.on('bskmsg-test', (event: any, data: any) => {
+    console.log('recieved some data', data);
+  });
+
   app.on(
     'certificate-error',
     (event, webContents, link, error, certificate, callback) => {},
