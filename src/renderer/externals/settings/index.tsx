@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
-import NewTab from './app/index';
+import { Settings } from './app/index';
 
 const App = () => {
-  return <NewTab />;
+  return <Settings />;
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));

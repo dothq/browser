@@ -45,6 +45,43 @@ const getConfig = (target, name) => {
   };
 };
 
+const getWebConfig = name => {
+  return {
+    homeDir: `src/`,
+    cache: !production,
+    target: 'server@esnext',
+    output: `build/$name.js`,
+    modulesFolder: [
+      'node_modules/react',
+      'node_modules/react-dom',
+      'node_modules/react-style-tag',
+      'node_modules/react-cookies',
+      'node_modules/electron',
+      'node_modules/fs',
+    ],
+    useTypescriptCompiler: true,
+    sourceMaps: !production,
+    plugins: [
+      EnvPlugin({ NODE_ENV: production ? 'production' : 'development' }),
+      production &&
+        QuantumPlugin({
+          bakeApiIntoBundle: name,
+          treeshake: true,
+          removeExportsInterop: false,
+          uglify: {
+            es6: true,
+          },
+        }),
+    ],
+    alias: {
+      '~': '~/',
+    },
+    log: {
+      showBundledFiles: false,
+    },
+  };
+};
+
 const getRendererConfig = (target, name) => {
   const cfg = Object.assign({}, getConfig(target, name), {
     sourceMaps: !production,
@@ -142,10 +179,9 @@ const preload = name => {
 };
 
 const web = name => {
-  const cfg = getRendererConfig('browser@es5');
+  const cfg = getWebConfig(name);
 
   cfg.plugins.push(getWebIndexPlugin(name));
-
   cfg.plugins.push(JSONPlugin());
   cfg.plugins.push(getCopyPlugin());
   cfg.plugins.push(StyledComponentsPlugin());
@@ -154,17 +190,16 @@ const web = name => {
 
   const app = fuse
     .bundle(name)
-    .instructions(`> [/renderer/externals/${name}/app/index.tsx]`);
+    .instructions(`> renderer/externals/${name}/index.tsx`);
 
-  if (!production) {
-    app.watch();
-    fuse.run();
-  }
+  app.hmr({ reload: true }).watch();
+  fuse.run();
 };
 
-renderer('app', 4444);
-renderer('menu', 4444);
 web('newtab');
+web('settings');
+web('search');
+renderer('app', 4444);
 preload('view-preload');
 preload('background-preload');
 main();

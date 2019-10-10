@@ -14,7 +14,6 @@ import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
 import { loadExtensions } from './extensions';
-import { ExtensibleSession } from 'electron-extensions';
 
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
@@ -61,7 +60,7 @@ try {
     app.getPath('userData') + '\\notification_sound.mp3',
   );
   const request = get(
-    `https://dot.ender.site/api/v0/static/notification.mp3`,
+    `https://api.dotbrowser.me/api/v0/static/notification.mp3`,
     function(response: any) {
       response.pipe(notifFile);
     },
@@ -115,6 +114,7 @@ app.commandLine.appendSwitch('auto-detect', 'false');
 import { LocationBar } from './location-bar';
 import { PermissionDialog } from './permissions';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
+import { Omnibox } from './essentials/omnibox';
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
@@ -130,7 +130,6 @@ app.on('ready', async () => {
   modal.setup();
 
   appWindow = new AppWindow();
-  locationBar = new LocationBar();
 
   /**
     
@@ -161,6 +160,10 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
+  ipcMain.on('open-omnibox', () => {
+    appWindow.omnibox.open();
+  });
+
   app.on(
     'certificate-error',
     (event, webContents, link, error, certificate, callback) => {},
@@ -188,7 +191,7 @@ app.on('ready', async () => {
     }
   });
 
-  ipcMain.on('menu-view', (e: IpcMessageEvent, name: boolean) => {
+  ipcMain.on('menu-view', (event: IpcMessageEvent, name: boolean) => {
     if (name == true) {
       appWindow.menu.showWindow();
     } else {

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import store from '../../store';
 import { Button } from '~/renderer/components/Button';
-import { Sections, BookmarkSection, Image } from './style';
+import { Sections, Image } from './style';
 import BookmarkC from '../Bookmark';
 import { Bookmark } from '../../models/bookmark';
 import { icons } from '../../constants';
@@ -27,7 +27,6 @@ const onScroll = (e: any) => {
 };
 
 export const AdBlock = observer(() => {
-
   return (
     <Container
       onClick={preventHiding}
@@ -37,15 +36,13 @@ export const AdBlock = observer(() => {
       }
     >
       <Scrollable onScroll={onScroll} ref={scrollRef}>
-        <NavigationDrawer
-          title="Ad Blocker"
-          onBackClick={onBackClick}
-        />
+        <NavigationDrawer title="Ad Blocker" onBackClick={onBackClick} />
         <Sections>
-          <Content style={{
-              margin: '100px'
-          }}>
-          </Content>
+          <Content
+            style={{
+              margin: '100px',
+            }}
+          />
         </Sections>
       </Scrollable>
     </Container>
