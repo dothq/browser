@@ -1,8 +1,18 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 
+export const Style = css`
+  .theme-light {
+    --default: #ffffff;
+  }
+
+  .theme-dark {
+    --default: #171717;
+  }
+`;
+
 export const StyledNewTab = styled.div`
-  background-color: #ffffff;
+  background-color: var(--default);
   height: 100vh;
   user-select: none;
 
@@ -35,7 +45,7 @@ export const Hero = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-top: 75px;
-  background-color: white;
+  background-color: var(--default);
 `;
 
 export const Logo = styled.div`
@@ -59,7 +69,7 @@ export const IronBar = styled.div`
   ${({ isFixed }: { isFixed: boolean }) => css`
     position: ${isFixed == true ? 'fixed' : 'absolute'};
     z-index: ${isFixed == true ? '9999' : 'unset'};
-    background-color: ${isFixed == true ? 'white' : 'transparent'};
+    background-color: ${isFixed == true ? 'var(--default)' : 'transparent'};
     box-shadow: ${isFixed == true ? '0px 5px 20px 0px #0000000d' : 'none'};
   `}
 `;

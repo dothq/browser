@@ -164,6 +164,11 @@ app.on('ready', async () => {
     appWindow.omnibox.open();
   });
 
+  ipcMain.on('get-settings-sync', e => {
+    console.log(e);
+    e.returnValue = file.toObject();
+  });
+
   ipcMain.on('bskmsg-test', (event: any, data: any) => {
     console.log('recieved some data', data);
   });

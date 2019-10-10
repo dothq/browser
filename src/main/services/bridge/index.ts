@@ -7,7 +7,6 @@ export class Brisk {
   constructor() {
     const app = express();
 
-    app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
 
     app.listen(3467, function() {
@@ -52,16 +51,14 @@ export class Brisk {
         'X-Requested-With,content-type',
       );
 
-      ipcRenderer.send(
-        `bskmsg-${req.params.channel}`,
-        JSON.stringify(req.body),
-      );
+      ipcRenderer.send(`bskmsg-${req.params.channel}`, req.body);
 
-      res.send({ channel: req.params.channel, data: JSON.stringify(req.body) });
+      res.json({ channel: req.params.channel, data: req.body });
     });
   }
 
   public send(channel: string, data: any) {
+    console.log(JSON.stringify(data));
     fetch(`http://localhost:3467/messenger/send/${channel}`, {
       method: 'POST',
       body: JSON.stringify(data),

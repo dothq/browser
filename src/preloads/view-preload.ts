@@ -1,4 +1,4 @@
-import { ipcRenderer, webFrame } from 'electron';
+import { ipcRenderer, remote, webFrame } from 'electron';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { getAPI } from '~/shared/utils/extensions';
@@ -52,6 +52,14 @@ window.addEventListener('mouseup', e => {
     goForward();
   }
 });
+
+if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
+  console.log('executing js');
+  webFrame.executeJavaScript('window', false, (w: any) => {
+    console.log('executed js');
+    w.settings = ipcRenderer.sendSync('get-settings-sync');
+  });
+}
 
 let beginningScrollLeft: number = null;
 let beginningScrollRight: number = null;
@@ -113,7 +121,6 @@ ipcRenderer.on('scroll-touch-end', () => {
 
   resetCounters();
 });
-
 
 // const runStylesheet = (url: string, code: string) => {
 //   const wrapper = `((code) => {

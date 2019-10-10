@@ -165,6 +165,12 @@ class NewTab extends React.Component {
   componentDidMount() {
     this.grabNews();
 
+    if (window.settings.uiTheme == 'light') {
+      document.body.classList.add('theme-light');
+    } else {
+      document.body.classList.add('theme-dark');
+    }
+
     document.addEventListener('scroll', () => {
       if (window.scrollY > 290) {
         if (this.state.ironBarFixed != true) {
@@ -235,7 +241,11 @@ class NewTab extends React.Component {
 
   render() {
     return (
-      <StyledNewTab>
+      <StyledNewTab
+        className={
+          window.settings.uiTheme == 'light' ? 'theme-light' : 'theme-dark'
+        }
+      >
         <SimpleStorage parent={this} />
         <IronBar isFixed={this.state.ironBarFixed}>
           {this.state.ironBarFixed == true && (
