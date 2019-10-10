@@ -138,7 +138,7 @@
     "node-fetch": "^2.6.0",
     "node-notifier": "^5.4.1",
     "node-vibrant": "3.2.0-alpha",
-    "notistack": "^0.8.9",
+    "notistack": "^0.9.2",
     "phin": "^3.4.0",
     "pixi-sound": "^3.0.3",
     "pretty-bytes": "^5.3.0",
