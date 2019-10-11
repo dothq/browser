@@ -122,7 +122,7 @@
     "icojs": "0.12.3",
     "is-online": "^8.2.0",
     "javascript-time-ago": "^2.0.2",
-    "leveldown": "5.0.1",
+    "leveldown": "5.3.0",
     "levelup": "4.0.1",
     "lifeguard-api": "^1.0.4",
     "lru-cache": "^5.1.1",
