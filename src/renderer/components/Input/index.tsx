@@ -106,7 +106,17 @@ export class Inputfield extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { color, label, placeholder, icon, inputType, style, fontColor, rows, cols } = this.props;
+    const {
+      color,
+      label,
+      placeholder,
+      icon,
+      inputType,
+      style,
+      fontColor,
+      rows,
+      cols,
+    } = this.props;
     const { activated, focused, error } = this.state;
 
     const hasLabel = label != null && label !== '';

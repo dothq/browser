@@ -59,6 +59,14 @@ if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
     console.log('executed js');
     w.settings = ipcRenderer.sendSync('get-settings-sync');
   });
+
+  window.addEventListener(
+    'message',
+    event => {
+      ipcRenderer.send(`dot-${event.data}`);
+    },
+    false,
+  );
 }
 
 let beginningScrollLeft: number = null;

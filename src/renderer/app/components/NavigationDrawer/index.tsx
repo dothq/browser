@@ -18,7 +18,7 @@ const onBack = (cb: (e?: React.MouseEvent<HTMLDivElement>) => void) => (
     cb(e);
   }
 
-  store.overlay.currentContent = 'default';
+  store.overlay.visible = false;
 };
 
 export const NavigationDrawer = ({
@@ -44,7 +44,12 @@ export const NavigationDrawer = ({
       </Header>
       {search && (
         <Search>
-          <Input placeholder={`${store.locale.lang.standard[0].search_placeholder} ${title}`} onInput={onSearchInput} />
+          <Input
+            placeholder={`${
+              store.locale.lang.standard[0].search_placeholder
+            } ${title}`}
+            onInput={onSearchInput}
+          />
         </Search>
       )}
       <MenuItems>{children}</MenuItems>

@@ -165,8 +165,13 @@ app.on('ready', async () => {
   });
 
   ipcMain.on('get-settings-sync', e => {
-    console.log(e);
-    e.returnValue = file.toObject();
+    const settings = json(resolve(homedir()) + '/dot/dot-options.json');
+
+    e.returnValue = settings.toObject();
+  });
+
+  ipcMain.on('dot-open-settings', e => {
+    appWindow.webContents.send('open-settings');
   });
 
   ipcMain.on('bskmsg-test', (event: any, data: any) => {

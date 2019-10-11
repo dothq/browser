@@ -4,10 +4,46 @@ import { centerIcon } from '~/shared/mixins';
 export const Style = css`
   .theme-light {
     --default: #ffffff;
+    --input-color: black;
+    --icon-filter: invert(0);
+    --logo-filter: invert(1);
+    --box-shadow: 0px 5px 20px 0px #0000000d;
+    --default-text: rgb(43, 43, 43);
+    --omnibox-background: white;
+    --omnibox-border: 1px solid #afafaf;
+    --tile-hover: #00000014;
+
+    --card-background: rgb(255, 255, 255);
+    --card-heading: rgba(0, 0, 0, 0.54);
+    --card-title: rgba(0, 0, 0, 0.87);
+    --card-description: rgba(0, 0, 0, 0.54);
+    --card-attribution: rgba(0, 0, 0, 0.54);
+
+    --skeleton-color: rgb(203, 203, 203);
   }
 
   .theme-dark {
     --default: #171717;
+    --input-color: white;
+    --icon-filter: invert(1);
+    --logo-filter: invert(0);
+    --box-shadow: 0px 5px 20px 0px #ffffff0d;
+    --default-text: darkgray;
+    --omnibox-background: #171717;
+    --omnibox-border: 1px solid #3a3a3a;
+    --tile-hover: #ffffff1a;
+
+    --card-background: rgb(7, 7, 7);
+    --card-heading: rgba(255, 255, 255, 0.54);
+    --card-title: rgba(255, 255, 255, 0.87);
+    --card-description: rgba(255, 255, 255, 0.54);
+    --card-attribution: rgba(255, 255, 255, 0.54);
+
+    --skeleton-color: rgb(119, 119, 119);
+  }
+
+  body {
+    background-color: var(--default);
   }
 `;
 
@@ -15,26 +51,6 @@ export const StyledNewTab = styled.div`
   background-color: var(--default);
   height: 100vh;
   user-select: none;
-
-  &::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  &::-webkit-scrollbar-track {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: #0005;
-    border: 2px solid white;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #0008;
-  }
 `;
 
 export const Hero = styled.div`
@@ -51,7 +67,7 @@ export const Hero = styled.div`
 export const Logo = styled.div`
   width: var(--width);
   height: var(--width);
-  filter: invert(1);
+  filter: var(--logo-filter);
   background: url(https://dotbrowser.me/static/icon.png) 100% 100% /
     var(--width) no-repeat;
   display: block;
@@ -70,7 +86,7 @@ export const IronBar = styled.div`
     position: ${isFixed == true ? 'fixed' : 'absolute'};
     z-index: ${isFixed == true ? '9999' : 'unset'};
     background-color: ${isFixed == true ? 'var(--default)' : 'transparent'};
-    box-shadow: ${isFixed == true ? '0px 5px 20px 0px #0000000d' : 'none'};
+    box-shadow: ${isFixed == true ? 'var(--box-shadow)' : 'none'};
   `}
 `;
 
@@ -124,7 +140,7 @@ export const Title = styled.h1`
   -ms-letter-spacing: normal;
   letter-spacing: normal;
   font-size: 1.575rem;
-  color: rgb(43, 43, 43);
+  color: var(--default-text);
   margin: 0px 0px 20px 13px;
   text-align: left;
   opacity: 0.9;
@@ -188,7 +204,7 @@ export const Card = styled.div`
   width: 344px;
   min-height: 72px;
   height: auto;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--card-background);
   margin-bottom: 24px;
   box-shadow: rgba(60, 64, 67, 0.08) 0px 1px 1px 0px,
     rgba(60, 64, 67, 0.16) 0px 1px 3px 1px;
@@ -218,7 +234,7 @@ export const CardDescription = styled.div`
 `;
 
 export const CardHeading = styled.div`
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--card-heading);
   font-family: Roboto;
   font-weight: 400;
   letter-spacing: 0.15rem;
@@ -228,7 +244,7 @@ export const CardHeading = styled.div`
 
 export const CardTitle = styled.div`
   margin-top: 12px;
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--card-title);
   font-family: Roboto;
   font-weight: 400;
   letter-spacing: 0.009375rem;
@@ -245,7 +261,7 @@ export const CardTitle = styled.div`
 export const CardLongDescription = styled.div`
   font-size: 14px;
   margin-top: 12px;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--card-description);
 `;
 
 export const CardAttribution = styled.div`
@@ -253,7 +269,7 @@ export const CardAttribution = styled.div`
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  color: rgba(0, 0, 0, 0.54);
+  color: var(--card-attribution);
 `;
 
 export const CardSourceIcon = styled.div`
@@ -264,6 +280,7 @@ export const CardSourceIcon = styled.div`
   transition: opacity 0.2s;
   background-position: center center;
   background-repeat: no-repeat;
+  border-radius: 3px;
 
   ${({ icon }: { icon: any }) => css`
     background-image: url(${icon});
@@ -286,7 +303,7 @@ export const SectionTitle = styled.p`
   -ms-letter-spacing: normal;
   letter-spacing: normal;
   font-size: 1.575rem;
-  color: rgb(43, 43, 43);
+  color: var(--default-text);
   margin: 20px 0px 20px 70px;
   text-align: left;
   opacity: 0.9;

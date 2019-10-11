@@ -45,7 +45,7 @@ export const StyledTile = styled.div`
   max-width: 124.5px;
 
   &:hover {
-    background-color: #00000014;
+    background-color: var(--tile-hover);
   }
 `;
 
@@ -69,7 +69,7 @@ export const TileName = styled.div`
   -webkit-line-clamp: 1;
   font-size: 13px;
   text-align: center;
-  color: black;
+  color: var(--input-color);
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;

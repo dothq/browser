@@ -4,7 +4,7 @@ import { icons } from '~/renderer/app/constants/icons';
 
 export const StyledSearchBox = styled.div`
   z-index: 2;
-  background-color: white;
+  background-color: var(--omnibox-background);
   border-radius: 50px;
   display: flex;
   flex-flow: column;
@@ -13,7 +13,7 @@ export const StyledSearchBox = styled.div`
   transition: 0.4s height;
   margin: 0 auto 32px auto;
   width: 600px;
-  border: 1px solid #afafaf;
+  border: var(--omnibox-border);
 
   ${({ isFixed }: { isFixed: boolean }) => css`
     position: ${isFixed == true ? 'fixed' : 'unset'};
@@ -36,6 +36,7 @@ export const SearchIcon = styled.div`
   min-width: 18px;
   margin-left: 16px;
   background-image: url(${icons.search});
+  filter: var(--icon-filter);
 `;
 
 export const Input = styled.input`
@@ -48,7 +49,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  color: black;
+  color: var(--input-color);
   margin-left: 42px;
   margin-right: 16px;
   font-family: Roboto;

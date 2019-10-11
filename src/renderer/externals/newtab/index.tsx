@@ -5,15 +5,8 @@ import NewTab from './app/index';
 import { Style } from './app/style';
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`${Style}`;
-
 const App = () => {
-  return (
-    <div>
-      <GlobalStyle />
-      <NewTab />
-    </div>
-  );
+  return <NewTab />;
 };
 
 ReactDOM.render(<App />, document.getElementById('app'));

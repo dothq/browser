@@ -282,6 +282,21 @@ export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
       {store.user.loggedin == true && <LoginSnackbar />}
+      <Container
+        visible={
+          store.overlay.currentContent === 'default' && store.overlay.visible
+        }
+      >
+        <Scrollable ref={store.overlay.scrollRef} id="home">
+          <Content>
+            <Image
+              src={icons.logo}
+              center
+              style={{ width: '250px', filter: 'var(--overlay-logo-filter)' }}
+            />
+          </Content>
+        </Scrollable>
+      </Container>
       <History />
       <Bookmarks />
       <Extensions />

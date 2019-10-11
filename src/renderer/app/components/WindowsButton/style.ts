@@ -12,7 +12,6 @@ export const Button = styled.div`
   height: 100%;
   width: 45px;
   min-width: 45px;
-  margin-right: 1px;
   position: relative;
   transition: 0.2s background-color;
   -webkit-app-region: no-drag;
@@ -25,9 +24,8 @@ export const Button = styled.div`
   }
 
   ${({ visible }: ButtonProps) => css`
-    display: ${visible ? 'auto' : 'none'}
+    display: ${visible ? 'auto' : 'none'};
   `};
-
 `;
 
 interface IconProps {

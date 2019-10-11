@@ -21,6 +21,7 @@ import {
   CardTimestamp,
   SectionTitle,
   IronBar_Left,
+  Style,
 } from './style';
 import * as React from 'react';
 import PropTypes from 'prop-types';
@@ -40,8 +41,11 @@ const moment = require('moment');
 import SimpleStorage from 'react-simple-storage';
 import store from '~/renderer/app/store';
 import { icons } from '~/renderer/app/constants';
+import { createGlobalStyle } from 'styled-components';
 
-const openCustomizeModal = () => {};
+const openSettings = () => {
+  window.postMessage('open-settings', 'http://127.0.0.1:4444/newtab.html');
+};
 
 export const FeedCard = ({
   category,
@@ -97,32 +101,30 @@ export const SkeletonCard = () => {
           <Skeleton
             widthRandomness={0}
             width={'344px'}
-            color={'#cbcbcb'}
+            color={'var(--skeleton-color)'}
             borderRadius={'0px'}
-            animated={false}
           />
         </CardImage>
         <CardDescription>
           <CardHeading>
-            <Skeleton color={'#cbcbcb'} animated={false} />
+            <Skeleton color={'var(--skeleton-color)'} />
           </CardHeading>
           <CardTitle>
-            <Skeleton color={'#cbcbcb'} animated={false} />
+            <Skeleton color={'var(--skeleton-color)'} />
           </CardTitle>
           <CardLongDescription>
-            <Skeleton count={5} color={'#cbcbcb'} animated={false} />
+            <Skeleton count={5} color={'var(--skeleton-color)'} />
           </CardLongDescription>
           <CardAttribution>
             <CardSourceIcon icon={'transparent'}>
               <Skeleton
                 widthRandomness={0}
                 width={'16px'}
-                color={'#cbcbcb'}
-                animated={false}
+                color={'var(--skeleton-color)'}
               />
             </CardSourceIcon>
             <CardTimestamp>
-              <Skeleton color={'#cbcbcb'} animated={false} />
+              <Skeleton color={'var(--skeleton-color)'} />
             </CardTimestamp>
           </CardAttribution>
         </CardDescription>
@@ -146,6 +148,8 @@ export const SkeletonFeed = () => {
     </Columns>
   );
 };
+
+const GlobalStyle = createGlobalStyle`${Style}`;
 
 class NewTab extends React.Component {
   public list: any = [];
@@ -246,14 +250,18 @@ class NewTab extends React.Component {
           window.settings.uiTheme == 'light' ? 'theme-light' : 'theme-dark'
         }
       >
-        <SimpleStorage parent={this} />
+        <GlobalStyle />
+        <SimpleStorage
+          parent={this}
+          blacklist={['news', 'newsLoaded', 'ironBarFixed']}
+        />
         <IronBar isFixed={this.state.ironBarFixed}>
           {this.state.ironBarFixed == true && (
             <IronBar_Left>
               <img
                 src={icons.logo}
                 style={{
-                  filter: 'invert(1)',
+                  filter: 'var(--logo-filter)',
                   width: '38px',
                   transform: 'scale(1.3)',
                 }}
@@ -262,12 +270,16 @@ class NewTab extends React.Component {
           )}
           <IronBar_Right>
             <ToolbarButton
-              icon={icons.edit}
+              icon={icons.settings}
               size={20}
-              onClick={openCustomizeModal}
-              style={{ marginRight: '5px' }}
+              onClick={openSettings}
+              style={{ marginRight: '5px', filter: 'var(--icon-filter)' }}
             />
-            <ToolbarButton icon={icons.user} size={25} />
+            <ToolbarButton
+              icon={icons.user}
+              size={25}
+              style={{ filter: 'var(--icon-filter)' }}
+            />
           </IronBar_Right>
         </IronBar>
         <Hero>
@@ -284,6 +296,7 @@ class NewTab extends React.Component {
                     ? 'rotate(-180deg)'
                     : 'rotate(0deg)'
                 }`,
+                filter: 'var(--icon-filter)',
                 transition: '0.5s transform',
               }}
               onClick={() => this.toggleVisibility('topSites')}
@@ -306,6 +319,7 @@ class NewTab extends React.Component {
                     ? 'rotate(-180deg)'
                     : 'rotate(0deg)'
                 }`,
+                filter: 'var(--icon-filter)',
                 transition: '0.5s transform',
               }}
               onClick={() => this.toggleVisibility('feed')}

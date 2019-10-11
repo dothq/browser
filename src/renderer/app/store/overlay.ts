@@ -96,26 +96,11 @@ export class OverlayStore {
   public set searchBoxValue(val: string) {
     this._searchBoxValue = val;
 
-    if (this._searchBoxValue.substring(0, 8) == 'file:///') {
-      this.inputRef.current.value = val.split('file:///')[1];
-    } else {
-      this.inputRef.current.value = val;
-    }
-
     var cleanURL = encodeURI(
       remote.app.getAppPath().replace(/\\/g, '/') +
         '\\static\\pages'.replace(/\\/g, '/'),
     );
     console.debug(cleanURL);
-
-    if (this.inputRef.current.value.includes(cleanURL) == true) {
-      this.inputRef.current.value =
-        'dot://' +
-        this.inputRef.current.value
-          .split(cleanURL)[1]
-          .split('/')[1]
-          .split('.html')[0];
-    }
   }
 
   constructor() {
@@ -124,6 +109,11 @@ export class OverlayStore {
     setTimeout(() => {
       store.tabs.addTab(defaultTabOptions);
     }, 1000);
+
+    ipcRenderer.on('open-settings', e => {
+      this.visible = true;
+      this.currentContent = 'settings';
+    });
   }
 
   public onWindowKeyDown = (e: KeyboardEvent) => {
@@ -198,8 +188,6 @@ export class OverlayStore {
       store.suggestions.list = [];
       lastSuggestion = undefined;
 
-      this.inputRef.current.value = '';
-
       this._visible = val;
       this.isNewTab = false;
       this.currentContent = 'default';
@@ -212,16 +200,8 @@ export class OverlayStore {
           .callViewMethod('webContents.getURL')
           .then(async (url: string) => {
             this.searchBoxValue = url;
-            this.inputRef.current.focus();
-            this.inputRef.current.select();
           });
       } else {
-        this.inputRef.current.value = '';
-
-        setTimeout(() => {
-          this.inputRef.current.focus();
-          this.inputRef.current.select();
-        });
       }
 
       this._visible = val;
@@ -230,23 +210,23 @@ export class OverlayStore {
 
   public suggest() {
     const { suggestions } = store;
-    const input = this.inputRef.current;
+    // const input = this.inputRef.current;
 
-    if (this.canSuggest) {
-      autoComplete(input.value, lastSuggestion);
-    }
+    // if (this.canSuggest) {
+    //   autoComplete(input.value, lastSuggestion);
+    // }
 
-    suggestions.load(input).then(suggestion => {
-      lastSuggestion = suggestion;
-      if (this.canSuggest) {
-        autoComplete(
-          input.value.substring(0, input.selectionStart),
-          suggestion,
-        );
-        this.canSuggest = false;
-      }
-    });
+    // suggestions.load(input).then(suggestion => {
+    //   lastSuggestion = suggestion;
+    //   if (this.canSuggest) {
+    //     autoComplete(
+    //       input.value.substring(0, input.selectionStart),
+    //       suggestion,
+    //     );
+    //     this.canSuggest = false;
+    //   }
+    // });
 
-    suggestions.selected = 0;
+    // suggestions.selected = 0;
   }
 }
