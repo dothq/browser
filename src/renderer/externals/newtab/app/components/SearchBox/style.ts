@@ -4,7 +4,7 @@ import { icons } from '~/renderer/app/constants/icons';
 
 export const StyledSearchBox = styled.div`
   z-index: 2;
-  background-color: var(--omnibox-background);
+  background-color: white;
   border-radius: 50px;
   display: flex;
   flex-flow: column;

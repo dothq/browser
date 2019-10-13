@@ -18,6 +18,7 @@ export class LocationBar extends BrowserWindow {
       fullscreenable: false,
       transparent: true,
       skipTaskbar: true,
+      focusable: false,
       minHeight: 0,
       acceptFirstMouse: true,
       title: 'Location Host',

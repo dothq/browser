@@ -8,9 +8,7 @@ interface CloseProps {
   visible: boolean;
 }
 
-export const Image = styled.img`
-
-`;
+export const Image = styled.img``;
 
 export const SearchInput = styled.input`
   color: #000;
@@ -24,13 +22,13 @@ export const SearchInput = styled.input`
 
   &::placeholder {
     color: rgb(33, 150, 243);
-    font-family: Roboto
+    font-family: Roboto;
   }
 
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
     width: ${visible ? 'auto' : '0px'};
-  `};  
+  `};
 `;
 
 export const StyledClose = styled.div`
@@ -113,10 +111,11 @@ export const StyledTitle = styled.div`
 
 export const StyledIcon = styled.div`
   height: 16px;
-  min-width: 16px;
-  transition: 0.2s opacity, 0.2s min-width;
+  transition: 0.2s opacity, 0.5s min-width;
   ${centerIcon()};
   ${({ isIconSet }: { isIconSet: boolean }) => css`
+    min-width: ${isIconSet ? '16px' : '0px'};
+    margin-left: ${isIconSet ? '12px' : '0px'};
     opacity: ${isIconSet ? 1 : 0.6};
   `};
 `;
@@ -131,7 +130,6 @@ export const StyledContent = styled.div`
   z-index: 2;
   align-items: center;
   display: flex;
-  margin-left: 12px;
   ${({ collapsed }: ContentProps) => css`
     max-width: calc(100% - ${24 + (collapsed ? 24 : 0)}px);
   `};

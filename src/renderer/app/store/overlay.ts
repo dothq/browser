@@ -82,15 +82,7 @@ export class OverlayStore {
 
   @computed
   public get searchBoxValue() {
-    this.getScreenshot();
-
     return this._searchBoxValue;
-  }
-
-  public getScreenshot() {
-    if (store.tabs.selectedTab) {
-      ipcRenderer.send('capture-page', store.tabs.selectedTab.id);
-    }
   }
 
   public set searchBoxValue(val: string) {

@@ -167,12 +167,10 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             role: 'undo',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\undo.png'),
             accelerator: 'CmdOrCtrl+Z',
           },
           {
             role: 'redo',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\redo.png'),
             accelerator: 'CmdOrCtrl+Y',
           },
           {
@@ -186,12 +184,10 @@ export class View extends BrowserView {
             role: 'copy',
             accelerator: 'CmdOrCtrl+C',
             enabled: params.selectionText.length >= 1,
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png'),
           },
           {
             role: 'paste',
             accelerator: 'CmdOrCtrl+V',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\paste.png'),
           },
           {
             role: 'selectAll',
@@ -212,7 +208,6 @@ export class View extends BrowserView {
           {
             role: 'copy',
             accelerator: 'CmdOrCtrl+C',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\copy.png'),
           },
           {
             label: `Search the web for "${truncateStr(
@@ -220,7 +215,6 @@ export class View extends BrowserView {
               16,
               '...',
             )}"`,
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\search.png'),
             click: () => {
               var url = `https://google.com/search?q=${params.selectionText}`;
 
@@ -240,7 +234,6 @@ export class View extends BrowserView {
           {
             label: 'Back              ',
             accelerator: 'Alt+Left',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\bck.png'),
             enabled: this.webContents.canGoBack(),
             click: () => {
               this.webContents.goBack();
@@ -249,7 +242,6 @@ export class View extends BrowserView {
           {
             label: 'Forward         ',
             accelerator: 'Alt+Right',
-            icon: resolve(app.getAppPath() + '\\static\\app-icons\\fwd.png'),
             enabled: this.webContents.canGoForward(),
             click: () => {
               this.webContents.goForward();
@@ -258,9 +250,6 @@ export class View extends BrowserView {
           {
             label: 'Refresh',
             accelerator: 'F5',
-            icon: resolve(
-              app.getAppPath() + '\\static\\app-icons\\refresh.png',
-            ),
             click: () => {
               this.webContents.reload();
             },
@@ -290,7 +279,6 @@ export class View extends BrowserView {
           label: 'Inspect',
           accelerator: 'F12',
           enabled: this.webContents.getURL().includes('static/pages/') == false,
-          icon: resolve(app.getAppPath() + '\\static\\app-icons\\dev.png'),
           click: () => {
             if (this.webContents.getURL()) {
               this.webContents.inspectElement(params.x, params.y);
@@ -397,7 +385,6 @@ export class View extends BrowserView {
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
-        screenshot: this.getScreenshot(),
       });
     });
 
@@ -615,7 +602,6 @@ export class View extends BrowserView {
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
-        screenshot: this.getScreenshot(),
       });
     });
 
@@ -638,16 +624,16 @@ export class View extends BrowserView {
 
     this.webContents.on('update-target-url', (e, url) => {
       var parentBounds = appWindow.getBounds();
-      locationBar.show();
+      appWindow.locationBar.show();
       if (appWindow.isMaximized() == true) {
-        locationBar.setBounds({
+        appWindow.locationBar.setBounds({
           x: parentBounds.x + 3,
           y: parentBounds.y + parentBounds.height - 35,
           width: parentBounds.width,
           height: 22,
         });
       } else {
-        locationBar.setBounds({
+        appWindow.locationBar.setBounds({
           x: parentBounds.x - 5,
           y: parentBounds.y + parentBounds.height - 26,
           width: parentBounds.width,
@@ -655,7 +641,7 @@ export class View extends BrowserView {
         });
       }
 
-      locationBar.webContents.send('target-url-changed', url);
+      appWindow.locationBar.webContents.send('target-url-changed', url);
     });
 
     (this.webContents as any).addListener(
@@ -706,12 +692,4 @@ export class View extends BrowserView {
 
     sendToAllExtensions(`api-emit-event-webNavigation-${name}`, ...data);
   };
-
-  public async getScreenshot(): Promise<string> {
-    return new Promise(resolve => {
-      this.webContents.capturePage(img => {
-        resolve(img.toDataURL());
-      });
-    });
-  }
 }

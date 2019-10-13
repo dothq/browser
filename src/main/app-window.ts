@@ -139,6 +139,9 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
+      this.viewManager.fixBounds();
+      this.omnibox.hide();
+
       // this.permissionWindow.rearrange();
       // this.menu.hideWindow()
     });
@@ -148,16 +151,22 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
+      this.omnibox.hide();
+
       // this.permissionWindow.rearrange();
       // this.menu.rearrange();
     });
 
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
+      this.viewManager.fixBounds();
+      this.omnibox.hide();
     });
 
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
+      this.viewManager.fixBounds();
+      this.omnibox.hide();
     });
 
     // Update window bounds on resize and on move when window is not maximized.
@@ -166,12 +175,16 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
       this.menu.hideWindow();
+      this.viewManager.fixBounds();
+      this.omnibox.hide();
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
       this.menu.hideWindow();
+      this.viewManager.fixBounds();
+      this.omnibox.hide();
     });
 
     if (
@@ -184,6 +197,7 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
+      this.omnibox.hide();
     };
 
     // const fixPerm = () => {

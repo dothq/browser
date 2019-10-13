@@ -875,52 +875,6 @@ export const Appearance = observer(() => {
           </Buttons>
         </ListItem>
 
-        <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].toggle_dot}</Title>
-          <Buttons style={{ marginLeft: 'auto', marginRight: '-12px' }}>
-            <ToggleSwitchDL />
-          </Buttons>
-        </ListItem>
-
-        <ListItem>
-          <Title style={{ fontSize: 15 }}>Emoji skin tone</Title>
-          <Buttons style={{ marginLeft: 'auto' }}>
-            <IconButton visible={true} onClick={toggleEmojiCtx} icon={store.options.skin} style={{ cursor: 'pointer', filter: 'invert(0)', backgroundSize: '20px', transition: '0.3s all' }} />
-            <ContextMenu visible={store.options.emojiCtx == true} style={{ filter: 'invert(0)', width: '50px' }}>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'default'} onClick={() => store.options.emojiSkin('default')} icon={icons.thumbs_up_default} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'pale'} onClick={() => store.options.emojiSkin('pale')} icon={icons.thumbs_up_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_pale'} onClick={() => store.options.emojiSkin('medium_pale')} icon={icons.thumbs_up_medium_pale} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium'} onClick={() => store.options.emojiSkin('medium')} icon={icons.thumbs_up_medium} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'medium_dark'} onClick={() => store.options.emojiSkin('medium_dark')} icon={icons.thumbs_up_medium_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-              <ContextMenuItem selected={store.options.emojiSkinTone == 'dark'} onClick={() => store.options.emojiSkin('dark')} icon={icons.thumbs_up_dark} style={{ padding: '15px', height: '45px', width: '50.5px' }} invert={true} opac={true}>
-
-              </ContextMenuItem>
-            </ContextMenu>
-          </Buttons>
-        </ListItem>
-
-        <ListItem>
-          <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].appearance[0].temp_type}</Title>
-          <Buttons style={{ marginLeft: 'auto', marginRight: '-17px', display: 'inline-flex' }}>
-            <IconButton visible={true} icon={icons} id="deg-type-cel" onClick={setDTC} style={{ textAlign: 'center', backgroundColor: `${isC}` }}>
-              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°C</span>
-            </IconButton>
-            <IconButton visible={true} id="deg-type-fah" icon={icons} onClick={setDTF} style={{ textAlign: 'center', backgroundColor: `${isF}` }}>
-              <span style={{ lineHeight: '32px', color: 'black', fontWeight: 900, fontFamily: 'roboto' }}>°F</span>
-            </IconButton>
-          </Buttons>
-        </ListItem>
-
       </SettingsSection>
     );
 });

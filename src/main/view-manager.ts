@@ -56,7 +56,7 @@ export class ViewManager {
     );
 
     ipcMain.on('browserview-call', async (e: any, data: any) => {
-      const view = this.views[data.tabId]
+      const view = this.views[data.tabId];
       let scope: any = view;
 
       if (data.scope && data.scope.trim() !== '') {
@@ -71,21 +71,16 @@ export class ViewManager {
           if (result instanceof Promise) {
             result = await result;
           }
-    
+
           if (data.callId) {
             appWindow.webContents.send(
               `browserview-call-result-${data.callId}`,
               result,
             );
           }
-
-        }
-        catch (e) {
-
-        }
+        } catch (e) {}
       }
     });
-
 
     ipcMain.on('browserview-hide', () => {
       this.hideView();
@@ -118,21 +113,23 @@ export class ViewManager {
 
     ipcMain.on('is-light-mode', () => {
       try {
-        var path = nativeImage.createFromPath(resolve(app.getAppPath() + '/static/icon-inverted.png'));
-        appWindow.setIcon(path)
-      }
-      catch(e) {
-        console.debug(e)
+        var path = nativeImage.createFromPath(
+          resolve(app.getAppPath() + '/static/icon-inverted.png'),
+        );
+        appWindow.setIcon(path);
+      } catch (e) {
+        console.debug(e);
       }
     });
 
     ipcMain.on('is-dark-mode', () => {
       try {
-        var path = nativeImage.createFromPath(resolve(app.getAppPath() + '/static/icon.png'));
-        appWindow.setIcon(path)
-      }
-      catch(e) {
-        console.debug(e)
+        var path = nativeImage.createFromPath(
+          resolve(app.getAppPath() + '/static/icon.png'),
+        );
+        appWindow.setIcon(path);
+      } catch (e) {
+        console.debug(e);
       }
     });
   }
@@ -151,6 +148,18 @@ export class ViewManager {
     appWindow.setBrowserView(null);
     for (const key in this.views) {
       this.destroy(parseInt(key, 10));
+    }
+  }
+
+  public newTabView() {
+    for (const key in this.views) {
+      if (
+        this.views[key].webContents
+          .getURL()
+          .startsWith('http://127.0.0.1:4444/newtab.html')
+      ) {
+        return this.views[key];
+      }
     }
   }
 

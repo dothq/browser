@@ -1,12 +1,18 @@
-import { BrowserWindow, app, nativeImage, screen, session, ipcMain, ipcRenderer } from 'electron';
+import {
+  BrowserWindow,
+  app,
+  nativeImage,
+  screen,
+  session,
+  ipcMain,
+  ipcRenderer,
+} from 'electron';
 import { resolve } from 'path';
 import { appWindow } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 
 export class PermissionDialog extends BrowserWindow {
-  
   constructor(public appWindow: any) {
-
     super({
       width: 405,
       height: 200,
@@ -14,7 +20,6 @@ export class PermissionDialog extends BrowserWindow {
       resizable: false,
       maximizable: false,
       show: false,
-      alwaysOnTop: true,
       fullscreenable: false,
       skipTaskbar: true,
       transparent: true,
@@ -32,17 +37,19 @@ export class PermissionDialog extends BrowserWindow {
       icon: resolve(app.getAppPath(), '/static/icon.png'),
     });
 
-    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
-    app.commandLine.appendSwitch('auto-detect', 'false')
+    app.commandLine.appendSwitch('auto-detect', 'false');
 
-    this.webContents.loadURL(app.getAppPath() + '/static/pages/dialog/permission.html')
+    this.setParentWindow(this.appWindow);
 
-    if(process.env.ENV == 'dev') {
-      this.webContents.openDevTools({ mode: 'detach'  })
+    this.webContents.loadURL(
+      app.getAppPath() + '/static/pages/dialog/permission.html',
+    );
+
+    if (process.env.ENV == 'dev') {
+      this.webContents.openDevTools({ mode: 'detach' });
     }
-
-
   }
 
   public async requestPermission(
@@ -62,25 +69,33 @@ export class PermissionDialog extends BrowserWindow {
 
       this.webContents.send('request-permission', { name, url, details });
 
-      ipcMain.once('request-permission-result', (e: any, r: boolean, permission: any) => {
-        resolve(r);
-        if(permission == 'http_permission') {
-          appWindow.viewManager.selected.webContents.loadURL(`https://${appWindow.viewManager.selected.webContents.getURL().split("://")[1]}`)
-        }
-      });
+      ipcMain.once(
+        'request-permission-result',
+        (e: any, r: boolean, permission: any) => {
+          resolve(r);
+          if (permission == 'http_permission') {
+            appWindow.viewManager.selected.webContents.loadURL(
+              `https://${
+                appWindow.viewManager.selected.webContents
+                  .getURL()
+                  .split('://')[1]
+              }`,
+            );
+          }
+        },
+      );
 
       ipcMain.once('pls-show', (e: any) => {
         this.show();
         this.setIgnoreMouseEvents(false);
-        this.setOpacity(1)
+        this.setOpacity(1);
       });
-  
+
       ipcMain.once('pls-hide', (e: any) => {
         this.hide();
         this.setIgnoreMouseEvents(false);
-        this.setOpacity(0)
+        this.setOpacity(0);
       });
-
     });
   }
 
@@ -88,5 +103,4 @@ export class PermissionDialog extends BrowserWindow {
     const cBounds = this.appWindow.getContentBounds();
     this.setBounds({ x: cBounds.x, y: cBounds.y + TOOLBAR_HEIGHT } as any);
   }
-
 }

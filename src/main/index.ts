@@ -129,6 +129,13 @@ app.on('ready', async () => {
 
   modal.setup();
 
+  app.commandLine.appendSwitch(
+    'widevine-cdm-path',
+    `${app.getAppPath()}/components/winevinecdm/winevinecdm.dll`,
+  );
+
+  app.commandLine.appendSwitch('widevine-cdm-version', '4.10.1503.4');
+
   appWindow = new AppWindow();
 
   /**
@@ -211,6 +218,11 @@ app.on('ready', async () => {
     } else {
       appWindow.menu.hideWindow();
     }
+  });
+
+  ipcMain.on('transport-settings-push', (event: any, data: any) => {
+    console.log('transporting', data);
+    appWindow.viewManager.newTabView().webContents.send('settings-push', data);
   });
 
   ipcMain.on('window-focus', () => {

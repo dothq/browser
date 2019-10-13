@@ -1,4 +1,4 @@
-import { ipcRenderer, remote, webFrame } from 'electron';
+import { ipcRenderer, remote, webFrame, ipcMain } from 'electron';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { getAPI } from '~/shared/utils/extensions';
@@ -67,6 +67,34 @@ if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
     },
     false,
   );
+
+  ipcRenderer.on('settings-push', (event: any, data: any) => {
+    webFrame.executeJavaScript('window', false, (w: any) => {
+      console.log('recieved settings push from', data);
+      w.settings = ipcRenderer.sendSync('get-settings-sync');
+
+      if (w.settings) {
+        console.log(event.data, w.settings.uiTheme);
+        if (w.settings.uiTheme == 'dark') {
+          console.log('dark');
+          document
+            .getElementById('app')
+            .firstElementChild.classList.remove('theme-light');
+          document
+            .getElementById('app')
+            .firstElementChild.classList.add('theme-dark');
+        } else {
+          console.log('light');
+          document
+            .getElementById('app')
+            .firstElementChild.classList.add('theme-light');
+          document
+            .getElementById('app')
+            .firstElementChild.classList.remove('theme-dark');
+        }
+      }
+    });
+  });
 }
 
 let beginningScrollLeft: number = null;

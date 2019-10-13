@@ -59,6 +59,8 @@ const getWebConfig = name => {
       'node_modules/electron',
       'node_modules/fs',
     ],
+    useSingleBundle: true,
+    dependencies: { ignoreAllExternal: true },
     useTypescriptCompiler: true,
     sourceMaps: !production,
     plugins: [
@@ -77,7 +79,7 @@ const getWebConfig = name => {
       '~': '~/',
     },
     log: {
-      showBundledFiles: false,
+      showBundledFiles: true,
     },
   };
 };

@@ -2,6 +2,7 @@ import { BrowserWindow, app, nativeImage, screen } from 'electron';
 import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
 import { Tab } from '~/renderer/app/models';
+import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
 
 export class Omnibox extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -34,8 +35,15 @@ export class Omnibox extends BrowserWindow {
     }
   }
 
-  public open(tab: Tab) {
+  public open(tab?: Tab) {
     this.show();
+
+    const cBounds = this.appWindow.getContentBounds();
+    console.log(cBounds);
+    this.setBounds({
+      x: cBounds.x + cBounds.width / 2,
+      y: cBounds.y + 42,
+    } as any);
 
     this.webContents.send('tab-content', tab);
   }

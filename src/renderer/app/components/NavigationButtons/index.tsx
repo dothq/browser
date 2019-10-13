@@ -8,7 +8,8 @@ import { StyledContainer, DotLauncher, DotLauncherWrapper } from './style';
 import { Button } from 'react-native';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, MenuItem } from 'electron';
+import { HistoryItem } from './../../models/history-item';
 
 const onBackClick = () => {
   store.tabs.selectedTab.callViewMethod('webContents.goBack');
@@ -24,6 +25,37 @@ const onRefreshClick = () => {
   } else {
     store.tabs.selectedTab.callViewMethod('webContents.reload');
   }
+};
+
+const onBackMouseDown = () => {
+  // setTimeout(() => {
+  //   const menu = remote.Menu.buildFromTemplate([]);
+  //   store.history.items.reverse().some((i: HistoryItem, index: any) => {
+  //     if (index == 12) return true;
+  //     var menuItem = new remote.MenuItem({
+  //       label: i.title,
+  //       type: 'normal',
+  //       click() {
+  //         store.tabs.selectedTab.url = i.url;
+  //       },
+  //     });
+  //     menu.append(menuItem);
+  //   });
+  //   const sep = new remote.MenuItem({ type: 'separator' });
+  //   const history = new remote.MenuItem({
+  //     label: store.locale.lang.history[0].title,
+  //     type: 'normal',
+  //     click() {
+  //       ipcRenderer.send('window-focus');
+  //       store.overlay.visible = true;
+  //       store.overlay.currentContent = 'history';
+  //       store.overlay.scrollRef.current.scrollTop = 0;
+  //     },
+  //   });
+  //   menu.append(sep);
+  //   menu.append(history);
+  //   menu.popup({ y: 40, x: 62 });
+  // }, 400);
 };
 
 const launcherOpen = () => {
@@ -143,6 +175,7 @@ export const NavigationButtons = observer(() => {
           filter: 'var(--toolbar-navigation-filter)',
         }}
         onClick={onBackClick}
+        onMouseDown={onBackMouseDown}
       />
       <ToolbarButton
         disabled={

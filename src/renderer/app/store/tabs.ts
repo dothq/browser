@@ -15,9 +15,10 @@ import {
 
 import HorizontalScrollbar from '~/renderer/app/components/HorizontalScrollbar';
 import store from '.';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer, remote, nativeImage } from 'electron';
 import { extname } from 'path';
 import { checkLightMode } from '../components/App';
+import * as request from 'request';
 
 export class TabsStore {
   @observable
@@ -129,16 +130,20 @@ export class TabsStore {
 
   public getHostname(url: string) {
     var match = url.match(/:\/\/(www[0-9]?\.)?(.[^/:]+)/i);
-    if (match != null && match.length > 2 && typeof match[2] === 'string' && match[2].length > 0) {
+    if (
+      match != null &&
+      match.length > 2 &&
+      typeof match[2] === 'string' &&
+      match[2].length > 0
+    ) {
       return match[2];
-    }
-    else {
-        return null;
+    } else {
+      return null;
     }
   }
 
   public get selectedTab() {
-    if(!store.tabGroups.currentGroup.selectedTabId) {
+    if (!store.tabGroups.currentGroup.selectedTabId) {
       return null;
     }
     return this.getTabById(store.tabGroups.currentGroup.selectedTabId);
@@ -167,16 +172,16 @@ export class TabsStore {
     });
 
     setInterval(function() {
-
-      if(store.tabs.selectedTab) {
-        remote.getCurrentWindow().setTitle(`Dot - ${store.tabs.selectedTab.title}`)
+      if (store.tabs.selectedTab) {
+        remote
+          .getCurrentWindow()
+          .setTitle(`Dot - ${store.tabs.selectedTab.title}`);
+      } else {
+        remote.getCurrentWindow().setTitle(`Dot`);
       }
-      else {
-        remote.getCurrentWindow().setTitle(`Dot`)
-      }
 
-      if(store.tabs.list.length == 0) {
-        remote.getCurrentWindow().setTitle(`Dot`)
+      if (store.tabs.list.length == 0) {
+        remote.getCurrentWindow().setTitle(`Dot`);
       }
     }, 250);
 
@@ -185,7 +190,7 @@ export class TabsStore {
 
   @action
   public openExternalLink(options = defaultTabOptions) {
-    this.addTab(options)
+    this.addTab(options);
     store.overlay.visible = false;
   }
 

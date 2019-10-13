@@ -69,9 +69,7 @@ const onMouseLeave = () => {
 };
 
 const onClick = () => {
-  if (store.canToggleMenu) {
-    store.overlay.visible = true;
-  }
+  ipcRenderer.send('open-omnibox');
 };
 
 const contextMenu = (tab: Tab) => () => {
@@ -81,7 +79,6 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'New tab',
       accelerator: 'CmdOrCtrl+T',
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/add.png'),
       click: () => {
         store.overlay.isNewTab = true;
         store.overlay.visible = true;
@@ -89,7 +86,6 @@ const contextMenu = (tab: Tab) => () => {
     },
     {
       label: 'Navigate here',
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/search.png'),
       click: () => {
         store.overlay.show();
         store.overlay.inputRef.current.focus();
@@ -102,7 +98,6 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'Reload',
       accelerator: 'F5',
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/refresh.png'),
       click: () => {
         tab.callViewMethod('webContents.reload');
       },
@@ -119,7 +114,6 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'Close tab',
       accelerator: 'CmdOrCtrl+W',
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/close.png'),
       click: () => {
         tab.close();
       },
@@ -140,7 +134,6 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'Close tabs from left',
       enabled: store.tabs.list.length != 1,
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/left.png'),
       click: () => {
         for (let i = tabs.indexOf(tab) - 1; i >= 0; i--) {
           tabs[i].close();
@@ -150,7 +143,6 @@ const contextMenu = (tab: Tab) => () => {
     {
       label: 'Close tabs from right',
       enabled: store.tabs.list.length != 1,
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/right.png'),
       click: () => {
         for (let i = tabs.length - 1; i > tabs.indexOf(tab); i--) {
           tabs[i].close();
@@ -188,9 +180,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
         <StyledIcon
           isIconSet={tab.favicon !== ''}
           style={{
-            backgroundImage: `url(${
-              tab.favicon == '' ? icons.globe : tab.favicon
-            })`,
+            backgroundImage: `url(${tab.favicon})`,
           }}
         />
       )}
@@ -203,7 +193,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
           }
           thickness={6}
           size={16}
-          style={{ minWidth: 16 }}
+          style={{ minWidth: 16, marginLeft: '12px' }}
         />
       )}
       <StyledTitle
