@@ -12,7 +12,8 @@
             "search_placeholder": "Search",
             "quit": "Quit",
             "quit_dot": "Quit Dot",
-            "quit_dot_with_version": "Quit Dot {appVersion}"
+            "quit_dot_with_version": "Quit Dot {appVersion}",
+            "test":"test"
         }
     ],
     "languages": [
