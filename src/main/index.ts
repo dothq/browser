@@ -31,6 +31,7 @@ import { makeId } from '~/shared/utils/string';
 import store from '~/renderer/app/store';
 import console = require('console');
 import { get } from 'http';
+import * as isDev from 'electron-is-dev';
 const nativeImage = require('electron').nativeImage;
 const modal = require('electron-modal');
 const json = require('edit-json-file');
@@ -123,15 +124,15 @@ app.on('ready', async () => {
    * Create the main process and location bar sub-process.
    */
 
-  const dir = `${app.getAppPath()}/extensions/developer`;
+  modal.setup();
+
+  const dir = `${process.cwd()}/extensions/developer`;
   console.log(dir);
   BrowserWindow.addDevToolsExtension(dir);
 
-  modal.setup();
-
   app.commandLine.appendSwitch(
     'widevine-cdm-path',
-    `${app.getAppPath()}/components/winevinecdm/winevinecdm.dll`,
+    `${process.cwd()}/components/winevinecdm/winevinecdm.dll`,
   );
 
   app.commandLine.appendSwitch('widevine-cdm-version', '4.10.1503.4');
@@ -207,7 +208,7 @@ app.on('ready', async () => {
   });
 
   ipcMain.on('update-check', () => {
-    if (process.env.ENV !== 'dev') {
+    if (isDev == false) {
       autoUpdater.checkForUpdates();
     }
   });

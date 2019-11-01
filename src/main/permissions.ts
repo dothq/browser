@@ -10,6 +10,7 @@ import {
 import { resolve } from 'path';
 import { appWindow } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
+import * as isDev from 'electron-is-dev';
 
 export class PermissionDialog extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -34,7 +35,7 @@ export class PermissionDialog extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), '/static/icon.png'),
+      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
@@ -44,10 +45,10 @@ export class PermissionDialog extends BrowserWindow {
     this.setParentWindow(this.appWindow);
 
     this.webContents.loadURL(
-      app.getAppPath() + '/static/pages/dialog/permission.html',
+      process.cwd() + '/static/pages/dialog/permission.html',
     );
 
-    if (process.env.ENV == 'dev') {
+    if (isDev) {
       this.webContents.openDevTools({ mode: 'detach' });
     }
   }

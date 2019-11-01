@@ -1,0 +1,205 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Brabhsálaí",
+            "dot_full_with_version": "Dot Brabhsálaí {appVersion}",
+            "button_open": "Oscailte",
+            "button_run": "Rith",
+            "button_send": "Seol",
+            "button_download": "Íoslódáil",
+            "search_placeholder": "Cuardaigh",
+            "quit": "Scoir",
+            "quit_dot": "Scoir Dot",
+            "quit_dot_with_version": "Scoir Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Béarla",
+            "cz": "Seicis",
+            "es": "Spainnis",
+            "de": "Gearmáinis",
+            "fr": "Fraincis",
+            "fi": "Fionlainnis",
+            "ru": "Rúisis",
+            "dk": "Danmhairgis",
+            "no": "Ioruais",
+            "ie": "Gaeilge",
+            "se": "Sualainnis",
+            "pt": "Portaingéilis"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Ag brabhsáil air",
+            "audio_details": "Éisteacht le fuaim ar",
+            "file_details": "Ag féachaint ar chomhad {fileType}",
+            "active_small_text": "Brabhsáil leathanach gréasáin",
+            "idle_small_text": "Díomhaoin",
+            "idle_details": "Dot Brabhsálaí",
+            "large_text": "Dot Brabhsálaí {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Suíomhanna Barr",
+            "dial_bookmarks": "Leabharmharcanna",
+            "overview": "Forbhreathnú",
+            "menu": "Clár",
+            "tab_groups": "Grúpaí Tab",
+            "default_tab_group": "Grúpa nua",
+            "world": "Domhain",
+            "history_bubble": "Stair",
+            "bookmarks_bubble": "Leabharmharcanna",
+            "downloads_bubble": "Íoslódálacha",
+            "settings_bubble": "Socruithe",
+            "extensions_bubble": "Eisínteachtaí",
+            "find_bubble": "Aimsigh",
+            "more_tools_bubble": "Tuilleadh uirlisí",
+            "welcome_snackbar": "Fáilte ar ais, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Cá bhfuil tú ag iarraidh dul inniu?",
+                    "message_2": "Cad ar d'intinn {username}?",
+                    "message_3": "Cuir isteach téarma cuardaigh nó URL chun tús a chur leis.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Cá bhfuil tú ag iarraidh dul inniu?",
+                    "message_2": "Cad ar d'intinn?",
+                    "message_3": "Cuir isteach téarma cuardaigh nó URL chun tús a chur leis.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Maidin mhaith",
+                    "afternoon": "Tráthnóna maith",
+                    "evening": "Tráthnóna maith"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Socruithe",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Add new",
+            "add_new": "Cuir inneall cuardaigh leis",
+            "my_profile": [
+                {
+                    "title": "Mo Phróifíl",
+                    "sign_in_btn": "Sínigh isteach",
+                    "sign_out_btn": "Sínigh amach",
+                    "guest_user": "Aoi"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Dealramh",
+                    "toggle_dot": "Toggle cnaipe Dot",
+                    "search_engine": "Inneall Cuardaigh",
+                    "temp_type": "Cineál teochta",
+                    "guest_user": "Aoi"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Íoslódálacha",
+                    "download_loc": "Íoslódálacha Suíomh"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Turgnaimh Fhorbróirí",
+                    "chromium_dt": "Uirlisí an Fhorbróra Chromium",
+                    "send_test_notif": "Seol fógra tástála",
+                    "open_log": "Oscail comhad loga"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Faoi Dot",
+                    "thanks_message": "Dot bhíothas in ann a bhuíochas sin do",
+                    "wxnd_coffee": "agus ☕.",
+                    "made_in": "A rinneadh i",
+                    "gb_with": "An Bhreatain Mhór le ",
+                    "end": ".",
+                    "developers_title": "Forbróirí",
+                    "beta_testers_title": "Tástálaithe Béite",
+                    "special_thanks_title": "Go raibh maith agat",
+                    "verbose_loaded_fcm": "Seirbhísí fógraithe FCM luchtaithe",
+                    "translators_title": "Aistritheoirí",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
+                    "about_page_btn": "Tabhair cuairt ar an leathanach dífhabhtaithe",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Seol Aiseolas",
+                    "feedback_title": "Seol aiseolas chuig forbróirí",
+                    "bug_report_title": "Oscail tuairisc fabht"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Teangacha",
+                    "download_languages": "Íoslódáil an pacáiste teanga is déanaí"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Stair",
+            "clear_browsing_history": "Sonraí brabhsála soiléire",
+            "sort": [
+                {
+                    "range_all": "Gach",
+                    "range_today": "Inniu",
+                    "range_yesterday": "Inné",
+                    "range_last_week": "An tseachtain seo caite",
+                    "range_last_month": "An mhí seo caite",
+                    "range_older": "Níos sine"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Leabharmharcanna",
+            "import": "Iompórtáil Leabharmharcanna",
+            "export": "Leabharmharcanna Onnmhairithe",
+            "add_bookmark": "Leabharmharc Nua"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Eisínteachtaí"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Faigh sa leathanach",
+            "navigate_back": "Ar ais",
+            "navigate_forward": "Ar aghaidh",
+            "navigate_refresh": "Athnuachan (F5)",
+            "navigate_close": "Dún an cluaisín (Ctrl+W)",
+            "open_dot": "Tosaitheoir Dot Oscailte"
+        }
+    ]
+}

@@ -34,6 +34,7 @@ import { TextField, ButtonBase, DialogActions, Select } from '@material-ui/core'
 import Ripple from '~/renderer/components/Ripple';
 import SelectList, { SelectListItem } from '../SelectList';
 import { SelectOption, SelectContainer } from '../SelectList/style';
+
 var request = require('ajax-request');
 
 var modal = require('electron-modal');
@@ -41,7 +42,7 @@ const { remote } = require('electron')
 const { Tray, app } = remote
 const json = require("edit-json-file");
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
-let allLangs = json(resolve(remote.app.getAppPath() + '/locale/all-locale.json'));
+let allLangs = json(resolve(process.cwd() + '/src/renderer/app/locale/all-locale.json'));
 allLangs = allLangs.toObject();
 const prettyBytes = require('pretty-bytes');
 
@@ -79,7 +80,7 @@ const logout = async () => {
 }
 
 const login = async () => {
-  var si = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\verification\\sign-in.html'), {
+  var si = await modal.open(resolve(process.cwd() + '\\static\\pages\\verification\\sign-in.html'), {
     width: 400,
     height: 600,
     resizable: false,
@@ -892,7 +893,7 @@ export const testNotif = () => {
       title: 'Dot',
       appName: "Dot",
       message: 'Testing Notification',
-      icon: resolve(app.getAppPath() + '\\static\\icon.png'),
+      icon: resolve(process.cwd() + '\\static\\icon.png'),
       sound: true,
       wait: true
     },

@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components';
 import { shadows } from '../../../../shared/mixins/shadows';
-import opacity from '../../../../shared/mixins/opacity';
-import * as typography from '../../../../shared/mixins/typography';
 import { popUp } from './keyframes';
 
 export const Root = styled.div`
@@ -28,17 +26,12 @@ export const Root = styled.div`
   `};
 `;
 
-export const Image = styled.img`
-
-`;
+export const Image = styled.img``;
 
 export const Content = styled.div`
   margin-left: 16px;
   flex: 1;
-  ${typography.body2()};
-  color: rgba(255, 255, 255, ${opacity.light.primaryText});
+  color: rgba(255, 255, 255, 0.6);
 `;
 
-export const Actions = styled.div`
-
-`;
+export const Actions = styled.div``;

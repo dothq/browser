@@ -1,0 +1,206 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot selain",
+            "dot_full_with_version": "Dot selain {appVersion}",
+            "button_open": "Avaa",
+            "button_run": "Suorita",
+            "button_send": "Lähetä",
+            "button_download": "Ladata",
+            "search_placeholder": "Etsi",
+            "quit": "Lopeta",
+            "quit_dot": "Lopeta Dot",
+            "quit_dot_with_version": "Lopeta Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Englanti",
+            "cz": "Tšekki",
+            "es": "Espanja",
+            "de": "Saksan kieli",
+            "fr": "Ranskan kieli",
+            "fi": "Suomalainen",
+            "ru": "Venäjän kieli",
+            "dk": "Tanskalainen",
+            "no": "Norjan kieli",
+            "ie": "Irlantilainen",
+            "se": "Ruotsin kieli",
+            "pt": "Portugalin kieli"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Selaa",
+            "audio_details": "Äänen kuunteleminen",
+            "file_details": "Tarkastellaan {fileType} -tiedostoa",
+            "active_small_text": "Web-sivun selaaminen",
+            "idle_small_text": "Poissa",
+            "idle_details": "Dot selain",
+            "large_text": "Dot selain {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Suosituimmat sivustot",
+            "dial_bookmarks": "Kirjanmerkit",
+            "overview": "Yleiskatsaus",
+            "menu": "Valikko",
+            "tab_groups": "Välilehtiryhmät",
+            "default_tab_group": "Uusi ryhmä",
+            "world": "Maa",
+            "history_bubble": "Historia",
+            "bookmarks_bubble": "Kirjanmerkit",
+            "downloads_bubble": "Lataukset",
+            "settings_bubble": "Asetukset",
+            "extensions_bubble": "Laajennukset",
+            "find_bubble": "Löydä",
+            "more_tools_bubble": "Lisää työkaluja",
+            "welcome_snackbar": "Tervetuloa takaisin, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Minne haluaisit mennä tänään?",
+                    "message_2": "Mitä sinulla on mielessäsi {username}?",
+                    "message_3": "Anna hakutermi tai URL-osoite aloittaaksesi.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Minne haluaisit mennä tänään?",
+                    "message_2": "Mitä sinulla on mielessäsi?",
+                    "message_3": "Anna hakutermi tai URL-osoite aloittaaksesi.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Huomenta",
+                    "afternoon": "Hyvää iltapäivää",
+                    "evening": "Iltaa"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Asetukset",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Add new",
+            "add_new": "Lisää hakukone",
+            "my_profile": [
+                {
+                    "title": "Minun profiilini",
+                    "sign_in_btn": "Kirjaudu sisään",
+                    "sign_out_btn": "Kirjaudu ulos",
+                    "guest_user": "Vieras"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Ulkomuoto",
+                    "toggle_dot": "Vaihda Dot -painiketta",
+                    "search_engine": "Hakukone",
+                    "temp_type": "Lämpötilan tyyppi",
+                    "guest_user": "Vieras"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Lataukset",
+                    "download_loc": "Latausten sijainti"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Kehittäjäkokeet",
+                    "chromium_dt": "Chromium-kehitystyökalut",
+                    "send_test_notif": "Lähetä testi-ilmoitus",
+                    "open_log": "Avaa lokitiedosto"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Meistä",
+                    "thanks_message": "Dot oli tehty mahdolliseksi",
+                    "wxnd_coffee": "ja ☕.",
+                    "made_in": "Tehty",
+                    "gb_with": "Isossa Britanniassa",
+                    "end": ".",
+                    "developers_title": "Kehittäjät",
+                    "beta_testers_title": "Beta-testaajat",
+                    "special_thanks_title": "Erityiskiitokset",
+                    "verbose_loaded_fcm": "Ladatut FCM-ilmoituspalvelut",
+                    "translators_title": "Seuraava",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
+                    "about_page_btn": "Käy virheenkorjaussivulla",
+                    "copyright_notice": "© 2019 Ender ja Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Lähetä palautetta",
+                    "feedback_title": "Lähetä palautetta kehittäjille",
+                    "bug_report_title": "Avaa vikailmoitus",
+                    "describe_issue": "Kuvaile ongelmasi"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Kielet",
+                    "download_languages": "Lataa uusin kielipaketti"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Historia",
+            "clear_browsing_history": "Poista selaustiedot",
+            "sort": [
+                {
+                    "range_all": "Kaikki",
+                    "range_today": "Tänään",
+                    "range_yesterday": "Eilen",
+                    "range_last_week": "Viime viikko",
+                    "range_last_month": "Viime kuukausi",
+                    "range_older": "Vanhin"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Kirjanmerkit",
+            "import": "Tuo kirjanmerkit",
+            "export": "Vie kirjanmerkit",
+            "add_bookmark": "Uusi kirjanmerkki"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Laajennukset"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Etsi sivulta",
+            "navigate_back": "Takaisin",
+            "navigate_forward": "Eteenpäin",
+            "navigate_refresh": "Päivitä sivu (F5)",
+            "navigate_close": "Sulje välilehti (Ctrl+W)",
+            "open_dot": "Avaa Dot Launcher"
+        }
+    ]
+}

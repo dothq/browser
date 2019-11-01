@@ -21,6 +21,8 @@ const path = require('path');
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import { Client } from 'discord-rpc';
 import { getCurrentWindow } from '~/renderer/app/utils';
+import * as isDev from 'electron-is-dev';
+
 var modal = require('electron-modal');
 
 export class View extends BrowserView {
@@ -32,7 +34,7 @@ export class View extends BrowserView {
   constructor(id: number, url: string) {
     super({
       webPreferences: {
-        preload: `${app.getAppPath()}/build/view-preload.js`,
+        preload: `${process.cwd()}/build/view-preload.js`,
         nodeIntegration: true,
         additionalArguments: [`--tab-id=${id}`],
         contextIsolation: true,
@@ -66,7 +68,7 @@ export class View extends BrowserView {
           {
             label: 'Open ' + params.mediaType + ' in new tab',
             enabled: params.srcURL.includes('blob:') == false,
-            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
+            icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.srcURL,
@@ -99,7 +101,7 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open link in new tab',
-            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
+            icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.linkURL,
@@ -127,7 +129,7 @@ export class View extends BrowserView {
         menuItems = menuItems.concat([
           {
             label: 'Open image in new tab',
-            icon: app.getAppPath() + '\\static\\app-icons\\add.png',
+            icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
               appWindow.webContents.send('api-tabs-create', {
                 url: params.srcURL,
@@ -520,15 +522,13 @@ export class View extends BrowserView {
                 title: `Dot - ${options.title}`,
                 width: options.width,
                 height: options.height,
-                icon: resolve(app.getAppPath() + '/static/icon.png'),
+                icon: resolve(process.cwd() + '/static/icon.png'),
               });
-              child.loadURL(
-                app.getAppPath() + '/static/pages/util/window.html',
-              );
+              child.loadURL(process.cwd() + '/static/pages/util/window.html');
               child.once('ready-to-show', () => {
                 child.show();
                 child.webContents.send('load-url', url);
-                if (process.env.ENV == 'dev') {
+                if (isDev) {
                   child.webContents.toggleDevTools();
                 }
               });
@@ -656,7 +656,7 @@ export class View extends BrowserView {
         if (`${this.webContents.getURL()}`.includes('#ise') == false) {
           event.preventDefault();
           this.webContents.loadURL(
-            app.getAppPath() +
+            process.cwd() +
               '/static/pages/error/ssl-error.html?du=' +
               url +
               '&err=' +

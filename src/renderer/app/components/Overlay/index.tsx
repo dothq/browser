@@ -38,7 +38,6 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Preloader } from '~/renderer/components/Preloader';
 const json = require('edit-json-file');
-const enUK = json(`${remote.app.getAppPath()}/locale/en.json`);
 
 import console = require('console');
 
@@ -261,22 +260,13 @@ const loadNews = (amount: any) => () => {
   }
 };
 
-setInterval(function() {
-  checkLightMode();
-}, 1500);
-
 import Confetti from 'react-confetti';
-import { Brisk } from './../../../../main/services/bridge/index';
 var canRef = React.createRef<HTMLCanvasElement>();
 var opac = 1;
 
 setTimeout(function() {
   opac = 0;
 }, 4000);
-
-export const briskClient = new Brisk();
-
-briskClient.send('test', { testing: 'ooff', boo: false });
 
 export const Overlay = observer(() => {
   return (

@@ -12,6 +12,7 @@ import { resolve, join } from 'path';
 import console = require('console');
 import { platform, homedir } from 'os';
 import { icons } from './constants/icons';
+
 var modal = require('electron-modal');
 const json = require("edit-json-file");
 const opts = json(resolve(homedir() + '/dot/dot-options.json'));
@@ -19,9 +20,9 @@ const opts = json(resolve(homedir() + '/dot/dot-options.json'));
 const { remote } = require('electron')
 const { Menu, MenuItem, Tray, app } = remote
 
-var tray = new Tray(resolve(app.getAppPath(), 'static/tray-icon.png'))
+var tray = new Tray(resolve(process.cwd(), 'static/tray-icon.png'))
 const contextMenu = Menu.buildFromTemplate([
-  { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', enabled: false, icon: resolve(app.getAppPath(), 'static/app-icons/tray-icon.png') },
+  { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', enabled: false, icon: resolve(process.cwd(), 'static/app-icons/tray-icon.png') },
   { type: 'separator' },
   { label: store.locale.lang.history[0].title, type: 'normal', click() {
       ipcRenderer.send('window-focus');
@@ -60,7 +61,7 @@ const contextMenu = Menu.buildFromTemplate([
     store.user.menuVisible = false;
   } },
   { type: 'separator' },
-  { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', role: 'quit', icon: resolve(app.getAppPath(), 'static/app-icons/tray-close.png') },
+  { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', role: 'quit', icon: resolve(process.cwd(), 'static/app-icons/tray-close.png') },
 ])
 
 tray.setToolTip(store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()))
@@ -311,7 +312,7 @@ export function openDeveloperTools() {
     return;
   }
 
-  if(remote.webContents.getFocusedWebContents().getURL() == join('file://', app.getAppPath(), 'build/app.html')) {
+  if(remote.webContents.getFocusedWebContents().getURL() == join('file://', process.cwd(), 'build/app.html')) {
     return;
   }
 
@@ -348,13 +349,13 @@ export async function tskManager() {
     
   })
 
-  var tm = await modal.open(resolve(app.getAppPath() + '\\static\\pages\\util\\tskmgr.html'), {
+  var tm = await modal.open(resolve(process.cwd() + '\\static\\pages\\util\\tskmgr.html'), {
     width: 820,
     height: 300,
     resizable: true,
     center: true,
     title: 'Dot - Task Manager',
-    icon: resolve(app.getAppPath() + '/static/app-icons/dev.png'),
+    icon: resolve(process.cwd() + '/static/app-icons/dev.png'),
     titleBarStyle: 'hiddenInset',
     autoHideMenuBar: true,
     webPreferences: {

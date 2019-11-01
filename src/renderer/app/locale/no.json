@@ -1,0 +1,206 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Browser",
+            "dot_full_with_version": "Dot Browser {appVersion}",
+            "button_open": "Open",
+            "button_run": "Run",
+            "button_send": "Send",
+            "button_download": "Nedlasting",
+            "search_placeholder": "Search",
+            "quit": "Forlat",
+            "quit_dot": "Forlat Dot",
+            "quit_dot_with_version": "Forlat Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Engelsk",
+            "cz": "Czech",
+            "es": "Spansk",
+            "de": "Tysk",
+            "fr": "Fransk",
+            "fi": "Finsk",
+            "ru": "Russisk",
+            "dk": "Danish",
+            "no": "Norsk",
+            "ie": "Irsk",
+            "se": "Svensk",
+            "pt": "Portugisisk"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Surfer på",
+            "audio_details": "Hører på lyd på",
+            "file_details": "Viser en {fileType} fil",
+            "active_small_text": "Surfer en nettside",
+            "idle_small_text": "Inaktiv",
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Toppsider",
+            "dial_bookmarks": "Bokmerker",
+            "overview": "Oversikt",
+            "menu": "Meny",
+            "tab_groups": "Tab grupper",
+            "default_tab_group": "Ny gruppe",
+            "world": "Verden",
+            "history_bubble": "Historie",
+            "bookmarks_bubble": "Bokmerker",
+            "downloads_bubble": "Nedlastninger",
+            "settings_bubble": "Instillinger",
+            "extensions_bubble": "Utvidelser",
+            "find_bubble": "Finn",
+            "more_tools_bubble": "Flere verktøy",
+            "welcome_snackbar": "Velkommen tilbake, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Hvor vil du i dag?",
+                    "message_2": "Hva har du i tankene {username}?",
+                    "message_3": "Skriv inn et søkeord eller en URL for å komme i gang.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Hvor vil du i dag?",
+                    "message_2": "Hva har du i tankene?",
+                    "message_3": "Skriv inn et søkeord eller en URL for å komme i gang.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "God morgen",
+                    "afternoon": "God aften",
+                    "evening": "God kveld"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Instillinger",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Add new",
+            "add_new": "Legg til søkemotor",
+            "my_profile": [
+                {
+                    "title": "Min profil",
+                    "sign_in_btn": "Logg in",
+                    "sign_out_btn": "Logg ut",
+                    "guest_user": "Gjest"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Utseende",
+                    "toggle_dot": "Endre Dot knappen",
+                    "search_engine": "Søkemotor",
+                    "temp_type": "Temperatur type",
+                    "guest_user": "Gjest"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Nedlastninger",
+                    "download_loc": "Nedlastninger Plassering"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Utvikler Eksperimenter",
+                    "chromium_dt": "Chromium Utvikler Verktøy",
+                    "send_test_notif": "Send test notifikasjon",
+                    "open_log": "Åpne logg fil"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Om Dot",
+                    "thanks_message": "Dot har blitt gjort mulig takket",
+                    "wxnd_coffee": "og ☕.",
+                    "made_in": "Laget i",
+                    "gb_with": "storbritannia med ",
+                    "end": ".",
+                    "developers_title": "Utviklere",
+                    "beta_testers_title": "Beta Testere",
+                    "special_thanks_title": "Spesiell takk",
+                    "verbose_loaded_fcm": "Lastet inn FCM Notifikasjon tjenesten",
+                    "translators_title": "Etter",
+                    "view_translators_github": "View all translators on GitHub.com",
+                    "view_translators": "View translators",
+                    "about_page_btn": "Besøk feiltesting siden",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Send tilbakemelding",
+                    "feedback_title": "Send tilbakemelding til utviklerene",
+                    "bug_report_title": "Åpne bug rapport",
+                    "describe_issue": "Beskriv problemet ditt"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Språk",
+                    "download_languages": "Last ned siste språkpakke"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Historie",
+            "clear_browsing_history": "Slett nettleser data",
+            "sort": [
+                {
+                    "range_all": "Alt",
+                    "range_today": "I dag",
+                    "range_yesterday": "I går",
+                    "range_last_week": "Forrige uke",
+                    "range_last_month": "forrige måned",
+                    "range_older": "Gamlere"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bokmerker",
+            "import": "Imporer Bokmerker",
+            "export": "Eksporter Bokmerker",
+            "add_bookmark": "Nytt Bokmerke"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Utvidelser"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Finn på siden",
+            "navigate_back": "Tilbake",
+            "navigate_forward": "Framover",
+            "navigate_refresh": "Oppdater siden (F5)",
+            "navigate_close": "Lukk kategorien (Ctrl+W)",
+            "open_dot": "Åpne Dot Launcher"
+        }
+    ]
+}

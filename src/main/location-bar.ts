@@ -1,6 +1,7 @@
 import { BrowserWindow, app, nativeImage, screen } from 'electron';
 import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
+import * as isDev from 'electron-is-dev';
 
 export class LocationBar extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -27,17 +28,18 @@ export class LocationBar extends BrowserWindow {
         nodeIntegration: true,
         contextIsolation: false,
       },
-      icon: resolve(app.getAppPath(), '/static/icon.png'),
+      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
     this.setParentWindow(this.appWindow);
 
     this.setIgnoreMouseEvents(true);
+    // tslint:disable-next-line: prefer-template
     this.webContents.loadURL(
-      app.getAppPath() + '/static/pages/util/location-bar.html',
+      process.cwd() + '/static/pages/util/location-bar.html',
     );
 
-    if (process.env.ENV == 'dev') {
+    if (isDev) {
       this.webContents.openDevTools({ mode: 'detach' });
     }
   }

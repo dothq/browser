@@ -3,6 +3,7 @@ import { appWindow } from '~/renderer/app';
 import { resolve } from 'path';
 import { Tab } from '~/renderer/app/models';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
+import * as isDev from 'electron-is-dev';
 
 export class Omnibox extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -30,7 +31,7 @@ export class Omnibox extends BrowserWindow {
 
     this.webContents.loadURL('http://localhost:4444/search.html');
 
-    if (process.env.ENV == 'dev') {
+    if (isDev) {
       this.webContents.openDevTools({ mode: 'detach' });
     }
   }

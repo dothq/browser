@@ -20,12 +20,13 @@ import {
 import { parse } from 'tldts';
 import { requestURL } from '~/renderer/app/utils/network';
 
+
 export let engine: FiltersEngine;
 
 const eventListeners: any = {};
 
 export const loadFilters = async () => {
-  const path = resolve(app.getAppPath(), 'filters/default.dat');
+  const path = resolve(process.cwd(), 'filters/default.dat');
 
   /*const { data } = await requestURL(
     'https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt',

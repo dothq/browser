@@ -6,6 +6,7 @@ import { sendToAllExtensions } from './extensions';
 import { resolve, join } from 'path';
 import console = require('console');
 
+
 declare const global: any;
 
 global.viewsMap = {};
@@ -114,7 +115,7 @@ export class ViewManager {
     ipcMain.on('is-light-mode', () => {
       try {
         var path = nativeImage.createFromPath(
-          resolve(app.getAppPath() + '/static/icon-inverted.png'),
+          resolve(process.cwd() + '/static/icon-inverted.png'),
         );
         appWindow.setIcon(path);
       } catch (e) {
@@ -125,7 +126,7 @@ export class ViewManager {
     ipcMain.on('is-dark-mode', () => {
       try {
         var path = nativeImage.createFromPath(
-          resolve(app.getAppPath() + '/static/icon.png'),
+          resolve(process.cwd() + '/static/icon.png'),
         );
         appWindow.setIcon(path);
       } catch (e) {

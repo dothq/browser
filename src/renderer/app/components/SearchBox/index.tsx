@@ -24,6 +24,7 @@ import { Image } from 'react-native';
 import { Dash } from '../Suggestion/style';
 import { Title } from '../Overlay/style';
 
+
 const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
 };
@@ -182,8 +183,7 @@ const onStarClick = async () => {
   const { selectedTab } = store.tabs;
 
   var dotURL = encodeURI(
-    remote.app.getAppPath().replace(/\\/g, '/') +
-      '\\static\\pages'.replace(/\\/g, '/'),
+    process.cwd().replace(/\\/g, '/') + '\\static\\pages'.replace(/\\/g, '/'),
   );
 
   if (selectedTab.url.includes(dotURL) == false) {

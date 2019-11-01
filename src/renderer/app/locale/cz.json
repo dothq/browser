@@ -1,0 +1,214 @@
+  
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Prohlížeč Dot",
+            "dot_full_with_version": "Dot {appVersion}",
+            "button_open": "Otevřít",
+            "button_run": "Spustit",
+            "button_send": "Odeslat",
+            "button_download": "Stáhnout",
+            "search_placeholder": "Hledat",
+            "quit": "Zavřít",
+            "quit_dot": "Zavřít Dot",
+            "quit_dot_with_version": "Zavřít Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Angličtina",
+            "cz": "Čeština",
+            "es": "Španělština",
+            "de": "Němčina",
+            "fr": "Francouzština",
+            "fi": "Finština",
+            "ru": "Ruština",
+            "dk": "Dánština",
+            "no": "Norština",
+            "ie": "Irština",
+            "se": "Švédština",
+            "pt": "Portugalština"
+        }
+    ],
+    "themes": [
+      {
+        "dark": "Temné",
+        "light": "Světlé",
+        "ui_theme": "Téma"
+      }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Surfuje na",
+            "audio_details": "Poslouchá audio na",
+            "file_details": "Prohlíží si {fileType}",
+            "active_small_text": "Surfuje na stránce",
+            "idle_small_text": "Nic nedělá",
+            "idle_details": "Prohlížeč Dot",
+            "large_text": "Dot verze {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Top stránky",
+            "dial_bookmarks": "Záložky",
+            "overview": "Přehled",
+            "menu": "Menu",
+            "tab_groups": "Skupiny stránek",
+            "default_tab_group": "Nová skupina",
+            "world": "Svět",
+            "history_bubble": "Historie",
+            "bookmarks_bubble": "Záložky",
+            "downloads_bubble": "Stažené",
+            "settings_bubble": "Nastavení",
+            "extensions_bubble": "Rozšíření",
+            "find_bubble": "Hledat",
+            "more_tools_bubble": "Více nástrojů",
+            "welcome_snackbar": "Vítej zpět, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Kam chceš jít?",
+                    "message_2": "Co máš na mysli?",
+                    "message_3": "Napiš URL nebo hledej.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Kam chceš dnes jít",
+                    "message_2": "Na co myslíš?",
+                    "message_3": "Zkus hledat.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "Dobré ráno",
+                    "afternoon": "Dobré odpoledne",
+                    "evening": "Dobrý večer"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Nastavení",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Přidat",
+            "add_new": "Přidat vyhledávač",
+            "my_profile": [
+                {
+                    "title": "Můj profil",
+                    "sign_in_btn": "Přihlásit se",
+                    "sign_out_btn": "Odhlásit se",
+                    "guest_user": "Nepřihlášen"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Vzhled",
+                    "toggle_dot": "Zobrazit tlačítko Dot",
+                    "search_engine": "Vyhledávací engine",
+                    "temp_type": "Teplota",
+                    "guest_user": "Nepřihlášen"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Stažené",
+                    "download_loc": "Složka"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Vývojářské experimenty",
+                    "chromium_dt": "Chromium Developer Tools",
+                    "send_test_notif": "Odeslat testovací notifikaci",
+                    "open_log": "Otevřít log"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Informace",
+                    "thanks_message": "Dot byl vytvořen díky",
+                    "wxnd_coffee": "a ☕.",
+                    "made_in": "Vytvořeno ve",
+                    "gb_with": "Velké Británii s ",
+                    "end": ".",
+                    "developers_title": "Vývojáři",
+                    "beta_testers_title": "Beta Testeři",
+                    "special_thanks_title": "Speciální poděkování",
+                    "translators_title": "Překlad",
+                    "view_translators_github": "Všechny překlady na GitHub.com",
+                    "view_translators": "Zobrazit překladatele",
+                    "verbose_loaded_fcm": "Načtené FCM notifikační služby",
+                    "about_page_btn": "Zobrazit Debug stránku",
+                    "copyright_notice": "© 2019 Ender And Fire Development, překlad Daniel Bulant"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Zpětná vazba",
+                    "feedback_title": "Odeslat zpětnou vazbu vývojářům",
+                    "bug_report_title": "Otevřít chybové hlášení",
+                    "describe_issue": "Popiš svůj problém"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Jazyky",
+                    "download_languages": "Stáhnout nejnovější balíček jazyků"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Historie",
+            "clear_browsing_history": "Smazat data prohlížení",
+            "sort": [
+                {
+                    "range_all": "Vše",
+                    "range_today": "Dnes",
+                    "range_yesterday": "Včera",
+                    "range_last_week": "Tento týden",
+                    "range_last_month": "Tento měsíc",
+                    "range_older": "Starší"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Záložky",
+            "import": "Importovat záložky",
+            "export": "Exportovat záložky",
+            "add_bookmark": "Nová záložka"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Rozšíření"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Najít na tránce",
+            "navigate_back": "Zpět",
+            "navigate_forward": "Vpřed",
+            "navigate_refresh": "Znovu načíst (F5)",
+            "navigate_close": "Zavřít stránku (Ctrl+W)",
+            "open_dot": "Otevřít Dot Spoušteč"
+        }
+    ]
+}

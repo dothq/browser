@@ -1,0 +1,204 @@
+{
+    "standard": [
+        {
+            "dot": "Dot",
+            "dot_with_version": "Dot {appVersion}",
+            "dot_full": "Dot Browser",
+            "dot_full_with_version": "Dot Browser {appVersion}",
+            "button_open": "Åben",
+            "button_run": "Start",
+            "button_send": "Send",
+            "button_download": "Hent",
+            "search_placeholder": "Søg",
+            "quit": "Afslut",
+            "quit_dot": "Afslut Dot",
+            "quit_dot_with_version": "Afslut Dot {appVersion}"
+        }
+    ],
+    "languages": [
+        {
+            "en": "Engelsk",
+            "es": "Spansk",
+            "de": "Tysk",
+            "fr": "Fransk",
+            "fi": "Finsk",
+            "ru": "Russisk",
+            "dk": "Dansk",
+            "no": "Norsk",
+            "ie": "Irisk",
+            "se": "Svensk",
+            "pt": "Portugisk"
+        }
+    ],
+    "rich_presence": [
+        {
+            "default_details": "Browser på",
+            "audio_details": "Lytter til lyd på",
+            "file_details": "Gemmenser {fileType} fil",
+            "active_small_text": "Browser en side",
+            "idle_small_text": "Tomgangstilstand",
+            "idle_details": "Dot Browser",
+            "large_text": "Dot Browser {version}"
+        }
+    ],
+    "overlay": [
+        {
+            "dial_top_sites": "Top Sider",
+            "dial_bookmarks": "Bogmærker",
+            "overview": "Oversigt",
+            "menu": "Menu",
+            "tab_groups": "Tab grupper",
+            "default_tab_group": "Ny gruppe",
+            "world": "Verden",
+            "history_bubble": "History",
+            "bookmarks_bubble": "Bogmærker",
+            "downloads_bubble": "Hentninger",
+            "settings_bubble": "Indstillinger",
+            "extensions_bubble": "Tilføjleser",
+            "find_bubble": "Led efter",
+            "more_tools_bubble": "Flere værktøjer",
+            "welcome_snackbar": "Velkommen tilbage, {username}"
+        }
+    ],
+    "search_bar": [
+        {
+            "logged_in": [
+                {
+                    "message_1": "Hvor vil du hen i dag?",
+                    "message_2": "Hvad har du på tankerne {username}?",
+                    "message_3": "Skriv din søgning eller indtast URL adressen for at begynde.",
+                    "message_4": "{currentTimeType}, {username}"
+                }
+            ],
+            "guest": [
+                {
+                    "message_1": "Hvor vil du hen i dag?",
+                    "message_2": "Hvad har du på tankerne?",
+                    "message_3": "Skriv din søgning eller indtast URL adressen for at begynde.",
+                    "message_4": "{currentTimeType}"
+                }
+            ],
+            "timeTypes": [
+                {
+                    "morning": "God morgen",
+                    "afternoon": "God eftermiddag",
+                    "evening": "God aften"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "title": "Indstillinger",
+            "google_searchEngine": "Google",
+            "bing_searchEngine": "Bing",
+            "yahoo_searchEngine": "Yahoo",
+            "ddg_searchEngine": "DuckDuckGo",
+            "ecosia_searchEngine": "Ecosia",
+            "create_new": "Tilføj ny",
+            "my_profile": [
+                {
+                    "title": "Min Profil",
+                    "sign_in_btn": "Log ind",
+                    "sign_out_btn": "Log ud",
+                    "guest_user": "Gæstebruger"
+                }
+            ],
+            "appearance": [
+                {
+                    "title": "Udseende",
+                    "toggle_dot": "Fra og til Dot knap",
+                    "search_engine": "Søgemaskine",
+                    "temp_type": "Temperatur type",
+                    "guest_user": "Gæst"
+                }
+            ],
+            "downloads": [
+                {
+                    "title": "Hentninger",
+                    "download_loc": "Hentnings Destination"
+                }
+            ],
+            "dev_tools": [
+                {
+                    "title": "Udviklereksperimenter",
+                    "chromium_dt": "Chromium Udvikler værktøjer",
+                    "send_test_notif": "Send testmeddelelse",
+                    "open_log": "Åbn logfil"
+                }
+            ],
+            "about_dot": [
+                {
+                    "title": "Omkring Dot",
+                    "thanks_message": "Dot blev muliggjort takket være",
+                    "wxnd_coffee": "og ☕.",
+                    "made_in": "Lavet i",
+                    "gb_with": "Storbritannien med ",
+                    "end": ".",
+                    "developers_title": "Udviklere",
+                    "beta_testers_title": "Betatestere",
+                    "special_thanks_title": "Specielt tak",
+                    "translators_title": "Oversættere",
+                    "view_translators_github": "Se alle oversættere på Github.com/dot-browser/desktop",
+                    "view_translators": "Se oversættere",
+                    "verbose_loaded_fcm": "Indlæste FCM-underretningstjenester",
+                    "about_page_btn": "Besøg debugsiden",
+                    "copyright_notice": "© 2019 Ender And Fire Development"
+                }
+            ],
+            "feedback": [
+                {
+                    "title": "Send feedback",
+                    "feedback_title": "Send feedback til udviklere",
+                    "bug_report_title": "Åbn en fejlrapport",
+                    "describe_issue": "Beskriv dit problem"
+                }
+            ],
+            "languages": [
+                {
+                    "title": "Sprog",
+                    "download_languages": "Download den nyeste sprogpakke"
+                }
+            ]
+        }
+    ],
+    "history": [
+        {
+            "title": "Historie",
+            "clear_browsing_history": "Slet browserdata",
+            "sort": [
+                {
+                    "range_all": "Alt",
+                    "range_today": "Kun i dag",
+                    "range_yesterday": "i går",
+                    "range_last_week": "Sidste uge",
+                    "range_last_month": "Sidste måned",
+                    "range_older": "Ældre"
+                }
+            ]
+        }
+    ],
+    "bookmarks": [
+        {
+            "title": "Bogmærker",
+            "import": "Importer bogmærker",
+            "export": "Eksporter bogmærker",
+            "add_bookmark": "Nyt bogmærke"
+        }
+    ],
+    "extensions": [
+        {
+            "title": "Udvidelser"
+        }
+    ],
+    "window": [
+        {
+            "find_on_page": "Find på side",
+            "navigate_back": "Tilbage",
+            "navigate_forward": "Fremad",
+            "navigate_refresh": "Opdater (F5)",
+            "navigate_close": "Luk fanen (Ctrl+W)",
+            "open_dot": "Åbn Dot Launcher"
+        }
+    ]
+}

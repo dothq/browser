@@ -14,6 +14,7 @@ import { getPath } from '~/shared/utils/paths';
 import { Extension, StorageArea } from './models';
 import { IpcExtension } from '~/shared/models';
 import { appWindow } from '.';
+import * as isDev from 'electron-is-dev';
 
 const readFile = promisify(fs.readFile);
 const readdir = promisify(fs.readdir);
@@ -62,7 +63,7 @@ export const startBackgroundPage = async (extension: Extension) => {
       partition: 'persist:extension',
       isBackgroundPage: true,
       commandLineSwitches: ['--background-page'],
-      preload: `${app.getAppPath()}/build/background-preload.js`,
+      preload: `${process.cwd()}/build/background-preload.js`,
       webPreferences: {
         webSecurity: false,
         nodeIntegration: false,
@@ -76,7 +77,7 @@ export const startBackgroundPage = async (extension: Extension) => {
       webContentsId: contents.id,
     };
 
-    if (process.env.ENV === 'dev') {
+    if (isDev) {
       contents.openDevTools({ mode: 'detach' });
     }
 

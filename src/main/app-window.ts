@@ -6,6 +6,7 @@ import {
   remote,
   ipcMain,
 } from 'electron';
+
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
@@ -21,6 +22,7 @@ import { MenuList } from './menu';
 import { Omnibox } from './essentials/omnibox';
 import { LocationBar } from './location-bar';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
+import * as isDev from 'electron-is-dev';
 
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 
@@ -63,7 +65,7 @@ export class AppWindow extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), '/icon.png'),
+      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
     this.setBackgroundColor('#fff');
@@ -236,20 +238,16 @@ export class AppWindow extends BrowserWindow {
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
 
-    this.webContents.on('crashed', (event: any, crashed: boolean) => {
-      this.loadURL(app.getAppPath() + 'static\\pages\\util\\crash.html');
-    });
-
-    if (process.env.ENV === 'dev') {
+    if (isDev) {
       this.setIcon(
         nativeImage.createFromPath(
-          resolve(app.getAppPath() + '\\static\\icon.png'),
+          resolve(process.cwd(), '\\static\\icon.png'),
         ),
       );
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
-      this.loadURL(join('file://', app.getAppPath(), 'build/app.html'));
+      this.loadURL(join('file://', process.cwd(), 'build/app.html'));
     }
 
     this.once('ready-to-show', () => {

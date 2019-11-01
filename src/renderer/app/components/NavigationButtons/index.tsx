@@ -11,6 +11,7 @@ import { platform, homedir } from 'os';
 import { ipcRenderer, remote, MenuItem } from 'electron';
 import { HistoryItem } from './../../models/history-item';
 
+
 const onBackClick = () => {
   store.tabs.selectedTab.callViewMethod('webContents.goBack');
 };
@@ -71,7 +72,7 @@ const dotLauncherCtm = () => () => {
       ),
       type: 'normal',
       enabled: false,
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-icon.png'),
+      icon: resolve(process.cwd(), 'static/app-icons/tray-icon.png'),
     },
     { type: 'separator' },
     {
@@ -112,7 +113,7 @@ const dotLauncherCtm = () => () => {
       ),
       type: 'normal',
       role: 'quit',
-      icon: resolve(remote.app.getAppPath(), 'static/app-icons/tray-close.png'),
+      icon: resolve(process.cwd(), 'static/app-icons/tray-close.png'),
     },
   ]);
 

@@ -3,13 +3,12 @@ import { resolve, join } from 'path';
 import { appWindow } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import store from '~/renderer/app/store';
+import * as isDev from 'electron-is-dev';
 
 export class MenuList extends BrowserWindow {
-  
   public visible: boolean = false;
 
   constructor(public appWindow: any) {
-
     super({
       width: 260,
       height: 365,
@@ -32,47 +31,47 @@ export class MenuList extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), '/static/icon.png'),
+      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
-    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar')
+    app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
-    app.commandLine.appendSwitch('auto-detect', 'false')
+    app.commandLine.appendSwitch('auto-detect', 'false');
 
-    if (process.env.ENV === 'dev') {
+    if (isDev) {
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/menu.html');
     } else {
-      this.loadURL(join('file://', app.getAppPath(), 'build/menu.html'));
+      this.loadURL(join('file://', process.cwd(), 'build/menu.html'));
     }
-
   }
 
   public showWindow() {
-    if(this.visible == false) {
-      
+    if (this.visible == false) {
       this.visible = true;
       this.webContents.send('visible', true);
-      this.show()
-      
+      this.show();
+
       this.webContents.focus();
       this.rearrange();
     }
   }
 
   public hideWindow() {
-    if(this.visible == true) {
-      this.hide()
+    if (this.visible == true) {
+      this.hide();
       this.webContents.send('visible', false);
-      this.rearrange()
+      this.rearrange();
     }
   }
 
   public rearrange() {
-    if(this.visible == true) {
+    if (this.visible == true) {
       const cBounds = this.appWindow.getContentBounds();
-      this.setBounds({ x: cBounds.width - 145, y: cBounds.y + TOOLBAR_HEIGHT } as any);
+      this.setBounds({
+        x: cBounds.width - 145,
+        y: cBounds.y + TOOLBAR_HEIGHT,
+      } as any);
     }
   }
-
 }

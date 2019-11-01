@@ -8,6 +8,7 @@ import { View } from '../../../main/view';
 import console = require('console');
 import { defaultTabOptions } from './../constants/tabs';
 
+
 let lastSuggestion: string;
 
 const autoComplete = (text: string, suggestion: string) => {
@@ -89,8 +90,7 @@ export class OverlayStore {
     this._searchBoxValue = val;
 
     var cleanURL = encodeURI(
-      remote.app.getAppPath().replace(/\\/g, '/') +
-        '\\static\\pages'.replace(/\\/g, '/'),
+      process.cwd().replace(/\\/g, '/') + '\\static\\pages'.replace(/\\/g, '/'),
     );
     console.debug(cleanURL);
   }
