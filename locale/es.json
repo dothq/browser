@@ -17,7 +17,7 @@
     ],
     "languages": [
         {
-            "en": "Ingles",
+            "en": "Inglés",
             "cz": "Checo",
             "es": "Español",
             "de": "Alemán",
@@ -175,7 +175,7 @@
                     "range_yesterday": "Ayer",
                     "range_last_week": "La semana pasada",
                     "range_last_month": "El mes pasado",
-                    "range_older": "Más viejo"
+                    "range_older": "Más antiguo"
                 }
             ]
         }
