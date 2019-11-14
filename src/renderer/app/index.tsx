@@ -4,21 +4,18 @@ import * as ReactDOM from 'react-dom';
 import { App } from './components/App';
 import { fonts } from '../constants';
 import store from './store';
-import { ipcRenderer, dialog, ipcMain } from 'electron';
-import { Settings } from 'react-native';
-var Mousetrap = require('mousetrap');
-import { AppWindow } from './app-window';
+import { ipcRenderer } from 'electron';
 import { resolve, join } from 'path';
-import console = require('console');
-import { platform, homedir } from 'os';
+import { homedir } from 'os';
 import { icons } from './constants/icons';
+import { AppWindow } from '../../main/app-window';
 
 var modal = require('electron-modal');
 const json = require("edit-json-file");
 const opts = json(resolve(homedir() + '/dot/dot-options.json'));
 
 const { remote } = require('electron')
-const { Menu, MenuItem, Tray, app } = remote
+const { Menu, Tray, app } = remote
 
 var tray = new Tray(resolve(process.cwd(), 'static/tray-icon.png'))
 const contextMenu = Menu.buildFromTemplate([
@@ -168,19 +165,6 @@ Menu.setApplicationMenu(
           label: 'Print webpage (Native)',
           click() {
             remote.webContents.getFocusedWebContents().print()
-          },
-        },
-        {
-          accelerator: 'CmdOrCtrl+S',
-          label: 'Save page',
-          click() {
-            if(store.tabs.selectedTab) {
-              remote.dialog.showSaveDialog(appWindow, { filters: [ { name: 'HTML file', extensions: ['html'] } ], }, (callback) => {
-                remote.webContents.getFocusedWebContents().savePage(callback, 'HTMLComplete', (error) => {
-                  if (!error) 
-                })
-              })
-            }
           },
         },
         { 
