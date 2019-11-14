@@ -2,7 +2,7 @@ import { observable, observe, action } from 'mobx';
 import * as React from 'react';
 
 import store from '.';
-import * as Datastore from 'nedb';
+import Datastore from 'nedb';
 import { ipcRenderer, remote } from 'electron';
 import { extname, resolve } from 'path';
 import { homedir } from 'os';

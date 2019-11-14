@@ -1,4 +1,4 @@
-import * as Datastore from 'nedb';
+import Datastore from 'nedb';
 import { observable } from 'mobx';
 import { getPath } from '~/shared/utils/paths';
 import * as React from 'react';

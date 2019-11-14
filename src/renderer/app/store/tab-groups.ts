@@ -1,6 +1,6 @@
 import { observable, computed, action } from 'mobx';
 
-import * as Datastore from 'nedb';
+import Datastore from 'nedb';
 import { TabGroup } from '~/renderer/app/models';
 import store from '.';
 import { ipcRenderer, remote } from 'electron';

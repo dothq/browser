@@ -1,4 +1,4 @@
-import * as Datastore from 'nedb';
+import Datastore from 'nedb';
 
 import { Favicon } from '../models';
 import { getPath } from '~/shared/utils/paths';
