@@ -1,22 +1,30 @@
 {
   "compilerOptions": {
-    "outDir": "./build/",
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
+    "target": "es2018",
     "module": "commonjs",
-    "target": "es6",
+    "lib": ["dom", "es2018"],
+
+    "outDir": "build",
+    "sourceMap": true,
+
+    "esModuleInterop": true,
+
+    "noImplicitAny": false,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
+    "forceConsistentCasingInFileNames": true,
+
     "jsx": "react",
     "allowJs": true,
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "lib": ["dom", "esnext"],
-    "experimentalDecorators": true,
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./src/*"]
-    }
-  },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"]
+
+    "watch": false,
+    "pretty": true,
+    "importHelpers": true
+  }
 }

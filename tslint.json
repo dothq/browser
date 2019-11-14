@@ -1,21 +1,44 @@
 {
-  "extends": ["tslint-config-airbnb"],
+  "extends": [
+    "tslint:latest",
+    "tslint-react",
+    "tslint-eslint-rules",
+    "tslint-config-prettier"
+  ],
   "rules": {
-    "no-increment-decrement": false,
-    "max-line-length": false,
-    "variable-name": [
+    "quotemark": [true, "single", "jsx-double"],
+    "trailing-comma": [true, "always"],
+    "object-literal-sort-keys": false,
+    "no-bitwise": true,
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
+    "curly": false,
+    "variable-name": [true, "ban-keywords"],
+    "no-implicit-dependencies": [true, "dev"],
+    "interface-name": false,
+    "no-empty-interface": false,
+    "jsx-no-lambda": false,
+    "member-ordering": [
       true,
-      "ban-keywords",
-      "check-format",
-      "allow-pascal-case",
-      "allow-leading-underscore"
+      {
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "public-constructor",
+          "private-static-field",
+          "private-instance-field",
+          "private-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-instance-method"
+        ]
+      }
     ],
-    "import-name": false,
-    "ter-arrow-parens": false,
-    "no-parameter-reassignment": false,
-    "object-shorthand-properties-first": false,
-    "semicolon": false,
-    "align": false,
-    "no-this-assignment": false
+    "no-var-requires": true,
+    "one-variable-per-declaration": false,
+    "max-line-length": [true, 140]
+  },
+  "jsRules": {
+    "quotemark": [true, "single"],
+    "object-literal-sort-keys": false
   }
 }
