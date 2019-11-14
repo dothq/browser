@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { StyledMenu } from './style';
 import { MenuItem } from '../MenuItem/style';
 import { Line } from '~/renderer/app/components/App/style';
-import { icons } from '../../../../constants/icons';
+import { icons } from '../../../../app/constants/icons';
 import store from '~/renderer/app/store';
 
 export const Menu = observer(() => {
