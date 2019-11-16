@@ -19,16 +19,18 @@
         {
             "en": "Engels",
             "cz": "Tsjechisch",
+            "ie": "Iers",
             "es": "Spaans",
-            "de": "Duits",
             "fr": "Frans",
-            "fi": "Fins",
-            "ru": "Russisch",
             "dk": "Deens",
             "no": "Noors",
-            "ie": "Iers",
+            "ru": "Russisch",
+            "de": "Duits",
+            "fi": "Fins",
             "se": "Zweeds",
-            "pt": "Portugees"
+            "pt": "Portugees",
+            "pl": "Pools",
+            "nl": "Nederlands"
         }
     ],
     "themes": [
