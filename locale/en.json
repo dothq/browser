@@ -29,7 +29,9 @@
             "no": "Norweigan",
             "ie": "Irish",
             "se": "Swedish",
-            "pt": "Portuguese"
+            "pt": "Portuguese",
+            "pl": "Polish",
+            "nl": "Dutch"
         }
     ],
     "themes": [
