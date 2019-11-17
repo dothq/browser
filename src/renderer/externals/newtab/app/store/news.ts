@@ -31,7 +31,5 @@ export class NewsStore {
         }
       }
     }
-
-    console.log(this.list);
   }
 }
