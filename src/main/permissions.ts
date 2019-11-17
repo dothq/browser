@@ -1,16 +1,11 @@
 import {
   BrowserWindow,
   app,
-  nativeImage,
-  screen,
-  session,
   ipcMain,
-  ipcRenderer,
 } from 'electron';
 import { resolve } from 'path';
 import { appWindow } from '.';
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
-import * as isDev from 'electron-is-dev';
+import { TOOLBAR_HEIGHT } from '../renderer/app/constants/design';
 
 export class PermissionDialog extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -47,10 +42,6 @@ export class PermissionDialog extends BrowserWindow {
     this.webContents.loadURL(
       process.cwd() + '/static/pages/dialog/permission.html',
     );
-
-    if (isDev) {
-      this.webContents.openDevTools({ mode: 'detach' });
-    }
   }
 
   public async requestPermission(
