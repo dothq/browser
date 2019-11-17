@@ -19,6 +19,7 @@ interface Props {
   opacity?: number;
   invert?: boolean;
   title?: any;
+  id?: string;
 }
 
 @observer
@@ -66,6 +67,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
       invert,
       title,
       onContextMenu,
+      id,
     } = this.props;
 
     let { style } = this.props;
@@ -95,7 +97,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
           disabled={disabled}
           opacity={opacity}
         />
-        <Circle>
+        <Circle id={id}>
           <Ripple
             ref={this.ripple}
             color="#000"
