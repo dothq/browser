@@ -1,43 +1,31 @@
 import {
   ipcMain,
   app,
-  Menu,
   session,
-  globalShortcut,
-  Tray,
   BrowserWindow,
-  screen,
-  IpcMessageEvent,
+  IpcMainEvent,
 } from 'electron';
-import { resolve, extname, join } from 'path';
+import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
-import { loadExtensions } from './extensions';
 
 import { registerProtocols } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
 import {
   existsSync,
   writeFileSync,
-  rename,
-  promises,
-  createWriteStream,
 } from 'fs';
-import { getPath } from '~/shared/utils/paths';
-import { Settings } from '~/renderer/app/models/settings';
-import { DotOptions } from '~/renderer/app/models/dotoptions';
-import { makeId } from '~/shared/utils/string';
-import store from '~/renderer/app/store';
+import { getPath } from '../shared/utils/paths';
+import { Settings } from '../renderer/app/models/settings';
+import { DotOptions } from '../renderer/app/models/dotoptions';
+import { makeId } from '../shared/utils/string';
+import { LocationBar } from './location-bar';
 import console = require('console');
-import { get } from 'http';
 import * as isDev from 'electron-is-dev';
-const nativeImage = require('electron').nativeImage;
+import { Tab } from '../renderer/app/models';
 const modal = require('electron-modal');
 const json = require('edit-json-file');
-const LifeguardSession = require('lifeguard-api');
-
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
 
 ipcMain.setMaxListeners(0);
 
@@ -50,23 +38,6 @@ registerProtocols();
 
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
-
-try {
-  if (
-    existsSync(getPath(app.getPath('userData') + '\\notification_sound.mp3'))
-  ) {
-  }
-} catch (e) {
-  const notifFile = createWriteStream(
-    app.getPath('userData') + '\\notification_sound.mp3',
-  );
-  const request = get(
-    `https://api.dotbrowser.me/api/v0/static/notification.mp3`,
-    function(response: any) {
-      response.pipe(notifFile);
-    },
-  );
-}
 
 // Check for settings
 try {
@@ -112,11 +83,6 @@ app.commandLine.appendSwitch('--enable-transparent-visuals');
 // Adds the sexy scrollbar
 app.commandLine.appendSwitch('auto-detect', 'false');
 
-import { LocationBar } from './location-bar';
-import { PermissionDialog } from './permissions';
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
-import { Omnibox } from './essentials/omnibox';
-
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 app.on('ready', async () => {
@@ -125,10 +91,6 @@ app.on('ready', async () => {
    */
 
   modal.setup();
-
-  const dir = `${process.cwd()}/extensions/developer`;
-  console.log(dir);
-  BrowserWindow.addDevToolsExtension(dir);
 
   app.commandLine.appendSwitch(
     'widevine-cdm-path',
@@ -168,8 +130,8 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
-  ipcMain.on('open-omnibox', () => {
-    appWindow.omnibox.open();
+  ipcMain.on('open-omnibox', (event: IpcMainEvent, tab: Tab) => {
+    appWindow.omnibox.open(tab);
   });
 
   ipcMain.on('get-settings-sync', e => {
@@ -186,18 +148,18 @@ app.on('ready', async () => {
     console.log('recieved some data', data);
   });
 
+  ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
+    appWindow[dialog].show();
+  })
+
+  ipcMain.on('hide-dialog', (event: IpcMainEvent, dialog: string) => {
+    appWindow[dialog].hide()
+  })
+
   app.on(
     'certificate-error',
     (event, webContents, link, error, certificate, callback) => {},
   );
-
-  appWindow.webContents.on('devtools-opened', () => {
-    if (appWindow.webContents.getURL().includes('file://') == true) {
-      return;
-    } else {
-      appWindow.webContents.devToolsWebContents.executeJavaScript('');
-    }
-  });
 
   ipcMain.on('dev-tools-open', () => {
     appWindow.webContents.inspectElement(0, 0);
@@ -210,14 +172,6 @@ app.on('ready', async () => {
   ipcMain.on('update-check', () => {
     if (isDev == false) {
       autoUpdater.checkForUpdates();
-    }
-  });
-
-  ipcMain.on('menu-view', (event: IpcMessageEvent, name: boolean) => {
-    if (name == true) {
-      appWindow.menu.showWindow();
-    } else {
-      appWindow.menu.hideWindow();
     }
   });
 
@@ -286,7 +240,7 @@ app.on('ready', async () => {
           );
           callback(response);
         } else {
-          const response = await appWindow.permissionWindow.requestPermission(
+          await appWindow.permissionWindow.requestPermission(
             'http_permission',
             webContents.getURL(),
             details,
@@ -298,84 +252,8 @@ app.on('ready', async () => {
     },
   );
 
-  // session
-  // .fromPartition('persist:view')
-  // .setPermissionRequestHandler((webContents, permission, callback) => {
-  //   if(new URL(webContents.getURL()).protocol == 'https:') {
-
-  //     var permissionObj = {
-  //       url: webContents.getURL(),
-  //       permissionNode: permission
-  //     }
-
-  //     try {
-  //       permissionWindow.webContents.send('permission', permissionObj);
-  //       permissionWindow.setOpacity(1)
-  //       permissionWindow.setIgnoreMouseEvents(false)
-
-  //       // const cBounds: any = appWindow.getContentBounds();
-  //       // permissionWindow.setBounds({
-  //       //   x: cBounds.x,
-  //       //   y: cBounds.y + TOOLBAR_HEIGHT,
-  //       //   height: permissionWindow.getBounds().height,
-  //       //   width: permissionWindow.getBounds().width
-  //       // });
-
-  //     } catch(e) {
-  //       permissionWindow = new PermissionDialog();
-
-  //       permissionWindow.webContents.on('dom-ready', () => {
-  //         permissionWindow.webContents.send('permission', permissionObj);
-  //         permissionWindow.setOpacity(1)
-  //         permissionWindow.setIgnoreMouseEvents(false)
-
-  //         // const cBounds: any = appWindow.getContentBounds();
-  //         // permissionWindow.setBounds({
-  //         //   x: cBounds.x,
-  //         //   y: cBounds.y + TOOLBAR_HEIGHT,
-  //         //   height: permissionWindow.getBounds().height,
-  //         //   width: permissionWindow.getBounds().width
-  //         // });
-
-  //       })
-
-  //     }
-  //   }
-  //   else {
-  //     return callback(false)
-  //   }
-  // })
-
-  /**
-   * @todo Work on Extensions
-   * @body electron-extensions doesn't seem to work with Electron 5.0, this is a priority.
-   */
-  // const extensions = new ExtensibleSession(viewSession);
-  // extensions.addWindow(appWindow);
-
-  // const extensionsPath = getPath('extensions');
-  // const dirs = await promises.readdir(extensionsPath);
-
-  // for (const dir of dirs) {
-  //   const extension = await extensions.loadExtension(
-  //     resolve(extensionsPath, dir),
-  //   );
-  //   extension.backgroundPage.webContents.openDevTools();
-  // }
-
   loadFilters();
-  // loadExtensions();
   runWebRequestService(appWindow);
-
-  // extensionsMain.setSession(viewSession);
-
-  // const extensionsPath = getPath('extensions');
-
-  // const dirs = await promises.readdir(extensionsPath);
-
-  // for (const dir of dirs) {
-  //   extensionsMain.load(resolve(extensionsPath, dir));
-  // }
 });
 
 app.on('window-all-closed', () => {
