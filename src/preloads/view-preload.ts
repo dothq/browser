@@ -54,9 +54,7 @@ window.addEventListener('mouseup', e => {
 });
 
 if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
-  console.log('executing js');
   webFrame.executeJavaScript('window', false, (w: any) => {
-    console.log('executed js');
     w.settings = ipcRenderer.sendSync('get-settings-sync');
   });
 
