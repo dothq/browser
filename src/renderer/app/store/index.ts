@@ -87,6 +87,9 @@ export class Store {
   public quickMenuVisible: boolean = false;
 
   @observable
+  public menuBounds: {} = {};
+
+  @observable
   public updateInfo = {
     available: false,
     version: '',

@@ -21,6 +21,10 @@ export const Style = css`
     box-sizing: border-box;
   }
 
+  .toolbar-button-hovered {
+    background-color: rgba(0, 0, 0, 0.06);
+  }
+
   .theme-dark {
     --inactive-toolbar-color: #404040;
     --active-toolbar-color: #000000e8;
