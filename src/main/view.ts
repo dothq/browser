@@ -4,26 +4,17 @@ import {
   Menu,
   nativeImage,
   clipboard,
-  Tray,
-  remote,
-  dialog,
   BrowserWindow,
   shell,
 } from 'electron';
-import { appWindow, locationBar } from '.';
+import { appWindow } from '.';
 import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import console = require('console');
-import store from '~/renderer/app/store';
 import { resolve } from 'path';
-const path = require('path');
-const { setup: setupPushReceiver } = require('electron-push-receiver');
 import { Client } from 'discord-rpc';
-import { getCurrentWindow } from '~/renderer/app/utils';
 import * as isDev from 'electron-is-dev';
-
-var modal = require('electron-modal');
 
 export class View extends BrowserView {
   public title: string = '';
@@ -541,18 +532,12 @@ export class View extends BrowserView {
           if (frameName === '_self' || options.title == '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
-            appWindow.viewManager.selected.webContents.setUserAgent(
-              appWindow.viewManager.selected.webContents.getUserAgent() +
-                ' Dot Browser/getdot.js.org',
-            );
+            appWindow.viewManager.selected.webContents.userAgent = appWindow.viewManager.selected.webContents.getUserAgent() + ' Dot Browser/getdot.js.org';
           }
           if (frameName === '_top' || options.title == '_top') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
-            appWindow.viewManager.selected.webContents.setUserAgent(
-              appWindow.viewManager.selected.webContents.getUserAgent() +
-                ' Dot Browser/getdot.js.org',
-            );
+            appWindow.viewManager.selected.webContents.userAgent = appWindow.viewManager.selected.webContents.getUserAgent() + ' Dot Browser/getdot.js.org';
           }
           if (frameName === '_blank' || options.title == '_blank') {
             e.preventDefault();
@@ -578,8 +563,6 @@ export class View extends BrowserView {
           e.preventDefault();
           appWindow.webContents.send('api-tabs-create', { url, active: true });
         }
-
-        console.log(frameName);
 
         if (frameName == '_blank') {
           e.preventDefault();
