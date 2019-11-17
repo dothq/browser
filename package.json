@@ -53,7 +53,7 @@
     "lint": "tslint \"src/**/*.ts*\"",
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
-    "download-filters": "node tools/download-filters.js",
+    "download-filters": "node tools/download-filters.js"
   },
   "pre-commit": [
     "lint-fix"
