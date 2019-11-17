@@ -126,9 +126,8 @@ export const audioVisible = () => {
   }
 }
 
-export const onMoreClick = () => {
-  store.quickMenuVisible = true;
-  ipcRenderer.send('menu-view', true);
+export const onMoreClick = (event: MouseEvent) => {
+  ipcRenderer.send('show-dialog', 'menu');
 }
 
 export const Toolbar = observer(() => {
