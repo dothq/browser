@@ -12,3 +12,4 @@ filters
 *.code-workspace
 extensions
 .cache
+.awcache
