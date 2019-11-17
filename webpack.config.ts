@@ -15,9 +15,10 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import { Configuration } from 'webpack';
 import { readdirSync } from 'fs';
-import { exec } from 'child_process';
 
 const devMode = process.env.NODE_ENV === 'development';
+
+process.env.isOpen = "false";
 
 class rendererPlugins {
     constructor() {
@@ -28,16 +29,6 @@ class rendererPlugins {
                 chunks: ['app'],
                 filename: `app.html`
             }),
-            {
-              apply: (compiler: any) => {
-                compiler.hooks.afterEmit.tap('AfterEmitPlugin', (_compilation) => {
-                  exec('npm start', (_err, stdout, stderr) => {
-                    if (stdout) process.stdout.write(stdout);
-                    if (stderr) process.stderr.write(stderr);
-                  });
-                });
-              }
-            },
             new WriteFilePlugin()
         ];
 
@@ -101,10 +92,11 @@ const baseConfig: Configuration = {
       {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
-        loader: 'ts-loader',
+        loader: 'awesome-typescript-loader',
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
+          useCache: true
         },
       },
       {
@@ -183,6 +175,21 @@ const rendererConfig = merge.smart(baseConfig, {
 const rendererDevConfig = merge.smart(rendererConfig, developmentConfig);
 const rendererProdConfig = merge.smart(rendererConfig, productionConfig);
 
+const preloadConfig = merge.smart(baseConfig, {
+  target: 'electron-renderer',
+  entry: {
+    'view-preload': './src/preloads/view-preload.ts'
+  },
+  plugins: [
+    devMode ? new NullPlugin() : new ForkTsCheckerWebpackPlugin({ tslint: true }),
+    new ExtractCssChunksPlugin(),
+    new WriteFilePlugin()
+  ],
+});
+
+const preloadDevConfig = merge.smart(preloadConfig, developmentConfig);
+const preloadProdConfig = merge.smart(preloadConfig, productionConfig);
+
 export default (devMode
-  ? [mainDevConfig, rendererDevConfig]
-  : [mainProdConfig, rendererProdConfig]);
+  ? [mainDevConfig, preloadDevConfig, rendererDevConfig]
+  : [mainProdConfig, preloadProdConfig, rendererProdConfig]);
