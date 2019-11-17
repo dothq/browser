@@ -2,56 +2,33 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 
 import store from '../../store';
-import { InputField, ExtLink, FakeSelect, Icon, Subtitle } from './style'
-import { Button } from '~/renderer/components/Button';
-import { Textfield } from '~/renderer/components/Textfield';
-import { Sections, Image, SettingsSection, ListItem, StyledNavigationDrawerItem, NavDILine_Profile, Title, Buttons, A, AboutWrapper, SettingsItem, TitleEmail } from './style';
-import BookmarkC from '../Bookmark';
-import { Bookmark } from '../../models/bookmark';
+import { ExtLink, Icon, Subtitle } from './style'
+import { Button } from '../../../components/Button';
+import { Textfield } from '../../../components/Textfield';
+import { Sections, Image, SettingsSection, ListItem, Title, Buttons, A, AboutWrapper, TitleEmail } from './style';
 import { icons } from '../../constants';
 import { NavigationDrawer } from '../NavigationDrawer';
-import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { Content, Container, Scrollable } from '../Overlay/style';
-import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
 import console = require('console');
 import Switch from '@material-ui/core/Switch';
-import OptSwitch from '../Switch';
 import { resolve } from 'path';
-import { platform, homedir } from 'os';
-import { DropArrow, IconButton, LanguageButton } from '../Overlay/style';
+import { homedir } from 'os';
+import { IconButton, LanguageButton } from '../Overlay/style';
 import { notify } from 'node-notifier';
-import { ipcRenderer, ipcMain, shell } from 'electron';
-import RPCSwitch from '../SettingsToggles/RichPresenceToggle';
-const DataURI = require('datauri').promise;
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { openNewGitHubIssue } from 'electron-util';
-import { Preloader } from '~/renderer/components/Preloader';
-import { Line } from '../App/style';
-import { DialogPopup } from '../DialogPopup';
-import { DialogTitle, DialogP, DialogContent, DialogButton } from '../DialogPopup/style';
-import { TextField, ButtonBase, DialogActions, Select } from '@material-ui/core';
-import Ripple from '~/renderer/components/Ripple';
+import { ipcRenderer } from 'electron';
 import SelectList, { SelectListItem } from '../SelectList';
-import { SelectOption, SelectContainer } from '../SelectList/style';
 
-var request = require('ajax-request');
-
-var modal = require('electron-modal');
 const { remote } = require('electron')
-const { Tray, app } = remote
 const json = require("edit-json-file");
 let file = json(resolve(homedir()) + '/dot/dot-options.json');
 let allLangs = json(resolve(process.cwd() + '/src/renderer/app/locale/all-locale.json'));
 allLangs = allLangs.toObject();
-const prettyBytes = require('pretty-bytes');
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
 var win = remote.getCurrentWindow();
-win.webContents.session.clearCache(function(){
-  
-});
+win.webContents.session.clearCache();
 
 store.options.currentDisplay = "profile";
 
@@ -62,108 +39,9 @@ const onBackClick = () => {
   store.bookmarks.menuVisible = false;
 };
 
-const onScroll = (e: any) => {
-  const scrollPos = e.target.scrollTop;
-  const scrollMax = e.target.scrollHeight - e.target.clientHeight - 256;
-};
-
 const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   
 };
-
-const logout = async () => {
-  store.user.loggedin = false;
-  store.user.username = "Guest";
-  store.user.avatar = icons.user
-  store.user.email = null;
-  localStorage.removeItem("dot_footprint")
-}
-
-const login = async () => {
-  var si = await modal.open(resolve(process.cwd() + '\\static\\pages\\verification\\sign-in.html'), {
-    width: 400,
-    height: 600,
-    resizable: false,
-    center: false,
-    alwaysOnTop: false,
-    title: store.locale.lang.settings[0].my_profile[0].sign_in_btn,
-    titleBarStyle: 'hiddenInset',
-    webPreferences: {
-      nodeIntegration: true
-    },
-    frame: false
-  });
-
-
-  si.on('passed-details', (c: any) => {
-    store.user.username = c.customname;
-    store.user.avatar = c.avatar;
-
-    
-
-    store.user.email = c.email;
-    store.user.loggedin = true;
-
-    localStorage.setItem("dot_footprint", Buffer.from(c.email + '||' + c.password).toString('base64'));
-
-    si.hide();
-  });
-
-  si.on('load-external-url', (c: any) => {
-    var url = c;
-    store.tabs.addTab({ url, active: true });
-
-    setTimeout(function() {
-      store.overlay.visible = false;
-    }, 250);
-  });
-
-  si.show();
-  
-  si.on('show', () => {
-    var div = document.getElementById('settings'),
-    divChildren = div.childNodes;
-  
-    for (var i=0; i<divChildren.length; i++) {
-      divChildren[i].style.filter = "blur(5px)";
-      divChildren[i].style.pointerEvents = "none";
-    }
-
-  });
-
-  si.on('closed', () => {
-
-    app.focus()
-
-    var div = document.getElementById('settings'),
-    divChildren = div.childNodes;
-
-    for (var i=0; i<divChildren.length; i++) {
-      divChildren[i].style.filter = null;
-      divChildren[i].style.pointerEvents = null;
-    }
-
-    si = null;
-
-  })
-
-  si.on('hide', () => {
-
-    app.focus()
-
-    var div = document.getElementById('settings'),
-    divChildren = div.childNodes;
-
-    for (var i=0; i<divChildren.length; i++) {
-      divChildren[i].style.filter = null;
-      divChildren[i].style.pointerEvents = null;
-    }
-
-    si = null;
-  })  
-
-
-}
 
 const onMouse = () => {
   if(store.user.loggedin == true) {
@@ -205,10 +83,6 @@ function avatarTitle() {
   }
 }
 
-const formSubmit = () => {
-  return false;
-}
-
 const YourProfile = observer(() => {
   var user = {
     username: 'Guest',
@@ -233,7 +107,7 @@ const YourProfile = observer(() => {
     <SettingsSection id="my-profile">
       <ListItem>
         <form encType="multipart/form-data" method="post" name="fileinfo">
-          <input id="avatar-choose" onChange={avatarChange} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
+          <input id="avatar-choose" onChange={() => alert("This has been temporarily disabled.")} accept="image/png" name="avatar" type="file" style={{ display: 'none' }}></input>
         </form>
         <Image src={store.user.avatar} id="user-avatar" title={avatarTitle()} onClick={pickAvatar} onMouseOver={onMouse} onMouseOut={offMouse} style={{ filter: `${shouldInvert}`, borderRadius: `${shouldBr}`, width: '48px', marginLeft: '-12px', transition: 'filter 0.3s' }}></Image>
         <div style={{ marginTop: '-7px' }}>
@@ -241,10 +115,10 @@ const YourProfile = observer(() => {
           <Email />
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <Button onClick={login} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+          <Button onClick={() => alert("This has been temporarily disabled.")} visible={store.user.loggedin == false} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.lang.settings[0].my_profile[0].sign_in_btn}
           </Button>
-          <Button onClick={logout} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
+          <Button onClick={() => alert("This has been temporarily disabled.")} visible={store.user.loggedin == true} style={{ backgroundColor: 'transparent', color: '#fff' }}>
             {store.locale.lang.settings[0].my_profile[0].sign_out_btn}
           </Button>
         </Buttons>
@@ -252,40 +126,6 @@ const YourProfile = observer(() => {
     </SettingsSection>
   );
 });
-
-async function avatarChange() {
-
-  var files = document.getElementById('avatar-choose').files[0];
-
-  if(files.type == "image/png") {
-    if(files.size / 1024 / 1024 <= 2) {
-
-      var content = await DataURI(files.path);
-
-      store.user.avatar = content
-
-      var form = document.forms.namedItem("fileinfo");
-    
-        var footprint = atob(localStorage.getItem("dot_footprint"));
-
-        var email = footprint.split("||")[0];
-        var password = footprint.split("||")[1];
-
-        var oData = new FormData(form);
-
-        var oReq = new XMLHttpRequest();
-        oReq.open("POST", `https://api.dotbrowser.me/api/v${store.api}/upload/avatar`, true);
-        oReq.setRequestHeader("Authorization", `DotUser ${password} at ${email}`)
-        oReq.send(oData);
-        oReq.onload = function() {
-          var body = JSON.parse(oReq.responseText);
-        };
-  
-
-    }
-  }
-
-};
 
 const wexond = () => {
   var url = "https://github.com/wexond/wexond"
@@ -328,18 +168,6 @@ const blz = () => {
   store.tabs.addTab({url, active: true });
   store.overlay.visible = false;
 }
-
-const UKFlag = observer(() => {
-  return (
-    <Image src={icons.uk} style={{ width: '14px' }}></Image>
-  )
-});
-
-const HeartEmote = observer(() => {
-  return (
-    <span style={{ color: '#ff4040' }}>❤</span>
-  );
-});
 
 const chachy = () => {
   var url = "https://github.com/chachyyyy"
@@ -409,7 +237,7 @@ const pickLocation = () => {
 }
 
 const awaitDownloadUpdate = async () => {
-  var input = document.getElementById("download-picker")
+  var input = document.getElementById("download-picker") as HTMLInputElement;
   dl = input.files[0].path;
 
   setTimeout(function() {
@@ -437,67 +265,11 @@ const Downloads = observer(() => {
         <Buttons style={{ marginLeft: 'auto' }}>
           <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
         </Buttons>
-        <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
+        <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} />
       </ListItem>
     </SettingsSection>
   );
 });
-
-const Passwords = observer(() => {
-
-  if(store.user.loggedin == true) {
-
-    if(store.options.authorized == false) {
-      return (
-        <SettingsSection style={{ height: '70px', paddingTop: '12px' }}>
-          <ListItem style={{ display: 'block' }}> 
-            <div style={{ display: 'flex', marginLeft: '-8px' }}>
-              <InputField style={{ backgroundColor: '#80808047', color: '#fff', borderRadius: '25px', height: '45px', paddingLeft: '20px', fontSize: '19px', width: '230px' }} fontColor="white" color="white" type="password"></InputField>
-              <Button visible={store.options.currentDisplay == 'passwords'} style={{ backgroundColor: 'transparent', color: '#fff', margin: '4px 4px 4px 10px' }}>
-                {store.locale.lang.settings[0].my_profile[0].sign_in_btn}
-              </Button>
-            </div>
-          </ListItem>
-        </SettingsSection>
-      )
-    }
-    if(store.options.authorized == true) {
-      return (
-        <SettingsSection>
-          <ListItem>
-            <div>
-              <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].downloads[0].download_loc}</Title>
-              <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
-            </div>
-            <Buttons style={{ marginLeft: 'auto' }}>
-              <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
-            </Buttons>
-            <input onChange={awaitDownloadUpdate} type="file" id="download-picker" style={{ display: 'none' }} webkitdirectory="true" />
-          </ListItem>
-        </SettingsSection>
-      )
-    }
-
-  }
-
-});
-
-const Advanced = observer(() => {
-  return (
-    <SettingsSection>
-      <ListItem>
-        <Title style={{ fontSize: 15 }}>Show Discord Rich Presence</Title>
-        <Buttons style={{ marginLeft: 'auto' }}>
-          <RPCSwitch />
-        </Buttons>
-      </ListItem>
-    </SettingsSection>
-  );
-});
-
-
-const showProfile = () => {
-}
 
 const secretBoyo = () => {
   var x = document.getElementById("about-wrapper");
@@ -564,103 +336,7 @@ class ToggleSwitchDL extends React.Component {
 
 export default ToggleSwitchDL;
 
-var seMenuVisible = false;
-
-const toggleSeMenu = (e: any) => {
-  if(store.options.emojiCtx == false) {
-    e.stopPropagation();
-    if(store.options.searchEngineCtx == true) {
-      store.options.searchEngineCtx = false
-    }
-    else {
-      store.options.searchEngineCtx = true
-    }
-  }
-}
-
-const setSearchEngine = () => {
-
-}
-
-const setEngineGoogle = () => {
-  file.set("searchEngine", "google");
-  console.info(`[SettingsStore] Set searchEngine to custom string google`)
-  file.save(); 
-  seMenuVisible = false   
-  store.options.currentSearchEngine
-}
-
-const setEngineBing = () => {
-  file.set("searchEngine", "bing");
-  console.info(`[SettingsStore] Set searchEngine to custom string bing`)
-  file.save();  
-  seMenuVisible = false 
-  document.getElementById("ctx-item-g").style.backgroundColor = "";
-  document.getElementById("ctx-item-b").style.backgroundColor = "#585858c7";
-  document.getElementById("ctx-item-y").style.backgroundColor = "";
-  document.getElementById("ctx-item-d").style.backgroundColor = "";
-  document.getElementById("ctx-item-e").style.backgroundColor = "";
-}
-
-const setEngineYahoo = () => {
-  file.set("searchEngine", "yahoo");
-  console.info(`[SettingsStore] Set searchEngine to custom string yahoo`)
-  file.save(); 
-  seMenuVisible = false 
-  document.getElementById("ctx-item-g").style.backgroundColor = "";
-  document.getElementById("ctx-item-b").style.backgroundColor = "";
-  document.getElementById("ctx-item-y").style.backgroundColor = "#585858c7";
-  document.getElementById("ctx-item-d").style.backgroundColor = "";
-  document.getElementById("ctx-item-e").style.backgroundColor = "";
-}
-
-const setEngineDdg = () => {
-  file.set("searchEngine", "ddg");
-  console.info(`[SettingsStore] Set searchEngine to custom string ddg`)
-  file.save();    
-  seMenuVisible = false
-  document.getElementById("ctx-item-g").style.backgroundColor = "";
-  document.getElementById("ctx-item-b").style.backgroundColor = "";
-  document.getElementById("ctx-item-y").style.backgroundColor = "";
-  document.getElementById("ctx-item-d").style.backgroundColor = "#585858c7";
-  document.getElementById("ctx-item-e").style.backgroundColor = "";
-}
-
-const setEngineEcosia = () => {
-  file.set("searchEngine", "ecosia");
-  console.info(`[SettingsStore] Set searchEngine to custom string ecosia`)
-  file.save();    
-  seMenuVisible = false
-  document.getElementById("ctx-item-g").style.backgroundColor = "";
-  document.getElementById("ctx-item-b").style.backgroundColor = "";
-  document.getElementById("ctx-item-y").style.backgroundColor = "";
-  document.getElementById("ctx-item-d").style.backgroundColor = "";
-  document.getElementById("ctx-item-e").style.backgroundColor = "#585858c7";
-}
-
-var se = file.get("searchEngine");
-if(se == "google") {
-  var cmICG = "#585858c7"
-}
-if(se == "yahoo") {
-  var cmICY = "#585858c7"
-}
-if(se == "bing") {
-  var cmICB = "#585858c7"
-}
-if(se == "ddg") {
-  var cmICD = "#585858c7"
-}
-if(se == "ecosia") {
-  var cmICE = "#585858c7"
-}
-
-if(!file.get("tempType")) {
-  file.set("tempType", "c");
-  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
-  file.save()
-}
-
+/* Deprecated soon */
 export const setDTC = () => {
   document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
   document.getElementById("deg-type-fah").style.backgroundColor = "";
@@ -678,6 +354,7 @@ export const setDTC = () => {
   
 };
 
+/* Deprecated soon */
 export const setDTF = () => {
   document.getElementById("deg-type-fah").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
   document.getElementById("deg-type-cel").style.backgroundColor = "";
@@ -693,15 +370,6 @@ export const setDTF = () => {
     store.weather.load("F");
   }
 };
-
-var isC = "";
-var isF = "";
-if(file.get("tempType") == "c") {
-  isC = "var(--degrees-button-color)"
-}
-if(file.get("tempType") == "F") {
-  isF = "var(--degrees-button-color)"
-}
 
 const feedbackRef = React.createRef<Textfield>();
 
@@ -726,123 +394,6 @@ export const Feedback = observer(() => {
     </SettingsSection>
   );
 });
-
-store.options.skin = icons.thumbs_up_default
-if(store.options.emojiSkinTone == 'pale') {
-  store.options.skin = icons.thumbs_up_pale
-} else if(store.options.emojiSkinTone == 'medium_pale') {
-  store.options.skin = icons.thumbs_up_medium_pale
-} else if(store.options.emojiSkinTone == 'medium') {
-  store.options.skin = icons.thumbs_up_medium
-} else if(store.options.emojiSkinTone == 'medium_dark') {
-  store.options.skin = icons.thumbs_up_medium_dark
-} else if(store.options.emojiSkinTone == 'dark') {
-  store.options.skin = icons.thumbs_up_dark
-}
-
-const toggleEmojiCtx = (e: any) => {
-  if(store.options.searchEngineCtx == false) {
-    e.stopPropagation();
-    if(store.options.emojiCtx == true) {
-      store.options.emojiCtx = false;
-    }
-    else {
-      store.options.emojiCtx = true;
-    }
-  }
-}
-
-const createNew = (e: any) => {
-  store.options.searchEngineCtx = false;
-  store.options.seURLRef.current.value = '';
-  store.options.seNameRef.current.value = '';
-  store.options.seNameerror = false;
-  store.options.seURLerror = false;
-  e.stopPropagation();
-  if(store.options.searchEngineNewModal == true) {
-    store.options.searchEngineNewModal = false;
-  }
-  else {
-    store.options.searchEngineNewModal = true;
-  }
-}
-
-const toggleEditSe = (e: any) => {
-  store.options.searchEngineCtx = false;
-  store.options.seURLRef.current.value = '';
-  store.options.seNameRef.current.value = '';
-  store.options.seNameerror = false;
-  store.options.seURLerror = false;
-  e.stopPropagation();
-  if(store.options.searchEngineEditModal == true) {
-    store.options.searchEngineEditModal = false;
-  }
-  else {
-    store.options.searchEngineEditModal = true;
-  }
-}
-
-const createSearchEngine = (e: any) => {
-
-  var pattern = new RegExp('^(https?:\\/\\/)?'+
-    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
-    '((\\d{1,3}\\.){3}\\d{1,3}))'+
-    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
-    '(\\?[;&a-z\\d%_.~+=-]*)?'+
-    '(\\#[-a-z\\d_]*)?$','i');
-
-  if(store.options.seNameRef.current.value.length == 0) {
-    return store.options.seNameerror = true;
-  }
-  else {
-    store.options.seNameerror = false;
-  }
-
-  if(store.options.seURLRef.current.value.length == 0) {
-    return store.options.seURLerror = true;
-  }
-  else {
-    store.options.seURLerror = false;
-  }
-
-  if(store.options.seURLRef.current.value.includes("%s") == false) {
-    return store.options.seURLerror = true;
-  }
-  else {
-    store.options.seURLerror = false;
-  }
-
-  if(pattern.test(store.options.seURLRef.current.value) == true) {
-    store.options.seURLerror = false;
-
-    var searchEngine = {
-      title: store.options.seNameRef.current.value,
-      url: store.options.seURLRef.current.value,
-      favicon: `${`https://api.faviconkit.com/${new URL(store.options.seURLRef.current.value).hostname}/144`}`
-    }
-  
-    store.options.searchEngineCtx = false;
-    e.stopPropagation();
-    store.options.searchEngineNewModal = false;
-
-    store.options.addSe(searchEngine)
-
-    
-  }
-  else {
-    store.options.seURLerror = true;
-  }
-
-};
-
-const isCustom = () => {
-  if(store.options.seIsCustom == true) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
 
 const setTheme = (theme: 'dark' | 'light') => {
   store.options.setTheme(theme)
@@ -987,7 +538,6 @@ const downloadLatestLangs = () => {
 
 export const Languages = observer(() => {
   var itemChecked = file.get("language");
-  var langs = store.locale.lang.languages[0];
   return (
     <SettingsSection>
       {allLangs.languages.map((i: any) => {
@@ -1000,7 +550,6 @@ export const Languages = observer(() => {
         }
 
         i.id = `lang-btn-${i.flag}`
-        var lang = langs[i.flag];
 
         return (<ListItem key={i.flag}>
           <Title style={{ fontSize: 15 }}> {i.title}</Title>
@@ -1015,8 +564,6 @@ export const Languages = observer(() => {
     </SettingsSection>
   );
 });
-
-var showLanguagePacks = false;
 
 export const DownloadLanguages = observer(() => {
 
@@ -1057,7 +604,7 @@ export const Settings = observer(() => {
         store.overlay.currentContent === 'settings' && store.overlay.visible
       }
     >
-      <Scrollable onScroll={onScroll} ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
+      <Scrollable ref={scrollRef} style={{ transition: 'filter 0.2s' }}>
         <NavigationDrawer
           title={store.locale.lang.settings[0].title}
           onBackClick={onBackClick}
@@ -1086,16 +633,11 @@ export const Settings = observer(() => {
               {store.options.currentDisplay == 'search' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.search})` }} /> {store.locale.lang.settings[0].appearance[0].search_engine}</Title>}
               {store.options.currentDisplay == 'search' && <Search />}
 
-              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == false && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.lock})` }} /> Verify your password</Title>}
-              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && store.options.authorized == true && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.key})` }} /> Passwords</Title>}
-              {store.options.currentDisplay == 'passwords' && store.user.loggedin == true && <Passwords />}
-
               {store.options.currentDisplay == 'downloads' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.download})` }} /> {store.locale.lang.settings[0].downloads[0].title}</Title>}
               {store.options.currentDisplay == 'downloads' && <Downloads />}
 
               {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.translate})` }} /> {store.locale.lang.settings[0].languages[0].title}</Title>}
               {store.options.currentDisplay == 'languages' && <Languages />}
-              {/* {store.options.currentDisplay == 'languages' && <DownloadLanguages />} */}
 
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.extensions})` }} /> {store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}
