@@ -15,16 +15,15 @@ import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import store from '~/renderer/app/store';
 import console = require('console');
-import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
 import { Omnibox } from './essentials/omnibox';
-import { LocationBar } from './location-bar';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import * as isDev from 'electron-is-dev';
 
 import { DotOptions } from '~/renderer/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
+import { LocationDialog } from './dialogs/location';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -44,7 +43,7 @@ export class AppWindow extends BrowserWindow {
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
   public menu: MenuDialog = new MenuDialog(this);
   public omnibox: Omnibox = new Omnibox(this);
-  public locationBar: LocationBar = new LocationBar(this);
+  public locationBar: LocationDialog = new LocationDialog(this);
 
   constructor() {
     super({

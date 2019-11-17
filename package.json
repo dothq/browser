@@ -42,7 +42,7 @@
     "url": "https://github.com/dot-browser/desktop/issues"
   },
   "scripts": {
-    "start": "cross-env ELECTRON_IS_DEV=1 electron .",
+    "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 electron .",
     "build": "npm run download-filters && npm run clean && webpack --progress --mode=production",
     "dev": "npm run download-filters && npm run clean && webpack-dev-server --port=4444 --content-base build/ --writeToDisk --inline --progress --mode=development",
     "clean": "rimraf build",

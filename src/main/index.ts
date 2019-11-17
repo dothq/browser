@@ -32,7 +32,6 @@ ipcMain.setMaxListeners(0);
 app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
-export let locationBar: LocationBar;
 
 registerProtocols();
 
