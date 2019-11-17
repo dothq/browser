@@ -2,20 +2,17 @@ import { observer } from 'mobx-react';
 import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 
-import { Style } from '~/renderer/app/style';
+import { Style } from '../../../app/style';
 import { Toolbar } from '../Toolbar';
-import { ipcRenderer, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import { Line, StyledApp, Screenshot } from './style';
 import { WindowsButtons } from '../WindowsButtons';
 import store from '../../store';
 import { platform } from 'os';
 import { Overlay } from '../Overlay';
 import console = require('console');
-import { writeFileSync, readFileSync, existsSync, appendFile } from 'fs';
-import { getPath } from '~/shared/utils/paths';
-import { ViewManager } from '~/main/view-manager';
-import { appWindow } from '~/main';
-import { resolve } from 'path';
+import { existsSync, appendFile } from 'fs';
+import { getPath } from '../../../../shared/utils/paths';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
@@ -68,7 +65,7 @@ export const App = observer(() => {
     <StyledApp>
       <GlobalStyle />
       <Toolbar />
-      <Line overlay={store.overlay.visible} />
+      <Line />
       <Screenshot img={store.overlay.screenshot} />
       <Overlay />
       {platform() !== 'darwin' && <WindowsButtons />}
