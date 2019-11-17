@@ -1,4 +1,4 @@
-import { app, protocol } from 'electron';
+import { app } from 'electron';
 import { readFile } from 'fs';
 import { join, resolve, normalize } from 'path';
 import { parse } from 'url';

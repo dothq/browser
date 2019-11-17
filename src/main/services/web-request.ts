@@ -1,24 +1,18 @@
-import { ipcMain, session, webContents, app } from 'electron';
-import { makeId } from '~/shared/utils/string';
+import { ipcMain, session, webContents } from 'electron';
+import { makeId } from '../../shared/utils/string';
 import { AppWindow } from '../app-window';
-import { matchesPattern } from '~/shared/utils/url';
-import { USER_AGENT, FALLBACK_USER_AGENT } from '~/shared/constants';
+import { matchesPattern } from '../../shared/utils/url';
+import { USER_AGENT, FALLBACK_USER_AGENT } from '../../shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
 import { appWindow } from '..';
-const json = require("edit-json-file");
-import { homedir } from 'os';
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
-
 import {
   FiltersEngine,
   makeRequest,
   updateResponseHeadersWithCSP,
-  parseFilters,
 } from '@cliqz/adblocker';
 import { parse } from 'tldts';
-import { requestURL } from '~/renderer/app/utils/network';
 
 
 export let engine: FiltersEngine;
@@ -210,7 +204,7 @@ export const runWebRequestService = (window: AppWindow) => {
 
   // onBeforeSendHeaders
 
-  const onBeforeSendHeaders = async (details: any, callback: any) => {
+  async (details: any, callback: any) => {
     const requestHeaders = objectToArray(details.requestHeaders);
 
     const newDetails: any = {
@@ -222,21 +216,9 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-
-    var url = new URL(details.url);
-    var hn = url.hostname.split(".")[1];
-
-    var blacklisted_from_ua = ['google', 'youtube', 'www.google', 'www.youtube', 'ebay', 'www.ebay']
-
-    if(blacklisted_from_ua.includes(hn.toLowerCase()) == true) {
-      details.requestHeaders['User-Agent'] = FALLBACK_USER_AGENT;
-      details.requestHeaders['DNT'] = '1';
-    }
-    else {
-      details.requestHeaders['User-Agent'] = USER_AGENT;
-      details.requestHeaders['DNT'] = '1';      
-    }
-
+    details.requestHeaders['User-Agent'] = USER_AGENT;
+    details.requestHeaders['DNT'] = '1';      
+    
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
@@ -248,7 +230,7 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeRequest(
-    async (details: Electron.OnBeforeRequestDetails, callback: any) => {
+    async (details: Electron.OnBeforeRequestListenerDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
 
       if (engine) {
@@ -290,7 +272,7 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onHeadersReceived(
-    async (details: Electron.OnHeadersReceivedDetails, callback: any) => {
+    async (details: Electron.OnHeadersReceivedListenerDetails, callback: any) => {
       updateResponseHeadersWithCSP(
         {
           url: details.url,
