@@ -43,15 +43,9 @@
   },
   "scripts": {
     "start": "cross-env ELECTRON_IS_DEV=1 electron .",
-    "build": "npm run download-filters && npm run clean && webpack --progress --mode=development",
+    "build": "npm run download-filters && npm run clean && webpack --progress --mode=production",
     "dev": "npm run download-filters && npm run clean && webpack-dev-server --port=4444 --content-base build/ --writeToDisk --inline --progress --mode=development",
     "clean": "rimraf build",
-    "web": "webpack-dev-server --config webpack.config.web.ts --mode development --hot --inline",
-    "start:devsrv": "webpack-dev-server --port 8000 --contentBase build --progress --mode=development --watch",
-    "legacy-dev": "npm run node-ver && npm run download-filters && cross-env NODE_ENV='dev' node fuse.js",
-    "legacy-build": "npm run node-ver && npm run download-filters && node fuse.js",
-    "legacy-start": "cross-env ENV='dev' electron --inspect=5858 .",
-    "start-with-url": "npm run dev -- https://google.com",
     "compile": "node tools/ci.js",
     "compile-win32": "npm run build && electron-builder -w -p always",
     "compile-darwin": "npm run build && electron-builder -m -p always",
@@ -60,8 +54,6 @@
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
     "download-filters": "node tools/download-filters.js",
-    "node-ver": "node tools/build-preload.js",
-    "tree-shake": "npm prune"
   },
   "pre-commit": [
     "lint-fix"
