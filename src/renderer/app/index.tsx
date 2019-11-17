@@ -17,9 +17,12 @@ const opts = json(resolve(homedir() + '/dot/dot-options.json'));
 const { remote } = require('electron')
 const { Menu, Tray, app } = remote
 
-var tray = new Tray(resolve(process.cwd(), 'static/tray-icon.png'))
+let icon = remote.nativeImage.createFromPath(resolve(process.cwd(), "src/shared/resources/icons/logo.png"));
+icon = icon.resize({ width: 16, height: 16 });
+
+var tray = new Tray(icon)
 const contextMenu = Menu.buildFromTemplate([
-  { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', enabled: false, icon: resolve(process.cwd(), 'static/app-icons/tray-icon.png') },
+  { label: store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', enabled: false, icon: icon },
   { type: 'separator' },
   { label: store.locale.lang.history[0].title, type: 'normal', click() {
       ipcRenderer.send('window-focus');
@@ -78,32 +81,6 @@ ipcRenderer.on('dev-tools-opened', () => {
   appWindow.webContents.openDevTools({ mode: 'detach' });
 });
 
-var reload = () => {
-  store.tabs.selectedTab.callViewMethod('webContents.reload');
-}
-
-var openLauncher = () => {
-  store.overlay.visible = true;
-}
-
-var history = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "history";
-  store.overlay.scrollRef.current.scrollTop = 0;
-}
-
-var bookmarks = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "bookmarks";
-  store.overlay.scrollRef.current.scrollTop = 0;
-}
-
-var settings = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "settings";
-  store.overlay.scrollRef.current.scrollTop = 0;
-}
-
 styleElement.textContent = `
 @font-face {
   font-family: 'Roboto';
@@ -134,17 +111,17 @@ Menu.setApplicationMenu(
     {
       label: 'Edit',
       submenu: [
-        { role: 'undo' },
-        { role: 'redo' },
+        { role: 'undo', label: 'Undo' },
+        { role: 'redo', label: 'Redo' },
         { type: 'separator' },
-        { role: 'cut' },
-        { role: 'copy' },
-        { role: 'paste' },
-        { role: 'pasteandmatchstyle' },
-        { role: 'delete' },
-        { role: 'selectall' },
-        { role: 'quit' },
-        { role: 'reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
+        { role: 'cut', label: 'Cut' },
+        { role: 'copy', label: 'Copy' },
+        { role: 'paste', label: 'Paste' },
+        { role: 'pasteandmatchstyle', label: 'Paste and match style' },
+        { role: 'delete', label: 'Delete' },
+        { role: 'selectall', label: 'Select all' },
+        { role: 'quit', label: 'Quit app' },
+        { role: 'reload', label: 'Reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
         {
           accelerator: 'CmdOrCtrl+F',
           label: 'Find in page',
