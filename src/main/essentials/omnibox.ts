@@ -1,20 +1,19 @@
-import { BrowserWindow, app, nativeImage, screen } from 'electron';
-import { appWindow } from '~/renderer/app';
-import { resolve } from 'path';
-import { Tab } from '~/renderer/app/models';
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants';
+import { BrowserWindow } from 'electron';
 import * as isDev from 'electron-is-dev';
+import { Tab } from '../../renderer/app/models';
 
 export class Omnibox extends BrowserWindow {
   constructor(public appWindow: any) {
     super({
       width: 1000,
-      height: 50,
+      height: 58,
       title: 'Omnibox Host',
       frame: false,
       resizable: false,
       maximizable: false,
+      opacity: 0,
       show: false,
+      hasShadow: true,
       fullscreenable: false,
       skipTaskbar: true,
       transparent: true,
@@ -34,15 +33,18 @@ export class Omnibox extends BrowserWindow {
     if (isDev) {
       this.webContents.openDevTools({ mode: 'detach' });
     }
+
+    this.on('blur', () => {
+      this.hide()
+    })
   }
 
   public open(tab?: Tab) {
     this.show();
 
     const cBounds = this.appWindow.getContentBounds();
-    console.log(cBounds);
+    
     this.setBounds({
-      x: cBounds.x + cBounds.width / 2,
       y: cBounds.y + 42,
     } as any);
 
