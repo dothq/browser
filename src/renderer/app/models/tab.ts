@@ -255,7 +255,6 @@ export class Tab {
             if (!palette.Vibrant) return;
 
             if (getColorBrightness(palette.Vibrant.hex) < 170) {
-              console.log(palette.DarkVibrant.hex, palette.Vibrant.hex);
               this.background =
                 store.options.theme == 'light'
                   ? palette.Vibrant.hex
@@ -363,6 +362,8 @@ export class Tab {
         tabId: this.id,
         windowId: 0,
       });
+
+      // ipcRenderer.send('open-omnibox', this);
 
       requestAnimationFrame(() => {
         store.tabs.updateTabsBounds(true);

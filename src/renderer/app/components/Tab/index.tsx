@@ -1,11 +1,9 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
-import { Preloader } from '~/renderer/components/Preloader';
-import { Tab } from '~/renderer/app/models';
-import store from '~/renderer/app/store';
-const emote = require('react-easy-emoji');
-const emoji = require('node-emoji');
+import { Preloader } from '../../../components/Preloader';
+import { Tab } from '../../models/tab';
+import store from '../../store';
 import {
   StyledTab,
   StyledContent,
@@ -15,17 +13,11 @@ import {
   StyledBorder,
   StyledOverlay,
   TabContainer,
-  SearchInput,
-  Image,
 } from './style';
 import { shadeBlendConvert } from '../../utils';
-import { transparency } from '~/renderer/constants';
-import { ipcRenderer, remote } from 'electron';
-import Ripple from '~/renderer/components/Ripple';
-import { resolve } from 'path';
-import console = require('console');
-import { icons } from '../../constants/icons';
-import { Title } from '../Overlay/style';
+import { remote } from 'electron';
+import Ripple from '../../../components/Ripple';
+import { transparency } from '../../../constants';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -33,10 +25,6 @@ const removeTab = (tab: Tab) => () => {
 
 const onCloseMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
   e.stopPropagation();
-};
-
-const onDblClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-  store.tabs.showUB();
 };
 
 const onMouseDown = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
@@ -66,10 +54,6 @@ const onMouseEnter = (tab: Tab) => () => {
 
 const onMouseLeave = () => {
   store.tabs.hoveredTabId = -1;
-};
-
-const onClick = () => {
-  ipcRenderer.send('open-omnibox');
 };
 
 const contextMenu = (tab: Tab) => () => {
@@ -172,8 +156,6 @@ const contextMenu = (tab: Tab) => () => {
 const Content = observer(({ tab }: { tab: Tab }) => {
   var title = tab.title;
 
-  var url = tab.url;
-
   return (
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && (
@@ -251,7 +233,6 @@ export default observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onMouseDown(tab)}
       onMouseEnter={onMouseEnter(tab)}
       onContextMenu={contextMenu(tab)}
-      onClick={onClick}
       title={tab.title}
       onMouseLeave={onMouseLeave}
       onMouseOver={onMouseHover}
