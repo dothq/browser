@@ -18,13 +18,13 @@ import console = require('console');
 import { locationBar } from '.';
 import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
 import { PermissionDialog } from './permissions';
-import { MenuList } from './menu';
 import { Omnibox } from './essentials/omnibox';
 import { LocationBar } from './location-bar';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import * as isDev from 'electron-is-dev';
 
 import { DotOptions } from '~/renderer/app/models/dotoptions';
+import { MenuDialog } from './dialogs/menu';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -42,7 +42,7 @@ try {
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
-  public menu: MenuList = new MenuList(this);
+  public menu: MenuDialog = new MenuDialog(this);
   public omnibox: Omnibox = new Omnibox(this);
   public locationBar: LocationBar = new LocationBar(this);
 
@@ -62,7 +62,7 @@ export class AppWindow extends BrowserWindow {
         nodeIntegration: true,
         contextIsolation: false,
         experimentalFeatures: true,
-        enableBlinkFeatures: 'OverlayScrollbars',
+        enableBlinkFeatures: 'OverlayScrollbars, dns-over-https',
         webviewTag: true,
       },
       icon: resolve(process.cwd(), '/static/icon.png'),
@@ -70,6 +70,7 @@ export class AppWindow extends BrowserWindow {
 
     this.setBackgroundColor('#fff');
 
+    app.commandLine.appendSwitch("dns-over-https");
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false');
@@ -144,8 +145,8 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.omnibox.hide();
 
-      // this.permissionWindow.rearrange();
-      // this.menu.hideWindow()
+      this.permissionWindow.rearrange();
+      this.menu.hide()
     });
 
     this.on('move', () => {
@@ -155,20 +156,22 @@ export class AppWindow extends BrowserWindow {
 
       this.omnibox.hide();
 
-      // this.permissionWindow.rearrange();
-      // this.menu.rearrange();
+      this.permissionWindow.rearrange();
+      this.menu.rearrange();
     });
 
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
       this.omnibox.hide();
+      this.menu.hide()
     });
 
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
       this.omnibox.hide();
+      this.menu.hide()
     });
 
     // Update window bounds on resize and on move when window is not maximized.
@@ -176,16 +179,18 @@ export class AppWindow extends BrowserWindow {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-      this.menu.hideWindow();
+      this.menu.hide();
       this.viewManager.fixBounds();
+      this.permissionWindow.rearrange();
       this.omnibox.hide();
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
         windowState.bounds = this.getBounds();
       }
-      this.menu.hideWindow();
+      this.menu.hide();
       this.viewManager.fixBounds();
+      this.permissionWindow.rearrange();
       this.omnibox.hide();
     });
 
@@ -193,12 +198,13 @@ export class AppWindow extends BrowserWindow {
       this.webContents.getURL().split('https://api.dotbrowser.me/api/')[0] !=
       `https://api.dotbrowser.me/api/`
     ) {
-      this.webContents.setUserAgent(`Dot Fetcher/${app.getVersion()}`);
+      this.webContents.userAgent = `Dot Fetcher/${app.getVersion()}`
     }
 
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
+      this.permissionWindow.rearrange();
       this.omnibox.hide();
     };
 
