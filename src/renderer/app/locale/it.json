@@ -37,181 +37,181 @@
     ],
     "themes": [
         {
-            "dark": "Dark",
-            "light": "Light",
-            "ui_theme": "Interface theme"
+            "dark": "Scuro",
+            "light": "Chiaro",
+            "ui_theme": "Tema dell'interfaccia"
         }
     ],
     "rich_presence": [
         {
-            "default_details": "Browsing on",
-            "audio_details": "Listening to audio on",
-            "file_details": "Viewing a {fileType} file",
-            "active_small_text": "Browsing a webpage",
-            "idle_small_text": "Idle",
+            "default_details": "Naviga su",
+            "audio_details": "Sta ascoltando audio da",
+            "file_details": "Sta guardando un {fileType} file",
+            "active_small_text": "Naviga su una pagina",
+            "idle_small_text": "Inattivo",
             "idle_details": "Dot Browser",
             "large_text": "Dot Browser {version}"
         }
     ],
     "overlay": [
         {
-            "dial_top_sites": "Top Sites",
-            "dial_bookmarks": "Bookmarks",
-            "overview": "Overview",
+            "dial_top_sites": "Migliori siti",
+            "dial_bookmarks": "Segnalibri",
+            "overview": "Panoramica",
             "menu": "Menu",
-            "tab_groups": "Tab groups",
-            "default_tab_group": "New group",
-            "world": "World",
-            "history_bubble": "History",
-            "bookmarks_bubble": "Bookmarks",
+            "tab_groups": "Gruppi di schede",
+            "default_tab_group": "Nuovo gruppo",
+            "world": "Mondo",
+            "history_bubble": "Cronologia",
+            "bookmarks_bubble": "Segnalibri",
             "downloads_bubble": "Downloads",
-            "settings_bubble": "Settings",
-            "extensions_bubble": "Extensions",
-            "find_bubble": "Find",
-            "more_tools_bubble": "More tools",
-            "welcome_snackbar": "Welcome back, {username}"
+            "settings_bubble": "Impostazioni",
+            "extensions_bubble": "Estensioni",
+            "find_bubble": "Trova",
+            "more_tools_bubble": "Altri tools",
+            "welcome_snackbar": "Bentornato, {username}"
         }
     ],
     "search_bar": [
         {
             "logged_in": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind {username}?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Dove vuoi andare oggi?",
+                    "message_2": "A cosa pensi oggi {username}?",
+                    "message_3": "Inserisci una parola chiave o un URL per iniziare.",
                     "message_4": "{currentTimeType}, {username}"
                 }
             ],
             "guest": [
                 {
-                    "message_1": "Where do you want to go today?",
-                    "message_2": "What's on your mind?",
-                    "message_3": "Enter a search term or URL to get started.",
+                    "message_1": "Dove vuoi andare oggi?",
+                    "message_2": "A cosa pensi oggi?",
+                    "message_3": "Inserisci una parola chiave o un URL per iniziare.",
                     "message_4": "{currentTimeType}"
                 }
             ],
             "timeTypes": [
                 {
-                    "morning": "Good morning",
-                    "afternoon": "Good afternoon",
-                    "evening": "Good evening"
+                    "morning": "Buongiorno",
+                    "afternoon": "Buon pomeriggio",
+                    "evening": "Buona sera"
                 }
             ]
         }
     ],
     "settings": [
         {
-            "title": "Settings",
+            "title": "Impostazioni",
             "google_searchEngine": "Google",
             "bing_searchEngine": "Bing",
             "yahoo_searchEngine": "Yahoo",
             "ddg_searchEngine": "DuckDuckGo",
             "ecosia_searchEngine": "Ecosia",
-            "create_new": "Add new",
-            "add_new": "Add search engine",
+            "create_new": "Agguingi nuovo",
+            "add_new": "Agguingi un nuovo motore di ricerca",
             "my_profile": [
                 {
-                    "title": "My Profile",
-                    "sign_in_btn": "Sign in",
-                    "sign_out_btn": "Sign out",
-                    "guest_user": "Guest"
+                    "title": "Il mio profilo",
+                    "sign_in_btn": "Accedi",
+                    "sign_out_btn": "Disconnettiti",
+                    "guest_user": "Ospite"
                 }
             ],
             "appearance": [
                 {
-                    "title": "Appearance",
-                    "toggle_dot": "Toggle Dot button",
-                    "search_engine": "Search Engine",
-                    "temp_type": "Temperature type",
-                    "guest_user": "Guest"
+                    "title": "Aspetto",
+                    "toggle_dot": "Abilita il pulsante Dot",
+                    "search_engine": "Motore di ricerca",
+                    "temp_type": "Tipo di temperatura",
+                    "guest_user": "Ospite"
                 }
             ],
             "downloads": [
                 {
                     "title": "Downloads",
-                    "download_loc": "Downloads Location"
+                    "download_loc": "Posizione dei Downloads"
                 }
             ],
             "dev_tools": [
                 {
-                    "title": "Developer Experiments",
-                    "chromium_dt": "Chromium Developer Tools",
-                    "send_test_notif": "Send test notification",
-                    "open_log": "Open log file"
+                    "title": "Esperimenti dello sviluppatore",
+                    "chromium_dt": "Tools dello Sviluppatore di Chromium",
+                    "send_test_notif": "Invia una notifica di prova",
+                    "open_log": "Apri il file degli eventi"
                 }
             ],
             "about_dot": [
                 {
-                    "title": "About Dot",
-                    "thanks_message": "Dot was made possible thanks to",
-                    "wxnd_coffee": "and ☕.",
-                    "made_in": "Made in",
-                    "gb_with": "Great Britain with ",
+                    "title": "Su Dot",
+                    "thanks_message": "Dot è stato reso possibile grazie a",
+                    "wxnd_coffee": "e ☕.",
+                    "made_in": "Fatto in",
+                    "gb_with": "Gran Bretagna con ",
                     "end": ".",
-                    "developers_title": "Developers",
+                    "developers_title": "Sviluppatori",
                     "beta_testers_title": "Beta Testers",
-                    "special_thanks_title": "Special Thanks",
-                    "translators_title": "Translators",
-                    "view_translators_github": "View all translators on GitHub.com",
-                    "view_translators": "View translators",
-                    "verbose_loaded_fcm": "Loaded FCM Notification services",
-                    "about_page_btn": "Visit the debug page",
+                    "special_thanks_title": "Ringraziamenti speciali",
+                    "translators_title": "Traduttori",
+                    "view_translators_github": "Guarda tutti i traduttori su GitHub.com",
+                    "view_translators": "Guarda traduttori",
+                    "verbose_loaded_fcm": "Abilitato il servizio delle notifiche FCM",
+                    "about_page_btn": "Visita la pagina di Debug",
                     "copyright_notice": "© 2019 Ender And Fire Development"
                 }
             ],
             "feedback": [
                 {
-                    "title": "Send feedback",
-                    "feedback_title": "Send feedback to developers",
-                    "bug_report_title": "Open a bug report",
-                    "describe_issue": "Describe your issue"
+                    "title": "Manda ",
+                    "feedback_title": "Invia un feedback agli sviluppatori",
+                    "bug_report_title": "Apri un bug report",
+                    "describe_issue": "Descrivi il tuo problema"
                 }
             ],
             "languages": [
                 {
-                    "title": "Languages",
-                    "download_languages": "Download latest language pack"
+                    "title": "Lingue",
+                    "download_languages": "Scarica l'ultimo pacchetto lingue"
                 }
             ]
         }
     ],
     "history": [
         {
-            "title": "History",
-            "clear_browsing_history": "Clear browsing data",
+            "title": "Cronologia",
+            "clear_browsing_history": "Svuota la cronologia",
             "sort": [
                 {
-                    "range_all": "All",
-                    "range_today": "Today",
-                    "range_yesterday": "Yesterday",
-                    "range_last_week": "Last week",
-                    "range_last_month": "Last month",
-                    "range_older": "Older"
+                    "range_all": "Tutti",
+                    "range_today": "Oggi",
+                    "range_yesterday": "Ieri",
+                    "range_last_week": "La scorsa settimana",
+                    "range_last_month": "Lo scorso mese",
+                    "range_older": "Più vecchio"
                 }
             ]
         }
     ],
     "bookmarks": [
         {
-            "title": "Bookmarks",
-            "import": "Import Bookmarks",
-            "export": "Export Bookmarks",
-            "add_bookmark": "New Bookmark"
+            "title": "Segnalibri",
+            "import": "Importa Segnalibri",
+            "export": "Esporta Segnalibri",
+            "add_bookmark": "Nuovo Segnalibro"
         }
     ],
     "extensions": [
         {
-            "title": "Extensions"
+            "title": "Estensioni"
         }
     ],
     "window": [
         {
-            "find_on_page": "Find in page",
-            "navigate_back": "Back",
-            "navigate_forward": "Forward",
-            "navigate_refresh": "Refresh (F5)",
-            "navigate_close": "Close tab (Ctrl+W)",
-            "open_dot": "Open Dot Launcher"
+            "find_on_page": "Trova nella pagina",
+            "navigate_back": "Indietro",
+            "navigate_forward": "Avanti",
+            "navigate_refresh": "Ricarica (F5)",
+            "navigate_close": "Chiudi la scheda (Ctrl+W)",
+            "open_dot": "Apri il Dot Launcher"
         }
     ]
 }
