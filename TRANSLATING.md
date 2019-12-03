@@ -1,1 +1,3 @@
-You can now translate for Dot with our new easy localization tool online at https://translate-dot.ender.site
+# 🗺 Translation 
+
+You can edit our language files over at [`src/renderer/app/locale`](https://github.com/dot-browser/desktop/tree/master/src/renderer/app/locale)
