@@ -1,5 +1,5 @@
 import { ipcMain, app, nativeImage, clipboard } from 'electron';
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
+import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants/design';
 import { appWindow } from '.';
 import { View } from './view';
 import { sendToAllExtensions } from './extensions';

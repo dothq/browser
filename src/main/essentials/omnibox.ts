@@ -1,6 +1,6 @@
 import { BrowserWindow } from 'electron';
 import * as isDev from 'electron-is-dev';
-import { Tab } from '../../renderer/app/models';
+import { Tab } from '../../renderer/views/app/models';
 
 export class Omnibox extends BrowserWindow {
   constructor(public appWindow: any) {

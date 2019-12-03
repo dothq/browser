@@ -17,13 +17,13 @@ import {
   writeFileSync,
 } from 'fs';
 import { getPath } from '../shared/utils/paths';
-import { Settings } from '../renderer/app/models/settings';
-import { DotOptions } from '../renderer/app/models/dotoptions';
+import { Settings } from '../renderer/views/app/models/settings';
+import { DotOptions } from '../renderer/views/app/models/dotoptions';
 import { makeId } from '../shared/utils/string';
 import { LocationBar } from './location-bar';
 import console = require('console');
 import * as isDev from 'electron-is-dev';
-import { Tab } from '../renderer/app/models';
+import { Tab } from '../renderer/views/app/models';
 const modal = require('electron-modal');
 const json = require('edit-json-file');
 
