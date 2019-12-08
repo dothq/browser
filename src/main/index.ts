@@ -10,7 +10,7 @@ import { platform, homedir } from 'os';
 import { AppWindow } from './app-window';
 import { autoUpdater } from 'electron-updater';
 
-import { registerProtocols } from './protocols';
+import { registerProtocol } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
 import {
   existsSync,
@@ -20,7 +20,7 @@ import { getPath } from '../shared/utils/paths';
 import { Settings } from '../renderer/views/app/models/settings';
 import { DotOptions } from '../renderer/views/app/models/dotoptions';
 import { makeId } from '../shared/utils/string';
-import { LocationBar } from './location-bar';
+
 import console = require('console');
 import * as isDev from 'electron-is-dev';
 import { Tab } from '../renderer/views/app/models';
@@ -32,8 +32,6 @@ ipcMain.setMaxListeners(0);
 app.setPath('userData', resolve(homedir(), 'dot'));
 
 export let appWindow: AppWindow;
-
-registerProtocols();
 
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
@@ -91,6 +89,8 @@ app.on('ready', async () => {
 
   modal.setup();
 
+  registerProtocol(session.fromPartition('persist:view'));
+
   app.commandLine.appendSwitch(
     'widevine-cdm-path',
     `${process.cwd()}/components/winevinecdm/winevinecdm.dll`,
@@ -133,8 +133,14 @@ app.on('ready', async () => {
     appWindow.omnibox.open(tab);
   });
 
+  ipcMain.on('open-print', (event: IpcMainEvent) => {
+    appWindow.print.show()
+  });
+
   ipcMain.on('get-settings-sync', e => {
     const settings = json(resolve(homedir()) + '/dot/dot-options.json');
+
+    console.log(settings.toObject())
 
     e.returnValue = settings.toObject();
   });
@@ -187,8 +193,6 @@ app.on('ready', async () => {
     appWindow.webContents.session.setDownloadPath(path);
   });
 
-  const viewSession = session.fromPartition('persist:view');
-
   session
     .fromPartition('persist:view')
     .on('will-download', (event, item, webContents) => {
@@ -228,10 +232,18 @@ app.on('ready', async () => {
       });
     });
 
+  let viewSession: Electron.Session = session.fromPartition('persist:view')
+
   viewSession.setPermissionRequestHandler(
     async (webContents, permission, callback, details) => {
+
       try {
-        if (new URL(webContents.getURL()).protocol == 'https:') {
+
+        const parsed = new URL(webContents.getURL());
+
+        if (
+          parsed.protocol == 'https:'
+        ) {
           const response = await appWindow.permissionWindow.requestPermission(
             permission,
             webContents.getURL(),
@@ -239,11 +251,15 @@ app.on('ready', async () => {
           );
           callback(response);
         } else {
-          await appWindow.permissionWindow.requestPermission(
-            'http_permission',
-            webContents.getURL(),
-            details,
-          );
+          if(parsed.protocol != 'dot:') {
+            await appWindow.permissionWindow.requestPermission(
+              'http_permission',
+              webContents.getURL(),
+              details,
+            );
+          } else {
+            callback(true)
+          }
         }
       } catch (e) {
         callback(false);

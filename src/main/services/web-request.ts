@@ -216,8 +216,7 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-    details.requestHeaders['User-Agent'] = USER_AGENT;
-    details.requestHeaders['DNT'] = '1';      
+    details.requestHeaders['User-Agent'] = USER_AGENT;     
     
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
