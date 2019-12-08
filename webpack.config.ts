@@ -8,18 +8,18 @@ import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import NullPlugin from 'webpack-null-plugin';
-
 import { Configuration } from 'webpack';
+import { spawn } from 'child_process';
 
 export const devMode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
 process.env.isOpen = "false";
 
+let electronProcess;
+
 export const baseConfig: Configuration = {
   output: {
-    path: path.resolve(__dirname, 'build', 'main'),
+    path: path.resolve(__dirname, 'build'),
     filename: '[name].js',
     publicPath: '',
   },
@@ -44,12 +44,13 @@ export const baseConfig: Configuration = {
       path.resolve(__dirname, 'node_modules'),
     ]
   },
+  plugins: [],
   module: {
     rules: [
       {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
@@ -108,7 +109,6 @@ const mainConfig = merge.smart(baseConfig, {
   watch: true,
   externals: [NodeExternals()],
   plugins: [
-    devMode ? new NullPlugin() : new ForkTsCheckerWebpackPlugin({ tslint: true }),
     new ExtractCssChunksPlugin(),
     new WriteFilePlugin()
   ],
@@ -117,18 +117,24 @@ const mainConfig = merge.smart(baseConfig, {
 const mainDevConfig = merge.smart(mainConfig, developmentConfig);
 const mainProdConfig = merge.smart(mainConfig, productionConfig);
 
-const preloadConfig = merge.smart(baseConfig, {
-  target: 'electron-renderer',
-  entry: {
-    'view-preload': './src/preloads/view-preload.ts'
+mainDevConfig.plugins.push({
+  apply: (compiler: any) => {
+    compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
+      if (electronProcess) {
+        electronProcess.kill();
+      }
+
+      electronProcess = spawn('npm', ['start'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      })
+        .on('close', code => process.exit(code))
+        .on('error', spawnError => console.error(spawnError));
+    });
   },
-  watch: true,
-  plugins: [new WriteFilePlugin()],
 });
 
-const preloadDevConfig = merge.smart(preloadConfig, developmentConfig);
-const preloadProdConfig = merge.smart(preloadConfig, productionConfig);
-
-export default (devMode
-  ? [mainDevConfig, preloadDevConfig]
-  : [mainProdConfig, preloadProdConfig]);
+export default (devMode == 'development'
+  ? [mainDevConfig]
+  : [mainProdConfig]);

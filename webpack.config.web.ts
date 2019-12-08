@@ -4,6 +4,7 @@ import WriteFilePlugin from 'write-file-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import { devMode } from './webpack.config';
+import webpack from 'webpack';
 
 const webConfig = {
     target: 'web',
@@ -11,6 +12,7 @@ const webConfig = {
     entry: {
       newtab: path.resolve(__dirname, 'src', 'renderer', 'views', 'newtab', 'index.tsx'),
       settings: path.resolve(__dirname, 'src', 'renderer', 'views', 'settings', 'index.tsx'),
+      error: path.resolve(__dirname, 'src', 'renderer', 'views', 'error', 'index.tsx'),
     },
     plugins: [
       new HtmlWebpackPlugin({  
@@ -25,7 +27,16 @@ const webConfig = {
         chunks: ['settings'],
         filename: `settings.html`
       }),
-      new WriteFilePlugin()
+      new HtmlWebpackPlugin({  
+        template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
+        inject: true,
+        chunks: ['error'],
+        filename: `error.html`
+      }),
+      new WriteFilePlugin(),
+      new webpack.EnvironmentPlugin({
+        NODE_ENV: devMode
+      })
     ],
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
@@ -33,6 +44,10 @@ const webConfig = {
         hot: true,
         inline: true,
         disableHostCheck: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+        }
     },
     output: {
         path: path.resolve(__dirname, 'build', 'web'),
@@ -51,9 +66,13 @@ const webConfig = {
             '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
             '~/shared': path.resolve(__dirname, 'src', 'shared'),
             '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
-        }
+        },
+        modules: [
+          path.resolve(__dirname, 'node_modules'),
+          path.resolve(__dirname, './'),
+        ]
       },
-      devtool: 'source-map',
+      devtool: 'eval',
       watchOptions: {
         ignored: [
           path.resolve(__dirname, 'node_modules'),

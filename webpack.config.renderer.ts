@@ -5,7 +5,7 @@ import NodeExternals from 'webpack-node-externals';
 
 import { devMode } from './webpack.config';
 
-const webConfig = {
+const rendererConfig = {
     mode: devMode,
     target: 'electron-renderer',
     entry: {
@@ -13,6 +13,7 @@ const webConfig = {
       menu: path.resolve(__dirname, 'src', 'renderer', 'views', 'menu', 'index.tsx'),
       search: path.resolve(__dirname, 'src', 'renderer', 'views', 'search', 'index.tsx'),
       location: path.resolve(__dirname, 'src', 'renderer', 'views', 'location', 'index.tsx'),
+      print: path.resolve(__dirname, 'src', 'renderer', 'views', 'print', 'index.tsx'),
     },
     devServer: {
         contentBase: path.join(__dirname, 'build', 'renderer'),
@@ -20,6 +21,10 @@ const webConfig = {
         hot: true,
         inline: true,
         disableHostCheck: true,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+        }
     },
     output: {
         path: path.resolve(__dirname, 'build', 'renderer'),
@@ -34,6 +39,20 @@ const webConfig = {
     watchOptions: {
       ignored: [
         path.resolve(__dirname, 'node_modules'),
+      ]
+    },
+    resolve: {
+      extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
+      alias: {
+          '~/renderer': path.resolve(__dirname, 'src', 'renderer'),
+          '~/main': path.resolve(__dirname, 'src', 'main'),
+          '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
+          '~/shared': path.resolve(__dirname, 'src', 'shared'),
+          '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
+      },
+      modules: [
+        path.resolve(__dirname, 'node_modules'),
+        path.resolve(__dirname, './'),
       ]
     },
     externals: [NodeExternals()],
@@ -61,6 +80,12 @@ const webConfig = {
         inject: true,
         chunks: ['location'],
         filename: `location.html`
+      }),
+      new HtmlWebpackPlugin({  
+        template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
+        inject: true,
+        chunks: ['print'],
+        filename: `print.html`
       }),
       new WriteFilePlugin()
     ],
@@ -96,4 +121,4 @@ const webConfig = {
     },
 };
   
-export default webConfig;
+export default rendererConfig;
