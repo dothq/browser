@@ -23,7 +23,7 @@ import * as isDev from 'electron-is-dev';
 
 import { DotOptions } from '~/renderer/views/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
-import { LocationDialog } from './dialogs/location';
+import { PrintDialog } from './dialogs/print';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -43,7 +43,7 @@ export class AppWindow extends BrowserWindow {
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
   public menu: MenuDialog = new MenuDialog(this);
   public omnibox: Omnibox = new Omnibox(this);
-  public locationBar: LocationDialog = new LocationDialog(this);
+  public print: PrintDialog = new PrintDialog(this);
 
   constructor() {
     super({
