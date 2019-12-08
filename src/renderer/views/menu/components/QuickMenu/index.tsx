@@ -16,7 +16,7 @@ import {
 } from './style';
 import store from '../../store';
 import { ipcRenderer } from 'electron';
-import { icons } from '../../../../views/app/constants';
+import { icons, NEWTAB_URL } from '../../../../views/app/constants';
 
 const changeContent = () => () => {
   // store.overlay.currentContent = content;
@@ -113,7 +113,7 @@ export const QuickMenu = observer(() => {
           )}
         </Actions>
         <MenuItems>
-          <MenuItem onClick={addTab('https://google.com')}>
+          <MenuItem onClick={addTab(NEWTAB_URL)}>
             <Icon icon={icons.add} />
             <MenuItemTitle>New tab</MenuItemTitle>
             <Shortcut>Ctrl+T</Shortcut>

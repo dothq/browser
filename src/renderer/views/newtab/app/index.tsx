@@ -1,13 +1,5 @@
 import {
   StyledNewTab,
-  Hero,
-  Logo,
-  IronBar,
-  IronIcon,
-  IronButton,
-  Heading,
-  Title,
-  IronBar_Right,
   Columns,
   Column,
   CardImage,
@@ -19,33 +11,24 @@ import {
   CardLongDescription,
   CardAttribution,
   CardTimestamp,
-  SectionTitle,
-  IronBar_Left,
   Style,
+  Section,
+  DotLogo,
+  Icon,
+  IronBar,
+  Section_Left,
+  Section_Right,
+  Section_Middle,
 } from './style';
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { SearchBox } from './components/SearchBox';
-import Dropdown from './components/Dropdown';
-import { DropdownItem } from './components/Dropdown/style';
-import { DropdownSeperator } from './components/Dropdown/style';
-import Checkbox from '@material-ui/core/Checkbox';
-import { Tiles } from './components/Tiles';
-import { Drawer } from './components/Drawer';
-import { DrawerSeperator } from './components/Drawer/style';
-import Ripple from '~/renderer/components/Ripple';
-import { Circle } from '~/renderer/views/app/components/ToolbarButton/style';
-import ToolbarButton from '~/renderer/views/app/components/ToolbarButton';
 import Skeleton from 'react-skeleton-loader';
 const moment = require('moment');
-import SimpleStorage from 'react-simple-storage';
-import store from '~/renderer/views/app/store';
-import { icons } from '~/renderer/views/app/constants';
 import { createGlobalStyle } from 'styled-components';
-
-const openSettings = () => {
-  window.postMessage('open-settings', 'http://127.0.0.1:4444/newtab.html');
-};
+import { icons } from '../../app/constants';
+import { Search } from './components/Search';
+import { Tiles } from './components/Tiles'
+import { Modal } from '@material-ui/core';
+import * as axios from 'axios';
 
 export const FeedCard = ({
   category,
@@ -160,6 +143,7 @@ class NewTab extends React.Component {
     ironBarFixed: false,
     topSitesVisibility: true,
     feedVisibility: true,
+    banner: ''
   };
 
   constructor(props: any) {
@@ -167,199 +151,49 @@ class NewTab extends React.Component {
   }
 
   componentDidMount() {
-    this.grabNews();
+    document.title = 'New Tab';
 
-    if (window.settings.uiTheme == 'light') {
-      document.body.classList.add('theme-light');
-    } else {
-      document.body.classList.add('theme-dark');
-    }
+    var oReq = new XMLHttpRequest();
+    oReq.onload = (event) => {
+      const res = oReq.responseText;
 
-    document.addEventListener('scroll', () => {
-      if (window.scrollY > 290) {
-        if (this.state.ironBarFixed != true) {
-          this.setState(() => ({
-            ['ironBarFixed']: true,
-          }));
-        }
-      } else {
-        if (this.state.ironBarFixed != false) {
-          this.setState(() => ({
-            ['ironBarFixed']: false,
-          }));
-        }
-      }
-    });
-  }
+      console.log(res)
 
-  toggleVisibility(component: any) {
-    this.setState(() => ({
-      [`${component == 'topSites' ? 'topSitesVisibility' : 'feedVisibility'}`]:
-        this.state[
-          component == 'topSites' ? 'topSitesVisibility' : 'feedVisibility'
-        ] == true
-          ? false
-          : true,
-    }));
-  }
+      this.setState({ banner: URL.createObjectURL(res.ntp_banner) })
+    };
+    oReq.open("GET", "https://cors-anywhere.herokuapp.com/https://api.dotbrowser.me/dot/ntp/state");
+    oReq.send();
 
-  grabNews() {
-    fetch(`https://api.dotbrowser.me/v2/news`)
-      .then(resp => resp.json())
-      .then(data => {
-        const newsState = [];
-
-        if (data.status == 'ok') {
-          const { articles } = data;
-
-          for (let i = 0; i < articles.length; i++) {
-            const x = articles[i];
-
-            x.title = x.title
-              .split('-')
-              .reverse()
-              .splice(1, x.title.split('-').length)
-              .reverse()
-              .join('-');
-
-            if (x.urlToImage) {
-              newsState.push({
-                url: x.url,
-                favicon: `https://i.olsh.me/icon?size=80..120..200&url=${
-                  x.url
-                }`,
-                source: x.source.name,
-                title: x.title,
-                description: x.description,
-                image: x.urlToImage,
-                publishDate: new Date(x.publishedAt).getTime(),
-                index: i,
-              });
-            }
-          }
-        }
-
-        this.setState({ news: newsState, newsLoaded: true });
-      });
+    fetch('', { 
+      mode: 'no-cors',
+     }).then(res => {
+      return res.json()
+    }).then(res => {
+      console.log(res)
+      this.setState({ banner: URL.createObjectURL(res.ntp_banner) })
+    })
   }
 
   render() {
     return (
       <StyledNewTab
         className={
-          window.settings.uiTheme == 'light' ? 'theme-light' : 'theme-dark'
+          'theme-light'
         }
       >
         <GlobalStyle />
-        <SimpleStorage
-          parent={this}
-          blacklist={['news', 'newsLoaded', 'ironBarFixed']}
-        />
-        <IronBar isFixed={this.state.ironBarFixed}>
-          {this.state.ironBarFixed == true && (
-            <IronBar_Left>
-              <img
-                src={icons.logo}
-                style={{
-                  filter: 'var(--logo-filter)',
-                  width: '38px',
-                  transform: 'scale(1.3)',
-                }}
-              />
-            </IronBar_Left>
-          )}
-          <IronBar_Right>
-            <ToolbarButton
-              icon={icons.settings}
-              size={20}
-              onClick={openSettings}
-              style={{ marginRight: '5px', filter: 'var(--icon-filter)' }}
-            />
-            <ToolbarButton
-              icon={icons.user}
-              size={25}
-              style={{ filter: 'var(--icon-filter)' }}
-            />
-          </IronBar_Right>
-        </IronBar>
-        <Hero>
-          <Logo />
-          <SearchBox isFixed={this.state.ironBarFixed} />
-          <SectionTitle>
-            Top Sites{' '}
-            <ToolbarButton
-              icon={icons.up}
-              style={{
-                marginLeft: '5px',
-                transform: `${
-                  this.state.topSitesVisibility == false
-                    ? 'rotate(-180deg)'
-                    : 'rotate(0deg)'
-                }`,
-                filter: 'var(--icon-filter)',
-                transition: '0.5s transform',
-              }}
-              onClick={() => this.toggleVisibility('topSites')}
-            />
-          </SectionTitle>
-          <Tiles
-            style={{
-              height: this.state.topSitesVisibility == true ? 'auto' : '0px',
-              overflow: 'hidden',
-            }}
-          />
-          <SectionTitle>
-            Feed{' '}
-            <ToolbarButton
-              icon={icons.up}
-              style={{
-                marginLeft: '5px',
-                transform: `${
-                  this.state.feedVisibility == false
-                    ? 'rotate(-180deg)'
-                    : 'rotate(0deg)'
-                }`,
-                filter: 'var(--icon-filter)',
-                transition: '0.5s transform',
-              }}
-              onClick={() => this.toggleVisibility('feed')}
-            />
-          </SectionTitle>
-          <Columns
-            style={{
-              opacity:
-                this.state.newsLoaded == true
-                  ? this.state.feedVisibility == true
-                    ? 1
-                    : 0
-                  : 0,
-              pointerEvents:
-                this.state.newsLoaded == true
-                  ? this.state.feedVisibility == true
-                    ? 'all'
-                    : 'none'
-                  : 'none',
-            }}
-          >
-            {this.state.news.map(function(item: any, index: any) {
-              return (
-                <FeedCard
-                  category={'General'}
-                  title={item.title}
-                  description={item.description}
-                  source={item.source}
-                  timestamp={item.publishDate}
-                  icon={item.favicon}
-                  image={item.image}
-                  uri={item.url}
-                  index={item.index}
-                />
-              );
-            })}
-          </Columns>
-          {this.state.newsLoaded == false && <SkeletonFeed />}
-          <SectionTitle>That's all folks!</SectionTitle>
-        </Hero>
+        <Section background={this.state.banner}>
+          <Section_Left>
+            <DotLogo color={'#434343'} />
+          </Section_Left>
+          <Section_Middle>
+            <Search style={{ maxWidth: '600px', margin: '0 auto' }} />
+            <Tiles />
+          </Section_Middle>
+          <Section_Right>
+            <Icon icon={icons.settings} />
+          </Section_Right>
+        </Section>
       </StyledNewTab>
     );
   }

@@ -13,13 +13,17 @@ export const StyledSearchBox = styled.div`
   transition: 0.4s height;
   margin: 0 auto 32px auto;
   width: 600px;
-  border: var(--omnibox-border);
+  transition: 0.2s all;
+  outline: none;
 
-  ${({ isFixed }: { isFixed: boolean }) => css`
+  ${({ isFixed, isFocused }: { isFixed: boolean; isFocused: any }) => css`
     position: ${isFixed == true ? 'fixed' : 'unset'};
     z-index: ${isFixed == true ? '9999999' : 'unset'};
     top: ${isFixed == true ? '20px' : 'unset'};
     margin-left: ${isFixed == true ? '300px' : 'auto'};
+
+    box-shadow: ${isFocused ? '0 0 0 1px #006eff, 0 0 0 4px rgba(30, 139, 251, 0.3), 0 8px 16px rgba(0,0,0,0.24)' : '0 0 0 1px #ffffff, 0 0 0 4px rgb(255, 255, 255)'};
+    border: ${isFocused ? '1px solid transparent' : 'var(--omnibox-border)'};
   `}
 `;
 
@@ -35,8 +39,12 @@ export const SearchIcon = styled.div`
   height: 18px;
   min-width: 18px;
   margin-left: 16px;
-  background-image: url(${icons.search});
   filter: var(--icon-filter);
+  background-size: 20px;
+
+  ${({ isFocused }: { isFocused: any }) => css`
+    background-image: url(${isFocused ? icons.search : 'http://www.getfavicon.org/icons/favicon12.ico'});
+  `}
 `;
 
 export const Input = styled.input`

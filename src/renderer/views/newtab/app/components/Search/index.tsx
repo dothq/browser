@@ -9,7 +9,7 @@ import {
 import store from '~/renderer/views/app/store';
 import { fetchHiyaMessage } from './../../constants/hiya';
 
-export class SearchBox extends React.Component {
+export class Search extends React.Component {
   public hiyaNotifications: string[] = [
     'How are you today?',
     `Search on Google or enter address`,
@@ -33,6 +33,7 @@ export class SearchBox extends React.Component {
     hiyaText: this.hiyaNotifications[
       Math.floor(Math.random() * this.hiyaNotifications.length)
     ],
+    focused: false
   };
 
   componentDidMount() {
@@ -50,7 +51,7 @@ export class SearchBox extends React.Component {
   }
 
   onFocus(e: any) {
-    this.setState({ hiyaState: true });
+    this.setState({ hiyaState: true, focused: true });
     document
       .getElementById('hiya')
       .removeEventListener('animationiteration', () => {});
@@ -58,7 +59,7 @@ export class SearchBox extends React.Component {
 
   onBlur(e: any) {
     if (!e.target.value) {
-      this.setState({ hiyaState: false });
+      this.setState({ hiyaState: false, focused: false });
       setTimeout(() => {
         document
           .getElementById('hiya')
@@ -72,6 +73,8 @@ export class SearchBox extends React.Component {
             });
           });
       }, 1000);
+    } else {
+      this.setState({ focused: false });
     }
   }
 
@@ -79,9 +82,9 @@ export class SearchBox extends React.Component {
     const { isFixed, style } = this.props;
 
     return (
-      <StyledSearchBox isFixed={isFixed} style={style}>
+      <StyledSearchBox isFixed={isFixed} style={style} isFocused={this.state.focused}>
         <SearchContainer>
-          <SearchIcon />
+          <SearchIcon isFocused={this.state.hiyaState} />
           <Input
             autoComplete="off"
             autoCorrect="off"

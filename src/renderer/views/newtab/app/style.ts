@@ -44,6 +44,7 @@ export const Style = css`
 
   body {
     background-color: var(--default);
+    margin: 0;
   }
 `;
 
@@ -51,6 +52,7 @@ export const StyledNewTab = styled.div`
   background-color: var(--default);
   height: 100vh;
   user-select: none;
+  font-family: Roboto;
 `;
 
 export const Hero = styled.div`
@@ -61,33 +63,47 @@ export const Hero = styled.div`
   margin-left: auto;
   margin-right: auto;
   padding-top: 75px;
-  background-color: var(--default);
 `;
 
-export const Logo = styled.div`
-  width: var(--width);
-  height: var(--width);
-  filter: var(--logo-filter);
-  background: url(https://dotbrowser.me/static/icon.png) 100% 100% /
-    var(--width) no-repeat;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  --width: 250px;
+export const Section = styled.div`
+  padding: 35px;
+  border-radius: 0 0 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 20px 80px 0px;
+  display: flex;
+
+  ${({ background }: { background: any }) => css`
+    background: url(${background});
+  `}
+`;
+
+export const DotLogo = styled.div`
+  width: 37px;
+  height: 37px;
+  border-radius: 50px;
+
+  ${({ color }: { color: any }) => css`
+    background-color: ${color};
+  `}
 `;
 
 export const IronBar = styled.div`
   ${centerIcon()};
   top: 0%;
   width: 100%;
-  padding: 25px;
+  display: flex;
+`;
 
-  ${({ isFixed }: { isFixed: boolean }) => css`
-    position: ${isFixed == true ? 'fixed' : 'absolute'};
-    z-index: ${isFixed == true ? '9999' : 'unset'};
-    background-color: ${isFixed == true ? 'var(--default)' : 'transparent'};
-    box-shadow: ${isFixed == true ? 'var(--box-shadow)' : 'none'};
-  `}
+export const Section_Left = styled.div`
+  float: left;
+`;
+
+export const Section_Right = styled.div`
+  float: right;
+`;
+
+export const Section_Middle = styled.div`
+  flex-grow: 1;
+  padding: 30px 0 0 0;
 `;
 
 export const IronButton = styled.div`
@@ -100,7 +116,7 @@ export const IronButton = styled.div`
   }
 `;
 
-export const IronIcon = styled.div`
+export const Icon = styled.div`
   width: 40px;
   height: 40px;
   -webkit-transition: background-color 0.3s;
@@ -116,8 +132,7 @@ export const IronIcon = styled.div`
     background-color: #110a0a1a;
   }
 
-  ${({ icon, side }: { icon: any; side: string }) => css`
-    float: ${side};
+  ${({ icon }: { icon: any }) => css`
     background-image: url(${icon});
   `}
 `;
@@ -163,16 +178,6 @@ export const Title = styled.h1`
       margin-right: 8px;
     }
   `}
-`;
-
-export const IronBar_Right = styled.div`
-  float: right;
-  display: flex;
-`;
-
-export const IronBar_Left = styled.div`
-  float: left;
-  display: flex;
 `;
 
 export const Columns = styled.div`

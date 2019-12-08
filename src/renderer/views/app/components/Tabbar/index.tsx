@@ -6,6 +6,7 @@ import store from '~/renderer/views/app/store';
 import { icons } from '~/renderer/views/app/constants/icons';
 import { AddTab, StyledTabbar, TabsContainer } from './style';
 import { Tabs } from '../Tabs';
+import { NEWTAB_URL } from '../../constants';
 
 const getContainer = () => store.tabs.containerRef.current;
 
@@ -14,8 +15,8 @@ const onMouseEnter = () => (store.tabs.scrollbarVisible = true);
 const onMouseLeave = () => (store.tabs.scrollbarVisible = false);
 
 const onAddTabClick = () => {
-  store.overlay.isNewTab = true;
-  store.overlay.visible = true;
+  const url = NEWTAB_URL;
+  store.tabs.addTab({ url, active: true })
 };
 
 export const Tabbar = observer(() => {
