@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 import { App } from './components/App';
-import { fonts } from '../../constants';
+import { fonts } from './constants/fonts';
 import store from './store';
 import { ipcRenderer } from 'electron';
 import { resolve, join } from 'path';
@@ -139,9 +139,9 @@ Menu.setApplicationMenu(
         },
         {
           accelerator: 'CmdOrCtrl+P',
-          label: 'Print webpage (Native)',
+          label: 'Print',
           click() {
-            remote.webContents.getFocusedWebContents().print()
+            ipcRenderer.send('open-print');
           },
         },
         { 

@@ -5,7 +5,7 @@ import {
   SearchIcon,
   Input,
   HiyaMessage,
-} from '../../../newtab/app/components/SearchBox/style';
+} from '../../../newtab/app/components/Search/style';
 
 export class OmniboxSearch extends React.Component {
   public hiyaNotifications: string[] = [

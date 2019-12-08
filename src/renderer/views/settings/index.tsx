@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
 import { Settings } from './app/index';
-import { fonts } from '../../constants';
+import { fonts } from '../app/constants/fonts';
 
 const styleElement = document.createElement('style');
 
