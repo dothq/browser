@@ -15,7 +15,7 @@ export class MenuDialog extends Dialog {
         height: HEIGHT,
         y: 36,
       },
-      devtools: true
+      devtools: false
     });
   }
 
