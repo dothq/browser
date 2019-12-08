@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyledApp } from '../../app/components/App/style';
-import { Preview, PrintController, Page } from './style';
+import { StyledApp, Preview, PrintController, Page } from './style';
 import { Title } from '../components/Typography/style'
 import { Printers } from '../components/Printers';
 
