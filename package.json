@@ -43,8 +43,8 @@
   },
   "scripts": {
     "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 electron .",
-    "build": "npm run poststart && concurrently \"npm run prod:main\" \"npm run prod:renderer\" \"npm run prod:web\"",
-    "dev": "npm run poststart && concurrently \"npm run dev:main\" \"npm run dev:renderer\" \"npm run dev:web\"",
+    "build": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run prod:main\" \"npm run prod:renderer\" \"npm run prod:web\" \"npm run prod:preloads\"",
+    "dev": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run dev:main\" \"npm run dev:renderer\" \"npm run dev:web\" \"npm run dev:preloads\"",
     "compile": "node tools/ci.js",
     "compile-win32": "npm run build && electron-builder -w -p always",
     "compile-darwin": "npm run build && electron-builder -m -p always",
@@ -53,12 +53,14 @@
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
     "poststart": "node tools/download-filters.js && rimraf build",
-    "dev:main": "cross-env NODE_ENV=dev webpack --config webpack.config.ts",
+    "dev:main": "cross-env NODE_ENV=dev START=1 webpack --config webpack.config.ts",
     "dev:renderer": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.renderer.ts",
     "dev:web": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.web.ts",
+    "dev:preloads": "cross-env NODE_ENV=dev webpack --config webpack.config.preloads.ts",
     "prod:main": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.ts",
-    "prod:renderer": "cross-env NODE_ENV=dev webpack --progress --config webpack.config.renderer.ts",
-    "prod:web": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.web.ts"
+    "prod:renderer": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.renderer.ts",
+    "prod:web": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.web.ts",
+    "prod:preloads": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.preloads.ts"
   },
   "pre-commit": [
     "lint-fix"
@@ -81,7 +83,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
-    "electron": "^7.1.2",
+    "electron": "^6.1.2",
     "electron-builder": "20.39.0",
     "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.8.6",
