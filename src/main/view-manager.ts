@@ -30,7 +30,7 @@ export class ViewManager {
   constructor() {
     ipcMain.on(
       'browserview-create',
-      (e: Electron.IpcMessageEvent, { tabId, url }: any) => {
+      (e: Electron.IpcMainEvent, { tabId, url }: any) => {
         this.create(tabId, url);
 
         appWindow.webContents.send(
@@ -42,7 +42,7 @@ export class ViewManager {
 
     ipcMain.on(
       'browserview-select',
-      (e: Electron.IpcMessageEvent, id: number) => {
+      (e: Electron.IpcMainEvent, id: number) => {
         const view = this.views[id];
         this.select(id);
         view.updateNavigationState();
@@ -51,7 +51,7 @@ export class ViewManager {
 
     ipcMain.on(
       'browserview-destroy',
-      (e: Electron.IpcMessageEvent, id: number) => {
+      (e: Electron.IpcMainEvent, id: number) => {
         this.destroy(id);
       },
     );
@@ -157,7 +157,7 @@ export class ViewManager {
       if (
         this.views[key].webContents
           .getURL()
-          .startsWith('http://127.0.0.1:4444/newtab.html')
+          .startsWith('dot://newtab')
       ) {
         return this.views[key];
       }

@@ -63,7 +63,7 @@ export const startBackgroundPage = async (extension: Extension) => {
       partition: 'persist:extension',
       isBackgroundPage: true,
       commandLineSwitches: ['--background-page'],
-      preload: `${process.cwd()}\\build\\background-preload.js`,
+      preload: `${process.cwd()}\\preloads\\background-preload.js`,
       webPreferences: {
         webSecurity: false,
         nodeIntegration: false,

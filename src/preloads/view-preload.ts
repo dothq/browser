@@ -1,30 +1,4 @@
-import { ipcRenderer, remote, webFrame, ipcMain } from 'electron';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { getAPI } from '~/shared/utils/extensions';
-import { format, parse } from 'url';
-import { IpcExtension } from '~/shared/models';
-import { runInThisContext } from 'vm';
-import console = require('console');
-
-/* Deprecated */
-// webFrame.registerURLSchemeAsPrivileged('extension');
-
-// webFrame.executeJavaScript('window', false, w => {
-//   w.chrome = {
-//     webstorePrivate: {
-//       install: () => {},
-//     },
-//     app: {
-//       isInstalled: false,
-//       getIsInstalled: () => {
-//         return false;
-//       },
-//       getDetails: () => {},
-//       installState: () => {},
-//     },
-//   };
-// });
+import { ipcRenderer, webFrame } from 'electron';
 
 const tabId = parseInt(
   process.argv.find(x => x.startsWith('--tab-id=')).split('=')[1],
@@ -53,10 +27,34 @@ window.addEventListener('mouseup', e => {
   }
 });
 
-if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
-  webFrame.executeJavaScript('window', false, (w: any) => {
+// console.log(window.location.href)
+if(window.location.href == "dot://newtab") {
+  (async function() {
+    console.log("async pls")
+    const w = await webFrame.executeJavaScript('window');
+    console.log(ipcRenderer.sendSync('get-settings-sync'))
     w.settings = ipcRenderer.sendSync('get-settings-sync');
-  });
+  }) 
+}
+
+const hostname = window.location.href.substr('dot://'.length);
+
+if (window.location.href.startsWith('dot://')) {
+  window.addEventListener('DOMContentLoaded', () => {
+    if (hostname.startsWith('settings')) document.title = 'Settings';
+    else if (hostname.startsWith('history')) document.title = 'History';
+    else if (hostname.startsWith('bookmarks')) document.title = 'Bookmarks';
+    else if (hostname.startsWith('extensions')) document.title = 'Extensions';
+    else if (hostname.startsWith('newtab')) {
+      document.title = 'New tab';
+    }
+});
+
+console.log(window.location.href)
+if (window.location.href == 'dot://newtab') {
+  webFrame.executeJavaScript('window', false).then(w => {
+    w.settings = ipcRenderer.sendSync('get-settings-sync');
+  })
 
   window.addEventListener(
     'message',
@@ -67,9 +65,9 @@ if (window.location.href == 'http://127.0.0.1:4444/newtab.html') {
   );
 
   ipcRenderer.on('settings-push', (event: any, data: any) => {
-    webFrame.executeJavaScript('window', false, (w: any) => {
-      console.log('recieved settings push from', data);
+    webFrame.executeJavaScript('window', false).then(w => {
       w.settings = ipcRenderer.sendSync('get-settings-sync');
+      console.log('recieved settings push from', data);
 
       if (w.settings) {
         console.log(event.data, w.settings.uiTheme);
@@ -155,118 +153,3 @@ ipcRenderer.on('scroll-touch-end', () => {
 
   resetCounters();
 });
-
-// const runStylesheet = (url: string, code: string) => {
-//   const wrapper = `((code) => {
-//     function init() {
-//       const styleElement = document.createElement('style');
-//       styleElement.textContent = code;
-//       document.head.append(styleElement);
-//     }
-//     document.addEventListener('DOMContentLoaded', init);
-//   })`;
-
-//   const compiledWrapper = runInThisContext(wrapper, {
-//     filename: url,
-//     lineOffset: 1,
-//     displayErrors: true,
-//   });
-
-//   return compiledWrapper.call(window, code);
-// };
-
-// const injectContentScript = (script: any, extension: IpcExtension) => {
-//   if (
-//     !script.matches.some((x: string) =>
-//       matchesPattern(
-//         x,
-//         `${location.protocol}//${location.host}${location.pathname}`,
-//       ),
-//     )
-//   ) {
-//     return;
-//   }
-
-//   process.setMaxListeners(0);
-
-//   if (script.js) {
-//     script.js.forEach((js: any) => {
-//       const fire = runContentScript.bind(
-//         window,
-//         js.url,
-//         js.code,
-//         extension,
-//         getIsolatedWorldId(extension.id),
-//       );
-
-//       if (script.runAt === 'document_start') {
-//         (process as any).once('document-start', fire);
-//       } else if (script.runAt === 'document_end') {
-//         (process as any).once('document-end', fire);
-//       } else {
-//         document.addEventListener('DOMContentLoaded', fire);
-//       }
-//     });
-//   }
-
-//   if (script.css) {
-//     script.css.forEach((css: any) => {
-//       const fire = runStylesheet.bind(window, css.url, css.code);
-//       if (script.runAt === 'document_start') {
-//         (process as any).once('document-start', fire);
-//       } else if (script.runAt === 'document_end') {
-//         (process as any).once('document-end', fire);
-//       } else {
-//         document.addEventListener('DOMContentLoaded', fire);
-//       }
-//     });
-//   }
-// };
-
-// let nextIsolatedWorldId = 1000;
-// const isolatedWorldsRegistry: any = {};
-
-// const getIsolatedWorldId = (id: string) => {
-//   if (isolatedWorldsRegistry[id]) {
-//     return isolatedWorldsRegistry[id];
-//   }
-//   nextIsolatedWorldId++;
-//   return (isolatedWorldsRegistry[id] = nextIsolatedWorldId);
-// };
-
-// const setImmediateTemp: any = setImmediate;
-
-// process.once('loaded', () => {
-//   global.setImmediate = setImmediateTemp;
-
-//   const extensions: { [key: string]: IpcExtension } = ipcRenderer.sendSync(
-//     'get-extensions',
-//   );
-
-//   Object.keys(extensions).forEach(key => {
-//     const extension = extensions[key];
-//     const { manifest } = extension;
-
-//     if (manifest.content_scripts) {
-//       const readArrayOfFiles = (relativePath: string) => ({
-//         url: `extension://${extension.id}/${relativePath}`,
-//         code: readFileSync(join(extension.path, relativePath), 'utf8'),
-//       });
-
-//       try {
-//         manifest.content_scripts.forEach(script => {
-//           const newScript = {
-//             matches: script.matches,
-//             js: script.js ? script.js.map(readArrayOfFiles) : [],
-//             css: script.css ? script.css.map(readArrayOfFiles) : [],
-//             runAt: script.run_at || 'document_idle',
-//           };
-
-//           injectContentScript(newScript, extension);
-//         });
-//       } catch (readError) {
-//         console.error('Failed to read content scripts', readError);
-//       }
-//     }
-//   });
-// });
