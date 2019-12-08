@@ -168,7 +168,7 @@ export class TabsStore {
       tab.setLeft(tab.getLeft(), false);
       this.updateTabsBounds(true);
 
-      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 1000);
+      this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 100);
     });
 
     setInterval(function() {

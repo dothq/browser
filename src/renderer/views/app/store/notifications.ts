@@ -69,7 +69,7 @@ export class NotifsStore {
     // //   skipTaskbar: false,
     // //   title: 'Dot Notification Handler',
     // //   titleBarStyle: 'hidden',
-    // //   devTools: true,
+    // //   devtools: false,
     // //   webPreferences: {
     // //     nodeIntegration: true
     // //   },

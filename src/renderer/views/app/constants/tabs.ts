@@ -5,7 +5,7 @@ import { Power2 } from 'gsap';
     ? 'http://localhost:8080/newtab.html'
     : 'wexond://newtab';*/
 
-export const NEWTAB_URL = 'https://google.com';
+export const NEWTAB_URL = 'dot://newtab';
 
 export const defaultTabOptions: chrome.tabs.CreateProperties = {
   url: NEWTAB_URL,

@@ -247,7 +247,7 @@ export default observer(({ tab }: { tab: Tab }) => {
                 store.options.theme == 'light' ? 0.85 : 0.3,
                 tab.background,
               )
-            : 'transparent',
+            : 'rgba(230, 230, 230, 0.25)',
         }}
       >
         <Content tab={tab} />

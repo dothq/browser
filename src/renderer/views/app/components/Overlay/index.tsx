@@ -117,33 +117,18 @@ async function setActivity() {
   if (!rpclient) {
     return;
   }
-  try {
-    var details = store.locale.lang.rich_presence[0].default_details;
 
-    if (store.tabs.selectedTab.audioPlaying == true) {
-      details = store.locale.lang.rich_presence[0].audio_details;
-    }
+  var details = store.locale.lang.rich_presence[0].default_details;
 
-    // if(store.tabs.selectedTab.url.substring(0, 8) == "file:///") {
-    //   var lastDot = store.tabs.selectedTab.url.lastIndexOf('.');
-    //   var fileType = store.tabs.selectedTab.url.substring(lastDot + 1);
-    //
-    //   details = store.locale.lang.rich_presence[0].file_details.replace(/{fileType}/g, fileType.toUpperCase())
-    // }
-
-    var state = `${store.tabs.getHostname(store.tabs.selectedTab.url)}`;
-    var largeImageKey = 'dlogo';
-    var smallImageKey = 'dot-online';
-    var smallImageText: string =
-      store.locale.lang.rich_presence[0].active_small_text;
-  } catch (e) {
-    var details = store.locale.lang.rich_presence[0].idle_details;
-    var state: string = store.locale.lang.rich_presence[0].idle_small_text;
-    var largeImageKey = 'dlogo';
-    var smallImageKey = 'dot-idle';
-    var smallImageText: string =
-      store.locale.lang.rich_presence[0].idle_small_text;
+  if (store.tabs.selectedTab.audioPlaying == true) {
+    details = store.locale.lang.rich_presence[0].audio_details;
   }
+
+  var state = `${store.tabs.getHostname(store.tabs.selectedTab.url)}`;
+  var largeImageKey = 'dlogo';
+  var smallImageKey = 'dot-online';
+  var smallImageText: string = store.locale.lang.rich_presence[0].active_small_text;
+
   rpclient.setActivity({
     details: details,
     state: state,
@@ -160,13 +145,11 @@ async function setActivity() {
 }
 
 rpclient.on('ready', () => {
-  // if(file.get("discordRichPresenceEnabled") == true) {
   setActivity();
 
   setInterval(() => {
     setActivity();
   }, 3e3);
-  // }
 });
 
 rpclient.login({ clientId }).catch(console.error);
@@ -268,6 +251,13 @@ setTimeout(function() {
   opac = 0;
 }, 4000);
 
+const onInputKeyUp = (e) => {
+  if(e.which == 13) {
+    var url = e.target.value;
+    store.tabs.addTab({ url, active: true })
+  }
+}
+
 export const Overlay = observer(() => {
   return (
     <StyledOverlay visible={store.overlay.visible} onClick={onClick}>
@@ -278,12 +268,13 @@ export const Overlay = observer(() => {
         }
       >
         <Scrollable ref={store.overlay.scrollRef} id="home">
-          <Content>
+          <Content onClick={onClick}>
             <Image
               src={icons.logo}
               center
               style={{ width: '250px', filter: 'var(--overlay-logo-filter)' }}
             />
+            <input id="url" onKeyUp={onInputKeyUp}></input>
           </Content>
         </Scrollable>
       </Container>

@@ -160,6 +160,6 @@ export const TabContainer = styled.div`
   backface-visibility: hidden;
   transition: 0.5s background-color;
   ${({ selected }: TabProps) => css`
-    background-color: ${selected ? 'rgba(33, 150, 243, 0.15)' : 'transparent'};
+    background-color: ${selected ? 'rgba(33, 150, 243, 0.15)' : 'rgba(230, 230, 230, 0.25)'};
   `};
 `;
