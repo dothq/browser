@@ -20,7 +20,8 @@ export class PrintDialog extends Dialog {
   }
 
   public rearrange() {
-    const { x } = this.appWindow.getContentBounds();
+    const { width } = this.appWindow.getContentBounds();
+    var x = Math.round(((width - WIDTH) / 2));
     super.rearrange({ x });
   }
 

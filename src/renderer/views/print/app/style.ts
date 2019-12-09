@@ -16,7 +16,7 @@ export const Preview = styled.div`
     width: 700px;
     display: block;
     float: left;
-    background-color: #f9f9f9;
+    background-color: #fff;
     border: 1px solid lightgray;
     border-radius: 4px 0 0 4px;
 `;

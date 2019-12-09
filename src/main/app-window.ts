@@ -146,6 +146,7 @@ export class AppWindow extends BrowserWindow {
       this.omnibox.hide();
       this.permissionWindow.rearrange();
       this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
@@ -158,6 +159,7 @@ export class AppWindow extends BrowserWindow {
 
       this.permissionWindow.rearrange();
       this.alert.rearrange();
+      this.print.rearrange();
       this.menu.rearrange();
     });
 
@@ -166,6 +168,7 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.omnibox.hide();
       this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
@@ -174,6 +177,7 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.omnibox.hide();
       this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
@@ -186,6 +190,7 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
       this.alert.rearrange();
+      this.print.rearrange();
       this.omnibox.hide();
     });
     this.on('move', () => {
@@ -196,6 +201,7 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
       this.alert.rearrange();
+      this.print.rearrange();
       this.omnibox.hide();
     });
 
@@ -211,6 +217,7 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('tabs-resize');
       this.permissionWindow.rearrange();
       this.alert.rearrange();
+      this.print.rearrange();
       this.omnibox.hide();
     };
 

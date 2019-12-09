@@ -15,5 +15,9 @@ export const Subtitle = styled.h1`
 
 export const Heading = styled.h1`
   font-family: Roboto;
-  font-size: 7px;
+  font-size: 16px;
+  display: inline-block;
+  text-align: center;
+  margin: 6px;
+  font-weight: 400;
 `;
