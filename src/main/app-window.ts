@@ -24,6 +24,7 @@ import * as isDev from 'electron-is-dev';
 import { DotOptions } from '~/renderer/views/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
 import { PrintDialog } from './dialogs/print';
+import { AlertDialog } from './dialogs/alert';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -44,6 +45,7 @@ export class AppWindow extends BrowserWindow {
   public menu: MenuDialog = new MenuDialog(this);
   public omnibox: Omnibox = new Omnibox(this);
   public print: PrintDialog = new PrintDialog(this);
+  public alert: AlertDialog = new AlertDialog(this);
 
   constructor() {
     super({
@@ -142,8 +144,8 @@ export class AppWindow extends BrowserWindow {
 
       this.viewManager.fixBounds();
       this.omnibox.hide();
-
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
       this.menu.hide()
     });
 
@@ -155,6 +157,7 @@ export class AppWindow extends BrowserWindow {
       this.omnibox.hide();
 
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
       this.menu.rearrange();
     });
 
@@ -162,6 +165,7 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
       this.omnibox.hide();
+      this.alert.rearrange();
       this.menu.hide()
     });
 
@@ -169,6 +173,7 @@ export class AppWindow extends BrowserWindow {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
       this.omnibox.hide();
+      this.alert.rearrange();
       this.menu.hide()
     });
 
@@ -180,6 +185,7 @@ export class AppWindow extends BrowserWindow {
       this.menu.hide();
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
       this.omnibox.hide();
     });
     this.on('move', () => {
@@ -189,6 +195,7 @@ export class AppWindow extends BrowserWindow {
       this.menu.hide();
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
       this.omnibox.hide();
     });
 
@@ -203,6 +210,7 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
       this.omnibox.hide();
     };
 
