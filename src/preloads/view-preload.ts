@@ -48,9 +48,9 @@ if (window.location.href.startsWith('dot://')) {
     else if (hostname.startsWith('newtab')) {
       document.title = 'New tab';
     }
-});
+  });
+}
 
-console.log(window.location.href)
 if (window.location.href == 'dot://newtab') {
   webFrame.executeJavaScript('window', false).then(w => {
     w.settings = ipcRenderer.sendSync('get-settings-sync');
@@ -152,4 +152,25 @@ ipcRenderer.on('scroll-touch-end', () => {
   }
 
   resetCounters();
-});
+})
+
+const updateAlert = () => {
+  webFrame.executeJavaScript('window', false).then(w => {
+    w.alert = (message?: any) => {
+      ipcRenderer.send('show-alert', 'alert', message);
+    }
+
+    w.confirm = (message?: any) => {
+      ipcRenderer.send('show-alert', 'confirm', message);
+    }
+
+    w.prompt = (message?: any) => {
+      ipcRenderer.send('show-alert', 'input', message);
+    }
+  })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateAlert();
+  setInterval(updateAlert, 1000)
+})
