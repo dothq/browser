@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { centerIcon } from '../../../../../shared/mixins';
 
 export const Title = styled.h1`
   font-family: Roboto;
@@ -8,7 +9,8 @@ export const Title = styled.h1`
 
 export const Subtitle = styled.h1`
   font-family: Roboto;
-  font-size: 9px;
+  font-size: 15px;
+  font-weight: 400;
 `;
 
 export const Heading = styled.h1`

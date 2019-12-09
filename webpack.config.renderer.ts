@@ -14,6 +14,7 @@ const rendererConfig = {
       search: path.resolve(__dirname, 'src', 'renderer', 'views', 'search', 'index.tsx'),
       location: path.resolve(__dirname, 'src', 'renderer', 'views', 'location', 'index.tsx'),
       print: path.resolve(__dirname, 'src', 'renderer', 'views', 'print', 'index.tsx'),
+      alert: path.resolve(__dirname, 'src', 'renderer', 'views', 'alert', 'index.tsx'),
     },
     devServer: {
         contentBase: path.join(__dirname, 'build', 'renderer'),
@@ -86,6 +87,12 @@ const rendererConfig = {
         inject: true,
         chunks: ['print'],
         filename: `print.html`
+      }),
+      new HtmlWebpackPlugin({  
+        template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
+        inject: true,
+        chunks: ['alert'],
+        filename: `alert.html`
       }),
       new WriteFilePlugin()
     ],
