@@ -24,6 +24,7 @@ import { makeId } from '../shared/utils/string';
 import console = require('console');
 import * as isDev from 'electron-is-dev';
 import { Tab } from '../renderer/views/app/models';
+import { AlertDialog } from './dialogs/alert';
 const modal = require('electron-modal');
 const json = require('edit-json-file');
 
@@ -134,7 +135,11 @@ app.on('ready', async () => {
   });
 
   ipcMain.on('open-print', (event: IpcMainEvent) => {
-    appWindow.print.show()
+    if(appWindow.print.visible == false) {
+      appWindow.print.show()
+    } else {
+      appWindow.print.hide()
+    }
   });
 
   ipcMain.on('get-settings-sync', e => {
@@ -154,11 +159,21 @@ app.on('ready', async () => {
   });
 
   ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
-    appWindow[dialog].show();
+    if(appWindow[dialog].visible == false) {
+      appWindow[dialog].show();
+    } else {
+      appWindow[dialog].hide();
+    }
   })
 
   ipcMain.on('hide-dialog', (event: IpcMainEvent, dialog: string) => {
     appWindow[dialog].hide()
+  })
+
+  ipcMain.on('show-alert', (event: IpcMainEvent, action: 'alert' | 'confirm' | 'input', content: any) => {
+    appWindow.alert.show();
+    appWindow.alert.action = action;
+    appWindow.alert.send(content);
   })
 
   app.on(
