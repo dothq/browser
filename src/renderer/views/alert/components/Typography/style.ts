@@ -12,4 +12,6 @@ export const Subtitle = styled.h1`
   font-size: 15px;
   font-weight: 400;
   opacity: 0.8;
+  height: 60px;
+  overflow-y: scroll;
 `;
