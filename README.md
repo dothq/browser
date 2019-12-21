@@ -28,6 +28,8 @@
     </a>
 </p>
 
+Rewrite is underway! You can check out the new version at [dot-browser/browser](https://github.com/dot-browser/browser)
+
 A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.
 
 ![](https://dotbrowser.me/static/Dot-landing.png)
