@@ -83,6 +83,10 @@ export class TabsStore {
         this.addTab(options);
       },
     );
+    
+    ipcRenderer.on('view-create', (e: any, url: any, active: boolean) => {
+      this.addTab({ url, active })
+    })
 
     ipcRenderer.on(
       `found-in-page`,

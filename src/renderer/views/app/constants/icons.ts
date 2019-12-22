@@ -45,6 +45,7 @@ const info = require('../../../../shared/resources/icons/info.svg');
 const globe = require('../../../../shared/resources/icons/globe.svg');
 const light = require('../../../../shared/resources/icons/light.svg');
 const dark = require('../../../../shared/resources/icons/dark.svg');
+const print = require('../../../../shared/resources/icons/print.svg');
 
 const thumbs_up_default = require('../../../../shared/resources/icons/emojis/thumbs_up_default.png');
 const thumbs_up_pale = require('../../../../shared/resources/icons/emojis/thumbs_up_pale.png');
@@ -180,4 +181,5 @@ export const icons = {
   globe,
   light,
   dark,
+  print,
 };

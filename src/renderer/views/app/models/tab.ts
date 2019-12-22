@@ -296,13 +296,13 @@ export class Tab {
       });
     });
 
-    ipcRenderer.on(`audio-playing-${this.id}`, (e: any) => {
+    ipcRenderer.once(`audio-playing-${this.id}`, (e: any) => {
       this.select();
       this.originalTitle = this.title;
       this.audioPlaying = true;
     });
 
-    ipcRenderer.on(`audio-stopped-${this.id}`, (e: any) => {
+    ipcRenderer.once(`audio-stopped-${this.id}`, (e: any) => {
       this.select();
       this.audioPlaying = false;
       this.title = this.originalTitle;
@@ -362,8 +362,6 @@ export class Tab {
         tabId: this.id,
         windowId: 0,
       });
-
-      // ipcRenderer.send('open-omnibox', this);
 
       requestAnimationFrame(() => {
         store.tabs.updateTabsBounds(true);

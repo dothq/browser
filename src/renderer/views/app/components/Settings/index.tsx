@@ -27,8 +27,8 @@ allLangs = allLangs.toObject();
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
-var win = remote.getCurrentWindow();
-win.webContents.session.clearCache();
+// var win = remote.getCurrentWindow();
+// win.webContents.session.clearCache();
 
 store.options.currentDisplay = "profile";
 

@@ -15,7 +15,7 @@ import {
   TabContainer,
 } from './style';
 import { shadeBlendConvert } from '../../utils';
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import Ripple from '../../../../components/Ripple';
 import { transparency } from '../../../../constants';
 
@@ -55,6 +55,12 @@ const onMouseEnter = (tab: Tab) => () => {
 const onMouseLeave = () => {
   store.tabs.hoveredTabId = -1;
 };
+
+const onClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
+  ipcRenderer.send('open-omnibox', {
+    url: tab.url,
+  });
+}
 
 const contextMenu = (tab: Tab) => () => {
   const { tabs } = store.tabGroups.currentGroup;
@@ -233,6 +239,7 @@ export default observer(({ tab }: { tab: Tab }) => {
       onMouseDown={onMouseDown(tab)}
       onMouseEnter={onMouseEnter(tab)}
       onContextMenu={contextMenu(tab)}
+      onClick={onClick(tab)}
       title={tab.title}
       onMouseLeave={onMouseLeave}
       onMouseOver={onMouseHover}
