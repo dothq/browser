@@ -296,11 +296,11 @@ export class View extends BrowserView {
       appWindow.webContents.send('found-in-page', result);
     });
 
-    this.webContents.on('media-started-playing', (listener: any) => {
+    this.webContents.once('media-started-playing', (listener: any) => {
       appWindow.webContents.send(`audio-playing-${this.tabId}`);
     });
 
-    this.webContents.on('media-paused', (listener: any) => {
+    this.webContents.once('media-paused', (listener: any) => {
       appWindow.webContents.send(`audio-stopped-${this.tabId}`);
     });
 
@@ -346,7 +346,7 @@ export class View extends BrowserView {
         this.webContents.executeJavaScript(script);
       }
 
-      appWindow.webContents.send(`load-commit-${this.tabId}`, ...args);
+      // appWindow.webContents.send(`load-commit-${this.tabId}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,
@@ -418,13 +418,13 @@ export class View extends BrowserView {
         });
       }
 
-      rpclient.on('ready', () => {
-        setActivity();
+      // rpclient.on('ready', () => {
+      //   setActivity();
 
-        setInterval(() => {
-          setActivity();
-        }, 3e3);
-      });
+      //   setInterval(() => {
+      //     setActivity();
+      //   }, 3e3);
+      // });
 
       rpclient.login({ clientId }).catch(console.error);
       //Discord Rich Presence
@@ -469,13 +469,13 @@ export class View extends BrowserView {
           });
         }
 
-        rpclient.on('ready', () => {
-          setActivity();
+        // rpclient.on('ready', () => {
+        //   setActivity();
 
-          setInterval(() => {
-            setActivity();
-          }, 3e3);
-        });
+        //   setInterval(() => {
+        //     setActivity();
+        //   }, 3e3);
+        // });
 
         rpclient.login({ clientId }).catch(console.error);
         //Discord Rich Presence
