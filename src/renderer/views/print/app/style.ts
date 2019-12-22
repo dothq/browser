@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '../../../../shared/mixins';
+import { icons } from '../../app/constants';
 
 export const StyledApp = styled.div`
     height: 98vh;
@@ -52,8 +53,34 @@ export const Icon = styled.div`
   ${centerIcon(24)};
   height: 32px;
   width: 32px;
+  border-radius: 50px;
+  filter: grayscale(1) brightness(0.2);
 
-  ${({ icon }: { icon: any }) => css`
-    background-image: url(${icon});
+  ${({ icon, opacity, hoverable, selected }: { icon: any; opacity: number; hoverable: boolean; selected: boolean; }) => css`
+    mask-image: url(${icon});
+    opacity: ${opacity};
+
+    background-color: #0087ff;
+    -webkit-mask-size: 24px;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+
+    ${selected == true ? 'filter: none;' : ''};
+
+    &:hover {
+        filter: ${hoverable ? 
+            selected == false ? 
+            'grayscale(1) brightness(0.2)' : 'none' 
+        : 'grayscale(1) brightness(5)'};
+    }
+    
   `}
+`;
+
+export const CloseIcon = styled.div`
+  ${centerIcon(24)};
+  height: 32px;
+  width: 32px;
+  border-radius: 50px;
+  background-image: url(${icons.close})
 `;

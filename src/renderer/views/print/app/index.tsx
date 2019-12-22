@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { StyledApp, Preview, PrintController, Page, Icon, TitleWrapper, ListItem } from './style';
+import { StyledApp, Preview, PrintController, Page, Icon, TitleWrapper, ListItem, CloseIcon } from './style';
 import { Title, Subtitle } from '../components/Typography/style'
 import { Printers } from '../components/Printers';
 import { icons } from '../../app/constants';
 import store from '../store';
 import { observer } from 'mobx-react';
 import { Select, MenuItem, FormControl, TextField } from '@material-ui/core';
+import { hot } from 'react-hot-loader/root';
 
 const onPageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
   store.settings.pages = event.target.value as number;
 };
 
-export const App = observer(() => (
+const App = observer(() => (
   <StyledApp visible={store.visible}>
     <Preview>
       <Page />
@@ -19,7 +20,7 @@ export const App = observer(() => (
     <PrintController>
       <TitleWrapper>
         <Title>Print</Title>
-        <Icon icon={icons.close} style={{ marginLeft: 'auto' }} onClick={() => store.hide()} />
+        <CloseIcon style={{ marginLeft: 'auto' }} onClick={() => store.hide()} />
       </TitleWrapper>
       <Printers />
       <ListItem>
@@ -57,3 +58,5 @@ export const App = observer(() => (
     </PrintController>
   </StyledApp>
 ))
+
+export default hot(App);
