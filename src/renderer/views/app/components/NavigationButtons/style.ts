@@ -10,7 +10,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const DotLauncher = styled.img`
-  width: 40px;
+  width: 38px;
   margin-left: 10px;
   filter: var(--toolbar-logo-filter);
   height: 38px;
@@ -18,8 +18,6 @@ export const DotLauncher = styled.img`
 `;
 
 export const DotLauncherWrapper = styled.div`
-  cursor: pointer;
-
   ${({ visible }: { visible: boolean }) => css`
     opacity: ${visible ? 1 : 0};
     pointer-events: ${visible ? 'auto' : 'none'};

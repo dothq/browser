@@ -154,7 +154,6 @@ export const NavigationButtons = observer(() => {
       <DotLauncherWrapper
         title={store.locale.lang.window[0].open_dot}
         id="dot"
-        onClick={launcherOpen}
         onContextMenu={dotLauncherCtm()}
         visible={tdl}
         style={{ height: '42px' }}
