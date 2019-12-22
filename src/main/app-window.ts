@@ -17,7 +17,6 @@ import store from '~/renderer/views/app/store';
 import console = require('console');
 import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants/design';
 import { PermissionDialog } from './permissions';
-import { Omnibox } from './essentials/omnibox';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import * as isDev from 'electron-is-dev';
 
@@ -25,6 +24,7 @@ import { DotOptions } from '~/renderer/views/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
 import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
+import { SearchDialog } from './dialogs/search';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -43,7 +43,7 @@ export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
   public menu: MenuDialog = new MenuDialog(this);
-  public omnibox: Omnibox = new Omnibox(this);
+  public search: SearchDialog = new SearchDialog(this);
   public print: PrintDialog = new PrintDialog(this);
   public alert: AlertDialog = new AlertDialog(this);
 
@@ -66,8 +66,11 @@ export class AppWindow extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(app.getAppPath(), '/static/icon.png'),
     });
+
+    process.traceDeprecation = true;
+
+    console.log(resolve(process.cwd(), '/static/icon.png'))
 
     this.setBackgroundColor('#fff');
 
@@ -143,7 +146,7 @@ export class AppWindow extends BrowserWindow {
       }
 
       this.viewManager.fixBounds();
-      this.omnibox.hide();
+      this.search.hide();
       this.permissionWindow.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
@@ -155,7 +158,7 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
-      this.omnibox.hide();
+      this.search.hide();
 
       this.permissionWindow.rearrange();
       this.alert.rearrange();
@@ -166,7 +169,7 @@ export class AppWindow extends BrowserWindow {
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
-      this.omnibox.hide();
+      this.search.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
@@ -175,7 +178,7 @@ export class AppWindow extends BrowserWindow {
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
-      this.omnibox.hide();
+      this.search.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
@@ -191,7 +194,7 @@ export class AppWindow extends BrowserWindow {
       this.permissionWindow.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
-      this.omnibox.hide();
+      this.search.hide();
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
@@ -202,7 +205,7 @@ export class AppWindow extends BrowserWindow {
       this.permissionWindow.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
-      this.omnibox.hide();
+      this.search.hide();
     });
 
     if (
@@ -218,7 +221,7 @@ export class AppWindow extends BrowserWindow {
       this.permissionWindow.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
-      this.omnibox.hide();
+      this.search.hide();
     };
 
     // const fixPerm = () => {
