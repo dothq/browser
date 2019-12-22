@@ -41,8 +41,8 @@ const webConfig = {
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
         port: 4445,
-        hot: true,
-        inline: true,
+        hot: false,
+        inline: false,
         disableHostCheck: true,
         headers: {
           'Access-Control-Allow-Origin': '*',

@@ -19,8 +19,8 @@ const rendererConfig = {
     devServer: {
         contentBase: path.join(__dirname, 'build', 'renderer'),
         port: 4444,
-        hot: true,
-        inline: true,
+        hot: false,
+        inline: false,
         disableHostCheck: true,
         headers: {
           'Access-Control-Allow-Origin': '*',
