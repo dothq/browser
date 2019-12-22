@@ -30,7 +30,6 @@ export class PermissionDialog extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
