@@ -22,9 +22,6 @@ export const registerProtocol = (session: Electron.Session) => {
     (request, callback: any) => {
       const parsed = parse(request.url);
 
-      console.log(parsed)
-      console.log(join(__dirname, 'web', parsed.path))
-
       if (parsed.path === '/') {
         return callback({
           path: join(__dirname, 'web', `${parsed.hostname}.html`),
