@@ -40,6 +40,7 @@ export class Search extends React.Component {
             spellCheck={false}
             onChange={() => this.onChange(event)}
             defaultValue={store.details.url}
+            placeholder="Search Google or enter address"
             ref={store.inputRef}
           />
         </SearchContainer>

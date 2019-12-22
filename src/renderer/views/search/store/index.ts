@@ -8,6 +8,10 @@ class Store {
         ipcRenderer.on('visible', (e, flag) => {
             this.visible = flag;
 
+            if(this.details.url == 'dot://newtab') {
+                this.details.url = '';
+            }
+
             this.inputRef.current.value = this.details.url;
             this.inputRef.current.focus();
         });

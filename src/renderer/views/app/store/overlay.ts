@@ -98,9 +98,10 @@ export class OverlayStore {
   constructor() {
     window.addEventListener('keydown', this.onWindowKeyDown);
 
-    setTimeout(() => {
+    window.addEventListener('DOMContentLoaded', () => {
       store.tabs.addTab(defaultTabOptions);
-    }, 1000);
+      ipcRenderer.send('open-omnibox', defaultTabOptions);
+    })
 
     ipcRenderer.on('open-settings', e => {
       this.visible = true;
