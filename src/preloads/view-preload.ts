@@ -51,46 +51,16 @@ if (window.location.href.startsWith('dot://')) {
   });
 }
 
-if (window.location.href == 'dot://newtab') {
-  webFrame.executeJavaScript('window', false).then(w => {
-    w.settings = ipcRenderer.sendSync('get-settings-sync');
-  })
-
-  window.addEventListener(
-    'message',
-    event => {
-      ipcRenderer.send(`dot-${event.data}`);
-    },
-    false,
-  );
-
-  ipcRenderer.on('settings-push', (event: any, data: any) => {
-    webFrame.executeJavaScript('window', false).then(w => {
-      w.settings = ipcRenderer.sendSync('get-settings-sync');
-      console.log('recieved settings push from', data);
-
-      if (w.settings) {
-        console.log(event.data, w.settings.uiTheme);
-        if (w.settings.uiTheme == 'dark') {
-          console.log('dark');
-          document
-            .getElementById('app')
-            .firstElementChild.classList.remove('theme-light');
-          document
-            .getElementById('app')
-            .firstElementChild.classList.add('theme-dark');
-        } else {
-          console.log('light');
-          document
-            .getElementById('app')
-            .firstElementChild.classList.add('theme-light');
-          document
-            .getElementById('app')
-            .firstElementChild.classList.remove('theme-dark');
-        }
-      }
-    });
-  });
+if(window.location.protocol == 'dot:') {
+  if(window.location.hostname == 'newtab') {
+    window.addEventListener(
+      'message',
+      event => {
+        ipcRenderer.send(`webui-${window.location.hostname}-message`, event.data);
+      },
+      false,
+    );
+  }
 }
 
 let beginningScrollLeft: number = null;
