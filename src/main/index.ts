@@ -130,8 +130,9 @@ app.on('ready', async () => {
     autoUpdater.quitAndInstall();
   });
 
-  ipcMain.on('open-omnibox', (event: IpcMainEvent, tab: Tab) => {
-    appWindow.omnibox.open(tab);
+  ipcMain.on('open-omnibox', (event: IpcMainEvent, details: any) => {
+    appWindow.search.show();
+    appWindow.search.send(details)
   });
 
   ipcMain.on('open-print', (event: IpcMainEvent) => {
@@ -152,6 +153,12 @@ app.on('ready', async () => {
 
   ipcMain.on('dot-open-settings', e => {
     appWindow.webContents.send('open-settings');
+  });
+
+  ipcMain.on('webui-newtab-message', (e: any, data: any) => {
+    if(data == 'settings') {
+      appWindow.viewManager.selected.webContents.loadURL('dot://settings')
+    }
   });
 
   ipcMain.on('bskmsg-test', (event: any, data: any) => {
