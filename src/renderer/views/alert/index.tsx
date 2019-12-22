@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
-import { App } from './app/index';
+import App from './app/index';
 import { fonts } from '../app/constants/fonts';
 
 const styleElement = document.createElement('style');

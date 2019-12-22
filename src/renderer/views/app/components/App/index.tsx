@@ -62,7 +62,7 @@ if (existsSync(errorLogPath)) {
   );
 }
 
-export const App = observer(() => {
+const App = observer(() => {
   return (
     <StyledApp>
       <GlobalStyle />

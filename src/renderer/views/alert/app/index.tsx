@@ -5,6 +5,7 @@ import { icons } from '../../app/constants';
 import store from '../store';
 import { observer } from 'mobx-react';
 import { Button, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { hot } from 'react-hot-loader/root';
 
 const content = () => {
   if(store.content.length != 0) {
@@ -25,7 +26,7 @@ const theme = createMuiTheme({
   }
 })
 
-export const App = observer(() => (
+const App = observer(() => (
   <MuiThemeProvider theme={theme}>
     <StyledApp visible={store.visible}>
         <TitleWrapper>
@@ -37,3 +38,5 @@ export const App = observer(() => (
     </StyledApp>
   </MuiThemeProvider>
 ))
+
+export default hot(App);
