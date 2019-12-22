@@ -15,6 +15,8 @@ export const StyledSearchBox = styled.div`
   width: 600px;
   transition: 0.2s all;
   outline: none;
+  opacity: 0;
+  pointer-events: none;
 
   ${({ isFixed, isFocused }: { isFixed: boolean; isFocused: any }) => css`
     position: ${isFixed == true ? 'fixed' : 'unset'};
@@ -113,6 +115,7 @@ export const HiyaMessage = styled.p`
   overflow: hidden;
   min-height: 19px;
   max-height: 19px;
+  font-family: Roboto;
   animation: ${hiyaAutomation} 4s cubic-bezier(0.87, 0.01, 0, 1.07) 0s infinite;
   overflow-y: hidden;
 `;

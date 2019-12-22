@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
-import { Error } from './app/index';
+import Error from './app/index';
 import { fonts } from '../app/constants/fonts';
 
 const styleElement = document.createElement('style');
@@ -29,11 +29,4 @@ styleElement.textContent = `
 
 document.head.appendChild(styleElement);
 
-const App = () => (
-  <>
-    <div id="egg"></div>
-    <Error />
-  </>
-)
-
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<Error />, document.getElementById('app'));

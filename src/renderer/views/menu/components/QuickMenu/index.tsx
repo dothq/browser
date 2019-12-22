@@ -57,6 +57,10 @@ const onIncognitoClick = () => {
   ipcRenderer.send('create-window', true);
 };
 
+const onPrintClick = () => {
+  ipcRenderer.send('show-dialog', 'print');
+};
+
 const addTab = (url: string) => () => {
   ipcRenderer.send(`view-create-${store.windowId}`, { url, active: true });
   store.hide();
@@ -157,7 +161,7 @@ export const QuickMenu = observer(() => {
             <Shortcut>Ctrl+F</Shortcut>
           </MenuItem>
           <MenuItem>
-            <Icon icon={icons.page} />
+            <Icon icon={icons.print} onClick={onPrintClick}/>
             <MenuItemTitle>Print</MenuItemTitle>
             <Shortcut>Ctrl+P</Shortcut>
           </MenuItem>

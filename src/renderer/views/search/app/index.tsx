@@ -1,15 +1,19 @@
 import * as React from 'react';
-import { StyledSearch } from './style';
-import { Tab } from './../../../views/app/models/tab';
-import OmniboxSearch from '../components/Search';
+import { Search } from '../components/Search';
+import { hot } from 'react-hot-loader/root';
+import { createGlobalStyle } from 'styled-components';
+import { Style } from './style';
+import store from '../store';
+import { observer } from 'mobx-react';
 
-class Search extends React.Component {
-  public props = {
-    style: '',
-  };
+const GlobalStyle = createGlobalStyle`${Style}`;
 
-  public tabContents: Tab;
+interface Props {
+  style?: any
+}
 
+@observer
+class App extends React.Component<Props, {}> {
   constructor(props: any) {
     super(props);
   }
@@ -18,9 +22,12 @@ class Search extends React.Component {
     const { style } = this.props;
 
     return (
-      <OmniboxSearch style={style} isFixed={false} tab={this.tabContents} />
+      <>
+        <GlobalStyle />
+        <Search style={style} visible={store.visible} />
+      </>
     );
   }
 }
 
-export default Search;
+export default hot(App);

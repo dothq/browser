@@ -6,10 +6,11 @@ import { Style } from '../../style';
 import { StyledApp } from './style';
 import { QuickMenu } from '../QuickMenu';
 import store from '../../store';
+import { hot } from 'react-hot-loader/root';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
-export const App = observer(() => {
+const App = observer(() => {
   return (
     <StyledApp visible={store.visible}>
       <QuickMenu />
@@ -17,3 +18,5 @@ export const App = observer(() => {
     </StyledApp>
   );
 })
+
+export default hot(App);

@@ -1,15 +1,8 @@
 import styled, { css, keyframes } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
-import { icons } from '../../app/constants';
+import { icons } from '~/renderer/views/app/constants/icons';
 
-export const Style = css`
-body {
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-`;
-
-export const StyledSearch = styled.div`
+export const StyledSearchBox = styled.div`
   z-index: 2;
   background-color: white;
   border-radius: 50px;
@@ -20,13 +13,19 @@ export const StyledSearch = styled.div`
   transition: 0.4s height;
   margin: 0 auto 32px auto;
   width: 600px;
-  border: 1px solid #afafaf;
+  transition: 0.1s all;
+  outline: none;
 
-  ${({ isFixed }: { isFixed: boolean }) => css`
+  ${({ isFixed, isFocused, visible }: { isFixed: boolean; isFocused: any; visible: boolean }) => css`
     position: ${isFixed == true ? 'fixed' : 'unset'};
     z-index: ${isFixed == true ? '9999999' : 'unset'};
     top: ${isFixed == true ? '20px' : 'unset'};
     margin-left: ${isFixed == true ? '300px' : 'auto'};
+
+    box-shadow: ${isFocused ? '0 0 0 1px #006eff, 0 0 0 4px rgba(30, 139, 251, 0.3), 0 8px 16px rgba(0,0,0,0.24)' : 'none'};
+    border: ${isFocused ? '1px solid transparent' : '1px solid #afafaf'};
+
+    opacity: ${visible ? 1 : 0};
   `}
 `;
 
@@ -42,7 +41,12 @@ export const SearchIcon = styled.div`
   height: 18px;
   min-width: 18px;
   margin-left: 16px;
-  background-image: url(${icons.search});
+  filter: var(--icon-filter);
+  background-size: 20px;
+
+  ${({ isFocused }: { isFocused: any }) => css`
+    background-image: url(${isFocused ? icons.search : 'http://www.getfavicon.org/icons/favicon12.ico'});
+  `}
 `;
 
 export const Input = styled.input`
@@ -55,7 +59,7 @@ export const Input = styled.input`
   border: none;
   outline: none;
   font-size: 16px;
-  color: black;
+  color: var(--input-color);
   margin-left: 42px;
   margin-right: 16px;
   font-family: Roboto;
@@ -112,4 +116,6 @@ export const HiyaMessage = styled.p`
   min-height: 19px;
   max-height: 19px;
   animation: ${hiyaAutomation} 4s cubic-bezier(0.87, 0.01, 0, 1.07) 0s infinite;
+  overflow-y: hidden;
+  font-family: Roboto;
 `;

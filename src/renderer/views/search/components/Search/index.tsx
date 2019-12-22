@@ -4,97 +4,46 @@ import {
   SearchContainer,
   SearchIcon,
   Input,
-  HiyaMessage,
-} from '../../../newtab/app/components/Search/style';
+} from './style';
+import store from '../../store';
 
-export class OmniboxSearch extends React.Component {
-  public hiyaNotifications: string[] = [
-    'How are you today?',
-    `Search on Google or enter address`,
-    'Where do you want to go today?',
-    "What's on your mind?",
-  ];
-
+export class Search extends React.Component {
   public props: any = {
     isFixed: false,
     style: '',
+    visible: false
   };
 
   constructor(props: any) {
     super(props);
   }
 
-  public hiyaBox = document.getElementById('hiya');
-
   public state = {
-    hiyaState: false,
-    hiyaText: this.hiyaNotifications[
-      Math.floor(Math.random() * this.hiyaNotifications.length)
-    ],
+    focused: false
   };
 
-  componentDidMount() {
-    document
-      .getElementById('hiya')
-      .addEventListener('animationiteration', () => {
-        const hiyaText = this.hiyaNotifications[
-          Math.floor(Math.random() * this.hiyaNotifications.length)
-        ];
-
-        this.setState({
-          hiyaText,
-        });
-      });
-  }
-
-  onFocus(e: any) {
-    this.setState({ hiyaState: true });
-    document
-      .getElementById('hiya')
-      .removeEventListener('animationiteration', () => {});
-  }
-
-  onBlur(e: any) {
-    if (!e.target.value) {
-      this.setState({ hiyaState: false });
-      setTimeout(() => {
-        document
-          .getElementById('hiya')
-          .addEventListener('animationiteration', () => {
-            const hiyaText = this.hiyaNotifications[
-              Math.floor(Math.random() * this.hiyaNotifications.length)
-            ];
-
-            this.setState({
-              hiyaText,
-            });
-          });
-      }, 1000);
-    }
+  onChange(e: any) {
+    store.details.url = e.target.value;
   }
 
   render() {
-    const { isFixed, style } = this.props;
+    const { isFixed, style, visible } = this.props;
 
     return (
-      <StyledSearchBox isFixed={isFixed} style={style}>
+      <StyledSearchBox isFixed={isFixed} style={style} isFocused={true} visible={visible}>
         <SearchContainer>
-          <SearchIcon />
+          <SearchIcon isFocused={true} />
           <Input
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
-            onFocus={() => this.onFocus(event)}
-            onBlur={() => this.onBlur(event)}
+            onChange={() => this.onChange(event)}
+            defaultValue={store.details.url}
+            ref={store.inputRef}
           />
-          {this.state.hiyaState == false && (
-            <HiyaMessage id="hiya">{this.state.hiyaText}</HiyaMessage>
-          )}
         </SearchContainer>
       </StyledSearchBox>
     );
   }
 }
-
-export default OmniboxSearch;

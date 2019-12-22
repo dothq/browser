@@ -29,6 +29,7 @@ import { Search } from './components/Search';
 import { Tiles } from './components/Tiles'
 import { Modal } from '@material-ui/core';
 import * as axios from 'axios';
+import { hot } from 'react-hot-loader/root';
 
 export const FeedCard = ({
   category,
@@ -134,6 +135,10 @@ export const SkeletonFeed = () => {
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
+const openWebView = (view: any) => {
+  window.location.href = `dot://${view}`
+}
+
 class NewTab extends React.Component {
   public list: any = [];
 
@@ -191,7 +196,7 @@ class NewTab extends React.Component {
             <Tiles />
           </Section_Middle>
           <Section_Right>
-            <Icon icon={icons.settings} />
+            <Icon icon={icons.settings} onClick={() => openWebView('settings')} />
           </Section_Right>
         </Section>
       </StyledNewTab>
@@ -199,4 +204,4 @@ class NewTab extends React.Component {
   }
 }
 
-export default NewTab;
+export default hot(NewTab);
