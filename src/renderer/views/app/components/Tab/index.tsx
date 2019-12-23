@@ -57,9 +57,12 @@ const onMouseLeave = () => {
 };
 
 const onClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
-  ipcRenderer.send('open-omnibox', {
-    url: tab.url,
-  });
+  if(store.canToggleMenu) {
+    store.canToggleMenu = false;
+    ipcRenderer.send('open-omnibox', {
+      url: tab.url,
+    });
+  }
 }
 
 const contextMenu = (tab: Tab) => () => {

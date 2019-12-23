@@ -3,7 +3,6 @@ import {
   app,
   ipcMain,
 } from 'electron';
-import { resolve } from 'path';
 import { appWindow } from '.';
 import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants/design';
 

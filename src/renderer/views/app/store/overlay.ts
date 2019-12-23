@@ -1,36 +1,31 @@
 import { observable, computed } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer, remote, webContents } from 'electron';
+import { ipcRenderer } from 'electron';
 import store from '../store';
-import { viewBm } from '../components/Toolbar';
-import { ViewManager } from '~/main/view-manager';
-import { View } from '../../../../main/view';
 import console = require('console');
 import { defaultTabOptions } from '../constants/tabs';
 
+/* @todo Re-implement autocomplete */
+// const autoComplete = (text: string, suggestion: string) => {
+//   const regex = /(http(s?)):\/\/(www.)?|www./gi;
+//   const regex2 = /(http(s?)):\/\//gi;
 
-let lastSuggestion: string;
+//   const start = text.length;
 
-const autoComplete = (text: string, suggestion: string) => {
-  const regex = /(http(s?)):\/\/(www.)?|www./gi;
-  const regex2 = /(http(s?)):\/\//gi;
+//   const input = store.overlay.inputRef.current;
 
-  const start = text.length;
+//   if (input.selectionStart !== input.value.length) return;
 
-  const input = store.overlay.inputRef.current;
-
-  if (input.selectionStart !== input.value.length) return;
-
-  if (suggestion) {
-    if (suggestion.startsWith(text.replace(regex, ''))) {
-      input.value = text + suggestion.replace(text.replace(regex, ''), '');
-    } else if (`www.${suggestion}`.startsWith(text.replace(regex2, ''))) {
-      input.value =
-        text + `www.${suggestion}`.replace(text.replace(regex2, ''), '');
-    }
-    input.setSelectionRange(start, input.value.length);
-  }
-};
+//   if (suggestion) {
+//     if (suggestion.startsWith(text.replace(regex, ''))) {
+//       input.value = text + suggestion.replace(text.replace(regex, ''), '');
+//     } else if (`www.${suggestion}`.startsWith(text.replace(regex2, ''))) {
+//       input.value =
+//         text + `www.${suggestion}`.replace(text.replace(regex2, ''), '');
+//     }
+//     input.setSelectionRange(start, input.value.length);
+//   }
+// };
 
 export class OverlayStore {
   public scrollRef = React.createRef<HTMLDivElement>();
@@ -100,7 +95,9 @@ export class OverlayStore {
 
     window.addEventListener('DOMContentLoaded', () => {
       store.tabs.addTab(defaultTabOptions);
-      ipcRenderer.send('open-omnibox', defaultTabOptions);
+      ipcRenderer.send('open-omnibox', {
+        url: defaultTabOptions.url
+      });
     })
 
     ipcRenderer.on('open-settings', e => {
@@ -171,15 +168,14 @@ export class OverlayStore {
         ipcRenderer.send('browserview-show');
       }, 200);
 
-      // this.timeout = setTimeout(() => {
-      //   if (store.tabs.selectedTab) {
-      //     if (store.tabs.selectedTab.isWindow) store.tabs.selectedTab.select();
-      //     else ipcRenderer.send('browserview-show');
-      //   }
-      // }, 200);
+      this.timeout = setTimeout(() => {
+        if (store.tabs.selectedTab) {
+          if (store.tabs.selectedTab.isWindow) store.tabs.selectedTab.select();
+          else ipcRenderer.send('browserview-show');
+        }
+      }, 200);
 
       store.suggestions.list = [];
-      lastSuggestion = undefined;
 
       this._visible = val;
       this.isNewTab = false;

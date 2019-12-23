@@ -1,6 +1,5 @@
 import {
   BrowserView,
-  app,
   Menu,
   nativeImage,
   clipboard,
@@ -8,12 +7,10 @@ import {
   shell,
 } from 'electron';
 import { appWindow } from '.';
-import { sendToAllExtensions } from './extensions';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import console = require('console');
 import { resolve } from 'path';
-import { Client } from 'discord-rpc';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
 
@@ -381,105 +378,11 @@ export class View extends BrowserView {
     this.webContents.addListener('will-navigate', (e, url) => {
       e.preventDefault();
       appWindow.viewManager.selected.webContents.loadURL(url);
-
-      //Discord Rich Presence
-      const clientId = '565573138146918421';
-
-      const rpclient = new Client({ transport: 'ipc' });
-      const startTimestamp = Math.round(+new Date() / 1000);
-
-      async function setActivity() {
-        if (!rpclient) {
-          return;
-        }
-        
-        var details = 'Browsing on';
-
-        if (appWindow.webContents.isCurrentlyAudible() == true) {
-          details = 'Listening to audio on';
-        }
-
-        var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
-        var arr = pattern.exec(url);
-        var state = arr[2];
-        var largeImageKey = 'dlogo';
-        var smallImageKey = 'dot-online';
-        var smallImageText = `Browsing a webpage`;
-        
-        rpclient.setActivity({
-          details: details,
-          state: state,
-          startTimestamp,
-          largeImageKey,
-          smallImageKey,
-          largeImageText: `Dot Browser ${app.getVersion()}`,
-          smallImageText,
-          instance: false,
-        });
-      }
-
-      // rpclient.on('ready', () => {
-      //   setActivity();
-
-      //   setInterval(() => {
-      //     setActivity();
-      //   }, 3e3);
-      // });
-
-      rpclient.login({ clientId }).catch(console.error);
-      //Discord Rich Presence
     });
 
     this.webContents.addListener(
       'new-window',
       (e, url, frameName, disposition, options, referrer) => {
-        //Discord Rich Presence
-        const clientId = '565573138146918421';
-
-        const rpclient = new Client({ transport: 'ipc' });
-        const startTimestamp = Math.round(+new Date() / 1000);
-
-        async function setActivity() {
-          if (!rpclient) {
-            return;
-          }
-
-          var details = 'Browsing on';
-
-          if (appWindow.webContents.isCurrentlyAudible() == true) {
-            details = 'Listening to audio on';
-          }
-
-          var pattern = /(.+:\/\/)?([^\/]+)(\/.*)*/i;
-          var arr = pattern.exec(url);
-          var state = arr[2];
-          var largeImageKey = 'dlogo';
-          var smallImageKey = 'dot-online';
-          var smallImageText = `Browsing a webpage`;
-
-          rpclient.setActivity({
-            details: details,
-            state: state,
-            startTimestamp,
-            largeImageKey,
-            smallImageKey,
-            largeImageText: `Dot Browser ${app.getVersion()}`,
-            smallImageText,
-            instance: false,
-          });
-        }
-
-        // rpclient.on('ready', () => {
-        //   setActivity();
-
-        //   setInterval(() => {
-        //     setActivity();
-        //   }, 3e3);
-        // });
-
-        rpclient.login({ clientId }).catch(console.error);
-        //Discord Rich Presence
-
         if (disposition === 'new-window') {
           if (disposition === 'new-window') {
             if (
@@ -517,12 +420,10 @@ export class View extends BrowserView {
           if (frameName === '_self' || options.title == '_self') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
-            appWindow.viewManager.selected.webContents.userAgent = appWindow.viewManager.selected.webContents.getUserAgent() + ' Dot Browser/getdot.js.org';
           }
           if (frameName === '_top' || options.title == '_top') {
             e.preventDefault();
             appWindow.viewManager.selected.webContents.loadURL(url);
-            appWindow.viewManager.selected.webContents.userAgent = appWindow.viewManager.selected.webContents.getUserAgent() + ' Dot Browser/getdot.js.org';
           }
           if (frameName === '_blank' || options.title == '_blank') {
             e.preventDefault();
@@ -590,13 +491,6 @@ export class View extends BrowserView {
       );
     });
 
-    this.webContents.on('update-target-url', (e, url) => {
-      /* TODO */
-      // appWindow.locationBar.show();
-      // appWindow.locationBar.rearrange()
-      // appWindow.locationBar.webContents.send('target-url-changed', url);
-    });
-
     (this.webContents as any).addListener(
       'certificate-error',
       (
@@ -625,7 +519,7 @@ export class View extends BrowserView {
       },
     );
 
-    this.setAutoResize({ width: true, height: true });
+    this.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
     this.webContents.loadURL(url);
   }
 
@@ -642,7 +536,5 @@ export class View extends BrowserView {
 
   public emitWebNavigationEvent = (name: string, ...data: any[]) => {
     this.webContents.send(`api-emit-event-webNavigation-${name}`, ...data);
-
-    sendToAllExtensions(`api-emit-event-webNavigation-${name}`, ...data);
   };
 }
