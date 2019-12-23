@@ -24,60 +24,6 @@ const onUpdateClick = () => {
   ipcRenderer.send('update-install');
 };
 
-@observer
-class BrowserActions extends React.Component {
-  public render() {
-    const { selectedTabId } = store.tabGroups.currentGroup;
-
-    return (
-      <>
-        {selectedTabId &&
-          store.extensions.browserActions.map(item => {
-            if (item.tabId === selectedTabId) {
-              return <BrowserAction data={item} key={item.extensionId} />;
-            }
-            return null;
-          })}
-      </>
-    );
-  }
-}
-
-const adBlockRef = React.createRef<HTMLDivElement>();
-
-export const toggleAdBlockWindow = () => {
-  // if(store.overlay.isAbOpen == false) {
-  //   var rect = document.getElementById("dab").getBoundingClientRect()
-  //   var ab = modal.open(resolve(remote.app.getAppPath() + '/static/pages/adblock.html'), {
-  //     width: 300,
-  //     height: 400,
-  //     x: rect.left-260,
-  //     y: rect.top+40,
-  //     frame: false,
-  //     resizable: false,
-  //     movable: false,
-  //     alwaysOnTop: false,
-  //     modal: false
-  //   }, {
-  //     totalAdsBlocked: store.tabs.selectedTab.blockedAds.toString()
-  //   })
-  //   store.overlay.isAbOpen = true;
-  //   store.overlay.abObj = ab;
-  //   ab.on('close', () => {
-  //     store.overlay.isAbOpen = false;
-  //     store.overlay.abObj = null;
-  //   })
-  //   ab.on('hide', () => {
-  //     store.overlay.isAbOpen = false;
-  //     store.overlay.abObj = null;
-  //   })
-  // }
-  // else {
-  //   store.overlay.abObj.hide()
-  //   store.overlay.isAbOpen = false;
-  // }
-}
-
 export const viewLauncher = () => {
   store.overlay.visible = true;
   store.overlay.scrollRef.current.scrollTop = 0;
@@ -138,11 +84,9 @@ export const Toolbar = observer(() => {
         <Tabbar />
         <Find />
         <Buttons>
-          <BrowserActions />
           {store.updateInfo.available && (
             <ToolbarButton icon={icons.download} onClick={onUpdateClick} />
           )}
-          {store.extensions.browserActions.length > 0 && <Separator />}
           <AbButton title={audioPlaying()}>
             <BrowserAction
               size={18}
@@ -182,7 +126,7 @@ export const Toolbar = observer(() => {
             />          
           </AbButton>
           { store.downloads.list.length > 0 && <Separator />}
-          <AbButton onClick={toggleAdBlockWindow} title="Dot Ad-Blocker" id="dab">
+          <AbButton title="Dot Ad-Blocker" id="dab">
             <BrowserAction
               size={18}
               style={{ marginLeft: 0 }}
