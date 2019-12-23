@@ -18,7 +18,7 @@ const preloadConfig = {
     module: {
         rules: [
           {
-            test: /\.(ts|tsx)?$/,
+            test: /\.tsx?$/,
             exclude: /node_modules/,
             loader: 'awesome-typescript-loader',
             options: {

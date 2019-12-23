@@ -48,7 +48,7 @@ export const baseConfig: Configuration = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         loader: 'ts-loader',
         options: {
