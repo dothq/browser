@@ -7,7 +7,6 @@ const preloadConfig = {
     target: 'electron-renderer',
     entry: {
       'view-preload': './src/preloads/view-preload.ts',
-      'background-preload': './src/preloads/background-preload.ts',
     },
     output: {
         path: path.resolve(__dirname, 'build', 'preloads'),
