@@ -13,17 +13,18 @@ import { platform } from 'os';
 import { ViewManager } from './view-manager';
 import { getPath } from '~/shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
-import store from '~/renderer/app/store';
+import store from '~/renderer/views/app/store';
 import console = require('console');
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
+import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants/design';
 import { PermissionDialog } from './permissions';
-import { Omnibox } from './essentials/omnibox';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import * as isDev from 'electron-is-dev';
 
-import { DotOptions } from '~/renderer/app/models/dotoptions';
+import { DotOptions } from '~/renderer/views/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
-import { LocationDialog } from './dialogs/location';
+import { PrintDialog } from './dialogs/print';
+import { AlertDialog } from './dialogs/alert';
+import { SearchDialog } from './dialogs/search';
 
 try {
   if (existsSync(getPath('dot-options.json'))) {
@@ -42,8 +43,9 @@ export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
   public menu: MenuDialog = new MenuDialog(this);
-  public omnibox: Omnibox = new Omnibox(this);
-  public locationBar: LocationDialog = new LocationDialog(this);
+  public search: SearchDialog = new SearchDialog(this);
+  public print: PrintDialog = new PrintDialog(this);
+  public alert: AlertDialog = new AlertDialog(this);
 
   constructor() {
     super({
@@ -61,15 +63,17 @@ export class AppWindow extends BrowserWindow {
         nodeIntegration: true,
         contextIsolation: false,
         experimentalFeatures: true,
-        enableBlinkFeatures: 'OverlayScrollbars, dns-over-https',
+        enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(process.cwd(), '/static/icon.png'),
     });
+
+    process.traceDeprecation = true;
+
+    console.log(resolve(process.cwd(), '/static/icon.png'))
 
     this.setBackgroundColor('#fff');
 
-    app.commandLine.appendSwitch("dns-over-https");
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false');
@@ -142,9 +146,10 @@ export class AppWindow extends BrowserWindow {
       }
 
       this.viewManager.fixBounds();
-      this.omnibox.hide();
-
+      this.search.hide();
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
@@ -153,23 +158,29 @@ export class AppWindow extends BrowserWindow {
         windowState.bounds = this.getBounds();
       }
 
-      this.omnibox.hide();
+      this.search.hide();
 
       this.permissionWindow.rearrange();
+      this.alert.rearrange();
+      this.print.rearrange();
       this.menu.rearrange();
     });
 
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
-      this.omnibox.hide();
+      this.search.hide();
+      this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
-      this.omnibox.hide();
+      this.search.hide();
+      this.alert.rearrange();
+      this.print.rearrange();
       this.menu.hide()
     });
 
@@ -181,7 +192,9 @@ export class AppWindow extends BrowserWindow {
       this.menu.hide();
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
-      this.omnibox.hide();
+      this.alert.rearrange();
+      this.print.rearrange();
+      this.search.hide();
     });
     this.on('move', () => {
       if (!this.isMaximized()) {
@@ -190,7 +203,9 @@ export class AppWindow extends BrowserWindow {
       this.menu.hide();
       this.viewManager.fixBounds();
       this.permissionWindow.rearrange();
-      this.omnibox.hide();
+      this.alert.rearrange();
+      this.print.rearrange();
+      this.search.hide();
     });
 
     if (
@@ -204,7 +219,9 @@ export class AppWindow extends BrowserWindow {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
       this.permissionWindow.rearrange();
-      this.omnibox.hide();
+      this.alert.rearrange();
+      this.print.rearrange();
+      this.search.hide();
     };
 
     // const fixPerm = () => {
@@ -246,13 +263,13 @@ export class AppWindow extends BrowserWindow {
     if (isDev) {
       this.setIcon(
         nativeImage.createFromPath(
-          resolve(process.cwd(), '\\static\\icon.png'),
+          resolve(app.getAppPath(), '\\static\\icon.png'),
         ),
       );
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
-      this.loadURL(join('file://', process.cwd(), 'build/app.html'));
+      this.loadURL(join('file://', app.getAppPath(), '\\resources\\app.asar\\build\\app.html'));
     }
 
     this.once('ready-to-show', () => {

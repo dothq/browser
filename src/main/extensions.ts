@@ -11,7 +11,7 @@ import { resolve } from 'path';
 import { promisify } from 'util';
 
 import { getPath } from '~/shared/utils/paths';
-import { Extension, StorageArea } from './models';
+import { Extension } from './models';
 import { IpcExtension } from '~/shared/models';
 import { appWindow } from '.';
 import * as isDev from 'electron-is-dev';
@@ -63,7 +63,7 @@ export const startBackgroundPage = async (extension: Extension) => {
       partition: 'persist:extension',
       isBackgroundPage: true,
       commandLineSwitches: ['--background-page'],
-      preload: `${process.cwd()}/build/background-preload.js`,
+      preload: `${process.cwd()}\\preloads\\background-preload.js`,
       webPreferences: {
         webSecurity: false,
         nodeIntegration: false,
@@ -114,20 +114,20 @@ export const loadExtensions = async () => {
           return;
         }
 
-        const storagePath = getPath('storage/extensions', id);
-        const local = new StorageArea(resolve(storagePath, 'local'));
-        const sync = new StorageArea(resolve(storagePath, 'sync'));
-        const managed = new StorageArea(resolve(storagePath, 'managed'));
+        // const storagePath = getPath('storage/extensions', id);
+        // // const local = new StorageArea(resolve(storagePath, 'local'));
+        // // const sync = new StorageArea(resolve(storagePath, 'sync'));
+        // // const managed = new StorageArea(resolve(storagePath, 'managed'));
 
-        const extension: Extension = {
-          manifest,
-          alarms: [],
-          databases: { local, sync, managed },
-          path: extensionPath,
-          id,
-        };
+        // const extension: Extension = {
+        //   manifest,
+        //   alarms: [],
+        //   databases: { local, sync, managed },
+        //   path: extensionPath,
+        //   id,
+        // };
 
-        extensions[id] = extension;
+        // extensions[id] = extension;
 
         if (typeof manifest.default_locale === 'string') {
           const defaultLocalePath = resolve(

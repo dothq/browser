@@ -13,8 +13,8 @@
   "homepage": "https://github.com/dot-browser/desktop#readme",
   "main": "build/main.js",
   "author": {
-    "name": "Dot Inc. & Ender And Fire Development",
-    "email": "efdev@ender.site"
+    "name": "Dot Technologies",
+    "email": "hello@dotbrowser.me"
   },
   "contributors": [
     {
@@ -42,10 +42,9 @@
     "url": "https://github.com/dot-browser/desktop/issues"
   },
   "scripts": {
-    "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 electron .",
-    "build": "npm run download-filters && npm run clean && webpack --progress --mode=production",
-    "dev": "npm run download-filters && npm run clean && webpack-dev-server --port=4444 --content-base build/ --writeToDisk --inline --progress --mode=development",
-    "clean": "rimraf build",
+    "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 ELECTRON_ENABLE_STACK_DUMPING=true electron .",
+    "build": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run prod:main\" \"npm run prod:renderer\" \"npm run prod:web\" \"npm run prod:preloads\"",
+    "dev": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run dev:main\" \"npm run dev:renderer\" \"npm run dev:web\" \"npm run dev:preloads\"",
     "compile": "node tools/ci.js",
     "compile-win32": "npm run build && electron-builder -w -p always",
     "compile-darwin": "npm run build && electron-builder -m -p always",
@@ -53,7 +52,15 @@
     "lint": "tslint \"src/**/*.ts*\"",
     "lint-fix": "prettier --write \"src/**/*.ts*\" && tslint \"src/**/*.ts*\" --fix",
     "postinstall": "electron-builder install-app-deps",
-    "download-filters": "node tools/download-filters.js"
+    "poststart": "node tools/download-filters.js && rimraf build",
+    "dev:main": "cross-env NODE_ENV=dev START=1 webpack --config webpack.config.ts",
+    "dev:renderer": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.renderer.ts",
+    "dev:web": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.web.ts",
+    "dev:preloads": "cross-env NODE_ENV=dev webpack --config webpack.config.preloads.ts",
+    "prod:main": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.ts",
+    "prod:renderer": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.renderer.ts",
+    "prod:web": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.web.ts",
+    "prod:preloads": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.preloads.ts"
   },
   "pre-commit": [
     "lint-fix"
@@ -76,7 +83,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
-    "electron": "^8.0.0-beta.2",
+    "electron": "^6.1.6",
     "electron-builder": "20.39.0",
     "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.8.6",
@@ -85,9 +92,12 @@
     "fuse-box": "^4.0.0-next.146",
     "html-webpack-plugin": "^3.2.0",
     "log-update": "3.2.0",
+    "mocha": "^6.2.2",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "pm2": "^4.1.2",
     "prettier": "1.17.0",
+    "react-hot-loader": "^4.12.18",
+    "spectron": "^9.0.0",
     "terser": "^4.3.9",
     "tslint": "5.15.0",
     "tslint-config-airbnb": "5.11.1",
@@ -95,6 +105,7 @@
     "typescript": "^3.3.3",
     "typescript-plugin-styled-components": "1.4.2",
     "uglify-js": "^3.6.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
@@ -107,9 +118,11 @@
   "dependencies": {
     "@babel/core": "^7.7.2",
     "@cliqz/adblocker": "0.8.0",
+    "@cliqz/adblocker-electron": "^1.4.0",
     "@material-ui/core": "^3.9.3",
     "@types/discord-rpc": "^3.0.1",
     "@types/express": "^4.17.1",
+    "@types/mocha": "^5.2.7",
     "ajax-request": "^1.2.3",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
@@ -126,7 +139,7 @@
     "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.3.1",
     "electron-chrome-extension": "^3.0.0",
-    "electron-extensions": "^4.0.1",
+    "electron-extensions": "^4.0.6",
     "electron-modal": "^1.0.0",
     "electron-process-manager": "^0.7.1",
     "electron-push-receiver": "^2.1.2",
@@ -152,10 +165,12 @@
     "mini-css-extract-plugin": "^0.8.0",
     "mobx": "5.9.4",
     "mobx-react": "5.4.3",
+    "mobx-react-lite": "^1.5.1",
     "moment": "^2.24.0",
+    "mouse-hooks": "^0.4.1",
     "mousetrap": "^1.6.3",
     "mui-simple-snackbars": "^0.6.0",
-    "nedb": "1.8.0",
+    "nedb": "^1.8.0",
     "nersent-ui": "^3.5.3",
     "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.0",
@@ -185,9 +200,11 @@
     "style-loader": "^1.0.0",
     "styled-components": "4.2.0",
     "tldts": "4.0.6",
+    "tree-kill": "^1.2.1",
     "ts-loader": "^6.2.0",
     "ts-node": "^8.5.0",
     "unirest": "^0.6.0",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-merge": "^4.2.2",
     "ws": "^7.1.2"
   }

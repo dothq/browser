@@ -8,67 +8,22 @@ import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 
-import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-import NullPlugin from 'webpack-null-plugin';
-
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 import { Configuration } from 'webpack';
-import { readdirSync } from 'fs';
+import { spawn } from 'child_process';
 
-const devMode = process.env.NODE_ENV === 'development';
+export const devMode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 
 process.env.isOpen = "false";
 
-class rendererPlugins {
-    constructor() {
-        var externalPlugins = [
-            new HtmlWebpackPlugin({  
-                template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
-                inject: true,
-                chunks: ['app'],
-                filename: `app.html`
-            }),
-            new WriteFilePlugin()
-        ];
+let electronProcess;
 
-        const externals = readdirSync(path.resolve(__dirname, 'src', 'renderer', 'externals'))
-        externals.forEach((external: any) => {
-            externalPlugins.push(
-                new HtmlWebpackPlugin({  
-                    template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
-                    inject: true,
-                    chunks: [`${external}`],
-                    filename: `${external}.html`
-                })
-            );
-        });
-    
-        return externalPlugins;
-    }
-}
-
-class rendererEntryPoints {
-    constructor() {
-        var entryPoints = {
-            app: path.resolve(__dirname, 'src', 'renderer', 'app', 'index.tsx')
-        };
-
-        const externals = readdirSync(path.resolve(__dirname, 'src', 'renderer', 'externals'))
-        externals.forEach((external: any) => {
-            entryPoints[external] = path.resolve(__dirname, 'src', 'renderer', 'externals', external, 'index.tsx')
-        });
-
-        return entryPoints;
-    }
-}
-
-const baseConfig: Configuration = {
+export const baseConfig: Configuration = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: '[name].js',
     publicPath: '',
   },
+  mode: devMode,
   node: {
     __dirname: false,
     __filename: false,
@@ -85,18 +40,20 @@ const baseConfig: Configuration = {
   },
   devtool: 'source-map',
   watchOptions: {
-    ignored: /node_modules/,
+    ignored: [
+      path.resolve(__dirname, 'node_modules'),
+    ]
   },
+  plugins: [],
   module: {
     rules: [
       {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
-        loader: 'awesome-typescript-loader',
+        loader: 'ts-loader',
         options: {
           transpileOnly: true,
           experimentalWatchApi: true,
-          useCache: true
         },
       },
       {
@@ -121,7 +78,6 @@ const baseConfig: Configuration = {
       },
     ],
   },
-  externals: [NodeExternals()],
 };
 
 const developmentConfig: Configuration = {
@@ -150,8 +106,9 @@ const mainConfig = merge.smart(baseConfig, {
   entry: {
     main: './src/main/index.ts',
   },
+  watch: true,
+  externals: [NodeExternals()],
   plugins: [
-    devMode ? new NullPlugin() : new ForkTsCheckerWebpackPlugin({ tslint: true }),
     new ExtractCssChunksPlugin(),
     new WriteFilePlugin()
   ],
@@ -160,36 +117,24 @@ const mainConfig = merge.smart(baseConfig, {
 const mainDevConfig = merge.smart(mainConfig, developmentConfig);
 const mainProdConfig = merge.smart(mainConfig, productionConfig);
 
-const rendererConfig = merge.smart(baseConfig, {
-  target: 'electron-renderer',
-  entry: new rendererEntryPoints(),
-  plugins: new rendererPlugins(),
-  devServer: {
-    port: 4444,
-    inline: true,
-    contentBase: './build',
-    writeToDisk: true
-  }
-});
+mainDevConfig.plugins.push({
+  apply: (compiler: any) => {
+    compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
+      if (electronProcess) {
+        electronProcess.kill();
+      }
 
-const rendererDevConfig = merge.smart(rendererConfig, developmentConfig);
-const rendererProdConfig = merge.smart(rendererConfig, productionConfig);
-
-const preloadConfig = merge.smart(baseConfig, {
-  target: 'electron-renderer',
-  entry: {
-    'view-preload': './src/preloads/view-preload.ts'
+      electronProcess = spawn('npm', ['start'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      })
+        .on('close', code => process.exit(code))
+        .on('error', spawnError => console.error(spawnError));
+    });
   },
-  plugins: [
-    devMode ? new NullPlugin() : new ForkTsCheckerWebpackPlugin({ tslint: true }),
-    new ExtractCssChunksPlugin(),
-    new WriteFilePlugin()
-  ],
 });
 
-const preloadDevConfig = merge.smart(preloadConfig, developmentConfig);
-const preloadProdConfig = merge.smart(preloadConfig, productionConfig);
-
-export default (devMode
-  ? [mainDevConfig, preloadDevConfig, rendererDevConfig]
-  : [mainProdConfig, preloadProdConfig, rendererProdConfig]);
+export default (devMode == 'development'
+  ? [mainDevConfig]
+  : [mainProdConfig]);

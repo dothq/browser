@@ -1,6 +1,6 @@
-import { ipcRenderer, webFrame } from 'electron';
-import { IpcExtension } from '~/shared/models';
-import { getAPI } from '~/shared/utils/extensions';
+import { ipcRenderer } from 'electron';
+import { IpcExtension } from '../shared/models';
+import { getAPI } from '../shared/utils/extensions';
 import { parse } from 'url';
 
 /** @deprecated */
@@ -8,7 +8,7 @@ import { parse } from 'url';
 
 ipcRenderer.setMaxListeners(0);
 
-declare const global: any;
+let global: any;
 
 process.once('loaded', () => {
   const extensionId = parse(window.location.href).hostname;
