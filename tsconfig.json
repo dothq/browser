@@ -25,6 +25,10 @@
 
     "watch": false,
     "pretty": true,
-    "importHelpers": true
-  }
+    "importHelpers": true,
+
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+  },
+  "include": ["./src/**/*", "./custom.d.ts"]
 }

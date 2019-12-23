@@ -60,7 +60,25 @@
     "prod:main": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.ts",
     "prod:renderer": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.renderer.ts",
     "prod:web": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.web.ts",
-    "prod:preloads": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.preloads.ts"
+    "prod:preloads": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.preloads.ts",
+    "test": "jest --coverage --passWithNoTests --coverageDirectory=output/coverage/jest"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/test/.+\\.spec)\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mocks/fileMock.js",
+      "\\.(s?css|sass)$": "<rootDir>/mocks/styleMock.js"
+    }
   },
   "pre-commit": [
     "lint-fix"
@@ -121,8 +139,11 @@
     "@cliqz/adblocker-electron": "^1.4.0",
     "@material-ui/core": "^3.9.3",
     "@types/discord-rpc": "^3.0.1",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/express": "^4.17.1",
+    "@types/jest": "^24.0.24",
     "@types/mocha": "^5.2.7",
+    "@types/react-test-renderer": "^16.9.1",
     "ajax-request": "^1.2.3",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
@@ -146,6 +167,7 @@
     "electron-root-path": "^1.0.9",
     "electron-updater": "^4.1.2",
     "electron-util": "^0.12.1",
+    "enzyme": "^3.11.0",
     "eslint": "^6.6.0",
     "express": "^4.17.1",
     "file-type": "10.11.0",
@@ -157,6 +179,9 @@
     "icojs": "0.12.3",
     "is-online": "^8.2.0",
     "javascript-time-ago": "^2.0.2",
+    "jest": "^24.9.0",
+    "jest-css-modules-transform": "^3.1.0",
+    "jest-enzyme": "^7.1.2",
     "leveldown": "5.0.1",
     "levelup": "4.0.1",
     "lifeguard-api": "^1.0.4",
@@ -201,6 +226,7 @@
     "styled-components": "4.2.0",
     "tldts": "4.0.6",
     "tree-kill": "^1.2.1",
+    "ts-jest": "^24.2.0",
     "ts-loader": "^6.2.0",
     "ts-node": "^8.5.0",
     "unirest": "^0.6.0",

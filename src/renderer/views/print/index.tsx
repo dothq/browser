@@ -25,7 +25,6 @@ styleElement.textContent = `
   font-weight: 300;
   src: url(${fonts.robotoLight}) format('woff2');
 }
-
 body {
   overflow-x: hidden;
   overflow-y: hidden;
