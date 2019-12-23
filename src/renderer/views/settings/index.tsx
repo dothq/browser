@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import * as ReactDOM from 'react-dom';
-import Search from './app/index';
-import { fonts } from '../../constants';
+import { Settings } from './app/index';
+import { fonts } from '../app/constants/fonts';
 
 const styleElement = document.createElement('style');
 
@@ -29,11 +29,8 @@ styleElement.textContent = `
 
 document.head.appendChild(styleElement);
 
-const App = ({ style }: { style: any }) => {
-  return <Search style={style} />;
+const App = () => {
+  return <Settings />;
 };
 
-ReactDOM.render(
-  <App style={{ overflow: 'hidden', margin: '0px', width: 'auto', boxShadow: '0 0 0px 2px #b3cefb', fontFamily: 'Roboto' }} />,
-  document.getElementById('app'),
-);
+ReactDOM.render(<App />, document.getElementById('app'));
