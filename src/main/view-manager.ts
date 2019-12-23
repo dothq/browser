@@ -1,11 +1,9 @@
-import { ipcMain, app, nativeImage, clipboard } from 'electron';
-import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants/design';
+import { ipcMain, nativeImage } from 'electron';
+import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants';
 import { appWindow } from '.';
 import { View } from './view';
-import { sendToAllExtensions } from './extensions';
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import console = require('console');
-
 
 declare const global: any;
 
@@ -204,7 +202,7 @@ export class ViewManager {
       width,
       height: this.fullscreen ? height : height - TOOLBAR_HEIGHT,
     });
-    view.setAutoResize({ width: true, height: true });
+    view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
   }
 
   public hideView() {

@@ -2,42 +2,23 @@ import {
   BrowserWindow,
   app,
   nativeImage,
-  dialog,
-  remote,
-  ipcMain,
 } from 'electron';
 
 import { resolve, join } from 'path';
 import { platform } from 'os';
 
 import { ViewManager } from './view-manager';
-import { getPath } from '~/shared/utils/paths';
+import { getPath } from '../shared/utils/paths';
 import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
-import store from '~/renderer/views/app/store';
 import console = require('console');
-import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants/design';
 import { PermissionDialog } from './permissions';
 const { setup: setupPushReceiver } = require('electron-push-receiver');
 import * as isDev from 'electron-is-dev';
 
-import { DotOptions } from '~/renderer/views/app/models/dotoptions';
 import { MenuDialog } from './dialogs/menu';
 import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
-
-try {
-  if (existsSync(getPath('dot-options.json'))) {
-  }
-} catch (e) {
-  writeFileSync(
-    getPath('dot-options.json'),
-    JSON.stringify({
-      toggleDotLauncher: true,
-      searchEngine: 'google',
-    } as DotOptions),
-  );
-}
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
@@ -208,13 +189,6 @@ export class AppWindow extends BrowserWindow {
       this.search.hide();
     });
 
-    if (
-      this.webContents.getURL().split('https://api.dotbrowser.me/api/')[0] !=
-      `https://api.dotbrowser.me/api/`
-    ) {
-      this.webContents.userAgent = `Dot Fetcher/${app.getVersion()}`
-    }
-
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
@@ -224,27 +198,6 @@ export class AppWindow extends BrowserWindow {
       this.search.hide();
     };
 
-    // const fixPerm = () => {
-    //   if(this.isMinimized() == true) {
-    //     this.permissionWindow.setOpacity(0)
-    //     this.permissionWindow.setIgnoreMouseEvents(true)
-
-    //     const cBounds: any = this.getContentBounds();
-    //     this.permissionWindow.setBounds({
-    //       x: cBounds.x,
-    //       y: cBounds.y + TOOLBAR_HEIGHT,
-    //       height: this.permissionWindow.getBounds().height,
-    //       width: this.permissionWindow.getBounds().width
-    //     });
-
-    //   }
-    //   else {
-    //     this.permissionWindow.setOpacity(1)
-    //     this.permissionWindow.setIgnoreMouseEvents(false)
-
-    //   }
-    // };
-
     this.on('maximize', resize);
     this.on('restore', resize);
     this.on('unmaximize', resize);
@@ -253,7 +206,6 @@ export class AppWindow extends BrowserWindow {
       console.error(error);
     });
 
-    // Save current window state to file.
     this.on('close', () => {
       windowState.maximized = this.isMaximized();
       windowState.fullscreen = this.isFullScreen();

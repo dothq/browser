@@ -307,14 +307,6 @@ export class Tab {
       this.audioPlaying = false;
       this.title = this.originalTitle;
     });
-
-    const { defaultBrowserActions, browserActions } = store.extensions;
-
-    for (const item of defaultBrowserActions) {
-      const browserAction = { ...item };
-      browserAction.tabId = this.id;
-      browserActions.push(browserAction);
-    }
   }
 
   @action

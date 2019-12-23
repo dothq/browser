@@ -2,8 +2,6 @@ import {
   ipcMain,
   app,
   session,
-  BrowserWindow,
-  IpcMainEvent,
 } from 'electron';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
@@ -12,109 +10,31 @@ import { autoUpdater } from 'electron-updater';
 
 import { registerProtocol } from './protocols';
 import { runWebRequestService, loadFilters } from './services/web-request';
-import {
-  existsSync,
-  writeFileSync,
-} from 'fs';
-import { getPath } from '../shared/utils/paths';
-import { Settings } from '../renderer/views/app/models/settings';
-import { DotOptions } from '../renderer/views/app/models/dotoptions';
 import { makeId } from '../shared/utils/string';
-
-import console = require('console');
-import * as isDev from 'electron-is-dev';
-import { Tab } from '../renderer/views/app/models';
-import { AlertDialog } from './dialogs/alert';
-const modal = require('electron-modal');
-const json = require('edit-json-file');
+import { startMessagingService } from './services/messaging';
 
 ipcMain.setMaxListeners(0);
 
-app.setPath('userData', resolve(homedir(), 'dot'));
+if(platform() == 'darwin') {
+  app.setPath('userData', resolve(homedir(), 'Library', 'Preferences'));
+} else if(platform() == 'win32') {
+  app.setPath('userData', resolve(homedir(), 'AppData', 'Roaming'));
+} else {
+  app.setPath('userData', resolve(homedir(), '.local', 'share'));
+}
 
 export let appWindow: AppWindow;
 
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
 
-// Check for settings
-try {
-  if (existsSync(getPath('settings.json'))) {
-  }
-} catch (e) {
-  writeFileSync(
-    getPath('settings.json'),
-    JSON.stringify({
-      dialType: 'top-sites',
-    } as Settings),
-  );
-}
-
-// Check for dot-options
-try {
-  if (existsSync(getPath('dot-options.json'))) {
-  }
-} catch (e) {
-  writeFileSync(
-    getPath('dot-options.json'),
-    JSON.stringify({
-      toggleDotLauncher: true,
-      searchEngine: 'google',
-    } as DotOptions),
-  );
-}
-
-try {
-  if (existsSync(getPath('tab-groups.json'))) {
-  }
-} catch (e) {
-  writeFileSync(
-    getPath('tab-groups.json'),
-    JSON.stringify({
-      'tab-groups': {},
-    }),
-  );
-}
-
-app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
-app.commandLine.appendSwitch('--enable-transparent-visuals');
-// Adds the sexy scrollbar
-app.commandLine.appendSwitch('auto-detect', 'false');
-
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 app.on('ready', async () => {
-  /**
-   * Create the main process and location bar sub-process.
-   */
-
-  modal.setup();
-
-  registerProtocol(session.fromPartition('persist:view'));
-
-  app.commandLine.appendSwitch(
-    'widevine-cdm-path',
-    `${process.cwd()}/components/winevinecdm/winevinecdm.dll`,
-  );
-
-  app.commandLine.appendSwitch('widevine-cdm-version', '4.10.1503.4');
-
   appWindow = new AppWindow();
 
-  /**
-    
-    * If the application is initiated with a URL argument, set a property in the AppWindow for easier access.
-    @example $ dot.exe "https://google.com"
-
-  */
-  if (process.argv[4]) {
-    if (new URL(process.argv[4]).hostname) {
-      setTimeout(() => {
-        appWindow.webContents.send('url-arguments-applied', process.argv[4]);
-        process.argv[4] = null;
-      }, 9000);
-    }
-  }
+  registerProtocol(session.fromPartition('persist:view'));
+  startMessagingService(appWindow);
 
   app.on('activate', () => {
     if (appWindow === null) {
@@ -124,95 +44,6 @@ app.on('ready', async () => {
 
   autoUpdater.on('update-downloaded', ({ version }) => {
     appWindow.webContents.send('update-available', version);
-  });
-
-  ipcMain.on('update-install', () => {
-    autoUpdater.quitAndInstall();
-  });
-
-  ipcMain.on('open-omnibox', (event: IpcMainEvent, details: any) => {
-    appWindow.search.show();
-    appWindow.search.send(details)
-  });
-
-  ipcMain.on('open-print', (event: IpcMainEvent) => {
-    if(appWindow.print.visible == false) {
-      appWindow.print.show()
-    } else {
-      appWindow.print.hide()
-    }
-  });
-
-  ipcMain.on('get-settings-sync', e => {
-    const settings = json(resolve(homedir()) + '/dot/dot-options.json');
-
-    console.log(settings.toObject())
-
-    e.returnValue = settings.toObject();
-  });
-
-  ipcMain.on('dot-open-settings', e => {
-    appWindow.webContents.send('open-settings');
-  });
-
-  ipcMain.on('webui-newtab-message', (e: any, data: any) => {
-    if(data == 'settings') {
-      appWindow.viewManager.selected.webContents.loadURL('dot://settings')
-    }
-  });
-
-  ipcMain.on('bskmsg-test', (event: any, data: any) => {
-    console.log('recieved some data', data);
-  });
-
-  ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
-    if(appWindow[dialog].visible == false) {
-      appWindow[dialog].show();
-    } else {
-      appWindow[dialog].hide();
-    }
-  })
-
-  ipcMain.on('hide-dialog', (event: IpcMainEvent, dialog: string) => {
-    appWindow[dialog].hide()
-  })
-
-  ipcMain.on('show-alert', (event: IpcMainEvent, action: 'alert' | 'confirm' | 'input', content: any) => {
-    appWindow.alert.show();
-    appWindow.alert.action = action;
-    appWindow.alert.send(content);
-  })
-
-  app.on(
-    'certificate-error',
-    (event, webContents, link, error, certificate, callback) => {},
-  );
-
-  ipcMain.on('dev-tools-open', () => {
-    appWindow.webContents.inspectElement(0, 0);
-
-    if (appWindow.webContents.isDevToolsOpened()) {
-      appWindow.webContents.devToolsWebContents.focus();
-    }
-  });
-
-  ipcMain.on('update-check', () => {
-    if (isDev == false) {
-      autoUpdater.checkForUpdates();
-    }
-  });
-
-  ipcMain.on('transport-settings-push', (event: any, data: any) => {
-    console.log('transporting', data);
-    appWindow.viewManager.newTabView().webContents.send('settings-push', data);
-  });
-
-  ipcMain.on('window-focus', () => {
-    appWindow.webContents.focus();
-  });
-
-  ipcMain.on('set-downloads-loc', (path: any) => {
-    appWindow.webContents.session.setDownloadPath(path);
   });
 
   session
