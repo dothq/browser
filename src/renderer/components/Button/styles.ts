@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-import { shadows, button } from '~/shared/mixins';
+import { button } from '../../../shared/mixins';
 
 interface StyledButtonProps {
   background: string;
