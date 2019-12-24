@@ -1,11 +1,9 @@
-import { ipcMain, app, nativeImage, clipboard } from 'electron';
-import { TOOLBAR_HEIGHT } from '~/renderer/app/constants/design';
+import { ipcMain, nativeImage } from 'electron';
+import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants';
 import { appWindow } from '.';
 import { View } from './view';
-import { sendToAllExtensions } from './extensions';
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import console = require('console');
-
 
 declare const global: any;
 
@@ -30,7 +28,7 @@ export class ViewManager {
   constructor() {
     ipcMain.on(
       'browserview-create',
-      (e: Electron.IpcMessageEvent, { tabId, url }: any) => {
+      (e: Electron.IpcMainEvent, { tabId, url }: any) => {
         this.create(tabId, url);
 
         appWindow.webContents.send(
@@ -42,7 +40,7 @@ export class ViewManager {
 
     ipcMain.on(
       'browserview-select',
-      (e: Electron.IpcMessageEvent, id: number) => {
+      (e: Electron.IpcMainEvent, id: number) => {
         const view = this.views[id];
         this.select(id);
         view.updateNavigationState();
@@ -51,7 +49,7 @@ export class ViewManager {
 
     ipcMain.on(
       'browserview-destroy',
-      (e: Electron.IpcMessageEvent, id: number) => {
+      (e: Electron.IpcMainEvent, id: number) => {
         this.destroy(id);
       },
     );
@@ -157,7 +155,7 @@ export class ViewManager {
       if (
         this.views[key].webContents
           .getURL()
-          .startsWith('http://127.0.0.1:4444/newtab.html')
+          .startsWith('dot://newtab')
       ) {
         return this.views[key];
       }
@@ -204,7 +202,7 @@ export class ViewManager {
       width,
       height: this.fullscreen ? height : height - TOOLBAR_HEIGHT,
     });
-    view.setAutoResize({ width: true, height: true });
+    view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
   }
 
   public hideView() {

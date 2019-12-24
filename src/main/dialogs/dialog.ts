@@ -85,7 +85,7 @@ export class Dialog extends BrowserView {
       }
     } else {
       this.webContents.loadURL(
-        join('file://', app.getAppPath(), `build/${name}.html`),
+        join('file://', app.getAppPath(), `\\build\\${name}.html`),
       );
     }
   }

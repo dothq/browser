@@ -12,6 +12,6 @@ filters
 *.code-workspace
 extensions
 .cache
-.awcache
+.awcache/*
 
 output

@@ -3,9 +3,8 @@ import {
   app,
   ipcMain,
 } from 'electron';
-import { resolve } from 'path';
 import { appWindow } from '.';
-import { TOOLBAR_HEIGHT } from '../renderer/app/constants/design';
+import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants/design';
 
 export class PermissionDialog extends BrowserWindow {
   constructor(public appWindow: any) {
@@ -30,7 +29,6 @@ export class PermissionDialog extends BrowserWindow {
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
       },
-      icon: resolve(process.cwd(), '/static/icon.png'),
     });
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');

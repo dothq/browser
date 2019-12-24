@@ -19,7 +19,8 @@
     "locale/**/*",
     "static/icon-inverted.png",
     "static/notification.mp3",
-    "static/tray-icon.png"
+    "static/tray-icon.png",
+    "build/*"
   ],
   "publish": "github",
   "nsis": {
