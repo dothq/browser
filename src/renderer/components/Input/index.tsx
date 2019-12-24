@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { StyledTextfield, Input, Label, Indicator, Icon } from './style';
-import { colors } from '~/renderer/constants';
+import { colors } from '../../constants';
 
 export type TestFunction = (str: string) => boolean;
 
@@ -25,7 +25,15 @@ interface State {
   error: boolean;
 }
 
-export class Inputfield extends React.PureComponent<Props, State> {
+export default class Inputfield extends React.PureComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.onIconClick = this.onIconClick.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
   public inputRef = React.createRef<HTMLInputElement>();
 
   static defaultProps: Props = {
@@ -47,25 +55,25 @@ export class Inputfield extends React.PureComponent<Props, State> {
     this.inputRef.current.value = str;
   }
 
-  onClick = () => {
+  onClick() {
     this.inputRef.current.focus();
-  };
+  }
 
-  public onFocus = () => {
+  public onFocus() {
     this.setState({
       activated: true,
       focused: true,
     });
-  };
+  }
 
-  public onBlur = () => {
+  public onBlur() {
     this.setState({
       activated: this.value.length !== 0,
       focused: false,
     });
-  };
+  }
 
-  public onIconClick = (e: React.SyntheticEvent<any>) => {
+  public onIconClick(e: React.SyntheticEvent<any>) {
     e.stopPropagation();
     e.preventDefault();
 
@@ -74,7 +82,7 @@ export class Inputfield extends React.PureComponent<Props, State> {
     if (typeof onIconClick === 'function') {
       onIconClick(this);
     }
-  };
+  }
 
   public test(fn?: TestFunction) {
     const { test } = this.props;
@@ -106,17 +114,7 @@ export class Inputfield extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const {
-      color,
-      label,
-      placeholder,
-      icon,
-      inputType,
-      style,
-      fontColor,
-      rows,
-      cols,
-    } = this.props;
+    const { color, label, placeholder, icon, inputType, style, fontColor } = this.props;
     const { activated, focused, error } = this.state;
 
     const hasLabel = label != null && label !== '';

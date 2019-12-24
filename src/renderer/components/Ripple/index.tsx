@@ -29,7 +29,7 @@ export interface IState {
 
 const easing = 'cubic-bezier(0.215, 0.61, 0.355, 1)';
 
-const getSize = (x: number, y: number, width: number, height: number) => {
+export const getSize = (x: number, y: number, width: number, height: number) => {
   if (width === 0 || height === 0) {
     return 0;
   }
@@ -48,6 +48,12 @@ const getSize = (x: number, y: number, width: number, height: number) => {
 };
 
 export default class Ripple extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+  }
   public static defaultProps: IProps = {
     fadeOutTime: 0.6,
     opacity: 0.2,
@@ -66,10 +72,10 @@ export default class Ripple extends React.Component<IProps, IState> {
 
   private root = React.createRef<HTMLDivElement>();
 
-  public onMouseUp = () => {
+  public onMouseUp() {
     this.fadeOut();
     window.removeEventListener('mouseup', this.onMouseUp);
-  };
+  }
 
   public fadeOut = () => {
     this.setState({
@@ -82,18 +88,13 @@ export default class Ripple extends React.Component<IProps, IState> {
     this.makeRipple(e.pageX, e.pageY);
   };
 
-  public onMouseLeave = () => {
+  public onMouseLeave() {
     this.onMouseUp();
-  };
+  }
 
   public makeRipple(mouseX: number, mouseY: number) {
     const { opacity } = this.props;
-    const {
-      left,
-      top,
-      width,
-      height,
-    } = this.root.current.getBoundingClientRect();
+    const { left, top, width, height } = this.root.current.getBoundingClientRect();
 
     window.addEventListener('mouseup', this.onMouseUp);
 
@@ -119,36 +120,20 @@ export default class Ripple extends React.Component<IProps, IState> {
     });
   }
 
-  public render() {
+  render() {
     const { color, fadeOutTime, rippleTime, style } = this.props;
 
-    const {
-      rippleX,
-      rippleY,
-      rippleSize,
-      rippleOpacity,
-      opacityTransition,
-      sizeTransition,
-    } = this.state;
+    const { rippleX, rippleY, rippleSize, rippleOpacity, opacityTransition, sizeTransition } = this.state;
 
     return (
-      <Root
-        onMouseLeave={this.onMouseLeave}
-        onMouseDown={this.onMouseDown}
-        ref={this.root}
-        style={style}
-      >
+      <Root onMouseLeave={this.onMouseLeave} onMouseDown={this.onMouseDown} ref={this.root} style={style}>
         <StyledRipple
           style={{
             transform: `translate3d(calc(-50.1% + ${rippleX}px), calc(-50.1% + ${rippleY}px), 0)`,
             width: rippleSize,
             height: rippleSize,
             transition: `0.3s background-color
-            ${
-              sizeTransition
-                ? `, ${rippleTime}s width ${easing}, ${rippleTime}s height ${easing}`
-                : ''
-            }
+            ${sizeTransition ? `, ${rippleTime}s width ${easing}, ${rippleTime}s height ${easing}` : ''}
             ${opacityTransition ? `, ${fadeOutTime}s opacity` : ''}`,
             backgroundColor: color,
             opacity: rippleOpacity,
