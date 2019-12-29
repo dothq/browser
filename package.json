@@ -199,6 +199,7 @@
     "nersent-ui": "^3.5.3",
     "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.0",
+    "node-json-db": "^1.0.3",
     "node-notifier": "^5.4.1",
     "node-vibrant": "3.2.0-alpha",
     "notistack": "^0.8.9",

@@ -20,6 +20,8 @@ import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 
+import { PreferencesExist } from './services/preferences';
+
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
   public permissionWindow: PermissionDialog = new PermissionDialog(this);
@@ -27,6 +29,8 @@ export class AppWindow extends BrowserWindow {
   public search: SearchDialog = new SearchDialog(this);
   public print: PrintDialog = new PrintDialog(this);
   public alert: AlertDialog = new AlertDialog(this);
+
+  public preferencesExist = PreferencesExist();
 
   constructor() {
     super({
