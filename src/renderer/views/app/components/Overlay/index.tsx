@@ -26,7 +26,6 @@ import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
-import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
 import { Snackbar } from '../Snackbar';

@@ -16,7 +16,7 @@ import { startMessagingService } from './services/messaging';
 ipcMain.setMaxListeners(0);
 
 if(platform() == 'darwin') {
-  app.setPath('userData', resolve(homedir(), 'Library', 'Preferences'));
+  app.setPath('userData', resolve(homedir(), 'Library', 'Application Support'));
 } else if(platform() == 'win32') {
   app.setPath('userData', resolve(homedir(), 'AppData', 'Roaming'));
 } else {
