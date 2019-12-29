@@ -3,8 +3,13 @@ import WriteFilePlugin from 'write-file-webpack-plugin';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-import { devMode } from './webpack.config';
+import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+
+import { devMode, scTransformer } from './webpack.config';
 import webpack from 'webpack';
+
+new webpack.optimize.ModuleConcatenationPlugin()
 
 const webConfig = {
     target: 'web',
@@ -36,7 +41,9 @@ const webConfig = {
       new WriteFilePlugin(),
       new webpack.EnvironmentPlugin({
         NODE_ENV: devMode
-      })
+      }),
+      new LodashModuleReplacementPlugin(),
+      new BundleAnalyzerPlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
@@ -84,10 +91,13 @@ const webConfig = {
           {
             test: /\.tsx?$/,
             exclude: /node_modules/,
-            loader: 'ts-loader',
+            loader: 'awesome-typescript-loader',
             options: {
               transpileOnly: true,
-              experimentalWatchApi: true
+              experimentalWatchApi: true,
+              getCustomTransformers: () => ({
+                before: [scTransformer],
+              }),
             },
           },
           {

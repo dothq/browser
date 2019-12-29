@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import * as ReactDOM from 'react-dom';
+import { render } from 'react-dom';;
 import { fonts } from '../app/constants/fonts';
 import App from './app';
 import { Style } from '../app/style';

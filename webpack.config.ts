@@ -8,6 +8,8 @@ import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 
+import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
+
 import { Configuration } from 'webpack';
 import { spawn } from 'child_process';
 
@@ -16,6 +18,11 @@ export const devMode = process.env.NODE_ENV === 'development' ? 'development' : 
 process.env.isOpen = "false";
 
 let electronProcess;
+
+export const scTransformer = createStyledComponentsTransformer({
+  minify: true,
+  displayName: devMode == 'development',
+});
 
 export const baseConfig: Configuration = {
   output: {

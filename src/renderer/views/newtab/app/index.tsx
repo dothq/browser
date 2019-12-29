@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root';
 import {
   StyledNewTab,
   Columns,
@@ -29,7 +30,6 @@ import { Search } from './components/Search';
 import { Tiles } from './components/Tiles'
 import { Modal } from '@material-ui/core';
 import * as axios from 'axios';
-import { hot } from 'react-hot-loader/root';
 
 export const FeedCard = ({
   category,
@@ -155,30 +155,6 @@ class NewTab extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    document.title = 'New Tab';
-
-    var oReq = new XMLHttpRequest();
-    oReq.onload = (event) => {
-      const res = oReq.responseText;
-
-      console.log(res)
-
-      this.setState({ banner: URL.createObjectURL(res.ntp_banner) })
-    };
-    oReq.open("GET", "https://cors-anywhere.herokuapp.com/https://api.dotbrowser.me/dot/ntp/state");
-    oReq.send();
-
-    fetch('', { 
-      mode: 'no-cors',
-     }).then(res => {
-      return res.json()
-    }).then(res => {
-      console.log(res)
-      this.setState({ banner: URL.createObjectURL(res.ntp_banner) })
-    })
-  }
-
   render() {
     return (
       <StyledNewTab
@@ -187,7 +163,7 @@ class NewTab extends React.Component {
         }
       >
         <GlobalStyle />
-        <Section background={this.state.banner}>
+        <Section>
           <Section_Left>
             <DotLogo color={'#434343'} />
           </Section_Left>

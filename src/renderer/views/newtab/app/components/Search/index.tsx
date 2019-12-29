@@ -9,6 +9,11 @@ import {
 import store from '~/renderer/views/app/store';
 import { fetchHiyaMessage } from './../../constants/hiya';
 
+const props: any = {
+  isFixed: false,
+  style: '',
+};
+
 export class Search extends React.Component {
   public hiyaNotifications: string[] = [
     'How are you today?',
@@ -17,13 +22,9 @@ export class Search extends React.Component {
     "What's on your mind?",
   ];
 
-  public props: any = {
-    isFixed: false,
-    style: '',
-  };
-
-  constructor(props: any) {
+  constructor(props) {
     super(props);
+    this.props = props;
   }
 
   public hiyaBox = document.getElementById('hiya');
