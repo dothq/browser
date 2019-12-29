@@ -22,22 +22,13 @@ export class SuggestionsStore {
   public height = 0;
 
   public load(input: HTMLInputElement) {
-    let file = json(resolve(homedir()) + '/dot/dot-options.json');
     return new Promise(async (resolve: (result: string) => void, reject) => {
       const filter = input.value.substring(0, input.selectionStart);
       const history = getHistorySuggestions(filter);
 
       const historySuggestions: Suggestion[] = [];
 
-      if(!file.get("searchEngine")) {
-        file.set("searchEngine", "google");
-        file.save()
-      }
-
-      var searchengine:string = await file.get("searchEngine");
-      if(searchengine == "ddg") {
-        searchengine = "DuckDuckGo"
-      }
+      var searchengine:string = 'google'
 
       var data = store.options.getById(searchengine);
       if(data) {

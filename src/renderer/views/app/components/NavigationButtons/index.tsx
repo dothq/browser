@@ -120,12 +120,6 @@ const dotLauncherCtm = () => () => {
   menu.popup();
 };
 
-const json = require('edit-json-file');
-
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
-
-var tdl = file.get('toggleDotLauncher');
-
 const refreshContextMenu = () => {
   const menu = remote.Menu.buildFromTemplate([
     {
@@ -155,7 +149,6 @@ export const NavigationButtons = observer(() => {
         title={store.locale.lang.window[0].open_dot}
         id="dot"
         onContextMenu={dotLauncherCtm()}
-        visible={tdl}
         style={{ height: '42px' }}
       >
         <DotLauncher src={icons.logo} />

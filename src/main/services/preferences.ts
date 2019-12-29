@@ -7,12 +7,14 @@ import { Preferences } from '../../shared/models/default-preferences';
 let userData = app.getPath('userData')
 
 export const PreferencesExist = () => { 
-    return existsSync(resolve(userData, 'Dot Browser', 'preferences.json'))
+    return existsSync(resolve(userData, 'preferences.json'))
 }
 
 export const preferencesFirstSetup = () => {
     writeFileSync(
-        resolve(userData, 'Dot Browser', 'preferences.json'),
-        Preferences
+        resolve(userData, 'preferences.json'),
+        JSON.stringify(Preferences)
     )
 }
+
+export const preferencesLocation = resolve(userData, 'preferences.json');

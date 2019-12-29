@@ -20,19 +20,6 @@ const fetch = require("node-fetch");
 import store from '../../store';
 import { resolve } from 'path';
 import { homedir } from 'os';
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
-
-
-if(!file.get("tempType")) {
-  file.set("tempType", "c");
-  file.save()
-  store.weather.tempindicator = "c"
-}
-else {
-  store.weather.tempindicator = file.get("tempType")
-}
-
 
 export const WeatherCard = observer(() => {
   return (

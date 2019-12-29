@@ -24,7 +24,7 @@ export class View extends BrowserView {
   constructor(id: number, url: string) {
     super({
       webPreferences: {
-        preload: `${process.cwd()}\\build\\preloads\\view-preload.js`,
+        preload: `${process.cwd()}/build/preloads/view-preload.js`,
         nodeIntegration: false,
         additionalArguments: [`--tab-id=${id}`],
         contextIsolation: true,

@@ -1,3 +1,8 @@
 export const Preferences = {
-    "appearance.theme": "light"
+    appearance: {
+        themeColor: "light"
+    },
+    search: {
+        provider: "duckduckgo"
+    }
 }

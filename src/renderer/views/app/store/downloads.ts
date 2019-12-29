@@ -7,8 +7,6 @@ import { homedir } from 'os';
 import { resolve } from 'path';
 import { rename } from 'fs';
 
-const json = require('edit-json-file');
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
 const app = remote.app;
 
 export class DownloadsStore {
@@ -22,7 +20,7 @@ export class DownloadsStore {
 
   @observable
   public async load() {
-    this.location = file.get('downloadLocation');
+    this.location = '';
   }
 
   constructor() {
@@ -39,18 +37,19 @@ export class DownloadsStore {
     });
 
     ipcRenderer.on('download-completed', (e: any, id: string) => {
+      /* @todo Rewrite downloads */
       const i = this.list.find(x => x.id === id);
-      i.savePath = resolve(file.get('downloadLocation') + '\\' + i.fileName);
+      // i.savePath = resolve(file.get('downloadLocation') + '\\' + i.fileName);
       i.completed = true;
 
-      rename(
-        resolve(app.getPath('temp') + '\\' + i.fileName),
-        resolve(file.get('downloadLocation') + '\\' + i.fileName),
-        function(err) {
-          if (err) {
-          }
-        },
-      );
+      // rename(
+      //   resolve(app.getPath('temp') + '\\' + i.fileName),
+      //   // resolve(file.get('downloadLocation') + '\\' + i.fileName),
+      //   function(err) {
+      //     if (err) {
+      //     }
+      //   },
+      // );
     });
   }
 }

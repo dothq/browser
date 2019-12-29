@@ -12,9 +12,6 @@ import {
   SecondaryText,
   Icon,
 } from './style';
-import console = require('console');
-import { resolve } from 'path';
-import { homedir } from 'os';
 import { isURL } from '~/shared/utils/url';
 
 interface Props {
@@ -42,40 +39,10 @@ const loadURL = (suggestion: Suggestion) => () => {
 
   var url = text;
 
-  const json = require("edit-json-file");
- 
-  let file = json(resolve(homedir()) + '/dot/dot-options.json');
-
-  var searchengine = file.get("searchEngine");
-
-  if(searchengine == "google") {
-    var searchurl = `https://www.google.com/search?hl=en&q=`;
-  }
-  if(searchengine == "yahoo") {
-    var searchurl = `https://search.yahoo.com/search?p=`;
-  }
-  if(searchengine == "bing") {
-    var searchurl = `https://www.bing.com/search?q=`;
-  }
-  if(searchengine == "ddg") {
-    var searchurl = `https://duckduckgo.com/?q=`;
-  }
-  if(searchengine == "ecosia") {
-    var searchurl = `https://www.ecosia.org/search?q=`;
-  }
-
-  var se = store.options.getById(searchengine);
-  if(se) {
-    if(se.title) {
-      searchurl = se.url.split('%s')[0];
-    }
-  }
-
-
   if (isURL(text) && !text.includes('://')) {
     url = `http://${text}`;
   } else if (!text.includes('://')) {
-    url = `${searchurl}${text}`;
+    url = `https://google.com/search?q=${text}`;
   }
 
   store.tabs.addTab({ url, active: true });

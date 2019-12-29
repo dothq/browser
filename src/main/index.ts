@@ -12,7 +12,7 @@ import {
   startMessagingService, 
   startSessionManager, 
   runWebRequestService, 
-  loadFilters,
+  loadFilters,  
   preferencesFirstSetup
 } from './services';
 
@@ -41,6 +41,8 @@ app.on('ready', async () => {
   registerProtocol(viewSession);
   startMessagingService(appWindow);
   startSessionManager(viewSession);
+
+  console.log(appWindow.preferencesExist)
 
   if(appWindow.preferencesExist == false) {
     preferencesFirstSetup();
