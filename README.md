@@ -14,6 +14,9 @@
     <a href="https://invite.gg/dot">
         <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
     </a>
+    <a href="https://github.com/styled-components/styled-components">
+        <img src="https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&amp;colorA=db748e" alt="style: styled-components" />
+    </a>
     <a href="https://github.com/dot-browser/desktop">
         <img src="https://travis-ci.org/dot-browser/desktop.svg?branch=master" alt="Travis">
     </a>

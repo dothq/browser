@@ -3,7 +3,7 @@ import WriteFilePlugin from 'write-file-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import NodeExternals from 'webpack-node-externals';
 
-import { devMode } from './webpack.config';
+import { devMode, scTransformer } from './webpack.config';
 
 const rendererConfig = {
     mode: devMode,
@@ -105,7 +105,10 @@ const rendererConfig = {
             options: {
               transpileOnly: true,
               experimentalWatchApi: true,
-              useCache: true
+              useCache: true,
+              getCustomTransformers: () => ({
+                before: [scTransformer],
+              }),
             },
           },
           {

@@ -20,10 +20,6 @@ import { ipcRenderer } from 'electron';
 import SelectList, { SelectListItem } from '../SelectList';
 
 const { remote } = require('electron')
-const json = require("edit-json-file");
-let file = json(resolve(homedir()) + '/dot/dot-options.json');
-let allLangs = json(resolve(process.cwd() + '/src/renderer/views/app/locale/all-locale.json'));
-allLangs = allLangs.toObject();
 
 const scrollRef = React.createRef<HTMLDivElement>();
 
@@ -192,10 +188,10 @@ const AboutDot = observer(() => {
   return (
     <SettingsSection>
       <ListItem>
-        <Image id="maybe-click-the-arrow" onClick={clearSecretBoyo} src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s', filter: 'var(--overlay-logo-filter)' }}></Image>
+        <Image id="maybe-click-the-arrow" src={icons.logo} style={{ width: '30px', transition: 'filter 0.2s', filter: 'var(--overlay-logo-filter)' }}></Image>
         <Title style={{ fontSize: 20 }}>{store.locale.lang.standard[0].dot_full_with_version.replace(/{appVersion}/g, remote.app.getVersion())}</Title>
         <Buttons style={{ marginLeft: 'auto' }}>
-          <A onClick={secretBoyo} style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
+          <A style={{ padding: '22px 8px 10px 12px', cursor: 'pointer', transition: 'background-color 0.2s', borderRadius: '50%', marginRight: '-10px' }}>
             <Image src={icons.down} style={{ filter: 'invert(100%)' }}></Image>
           </A>
         </Buttons>
@@ -222,35 +218,12 @@ const AboutDot = observer(() => {
   );
 });
 
-if(!file.get("downloadLocation")) {
-  file.set("downloadLocation", resolve(homedir()) + '\\Downloads');
-  file.save()
-  var dl = file.get("downloadLocation");
-}
-else {
-  var dl = file.get("downloadLocation");
-}
-
 const pickLocation = () => {
   var input = document.getElementById("download-picker");
   input.click();
 }
 
 const awaitDownloadUpdate = async () => {
-  var input = document.getElementById("download-picker") as HTMLInputElement;
-  dl = input.files[0].path;
-
-  setTimeout(function() {
-
-    file.set("downloadLocation", dl)
-    file.save()
-  
-    store.downloads.location = dl;
-    ipcRenderer.send('set-downloads-loc', `${dl}`);
-
-    document.getElementById("dl-l").innerText = dl;
-
-  }, 300);
 
 }
 
@@ -260,7 +233,7 @@ const Downloads = observer(() => {
       <ListItem>
         <div>
           <Title style={{ fontSize: 15 }}>{store.locale.lang.settings[0].downloads[0].download_loc}</Title>
-          <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}>{dl}</Title>
+          <Title id="dl-l" style={{ fontSize: 13, marginTop: '-7px', color: '#a2a2a2' }}></Title>
         </div>
         <Buttons style={{ marginLeft: 'auto' }}>
           <IconButton visible={true} onClick={pickLocation} icon={icons.more} style={{ cursor: 'pointer' }} />
@@ -271,55 +244,14 @@ const Downloads = observer(() => {
   );
 });
 
-const secretBoyo = () => {
-  var x = document.getElementById("about-wrapper");
-  if (x.style.display === "none") {
-    x.style.display = null;
-    document.getElementById("maybe-click-the-arrow").style.filter = `var(--overlay-logo-filter)`
-  } else {
-    x.style.display = "none";
-    const eggies = [
-      'invert(40%) grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg) saturate(400%) contrast(2)',
-      'grayscale(100%) brightness(30%) sepia(100%) hue-rotate(-180deg) saturate(700%) contrast(0.8)',
-      'grayscale(100%) brightness(40%) sepia(100%) hue-rotate(50deg) saturate(1000%) contrast(0.8)',
-      'grayscale(100%) brightness(222%) sepia(1000%) hue-rotate(6deg) saturate(600%) contrast(1.1)'
-    ]
-    const egg = eggies[Math.floor(Math.random()*eggies.length)];
-    document.getElementById("maybe-click-the-arrow").style.filter = egg;
-  }
-}
-
-const clearSecretBoyo = () => {
-  document.getElementById("maybe-click-the-arrow").style.filter = `var(--overlay-logo-filter)`
-}
-
-const optionsData = file.get();
-
 class ToggleSwitchDL extends React.Component {
   state = {
-    dotLauncherToggle: optionsData.toggleDotLauncher,
+    dotLauncherToggle: false,
     checkedB: true,
   };
 
   handleChange = (name: any) => (event: any) => {
     this.setState({ [name]: event.target.checked });
-    if(name == "dotLauncherToggle") {
-      if(optionsData.toggleDotLauncher == true) {
-        file.set("toggleDotLauncher", false);
-        console.info(`[SettingsStore] Set dotLauncherEnabled to false`)
-        file.save();
-        document.getElementById("dot").style.display = "none";
-      }
-      else {
-        file.set("toggleDotLauncher", true);
-        console.info(`[SettingsStore] Set dotLauncherEnabled to true`)
-        file.save();
-        document.getElementById("dot").style.opacity = "1";
-        document.getElementById("dot").style.pointerEvents = "all";
-        document.getElementById("dot").style.width = "auto";
-        document.getElementById("dot").style.display = null;
-      }
-    }
   };
 
   render() {
@@ -335,41 +267,6 @@ class ToggleSwitchDL extends React.Component {
 }
 
 export default ToggleSwitchDL;
-
-/* Deprecated soon */
-export const setDTC = () => {
-  document.getElementById("deg-type-cel").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
-  document.getElementById("deg-type-fah").style.backgroundColor = "";
-
-  if(!file.get("tempType")) {
-    file.set("tempType", "c")
-    file.save()
-    store.weather.load("c");
-  }
-  else {
-    file.set("tempType", "c")
-    file.save()
-    store.weather.load("c");
-  }
-  
-};
-
-/* Deprecated soon */
-export const setDTF = () => {
-  document.getElementById("deg-type-fah").style.backgroundColor = "rgba(88, 88, 88, 0.78)";
-  document.getElementById("deg-type-cel").style.backgroundColor = "";
-
-  if(!file.get("tempType")) {
-    file.set("tempType", "F")
-    file.save()
-    store.weather.load("F");
-  }
-  else {
-    file.set("tempType", "F")
-    file.save()
-    store.weather.load("F");
-  }
-};
 
 const feedbackRef = React.createRef<Textfield>();
 
@@ -536,34 +433,33 @@ const downloadLatestLangs = () => {
   });
 }
 
-export const Languages = observer(() => {
-  var itemChecked = file.get("language");
-  return (
-    <SettingsSection>
-      {allLangs.languages.map((i: any) => {
+// export const Languages = observer(() => {
+//   return (
+//     <SettingsSection>
+//       {allLangs.languages.map((i: any) => {
 
-        if(itemChecked == i.flag) {
-          i.icon = icons.checked
-        }
-        else {
-          i.icon = icons.not_checked
-        }
+//         if(itemChecked == i.flag) {
+//           i.icon = icons.checked
+//         }
+//         else {
+//           i.icon = icons.not_checked
+//         }
 
-        i.id = `lang-btn-${i.flag}`
+//         i.id = `lang-btn-${i.flag}`
 
-        return (<ListItem key={i.flag}>
-          <Title style={{ fontSize: 15 }}> {i.title}</Title>
-          <Buttons style={{ marginLeft: 'auto', display: 'flex' }}>
-            <img style={{ width: '28px', height: '28px', marginLeft: '10px' }} src={`https://twemoji.maxcdn.com/2/72x72/` + i.flag_icon}></img>
-            <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image', cursor: 'pointer' }}>
-              ----
-            </LanguageButton>
-          </Buttons>
-        </ListItem>);
-      })}
-    </SettingsSection>
-  );
-});
+//         return (<ListItem key={i.flag}>
+//           <Title style={{ fontSize: 15 }}> {i.title}</Title>
+//           <Buttons style={{ marginLeft: 'auto', display: 'flex' }}>
+//             <img style={{ width: '28px', height: '28px', marginLeft: '10px' }} src={`https://twemoji.maxcdn.com/2/72x72/` + i.flag_icon}></img>
+//             <LanguageButton id={i.id} icon={i.icon} onClick={() => setLanguage(i.flag)} style={{ textAlign: 'center', color: 'transparent', padding: '10px', transition: '0.3s background-image', cursor: 'pointer' }}>
+//               ----
+//             </LanguageButton>
+//           </Buttons>
+//         </ListItem>);
+//       })}
+//     </SettingsSection>
+//   );
+// });
 
 export const DownloadLanguages = observer(() => {
 
@@ -580,15 +476,6 @@ export const DownloadLanguages = observer(() => {
     </SettingsSection>
   )
 });
-
-function setLanguage(l: any) {
-  var ol = file.get("language");
-  file.set("language", l)
-  file.save()
-  document.getElementById(`lang-btn-${ol}`).style.backgroundImage = `url(${icons.not_checked})`
-  document.getElementById(`lang-btn-${l}`).style.backgroundImage = `url(${icons.checked})`
-  store.locale.setLanguage(l)
-}
 
 export const scrollMp = () => {
   document.getElementById("my-profile").scrollTop = 0;
@@ -637,7 +524,6 @@ export const Settings = observer(() => {
               {store.options.currentDisplay == 'downloads' && <Downloads />}
 
               {store.options.currentDisplay == 'languages' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.translate})` }} /> {store.locale.lang.settings[0].languages[0].title}</Title>}
-              {store.options.currentDisplay == 'languages' && <Languages />}
 
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Title style={{ margin: '75px -30px -25px -30px' }}><Icon style={{ backgroundImage: `url(${icons.extensions})` }} /> {store.locale.lang.settings[0].dev_tools[0].title}</Title>}
               {store.user.experiments == true && store.options.currentDisplay == 'dev' && <Experiments />}

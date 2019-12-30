@@ -176,18 +176,8 @@ export class Store {
         }
       }
     });
-
-    this.settings = {
-      ...this.settings,
-      ...JSON.parse(readFileSync(getPath('settings.json'), 'utf8')),
-    };
   }
 
-  public saveSettings() {
-    writeFile(getPath('settings.json'), JSON.stringify(this.settings), err => {
-      if (err) console.error(err);
-    });
-  }
 }
 
 export default new Store();

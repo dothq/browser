@@ -4,13 +4,7 @@ import { resolve } from 'path';
 import { homedir } from 'os';
 import store from '../store';
 
-const json = require('edit-json-file');
-const opts = json(resolve(homedir() + '/dot/dot-options.json'));
-
-if (!opts.get('language')) {
-  opts.set('language', 'en');
-  opts.save();
-}
+const json = require("edit-json-file")
 
 export class LocaleStore {
   public lang: any;
@@ -25,7 +19,7 @@ export class LocaleStore {
   public showLanguagePacks: boolean;
 
   @observable
-  public currentLanguage: string = opts.get('language');
+  public currentLanguage: string = 'en'
 
   @action
   public setLanguage(language: string) {
@@ -49,13 +43,4 @@ export class LocaleStore {
     );
     this.lang = languageJSON.toObject();
   }
-
-  public loadUK() {
-    const enUK = json(`${process.cwd()}/locale/en.json`);
-    this.uk = enUK.toObject();
-    throw new Error('This resource is deprecated.');
-  }
-
-  /** @deprecated */
-  public uk: any;
 }

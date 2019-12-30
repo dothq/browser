@@ -42,7 +42,7 @@
     "url": "https://github.com/dot-browser/desktop/issues"
   },
   "scripts": {
-    "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 ELECTRON_ENABLE_STACK_DUMPING=true electron .",
+    "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 electron .",
     "build": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run prod:main\" \"npm run prod:renderer\" \"npm run prod:web\" \"npm run prod:preloads\"",
     "dev": "npm run poststart && concurrently -n main,renderer,web,preloads \"npm run dev:main\" \"npm run dev:renderer\" \"npm run dev:web\" \"npm run dev:preloads\"",
     "compile": "node tools/ci.js",
@@ -122,11 +122,12 @@
     "tslint-config-airbnb": "5.11.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "^3.3.3",
-    "typescript-plugin-styled-components": "1.4.2",
+    "typescript-plugin-styled-components": "^1.4.2",
     "uglify-js": "^3.6.3",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
     "webpack-messages": "^2.0.4",
@@ -187,6 +188,7 @@
     "leveldown": "5.0.1",
     "levelup": "4.0.1",
     "lifeguard-api": "^1.0.4",
+    "lodash-webpack-plugin": "^0.11.5",
     "lru-cache": "^5.1.1",
     "material-ui": "^0.20.2",
     "mini-css-extract-plugin": "^0.8.0",
@@ -201,6 +203,7 @@
     "nersent-ui": "^3.5.3",
     "node-emoji": "^1.10.0",
     "node-fetch": "^2.6.0",
+    "node-json-db": "^1.0.3",
     "node-notifier": "^5.4.1",
     "node-vibrant": "3.2.0-alpha",
     "notistack": "^0.8.9",
@@ -232,7 +235,6 @@
     "ts-loader": "^6.2.0",
     "ts-node": "^8.5.0",
     "unirest": "^0.6.0",
-    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-merge": "^4.2.2",
     "ws": "^7.1.2"
   }

@@ -1,18 +1,15 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { render } from 'react-dom';;
 
 import App from './components/App';
 import { fonts } from './constants/fonts';
 import store from './store';
 import { ipcRenderer } from 'electron';
 import { resolve, join } from 'path';
-import { homedir } from 'os';
 import { icons } from './constants/icons';
 import { AppWindow } from '../../../main/app-window';
 
 var modal = require('electron-modal');
-const json = require("edit-json-file");
-const opts = json(resolve(homedir() + '/dot/dot-options.json'));
 
 const { remote } = require('electron')
 const { Menu, Tray, app } = remote
@@ -337,11 +334,6 @@ export async function tskManager() {
 
 }
 
-if(opts.get("uiTheme") == 'dark') {
-  document.getElementById("app").classList.add("theme-dark")
-}
-else {
-  document.getElementById("app").classList.add("theme-light")
-}
+document.getElementById("app").classList.add('theme-light');
 
 ReactDOM.render(<App />, document.getElementById('app'));

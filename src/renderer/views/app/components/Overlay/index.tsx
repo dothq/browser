@@ -26,7 +26,6 @@ import { History } from '../History';
 import { Bookmarks } from '../Bookmarks';
 import { AdBlock } from '../AdBlock';
 import { Settings } from '../Settings';
-import { Extensions } from '../Extensions';
 import { Preload } from '../Preload';
 import { Dial } from '../Dial';
 import { Snackbar } from '../Snackbar';
@@ -37,7 +36,6 @@ import { Menu, MenuItem } from 'nersent-ui';
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { Preloader } from '~/renderer/components/Preloader';
-const json = require('edit-json-file');
 
 import console = require('console');
 
@@ -45,18 +43,6 @@ import console = require('console');
 import { ipcRenderer } from 'electron';
 import { ExtLink } from '../NewsCard/style';
 import { checkLightMode } from '../App';
-
-let file = json(`${remote.app.getPath('userData')}/dot-options.json`);
-
-if (!file.get('searchEngine')) {
-  file.set('searchEngine', 'google');
-  file.save();
-}
-
-if (!file.get('toggleDotLauncher')) {
-  file.set('toggleDotLauncher', true);
-  file.save();
-}
 
 const {
   START_NOTIFICATION_SERVICE,
@@ -280,7 +266,6 @@ export const Overlay = observer(() => {
       </Container>
       <History />
       <Bookmarks />
-      <Extensions />
       <Settings />
       <AdBlock />
     </StyledOverlay>

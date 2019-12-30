@@ -9,8 +9,6 @@ import { checkServerIdentity } from 'tls';
 import console = require('console');
 import { homedir } from 'os';
 import { FORECAST_KEY } from '../constants'; /* Forecast key is used to fetch the DarkSky API */
-const editJsonFile = require("edit-json-file");
-let file = editJsonFile(resolve(homedir()) + '/dot/dot-options.json');
 
 //New class by Daniel Bulant
 //New class, for easier day storing

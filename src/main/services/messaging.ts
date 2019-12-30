@@ -1,5 +1,6 @@
-import { ipcMain, autoUpdater, IpcMainEvent } from 'electron'
+import { ipcMain, IpcMainEvent } from 'electron'
 import { AppWindow } from '../app-window';
+import { autoUpdater } from 'electron-updater';
 
 export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('update-install', () => {
@@ -48,5 +49,9 @@ export const startMessagingService = (window: AppWindow) => {
     
     ipcMain.on('window-focus', () => {
         window.webContents.focus();
+    });
+
+    autoUpdater.on('update-downloaded', ({ version }) => {
+        window.webContents.send('update-available', version);
     });
 }
