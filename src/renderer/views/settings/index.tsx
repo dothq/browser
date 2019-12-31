@@ -33,4 +33,4 @@ const App = () => {
   return <Settings />;
 };
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));

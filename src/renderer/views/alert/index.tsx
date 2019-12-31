@@ -34,4 +34,4 @@ body {
 
 document.head.appendChild(styleElement);
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));

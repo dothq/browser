@@ -336,4 +336,4 @@ export async function tskManager() {
 
 document.getElementById("app").classList.add('theme-light');
 
-ReactDOM.render(<App />, document.getElementById('app'));
+render(<App />, document.getElementById('app'));

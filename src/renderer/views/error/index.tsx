@@ -29,4 +29,4 @@ styleElement.textContent = `
 
 document.head.appendChild(styleElement);
 
-ReactDOM.render(<Error />, document.getElementById('app'));
+render(<Error />, document.getElementById('app'));
