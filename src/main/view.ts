@@ -29,6 +29,7 @@ export class View extends BrowserView {
         additionalArguments: [`--tab-id=${id}`],
         contextIsolation: true,
         partition: 'persist:view',
+        scrollBounce: true,
         plugins: true,
       },
     });
