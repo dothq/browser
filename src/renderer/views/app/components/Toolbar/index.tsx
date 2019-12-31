@@ -17,6 +17,7 @@ import console = require('console');
 import { TabSearchBox } from '../TabSearchBox';
 import { resolve } from 'path';
 import { tskManager, openDeveloperTools } from '../..';
+import { shadeBlendConvert } from '../../utils';
 
 const modal = require('electron-modal');
 
@@ -89,79 +90,95 @@ export const Toolbar = observer(() => {
           )}
           <AbButton title={audioPlaying()}>
             <BrowserAction
-              size={18}
+              size={16}
               style={{ marginLeft: 0 }}
-              opacity={0.54}
+              opacity={0.8}
               title="This tab is playing audio."
               visible={audioVisible()}
               data={{
-                badgeBackgroundColor: 'gray',
+                badgeBackgroundColor: store.tabs.selectedTab
+                  ? store.tabs.selectedTab.background
+                  : 'transparent',
                 badgeText: store.tabs.selectedTab
                 ? store.tabs.selectedTab.audioPlaying
                   ? ''
                   : ''
                 : '',
                 icon: icons.music,
-                badgeTextColor: 'white',
+                badgeTextColor: store.tabs.selectedTab
+                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  : 'transparent',
               }}
             />          
           </AbButton>
           <AbButton onClick={viewLauncher}>
             <BrowserAction
-              size={18}
+              size={16}
               style={{ marginLeft: 0 }}
-              opacity={0.54}
+              opacity={0.8}
               title="Dot Downloads"
               visible={store.downloads.list.length > 0}
               data={{
-                badgeBackgroundColor: 'gray',
+                badgeBackgroundColor: store.tabs.selectedTab
+                  ? store.tabs.selectedTab.background
+                  : 'transparent',
                 badgeText: store.tabs.selectedTab
                   ? store.downloads.list.length > 0
                     ? store.downloads.list.length.toString()
                     : ''
                   : '',
                 icon: icons.download,
-                badgeTextColor: 'white',
+                badgeTextColor: store.tabs.selectedTab
+                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  : 'transparent',
               }}
             />          
           </AbButton>
           { store.downloads.list.length > 0 && <Separator />}
           <AbButton title="Dot Ad-Blocker" id="dab">
             <BrowserAction
-              size={18}
+              size={16}
               style={{ marginLeft: 0 }}
-              opacity={0.54}
+              opacity={0.8}
               title="Dot Ad-Blocker"
               visible={true}
               data={{
-                badgeBackgroundColor: 'gray',
+                badgeBackgroundColor: store.tabs.selectedTab
+                  ? store.tabs.selectedTab.background
+                  : 'transparent',
                 badgeText: store.tabs.selectedTab
                   ? store.tabs.selectedTab.blockedAds > 0
                     ? store.tabs.selectedTab.blockedAds.toString()
                     : ''
                   : '',
                 icon: icons.shield,
-                badgeTextColor: 'white',
+                badgeTextColor: store.tabs.selectedTab
+                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  : 'transparent',
               }}
             />
           </AbButton>
           <Separator />
-          <AbButton title="View more options" onClick={onMoreClick}>
+          <AbButton title="View more options" onClick={() => onMoreClick}>
             <BrowserAction
-              size={21}
+              size={17}
               style={{ marginLeft: 0 }}
-              opacity={0.54}
+              opacity={0.8}
               title="View more options"
               visible={true}
               data={{
-                badgeBackgroundColor: 'gray',
+                badgeBackgroundColor: store.tabs.selectedTab
+                  ? store.tabs.selectedTab.background
+                  : 'transparent',
                 badgeText: store.tabs.selectedTab
                   ? ''
                     ? ''
                     : ''
                   : '',
                 icon: icons.more,
-                badgeTextColor: 'white',
+                badgeTextColor: store.tabs.selectedTab
+                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  : 'transparent',
               }}
             />
           </AbButton>

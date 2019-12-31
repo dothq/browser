@@ -39,6 +39,5 @@ export const Separator = styled.div`
   height: 16px;
   width: 1px;
   background-color: var(--toolbar-separator-color);
-  margin-left: 8px;
-  margin-right: 8px;
+  margin: 0 3px;
 `;

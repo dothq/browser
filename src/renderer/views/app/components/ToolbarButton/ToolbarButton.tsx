@@ -40,9 +40,6 @@ export default class ToolbarButton extends React.Component<Props, {}> {
       }
     }} disabled={disabled}>
       <Icon style={{ backgroundImage: `url(${icon})` }} size={size} disabled={disabled} opacity={opacity} />
-      <Circle>
-        <Ripple ref={this.ripple} color="#000" rippleTime={0.8} opacity={0.1} />
-      </Circle>
       {children}
     </Button>);
   }

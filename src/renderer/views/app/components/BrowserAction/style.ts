@@ -17,14 +17,13 @@ interface BadgeProps {
 
 export const Badge = styled.div`
   position: absolute;
-  padding: 0 1.5px;
-  border-radius: 4px;
-  border: 1px solid white;
-  bottom: 6px;
+  padding: 1.5px 2px;
+  border-radius: 9px;
+  bottom: 20px;
   pointer-events: none;
-  right: 6px;
+  right: 3px;
   z-index: 5;
-  font-size: 10px;
+  font-size: 8px;
   ${({ background, color }: BadgeProps) => css`
     background-color: ${background};
     color: ${color};

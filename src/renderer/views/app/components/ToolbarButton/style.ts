@@ -18,7 +18,7 @@ export const Icon = styled.div`
     opacity: number;
   }) => css`
     ${centerIcon(size)};
-    opacity: ${disabled ? 0.25 : opacity};
+    opacity: ${disabled ? 0.4 : opacity};
   `};
 `;
 
