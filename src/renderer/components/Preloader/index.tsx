@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { colors } from '~/renderer/constants';
+import { colors } from '../../../renderer/constants';
 import { Path, StyledPreloader } from './style';
 
 export interface Props {

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { robotoRegular, robotoMedium, centerIcon } from '~/shared/mixins';
+import { robotoRegular, robotoMedium, centerIcon } from '../../../shared/mixins';
 
 export const StyledTextfield = styled.div`
   width: 280px;
@@ -17,6 +17,7 @@ interface InputProps {
   hasLabel: boolean;
   hasIcon: boolean;
   fontColor: string;
+  type?: 'text' | 'email' | 'password' | 'number';
 }
 
 export const Input = styled.input`
@@ -46,7 +47,6 @@ export const Input = styled.input`
     &[type='number']::-webkit-outer-spin-button {
       -webkit-appearance: none;
     }
-
   `}
 `;
 
@@ -77,7 +77,6 @@ export const Textarea = styled.textarea`
     &[type='number']::-webkit-outer-spin-button {
       -webkit-appearance: none;
     }
-
   `}
 `;
 
