@@ -264,12 +264,12 @@ export default observer(({ tab }: { tab: Tab }) => {
         <Close tab={tab} />
 
         <Overlay tab={tab} />
-        <Ripple
+        {/* <Ripple
           rippleTime={0.6}
           opacity={0.15}
           color={tab.background}
           style={{ zIndex: 9 }}
-        />
+        /> */}
       </TabContainer>
       <Border tab={tab} />
     </StyledTab>

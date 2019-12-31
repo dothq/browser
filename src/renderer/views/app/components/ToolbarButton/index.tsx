@@ -97,14 +97,7 @@ export default class ToolbarButton extends React.Component<Props, {}> {
           disabled={disabled}
           opacity={opacity}
         />
-        <Circle id={id}>
-          <Ripple
-            ref={this.ripple}
-            color="#000"
-            rippleTime={0.8}
-            opacity={0.1}
-          />
-        </Circle>
+        <Circle id={id} />
         {children}
       </Button>
     );
