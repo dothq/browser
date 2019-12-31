@@ -232,26 +232,24 @@ export const runWebRequestService = (window: AppWindow) => {
     async (details: Electron.OnBeforeRequestListenerDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
 
-      // if (engine) {
-      //   const { match, redirect } = engine.match(
-      //     makeRequest({ type: details.resourceType, url: details.url }, parse),
-      //   );
+      if (engine) {
+        const { match, redirect } = engine.match(
+          makeRequest({ type: details.resourceType, url: details.url }, parse),
+        );
 
-      //   if (match || redirect) {
+        if (match || redirect) {
 
-      //     // if(file.get("adblockEnabled") == true) {
-      //       appWindow.webContents.send(`blocked-ad-${tabId}`);
+            appWindow.webContents.send(`blocked-ad-${tabId}`);
 
-      //       if (redirect) {
-      //         callback({ redirectURL: redirect });
-      //       } else {
-      //         callback({ cancel: true });
-      //       }
+            if (redirect) {
+              callback({ redirectURL: redirect });
+            } else {
+              callback({ cancel: true });
+            }
   
-      //       return;
-      //     // }
-      //   }
-      // }
+            return;
+        }
+      }
 
       await onBeforeRequest(details, callback);
     },
