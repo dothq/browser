@@ -9,7 +9,6 @@ import { AppWindow } from './app-window';
 
 import { registerProtocol } from './protocols';
 import { 
-  startMessagingService, 
   startSessionManager, 
   runWebRequestService, 
   loadFilters,  
@@ -39,7 +38,6 @@ app.on('ready', async () => {
   let viewSession = session.fromPartition('persist:view');
 
   registerProtocol(viewSession);
-  startMessagingService(appWindow);
   startSessionManager(viewSession);
 
   console.log(appWindow.preferencesExist)

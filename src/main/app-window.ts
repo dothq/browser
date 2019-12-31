@@ -21,6 +21,7 @@ import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 
 import { PreferencesExist } from './services/preferences';
+import { startMessagingService } from './services';
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
@@ -55,7 +56,7 @@ export class AppWindow extends BrowserWindow {
 
     process.traceDeprecation = true;
 
-    console.log(resolve(process.cwd(), '/static/icon.png'))
+    startMessagingService(this);
 
     this.setBackgroundColor('#fff');
 
