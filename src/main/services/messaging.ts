@@ -52,6 +52,10 @@ export const startMessagingService = (window: AppWindow) => {
         window.webContents.focus();
     });
 
+    ipcMain.on('app-open-dev-tools', () => {
+        window.webContents.openDevTools({ mode: 'detach' })
+    })
+
     autoUpdater.on('update-downloaded', ({ version }) => {
         window.webContents.send('update-available', version);
     });

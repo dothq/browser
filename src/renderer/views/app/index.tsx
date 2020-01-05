@@ -260,6 +260,13 @@ Menu.setApplicationMenu(
             tskManager()
           }
         }, 
+        { 
+          label: 'Launcher',
+          accelerator: 'CmdOrCtrl+Shift+U+I',
+          click() { 
+            ipcRenderer.send('app-open-dev-tools');
+          } 
+        },
       ],
     },
   ]),
