@@ -14,6 +14,8 @@ import {
   loadFilters,  
   preferencesFirstSetup
 } from './services';
+import { Preferences } from './models/preferences';
+import { preferencesExist } from './services/preferences';
 
 ipcMain.setMaxListeners(0);
 
@@ -26,6 +28,14 @@ if(platform() == 'darwin') {
 }
 
 export let appWindow: AppWindow;
+export let preferences: Preferences;
+
+if(preferencesExist() == false) {
+  preferencesFirstSetup();
+  preferences = new Preferences();
+} else {
+  preferences = new Preferences();
+}
 
 app.setAsDefaultProtocolClient('http');
 app.setAsDefaultProtocolClient('https');
@@ -39,12 +49,6 @@ app.on('ready', async () => {
 
   registerProtocol(viewSession);
   startSessionManager(viewSession);
-
-  console.log(appWindow.preferencesExist)
-
-  if(appWindow.preferencesExist == false) {
-    preferencesFirstSetup();
-  }
 
   app.on('activate', () => {
     if (appWindow === null) {

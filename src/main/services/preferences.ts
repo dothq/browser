@@ -2,18 +2,20 @@ import { existsSync, writeFileSync } from 'fs';
 import { app } from 'electron';
 import { resolve } from 'path';
 
-import { Preferences } from '../../shared/models/default-preferences';
+import { DEFAULT_PREFERENCES_OBJECT } from '../../shared/models/default-preferences';
 
 let userData = app.getPath('userData')
 
-export const PreferencesExist = () => { 
+export const preferencesExist = () => { 
     return existsSync(resolve(userData, 'preferences.json'))
 }
 
 export const preferencesFirstSetup = () => {
+    const defaultPreferences = DEFAULT_PREFERENCES_OBJECT
+
     writeFileSync(
         resolve(userData, 'preferences.json'),
-        JSON.stringify(Preferences)
+        JSON.stringify(defaultPreferences)
     )
 }
 

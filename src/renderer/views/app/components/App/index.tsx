@@ -14,8 +14,6 @@ import console = require('console');
 import { existsSync, appendFile } from 'fs';
 import { getPath } from '../../../../../shared/utils/paths';
 
-
-
 const GlobalStyle = createGlobalStyle`${Style}`;
 
 // Locale loader
@@ -64,7 +62,7 @@ if (existsSync(errorLogPath)) {
 
 const App = observer(() => {
   return (
-    <StyledApp>
+    <StyledApp className={`theme-${store.preferences.appearance.theme}`}>
       <GlobalStyle />
       <Toolbar />
       <Line />

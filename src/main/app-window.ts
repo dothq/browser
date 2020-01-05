@@ -20,7 +20,6 @@ import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 
-import { PreferencesExist } from './services/preferences';
 import { startMessagingService } from './services';
 
 export class AppWindow extends BrowserWindow {
@@ -30,8 +29,6 @@ export class AppWindow extends BrowserWindow {
   public search: SearchDialog = new SearchDialog(this);
   public print: PrintDialog = new PrintDialog(this);
   public alert: AlertDialog = new AlertDialog(this);
-
-  public preferencesExist = PreferencesExist();
 
   constructor() {
     super({
@@ -217,8 +214,6 @@ export class AppWindow extends BrowserWindow {
       windowState.fullscreen = this.isFullScreen();
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
-
-    console.log('file://' + resolve(__dirname, 'app.html'))
 
     if (process.env.NODE_ENV == 'dev') {
       this.setIcon(

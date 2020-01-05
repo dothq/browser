@@ -19,12 +19,12 @@ import { DownloadsStore } from './downloads';
 import { LocaleStore } from './locale';
 import { AutofillStore } from './autofill';
 import { AbStore } from './adblockwindow';
-import { OptionsStore } from './settings';
 import { WeatherStore } from './weather';
 import { NewsStore } from './news';
 import { UserStore } from './user';
 import * as isDev from 'electron-is-dev';
-import console = require('console');
+import { DEFAULT_PREFERENCES } from '~/shared/models/default-preferences';
+import { OptionsStore } from './settings';
 
 export class Store {
   public history = new HistoryStore();
@@ -37,13 +37,13 @@ export class Store {
   public overlay = new OverlayStore();
   public downloads = new DownloadsStore();
   public adblockwindow = new AbStore();
-  public options = new OptionsStore();
   public weather = new WeatherStore();
   public user = new UserStore();
   public locale = new LocaleStore();
   public news = new NewsStore();
   public notifications = new NotifsStore();
   public autofill = new AutofillStore();
+  public options = new OptionsStore();
 
   public app = require("electron").app;
   public remoteApp = require("electron").remote.app;
@@ -76,9 +76,7 @@ export class Store {
   };
 
   @observable
-  public settings: Settings = {
-    dialType: 'top-sites'
-  };
+  public preferences: DEFAULT_PREFERENCES
 
   public async init() {
     const data = await fetch('https://api.dotbrowser.me/api/v0/version');
@@ -160,6 +158,8 @@ export class Store {
         this.tabs.selectedTab.findVisible = true;
       }
     });
+
+    this.preferences = ipcRenderer.sendSync('get-settings');
 
     /* @todo Fix update checks */
     // ipcRenderer.send('update-check');

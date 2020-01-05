@@ -1,6 +1,7 @@
 import { ipcMain, IpcMainEvent } from 'electron'
 import { AppWindow } from '../app-window';
 import { autoUpdater } from 'electron-updater';
+import { preferences } from '..';
 
 export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('update-install', () => {
@@ -54,6 +55,10 @@ export const startMessagingService = (window: AppWindow) => {
 
     ipcMain.on('app-open-dev-tools', () => {
         window.webContents.openDevTools({ mode: 'detach' })
+    })
+
+    ipcMain.on('get-settings', (e: IpcMainEvent) => {
+        e.returnValue = preferences;
     })
 
     autoUpdater.on('update-downloaded', ({ version }) => {
