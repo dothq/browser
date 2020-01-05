@@ -13,6 +13,7 @@ export const startMessagingService = (window: AppWindow) => {
     });
     
     ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
+        console.log("Showing dialog", dialog);
         if(window[dialog].visible == false) {
             window[dialog].show();
         } else {

@@ -20,10 +20,10 @@ export let engine: FiltersEngine;
 const eventListeners: any = {};
 
 export const loadFilters = async () => {
-  const path = resolve(process.cwd(), 'filters/default.dat');
+  const path = resolve(__dirname, '../', 'filters/default.dat');
 
   /*const { data } = await requestURL(
-    'https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt',
+    // 'https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt',
   );*/
 
   if (existsSync(path)) {
@@ -31,17 +31,19 @@ export const loadFilters = async () => {
       if (err) return console.error(err);
 
       engine = FiltersEngine.deserialize(buffer);
+      
+      // /*const { networkFilters, cosmeticFilters } = parseFilters(
+      //   data,
+      //   engine.config,
+      // );
 
-      /*const { networkFilters, cosmeticFilters } = parseFilters(
-        data,
-        engine.config,
-      );
-
-      engine.update({
-        newNetworkFilters: networkFilters,
-        newCosmeticFilters: cosmeticFilters,
-      });*/
+      // engine.update({
+      //   newNetworkFilters: networkFilters,
+      //   newCosmeticFilters: cosmeticFilters,
+      // });*/
     });
+  } else {
+    console.log("Could not find the filters file.")
   }
 };
 

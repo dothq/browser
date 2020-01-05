@@ -59,7 +59,5 @@ app.on('ready', async () => {
 app.on('window-all-closed', () => {
   if (platform() !== 'darwin') {
     app.quit();
-  } else {
-    process.exit(0)
   }
 });

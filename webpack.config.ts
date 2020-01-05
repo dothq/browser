@@ -88,6 +88,7 @@ export const baseConfig: Configuration = {
 };
 
 const developmentConfig: Configuration = {
+  watch: true,
   optimization: {
     splitChunks: false,
     removeEmptyChunks: false,
@@ -113,7 +114,6 @@ const mainConfig = merge.smart(baseConfig, {
   entry: {
     main: './src/main/index.ts',
   },
-  watch: true,
   externals: [NodeExternals()],
   plugins: [
     new ExtractCssChunksPlugin(),

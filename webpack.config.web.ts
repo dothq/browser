@@ -9,7 +9,9 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import { devMode, scTransformer } from './webpack.config';
 import webpack from 'webpack';
 
-new webpack.optimize.ModuleConcatenationPlugin()
+if(devMode == 'development') {
+  new webpack.optimize.ModuleConcatenationPlugin()
+}
 
 const webConfig = {
     target: 'web',
@@ -42,13 +44,11 @@ const webConfig = {
       new webpack.EnvironmentPlugin({
         NODE_ENV: devMode
       }),
-      new LodashModuleReplacementPlugin(),
-      new BundleAnalyzerPlugin()
+      new LodashModuleReplacementPlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
         port: 4445,
-        hot: false,
         inline: false,
         disableHostCheck: true,
         headers: {
@@ -119,5 +119,9 @@ const webConfig = {
         ],
       },
 };
-  
+
+if(devMode == 'development') {
+  webConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
 export default webConfig;

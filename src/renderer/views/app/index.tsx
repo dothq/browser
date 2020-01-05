@@ -58,7 +58,7 @@ const contextMenu = Menu.buildFromTemplate([
     store.user.menuVisible = false;
   } },
   { type: 'separator' },
-  { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', role: 'quit', icon: resolve(process.cwd(), 'static/app-icons/tray-close.png') },
+  { label: store.locale.lang.standard[0].quit_dot_with_version.replace(/{appVersion}/g, app.getVersion()), type: 'normal', role: 'quit' },
 ])
 
 tray.setToolTip(store.locale.lang.standard[0].dot_with_version.replace(/{appVersion}/g, app.getVersion()))
@@ -270,7 +270,7 @@ export function openDeveloperTools() {
     return;
   }
 
-  if(remote.webContents.getFocusedWebContents().getURL() == join('file://', process.cwd(), '\\resources\\app.asar\\build\\app.html')) {
+  if(remote.webContents.getFocusedWebContents().getURL() == join('file://', process.cwd(), '\\resources\\app.asar\\build\\renderer\\app.html')) {
     return;
   }
 

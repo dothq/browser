@@ -6,7 +6,7 @@ import { Style } from '../../style';
 import { StyledApp } from './style';
 import { URL } from '../URL';
 import store from '../../store';
-import { hot } from 'react-hot-loader/root';
+
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
@@ -19,4 +19,4 @@ const App = observer(() => {
   );
 })
 
-export default hot(App)
+export default App;

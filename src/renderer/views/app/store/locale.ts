@@ -37,9 +37,9 @@ export class LocaleStore {
   }
 
   public load() {
-    console.log(process.cwd());
+    console.log(`${__dirname.split("build/renderer")[0]}src/renderer/views/app/locale/${this.currentLanguage}.json`);
     const languageJSON = json(
-      `${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`,
+      `${__dirname.split("build/renderer")[0]}src/renderer/views/app/locale/${this.currentLanguage}.json`,
     );
     this.lang = languageJSON.toObject();
   }

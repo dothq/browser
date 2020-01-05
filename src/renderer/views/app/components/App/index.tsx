@@ -14,7 +14,7 @@ import console = require('console');
 import { existsSync, appendFile } from 'fs';
 import { getPath } from '../../../../../shared/utils/paths';
 
-import { hot } from 'react-hot-loader/root';
+
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
@@ -75,4 +75,4 @@ const App = observer(() => {
   );
 });
 
-export default hot(App);
+export default App;

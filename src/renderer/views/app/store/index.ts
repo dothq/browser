@@ -161,7 +161,8 @@ export class Store {
       }
     });
 
-    ipcRenderer.send('update-check');
+    /* @todo Fix update checks */
+    // ipcRenderer.send('update-check');
 
     requestAnimationFrame(() => {
       if (remote.process.argv.length > 1 && isDev == false) {

@@ -127,6 +127,7 @@ ipcRenderer.on('scroll-touch-end', () => {
 const updateAlert = () => {
   webFrame.executeJavaScript('window', false).then(w => {
     w.alert = (message?: any) => {
+      console.log("Dispatched alert")
       ipcRenderer.send('show-alert', 'alert', message);
     }
 

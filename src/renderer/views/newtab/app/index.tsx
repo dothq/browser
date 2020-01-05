@@ -1,4 +1,4 @@
-import { hot } from 'react-hot-loader/root';
+
 import {
   StyledNewTab,
   Columns,
@@ -180,4 +180,4 @@ class NewTab extends React.Component {
   }
 }
 
-export default hot(NewTab);
+export default NewTab;

@@ -5,7 +5,7 @@ import { icons } from '../../app/constants';
 import store from '../store';
 import { observer } from 'mobx-react';
 import { Button, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-import { hot } from 'react-hot-loader/root';
+
 
 const content = () => {
   if(store.content.length != 0) {
@@ -39,4 +39,4 @@ const App = observer(() => (
   </MuiThemeProvider>
 ))
 
-export default hot(App);
+export default App;

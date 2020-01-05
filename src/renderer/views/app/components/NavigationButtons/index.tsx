@@ -63,6 +63,8 @@ const launcherOpen = () => {
   store.overlay.visible = true;
 };
 
+console.log(resolve(__dirname.split("build/renderer")[0], 'static/app-icons/tray-icon.png'),)
+
 const dotLauncherCtm = () => () => {
   const menu = remote.Menu.buildFromTemplate([
     {
@@ -72,7 +74,7 @@ const dotLauncherCtm = () => () => {
       ),
       type: 'normal',
       enabled: false,
-      icon: resolve(process.cwd(), 'static/app-icons/tray-icon.png'),
+      icon: resolve(__dirname.split("build/renderer")[0], 'static/app-icons/tray-icon.png'),
     },
     { type: 'separator' },
     {
@@ -113,7 +115,6 @@ const dotLauncherCtm = () => () => {
       ),
       type: 'normal',
       role: 'quit',
-      icon: resolve(process.cwd(), 'static/app-icons/tray-close.png'),
     },
   ]);
 

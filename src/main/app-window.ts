@@ -51,6 +51,7 @@ export class AppWindow extends BrowserWindow {
         experimentalFeatures: true,
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
+        webSecurity: false
       },
     });
 
@@ -217,16 +218,18 @@ export class AppWindow extends BrowserWindow {
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
 
-    if (isDev) {
+    console.log('file://' + resolve(__dirname, 'app.html'))
+
+    if (process.env.NODE_ENV == 'dev') {
       this.setIcon(
         nativeImage.createFromPath(
-          resolve(app.getAppPath(), '\\static\\icon.png'),
+          resolve(app.getAppPath(), `/static/icon.${platform() == 'win32' ? 'icon' : platform() == 'darwin' ? 'icns' : 'png'}`),
         ),
       );
       this.webContents.openDevTools({ mode: 'detach' });
       this.loadURL('http://localhost:4444/app.html');
     } else {
-      this.loadURL(join('file://', app.getAppPath(), '\\resources\\app.asar\\build\\app.html'));
+      this.loadURL('file://' + resolve(__dirname, 'renderer', 'app.html'));
     }
 
     this.once('ready-to-show', () => {

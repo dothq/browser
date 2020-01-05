@@ -1,6 +1,6 @@
 {
   "appId": "org.dotinc.browser",
-  "productName": "Dot",
+  "productName": "Dot Browser",
   "asar": true,
   "directories": {
     "output": "dist",
@@ -20,7 +20,8 @@
     "static/icon-inverted.png",
     "static/notification.mp3",
     "static/tray-icon.png",
-    "build/*"
+    "build/*",
+    "src/renderer/views/app/locale/**/*"
   ],
   "publish": "github",
   "nsis": {

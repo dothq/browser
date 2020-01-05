@@ -18,7 +18,6 @@ async function areYouSure(tabSize: number) {
       modal: true,
       minimizable: false,
       movable: false,
-      icon: resolve(process.cwd() + '/static/app-icons/tray-close.png'),
       titleBarStyle: 'hiddenInset',
       autoHideMenuBar: true,
       webPreferences: {

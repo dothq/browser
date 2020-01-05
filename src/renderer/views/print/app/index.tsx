@@ -6,7 +6,7 @@ import { icons } from '../../app/constants';
 import store from '../store';
 import { observer } from 'mobx-react';
 import { Select, MenuItem, FormControl, TextField } from '@material-ui/core';
-import { hot } from 'react-hot-loader/root';
+
 
 const onPageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
   store.settings.pages = event.target.value as number;
@@ -59,4 +59,4 @@ const App = observer(() => (
   </StyledApp>
 ))
 
-export default hot(App);
+export default App;

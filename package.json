@@ -1,6 +1,6 @@
 {
   "name": "dot",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "A beautiful browser with darn-simple UI, based on Wexond.",
   "keywords": [
     "web-browser",
@@ -57,10 +57,10 @@
     "dev:renderer": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.renderer.ts",
     "dev:web": "cross-env NODE_ENV=dev webpack-dev-server --config webpack.config.web.ts",
     "dev:preloads": "cross-env NODE_ENV=dev webpack --config webpack.config.preloads.ts",
-    "prod:main": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.ts",
-    "prod:renderer": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.renderer.ts",
-    "prod:web": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.web.ts",
-    "prod:preloads": "cross-env NODE_ENV=prod webpack --progress --config webpack.config.preloads.ts",
+    "prod:main": "cross-env NODE_ENV=prod webpack --config webpack.config.ts",
+    "prod:renderer": "cross-env NODE_ENV=prod webpack --config webpack.config.renderer.ts",
+    "prod:web": "cross-env NODE_ENV=prod webpack --config webpack.config.web.ts",
+    "prod:preloads": "cross-env NODE_ENV=prod webpack --config webpack.config.preloads.ts",
     "test": "jest --coverage --passWithNoTests --coverageDirectory=output/coverage/jest"
   },
   "jest": {
@@ -102,7 +102,7 @@
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
     "electron": "^6.1.6",
-    "electron-builder": "20.39.0",
+    "electron-builder": "^21.2.0",
     "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.8.6",
     "extract-css-chunks-webpack-plugin": "^4.6.0",
@@ -161,7 +161,7 @@
     "download-git-repo": "^2.0.0",
     "edit-json-file": "^1.3.1",
     "electron-chrome-extension": "^3.0.0",
-    "electron-extensions": "^4.0.6",
+    "electron-extensions": "^6.0.0",
     "electron-modal": "^1.0.0",
     "electron-process-manager": "^0.7.1",
     "electron-push-receiver": "^2.1.2",

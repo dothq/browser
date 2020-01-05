@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Search } from '../components/Search';
-import { hot } from 'react-hot-loader/root';
+
 import { createGlobalStyle } from 'styled-components';
 import { Style } from './style';
 import store from '../store';
@@ -30,4 +30,4 @@ class App extends React.Component<Props, {}> {
   }
 }
 
-export default hot(App);
+export default App;

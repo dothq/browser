@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyledError, Container } from '../components/Error/style';
 import { Title, ErrorIcon, Subtitle } from '../style';
-import { hot } from 'react-hot-loader/root';
+
 
 const Error = () => (
   <StyledError>
@@ -13,4 +13,4 @@ const Error = () => (
   </StyledError>
 )
 
-export default hot(Error);
+export default Error;

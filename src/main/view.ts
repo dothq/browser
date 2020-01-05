@@ -344,7 +344,7 @@ export class View extends BrowserView {
         this.webContents.executeJavaScript(script);
       }
 
-      // appWindow.webContents.send(`load-commit-${this.tabId}`, ...args);
+      appWindow.webContents.send(`load-commit-${this.tabId}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,
