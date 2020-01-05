@@ -63,8 +63,6 @@ const launcherOpen = () => {
   store.overlay.visible = true;
 };
 
-console.log(resolve(__dirname.split("build/renderer")[0], 'static/app-icons/tray-icon.png'),)
-
 const dotLauncherCtm = () => () => {
   const menu = remote.Menu.buildFromTemplate([
     {
