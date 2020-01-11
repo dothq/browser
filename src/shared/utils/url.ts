@@ -17,3 +17,7 @@ export const matchesPattern = (pattern: string, url: string) => {
   );
   return url.match(regexp) != null;
 };
+
+export const getHostname = (input: string): string => {
+  return new URL(input).hostname;
+};

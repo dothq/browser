@@ -51,6 +51,7 @@ export const baseConfig: Configuration = {
       path.resolve(__dirname, 'node_modules'),
     ]
   },
+  watch: devMode == 'development' ? false : true,
   plugins: [],
   module: {
     rules: [

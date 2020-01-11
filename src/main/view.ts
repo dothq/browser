@@ -13,6 +13,7 @@ import console = require('console');
 import { resolve } from 'path';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
+import { getHostname } from '~/shared/utils/url';
 
 export class View extends BrowserView {
   public title: string = '';
@@ -36,6 +37,13 @@ export class View extends BrowserView {
 
     this.homeUrl = url;
     this.tabId = id;
+
+    this.webContents.setUserAgent(
+      this.webContents.getUserAgent()
+      .replace(/ dot\\?.([^\s]+)/g, '')
+      .replace(/ Electron\\?.([^\s]+)/g, '')
+      .replace(/Chrome\\?.([^\s]+)/g, 'Chrome/79.0.3945.88')
+    )
 
     var truncateStr = function(str: any, length: any, ending: any) {
       if (length == null) {
@@ -378,6 +386,13 @@ export class View extends BrowserView {
 
     this.webContents.addListener('will-navigate', (e, url) => {
       e.preventDefault();
+
+      if(getHostname(url) !== getHostname(this.url)) {
+        appWindow.webContents.send(
+          `browserview-tab-info-updated-${this.tabId}`
+        )
+      }
+
       appWindow.viewManager.selected.webContents.loadURL(url);
     });
 
@@ -478,6 +493,7 @@ export class View extends BrowserView {
     this.webContents.addListener(
       'page-favicon-updated',
       async (e, favicons) => {
+        console.log(`Updated favicon for ${this.url}`)
         appWindow.webContents.send(
           `browserview-favicon-updated-${this.tabId}`,
           favicons[0],

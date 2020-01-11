@@ -10,6 +10,7 @@ import {
   TOOLBAR_HEIGHT,
   defaultTabOptions,
   TAB_ANIMATION_DURATION,
+  icons,
 } from '~/renderer/views/app/constants';
 import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
@@ -37,7 +38,7 @@ export class Tab {
   public loading: boolean = false;
 
   @observable
-  public favicon: string = '';
+  public favicon: string = icons.home;
 
   @observable
   public tabGroupId: number;
@@ -241,6 +242,13 @@ export class Tab {
     );
 
     ipcRenderer.on(
+      `browserview-tab-info-updated-${this.id}`, async (e) => {
+        // this.background = colors.blue['500'];
+        // this.hasThemeColor = false;
+        // this.favicon = '';
+    })
+
+    ipcRenderer.on(
       `browserview-favicon-updated-${this.id}`,
       async (e: any, favicon: string) => {
         try {
@@ -264,7 +272,7 @@ export class Tab {
             }
           }
         } catch (e) {
-          this.favicon = '';
+          this.favicon = icons.home;
           this.background = colors.blue['500'];
         }
         this.updateData();

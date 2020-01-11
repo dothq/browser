@@ -3,6 +3,7 @@ import { DEFAULT_PREFERENCES, DEFAULT_PREFERENCES_OBJECT } from '../../shared/mo
 import { EventEmitter } from 'events';
 import { readFileSync } from 'fs';
 import { preferencesLocation } from '../services';
+import { appWindow } from '..';
 
 const fileOptions = {
     encoding: 'utf-8'
@@ -11,8 +12,12 @@ const fileOptions = {
 export class Preferences extends EventEmitter {
     public conf = DEFAULT_PREFERENCES_OBJECT;
 
-    public load = () => {
+    constructor() {
+        super();
+
         const preferences = (JSON.parse(readFileSync(preferencesLocation, fileOptions)) as DEFAULT_PREFERENCES)
+
+        console.log(preferences)
 
         if(!preferences.appearance.theme) {
             preferences.appearance.theme = 'light';
@@ -25,9 +30,4 @@ export class Preferences extends EventEmitter {
         this.conf = preferences;
     }
 
-    constructor() {
-        super();
-
-        this.load()
-    }
 }

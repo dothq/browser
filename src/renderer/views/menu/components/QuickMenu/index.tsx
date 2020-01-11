@@ -62,7 +62,7 @@ const onPrintClick = () => {
 };
 
 const addTab = (url: string) => () => {
-  ipcRenderer.send(`view-create-${store.windowId}`, { url, active: true });
+  // ipcRenderer.send(`browserview-create-${store.tabs.selected}`, { url, active: true });
   store.hide();
 };
 

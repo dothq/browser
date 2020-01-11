@@ -2,7 +2,7 @@ import { ipcMain, session, webContents } from 'electron';
 import { makeId } from '../../shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '../../shared/utils/url';
-import { USER_AGENT, FALLBACK_USER_AGENT } from '../../shared/constants';
+import { USER_AGENT } from '../../shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
@@ -218,8 +218,6 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-    details.requestHeaders['User-Agent'] = USER_AGENT;     
-    
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
@@ -231,7 +229,7 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeRequest(
-    async (details: Electron.OnBeforeRequestListenerDetails, callback: any) => {
+    async (details: Electron.OnBeforeRequestDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
 
       if (engine) {
@@ -271,7 +269,7 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onHeadersReceived(
-    async (details: Electron.OnHeadersReceivedListenerDetails, callback: any) => {
+    async (details: Electron.OnHeadersReceivedDetails, callback: any) => {
       updateResponseHeadersWithCSP(
         {
           url: details.url,

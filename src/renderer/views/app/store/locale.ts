@@ -24,7 +24,6 @@ export class LocaleStore {
   @action
   public setLanguage(language: string) {
     this.currentLanguage = language;
-    this.load();
     store.overlay.currentContent = 'preload';
     remote.webContents.getFocusedWebContents().reload();
   }
@@ -36,10 +35,18 @@ export class LocaleStore {
     const json = await data.json();
   }
 
-  public load() {
-    const languageJSON = json(
-      `${__dirname.split("build/renderer")[0]}src/renderer/views/app/locale/${this.currentLanguage}.json`,
-    );
+  constructor() {
+    let languageJSON;
+    if(process.env.ENV !== 'dev') {
+      languageJSON = json(
+        `${__dirname.split("build/renderer")[0]}src/renderer/views/app/locale/${this.currentLanguage}.json`,
+      );
+    } else {
+      languageJSON = json(
+        `${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`,
+      );
+    }
+    console.log(`${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`)
     this.lang = languageJSON.toObject();
   }
 }

@@ -23,7 +23,7 @@ import { WeatherStore } from './weather';
 import { NewsStore } from './news';
 import { UserStore } from './user';
 import * as isDev from 'electron-is-dev';
-import { DEFAULT_PREFERENCES } from '~/shared/models/default-preferences';
+import { DEFAULT_PREFERENCES, DEFAULT_PREFERENCES_OBJECT } from '~/shared/models/default-preferences';
 import { OptionsStore } from './settings';
 
 export class Store {
@@ -76,7 +76,7 @@ export class Store {
   };
 
   @observable
-  public preferences: DEFAULT_PREFERENCES
+  public preferences = DEFAULT_PREFERENCES_OBJECT
 
   public async init() {
     const data = await fetch('https://api.dotbrowser.me/api/v0/version');
@@ -90,8 +90,6 @@ export class Store {
     this.notifications.showPermissionWindow();
 
     this.loadedAPI = true;
-
-    
   }
 
   public api: number;
@@ -114,6 +112,14 @@ export class Store {
   };
 
   constructor() {
+
+    ipcRenderer.on(
+      'update-settings',
+      (e: IpcRendererEvent, preferences: DEFAULT_PREFERENCES) => {
+        console.log(preferences)
+        this.preferences = preferences;
+      }
+    )
 
     this.init()
 
@@ -158,8 +164,6 @@ export class Store {
         this.tabs.selectedTab.findVisible = true;
       }
     });
-
-    this.preferences = ipcRenderer.sendSync('get-settings');
 
     /* @todo Fix update checks */
     // ipcRenderer.send('update-check');

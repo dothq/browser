@@ -113,11 +113,6 @@ export const StyledIcon = styled.div`
   height: 16px;
   transition: 0.2s opacity, 0.5s min-width;
   ${centerIcon()};
-  ${({ isIconSet }: { isIconSet: boolean }) => css`
-    min-width: ${isIconSet ? '16px' : '0px'};
-    margin-left: ${isIconSet ? '12px' : '0px'};
-    opacity: ${isIconSet ? 1 : 0.6};
-  `};
 `;
 
 interface ContentProps {

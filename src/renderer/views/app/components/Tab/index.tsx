@@ -18,6 +18,7 @@ import { shadeBlendConvert } from '../../utils';
 import { remote, ipcRenderer } from 'electron';
 import Ripple from '../../../../components/Ripple';
 import { transparency } from '../../../../constants';
+import { icons } from '../../constants';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -169,9 +170,8 @@ const Content = observer(({ tab }: { tab: Tab }) => {
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && (
         <StyledIcon
-          isIconSet={tab.favicon !== ''}
           style={{
-            backgroundImage: `url(${tab.favicon})`,
+            backgroundImage: `url(${tab.favicon ? tab.favicon : icons.home })`,
           }}
         />
       )}

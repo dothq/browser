@@ -141,6 +141,11 @@ const refreshContextMenu = () => {
   menu.popup();
 };
 
+const onHomeClick = () => {
+  var url = 'dot://newtab'
+  store.tabs.addTab({ url, active: true });
+}
+
 export const NavigationButtons = observer(() => {
   return (
     <StyledContainer isFullscreen={store.isFullscreen}>
@@ -192,6 +197,14 @@ export const NavigationButtons = observer(() => {
         }
         onContextMenu={refreshContextMenu}
         onClick={onRefreshClick}
+        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
+      />
+      <ToolbarButton
+        size={20}
+        disabled={store.tabs.list.length == 0 || store.overlay.visible == true}
+        title={'Home'}
+        icon={icons.home}
+        onClick={onHomeClick}
         style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
       />
     </StyledContainer>

@@ -21,6 +21,7 @@ import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 
 import { startMessagingService } from './services';
+import { preferences } from '.';
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
@@ -55,6 +56,8 @@ export class AppWindow extends BrowserWindow {
     process.traceDeprecation = true;
 
     startMessagingService(this);
+
+    this.webContents.send('update-settings', preferences);
 
     this.setBackgroundColor('#fff');
 
@@ -215,7 +218,7 @@ export class AppWindow extends BrowserWindow {
       writeFileSync(windowDataPath, JSON.stringify(windowState));
     });
 
-    if (process.env.NODE_ENV == 'dev') {
+    if (process.env.ENV == 'dev') {
       this.setIcon(
         nativeImage.createFromPath(
           resolve(app.getAppPath(), `/static/icon.${platform() == 'win32' ? 'icon' : platform() == 'darwin' ? 'icns' : 'png'}`),
