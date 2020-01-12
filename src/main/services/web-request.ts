@@ -6,14 +6,13 @@ import { USER_AGENT } from '../../shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
-import { appWindow } from '..';
+import { windowsManager } from '..';
 import {
   FiltersEngine,
   makeRequest,
   updateResponseHeadersWithCSP,
 } from '@cliqz/adblocker';
 import { parse } from 'tldts';
-
 
 export let engine: FiltersEngine;
 
@@ -22,25 +21,12 @@ const eventListeners: any = {};
 export const loadFilters = async () => {
   const path = resolve(__dirname, '../', 'filters/default.dat');
 
-  /*const { data } = await requestURL(
-    // 'https://raw.githubusercontent.com/MajkiIT/polish-ads-filter/master/polish-adblock-filters/adblock.txt',
-  );*/
-
   if (existsSync(path)) {
     readFile(resolve(path), (err, buffer) => {
       if (err) return console.error(err);
 
       engine = FiltersEngine.deserialize(buffer);
       
-      // /*const { networkFilters, cosmeticFilters } = parseFilters(
-      //   data,
-      //   engine.config,
-      // );
-
-      // engine.update({
-      //   newNetworkFilters: networkFilters,
-      //   newCosmeticFilters: cosmeticFilters,
-      // });*/
     });
   } else {
     console.log("Could not find the filters file.")
@@ -218,6 +204,12 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
+    const tabId = getTabByWebContentsId(window, details.webContentsId);
+
+    if(details.resourceType == 'mainFrame') {
+      windowsManager.window.webContents.send(`browserview-tab-info-updated-${tabId}`);
+    }
+
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
@@ -232,6 +224,10 @@ export const runWebRequestService = (window: AppWindow) => {
     async (details: Electron.OnBeforeRequestDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
 
+      if(details.resourceType == 'mainFrame') {
+        windowsManager.window.webContents.send(`browserview-tab-info-updated-${tabId}`);
+      }
+
       if (engine) {
         const { match, redirect } = engine.match(
           makeRequest({ type: details.resourceType, url: details.url }, parse),
@@ -239,7 +235,7 @@ export const runWebRequestService = (window: AppWindow) => {
 
         if (match || redirect) {
 
-            appWindow.webContents.send(`blocked-ad-${tabId}`);
+            windowsManager.window.webContents.send(`blocked-ad-${tabId}`);
 
             if (redirect) {
               callback({ redirectURL: redirect });

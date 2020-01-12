@@ -6,18 +6,18 @@ import {
   BrowserWindow,
   shell,
 } from 'electron';
-import { appWindow } from '.';
+import { windowsManager } from '.';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import console = require('console');
 import { resolve } from 'path';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
-import { getHostname } from '~/shared/utils/url';
 
 export class View extends BrowserView {
   public title: string = '';
   public url: string = '';
+  public favicon: string = '';
   public tabId: number;
   public homeUrl: string = 'dot://newtab';
   public error: ViewError;
@@ -69,7 +69,7 @@ export class View extends BrowserView {
             enabled: params.srcURL.includes('blob:') == false,
             icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
-              appWindow.webContents.send('api-tabs-create', {
+              windowsManager.window.webContents.send('api-tabs-create', {
                 url: params.srcURL,
                 active: false,
               });
@@ -102,7 +102,7 @@ export class View extends BrowserView {
             label: 'Open link in new tab',
             icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
-              appWindow.webContents.send('api-tabs-create', {
+              windowsManager.window.webContents.send('api-tabs-create', {
                 url: params.linkURL,
                 active: false,
               });
@@ -130,7 +130,7 @@ export class View extends BrowserView {
             label: 'Open image in new tab',
             icon: process.cwd() + '\\static\\app-icons\\add.png',
             click: () => {
-              appWindow.webContents.send('api-tabs-create', {
+              windowsManager.window.webContents.send('api-tabs-create', {
                 url: params.srcURL,
                 active: false,
               });
@@ -299,25 +299,25 @@ export class View extends BrowserView {
     });
 
     this.webContents.addListener('found-in-page', (e, result) => {
-      appWindow.webContents.send('found-in-page', result);
+      windowsManager.window.webContents.send('found-in-page', result);
     });
 
     this.webContents.once('media-started-playing', (listener: any) => {
-      appWindow.webContents.send(`audio-playing-${this.tabId}`);
+      windowsManager.window.webContents.send(`audio-playing-${this.tabId}`);
     });
 
     this.webContents.once('media-paused', (listener: any) => {
-      appWindow.webContents.send(`audio-stopped-${this.tabId}`);
+      windowsManager.window.webContents.send(`audio-stopped-${this.tabId}`);
     });
 
     this.webContents.addListener('did-stop-loading', () => {
       this.updateNavigationState();
-      appWindow.webContents.send(`view-loading-${this.tabId}`, false);
+      windowsManager.window.webContents.send(`view-loading-${this.tabId}`, false, this.url);
     });
 
     this.webContents.addListener('did-start-loading', () => {
       this.updateNavigationState();
-      appWindow.webContents.send(`view-loading-${this.tabId}`, true);
+      windowsManager.window.webContents.send(`view-loading-${this.tabId}`, true, this.url);
     });
 
     this.webContents.addListener('did-fail-load', 
@@ -339,6 +339,8 @@ export class View extends BrowserView {
     this.webContents.addListener('did-start-navigation', (...args: any[]) => {
       this.updateNavigationState();
 
+      windowsManager.window.webContents.send(`browserview-tab-info-updated-${this.tabId}`);
+
       const url = this.webContents.getURL();
 
       const { styles, scripts } = engine.getCosmeticsFilters({
@@ -352,7 +354,7 @@ export class View extends BrowserView {
         this.webContents.executeJavaScript(script);
       }
 
-      appWindow.webContents.send(`load-commit-${this.tabId}`, ...args);
+      windowsManager.window.webContents.send(`load-commit-${this.tabId}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,
@@ -384,17 +386,30 @@ export class View extends BrowserView {
       });
     });
 
-    this.webContents.addListener('will-navigate', (e, url) => {
-      e.preventDefault();
+    // this.webContents.addListener('will-navigate', (e, url) => {
+    //   e.preventDefault();
 
-      if(getHostname(url) !== getHostname(this.url)) {
-        appWindow.webContents.send(
-          `browserview-tab-info-updated-${this.tabId}`
-        )
-      }
+    //   windowsManager.window.viewManager.selected.webContents.loadURL(url);
+    // });
 
-      appWindow.viewManager.selected.webContents.loadURL(url);
+    this.webContents.addListener('did-navigate', async (e, url) => {
+      windowsManager.window.webContents.send(
+        `view-did-navigate-${this.webContents.id}`,
+        url,
+      );
     });
+
+    this.webContents.addListener(
+      'did-navigate-in-page',
+      async (e, url, isMainFrame) => {
+        if (isMainFrame) {
+          windowsManager.window.webContents.send(
+            `view-did-navigate-${this.webContents.id}`,
+            url,
+          );
+        }
+      },
+    );
 
     this.webContents.addListener(
       'new-window',
@@ -402,7 +417,7 @@ export class View extends BrowserView {
         if (disposition === 'new-window') {
           if (disposition === 'new-window') {
             if (
-              appWindow.viewManager.selected.title != `Dot - ${options.title}`
+              windowsManager.window.viewManager.selected.title != `Dot - ${options.title}`
             ) {
               e.preventDefault();
               if (
@@ -431,44 +446,44 @@ export class View extends BrowserView {
           }
           if (frameName === 'link') {
             e.preventDefault();
-            appWindow.viewManager.selected.webContents.loadURL(url);
+            windowsManager.window.viewManager.selected.webContents.loadURL(url);
           }
           if (frameName === '_self' || options.title == '_self') {
             e.preventDefault();
-            appWindow.viewManager.selected.webContents.loadURL(url);
+            windowsManager.window.viewManager.selected.webContents.loadURL(url);
           }
           if (frameName === '_top' || options.title == '_top') {
             e.preventDefault();
-            appWindow.viewManager.selected.webContents.loadURL(url);
+            windowsManager.window.viewManager.selected.webContents.loadURL(url);
           }
           if (frameName === '_blank' || options.title == '_blank') {
             e.preventDefault();
-            appWindow.webContents.send('api-tabs-create', {
+            windowsManager.window.webContents.send('api-tabs-create', {
               url,
               active: true,
             });
           }
           if (frameName === 'modal') {
             e.preventDefault();
-            appWindow.webContents.send('api-tabs-create', {
+            windowsManager.window.webContents.send('api-tabs-create', {
               url,
               active: true,
             });
           }
         } else if (disposition === 'foreground-tab') {
           e.preventDefault();
-          appWindow.webContents.send('api-tabs-create', { url, active: true });
+          windowsManager.window.webContents.send('api-tabs-create', { url, active: true });
         } else if (disposition === 'background-tab') {
           e.preventDefault();
-          appWindow.webContents.send('api-tabs-create', { url, active: false });
+          windowsManager.window.webContents.send('api-tabs-create', { url, active: false });
         } else if (frameName == '_blank') {
           e.preventDefault();
-          appWindow.webContents.send('api-tabs-create', { url, active: true });
+          windowsManager.window.webContents.send('api-tabs-create', { url, active: true });
         }
 
         if (frameName == '_blank') {
           e.preventDefault();
-          appWindow.webContents.send('api-tabs-create', { url, active: true });
+          windowsManager.window.webContents.send('api-tabs-create', { url, active: true });
         }
 
         this.emitWebNavigationEvent('onCreatedNavigationTarget', {
@@ -493,8 +508,11 @@ export class View extends BrowserView {
     this.webContents.addListener(
       'page-favicon-updated',
       async (e, favicons) => {
+        this.favicon = favicons[0];
+
+        console.log(favicons)
         console.log(`Updated favicon for ${this.url}`)
-        appWindow.webContents.send(
+        windowsManager.window.webContents.send(
           `browserview-favicon-updated-${this.tabId}`,
           favicons[0],
         );
@@ -502,7 +520,7 @@ export class View extends BrowserView {
     );
 
     this.webContents.addListener('did-change-theme-color', (e, color) => {
-      appWindow.webContents.send(
+      windowsManager.window.webContents.send(
         `browserview-theme-color-updated-${this.tabId}`,
         color,
       );
@@ -543,8 +561,8 @@ export class View extends BrowserView {
   public updateNavigationState() {
     if (this.isDestroyed()) return;
 
-    if (appWindow.viewManager.selectedId === this.tabId) {
-      appWindow.webContents.send('update-navigation-state', {
+    if (windowsManager.window.viewManager.selectedId === this.tabId) {
+      windowsManager.window.webContents.send('update-navigation-state', {
         canGoBack: this.webContents.canGoBack(),
         canGoForward: this.webContents.canGoForward(),
       });

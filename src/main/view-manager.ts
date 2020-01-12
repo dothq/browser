@@ -1,6 +1,6 @@
 import { ipcMain, nativeImage } from 'electron';
 import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants';
-import { appWindow } from '.';
+import { windowsManager } from '.';
 import { View } from './view';
 import { resolve } from 'path';
 import console = require('console');
@@ -31,7 +31,7 @@ export class ViewManager {
       (e: Electron.IpcMainEvent, { tabId, url }: any) => {
         this.create(tabId, url);
 
-        appWindow.webContents.send(
+        windowsManager.window.webContents.send(
           `browserview-created-${tabId}`,
           this.views[tabId].id,
         );
@@ -72,7 +72,7 @@ export class ViewManager {
           }
 
           if (data.callId) {
-            appWindow.webContents.send(
+            windowsManager.window.webContents.send(
               `browserview-call-result-${data.callId}`,
               result,
             );
@@ -96,7 +96,7 @@ export class ViewManager {
         const url = view.webContents.getURL();
 
         if (title !== view.title) {
-          appWindow.webContents.send(`browserview-data-updated-${key}`, {
+          windowsManager.window.webContents.send(`browserview-data-updated-${key}`, {
             title,
             url,
           });
@@ -108,28 +108,6 @@ export class ViewManager {
 
     ipcMain.on('browserview-clear', () => {
       this.clear();
-    });
-
-    ipcMain.on('is-light-mode', () => {
-      try {
-        var path = nativeImage.createFromPath(
-          resolve(process.cwd() + '/static/icon-inverted.png'),
-        );
-        appWindow.setIcon(path);
-      } catch (e) {
-        console.debug(e);
-      }
-    });
-
-    ipcMain.on('is-dark-mode', () => {
-      try {
-        var path = nativeImage.createFromPath(
-          resolve(process.cwd() + '/static/icon.png'),
-        );
-        appWindow.setIcon(path);
-      } catch (e) {
-        console.debug(e);
-      }
     });
   }
 
@@ -144,7 +122,7 @@ export class ViewManager {
   }
 
   public clear() {
-    appWindow.setBrowserView(null);
+    windowsManager.window.setBrowserView(null);
     for (const key in this.views) {
       this.destroy(parseInt(key, 10));
     }
@@ -168,13 +146,13 @@ export class ViewManager {
 
     if (!view || view.isDestroyed()) {
       this.destroy(tabId);
-      appWindow.setBrowserView(null);
+      windowsManager.window.setBrowserView(null);
       return;
     }
 
     if (this.isHidden) return;
 
-    appWindow.setBrowserView(view);
+    windowsManager.window.setBrowserView(view);
 
     const currUrl = view.webContents.getURL();
 
@@ -182,7 +160,7 @@ export class ViewManager {
       (currUrl === '' && view.homeUrl === 'about:blank') ||
       currUrl === 'about:blank'
     ) {
-      appWindow.webContents.focus();
+      windowsManager.window.webContents.focus();
     } else {
       view.webContents.focus();
     }
@@ -195,7 +173,7 @@ export class ViewManager {
 
     if (!view) return;
 
-    const { width, height } = appWindow.getContentBounds();
+    const { width, height } = windowsManager.window.getContentBounds();
     view.setBounds({
       x: 0,
       y: this.fullscreen ? 0 : TOOLBAR_HEIGHT + 1,
@@ -207,7 +185,7 @@ export class ViewManager {
 
   public hideView() {
     this.isHidden = true;
-    appWindow.setBrowserView(null);
+    windowsManager.window.setBrowserView(null);
   }
 
   public showView() {
@@ -223,8 +201,8 @@ export class ViewManager {
       return;
     }
 
-    if (appWindow.getBrowserView() === view) {
-      appWindow.setBrowserView(null);
+    if (windowsManager.window.getBrowserView() === view) {
+      windowsManager.window.setBrowserView(null);
     }
 
     view.destroy();

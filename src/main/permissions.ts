@@ -3,7 +3,7 @@ import {
   app,
   ipcMain,
 } from 'electron';
-import { appWindow } from '.';
+import { windowsManager } from '.';
 import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants/design';
 
 export class PermissionDialog extends BrowserWindow {
@@ -64,9 +64,9 @@ export class PermissionDialog extends BrowserWindow {
         (e: any, r: boolean, permission: any) => {
           resolve(r);
           if (permission == 'http_permission') {
-            appWindow.viewManager.selected.webContents.loadURL(
+            this.appWindow.viewManager.selected.webContents.loadURL(
               `https://${
-                appWindow.viewManager.selected.webContents
+                this.appWindow.viewManager.selected.webContents
                   .getURL()
                   .split('://')[1]
               }`,

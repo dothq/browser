@@ -1,7 +1,7 @@
 import { app } from 'electron';
 import { resolve } from 'path';
 import { makeId } from '../../shared/utils/string';
-import { appWindow } from '..';
+import { windowsManager } from '..';
 
 export const startSessionManager = (viewSession: Electron.Session) => {
     viewSession
@@ -12,7 +12,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
 
             item.setSavePath(savePath);
 
-            appWindow.webContents.send('download-started', {
+            windowsManager.window.webContents.send('download-started', {
                 fileName,
                 receivedBytes: 0,
                 totalBytes: item.getTotalBytes(),
@@ -28,7 +28,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
                     if (item.isPaused()) {
 
                     } else {
-                        appWindow.webContents.send('download-progress', {
+                        windowsManager.window.webContents.send('download-progress', {
                             id,
                             receivedBytes: item.getReceivedBytes(),
                             downloadedFrom: item.getURL(),
@@ -38,7 +38,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
             });
 
             item.once('done', () => {
-                appWindow.webContents.send('download-completed', id);
+                windowsManager.window.webContents.send('download-completed', id);
             });
         });
 
@@ -49,7 +49,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
             if (
                 parsed.protocol == 'https:'
             ) {
-                const response = await appWindow.permissionWindow.requestPermission(
+                const response = await windowsManager.window.permissionWindow.requestPermission(
                     permission,
                     webContents.getURL(),
                     details,
@@ -58,7 +58,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
                 callback(response);
             } else {    
                 if(parsed.protocol != 'dot:') {
-                    await appWindow.permissionWindow.requestPermission('http_permission', webContents.getURL(), details);
+                    await windowsManager.window.permissionWindow.requestPermission('http_permission', webContents.getURL(), details);
                 } else {
                     callback(true)
                 }

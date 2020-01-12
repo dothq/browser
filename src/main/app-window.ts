@@ -2,6 +2,7 @@ import {
   BrowserWindow,
   app,
   nativeImage,
+  ipcMain,
 } from 'electron';
 
 import { resolve, join } from 'path';
@@ -21,7 +22,6 @@ import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 
 import { startMessagingService } from './services';
-import { preferences } from '.';
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
@@ -57,8 +57,6 @@ export class AppWindow extends BrowserWindow {
 
     startMessagingService(this);
 
-    this.webContents.send('update-settings', preferences);
-
     this.setBackgroundColor('#fff');
 
     app.commandLine.appendSwitch('enable-features', 'OverlayScrollbar');
@@ -87,10 +85,6 @@ export class AppWindow extends BrowserWindow {
 
     const windowDataPath = getPath('window-data.json');
 
-    const errorLogPath = getPath('dot-errors.log');
-
-    var time = new Date().toUTCString();
-
     setupPushReceiver(this.webContents);
 
     let windowState: any = {};
@@ -102,14 +96,6 @@ export class AppWindow extends BrowserWindow {
       } catch (e) {
         writeFileSync(windowDataPath, JSON.stringify({}));
       }
-    }
-
-    if (existsSync(errorLogPath)) {
-      appendFile(
-        errorLogPath,
-        `// Error log effective of 2.2.0, ${time}. Running ${platform()}, started main app.\n`,
-        function(err) {},
-      );
     }
 
     // Merge bounds from the last window state to the current window options.
@@ -230,7 +216,7 @@ export class AppWindow extends BrowserWindow {
       this.loadURL('file://' + resolve(__dirname, 'renderer', 'app.html'));
     }
 
-    this.once('ready-to-show', () => {
+    this.once('ready-to-show', async () => {
       this.show();
     });
 
