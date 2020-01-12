@@ -13,6 +13,7 @@ const preloadConfig = {
         filename: '[name].js',
         publicPath: '',
     },
+    watch: devMode == 'development' ? false : true,
     plugins: [new WriteFilePlugin()],
     module: {
         rules: [

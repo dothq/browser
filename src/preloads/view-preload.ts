@@ -27,20 +27,17 @@ window.addEventListener('mouseup', e => {
   }
 });
 
-// console.log(window.location.href)
-if(window.location.href == "dot://newtab") {
-  (async function() {
-    console.log("async pls")
-    const w = await webFrame.executeJavaScript('window');
-    console.log(ipcRenderer.sendSync('get-settings-sync'))
-    w.settings = ipcRenderer.sendSync('get-settings-sync');
-  }) 
-}
+console.log("[Preload] Loaded preload.")
 
 const hostname = window.location.href.substr('dot://'.length);
 
-if (window.location.href.startsWith('dot://')) {
-  window.addEventListener('DOMContentLoaded', () => {
+if (window.location.protocol == 'dot:') {
+  (async function() {
+    const w = await webFrame.executeJavaScript('window');
+    w.settings = ipcRenderer.sendSync('get-settings-sync');
+  })
+
+  window.addEventListener('DOMContentLoaded', async () => {
     if (hostname.startsWith('settings')) document.title = 'Settings';
     else if (hostname.startsWith('history')) document.title = 'History';
     else if (hostname.startsWith('bookmarks')) document.title = 'Bookmarks';
@@ -49,18 +46,6 @@ if (window.location.href.startsWith('dot://')) {
       document.title = 'New tab';
     }
   });
-}
-
-if(window.location.protocol == 'dot:') {
-  if(window.location.hostname == 'newtab') {
-    window.addEventListener(
-      'message',
-      event => {
-        ipcRenderer.send(`webui-${window.location.hostname}-message`, event.data);
-      },
-      false,
-    );
-  }
 }
 
 let beginningScrollLeft: number = null;

@@ -106,7 +106,7 @@ export const Toolbar = observer(() => {
                 : '',
                 icon: icons.music,
                 badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
                   : 'transparent',
               }}
             />          
@@ -129,7 +129,7 @@ export const Toolbar = observer(() => {
                   : '',
                 icon: icons.download,
                 badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
                   : 'transparent',
               }}
             />          
@@ -153,7 +153,7 @@ export const Toolbar = observer(() => {
                   : '',
                 icon: icons.shield,
                 badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
                   : 'transparent',
               }}
             />
@@ -177,7 +177,7 @@ export const Toolbar = observer(() => {
                   : '',
                 icon: icons.more,
                 badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.options.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
                   : 'transparent',
               }}
             />

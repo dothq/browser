@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { centerIcon } from '~/shared/mixins';
+import { ITheme } from '~/interfaces/theme';
 
 interface ButtonProps {
   icon: string;
@@ -32,16 +33,19 @@ interface IconProps {
   icon: string;
   isClose?: boolean;
   isDark?: boolean;
+  theme?: ITheme;
 }
 
 export const Icon = styled.div`
   width: 100%;
   height: 100%;
   transition: 0.2s filter;
-  filter: var(--windows-controls-color);
   ${centerIcon(11)};
-  ${({ icon, isClose, isDark }: IconProps) => css`
+  
+  ${({ icon, isClose, isDark, theme }: IconProps) => css`
     background-image: url(${icon});
+    filter: ${theme['windows-controls-color']};
+
     &:hover {
       filter: ${isClose && 'invert(100%)'};
     }

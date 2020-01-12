@@ -17,8 +17,9 @@ import {
 import { shadeBlendConvert } from '../../utils';
 import { remote, ipcRenderer } from 'electron';
 import Ripple from '../../../../components/Ripple';
-import { transparency } from '../../../../constants';
+import { transparency, colors } from '../../../../constants';
 import { icons } from '../../constants';
+import { ITheme } from '~/interfaces/theme';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -164,39 +165,27 @@ const contextMenu = (tab: Tab) => () => {
 };
 
 const Content = observer(({ tab }: { tab: Tab }) => {
-  var title = tab.title;
-
   return (
     <StyledContent collapsed={tab.isExpanded}>
-      {!tab.loading && (
+      {!tab.loading && tab.favicon !== undefined && (
         <StyledIcon
-          style={{
-            backgroundImage: `url(${tab.favicon ? tab.favicon : icons.home })`,
-          }}
+          isIconSet={true}
+          favicon={tab.favicon}
         />
       )}
       {tab.loading && (
         <Preloader
-          color={
-            store.options.theme == 'dark'
-              ? shadeBlendConvert(0.8, tab.background)
-              : tab.background
-          }
+          color={tab.background}
           thickness={6}
           size={16}
           style={{ minWidth: 16, marginLeft: '12px' }}
         />
       )}
       <StyledTitle
-        style={{
-          color: tab.isSelected
-            ? store.options.theme == 'dark'
-              ? shadeBlendConvert(0.8, tab.background)
-              : tab.background
-            : `rgba(0, 0, 0, ${transparency.text.high})`,
-        }}
+        isIcon={tab.isIconSet}
+        tab={tab}
       >
-        <span>{title}</span>
+        <span>{tab.title}</span>
       </StyledTitle>
     </StyledContent>
   );
@@ -226,7 +215,7 @@ const Overlay = observer(({ tab }: { tab: Tab }) => {
       style={{
         backgroundColor: tab.isSelected
           ? shadeBlendConvert(
-              store.options.theme == 'light' ? 0.8 : 0.5,
+              store.preferences.conf.appearance.theme == 'light' ? 0.8 : 0.5,
               tab.background,
             )
           : 'rgba(0, 0, 0, 0.04)',
@@ -254,22 +243,25 @@ export default observer(({ tab }: { tab: Tab }) => {
         style={{
           backgroundColor: tab.isSelected
             ? shadeBlendConvert(
-                store.options.theme == 'light' ? 0.85 : 0.3,
+                store.theme['tab-vibrant-opacity'],
                 tab.background,
               )
-            : 'rgba(230, 230, 230, 0.25)',
+            : shadeBlendConvert(
+                0.9,
+                tab.hasThemeColor ? tab.background : colors.blue['500'],
+              ),
         }}
       >
         <Content tab={tab} />
         <Close tab={tab} />
 
         <Overlay tab={tab} />
-        {/* <Ripple
+        <Ripple
           rippleTime={0.6}
           opacity={0.15}
           color={tab.background}
           style={{ zIndex: 9 }}
-        /> */}
+        />
       </TabContainer>
       <Border tab={tab} />
     </StyledTab>

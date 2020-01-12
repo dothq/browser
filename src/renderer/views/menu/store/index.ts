@@ -3,6 +3,8 @@ import { observable } from 'mobx';
 import { resolve } from 'path';
 import { homedir } from 'os';
 
+const json = require('edit-json-file')
+
 export class Store {
   @observable
   public visible = true;
@@ -13,7 +15,18 @@ export class Store {
   public lang: any;
 
   public loadLocale() {
-
+    let languageJSON;
+    if(process.env.ENV !== 'dev') {
+      languageJSON = json(
+        `${__dirname.split("build/renderer")[0]}src/renderer/views/app/locale/${this.currentLanguage}.json`,
+      );
+    } else {
+      languageJSON = json(
+        `${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`,
+      );
+    }
+    console.log(`${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`)
+    this.lang = languageJSON.toObject();
   }
 
   public constructor() {

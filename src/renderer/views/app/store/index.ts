@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observable } from 'mobx';
+import { observable, action, computed } from 'mobx';
 
 import { TabsStore } from './tabs';
 import { TabGroupsStore } from './tab-groups';
@@ -12,9 +12,6 @@ import { SuggestionsStore } from './suggestions';
 import { NotifsStore } from './notifications';
 import { extname } from 'path';
 import { BookmarksStore } from './bookmarks';
-import { readFileSync, writeFile } from 'fs';
-import { getPath } from '../../../../shared/utils/paths';
-import { Settings } from '../models/settings';
 import { DownloadsStore } from './downloads';
 import { LocaleStore } from './locale';
 import { AutofillStore } from './autofill';
@@ -23,8 +20,10 @@ import { WeatherStore } from './weather';
 import { NewsStore } from './news';
 import { UserStore } from './user';
 import * as isDev from 'electron-is-dev';
-import { DEFAULT_PREFERENCES, DEFAULT_PREFERENCES_OBJECT } from '~/shared/models/default-preferences';
+import { DEFAULT_PREFERENCES } from '~/shared/models/default-preferences';
 import { OptionsStore } from './settings';
+import { getTheme } from '~/shared/utils/themes';
+import { PreferencesStore } from './preferences';
 
 export class Store {
   public history = new HistoryStore();
@@ -44,6 +43,7 @@ export class Store {
   public notifications = new NotifsStore();
   public autofill = new AutofillStore();
   public options = new OptionsStore();
+  public preferences = new PreferencesStore(this);
 
   public app = require("electron").app;
   public remoteApp = require("electron").remote.app;
@@ -75,23 +75,6 @@ export class Store {
     canGoForward: false,
   };
 
-  @observable
-  public preferences = DEFAULT_PREFERENCES_OBJECT
-
-  public async init() {
-    const data = await fetch('https://api.dotbrowser.me/api/v0/version');
-    const json = await data.json();
-
-    this.api = json.api;
-
-    this.weather.load()
-    this.news.load();
-    this.notifications.loadAll();
-    this.notifications.showPermissionWindow();
-
-    this.loadedAPI = true;
-  }
-
   public api: number;
 
   public loadedAPI: boolean;
@@ -100,8 +83,10 @@ export class Store {
 
   public canToggleMenu = false;
 
-  @observable
-  public theme: number = 1 | 0;
+  @computed
+  public get theme() {
+    return getTheme(this.preferences.conf.appearance.theme)
+  }
 
   @observable
   public isMaximized: boolean;
@@ -111,17 +96,10 @@ export class Store {
     y: 0,
   };
 
-  constructor() {
+  public loaded: boolean = false;
 
-    ipcRenderer.on(
-      'update-settings',
-      (e: IpcRendererEvent, preferences: DEFAULT_PREFERENCES) => {
-        console.log(preferences)
-        this.preferences = preferences;
-      }
-    )
-
-    this.init()
+  public constructor() {
+    console.log("App loaded in store")
 
     ipcRenderer.on(
       'update-navigation-state',

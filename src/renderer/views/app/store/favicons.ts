@@ -8,6 +8,7 @@ import { observable } from 'mobx';
 
 const icojs = require('icojs');
 const fileType = require('file-type');
+const sizeOf = require('buffer-image-size');
 
 const convertIcoToPng = (icoData: Buffer) => {
   return new Promise((resolve: (b: Buffer) => void) => {
@@ -64,6 +65,9 @@ export class FaviconsStore {
           }
 
           let data = Buffer.from(res.data, 'binary');
+
+          const dimensions = sizeOf(data);
+          console.log(dimensions)
 
           const type = fileType(data);
 

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { TOOLBAR_BUTTON_WIDTH } from '~/renderer/views/app/constants';
 import ToolbarButton from '../ToolbarButton';
+import { ITheme } from '~/interfaces/theme';
 
 export const StyledTabbar = styled.div`
   height: 100%;
@@ -28,4 +29,8 @@ export const AddTab = styled(ToolbarButton)`
   position: absolute;
   left: 0;
   top: 0;
+
+  ${({ theme }: { theme?: ITheme }) => css`
+    filter: ${theme['toolbar-addtab-filter']}
+  `};
 `;

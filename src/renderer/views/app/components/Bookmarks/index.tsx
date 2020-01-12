@@ -12,7 +12,6 @@ import { ContextMenu, ContextMenuItem } from '../ContextMenu';
 import { Content, Container, Scrollable, Title } from '../Overlay/style';
 import { SelectionDialog } from '../SelectionDialog';
 import { preventHiding } from '../Overlay';
-import { ListItem, Buttons } from '../Settings/style';
 import { Textfield } from '~/renderer/components/Textfield';
 import { Inputfield } from '~/renderer/components/Input';
 import Dialog from '@material-ui/core/Dialog';
@@ -77,30 +76,6 @@ const BookmarksList = observer(() => {
   );
 });
 
-export const NewBookmark = observer(() => {
-  return (
-        <BookmarkSection>
-          <ListItem>
-
-          </ListItem>
-        </BookmarkSection>
-  )
-});
-
-export const ImportDialog = observer(() => {
-  return (
-    <BookmarkSection>
-      <ListItem>
-        <Title>Import from</Title>
-        <Buttons style={{ marginLeft: 'auto' }}>
-          <Select>
-            
-          </Select>
-        </Buttons>
-      </ListItem>
-    </BookmarkSection>
-  );
-});
 
 export const Bookmarks = observer(() => {
   const { length } = store.bookmarks.selectedItems;
@@ -148,11 +123,6 @@ export const Bookmarks = observer(() => {
         </ContextMenu>
         <Sections>
           <Content>
-
-          {store.bookmarks.currentDisplay == 'new_bookmark' && (<Title style={{ margin: '75px -30px -25px -30px' }}>{store.locale.lang.bookmarks[0].add_bookmark}</Title>)}
-          {store.bookmarks.currentDisplay == 'new_bookmark' && (<NewBookmark />)}
-
-          {store.bookmarks.currentDisplay == 'import' && (<ImportDialog />)}
 
           </Content>
         </Sections>

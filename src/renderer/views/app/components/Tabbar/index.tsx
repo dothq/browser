@@ -31,7 +31,6 @@ export const Tabbar = observer(() => {
       </TabsContainer>
       <AddTab
         icon={icons.add}
-        style={{ filter: 'var(--toolbar-addtab-filter)' }}
         onClick={onAddTabClick}
         divRef={(r: any) => (store.addTab.ref = r)}
       />

@@ -178,8 +178,8 @@ export const preventHiding = (e: any) => {
   if ((store.options.emojiCtx = true)) {
     store.options.emojiCtx = false;
   }
-  if ((store.options.themeSelect = true)) {
-    store.options.themeSelect = false;
+  if ((store.preferences.conf.appearance.themeSelect = true)) {
+    store.preferences.conf.appearance.themeSelect = false;
   }
 };
 
@@ -266,7 +266,6 @@ export const Overlay = observer(() => {
       </Container>
       <History />
       <Bookmarks />
-      <Settings />
       <AdBlock />
     </StyledOverlay>
   );

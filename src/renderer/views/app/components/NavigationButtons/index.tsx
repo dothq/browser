@@ -10,6 +10,7 @@ import { resolve } from 'path';
 import { platform, homedir } from 'os';
 import { ipcRenderer, remote, MenuItem } from 'electron';
 import { HistoryItem } from '../../models/history-item';
+import { NEWTAB_URL } from '../../constants';
 
 
 const onBackClick = () => {
@@ -142,8 +143,7 @@ const refreshContextMenu = () => {
 };
 
 const onHomeClick = () => {
-  var url = 'dot://newtab'
-  store.tabs.addTab({ url, active: true });
+  store.tabs.selectedTab.callViewMethod('webContents.loadURL', NEWTAB_URL);
 }
 
 export const NavigationButtons = observer(() => {
@@ -169,7 +169,6 @@ export const NavigationButtons = observer(() => {
         style={{
           marginLeft: 8,
           height: '42px',
-          filter: 'var(--toolbar-navigation-filter)',
         }}
         onClick={onBackClick}
         onMouseDown={onBackMouseDown}
@@ -184,7 +183,7 @@ export const NavigationButtons = observer(() => {
         icon={icons.forward}
         onClick={onForwardClick}
         title={store.locale.lang.window[0].navigate_forward}
-        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
+        style={{ height: '42px' }}
       />
       <ToolbarButton
         size={20}
@@ -197,7 +196,7 @@ export const NavigationButtons = observer(() => {
         }
         onContextMenu={refreshContextMenu}
         onClick={onRefreshClick}
-        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
+        style={{ height: '42px' }}
       />
       <ToolbarButton
         size={20}
@@ -205,7 +204,7 @@ export const NavigationButtons = observer(() => {
         title={'Home'}
         icon={icons.home}
         onClick={onHomeClick}
-        style={{ height: '42px', filter: 'var(--toolbar-navigation-filter)' }}
+        style={{ height: '42px' }}
       />
     </StyledContainer>
   );

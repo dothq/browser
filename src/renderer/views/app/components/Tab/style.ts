@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 import { transparency, colors } from '~/renderer/constants';
 import { icons, TABS_PADDING } from '~/renderer/views/app/constants';
 import { centerIcon, body2 } from '~/shared/mixins';
+import { Tab } from '../../models/tab';
+import { ITheme } from '~/interfaces/theme';
+import { shadeBlendConvert } from '../../utils';
 
 interface CloseProps {
   visible: boolean;
@@ -89,7 +92,7 @@ export const StyledOverlay = styled.div`
   right: 0;
   bottom: 0;
   transition: 0.3s opacity;
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: #f9f9f9;
   ${({ hovered }: { hovered: boolean }) => css`
     opacity: ${hovered ? 1 : 0};
   `};
@@ -97,6 +100,8 @@ export const StyledOverlay = styled.div`
 
 interface TitleProps {
   isIcon: boolean;
+  tab?: Tab;
+  theme?: ITheme;
 }
 
 export const StyledTitle = styled.div`
@@ -106,13 +111,30 @@ export const StyledTitle = styled.div`
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: 0.2s margin-left;
-  margin-left: 12px;
+  margin-left: 8px;
+
+  ${({ isIcon, tab, theme }: TitleProps) => css`
+    margin-left: ${!isIcon ? 0 : 12}px;
+
+    color: ${tab.isSelected
+    ? shadeBlendConvert(theme['tab-text-opacity'], tab.background)
+    : `rgba(0, 0, 0, ${transparency.text.high})`}
+  `};
 `;
 
 export const StyledIcon = styled.div`
   height: 16px;
-  transition: 0.2s opacity, 0.5s min-width;
+  min-width: 16px;
+  transition: 0.2s opacity, 0.2s min-width;
   ${centerIcon()};
+  
+  ${({ isIconSet, favicon }: { isIconSet: boolean; favicon: string }) => css`
+    min-width: ${favicon !== '' ? '16px' : '0px'};
+    opacity: ${favicon !== '' ? 1 : 0};
+    margin-left: ${favicon !== '' ? '12px' : '0px'};
+
+    background-image: url(${favicon});
+  `};
 `;
 
 interface ContentProps {

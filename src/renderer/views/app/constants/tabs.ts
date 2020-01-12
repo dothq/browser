@@ -12,7 +12,7 @@ export const defaultTabOptions: chrome.tabs.CreateProperties = {
   active: true,
 };
 
-export const TAB_MAX_WIDTH = 218;
+export const TAB_MAX_WIDTH = 232;
 export const TAB_MIN_WIDTH = 72;
 export const TAB_PINNED_WIDTH = 32;
 export const TAB_ANIMATION_DURATION = 0.3;

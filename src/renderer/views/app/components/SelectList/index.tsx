@@ -46,7 +46,7 @@ class SelectList extends React.Component<Props, {}> {
             icon,
         } = this.props;
 
-        console.log(store.options.theme)
+        console.log(store.preferences.conf.appearance.theme)
 
         return (
             <StyledSelect onClick={() => this.toggleView()} isOpen={this.view}>

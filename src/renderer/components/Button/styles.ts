@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 import { shadows, button } from '~/shared/mixins';
+import { ITheme } from '~/interfaces/theme';
 
 interface StyledButtonProps {
   background: string;
@@ -8,6 +9,7 @@ interface StyledButtonProps {
   type?: 'contained' | 'outlined';
   visible: boolean;
   icon?: any;
+  theme?: ITheme;
 }
 
 export const StyledButton = styled.div`
@@ -17,7 +19,6 @@ export const StyledButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px var(--button-border) solid;
   transition: background-color 0.3s;
   border-radius: 30px;
   padding-top: 3px;
@@ -25,19 +26,21 @@ export const StyledButton = styled.div`
   padding-left: 10px;
   padding-right: 10px;
   margin-right: -9px;
-  color: var(--button-text-color) !important;
 
-  &:hover {
-    background-color: var(--button-hover) !important;
-  }
-
-  ${({ background, foreground, type, visible, icon }: StyledButtonProps) => css`
+  ${({ background, foreground, type, visible, icon, theme }: StyledButtonProps) => css`
     display: ${visible ? 'auto' : 'none'};
     color: ${foreground || '#fff'};
     background-color: ${type === 'outlined'
       ? 'transparent'
       : background || '#2196F3'};
     background-image: url(${icon})
+
+    border: 1px ${theme['button-border']} solid;
+    color: ${theme['button-text-color']} !important;
+
+    &:hover {
+      background-color: ${theme['button-hover']} !important;
+    }
   `};
 `;
 

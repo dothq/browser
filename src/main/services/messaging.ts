@@ -57,10 +57,6 @@ export const startMessagingService = (window: AppWindow) => {
         window.webContents.openDevTools({ mode: 'detach' })
     })
 
-    ipcMain.on('get-settings', (e: IpcMainEvent) => {
-        e.returnValue = preferences;
-    })
-
     autoUpdater.on('update-downloaded', ({ version }) => {
         window.webContents.send('update-available', version);
     });

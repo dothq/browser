@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 import { TOOLBAR_BUTTON_WIDTH, TOOLBAR_HEIGHT } from '~/renderer/views/app/constants';
 import { centerIcon } from '~/shared/mixins';
+import { ITheme } from '~/interfaces/theme';
 
 export const Icon = styled.div`
   width: 100%;
@@ -28,9 +29,9 @@ export const Button = styled.div`
   position: relative;
   transition: 0.2s background-color;
   width: ${TOOLBAR_BUTTON_WIDTH}px;
-  ${({ disabled, invert }: { disabled: boolean; invert: boolean }) => css`
+  ${({ disabled, invert, theme }: { disabled: boolean; invert: boolean; theme?: ITheme }) => css`
     pointer-events: ${disabled ? 'none' : 'auto'};
-    filter: ${invert ? 'invert(100%)' : 'none'};
+    filter: ${theme['toolbar-navigation-filter']};
   `};
 `;
 

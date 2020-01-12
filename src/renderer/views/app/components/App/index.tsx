@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { Style } from '../../style';
 import { Toolbar } from '../Toolbar';
@@ -59,16 +59,20 @@ if (existsSync(errorLogPath)) {
   );
 }
 
+console.log("[ThemeStore]", store.theme)
+
 const App = observer(() => {
   return (
-    <StyledApp className={`theme-${store.preferences.appearance.theme}`}>
-      <GlobalStyle />
-      <Toolbar />
-      <Line />
-      <Screenshot img={store.overlay.screenshot} />
-      <Overlay />
-      {platform() !== 'darwin' && <WindowsButtons />}
-    </StyledApp>
+    <ThemeProvider theme={store.theme}>
+      <StyledApp >
+        <GlobalStyle />
+        <Toolbar />
+        <Line />
+        <Screenshot img={store.overlay.screenshot} />
+        <Overlay />
+        {platform() !== 'darwin' && <WindowsButtons />}
+      </StyledApp>
+    </ThemeProvider>
   );
 });
 

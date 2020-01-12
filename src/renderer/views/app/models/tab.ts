@@ -11,6 +11,7 @@ import {
   defaultTabOptions,
   TAB_ANIMATION_DURATION,
   icons,
+  TAB_MAX_WIDTH,
 } from '~/renderer/views/app/constants';
 import { closeWindow, getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
@@ -38,7 +39,7 @@ export class Tab {
   public loading: boolean = false;
 
   @observable
-  public favicon: string = icons.home;
+  public favicon: string;
 
   @observable
   public tabGroupId: number;
@@ -243,19 +244,27 @@ export class Tab {
 
     ipcRenderer.on(
       `browserview-tab-info-updated-${this.id}`, async (e) => {
-        // this.background = colors.blue['500'];
-        // this.hasThemeColor = false;
-        // this.favicon = '';
+        this.background = colors.blue['500'];
+        this.hasThemeColor = false;
+        this.favicon = undefined;
     })
+
+    ipcRenderer.on(`view-did-navigate-${this.id}`, async (e, url: string) => {
+      console.log("Navigated to", url);
+    });
 
     ipcRenderer.on(
       `browserview-favicon-updated-${this.id}`,
       async (e: any, favicon: string) => {
-        try {
-          this.favicon = favicon;
+        console.log(favicon);
 
+        try {
           const fav = await store.favicons.addFavicon(favicon);
           const buf = Buffer.from(fav.split('base64,')[1], 'base64');
+
+          this.favicon = favicon;
+
+          console.log("favicon", this.favicon)
 
           if (!this.hasThemeColor) {
             const palette = await Vibrant.from(buf).getPalette();
@@ -264,7 +273,7 @@ export class Tab {
 
             if (getColorBrightness(palette.Vibrant.hex) < 170) {
               this.background =
-                store.options.theme == 'light'
+                store.preferences.conf.appearance.theme == 'light'
                   ? palette.Vibrant.hex
                   : palette.DarkVibrant.hex;
             } else {
@@ -272,7 +281,8 @@ export class Tab {
             }
           }
         } catch (e) {
-          this.favicon = icons.home;
+          console.log(e)
+          // this.favicon = ;
           this.background = colors.blue['500'];
         }
         this.updateData();
@@ -296,7 +306,7 @@ export class Tab {
       },
     );
 
-    ipcRenderer.on(`view-loading-${this.id}`, (e: any, loading: boolean) => {
+    ipcRenderer.on(`view-loading-${this.id}`, (e: any, loading: boolean, url: string) => {
       this.loading = loading;
 
       this.emitOnUpdated({
@@ -382,8 +392,8 @@ export class Tab {
 
     const width = containerWidth / tabs.length - TABS_PADDING;
 
-    if (width > 200) {
-      return 200;
+    if (width > TAB_MAX_WIDTH) {
+      return TAB_MAX_WIDTH;
     }
     if (width < 72) {
       return 72;

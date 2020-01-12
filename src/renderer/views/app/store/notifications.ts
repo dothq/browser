@@ -3,7 +3,7 @@ import { observable, action } from 'mobx';
 import { defaultNotifOptions, TOOLBAR_HEIGHT } from '../constants'
 import { resolve } from 'path';
 import store from '../store';
-import { appWindow } from '..';
+import { windowsManager } from '..';
 var modal = require('electron-modal');
 
 export class NotifsStore {
