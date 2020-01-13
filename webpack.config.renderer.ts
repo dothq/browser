@@ -3,7 +3,7 @@ import WriteFilePlugin from 'write-file-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import NodeExternals from 'webpack-node-externals';
 
-import { devMode, scTransformer } from './webpack.config';
+import { devMode, scTransformer, aliases } from './webpack.config';
 
 const rendererConfig = {
     mode: devMode,
@@ -43,13 +43,7 @@ const rendererConfig = {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-      alias: {
-          '~/renderer': path.resolve(__dirname, 'src', 'renderer'),
-          '~/main': path.resolve(__dirname, 'src', 'main'),
-          '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
-          '~/shared': path.resolve(__dirname, 'src', 'shared'),
-          '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
-      },
+      alias: aliases,
       modules: [
         path.resolve(__dirname, 'node_modules'),
         path.resolve(__dirname, './'),

@@ -24,6 +24,15 @@ export const scTransformer = createStyledComponentsTransformer({
   displayName: devMode == 'development',
 });
 
+export const aliases = {
+  '~/renderer': path.resolve(__dirname, 'src', 'renderer'),
+  '~/main': path.resolve(__dirname, 'src', 'main'),
+  '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
+  '~/shared': path.resolve(__dirname, 'src', 'shared'),
+  '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
+  '~/interfaces': path.resolve(__dirname, 'src', 'interfaces'),
+}
+
 export const baseConfig: Configuration = {
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -37,13 +46,7 @@ export const baseConfig: Configuration = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-    alias: {
-        '~/renderer': path.resolve(__dirname, 'src', 'renderer'),
-        '~/main': path.resolve(__dirname, 'src', 'main'),
-        '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
-        '~/shared': path.resolve(__dirname, 'src', 'shared'),
-        '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
-    }
+    alias: aliases
   },
   devtool: 'source-map',
   watchOptions: {

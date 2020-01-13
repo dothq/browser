@@ -6,7 +6,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
-import { devMode, scTransformer } from './webpack.config';
+import { devMode, scTransformer, aliases } from './webpack.config';
 import webpack from 'webpack';
 
 if(devMode == 'development') {
@@ -67,13 +67,7 @@ const webConfig = {
       },
       resolve: {
         extensions: ['.tsx', '.ts', '.jsx', '.js', '.json'],
-        alias: {
-            '~/renderer': path.resolve(__dirname, 'src', 'renderer'),
-            '~/main': path.resolve(__dirname, 'src', 'main'),
-            '~/preloads': path.resolve(__dirname, 'src', 'preloads'),
-            '~/shared': path.resolve(__dirname, 'src', 'shared'),
-            '~/extensions': path.resolve(__dirname, 'src', 'extensions'),
-        },
+        alias: aliases,
         modules: [
           path.resolve(__dirname, 'node_modules'),
           path.resolve(__dirname, './'),
