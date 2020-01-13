@@ -31,7 +31,7 @@ export const lightTheme: ITheme = {
     "context-menu-icon-filter": "invert(0%)",
 
     "tab-group-filter": "invert(0%)",
-    "tab-vibrant-opacity": 0,
+    "tab-vibrant-opacity": 0.6,
     "tab-text-opacity": 0,
 
     "bubble-background": "#cecece",

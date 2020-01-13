@@ -1,8 +1,11 @@
 import { observable, action } from 'mobx';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 
 import { DEFAULT_PREFERENCES_OBJECT, DEFAULT_PREFERENCES } from '~/shared/models/default-preferences';
 import { Store } from '.';
+import watch from 'node-watch';
+import { resolve } from 'path';
+import { readFileSync } from 'fs';
 
 export type SettingsSection =
   | 'appearance'
@@ -20,6 +23,19 @@ export class PreferencesStore {
     ipcRenderer.on('update-settings', (e, settings: DEFAULT_PREFERENCES) => {
       this.updatePreferences(settings);
       console.log("store", this.conf)
+    });
+
+    let userData = remote.app.getPath('userData')
+
+    const self = this;
+
+    watch(resolve(userData, 'dot', 'preferences.json'), () => {
+        console.log(`[PreferencesStore] The preferences file has been updated.`);
+
+        const file = readFileSync(resolve(userData, 'dot', 'preferences.json'), 'utf-8');
+        const newPrefs = JSON.parse(file)
+
+        self.updatePreferences(newPrefs)
     });
   }
 
