@@ -206,10 +206,6 @@ export const runWebRequestService = (window: AppWindow) => {
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
     const tabId = getTabByWebContentsId(window, details.webContentsId);
 
-    if(details.resourceType == 'mainFrame') {
-      windowsManager.window.webContents.send(`browserview-tab-info-updated-${tabId}`);
-    }
-
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 
@@ -223,10 +219,6 @@ export const runWebRequestService = (window: AppWindow) => {
   webviewRequest.onBeforeRequest(
     async (details: Electron.OnBeforeRequestDetails, callback: any) => {
       const tabId = getTabByWebContentsId(window, details.webContentsId);
-
-      if(details.resourceType == 'mainFrame') {
-        windowsManager.window.webContents.send(`browserview-tab-info-updated-${tabId}`);
-      }
 
       if (engine) {
         const { match, redirect } = engine.match(
