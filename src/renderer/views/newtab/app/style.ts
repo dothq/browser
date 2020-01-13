@@ -1,7 +1,12 @@
 import styled, { css } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
+import { ITheme } from '~/interfaces/theme';
 
 export const Style = css`
+  body {
+    margin: 0;
+  }
+
   .theme-light {
     --default: #ffffff;
     --input-color: black;
@@ -41,18 +46,16 @@ export const Style = css`
 
     --skeleton-color: rgb(119, 119, 119);
   }
-
-  body {
-    background-color: var(--default);
-    margin: 0;
-  }
 `;
 
 export const StyledNewTab = styled.div`
-  background-color: var(--default);
   height: 100vh;
   user-select: none;
   font-family: Roboto;
+
+  ${({ theme }: { theme?: ITheme }) => css`
+    background-color: ${theme['webui-newtab-background-color']};
+  `};
 `;
 
 export const Hero = styled.div`
@@ -81,10 +84,11 @@ export const DotLogo = styled.div`
   height: 37px;
   border-radius: 50px;
 
-  ${({ color }: { color: any }) => css`
-    background-color: ${color};
+  ${({ theme }: { theme?: ITheme }) => css`
+    background-color: ${theme['webui-newtab-dot-color']};
   `}
 `;
+
 
 export const IronBar = styled.div`
   ${centerIcon()};
@@ -121,7 +125,6 @@ export const Icon = styled.div`
   height: 40px;
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
-  opacity: 0.8;
   background-size: 25px;
   background-position: center;
   background-repeat: no-repeat;
@@ -132,8 +135,10 @@ export const Icon = styled.div`
     background-color: #110a0a1a;
   }
 
-  ${({ icon }: { icon: any }) => css`
+  ${({ icon, theme }: { icon: any; theme?: ITheme }) => css`
     background-image: url(${icon});
+    filter: ${theme['webui-newtab-icon-filter']};
+    opacity: ${theme['webui-newtab-icon-opacity']}
   `}
 `;
 

@@ -25,6 +25,7 @@ export class View extends BrowserView {
   constructor(id: number, url: string) {
     super({
       webPreferences: {
+        sandbox: true,
         preload: `${process.cwd()}/build/preloads/view-preload.js`,
         nodeIntegration: false,
         additionalArguments: [`--tab-id=${id}`],
@@ -32,6 +33,7 @@ export class View extends BrowserView {
         partition: 'persist:view',
         scrollBounce: true,
         plugins: true,
+        javascript: true
       },
     });
 
@@ -339,7 +341,9 @@ export class View extends BrowserView {
     this.webContents.addListener('did-start-navigation', (...args: any[]) => {
       this.updateNavigationState();
 
-      windowsManager.window.webContents.send(`browserview-tab-info-updated-${this.tabId}`);
+      if(args[3] == true) {
+        windowsManager.window.webContents.send(`browserview-tab-info-updated-${this.tabId}`);
+      }
 
       const url = this.webContents.getURL();
 
@@ -515,6 +519,7 @@ export class View extends BrowserView {
         windowsManager.window.webContents.send(
           `browserview-favicon-updated-${this.tabId}`,
           favicons[0],
+          windowsManager.settings.conf.appearance.theme
         );
       },
     );

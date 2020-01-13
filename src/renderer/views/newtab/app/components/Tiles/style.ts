@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { icons } from '../../../../app/constants';
+import { ITheme } from '~/interfaces/theme';
 
 export const StyledTiles = styled.div`
   margin: 50px 0;
@@ -30,28 +31,31 @@ export const StyledTile = styled.div`
   opacity: 1;
   width: 100px;
   height: 100px;
-  box-shadow: 0 0 0 1px #efefef, 0 0 0 4px rgb(255,255,255);
   transition: box-shadow 150ms;
   margin-right: 35px;
 
-  &:hover {
-    box-shadow: 0 0 0 3px #accdef, 0 0 0 5px rgb(0, 124, 251);
-  }
+  ${({ theme }: { theme?: ITheme }) => css`
+    box-shadow: ${theme['webui-newtab-tile-shadow']};
+
+    &:hover {
+      box-shadow ${theme['webui-newtab-tile-shadow-hover']};
+    }
+  `};
 `;
+
 
 export const TileIcon = styled.div`
   width: 45px;
   height: 45px;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-filter: none;
-  filter: none;
   border-radius: 4px;
 
-  ${({ icon }: { icon?: any }) => css`
+  ${({ icon, theme }: { icon?: any; theme?: ITheme }) => css`
     background-image: url(${icon ? icon : icons.page});
     background-size: ${icon ? '45px' : '32px'};
-    opacity: ${icon ? '1' : '0.4'};
+    opacity: ${icon ? '1' : theme['webui-newtab-icon-opacity']};
+    filter: ${icon ? 'none' : theme['webui-newtab-icon-filter']};
   `}
 `;
 

@@ -36,6 +36,7 @@ export class Preferences extends EventEmitter {
 
         ipcMain.on('get-settings-sync', async e => {
             await this.onLoad();
+            this.load()
             e.returnValue = this.conf;
           });
       

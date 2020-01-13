@@ -255,16 +255,12 @@ export class Tab {
 
     ipcRenderer.on(
       `browserview-favicon-updated-${this.id}`,
-      async (e: any, favicon: string) => {
-        console.log(favicon);
-
+      async (e: any, favicon: string, theme: string) => {
         try {
           const fav = await store.favicons.addFavicon(favicon);
           const buf = Buffer.from(fav.split('base64,')[1], 'base64');
 
           this.favicon = favicon;
-
-          console.log("favicon", this.favicon)
 
           if (!this.hasThemeColor) {
             const palette = await Vibrant.from(buf).getPalette();
@@ -273,7 +269,7 @@ export class Tab {
 
             if (getColorBrightness(palette.Vibrant.hex) < 170) {
               this.background =
-                store.preferences.conf.appearance.theme == 'light'
+                theme == 'light'
                   ? palette.Vibrant.hex
                   : palette.DarkVibrant.hex;
             } else {

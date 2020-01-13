@@ -18,6 +18,7 @@ import { TabSearchBox } from '../TabSearchBox';
 import { resolve } from 'path';
 import { tskManager, openDeveloperTools } from '../..';
 import { shadeBlendConvert } from '../../utils';
+import { colors } from '~/renderer/constants';
 
 const modal = require('electron-modal');
 
@@ -144,7 +145,9 @@ export const Toolbar = observer(() => {
               visible={true}
               data={{
                 badgeBackgroundColor: store.tabs.selectedTab
-                  ? store.tabs.selectedTab.background
+                  ? store.preferences.conf.appearance.theme == 'light'
+                    ? store.tabs.selectedTab.background
+                    : shadeBlendConvert(store.preferences.conf.appearance.theme !== 'dark' && store.preferences.conf.appearance.theme !== 'oled' ? 0.85 : 0.3, store.tabs.selectedTab.background)
                   : 'transparent',
                 badgeText: store.tabs.selectedTab
                   ? store.tabs.selectedTab.blockedAds > 0
@@ -152,9 +155,7 @@ export const Toolbar = observer(() => {
                     : ''
                   : '',
                 icon: icons.shield,
-                badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
-                  : 'transparent',
+                badgeTextColor: colors.grey['100']
               }}
             />
           </AbButton>

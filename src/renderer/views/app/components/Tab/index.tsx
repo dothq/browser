@@ -175,7 +175,10 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       )}
       {tab.loading && (
         <Preloader
-          color={tab.background}
+          color={shadeBlendConvert(
+            store.theme['tab-vibrant-opacity'],
+            tab.background,
+          )}
           thickness={6}
           size={16}
           style={{ minWidth: 16, marginLeft: '12px' }}
@@ -183,7 +186,18 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       )}
       <StyledTitle
         isIcon={tab.isIconSet}
-        tab={tab}
+        style={{ 
+          color: `${
+            tab.isSelected
+              ? store.preferences.conf.appearance.theme == 'light'
+                ? tab.background
+                : shadeBlendConvert(
+                    store.theme['tab-vibrant-opacity'],
+                    tab.background,
+                  )
+            : colors.grey['100']
+          }`
+        }}
       >
         <span>{tab.title}</span>
       </StyledTitle>
@@ -215,7 +229,7 @@ const Overlay = observer(({ tab }: { tab: Tab }) => {
       style={{
         backgroundColor: tab.isSelected
           ? shadeBlendConvert(
-              store.preferences.conf.appearance.theme == 'light' ? 0.8 : 0.5,
+              store.preferences.conf.appearance.theme == 'light' ? 0.6 : 0.3,
               tab.background,
             )
           : 'rgba(0, 0, 0, 0.04)',
@@ -241,15 +255,12 @@ export default observer(({ tab }: { tab: Tab }) => {
       <TabContainer
         selected={tab.isSelected}
         style={{
-          backgroundColor: tab.isSelected
-            ? shadeBlendConvert(
-                store.theme['tab-vibrant-opacity'],
-                tab.background,
-              )
-            : shadeBlendConvert(
-                0.9,
-                tab.hasThemeColor ? tab.background : colors.blue['500'],
-              ),
+          backgroundColor: store.preferences.conf.appearance.theme == 'light' 
+          ? shadeBlendConvert(
+            store.theme['tab-vibrant-opacity']+0.1,
+            tab.background,
+          )
+          : tab.background
         }}
       >
         <Content tab={tab} />

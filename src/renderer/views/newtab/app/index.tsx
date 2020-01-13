@@ -24,12 +24,13 @@ import {
 import * as React from 'react';
 import Skeleton from 'react-skeleton-loader';
 const moment = require('moment');
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { icons } from '../../app/constants';
 import { Search } from './components/Search';
 import { Tiles } from './components/Tiles'
 import { Modal } from '@material-ui/core';
 import * as axios from 'axios';
+import store from './store';
 
 export const FeedCard = ({
   category,
@@ -157,25 +158,23 @@ class NewTab extends React.Component {
 
   render() {
     return (
-      <StyledNewTab
-        className={
-          'theme-light'
-        }
-      >
-        <GlobalStyle />
-        <Section>
-          <Section_Left>
-            <DotLogo color={'#434343'} />
-          </Section_Left>
-          <Section_Middle>
-            <Search style={{ maxWidth: '600px', margin: '0 auto' }} />
-            <Tiles />
-          </Section_Middle>
-          <Section_Right>
-            <Icon icon={icons.settings} onClick={() => openWebView('settings')} />
-          </Section_Right>
-        </Section>
-      </StyledNewTab>
+      <ThemeProvider theme={store.theme}>
+        <StyledNewTab>
+          <GlobalStyle />
+          <Section>
+            <Section_Left>
+              <DotLogo color={'#434343'} />
+            </Section_Left>
+            <Section_Middle>
+              <Search style={{ maxWidth: '600px', margin: '0 auto' }} />
+              <Tiles />
+            </Section_Middle>
+            <Section_Right>
+              <Icon icon={icons.settings} onClick={() => openWebView('settings')} />
+            </Section_Right>
+          </Section>
+        </StyledNewTab>
+      </ThemeProvider>
     );
   }
 }

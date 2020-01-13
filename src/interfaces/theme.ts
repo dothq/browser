@@ -72,4 +72,11 @@ export interface ITheme {
     "line-color": string,
 
     "star-invert": string,
+
+    "webui-newtab-background-color": string,
+    "webui-newtab-dot-color": string,
+    "webui-newtab-tile-shadow": string,
+    "webui-newtab-tile-shadow-hover": string,
+    "webui-newtab-icon-filter": string,
+    "webui-newtab-icon-opacity": number
 }

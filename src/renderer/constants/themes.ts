@@ -74,6 +74,13 @@ export const lightTheme: ITheme = {
     "line-color": "#e5e5e5",
 
     "star-invert": "invert(0%)",
+
+    "webui-newtab-background-color": "#ffffff",
+    "webui-newtab-dot-color": "#434343",
+    "webui-newtab-tile-shadow": "0 0 0 1px #efefef, 0 0 0 4px rgb(255,255,255)",
+    "webui-newtab-tile-shadow-hover": "0 0 0 3px #accdef, 0 0 0 5px rgb(0,124,251)",
+    "webui-newtab-icon-filter": "invert(0)",
+    "webui-newtab-icon-opacity": 0.4
 }
 
 export const darkTheme: ITheme = {
@@ -150,6 +157,17 @@ export const darkTheme: ITheme = {
     "line-color": "#242424", 
 
     "star-invert": "invert(100%)", 
+
+    "webui-newtab-background-color": "#171717",
+    "webui-newtab-dot-color": "#ececec",
+    "webui-newtab-tile-shadow": "0 0 0 1px #1f1f1f, 0 0 0 4px rgba(255, 255, 255, 0)",
+    "webui-newtab-tile-shadow-hover": "0 0 0 3px #accdef, 0 0 0 5px rgb(0,124,251)",
+    "webui-newtab-icon-filter": "invert(1)",
+    "webui-newtab-icon-opacity": 1
 }
 
-export const oledTheme: ITheme = { ...darkTheme, "active-toolbar-color": "#020202" }
+export const oledTheme: ITheme = { ...darkTheme, 
+    "active-toolbar-color": "#020202", 
+    
+    "webui-newtab-background-color": "#020202"
+}

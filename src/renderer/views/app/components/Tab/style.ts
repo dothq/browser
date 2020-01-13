@@ -115,10 +115,6 @@ export const StyledTitle = styled.div`
 
   ${({ isIcon, tab, theme }: TitleProps) => css`
     margin-left: ${!isIcon ? 0 : 12}px;
-
-    color: ${tab.isSelected
-    ? shadeBlendConvert(theme['tab-text-opacity'], tab.background)
-    : `rgba(0, 0, 0, ${transparency.text.high})`}
   `};
 `;
 
