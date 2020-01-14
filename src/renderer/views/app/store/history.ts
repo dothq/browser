@@ -3,6 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { HistoryItem, HistorySection } from '../models';
 import { getPath } from '~/shared/utils/paths';
 import { countVisitedTimes, compareDates, getSectionLabel } from '../utils';
+import { ipcRenderer, IpcRendererEvent } from 'electron';
 
 export type QuickRange =
   | 'all'
@@ -49,6 +50,14 @@ export class HistoryStore {
 
   constructor() {
     this.load();
+
+    console.log("Calling for top-sites");
+    ipcRenderer.send('update-top-sites');
+
+    ipcRenderer.on('get-top-sites', () => {
+      console.log("Recieved by appWindow, sending back history items.");
+      ipcRenderer.send('receive-top-sites', this.items);
+    })
   }
 
   public resetLoadedItems() {

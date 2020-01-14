@@ -30,6 +30,7 @@ export interface ITheme {
 
     "tab-group-filter": string,
     "tab-vibrant-opacity": number,
+    "tab-preloader-vibrant-opacity": number,
     "tab-text-opacity": number,
 
     "bubble-background": string,
@@ -78,5 +79,6 @@ export interface ITheme {
     "webui-newtab-tile-shadow": string,
     "webui-newtab-tile-shadow-hover": string,
     "webui-newtab-icon-filter": string,
-    "webui-newtab-icon-opacity": number
+    "webui-newtab-icon-opacity": number,
+    "webui-newtab-search-shadow": string,
 }

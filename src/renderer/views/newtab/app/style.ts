@@ -80,8 +80,8 @@ export const Section = styled.div`
 `;
 
 export const DotLogo = styled.div`
-  width: 37px;
-  height: 37px;
+  width: 28px;
+  height: 28px;
   border-radius: 50px;
 
   ${({ theme }: { theme?: ITheme }) => css`
@@ -121,15 +121,15 @@ export const IronButton = styled.div`
 `;
 
 export const Icon = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   -webkit-transition: background-color 0.3s;
   transition: background-color 0.3s;
-  background-size: 25px;
+  background-size: 22px;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50px;
-  margin: 0px 4px;
+  opacity: 0.8;
 
   &:hover {
     background-color: #110a0a1a;
@@ -138,7 +138,6 @@ export const Icon = styled.div`
   ${({ icon, theme }: { icon: any; theme?: ITheme }) => css`
     background-image: url(${icon});
     filter: ${theme['webui-newtab-icon-filter']};
-    opacity: ${theme['webui-newtab-icon-opacity']}
   `}
 `;
 

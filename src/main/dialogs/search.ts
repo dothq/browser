@@ -15,7 +15,6 @@ export class SearchDialog extends Dialog {
         height: HEIGHT,
         y: 80,
       },
-      hideTimeout: 300,
       devtools: true
     });
   }
@@ -26,11 +25,12 @@ export class SearchDialog extends Dialog {
     super.setBounds({ x, y: 80, width: WIDTH, height: HEIGHT })
   }
 
-  public show() {
+  public show(content) {
     this.rearrange();
     super.show();
-    this.webContents.send('visible', true);
     this.visible = true;
+    this.webContents.send('content', content);
+    this.webContents.send('visible', true);
   }
 
   public hide() {
@@ -38,7 +38,4 @@ export class SearchDialog extends Dialog {
     super.hide();
   }
 
-  public send(content?: any) {
-    this.webContents.send('content', content);
-  }
 }

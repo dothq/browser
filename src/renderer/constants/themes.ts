@@ -31,7 +31,8 @@ export const lightTheme: ITheme = {
     "context-menu-icon-filter": "invert(0%)",
 
     "tab-group-filter": "invert(0%)",
-    "tab-vibrant-opacity": 0.6,
+    "tab-vibrant-opacity": 0.4,
+    "tab-preloader-vibrant-opacity": 0.2,
     "tab-text-opacity": 0,
 
     "bubble-background": "#cecece",
@@ -80,7 +81,8 @@ export const lightTheme: ITheme = {
     "webui-newtab-tile-shadow": "0 0 0 1px #efefef, 0 0 0 4px rgb(255,255,255)",
     "webui-newtab-tile-shadow-hover": "0 0 0 3px #accdef, 0 0 0 5px rgb(0,124,251)",
     "webui-newtab-icon-filter": "invert(0)",
-    "webui-newtab-icon-opacity": 0.4
+    "webui-newtab-icon-opacity": 0.5,
+    "webui-newtab-search-shadow": "0 0 0 1px #d2d2d2, 0 0 0 4px rgb(255, 255, 255)"
 }
 
 export const darkTheme: ITheme = {
@@ -115,6 +117,7 @@ export const darkTheme: ITheme = {
 
     "tab-group-filter": "invert(100%)", 
     "tab-vibrant-opacity": 0.8,
+    "tab-preloader-vibrant-opacity": 0.4,
     "tab-text-opacity": 0.4,
 
     "bubble-background": "#21212121", 
@@ -161,9 +164,10 @@ export const darkTheme: ITheme = {
     "webui-newtab-background-color": "#171717",
     "webui-newtab-dot-color": "#ececec",
     "webui-newtab-tile-shadow": "0 0 0 1px #1f1f1f, 0 0 0 4px rgba(255, 255, 255, 0)",
-    "webui-newtab-tile-shadow-hover": "0 0 0 3px #accdef, 0 0 0 5px rgb(0,124,251)",
+    "webui-newtab-tile-shadow-hover": "0 0 0 3px #dedede, 0 0 0 5px rgb(128, 128, 128)",
     "webui-newtab-icon-filter": "invert(1)",
-    "webui-newtab-icon-opacity": 1
+    "webui-newtab-icon-opacity": 1,
+    "webui-newtab-search-shadow": "0 0 0 1px #444444, 0 0 0 4px rgba(255,255,255,0)"
 }
 
 export const oledTheme: ITheme = { ...darkTheme, 

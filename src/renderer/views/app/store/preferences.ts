@@ -35,6 +35,7 @@ export class PreferencesStore {
         const file = readFileSync(resolve(userData, 'dot', 'preferences.json'), 'utf-8');
         const newPrefs = JSON.parse(file)
 
+        self.conf = newPrefs;
         self.updatePreferences(newPrefs)
     });
   }

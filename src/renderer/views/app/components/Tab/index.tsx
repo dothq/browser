@@ -61,9 +61,7 @@ const onMouseLeave = () => {
 const onClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
   if(store.canToggleMenu) {
     store.canToggleMenu = false;
-    ipcRenderer.send('open-omnibox', {
-      url: tab.url,
-    });
+    ipcRenderer.send('open-omnibox');
   }
 }
 
@@ -176,7 +174,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       {tab.loading && (
         <Preloader
           color={shadeBlendConvert(
-            store.theme['tab-vibrant-opacity'],
+            store.theme['tab-preloader-vibrant-opacity'],
             tab.background,
           )}
           thickness={6}
@@ -257,7 +255,7 @@ export default observer(({ tab }: { tab: Tab }) => {
         style={{
           backgroundColor: store.preferences.conf.appearance.theme == 'light' 
           ? shadeBlendConvert(
-            store.theme['tab-vibrant-opacity']+0.1,
+            store.theme['tab-vibrant-opacity']+0.3,
             tab.background,
           )
           : tab.background
@@ -268,7 +266,7 @@ export default observer(({ tab }: { tab: Tab }) => {
 
         <Overlay tab={tab} />
         <Ripple
-          rippleTime={0.6}
+          rippleTime={0.4}
           opacity={0.15}
           color={tab.background}
           style={{ zIndex: 9 }}

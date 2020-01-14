@@ -1,6 +1,7 @@
 import styled, { css, keyframes } from 'styled-components';
 import { centerIcon } from '~/shared/mixins';
 import { icons } from '~/renderer/views/app/constants/icons';
+import { ITheme } from '~/interfaces/theme';
 
 export const StyledSearchBox = styled.div`
   z-index: 2;
@@ -15,17 +16,14 @@ export const StyledSearchBox = styled.div`
   width: 600px;
   transition: 0.2s all;
   outline: none;
-  opacity: 0;
-  pointer-events: none;
 
-  ${({ isFixed, isFocused }: { isFixed: boolean; isFocused: any }) => css`
+  ${({ isFixed, isFocused, theme }: { isFixed: boolean; isFocused: any; theme?: ITheme }) => css`
     position: ${isFixed == true ? 'fixed' : 'unset'};
     z-index: ${isFixed == true ? '9999999' : 'unset'};
     top: ${isFixed == true ? '20px' : 'unset'};
     margin-left: ${isFixed == true ? '300px' : 'auto'};
 
-    box-shadow: ${isFocused ? '0 0 0 1px #006eff, 0 0 0 4px rgba(30, 139, 251, 0.3), 0 8px 16px rgba(0,0,0,0.24)' : '0 0 0 1px #ffffff, 0 0 0 4px rgb(255, 255, 255)'};
-    border: ${isFocused ? '1px solid transparent' : 'var(--omnibox-border)'};
+    box-shadow: ${theme['webui-newtab-search-shadow']};
   `}
 `;
 
