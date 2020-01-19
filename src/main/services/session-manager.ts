@@ -49,7 +49,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
             if (
                 parsed.protocol == 'https:'
             ) {
-                const response = await windowsManager.window.permissionWindow.requestPermission(
+                const response = await windowsManager.window.permissions.requestPermission(
                     permission,
                     webContents.getURL(),
                     details,
@@ -58,7 +58,7 @@ export const startSessionManager = (viewSession: Electron.Session) => {
                 callback(response);
             } else {    
                 if(parsed.protocol != 'dot:') {
-                    await windowsManager.window.permissionWindow.requestPermission('http_permission', webContents.getURL(), details);
+                    await windowsManager.window.permissions.requestPermission('http_permission', webContents.getURL(), details);
                 } else {
                     callback(true)
                 }

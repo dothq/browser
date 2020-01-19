@@ -1,6 +1,5 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { platform } from 'os';
 
 import store from '~/renderer/views/app/store';
 import { StyledToolbar, Buttons, Separator, ToolbarWrap } from './style';
@@ -8,19 +7,12 @@ import { NavigationButtons } from '../NavigationButtons';
 import { Tabbar } from '../Tabbar';
 import ToolbarButton from "../ToolbarButton";
 import { icons } from '../../constants';
-import { ipcRenderer, Menu, remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import BrowserAction from '../BrowserAction';
 import { Find } from '../Find';
 import { AbButton } from '../ToolbarButton/style';
-import { ContextMenu, ContextMenuItem } from '../ContextMenu';
-import console = require('console');
-import { TabSearchBox } from '../TabSearchBox';
-import { resolve } from 'path';
-import { tskManager, openDeveloperTools } from '../..';
 import { shadeBlendConvert } from '../../utils';
 import { colors } from '~/renderer/constants';
-
-const modal = require('electron-modal');
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -135,7 +127,6 @@ export const Toolbar = observer(() => {
               }}
             />          
           </AbButton>
-          { store.downloads.list.length > 0 && <Separator />}
           <AbButton title="Dot Ad-Blocker" id="dab">
             <BrowserAction
               size={16}

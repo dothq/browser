@@ -96,9 +96,9 @@ export class OverlayStore {
     window.addEventListener('DOMContentLoaded', () => {
       store.tabs.addTab(defaultTabOptions);
 
-      ipcRenderer.send('open-omnibox', {
-        url: defaultTabOptions.url
-      });
+      // ipcRenderer.send('open-omnibox', {
+      //   url: defaultTabOptions.url
+      // });
     })
 
     ipcRenderer.on('open-settings', e => {

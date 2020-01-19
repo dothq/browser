@@ -2,6 +2,8 @@ import { ipcMain, IpcMainEvent, app } from 'electron'
 import { AppWindow } from '../app-window';
 import { autoUpdater } from 'electron-updater';
 
+import colors from 'colors';
+
 export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('update-install', () => {
         autoUpdater.quitAndInstall();
@@ -59,12 +61,12 @@ export const startMessagingService = (window: AppWindow) => {
         window.webContents.openDevTools({ mode: 'detach' })
     })
 
-    ipcMain.on('update-top-sites', async e => {
+    ipcMain.once('update-top-sites', async e => {
         window.webContents.send('get-top-sites');
 
-        ipcMain.on('receive-top-sites', async (e, topsites) => {
+        ipcMain.once('receive-top-sites', async (e, topsites) => {
             await app.isReady();
-            console.log("Recieved history items from history store, sending back to search.");
+            console.log(`${colors.blue.bold('[History]')} Sending history items to search dialog`);
             window.search.webContents.send('history-items', topsites);
         })
 

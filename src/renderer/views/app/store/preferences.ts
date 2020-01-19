@@ -29,10 +29,10 @@ export class PreferencesStore {
 
     const self = this;
 
-    watch(resolve(userData, 'dot', 'preferences.json'), () => {
+    watch(resolve(userData, 'preferences.json'), () => {
         console.log(`[PreferencesStore] The preferences file has been updated.`);
 
-        const file = readFileSync(resolve(userData, 'dot', 'preferences.json'), 'utf-8');
+        const file = readFileSync(resolve(userData, 'preferences.json'), 'utf-8');
         const newPrefs = JSON.parse(file)
 
         self.conf = newPrefs;

@@ -1,51 +1,11 @@
 import { remote } from 'electron';
 import store from '../store';
 import { resolve } from 'path';
-import console = require('console');
-
-var modal = require('electron-modal');
-
-async function areYouSure(tabSize: number) {
-  var ars = await modal.open(
-    resolve(process.cwd() + '\\static\\pages\\util\\quit-dot.html'),
-    {
-      width: 504,
-      height: 179,
-      resizable: true,
-      center: true,
-      title: 'Quit Dot',
-      maximizable: false,
-      modal: true,
-      minimizable: false,
-      movable: false,
-      titleBarStyle: 'hiddenInset',
-      autoHideMenuBar: true,
-      webPreferences: {
-        nodeIntegration: true,
-      },
-      frame: true,
-    },
-    { tabs: tabSize },
-  );
-
-  ars.show();
-
-  remote.webContents.getFocusedWebContents().openDevTools();
-
-  ars.on('window-close', () => {
-    ars.hide();
-    getCurrentWindow().close();
-  });
-}
 
 export const getCurrentWindow = () => remote.getCurrentWindow();
 
 export const closeWindow = () => {
-  if (store.tabs.list.length == 0) {
-    getCurrentWindow().close();
-  } else {
-    areYouSure(store.tabs.list.length);
-  }
+  getCurrentWindow().close();
 };
 
 export const minimizeWindow = () => {

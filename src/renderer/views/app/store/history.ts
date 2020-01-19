@@ -19,7 +19,6 @@ export class HistoryStore {
     autoload: true,
   });
 
-  @observable
   public items: HistoryItem[] = [];
 
   @observable
@@ -51,11 +50,9 @@ export class HistoryStore {
   constructor() {
     this.load();
 
-    console.log("Calling for top-sites");
     ipcRenderer.send('update-top-sites');
 
-    ipcRenderer.on('get-top-sites', () => {
-      console.log("Recieved by appWindow, sending back history items.");
+    ipcRenderer.once('get-top-sites', () => {
       ipcRenderer.send('receive-top-sites', this.items);
     })
   }

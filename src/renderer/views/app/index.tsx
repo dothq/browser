@@ -9,8 +9,6 @@ import { resolve, join } from 'path';
 import { icons } from './constants/icons';
 import { AppWindow } from '../../../main/app-window';
 
-var modal = require('electron-modal');
-
 const { remote } = require('electron')
 const { Menu, Tray, app } = remote
 
@@ -107,6 +105,7 @@ Menu.setApplicationMenu(
   Menu.buildFromTemplate([
     {
       label: 'Edit',
+      type: 'submenu',
       submenu: [
         { role: 'undo', label: 'Undo' },
         { role: 'redo', label: 'Redo' },

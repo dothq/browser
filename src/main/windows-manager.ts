@@ -5,7 +5,8 @@ import { app, session } from 'electron';
 import { 
   startSessionManager, 
   runWebRequestService, 
-  loadFilters 
+  loadFilters, 
+  preferencesLoad
 } from './services';
 
 export class WindowsManager {
@@ -13,7 +14,10 @@ export class WindowsManager {
 
   public settings = new Preferences(this);
 
+  public performanceStart: number;
+
   public constructor() {
+    this.startMonitor()
     this.onReady();
   }
 
@@ -25,6 +29,8 @@ export class WindowsManager {
     registerProtocol(viewSession);
     startSessionManager(viewSession);
 
+    preferencesLoad()
+
     this.create()
 
     loadFilters();
@@ -35,5 +41,9 @@ export class WindowsManager {
 
   private create() {
     this.window = new AppWindow();
+  }
+
+  private startMonitor() {
+    this.performanceStart = Date.now()
   }
 }

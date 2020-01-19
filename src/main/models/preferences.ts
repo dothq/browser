@@ -42,7 +42,6 @@ export class Preferences extends EventEmitter {
       
         ipcMain.on('get-settings', async e => {
             await this.onLoad();
-            console.log("update-settings", this.conf)
             this.windowsManager.window.webContents.send("update-settings", this.conf);
         });
 
@@ -52,8 +51,6 @@ export class Preferences extends EventEmitter {
     private async load() {
         const file = await promises.readFile(preferencesLocation, 'utf-8');
         const preferences = JSON.parse(file);
-
-        console.log("load", preferences)
 
         if(!preferences.appearance.theme) {
             preferences.appearance.theme = 'light';
@@ -67,7 +64,6 @@ export class Preferences extends EventEmitter {
 
         this.loaded = true;
         this.emit('load');
-        console.log("emitted load event");
     }
     
 

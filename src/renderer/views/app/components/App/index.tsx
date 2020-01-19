@@ -4,62 +4,16 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { Style } from '../../style';
 import { Toolbar } from '../Toolbar';
-import { ipcRenderer } from 'electron';
+import { Overlay } from '../Overlay';
 import { Line, StyledApp, Screenshot } from './style';
 import { WindowsButtons } from '../WindowsButtons';
+
 import store from '../../store';
 import { platform } from 'os';
-import { Overlay } from '../Overlay';
-import console = require('console');
-import { existsSync, appendFile } from 'fs';
-import { getPath } from '../../../../../shared/utils/paths';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
-// Locale loader
-
-export function checkLightMode() {
-  if (platform() === 'win32') {
-    var exec = require('child_process').exec;
-    exec(
-      'reg query HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -v SystemUsesLightTheme',
-      function(err: any, stdout: any, stderr: any) {
-        if (err) {
-          console.debug('\n' + stderr);
-        } else {
-          if (stdout.split('0x')[1] == 1) {
-            ipcRenderer.send('is-light-mode');
-          }
-          if (stdout.split('0x')[1] == 0) {
-            ipcRenderer.send('is-dark-mode');
-          }
-        }
-      },
-    );
-  }
-}
-checkLightMode();
-
 store.tabGroups.addGroup();
-
-window.onbeforeunload = () => {
-  ipcRenderer.send('browserview-clear');
-  checkLightMode();
-};
-
-const errorLogPath = getPath('dot-errors.log');
-
-var time = new Date().toUTCString();
-
-if (existsSync(errorLogPath)) {
-  appendFile(
-    errorLogPath,
-    `// Error log effective of 2.2.0, ${time}. Running ${platform()}, started renderer app.\n`,
-    function(err) {},
-  );
-}
-
-console.log("[ThemeStore]", store.theme)
 
 const App = observer(() => {
   return (

@@ -2,30 +2,27 @@ import {
   BrowserWindow,
   app,
   nativeImage,
-  ipcMain,
 } from 'electron';
 
-import { resolve, join } from 'path';
+import { resolve } from 'path';
 import { platform } from 'os';
 
 import { ViewManager } from './view-manager';
-import { getPath } from '../shared/utils/paths';
-import { existsSync, readFileSync, writeFileSync, appendFile } from 'fs';
 import console = require('console');
-import { PermissionDialog } from './permissions';
-const { setup: setupPushReceiver } = require('electron-push-receiver');
-import * as isDev from 'electron-is-dev';
+import colors from 'colors';
 
 import { MenuDialog } from './dialogs/menu';
 import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
+import { PermissionsDialog } from './dialogs/permissions';
 
 import { startMessagingService } from './services';
+import { windowsManager } from '.';
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
-  public permissionWindow: PermissionDialog = new PermissionDialog(this);
+  public permissions: PermissionsDialog = new PermissionsDialog(this);
   public menu: MenuDialog = new MenuDialog(this);
   public search: SearchDialog = new SearchDialog(this);
   public print: PrintDialog = new PrintDialog(this);
@@ -63,77 +60,18 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false');
 
-    let pluginName;
-    switch (process.platform) {
-      case 'win32':
-        pluginName = 'pepflashplayer.dll';
-        break;
-      case 'darwin':
-        pluginName = 'PepperFlashPlayer.plugin';
-        break;
-      case 'linux':
-        pluginName = 'libpepflashplayer.so';
-        break;
-    }
-
-    /** @almost_deprecated */
-    // Adobe Flash Player will be deprecated January 2020
-    app.commandLine.appendSwitch(
-      'ppapi-flash-path',
-      join(__dirname, pluginName),
-    );
-
-    const windowDataPath = getPath('window-data.json');
-
-    setupPushReceiver(this.webContents);
-
-    let windowState: any = {};
-
-    if (existsSync(windowDataPath)) {
-      try {
-        // Read the last window state from file.
-        windowState = JSON.parse(readFileSync(windowDataPath, 'utf8'));
-      } catch (e) {
-        writeFileSync(windowDataPath, JSON.stringify({}));
-      }
-    }
-
-    // Merge bounds from the last window state to the current window options.
-    if (windowState) {
-      this.setBounds({ ...windowState.bounds });
-    }
-
-    if (windowState) {
-      if (windowState.maximized) {
-        this.maximize();
-      }
-      if (windowState.fullscreen) {
-        this.setFullScreen(true);
-      }
-    }
-
-    // Update modal bounds (permission window) on resize and move
     this.on('resize', () => {
-      if (!this.isMaximized()) {
-        windowState.bounds = this.getBounds();
-      }
-
       this.viewManager.fixBounds();
-      this.search.hide();
-      this.permissionWindow.rearrange();
+      this.search.rearrange();
+      this.permissions.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
     });
 
     this.on('move', () => {
-      if (!this.isMaximized()) {
-        windowState.bounds = this.getBounds();
-      }
-
-      this.search.hide();
-
-      this.permissionWindow.rearrange();
+      this.search.rearrange();
+      this.permissions.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.rearrange();
@@ -142,7 +80,7 @@ export class AppWindow extends BrowserWindow {
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
-      this.search.hide();
+      this.search.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
@@ -151,31 +89,25 @@ export class AppWindow extends BrowserWindow {
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
-      this.search.hide();
+      this.search.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
     });
 
-    // Update window bounds on resize and on move when window is not maximized.
     this.on('resize', () => {
-      if (!this.isMaximized()) {
-        windowState.bounds = this.getBounds();
-      }
       this.menu.hide();
       this.viewManager.fixBounds();
-      this.permissionWindow.rearrange();
+      this.permissions.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
     });
+
     this.on('move', () => {
-      if (!this.isMaximized()) {
-        windowState.bounds = this.getBounds();
-      }
       this.menu.hide();
       this.viewManager.fixBounds();
-      this.permissionWindow.rearrange();
+      this.permissions.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
@@ -184,7 +116,7 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
-      this.permissionWindow.rearrange();
+      this.permissions.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
@@ -195,13 +127,7 @@ export class AppWindow extends BrowserWindow {
     this.on('unmaximize', resize);
 
     process.on('uncaughtException', error => {
-      console.error(error);
-    });
-
-    this.on('close', () => {
-      windowState.maximized = this.isMaximized();
-      windowState.fullscreen = this.isFullScreen();
-      writeFileSync(windowDataPath, JSON.stringify(windowState));
+      console.log(`${colors.blue.bold('[Exception]')} ${error}`);
     });
 
     if (process.env.ENV == 'dev') {
@@ -218,6 +144,8 @@ export class AppWindow extends BrowserWindow {
 
     this.once('ready-to-show', async () => {
       this.show();
+
+      console.log(`${colors.blue.bold('[Performance]')} Loaded application in ${Date.now() - windowsManager.performanceStart}ms`);
     });
 
     this.on('enter-full-screen', () => {
