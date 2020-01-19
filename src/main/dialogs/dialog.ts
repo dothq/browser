@@ -1,7 +1,9 @@
 import { BrowserView, app, ipcMain } from 'electron';
 import { join } from 'path';
-import { AppWindow } from '../windows';
+import { AppWindow } from '../app-window';
 import { platform } from 'os';
+
+import colors from 'colors';
 
 interface IOptions {
   name: string;
@@ -72,7 +74,9 @@ export class Dialog extends BrowserView {
     
     this.webContents.debugger.on('message', (event, method, params) => {
         if(method == 'Runtime.exceptionThrown') {
-            console.log(`\x1b[31m${params.exceptionDetails.exception.className} in \x1b[1m[${this.name}]\x1b[0m`, params.exceptionDetails.exception.description)
+            const error = params.exceptionDetails.exception.description;
+
+            console.log(`${colors.blue.bold('[Dialog]')} ${error}`);
         }
     })
 

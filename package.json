@@ -156,6 +156,7 @@
     "braces": "^3.0.2",
     "buffer-image-size": "^0.6.4",
     "cache-loader": "^4.1.0",
+    "colors": "^1.4.0",
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "datauri": "^2.0.0",

@@ -15,6 +15,7 @@ const rendererConfig = {
       location: path.resolve(__dirname, 'src', 'renderer', 'views', 'location', 'index.tsx'),
       print: path.resolve(__dirname, 'src', 'renderer', 'views', 'print', 'index.tsx'),
       alert: path.resolve(__dirname, 'src', 'renderer', 'views', 'alert', 'index.tsx'),
+      permissions: path.resolve(__dirname, 'src', 'renderer', 'views', 'permissions', 'index.tsx'),
     },
     devServer: {
         contentBase: path.join(__dirname, 'build', 'renderer'),
@@ -86,6 +87,12 @@ const rendererConfig = {
         inject: true,
         chunks: ['alert'],
         filename: `alert.html`
+      }),
+      new HtmlWebpackPlugin({  
+        template: path.resolve(__dirname, 'static', 'pages', 'app.html'),
+        inject: true,
+        chunks: ['permissions'],
+        filename: `permissions.html`
       }),
       new WriteFilePlugin()
     ],
