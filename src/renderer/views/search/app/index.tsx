@@ -20,7 +20,7 @@ class App extends React.Component<Props, {}> {
 
   render() {
     const { style } = this.props;
-
+    
     return (
       <>
         <GlobalStyle />

@@ -13,7 +13,7 @@ export const preferencesExist = () => {
 }
 
 export const preferencesLoad = () => {
-    console.log(`${colors.blue.bold('[Preferences]')} Loaded preferences file located at ${userData}`);
+    console.log(`${colors.blue.bold('Preferences')} Loaded preferences file located at ${userData}`);
 
     if(preferencesExist() == false) {
         const defaultPreferences = DEFAULT_PREFERENCES_OBJECT

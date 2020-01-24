@@ -48,6 +48,12 @@ const dark = require('../../../../shared/resources/icons/dark.svg');
 const print = require('../../../../shared/resources/icons/print.svg');
 const home = require('../../../../shared/resources/icons/home.svg');
 
+const notifications = require('../../../../shared/resources/icons/notifications.svg');
+const location = require('../../../../shared/resources/icons/location.svg');
+const microphone = require('../../../../shared/resources/icons/microphone.svg');
+const fullscreen = require('../../../../shared/resources/icons/fullscreen.svg');
+const pointerLock = require('../../../../shared/resources/icons/pointer_lock.svg');
+
 const thumbs_up_default = require('../../../../shared/resources/icons/emojis/thumbs_up_default.png');
 const thumbs_up_pale = require('../../../../shared/resources/icons/emojis/thumbs_up_pale.png');
 const thumbs_up_dark = require('../../../../shared/resources/icons/emojis/thumbs_up_dark.png');
@@ -184,4 +190,9 @@ export const icons = {
   dark,
   print,
   home,
+  notifications,
+  microphone,
+  fullscreen,
+  pointerLock,
+  location,
 };

@@ -4,13 +4,13 @@ import { getHostname } from '~/shared/utils/url';
 
 interface PermissionRequest {
     url: string;
-    permission: string;
+    name: string;
     time: number;
 }
 
 const defaultPermissionRequest = {
     url: '',
-    permission: '',
+    name: 'geolocation',
     time: Date.now()
 }
 
@@ -23,6 +23,8 @@ class Store {
 
         ipcRenderer.on('request-permission', (e, content) => {
             content.url = getHostname(content.url)
+
+            console.log(content)
 
             this.content.push(content)
             this.content.shift()
@@ -39,8 +41,11 @@ class Store {
         this.visible = false;
         setTimeout(() => {
             ipcRenderer.send('hide-dialog', 'alert');
-            this.content.shift();
         }, 100);
+    }
+
+    public resolveRequest(r: boolean) {
+        ipcRenderer.send('request-permission-result', r, this.content[0]);
     }
 }
 

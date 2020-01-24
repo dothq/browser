@@ -331,9 +331,9 @@ export class View extends BrowserView {
             url: validatedURL
           }
 
-          console.log(this.error);
+          const url = this.webContents.getURL();
 
-          this.webContents.loadURL('dot://error')
+          this.webContents.loadURL(`dot://error#${url}`)
         }
       }
     )

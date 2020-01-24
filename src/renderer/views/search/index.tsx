@@ -1,9 +1,8 @@
 import * as React from 'react';
 
-import { render } from 'react-dom';;
+import { render } from 'react-dom';
 import { fonts } from '../app/constants/fonts';
 import App from './app';
-import { Style } from '../app/style';
 
 const styleElement = document.createElement('style');
 
@@ -25,6 +24,10 @@ styleElement.textContent = `
   font-style: normal;
   font-weight: 300;
   src: url(${fonts.robotoLight}) format('woff2');
+}
+
+*::selection {
+  background-color: #1a73e845;
 }
 `;
 

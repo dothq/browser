@@ -63,7 +63,7 @@ export class AppWindow extends BrowserWindow {
     this.on('resize', () => {
       this.viewManager.fixBounds();
       this.search.rearrange();
-      this.permissions.rearrange();
+      this.permissions.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.hide()
@@ -71,7 +71,7 @@ export class AppWindow extends BrowserWindow {
 
     this.on('move', () => {
       this.search.rearrange();
-      this.permissions.rearrange();
+      this.permissions.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.menu.rearrange();
@@ -83,6 +83,7 @@ export class AppWindow extends BrowserWindow {
       this.search.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
+      this.permissions.rearrange();
       this.menu.hide()
     });
 
@@ -92,13 +93,14 @@ export class AppWindow extends BrowserWindow {
       this.search.rearrange();
       this.alert.rearrange();
       this.print.rearrange();
+      this.permissions.rearrange();
       this.menu.hide()
     });
 
     this.on('resize', () => {
       this.menu.hide();
       this.viewManager.fixBounds();
-      this.permissions.rearrange();
+      this.permissions.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
@@ -107,7 +109,7 @@ export class AppWindow extends BrowserWindow {
     this.on('move', () => {
       this.menu.hide();
       this.viewManager.fixBounds();
-      this.permissions.rearrange();
+      this.permissions.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
@@ -116,7 +118,7 @@ export class AppWindow extends BrowserWindow {
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
-      this.permissions.rearrange();
+      this.permissions.hide();
       this.alert.rearrange();
       this.print.rearrange();
       this.search.hide();
@@ -127,7 +129,7 @@ export class AppWindow extends BrowserWindow {
     this.on('unmaximize', resize);
 
     process.on('uncaughtException', error => {
-      console.log(`${colors.blue.bold('[Exception]')} ${error}`);
+      console.log(`${colors.blue.bold('Exception')} ${error}`);
     });
 
     if (process.env.ENV == 'dev') {
@@ -145,7 +147,7 @@ export class AppWindow extends BrowserWindow {
     this.once('ready-to-show', async () => {
       this.show();
 
-      console.log(`${colors.blue.bold('[Performance]')} Loaded application in ${Date.now() - windowsManager.performanceStart}ms`);
+      console.log(`${colors.blue.bold('Performance')} Loaded application in ${Date.now() - windowsManager.performanceStart}ms`);
     });
 
     this.on('enter-full-screen', () => {

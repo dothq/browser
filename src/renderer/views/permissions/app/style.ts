@@ -22,6 +22,20 @@ export const TitleWrapper = styled.div`
     line-height: 0px;
 `;
 
+export const PermissionIcon = styled.div`
+  ${centerIcon(22)};
+  height: 24px;
+  width: 24px;
+
+  margin-top: -3px;
+  margin-right: 8px;
+  opacity: 0.9;
+
+  ${({ icon }: { icon: any }) => css`
+    background-image: url(${icon});
+  `}
+`;
+
 export const Icon = styled.div`
   ${centerIcon(16)};
   height: 24px;

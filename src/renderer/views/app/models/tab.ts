@@ -19,6 +19,7 @@ import { makeId } from '~/shared/utils/string';
 import { setInterval } from 'timers';
 import { ClosedTabs } from './closed-tabs';
 import console = require('console');
+import { getHostname } from '~/shared/utils/url';
 
 let id = 1;
 
@@ -195,8 +196,10 @@ export class Tab {
       async (e: any, { title, url }: any) => {
         let updated = null;
 
+        const protocol = new URL(url).protocol;
+
         if (url !== this.url) {
-          if (url.includes('ssl-error.html?du=') == false) {
+          if(protocol !== 'dot:') {
             this.lastHistoryId = await store.history.addItem({
               title: this.title,
               url,

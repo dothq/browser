@@ -21,7 +21,8 @@ export class PermissionsDialog extends Dialog {
   }
 
   public rearrange() {
-    var x = 0;
+    const { width } = this.appWindow.getContentBounds();
+    var x = Math.round(((width - WIDTH) / 2));
     super.setBounds({ x, y: 36, width: WIDTH, height: HEIGHT })
   }
 
@@ -63,14 +64,19 @@ export class PermissionsDialog extends Dialog {
         'request-permission-result',
         (e: any, r: boolean, permission: any) => {
           resolve(r);
-          if (permission == 'http_permission') {
-            this.appWindow.viewManager.selected.webContents.loadURL(
-              `https://${
-                this.appWindow.viewManager.selected.webContents
-                  .getURL()
-                  .split('://')[1]
-              }`,
-            );
+          
+          this.hide()
+
+          if (permission.name == 'http_permission') {
+            if(r == true) {
+              this.appWindow.viewManager.selected.webContents.loadURL(
+                `https://${
+                  this.appWindow.viewManager.selected.webContents
+                    .getURL()
+                    .split('://')[1]
+                }`,
+              );
+            }
           }
         },
       );

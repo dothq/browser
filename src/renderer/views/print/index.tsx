@@ -29,6 +29,10 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
 }
+
+*::selection {
+  background-color: #1a73e845;
+}
 `;
 
 document.head.appendChild(styleElement);

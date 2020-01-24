@@ -76,7 +76,7 @@ export class Dialog extends BrowserView {
         if(method == 'Runtime.exceptionThrown') {
             const error = params.exceptionDetails.exception.description;
 
-            console.log(`${colors.blue.bold('[Dialog]')} ${error}`);
+            console.log(`${colors.blue.bold('Dialog')} ${error}`);
         }
     })
 

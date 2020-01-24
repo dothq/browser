@@ -1,11 +1,13 @@
 import { AppWindow } from '../app-window';
 import { Dialog } from './dialog';
+import { ipcMain } from 'electron';
 
 const WIDTH = 650;
 const HEIGHT = 78;
 
 export class SearchDialog extends Dialog {
   public visible = false;
+  public lastHeight = 0;
 
   constructor(appWindow: AppWindow) {
     super(appWindow, {
@@ -17,6 +19,16 @@ export class SearchDialog extends Dialog {
       },
       devtools: true
     });
+
+    ipcMain.on(`height-${this.webContents.id}`, (e, height) => {
+      const { width } = this.appWindow.getContentBounds();
+      super.rearrange({
+        height: 78 + height,
+        x: Math.round(width / 2 - WIDTH / 2),
+      });
+      this.lastHeight = 78 + height;
+    });
+
   }
 
   public rearrange() {

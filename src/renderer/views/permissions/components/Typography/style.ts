@@ -14,6 +14,7 @@ export const Subtitle = styled.h1`
   opacity: 0.8;
   height: 44px;
   overflow-y: hidden;
+  display: flex;
 
   ::selection {
     background-color: #1a73e845;

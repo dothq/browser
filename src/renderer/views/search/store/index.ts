@@ -2,7 +2,7 @@ import { observable } from "mobx";
 import { ipcRenderer, remote } from 'electron';
 import React from 'react';
 import { SuggestionsStore } from './suggestions';
-import { HistoryItem } from '../../app/models';
+import { Suggestion } from '../../app/models';
 
 let lastSuggestion;
 
@@ -14,7 +14,7 @@ class Store {
 
     public tabId: number = 1;
 
-    public history: HistoryItem[] = [];
+    public history: Suggestion[] = [];
 
     public constructor() {
         ipcRenderer.on('visible', (e, flag) => {
@@ -68,22 +68,25 @@ class Store {
         ipcRenderer.send('hide-dialog', 'search');
     }
 
-    public autoComplete = (input: any, suggestion: string) => {
+    public autoComplete = (inputValue: any, suggestion: string) => {
         const regex = /(http(s?)):\/\/(www.)?|www./gi;
         const regex2 = /(http(s?)):\/\//gi;
 
-        const start = input.value.length;
+        const input = this.inputRef.current;
 
-        if (input.selectionStart !== input.value.length) return;
+        const start = inputValue;
+
+        if (input.selectionStart !== inputValue.length) return;
 
         if (suggestion) {
-            if (suggestion.startsWith(input.value.replace(regex, ''))) {
-            input.value = input.value + suggestion.replace(input.value.replace(regex, ''), '');
-            } else if (`www.${suggestion}`.startsWith(input.value.replace(regex2, ''))) {
-            input.value =
-            input.value + `www.${suggestion}`.replace(input.value.replace(regex2, ''), '');
+            if (suggestion.startsWith(inputValue.replace(regex, ''))) {
+                inputValue = inputValue + suggestion.replace(inputValue.replace(regex, ''), '');
+            } else if (`www.${suggestion}`.startsWith(inputValue.replace(regex2, ''))) {
+                inputValue =
+                inputValue + `www.${suggestion}`.replace(inputValue.replace(regex2, ''), '');
             }
-            input.setSelectionRange(start, input.value.length);
+
+            input.setSelectionRange(start, inputValue.length);
         }
     };
 

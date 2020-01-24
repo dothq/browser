@@ -43,10 +43,12 @@ if (window.location.protocol === 'dot:') {
     else if (window.location.hostname === 'history') document.title = 'History';
     else if (window.location.hostname === 'bookmarks')
       document.title = 'Bookmarks';
-    else if (window.location.hostname === 'extensions')
+    else if (window.location.hostname === 'extensions') {
       document.title = 'Extensions';
-    else if (window.location.hostname === 'newtab') {
+    } else if (window.location.hostname === 'newtab') {
       document.title = 'New tab';
+    } else if (window.location.hostname === 'error') {
+      document.title = window.location.hash.split("#")[1] || 'dot://error';
     }
   });
 }

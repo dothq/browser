@@ -66,7 +66,7 @@ export const startMessagingService = (window: AppWindow) => {
 
         ipcMain.once('receive-top-sites', async (e, topsites) => {
             await app.isReady();
-            console.log(`${colors.blue.bold('[History]')} Sending history items to search dialog`);
+            console.log(`${colors.blue.bold('History')} Sending history items to search dialog`);
             window.search.webContents.send('history-items', topsites);
         })
 

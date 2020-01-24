@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 import { isURL } from '~/shared/utils/url';
 import { icons } from '../../app/constants';
 import { Suggestion } from '../../app/models';
@@ -10,7 +10,14 @@ let searchSuggestions: Suggestion[] = [];
 export class SuggestionsStore {
 
     @observable
-    public list;
+    public selected = 0;
+
+    public list: any = [];
+
+    @computed
+    public get selectedSuggestion() {
+      return this.list.find(x => x._id === this.selected);
+    }
 
     public load(input: HTMLInputElement) {
         return new Promise(async (resolve: (result: string) => void, reject) => {

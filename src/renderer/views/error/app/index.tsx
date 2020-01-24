@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { StyledError, Container } from '../components/Error/style';
 import { Title, ErrorIcon, Subtitle } from '../style';
+import { Buttons } from '../components/Buttons';
 
 
 const Error = () => (
   <StyledError>
     <Container>
       <ErrorIcon />
-      <Title>Cannot connect to the internet</Title>
-      <Subtitle>Try restarting your router or reconnecting to Wi-Fi.</Subtitle>
+      <Title>Something went wrong</Title>
+      <Subtitle>We can't seem to display this webpage.</Subtitle>
+      <Buttons />
     </Container>
   </StyledError>
 )
