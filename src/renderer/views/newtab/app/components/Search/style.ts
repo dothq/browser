@@ -16,13 +16,10 @@ export const StyledSearchBox = styled.div`
   width: 600px;
   transition: 0.2s all;
   outline: none;
+  max-width: 600px;
+  margin: 0 auto;
 
-  ${({ isFixed, isFocused, theme }: { isFixed: boolean; isFocused: any; theme?: ITheme }) => css`
-    position: ${isFixed == true ? 'fixed' : 'unset'};
-    z-index: ${isFixed == true ? '9999999' : 'unset'};
-    top: ${isFixed == true ? '20px' : 'unset'};
-    margin-left: ${isFixed == true ? '300px' : 'auto'};
-
+  ${({ theme }: { theme?: ITheme }) => css`
     box-shadow: ${theme['webui-newtab-search-shadow']};
   `}
 `;

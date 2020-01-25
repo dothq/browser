@@ -5,28 +5,6 @@ import store from '../store';
 import console = require('console');
 import { defaultTabOptions } from '../constants/tabs';
 
-/* @todo Re-implement autocomplete */
-// const autoComplete = (text: string, suggestion: string) => {
-//   const regex = /(http(s?)):\/\/(www.)?|www./gi;
-//   const regex2 = /(http(s?)):\/\//gi;
-
-//   const start = text.length;
-
-//   const input = store.overlay.inputRef.current;
-
-//   if (input.selectionStart !== input.value.length) return;
-
-//   if (suggestion) {
-//     if (suggestion.startsWith(text.replace(regex, ''))) {
-//       input.value = text + suggestion.replace(text.replace(regex, ''), '');
-//     } else if (`www.${suggestion}`.startsWith(text.replace(regex2, ''))) {
-//       input.value =
-//         text + `www.${suggestion}`.replace(text.replace(regex2, ''), '');
-//     }
-//     input.setSelectionRange(start, input.value.length);
-//   }
-// };
-
 export class OverlayStore {
   public scrollRef = React.createRef<HTMLDivElement>();
   public inputRef = React.createRef<HTMLInputElement>();
@@ -192,27 +170,5 @@ export class OverlayStore {
 
       this._visible = val;
     }
-  }
-
-  public suggest() {
-    const { suggestions } = store;
-    // const input = this.inputRef.current;
-
-    // if (this.canSuggest) {
-    //   autoComplete(input.value, lastSuggestion);
-    // }
-
-    // suggestions.load(input).then(suggestion => {
-    //   lastSuggestion = suggestion;
-    //   if (this.canSuggest) {
-    //     autoComplete(
-    //       input.value.substring(0, input.selectionStart),
-    //       suggestion,
-    //     );
-    //     this.canSuggest = false;
-    //   }
-    // });
-
-    // suggestions.selected = 0;
   }
 }

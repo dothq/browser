@@ -16,7 +16,6 @@ import {
   Section,
   DotLogo,
   Icon,
-  IronBar,
   Section_Left,
   Section_Right,
   Section_Middle,
@@ -27,9 +26,7 @@ const moment = require('moment');
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { icons } from '../../app/constants';
 import { Search } from './components/Search';
-import { Tiles } from './components/Tiles'
-import { Modal } from '@material-ui/core';
-import * as axios from 'axios';
+import { Tiles } from './components/Tiles';
 import store from './store';
 
 export const FeedCard = ({
@@ -166,7 +163,7 @@ class NewTab extends React.Component {
               <DotLogo color={'#434343'} />
             </Section_Left>
             <Section_Middle>
-              <Search style={{ maxWidth: '600px', margin: '0 auto' }} />
+              <Search />
               <Tiles />
             </Section_Middle>
             <Section_Right>

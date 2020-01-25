@@ -34,7 +34,6 @@ export class Dialog extends BrowserView {
 
   private timeout: any;
   private hideTimeout: number;
-  private name: string;
 
   public constructor(
     appWindow: AppWindow,
@@ -50,7 +49,6 @@ export class Dialog extends BrowserView {
     this.appWindow = appWindow;
     this.bounds = { ...this.bounds, ...bounds };
     this.hideTimeout = hideTimeout;
-    this.name = name;
 
     setTimeout(() => {
       appWindow.addBrowserView(this);

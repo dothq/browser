@@ -1,9 +1,7 @@
-import { ipcMain, nativeImage } from 'electron';
+import { ipcMain } from 'electron';
 import { TOOLBAR_HEIGHT } from '../renderer/views/app/constants';
 import { windowsManager } from '.';
 import { View } from './view';
-import { resolve } from 'path';
-import console = require('console');
 
 declare const global: any;
 

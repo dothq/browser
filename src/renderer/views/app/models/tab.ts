@@ -1,7 +1,7 @@
 import { observable, computed, action } from 'mobx';
 import * as React from 'react';
-import { ipcRenderer, webContents } from 'electron';
-import * as Vibrant from 'node-vibrant';
+import { ipcRenderer } from 'electron';
+import Vibrant = require('node-vibrant')
 import { remote } from 'electron';
 
 import store from '~/renderer/views/app/store';
@@ -10,16 +10,12 @@ import {
   TOOLBAR_HEIGHT,
   defaultTabOptions,
   TAB_ANIMATION_DURATION,
-  icons,
   TAB_MAX_WIDTH,
 } from '~/renderer/views/app/constants';
-import { closeWindow, getColorBrightness } from '../utils';
+import { getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
-import { setInterval } from 'timers';
 import { ClosedTabs } from './closed-tabs';
-import console = require('console');
-import { getHostname } from '~/shared/utils/url';
 
 let id = 1;
 

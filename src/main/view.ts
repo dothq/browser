@@ -9,7 +9,6 @@ import {
 import { windowsManager } from '.';
 import { engine } from './services/web-request';
 import { parse } from 'tldts';
-import console = require('console');
 import { resolve } from 'path';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
@@ -514,8 +513,6 @@ export class View extends BrowserView {
       async (e, favicons) => {
         this.favicon = favicons[0];
 
-        console.log(favicons)
-        console.log(`Updated favicon for ${this.url}`)
         windowsManager.window.webContents.send(
           `browserview-favicon-updated-${this.tabId}`,
           favicons[0],

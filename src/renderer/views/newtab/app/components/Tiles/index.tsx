@@ -1,13 +1,13 @@
-import { StyledTiles, StyledTile, TileName, TileIcon } from './style';
+import { StyledTiles, StyledTile, TileIcon } from './style';
 import * as React from 'react';
 
 const openURI = (uri: string) => {
   window.location.href = uri;
 }
 
-export const Tiles = ({ style }: { style: any }) => {
+export const Tiles = () => {
   return (
-    <StyledTiles style={style}>
+    <StyledTiles>
       <StyledTile onClick={() => openURI('https://netflix.com')}>
         <TileIcon icon={'https://assets.nflxext.com/us/ffe/siteui/common/icons/nficon2016.png'} />
       </StyledTile>

@@ -73,10 +73,6 @@ export const Section = styled.div`
   border-radius: 0 0 20px 20px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 20px 80px 0px;
   display: flex;
-
-  ${({ background }: { background: any }) => css`
-    background: url(${background});
-  `}
 `;
 
 export const DotLogo = styled.div`

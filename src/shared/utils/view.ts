@@ -3,7 +3,6 @@ import { ipcRenderer } from 'electron';
 import { makeId } from './string';
 
 export const callViewMethod = (
-  windowId: number,
   id: number,
   scope: string,
   ...args: any[]
@@ -15,7 +14,6 @@ export const callViewMethod = (
       scope,
       tabId: id,
       callId,
-      windowId
     });
 
     ipcRenderer.once(`browserview-call-result-${callId}`, (e, result) => {

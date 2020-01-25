@@ -6,13 +6,6 @@ import {
   Input,
   HiyaMessage,
 } from './style';
-import store from '~/renderer/views/app/store';
-import { fetchHiyaMessage } from './../../constants/hiya';
-
-const props: any = {
-  isFixed: false,
-  style: '',
-};
 
 export class Search extends React.Component {
   public hiyaNotifications: string[] = [
@@ -24,7 +17,6 @@ export class Search extends React.Component {
 
   constructor(props) {
     super(props);
-    this.props = props;
   }
 
   public hiyaBox = document.getElementById('hiya');
@@ -80,10 +72,8 @@ export class Search extends React.Component {
   }
 
   render() {
-    const { isFixed, style } = this.props;
-
     return (
-      <StyledSearchBox isFixed={isFixed} style={style} isFocused={this.state.focused}>
+      <StyledSearchBox>
         <SearchContainer>
           <SearchIcon isFocused={this.state.hiyaState} />
           <Input

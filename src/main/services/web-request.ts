@@ -2,7 +2,6 @@ import { ipcMain, session, webContents } from 'electron';
 import { makeId } from '../../shared/utils/string';
 import { AppWindow } from '../app-window';
 import { matchesPattern } from '../../shared/utils/url';
-import { USER_AGENT } from '../../shared/constants';
 import { existsSync, readFile } from 'fs';
 import console = require('console');
 import { resolve } from 'path';
@@ -204,8 +203,6 @@ export const runWebRequestService = (window: AppWindow) => {
   };
 
   webviewRequest.onBeforeSendHeaders(async (details: any, callback: any) => {
-    const tabId = getTabByWebContentsId(window, details.webContentsId);
-
     callback({ cancel: false, requestHeaders: details.requestHeaders });
   });
 

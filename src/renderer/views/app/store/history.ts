@@ -3,7 +3,7 @@ import { observable, computed, action } from 'mobx';
 import { HistoryItem, HistorySection } from '../models';
 import { getPath } from '~/shared/utils/paths';
 import { countVisitedTimes, compareDates, getSectionLabel } from '../utils';
-import { ipcRenderer, IpcRendererEvent } from 'electron';
+import { ipcRenderer } from 'electron';
 
 export type QuickRange =
   | 'all'
@@ -53,6 +53,7 @@ export class HistoryStore {
     ipcRenderer.send('update-top-sites');
 
     ipcRenderer.once('get-top-sites', () => {
+      console.log(this.items)
       ipcRenderer.send('receive-top-sites', this.items);
     })
   }

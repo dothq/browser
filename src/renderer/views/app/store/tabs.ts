@@ -1,8 +1,7 @@
-import { observable, observe, action } from 'mobx';
+import { observable, action } from 'mobx';
 import * as React from 'react';
 import { TweenLite } from 'gsap';
 
-import { icons } from '~/renderer/views/app/constants';
 import { Tab } from '~/renderer/views/app/models';
 
 import {
@@ -15,10 +14,7 @@ import {
 
 import HorizontalScrollbar from '~/renderer/views/app/components/HorizontalScrollbar';
 import store from '../store';
-import { ipcRenderer, remote, nativeImage } from 'electron';
-import { extname } from 'path';
-import { checkLightMode } from '../components/App';
-import * as request from 'request';
+import { ipcRenderer, remote } from 'electron';
 
 export class TabsStore {
   @observable

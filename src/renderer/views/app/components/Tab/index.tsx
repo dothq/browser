@@ -17,9 +17,7 @@ import {
 import { shadeBlendConvert } from '../../utils';
 import { remote, ipcRenderer } from 'electron';
 import Ripple from '../../../../components/Ripple';
-import { transparency, colors } from '../../../../constants';
-import { icons } from '../../constants';
-import { ITheme } from '~/interfaces/theme';
+import { colors } from '../../../../constants';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
