@@ -10,7 +10,7 @@
     "mobx",
     "styled-components"
   ],
-  "homepage": "https://github.com/dot-browser/desktop#readme",
+  "homepage": "https://github.com/dothq/browser#readme",
   "main": "build/main.js",
   "author": {
     "name": "Dot Technologies",
@@ -36,10 +36,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dot-browser/desktop.git"
+    "url": "git+https://github.com/dothq/browser.git"
   },
   "bugs": {
-    "url": "https://github.com/dot-browser/desktop/issues"
+    "url": "https://github.com/dothq/browser/issues"
   },
   "scripts": {
     "start": "cross-env ENV=dev ELECTRON_IS_DEV=1 electron .",

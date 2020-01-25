@@ -3,31 +3,13 @@ import Datastore from 'nedb';
 import { Favicon } from '../models';
 import { getPath } from '~/shared/utils/paths';
 import { requestURL } from '../utils/network';
-import { rejects } from 'assert';
 import { observable } from 'mobx';
 
-const icojs = require('icojs');
-const fileType = require('file-type');
-const sizeOf = require('buffer-image-size');
+import * as icojs from 'icojs';
+import fileType from 'file-type';
 
-const convertIcoToPng = (icoData: Buffer) => {
-  return new Promise((resolve: (b: Buffer) => void) => {
-    icojs.parse(icoData, 'image/png').then((images: any) => {
-      resolve(images[0].buffer);
-    });
-  });
-};
-
-const readImage = (buffer: Buffer) => {
-  return new Promise((resolve: (b: Buffer) => void) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      resolve(Buffer.from(reader.result as any));
-    };
-
-    reader.readAsArrayBuffer(new Blob([buffer]));
-  });
+const convertIcoToPng = async (icoData: Buffer): Promise<ArrayBuffer> => {
+  return (await icojs.parse(icoData, 'image/png'))[0].buffer;
 };
 
 export class FaviconsStore {
@@ -54,8 +36,8 @@ export class FaviconsStore {
     });
   };
 
-  public addFavicon = async (url: string) => {
-    return new Promise(async (resolve: (a: any) => void, reject: any) => {
+  public addFavicon = async (url: string): Promise<string> => {
+    return new Promise(async resolve => {
       if (!this.favicons[url]) {
         try {
           const res = await requestURL(url);
@@ -66,18 +48,15 @@ export class FaviconsStore {
 
           let data = Buffer.from(res.data, 'binary');
 
-          const dimensions = sizeOf(data);
-          console.log(dimensions)
-
           const type = fileType(data);
 
           if (type && type.ext === 'ico') {
-            data = await convertIcoToPng(data);
+            data = Buffer.from(new Uint8Array(await convertIcoToPng(data)));
           }
 
-          data = await readImage(data);
-
-          const str = `data:png;base64,${data.toString('base64')}`;
+          const str = `data:${fileType(data).ext};base64,${data.toString(
+            'base64',
+          )}`;
 
           this.db.insert({
             url,
@@ -88,7 +67,7 @@ export class FaviconsStore {
 
           resolve(str);
         } catch (e) {
-          reject(e);
+          throw e;
         }
       } else {
         resolve(this.favicons[url]);

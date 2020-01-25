@@ -5,11 +5,11 @@
 
 <div align="center">
 <p align="center">
-    <a href="https://github.com/dot-browser/desktop/releases">
-        <img src="https://img.shields.io/github/downloads/dot-browser/desktop/total.svg" alt="Downloads">
+    <a href="https://github.com/dothq/browser/releases">
+        <img src="https://img.shields.io/github/downloads/dothq/browser/total.svg" alt="Downloads">
     </a>
-    <a href="https://github.com/dot-browser/desktop/releases">
-        <img src="http://hits.dwyl.io/dot-browser/desktop.svg" alt="Hits">
+    <a href="https://github.com/dothq/browser/releases">
+        <img src="http://hits.dwyl.io/dothq/browser.svg" alt="Hits">
     </a>
     <a href="https://invite.gg/dot">
         <img src="https://discordapp.com/api/guilds/307605794680209409/widget.png?style=shield" alt="Discord">
@@ -17,17 +17,17 @@
     <a href="https://github.com/styled-components/styled-components">
         <img src="https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&amp;colorA=db748e" alt="style: styled-components" />
     </a>
-    <a href="https://github.com/dot-browser/desktop">
-        <img src="https://travis-ci.org/dot-browser/desktop.svg?branch=master" alt="Travis">
+    <a href="https://github.com/dothq/browser">
+        <img src="https://travis-ci.org/dothq/browser.svg?branch=master" alt="Travis">
     </a>
-    <a href="https://github.com/dot-browser/desktop/issues">
-        <img src="https://img.shields.io/github/issues-raw/dot-browser/desktop.svg" alt="Issues Open">
+    <a href="https://github.com/dothq/browser/issues">
+        <img src="https://img.shields.io/github/issues-raw/dothq/browser.svg" alt="Issues Open">
     </a>
-    <a href="https://github.com/dot-browser/desktop/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
-        <img src="https://img.shields.io/github/issues-closed-raw/dot-browser/desktop.svg" alt="Issues Closed">
+    <a href="https://github.com/dothq/browser/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+is%3Aclosed">
+        <img src="https://img.shields.io/github/issues-closed-raw/dothq/browser.svg" alt="Issues Closed">
     </a>
     <a href="/LICENSE">
-        <img src="https://img.shields.io/github/license/dot-browser/desktop.svg" alt="License">
+        <img src="https://img.shields.io/github/license/dothq/browser.svg" alt="License">
     </a>
 </p>
 
