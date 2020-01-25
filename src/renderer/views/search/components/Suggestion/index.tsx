@@ -11,7 +11,7 @@ import {
 } from './style';
 
 import store from '../../store';
-import { remote, ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 import { callViewMethod } from '~/shared/utils/view';
 import { icons } from '~/renderer/views/app/constants';
 
@@ -37,7 +37,6 @@ const onClick = (suggestion: any) => () => {
   }
 
   callViewMethod(
-    remote.getCurrentWindow().id,
     store.tabId,
     'webContents.loadURL',
     url,

@@ -12,6 +12,7 @@ export class SuggestionsStore {
     @observable
     public selected = 0;
 
+    @observable
     public list: any = [];
 
     @computed
@@ -19,68 +20,66 @@ export class SuggestionsStore {
       return this.list.find(x => x._id === this.selected);
     }
 
-    public load(input: HTMLInputElement) {
-        return new Promise(async (resolve: (result: string) => void, reject) => {
-          const filter = input.value.substring(0, input.selectionStart);
-          const history = getHistorySuggestions(filter);
-    
-          const historySuggestions: Suggestion[] = [];
-    
-          var searchengine:string = 'google'
-    
-          var cse = searchengine.charAt(0).toUpperCase() + searchengine.slice(1);
-    
-          if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {
+    public load(input: HTMLInputElement): Promise<string> {
+      return new Promise(async resolve => {
+        const filter = input.value.substring(0, input.selectionStart);
+        const history = getHistorySuggestions(filter);
+  
+        const historySuggestions: Suggestion[] = [];
+  
+        if ((!history[0] || !history[0].canSuggest) && filter.trim() !== '') {
+          if (isURL(filter) || filter.indexOf('://') !== -1) {
             historySuggestions.unshift({
               primaryText: filter,
-              secondaryText: `search on ${cse}`,
+              secondaryText: 'open website',
+              favicon: icons.page,
+            });
+          }
+        }
+  
+        for (const item of history) {
+          if (!item.isSearch) {
+            historySuggestions.push({
+              primaryText: item.url,
+              secondaryText: item.title,
+              favicon: item.favicon,
+              canSuggest: item.canSuggest,
+            });
+          } else {
+            historySuggestions.push({
+              primaryText: item.url,
               favicon: icons.search,
+              canSuggest: item.canSuggest,
               isSearch: true,
             });
-            if (isURL(filter)) {
-              historySuggestions.unshift({
-                primaryText: filter,
-                secondaryText: 'open website',
-                favicon: icons.page,
-              });
-            }
           }
-    
-          for (const item of history) {
-            if (!item.isSearch) {
-              historySuggestions.push({
-                primaryText: item.url,
-                secondaryText: item.title,
-                favicon: '',
-                canSuggest: item.canSuggest,
-              });
-            } else {
-              historySuggestions.push({
-                primaryText: item.url,
-                secondaryText: `search on ${cse}`,
-                favicon: icons.search,
-                canSuggest: item.canSuggest,
-              });
-            }
-          }
-    
-          let suggestions: Suggestion[] =
-            input.value === ''
-              ? []
-              : historySuggestions.concat(searchSuggestions).slice(0, 6);
-    
-          for (let i = 0; i < suggestions.length; i++) {
-            suggestions[i].id = i;
-          }
-    
-          this.list = suggestions;
-    
-          if (historySuggestions.length > 0 && historySuggestions[0].canSuggest) {
-            resolve(historySuggestions[0].primaryText);
-          }
-    
+        }
+  
+        historySuggestions.splice(1, 0, {
+          primaryText: filter,
+          secondaryText: `search in Google`,
+          favicon: icons.search,
+          isSearch: true,
+        });
+  
+        let suggestions: Suggestion[] =
+          input.value === ''
+            ? []
+            : historySuggestions.concat(searchSuggestions).slice(0, 5);
+  
+        for (let i = 0; i < suggestions.length; i++) {
+          suggestions[i].id = i;
+        }
+  
+        this.list = suggestions;
+  
+        if (historySuggestions.length > 0 && historySuggestions[0].canSuggest) {
+          resolve(historySuggestions[0].primaryText);
+        }
+  
+        try {
           const searchData = await getSearchSuggestions(filter);
-    
+  
           if (input.value.substring(0, input.selectionStart) === filter) {
             searchSuggestions = [];
             for (const item of searchData) {
@@ -90,18 +89,21 @@ export class SuggestionsStore {
                 isSearch: true,
               });
             }
-    
+  
             suggestions =
               input.value === ''
                 ? []
-                : historySuggestions.concat(searchSuggestions).slice(0, 6);
-    
+                : historySuggestions.concat(searchSuggestions).slice(0, 5);
+  
             for (let i = 0; i < suggestions.length; i++) {
               suggestions[i].id = i;
             }
-    
+  
             this.list = suggestions;
           }
-        });
-      }
+        } catch (e) {
+          console.error(e);
+        }
+      });
+    }
 }

@@ -19,9 +19,9 @@ export const StyledSuggestion = styled.div`
   }) => {
     let backgroundColor = 'transparent';
     if (selected) {
-      backgroundColor = 'rgba(255, 255, 255, 0.06)'
+      backgroundColor = 'rgba(0, 0, 0, 0.06)'
     } else if (hovered) {
-      backgroundColor = 'rgba(255, 255, 255, 0.03)'
+      backgroundColor = 'rgba(0, 0, 0, 0.03)'
     }
     return css`
       background-color: ${backgroundColor};
@@ -37,6 +37,7 @@ export const PrimaryText = styled.div`
   text-overflow: ellipsis;
   font-size: 13px;
   opacity: ${transparency.text.high};
+  user-select: none;
 `;
 
 export const SecondaryText = styled.div`
@@ -47,6 +48,7 @@ export const SecondaryText = styled.div`
   padding-right: 16px;
   font-size: 13px;
   opacity: ${transparency.text.medium};
+  user-select: none;
 `;
 
 export const Icon = styled.div`

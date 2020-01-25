@@ -4,14 +4,16 @@ import { icons } from '~/renderer/views/app/constants/icons';
 
 export const StyledSearchBox = styled.div`
   z-index: 2;
-  background-color: white;
-  border-radius: 50px;
+  font-family: Roboto;
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.42);
+  background-color: #fffffffc;
   display: flex;
   flex-flow: column;
   overflow: hidden;
   min-height: 48px;
   transition: 0.4s height;
-  margin: 0 auto 32px auto;
+  margin: 8px auto;
   width: 600px;
   transition: 0.1s all;
   outline: none;
@@ -21,9 +23,6 @@ export const StyledSearchBox = styled.div`
     z-index: ${isFixed == true ? '9999999' : 'unset'};
     top: ${isFixed == true ? '20px' : 'unset'};
     margin-left: ${isFixed == true ? '300px' : 'auto'};
-
-    box-shadow: ${isFocused ? '0 0 0 1px #006eff, 0 0 0 4px rgba(30, 139, 251, 0.3), 0 8px 16px rgba(0,0,0,0.24)' : 'none'};
-    border: ${isFocused ? '1px solid transparent' : '1px solid #afafaf'};
 
     opacity: ${visible ? 1 : 0};
   `}

@@ -10,17 +10,20 @@ class Store {
 
     public suggestions: SuggestionsStore = new SuggestionsStore();
 
+    @observable
     public id = remote.getCurrentWebContents().id;
 
+    @observable
     public tabId: number = 1;
 
+    @observable
     public history: Suggestion[] = [];
 
     public constructor() {
         ipcRenderer.on('visible', (e, flag) => {
             this.visible = flag;
 
-            console.log(this.details.url)
+            this.suggestions.list = [];
 
             this.tabId = this.details.tabId;
 
@@ -41,7 +44,7 @@ class Store {
         ipcRenderer.on('history-items', (e, items) => {
             console.log("Got history items!")
             this.history = items;
-            console.log(items[0])
+            console.log(this.history)
         })
 
         window.addEventListener('blur', () => {
@@ -49,6 +52,7 @@ class Store {
         })
     }
 
+    @observable
     public inputRef = React.createRef<HTMLInputElement>();
 
     @observable
@@ -65,7 +69,7 @@ class Store {
 
     public hide() {
         this.visible = false;
-        ipcRenderer.send('hide-dialog', 'search');
+        ipcRenderer.send('hide-dialog', 'search'); 
     }
 
     public autoComplete = (inputValue: any, suggestion: string) => {
@@ -108,6 +112,8 @@ class Store {
             this.canSuggest = false;
           }
         });
+
+        suggestions.selected = 0;
 
     }
 

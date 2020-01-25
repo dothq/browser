@@ -7,9 +7,11 @@ import {
 } from './style';
 import store from '../../store';
 import { callViewMethod } from '~/shared/utils/view';
-import { remote, ipcRenderer } from 'electron';
-import { isURL } from '~/shared/utils/url';
+import { ipcRenderer } from 'electron';
 import { Suggestions } from '../Suggestions';
+import { observer } from 'mobx-react';
+
+const urlRegex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.which === 13) {
@@ -19,22 +21,13 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const text = e.currentTarget.value;
     let url = text;
 
-    const suggestion = store.suggestions.selectedSuggestion;
-
-    if (suggestion) {
-      if (suggestion.isSearch) {
-        url = `https://google.com/search?q=${text}`;
-      } else if (text.indexOf('://') === -1) {
-        url = `http://${text}`;
-      }
+    if(!urlRegex.test(url)) {
+      url = `https://google.com/search?q=${text}`
+    } else if(url.indexOf("://") === -1) {
+      url = `http://${text}`
     }
 
-    console.log(suggestion)
-
-    e.currentTarget.value = url;
-
     callViewMethod(
-      remote.getCurrentWindow().id,
       store.tabId,
       'webContents.loadURL',
       url,
@@ -45,6 +38,10 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     });
   }
 };
+
+const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  store.details.url = e.currentTarget.value;
+}
 
 export const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
   const key = e.keyCode;
@@ -93,6 +90,7 @@ const onInput = () => {
   store.suggest()
 }
 
+@observer
 export class Search extends React.Component {
   public props: any = {
     isFixed: false,
@@ -108,10 +106,6 @@ export class Search extends React.Component {
     focused: false
   };
 
-  onChange(e: any) {
-    store.details.url = e.target.value;
-  }
-
   render() {
     const { isFixed, style, visible } = this.props;
 
@@ -120,13 +114,13 @@ export class Search extends React.Component {
     let height = 0;
 
     if (suggestionsVisible) {
-      for (const s of store.suggestions.list) {
+      store.suggestions.list.forEach(() => {
         height += 38;
-      }
+      })
 
-      for (const s of store.history) {
+      store.history.forEach(() => {
         height += 38;
-      }
+      })
 
       if (store.suggestions.list.length > 0) {
         height += 30;
@@ -148,7 +142,7 @@ export class Search extends React.Component {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
-            onChange={() => this.onChange(event)}
+            onChange={onChange}
             defaultValue={store.details.url}
             placeholder="Search Google or enter address"
             onKeyDown={onKeyDown}

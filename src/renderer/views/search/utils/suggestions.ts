@@ -1,6 +1,5 @@
 import store from '../store';
-import { Suggestion, HistoryItem } from '../../app/models';
-import { countVisitedTimes } from '../../app/utils';
+import { HistoryItem } from '../../app/models';
 
 interface HistorySuggestion extends HistoryItem {
     canSuggest?: boolean;
