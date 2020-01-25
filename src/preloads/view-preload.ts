@@ -70,8 +70,24 @@ const updateAlert = () => {
   })
 }
 
+const insertStyles = () => {
+  const styleElement = document.createElement("style")
+
+  styleElement.textContent = `
+    ::selection {
+      background-color: #009dff52;
+    }
+  `
+
+  styleElement.setAttribute("data-dot-special", "");
+
+  document.head.appendChild(styleElement)
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   updateAlert();
+  insertStyles();
+
   setInterval(updateAlert, 1000)
 
   let beginningScrollLeft: number = null;
