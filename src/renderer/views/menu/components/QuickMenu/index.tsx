@@ -58,7 +58,7 @@ const onIncognitoClick = () => {
 };
 
 const onPrintClick = () => {
-  ipcRenderer.send('show-dialog', 'print');
+
 };
 
 const addTab = (url: string) => () => {
