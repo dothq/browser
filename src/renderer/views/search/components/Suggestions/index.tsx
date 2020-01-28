@@ -20,10 +20,6 @@ export const Suggestions = observer(({ visible }: Props) => {
       {store.suggestions.list.map(suggestion => (
         <Suggestion suggestion={suggestion} key={suggestion.id} />
       ))}
-      {store.history.length > 0 && <Subheading>Tabs</Subheading>}
-      {store.history.map(suggestion => (
-        <Suggestion suggestion={suggestion} key={suggestion.id} />
-      ))}
     </StyledSuggestions>
   );
 });
