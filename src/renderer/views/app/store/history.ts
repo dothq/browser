@@ -49,13 +49,6 @@ export class HistoryStore {
 
   constructor() {
     this.load();
-
-    ipcRenderer.send('update-top-sites');
-
-    ipcRenderer.once('get-top-sites', () => {
-      console.log(this.items)
-      ipcRenderer.send('receive-top-sites', this.items);
-    })
   }
 
   public resetLoadedItems() {
@@ -75,6 +68,15 @@ export class HistoryStore {
       );
 
       this.items = items;
+
+      setTimeout(() => {
+        ipcRenderer.send('update-top-sites');
+
+        ipcRenderer.once('get-top-sites', () => {
+          console.log(items)
+          ipcRenderer.send('receive-top-sites', items);
+        })
+      }, 5000);
     });
   }
 

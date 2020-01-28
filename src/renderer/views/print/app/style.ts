@@ -25,6 +25,10 @@ export const Preview = styled.div`
 export const Page = styled.div`
     width: 350px;
     height: 500px;
+
+    ${({ image }: { image: string }) => css`
+        background-image: url(${image});
+    `}
 `;
 
 export const PrintController = styled.div`

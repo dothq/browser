@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, PrinterInfo } from 'electron';
 
 class Store {
 
@@ -8,13 +8,27 @@ class Store {
             this.visible = flag;
         });
 
-        // window.addEventListener('blur', () => {
-        //     this.hide()
-        // })
+        ipcRenderer.on('update-printers', (e, printers) => {
+            this.printers = printers;
+        });
+
+        ipcRenderer.on('update-page-preview', (e, image) => {
+            this.preview = image;
+        });
+
+        window.addEventListener('blur', () => {
+            this.hide()
+        })
     }
 
     @observable
     public visible: boolean = false;
+
+    @observable
+    public printers: PrinterInfo[] = [];
+
+    @observable
+    public preview: string = '';
 
     @observable
     public settings = {

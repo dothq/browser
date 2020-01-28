@@ -15,7 +15,7 @@ const onPageChange = (event: React.ChangeEvent<{ value: unknown }>) => {
 const App = observer(() => (
   <StyledApp visible={store.visible}>
     <Preview>
-      <Page />
+      <Page image={store.preview} />
     </Preview>
     <PrintController>
       <TitleWrapper>

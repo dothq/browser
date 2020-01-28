@@ -75,4 +75,13 @@ export const startMessagingService = (window: AppWindow) => {
     autoUpdater.on('update-downloaded', ({ version }) => {
         window.webContents.send('update-available', version);
     });
+
+    ipcMain.on('open-print', (e) => {
+        window.print.show()
+        window.print.webContents.send('update-printers', window.webContents.getPrinters());
+
+        window.viewManager.selected.webContents.capturePage().then(image => {
+            window.print.webContents.send('update-page-preview', image.toDataURL());
+        })
+    })
 }
