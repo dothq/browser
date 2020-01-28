@@ -5,6 +5,7 @@ import {
   clipboard,
   BrowserWindow,
   shell,
+  ContextMenuParams,
 } from 'electron';
 import { windowsManager } from '.';
 import { engine } from './services/web-request';
@@ -12,6 +13,7 @@ import { parse } from 'tldts';
 import { resolve } from 'path';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
+import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants';
 
 export class View extends BrowserView {
   public title: string = '';
@@ -60,243 +62,17 @@ export class View extends BrowserView {
       }
     };
 
-    this.webContents.on('context-menu', (e, params) => {
-      let menuItems: Electron.MenuItemConstructorOptions[] = [];
+    this.webContents.addListener('context-menu', (e, params: ContextMenuParams) => {
 
-      if (params.mediaType == 'video' || params.mediaType == 'audio') {
-        menuItems = menuItems.concat([
-          {
-            label: 'Open ' + params.mediaType + ' in new tab',
-            enabled: params.srcURL.includes('blob:') == false,
-            icon: process.cwd() + '\\static\\app-icons\\add.png',
-            click: () => {
-              windowsManager.window.webContents.send('api-tabs-create', {
-                url: params.srcURL,
-                active: false,
-              });
-            },
-          },
-          {
-            label: 'Save ' + params.mediaType,
-            enabled: params.srcURL.includes('blob:') == false,
-            click: () => {
-              this.webContents.downloadURL(params.srcURL);
-            },
-          },
-          {
-            label: 'Copy link',
-            enabled: params.srcURL.includes('blob:') == false,
-            click: () => {
-              clipboard.clear();
-              clipboard.writeText(params.srcURL);
-            },
-          },
-          {
-            type: 'separator',
-          },
-        ]);
+      const navigationFlags = {
+        back: this.webContents.canGoBack(),
+        forward: this.webContents.canGoForward()
       }
 
-      if (params.linkURL !== '') {
-        menuItems = menuItems.concat([
-          {
-            label: 'Open link in new tab',
-            icon: process.cwd() + '\\static\\app-icons\\add.png',
-            click: () => {
-              windowsManager.window.webContents.send('api-tabs-create', {
-                url: params.linkURL,
-                active: false,
-              });
-            },
-          },
-          {
-            type: 'separator',
-          },
-          {
-            label: 'Copy link address',
-            click: () => {
-              clipboard.clear();
-              clipboard.writeText(params.linkURL);
-            },
-          },
-          {
-            type: 'separator',
-          },
-        ]);
-      }
+      windowsManager.window.quickMenu.webContents.send("update-navigation-flags", navigationFlags);
 
-      if (params.hasImageContents) {
-        menuItems = menuItems.concat([
-          {
-            label: 'Open image in new tab',
-            icon: process.cwd() + '\\static\\app-icons\\add.png',
-            click: () => {
-              windowsManager.window.webContents.send('api-tabs-create', {
-                url: params.srcURL,
-                active: false,
-              });
-            },
-          },
-          {
-            label: 'Save image',
-            click: () => {
-              this.webContents.downloadURL(params.srcURL);
-            },
-          },
-          {
-            label: 'Copy image',
-            click: () => {
-              const img = nativeImage.createFromDataURL(params.srcURL);
-
-              clipboard.clear();
-              clipboard.writeImage(img);
-            },
-          },
-          {
-            label: 'Copy image address',
-            click: () => {
-              clipboard.clear();
-              clipboard.writeText(params.srcURL);
-            },
-          },
-          {
-            type: 'separator',
-          },
-        ]);
-      }
-
-      if (params.isEditable) {
-        menuItems = menuItems.concat([
-          {
-            role: 'undo',
-            accelerator: 'CmdOrCtrl+Z',
-          },
-          {
-            role: 'redo',
-            accelerator: 'CmdOrCtrl+Y',
-          },
-          {
-            type: 'separator',
-          },
-          {
-            role: 'cut',
-            enabled: params.selectionText.length >= 1,
-          },
-          {
-            role: 'copy',
-            accelerator: 'CmdOrCtrl+C',
-            enabled: params.selectionText.length >= 1,
-          },
-          {
-            role: 'paste',
-            accelerator: 'CmdOrCtrl+V',
-          },
-          {
-            role: 'selectAll',
-            accelerator: 'CmdOrCtrl+A',
-          },
-          {
-            type: 'separator',
-          },
-        ]);
-      }
-
-      if (
-        !params.isEditable &&
-        params.selectionText !== '' &&
-        !params.hasImageContents
-      ) {
-        menuItems = menuItems.concat([
-          {
-            role: 'copy',
-            accelerator: 'CmdOrCtrl+C',
-          },
-          {
-            label: `Search the web for "${truncateStr(
-              params.selectionText,
-              16,
-              '...',
-            )}"`,
-            click: () => {
-              var url = `https://google.com/search?q=${params.selectionText}`;
-
-              this.webContents.loadURL(url);
-            },
-          },
-        ]);
-      }
-
-      if (
-        !params.hasImageContents &&
-        params.linkURL === '' &&
-        params.selectionText === '' &&
-        !params.isEditable
-      ) {
-        menuItems = menuItems.concat([
-          {
-            label: 'Back              ',
-            accelerator: 'Alt+Left',
-            enabled: this.webContents.canGoBack(),
-            click: () => {
-              this.webContents.goBack();
-            },
-          },
-          {
-            label: 'Forward         ',
-            accelerator: 'Alt+Right',
-            enabled: this.webContents.canGoForward(),
-            click: () => {
-              this.webContents.goForward();
-            },
-          },
-          {
-            label: 'Refresh',
-            accelerator: 'F5',
-            click: () => {
-              this.webContents.reload();
-            },
-          },
-          {
-            type: 'separator',
-          },
-        ]);
-      }
-
-      menuItems.push(
-        {
-          type: 'separator',
-        },
-        {
-          label: 'View source',
-          enabled: this.webContents.getURL().includes('static/pages/') == false,
-          click: () => {
-            if (this.webContents.getURL().substr(0, 12) != 'view-source:') {
-              var url = `view-source:${this.webContents.getURL()}`;
-
-              this.webContents.loadURL(url);
-            }
-          },
-        },
-        {
-          label: 'Inspect',
-          accelerator: 'F12',
-          enabled: this.webContents.getURL().includes('static/pages/') == false,
-          click: () => {
-            if (this.webContents.getURL()) {
-              this.webContents.inspectElement(params.x, params.y);
-
-              if (this.webContents.isDevToolsOpened()) {
-                this.webContents.devToolsWebContents.focus();
-                this.webContents.devToolsWebContents.toggleDevTools();
-              }
-            }
-          },
-        },
-      );
-
-      const menu = Menu.buildFromTemplate(menuItems);
-
-      menu.popup();
+      windowsManager.window.quickMenu.show(this.tabId)
+      windowsManager.window.quickMenu.setPos(params.x, params.y+TOOLBAR_HEIGHT)
     });
 
     this.webContents.addListener('found-in-page', (e, result) => {

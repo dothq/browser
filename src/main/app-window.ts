@@ -16,6 +16,7 @@ import { PrintDialog } from './dialogs/print';
 import { AlertDialog } from './dialogs/alert';
 import { SearchDialog } from './dialogs/search';
 import { PermissionsDialog } from './dialogs/permissions';
+import { QuickMenuDialog } from './dialogs/quickmenu';
 
 import { startMessagingService } from './services';
 import { windowsManager } from '.';
@@ -27,6 +28,7 @@ export class AppWindow extends BrowserWindow {
   public search: SearchDialog = new SearchDialog(this);
   public print: PrintDialog = new PrintDialog(this);
   public alert: AlertDialog = new AlertDialog(this);
+  public quickMenu: QuickMenuDialog = new QuickMenuDialog(this);
 
   constructor() {
     super({
@@ -129,7 +131,7 @@ export class AppWindow extends BrowserWindow {
     this.on('unmaximize', resize);
 
     process.on('uncaughtException', error => {
-      console.log(`${colors.blue.bold('Exception')} ${error}`);
+      console.log(`${colors.blue.bold('Exception')}`, error);
     });
 
     if (process.env.ENV == 'dev') {
