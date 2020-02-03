@@ -24,8 +24,6 @@ class Store {
         ipcRenderer.on('request-permission', (e, content) => {
             content.url = getHostname(content.url)
 
-            console.log(content)
-
             this.content.push(content)
             this.content.shift()
         })

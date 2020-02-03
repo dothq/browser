@@ -10,7 +10,6 @@ export const startMessagingService = (window: AppWindow) => {
     });
     
     ipcMain.on('open-omnibox', (event: IpcMainEvent) => {
-        console.log(window.viewManager.selected.url)
         window.search.show({
             url: window.viewManager.selected.url,
             tabId: window.viewManager.selected.tabId
@@ -18,7 +17,6 @@ export const startMessagingService = (window: AppWindow) => {
     });
     
     ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
-        console.log("Showing dialog", dialog);
         if(window[dialog].visible == false) {
             window[dialog].show();
         } else {
@@ -49,7 +47,6 @@ export const startMessagingService = (window: AppWindow) => {
     });
     
     ipcMain.on('transport-settings-push', (event: any, data: any) => {
-        console.log('transporting', data);
         window.viewManager.newTabView().webContents.send('settings-push', data);
     });
     
@@ -64,7 +61,7 @@ export const startMessagingService = (window: AppWindow) => {
     ipcMain.once('update-top-sites', async e => {
         window.webContents.send('get-top-sites');
 
-        ipcMain.once('receive-top-sites', async (e, topsites) => {
+        ipcMain.on('receive-top-sites', async (e, topsites) => {
             await app.isReady();
             console.log(`${colors.blue.bold('History')} Sending history items to search dialog`);
             window.search.webContents.send('history-items', topsites);
@@ -77,11 +74,22 @@ export const startMessagingService = (window: AppWindow) => {
     });
 
     ipcMain.on('open-print', (e) => {
+
+        window.viewManager.selected.webContents.executeJavaScript(`
+            document.body.style.width = "467px";
+        `)
+
         window.print.show()
         window.print.webContents.send('update-printers', window.webContents.getPrinters());
 
-        window.viewManager.selected.webContents.capturePage().then(image => {
+        window.viewManager.selected.webContents.capturePage({ width: 467, height: 686, x: 0, y: 0 }).then(image => {
             window.print.webContents.send('update-page-preview', image.toDataURL());
         })
+
+        setTimeout(() => {
+            window.viewManager.selected.webContents.executeJavaScript(`
+                document.body.style.width = "";
+            `)
+        }, 3000);
     })
 }

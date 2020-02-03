@@ -96,8 +96,6 @@ export class Store {
   public loaded: boolean = false;
 
   public constructor() {
-    console.log("App loaded in store")
-
     ipcRenderer.on(
       'update-navigation-state',
       (e: IpcRendererEvent, data: any) => {

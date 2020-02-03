@@ -28,8 +28,7 @@ window.addEventListener('mouseup', e => {
 });
 
 if (
-  window.location.protocol === 'dot:' ||
-  window.location.protocol === 'dot-error:'
+  window.location.protocol === 'dot:'
 ) {
   (async function() {
     const w = await webFrame.executeJavaScript('window');
@@ -50,13 +49,13 @@ if (window.location.protocol === 'dot:') {
     } else if (window.location.hostname === 'error') {
       document.title = window.location.hash.split("#")[1] || 'dot://error';
     }
+
   });
 }
 
 const updateAlert = () => {
   webFrame.executeJavaScript('window', false).then(w => {
     w.alert = (message?: any) => {
-      console.log("Dispatched alert")
       ipcRenderer.send('show-alert', 'alert', message);
     }
 

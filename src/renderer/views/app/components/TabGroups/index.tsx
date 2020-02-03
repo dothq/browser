@@ -7,8 +7,6 @@ import store from '../../store';
 import { Section } from '../Overlay/style';
 import { Header, preventHiding } from '../Overlay';
 
-
-
 const onAddClick = () => {
   store.tabGroups.addGroup();
 };
