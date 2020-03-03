@@ -55,8 +55,8 @@ export class PermissionsDialog extends Dialog {
         return reject('Unknown permission');
       }
 
-      this.rearrange();
-      this.show()
+      // this.rearrange();
+      // this.show()
 
       this.webContents.send('request-permission', { name, url, details });
 

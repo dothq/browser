@@ -3,6 +3,7 @@ import { AppWindow } from '../app-window';
 import { autoUpdater } from 'electron-updater';
 
 import colors from 'colors';
+import { callViewMethod } from '~/shared/utils/view';
 
 export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('update-install', () => {
@@ -10,28 +11,28 @@ export const startMessagingService = (window: AppWindow) => {
     });
     
     ipcMain.on('open-omnibox', (event: IpcMainEvent) => {
-        window.search.show({
+        window.dialogs.search.show({
             url: window.viewManager.selected.url,
             tabId: window.viewManager.selected.tabId
         });
     });
     
     ipcMain.on('show-dialog', (event: IpcMainEvent, dialog: string) => {
-        if(window[dialog].visible == false) {
-            window[dialog].show();
+        if(window.dialogs[dialog].visible == false) {
+            window.dialogs[dialog].show();
         } else {
-            window[dialog].hide();
+            window.dialogs[dialog].hide();
         }
     })
 
     ipcMain.on('hide-dialog', (event: IpcMainEvent, dialog: string) => {
-        window[dialog].hide()
+        window.dialogs[dialog].hide()
     })
 
     ipcMain.on('show-alert', (event: IpcMainEvent, action: 'alert' | 'confirm' | 'input', content: any) => {
-        window.alert.show();
-        window.alert.action = action;
-        window.alert.send(content);
+        window.dialogs.alert.show();
+        window.dialogs.alert.action = action;
+        window.dialogs.alert.send(content);
     })
 
     ipcMain.on('dev-tools-open', () => {
@@ -54,6 +55,23 @@ export const startMessagingService = (window: AppWindow) => {
         window.webContents.focus();
     });
 
+    ipcMain.on('window-close', () => {
+        console.log(`${colors.blue.bold('Window')} Given signal to close application.`);
+        window.close()
+    });
+
+    ipcMain.on('window-restore', () => {
+        window.unmaximize()
+    });
+
+    ipcMain.on('window-maximize', () => {
+        window.maximize()
+    });
+
+    ipcMain.on('window-minimize', () => {
+        window.minimize()
+    });
+
     ipcMain.on('app-open-dev-tools', () => {
         window.webContents.openDevTools({ mode: 'detach' })
     })
@@ -64,7 +82,7 @@ export const startMessagingService = (window: AppWindow) => {
         ipcMain.on('receive-top-sites', async (e, topsites) => {
             await app.isReady();
             console.log(`${colors.blue.bold('History')} Sending history items to search dialog`);
-            window.search.webContents.send('history-items', topsites);
+            window.dialogs.search.webContents.send('history-items', topsites);
         })
 
     })
@@ -73,17 +91,25 @@ export const startMessagingService = (window: AppWindow) => {
         window.webContents.send('update-available', version);
     });
 
+    ipcMain.on('get-accent-color', (event) => {
+        window.webContents.send('get-accent-color');
+
+        ipcMain.on('receive-accent-color', async (e, ac) => {
+            event.returnValue = ac;
+        })
+    })
+
     ipcMain.on('open-print', (e) => {
 
         window.viewManager.selected.webContents.executeJavaScript(`
             document.body.style.width = "467px";
         `)
 
-        window.print.show()
-        window.print.webContents.send('update-printers', window.webContents.getPrinters());
+        window.dialogs.print.show()
+        window.dialogs.print.webContents.send('update-printers', window.webContents.getPrinters());
 
         window.viewManager.selected.webContents.capturePage({ width: 467, height: 686, x: 0, y: 0 }).then(image => {
-            window.print.webContents.send('update-page-preview', image.toDataURL());
+            window.dialogs.print.webContents.send('update-page-preview', image.toDataURL());
         })
 
         setTimeout(() => {

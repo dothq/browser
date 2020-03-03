@@ -27,17 +27,13 @@ window.addEventListener('mouseup', e => {
   }
 });
 
-if (
-  window.location.protocol === 'dot:'
-) {
-  (async function() {
-    const w = await webFrame.executeJavaScript('window');
-    w.settings = ipcRenderer.sendSync('get-settings-sync');
-  })();
-}
-
 if (window.location.protocol === 'dot:') {
-  window.addEventListener('DOMContentLoaded', () => {
+  window.onload = () => {
+    (async function() {
+      const w = await webFrame.executeJavaScript('window');
+      w.settings = ipcRenderer.sendSync('get-settings-sync');
+    })();
+
     if (window.location.hostname === 'settings') document.title = 'Settings';
     else if (window.location.hostname === 'history') document.title = 'History';
     else if (window.location.hostname === 'bookmarks')
@@ -50,7 +46,7 @@ if (window.location.protocol === 'dot:') {
       document.title = window.location.hash.split("#")[1] || 'dot://error';
     }
 
-  });
+  };
 }
 
 const updateAlert = () => {
@@ -74,7 +70,7 @@ const insertStyles = () => {
 
   styleElement.textContent = `
     ::selection {
-      background-color: #009dff52;
+      background-color: #cfe8fc;
     }
   `
 
@@ -88,6 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
   insertStyles();
 
   setInterval(updateAlert, 1000)
+
+  if(window.location.hostname == "www.youtube.com" && window.location.pathname == "/" && document.getElementById("masthead-ad")) {
+    document.getElementById("masthead-ad").outerHTML = '';
+  }
 
   let beginningScrollLeft: number = null;
   let beginningScrollRight: number = null;

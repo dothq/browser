@@ -37,7 +37,7 @@ export class SearchDialog extends Dialog {
     super.setBounds({ x, y: 80, width: WIDTH, height: HEIGHT })
   }
 
-  public show(content) {
+  public show(content?: any) {
     this.rearrange();
     super.show();
     this.visible = true;

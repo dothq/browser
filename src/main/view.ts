@@ -1,19 +1,20 @@
 import {
   BrowserView,
-  Menu,
-  nativeImage,
-  clipboard,
   BrowserWindow,
   shell,
   ContextMenuParams,
+  Menu,
+  clipboard,
+  nativeImage,
 } from 'electron';
 import { windowsManager } from '.';
-import { engine } from './services/web-request';
 import { parse } from 'tldts';
 import { resolve } from 'path';
 import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
 import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants';
+import { engine } from './services';
+import { truncateStr } from '~/shared/mixins';
 
 export class View extends BrowserView {
   public title: string = '';
@@ -41,38 +42,248 @@ export class View extends BrowserView {
     this.homeUrl = url;
     this.tabId = id;
 
-    this.webContents.setUserAgent(
-      this.webContents.getUserAgent()
+    this.setBackgroundColor("#fff");
+
+    this.webContents.userAgent =
+      this.webContents.userAgent
       .replace(/ dot\\?.([^\s]+)/g, '')
       .replace(/ Electron\\?.([^\s]+)/g, '')
-      .replace(/Chrome\\?.([^\s]+)/g, 'Chrome/79.0.3945.88')
-    )
+      .replace(/Chrome\\?.([^\s]+)/g, `Chrome/${windowsManager.versions.chromium}`)
 
-    var truncateStr = function(str: any, length: any, ending: any) {
-      if (length == null) {
-        length = 100;
-      }
-      if (ending == null) {
-        ending = '...';
-      }
-      if (str.length > length) {
-        return str.substring(0, length - ending.length) + ending;
-      } else {
-        return str;
-      }
-    };
-
-    this.webContents.addListener('context-menu', (e, params: ContextMenuParams) => {
-
-      const navigationFlags = {
-        back: this.webContents.canGoBack(),
-        forward: this.webContents.canGoForward()
-      }
-
-      windowsManager.window.quickMenu.webContents.send("update-navigation-flags", navigationFlags);
-
-      windowsManager.window.quickMenu.show(this.tabId)
-      windowsManager.window.quickMenu.setPos(params.x, params.y+TOOLBAR_HEIGHT)
+      this.webContents.on('context-menu', (e, params) => {
+        let menuItems: Electron.MenuItemConstructorOptions[] = [];
+  
+        if (params.mediaType == 'video' || params.mediaType == 'audio') {
+          menuItems = menuItems.concat([
+            {
+              label: 'Open ' + params.mediaType + ' in new tab',
+              enabled: params.srcURL.includes('blob:') == false,
+              icon: process.cwd() + '\\static\\app-icons\\add.png',
+              click: () => {
+                windowsManager.window.webContents.send('api-tabs-create', {
+                  url: params.srcURL,
+                  active: false,
+                });
+              },
+            },
+            {
+              label: 'Save ' + params.mediaType,
+              enabled: params.srcURL.includes('blob:') == false,
+              click: () => {
+                this.webContents.downloadURL(params.srcURL);
+              },
+            },
+            {
+              label: 'Copy link',
+              enabled: params.srcURL.includes('blob:') == false,
+              click: () => {
+                clipboard.clear();
+                clipboard.writeText(params.srcURL);
+              },
+            },
+            {
+              type: 'separator',
+            },
+          ]);
+        }
+  
+        if (params.linkURL !== '') {
+          menuItems = menuItems.concat([
+            {
+              label: 'Open link in new tab',
+              icon: process.cwd() + '\\static\\app-icons\\add.png',
+              click: () => {
+                windowsManager.window.webContents.send('api-tabs-create', {
+                  url: params.linkURL,
+                  active: false,
+                });
+              },
+            },
+            {
+              type: 'separator',
+            },
+            {
+              label: 'Copy link address',
+              click: () => {
+                clipboard.clear();
+                clipboard.writeText(params.linkURL);
+              },
+            },
+            {
+              type: 'separator',
+            },
+          ]);
+        }
+  
+        if (params.hasImageContents) {
+          menuItems = menuItems.concat([
+            {
+              label: 'Open image in new tab',
+              click: () => {
+                windowsManager.window.webContents.send('api-tabs-create', {
+                  url: params.srcURL,
+                  active: false,
+                });
+              },
+            },
+            {
+              label: 'Save image',
+              click: () => {
+                this.webContents.downloadURL(params.srcURL);
+              },
+            },
+            {
+              label: 'Copy image',
+              click: () => {
+                const img = nativeImage.createFromDataURL(params.srcURL);
+  
+                clipboard.clear();
+                clipboard.writeImage(img);
+              },
+            },
+            {
+              label: 'Copy image address',
+              click: () => {
+                clipboard.clear();
+                clipboard.writeText(params.srcURL);
+              },
+            },
+            {
+              type: 'separator',
+            },
+          ]);
+        }
+  
+        if (params.isEditable) {
+          menuItems = menuItems.concat([
+            {
+              role: 'undo',
+              accelerator: 'CmdOrCtrl+Z',
+            },
+            {
+              role: 'redo',
+              accelerator: 'CmdOrCtrl+Y',
+            },
+            {
+              type: 'separator',
+            },
+            {
+              role: 'cut',
+              enabled: params.selectionText.length >= 1,
+            },
+            {
+              role: 'copy',
+              accelerator: 'CmdOrCtrl+C',
+              enabled: params.selectionText.length >= 1,
+            },
+            {
+              role: 'paste',
+              accelerator: 'CmdOrCtrl+V',
+            },
+            {
+              role: 'selectAll',
+              accelerator: 'CmdOrCtrl+A',
+            },
+            {
+              type: 'separator',
+            },
+          ]);
+        }
+  
+        if (
+          !params.isEditable &&
+          params.selectionText !== '' &&
+          !params.hasImageContents
+        ) {
+          menuItems = menuItems.concat([
+            {
+              role: 'copy',
+              accelerator: 'CmdOrCtrl+C',
+            },
+            {
+              label: `Search the web for "${truncateStr(
+                params.selectionText,
+                16,
+                '...',
+              )}"`,
+              click: () => {
+                var url = `https://google.com/search?q=${params.selectionText}`;
+  
+                this.webContents.loadURL(url);
+              },
+            },
+          ]);
+        }
+  
+        if (
+          !params.hasImageContents &&
+          params.linkURL === '' &&
+          params.selectionText === '' &&
+          !params.isEditable
+        ) {
+          menuItems = menuItems.concat([
+            {
+              label: 'Back              ',
+              accelerator: 'Alt+Left',
+              enabled: this.webContents.canGoBack(),
+              click: () => {
+                this.webContents.goBack();
+              },
+            },
+            {
+              label: 'Forward         ',
+              accelerator: 'Alt+Right',
+              enabled: this.webContents.canGoForward(),
+              click: () => {
+                this.webContents.goForward();
+              },
+            },
+            {
+              label: 'Refresh',
+              accelerator: 'F5',
+              click: () => {
+                this.webContents.reload();
+              },
+            },
+            {
+              type: 'separator',
+            },
+          ]);
+        }
+  
+        menuItems.push(
+          {
+            type: 'separator',
+          },
+          {
+            label: 'View source',
+            click: () => {
+              if (this.webContents.getURL().substr(0, 12) != 'view-source:') {
+                var url = `view-source:${this.webContents.getURL()}`;
+  
+                this.webContents.loadURL(url);
+              }
+            },
+          },
+          {
+            label: 'Inspect',
+            accelerator: 'F12',
+            click: () => {
+              if (this.webContents.getURL()) {
+                this.webContents.inspectElement(params.x, params.y);
+  
+                if (this.webContents.isDevToolsOpened()) {
+                  this.webContents.devToolsWebContents.focus();
+                  this.webContents.devToolsWebContents.toggleDevTools();
+                }
+              }
+            },
+          },
+        );
+  
+        const menu = Menu.buildFromTemplate(menuItems);
+  
+        menu.popup();
     });
 
     this.webContents.addListener('found-in-page', (e, result) => {
@@ -106,34 +317,32 @@ export class View extends BrowserView {
             url: validatedURL
           }
 
-          const url = this.webContents.getURL();
+          if(!windowsManager.window.viewManager.viewErrors[this.id]) {
+            windowsManager.window.viewManager.viewErrors[this.id] = true;
 
-          this.webContents.loadURL(`dot://error#${url}`)
+            return this.webContents.reload()
+          } else {
+            delete windowsManager.window.viewManager.viewErrors[this.id];
+
+            const url = this.webContents.getURL();
+  
+            return this.webContents.loadURL(`dot://error#${url}`)
+          }
+
         }
       }
     )
 
-    this.webContents.addListener('did-start-navigation', (...args: any[]) => {
+    this.webContents.addListener('did-start-navigation', async (...args) => {
       this.updateNavigationState();
 
       if(args[3] == true) {
         windowsManager.window.webContents.send(`browserview-tab-info-updated-${this.tabId}`);
       }
 
-      const url = this.webContents.getURL();
+      let url = this.webContents.getURL();
 
-      const { styles, scripts } = engine.getCosmeticsFilters({
-        url,
-        ...parse(url),
-      });
-
-      this.webContents.insertCSS(styles);
-
-      for (const script of scripts) {
-        this.webContents.executeJavaScript(script);
-      }
-
-      windowsManager.window.webContents.send(`load-commit-${this.tabId}`, ...args);
+      // windowsManager.window.webContents.send(`load-commit-${this.webContents.id}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,
@@ -155,27 +364,28 @@ export class View extends BrowserView {
       });
     });
 
-    this.webContents.addListener('did-finish-load', async () => {
-      this.emitWebNavigationEvent('onCompleted', {
+    this.webContents.addListener('did-navigate', async (e, url) => {
+      windowsManager.window.webContents.send(
+        `view-did-navigate-${this.webContents.id}`,
+        url,
+      );
+
+      this.emitWebNavigationEvent('onCreatedNavigationTarget', {
+        tabId: this.tabId,
+        url,
+        sourceFrameId: 0,
+        timeStamp: Date.now(),
+      });
+    });
+
+    this.webContents.addListener('dom-ready', () => {
+      this.emitWebNavigationEvent('onDOMContentLoaded', {
         tabId: this.tabId,
         url: this.webContents.getURL(),
         frameId: 0,
         timeStamp: Date.now(),
         processId: process.pid,
       });
-    });
-
-    // this.webContents.addListener('will-navigate', (e, url) => {
-    //   e.preventDefault();
-
-    //   windowsManager.window.viewManager.selected.webContents.loadURL(url);
-    // });
-
-    this.webContents.addListener('did-navigate', async (e, url) => {
-      windowsManager.window.webContents.send(
-        `view-did-navigate-${this.webContents.id}`,
-        url,
-      );
     });
 
     this.webContents.addListener(
@@ -189,6 +399,16 @@ export class View extends BrowserView {
         }
       },
     );
+
+    this.webContents.addListener('did-finish-load', async () => {
+      this.emitWebNavigationEvent('onCompleted', {
+          tabId: this.tabId,
+          url: this.webContents.getURL(),
+          frameId: 0,
+          timeStamp: Date.now(),
+          processId: process.pid,
+      });
+    })
 
     this.webContents.addListener(
       'new-window',
@@ -264,25 +484,8 @@ export class View extends BrowserView {
           e.preventDefault();
           windowsManager.window.webContents.send('api-tabs-create', { url, active: true });
         }
-
-        this.emitWebNavigationEvent('onCreatedNavigationTarget', {
-          tabId: this.tabId,
-          url,
-          sourceFrameId: 0,
-          timeStamp: Date.now(),
-        });
       },
     );
-
-    this.webContents.addListener('dom-ready', () => {
-      this.emitWebNavigationEvent('onDOMContentLoaded', {
-        tabId: this.tabId,
-        url: this.webContents.getURL(),
-        frameId: 0,
-        timeStamp: Date.now(),
-        processId: process.pid,
-      });
-    });
 
     this.webContents.addListener(
       'page-favicon-updated',
@@ -304,42 +507,18 @@ export class View extends BrowserView {
       );
     });
 
-    (this.webContents as any).addListener(
-      'certificate-error',
-      (
-        event: Electron.Event,
-        url: string,
-        error: string,
-        certificate: Electron.Certificate,
-        callback: Function,
-      ) => {
-        if (`${this.webContents.getURL()}`.includes('#ise') == false) {
-          event.preventDefault();
-          this.webContents.loadURL(
-            process.cwd() +
-              '/static/pages/error/ssl-error.html?du=' +
-              url +
-              '&err=' +
-              error,
-          );
-          callback(true);
-        }
-        if (`${this.webContents.getURL()}`.includes('#ise') == true) {
-          event.preventDefault();
-          this.webContents.loadURL(this.webContents.getURL() + '#ise');
-          callback(true);
-        }
-      },
-    );
-
     this.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
     this.webContents.loadURL(url);
   }
 
+  public emitWebNavigationEvent = (name: string, ...data: any[]) => {
+    this.webContents.send(`api-emit-event-webNavigation-${name}`, ...data);
+  };
+
   public updateNavigationState() {
     if (this.isDestroyed()) return;
 
-    if (windowsManager.window.viewManager.selectedId === this.tabId) {
+    if (windowsManager.window.viewManager.selectedId === this.webContents.id) {
       windowsManager.window.webContents.send('update-navigation-state', {
         canGoBack: this.webContents.canGoBack(),
         canGoForward: this.webContents.canGoForward(),
@@ -347,7 +526,4 @@ export class View extends BrowserView {
     }
   }
 
-  public emitWebNavigationEvent = (name: string, ...data: any[]) => {
-    this.webContents.send(`api-emit-event-webNavigation-${name}`, ...data);
-  };
 }

@@ -10,6 +10,7 @@ global.viewsMap = {};
 export class ViewManager {
   public views: { [key: number]: View } = {};
   public selectedId = 0;
+  public viewErrors: { [key: number]: boolean } = {};
   public _fullscreen = false;
 
   public isHidden = false;
@@ -199,7 +200,7 @@ export class ViewManager {
       return;
     }
 
-    if (windowsManager.window.getBrowserView() === view) {
+    if (windowsManager.window.getBrowserViews()[0] === view) {
       windowsManager.window.setBrowserView(null);
     }
 

@@ -21,15 +21,12 @@ export class QuickMenuDialog extends Dialog {
   }
 
   public setPos(x: number, y: number) {
-
-    console.log("rect", x, y)
-
     super.rearrange({ x, y });
   }
 
   public show(tabId: number) {
     super.show();
-    this.webContents.send('visible', true, tabId);
+    this.webContents.send('visible', true, tabId, this.appWindow.viewManager.selected.url);
     this.visible = true;
   }
 

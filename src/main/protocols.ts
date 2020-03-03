@@ -17,21 +17,30 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 export const registerProtocol = (session: Electron.Session) => {
-  session.protocol.registerFileProtocol(
-    'dot',
-    (request, callback: any) => {
-      const parsed = parse(request.url);
+  if(process.env.ENV === "dev") {
+    session.protocol.registerHttpProtocol(
+      'dot', (request, callback) => {
+        const parsed = parse(request.url);
 
-      if (parsed.path === '/') {
-        return callback({
-          path: join(__dirname, 'web', `${parsed.hostname}.html`),
-        });
+        const baseUrl = 'http://localhost:4445/';
+
+        if (parsed.path === '/') {
+          return callback({ url: `${baseUrl}${parsed.hostname}.html` })
+        }
+
+        callback({ url: `${baseUrl}${parsed.path}` })
       }
-
-      callback({ path: join(__dirname, 'web', parsed.path) });
-    },
-    error => {
-      if (error) console.error(error);
-    },
-  );
+    );
+  } else {
+    session.protocol.registerFileProtocol(
+      'dot', (request, callback) => {
+        const parsed = parse(request.url);
+  
+        if (parsed.path === '/') {
+          return callback({ path: join(__dirname, 'web', `${parsed.hostname}.html`) })
+        }
+  
+        callback({ path: join(__dirname, 'web', parsed.path) })
+      })
+  }
 };
