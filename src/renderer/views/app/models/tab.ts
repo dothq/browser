@@ -116,7 +116,7 @@ export class Tab {
 
   @computed
   public get isSelected() {
-    return store.tabGroups.currentGroup.selectedTabId === this.id;
+    return store.tabs.selectedId === this.id;
   }
 
   @computed
@@ -228,9 +228,9 @@ export class Tab {
 
     ipcRenderer.on(
       `load-commit-${this.id}`,
-      (
-        e: any,
-        event: any,
+      async (
+        e,
+        event,
         url: string,
         isInPlace: boolean,
         isMainFrame: boolean,
@@ -247,10 +247,6 @@ export class Tab {
         this.hasThemeColor = false;
         this.favicon = undefined;
     })
-
-    ipcRenderer.on(`view-did-navigate-${this.id}`, async (e, url: string) => {
-      console.log("Navigated to", url);
-    });
 
     ipcRenderer.on(
       `browserview-favicon-updated-${this.id}`,
@@ -277,7 +273,7 @@ export class Tab {
           }
         } catch (e) {
           console.log(e)
-          // this.favicon = ;
+          this.favicon = '';
           this.background = colors.blue['500'];
         }
         this.updateData();
@@ -359,7 +355,7 @@ export class Tab {
     if (!this.isClosing) {
       store.canToggleMenu = this.isSelected;
 
-      this.tabGroup.selectedTabId = this.id;
+      store.tabs.selectedId = this.id;
 
       ipcRenderer.send('browserview-select', this.id);
 
@@ -440,7 +436,7 @@ export class Tab {
 
     store.tabs.lastUrl.push(this.url);
 
-    const selected = tabGroup.selectedTabId === this.id;
+    const selected = store.tabs.selectedId === this.id;
 
     ipcRenderer.send('browserview-destroy', this.id);
 

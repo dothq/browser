@@ -15,6 +15,7 @@ import {
 import HorizontalScrollbar from '~/renderer/views/app/components/HorizontalScrollbar';
 import store from '../store';
 import { ipcRenderer, remote } from 'electron';
+import { shadeBlendConvert } from '../utils';
 
 export class TabsStore {
   @observable
@@ -34,6 +35,9 @@ export class TabsStore {
 
   @observable
   public scrollable = false;
+
+  @observable
+  public selectedId: number = 0;
 
   public lastScrollLeft: number = 0;
   public lastMouseX: number = 0;
@@ -82,6 +86,15 @@ export class TabsStore {
     
     ipcRenderer.on('view-create', (e: any, url: any, active: boolean) => {
       this.addTab({ url, active })
+    })
+
+    ipcRenderer.on('get-accent-color', e => {
+      const filtered = shadeBlendConvert(
+        store.theme['tab-vibrant-opacity']+0.3,
+        this.selectedTab.background
+      )
+
+      ipcRenderer.send('receive-accent-color', filtered)
     })
 
     ipcRenderer.on(
@@ -143,10 +156,7 @@ export class TabsStore {
   }
 
   public get selectedTab() {
-    if (!store.tabGroups.currentGroup.selectedTabId) {
-      return null;
-    }
-    return this.getTabById(store.tabGroups.currentGroup.selectedTabId);
+    return this.getTabById(this.selectedId)
   }
 
   public get hoveredTab() {
@@ -171,27 +181,12 @@ export class TabsStore {
       this.scrollbarRef.current.scrollToEnd(TAB_ANIMATION_DURATION * 100);
     });
 
-    setInterval(function() {
-      if (store.tabs.selectedTab) {
-        remote
-          .getCurrentWindow()
-          .setTitle(`Dot - ${store.tabs.selectedTab.title}`);
-      } else {
-        remote.getCurrentWindow().setTitle(`Dot`);
-      }
-
-      if (store.tabs.list.length == 0) {
-        remote.getCurrentWindow().setTitle(`Dot`);
-      }
-    }, 250);
-
     return tab;
   }
 
   @action
   public openExternalLink(options = defaultTabOptions) {
     this.addTab(options);
-    store.overlay.visible = false;
   }
 
   public removeTab(id: number) {

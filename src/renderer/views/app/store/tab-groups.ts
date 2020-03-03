@@ -43,13 +43,6 @@ export class TabGroupsStore {
 
     if (tab) {
       tab.select();
-      store.overlay.visible = false;
-    } else {
-      const { current } = store.overlay.inputRef;
-      if (current) {
-        store.overlay.searchBoxValue = '';
-        current.focus();
-      }
     }
 
     setTimeout(() => {
@@ -102,12 +95,6 @@ export class TabGroupsStore {
     const tabGroup: TabGroup = new TabGroup();
     this.list.push(tabGroup);
     this.currentGroupId = tabGroup.id;
-
-    const { current } = store.overlay.inputRef;
-    if (current) {
-      store.overlay.searchBoxValue = '';
-      current.focus();
-    }
 
     return new Promise((resolve: (id: string) => void) => {
       this.db.insert(tabGroup, (err: any, doc: TabGroup) => {
