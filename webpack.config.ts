@@ -7,6 +7,10 @@ import TerserPlugin from 'terser-webpack-plugin';
 import ExtractCssChunksPlugin from 'extract-css-chunks-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import WriteFilePlugin from 'write-file-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import terser from 'terser';
+
+import * as Sentry from '@sentry/node';
 
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 
@@ -55,7 +59,21 @@ export const baseConfig: Configuration = {
     ]
   },
   watch: devMode == 'development' ? false : true,
-  plugins: [],
+  plugins: [
+    new CopyPlugin(
+      [
+        {
+          from:
+            'node_modules/@cliqz/adblocker-electron-preload/dist/preload.cjs.js',
+          to: 'preload.js',
+          transform: (fileContent, path) => {
+            return terser.minify(fileContent.toString()).code.toString();
+          },
+        },
+      ],
+      { copyUnmodified: true },
+    ),
+  ],
   module: {
     rules: [
       {
@@ -149,3 +167,5 @@ mainDevConfig.plugins.push({
 export default (devMode == 'development'
   ? [mainDevConfig]
   : [mainProdConfig]);
+
+Sentry.init({ dsn: 'https://6820d13549a4444991a1c7e9a8047e31@sentry.io/3379175' });

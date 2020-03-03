@@ -1,20 +1,13 @@
 import path from 'path';
-import WriteFilePlugin from 'write-file-webpack-plugin';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-
-import LodashModuleReplacementPlugin from 'lodash-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import { devMode, scTransformer, aliases } from './webpack.config';
 import webpack from 'webpack';
 
-if(devMode == 'development') {
-  new webpack.optimize.ModuleConcatenationPlugin()
-}
+import * as Sentry from '@sentry/node';
 
 const webConfig = {
-    target: 'web',
     mode: devMode,
     entry: {
       newtab: path.resolve(__dirname, 'src', 'renderer', 'views', 'newtab', 'index.tsx'),
@@ -40,11 +33,9 @@ const webConfig = {
         chunks: ['error'],
         filename: `error.html`
       }),
-      new WriteFilePlugin(),
       new webpack.EnvironmentPlugin({
         NODE_ENV: devMode
       }),
-      new LodashModuleReplacementPlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
@@ -73,19 +64,13 @@ const webConfig = {
           path.resolve(__dirname, './'),
         ]
       },
-      devtool: 'eval',
-      watchOptions: {
-        ignored: [
-          path.resolve(__dirname, 'node_modules'),
-          path.resolve(__dirname, 'src', 'preloads', 'view-preload.ts'),
-        ]
-      },
+      devtool: 'source-map',
       module: {
         rules: [
           {
             test: /\.tsx?$/,
             exclude: /node_modules/,
-            loader: 'awesome-typescript-loader',
+            loader: 'ts-loader',
             options: {
               transpileOnly: true,
               experimentalWatchApi: true,
@@ -114,8 +99,6 @@ const webConfig = {
       },
 };
 
-if(devMode == 'development') {
-  webConfig.plugins.push(new BundleAnalyzerPlugin())
-}
-
 export default webConfig;
+
+Sentry.init({ dsn: 'https://6820d13549a4444991a1c7e9a8047e31@sentry.io/3379175' });

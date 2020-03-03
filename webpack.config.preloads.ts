@@ -2,6 +2,8 @@ import path from 'path';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 import { devMode, aliases } from './webpack.config';
 
+import * as Sentry from '@sentry/node';
+
 const preloadConfig = {
     mode: devMode,
     target: 'electron-renderer',
@@ -40,3 +42,5 @@ const preloadConfig = {
 }
 
 export default preloadConfig;
+
+Sentry.init({ dsn: 'https://6820d13549a4444991a1c7e9a8047e31@sentry.io/3379175' });

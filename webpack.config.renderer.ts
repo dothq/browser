@@ -5,6 +5,8 @@ import NodeExternals from 'webpack-node-externals';
 
 import { devMode, scTransformer, aliases } from './webpack.config';
 
+import * as Sentry from '@sentry/node';
+
 const rendererConfig = {
     mode: devMode,
     target: 'electron-renderer',
@@ -139,3 +141,5 @@ const rendererConfig = {
 };
   
 export default rendererConfig;
+
+Sentry.init({ dsn: 'https://6820d13549a4444991a1c7e9a8047e31@sentry.io/3379175' });
