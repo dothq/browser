@@ -15,13 +15,10 @@ import * as Sentry from '@sentry/node';
 import createStyledComponentsTransformer from 'typescript-plugin-styled-components';
 
 import { Configuration } from 'webpack';
-import { spawn } from 'child_process';
 
-export const devMode = process.env.NODE_ENV === 'development' ? 'development' : 'production';
+export const devMode = process.env.NODE_ENV === 'dev' ? 'development' : 'production';
 
 process.env.isOpen = "false";
-
-let electronProcess;
 
 export const scTransformer = createStyledComponentsTransformer({
   minify: true,
@@ -58,7 +55,7 @@ export const baseConfig: Configuration = {
       path.resolve(__dirname, 'node_modules'),
     ]
   },
-  watch: devMode == 'development' ? false : true,
+  watch: devMode == 'development' ? true : false,
   plugins: [
     new CopyPlugin(
       [
@@ -145,24 +142,6 @@ const mainConfig = merge.smart(baseConfig, {
 
 const mainDevConfig = merge.smart(mainConfig, developmentConfig);
 const mainProdConfig = merge.smart(mainConfig, productionConfig);
-
-mainDevConfig.plugins.push({
-  apply: (compiler: any) => {
-    compiler.hooks.afterEmit.tap('AfterEmitPlugin', () => {
-      if (electronProcess) {
-        electronProcess.kill();
-      }
-
-      electronProcess = spawn('npm', ['start'], {
-        shell: true,
-        env: process.env,
-        stdio: 'inherit',
-      })
-        .on('close', code => process.exit(code))
-        .on('error', spawnError => console.error(spawnError));
-    });
-  },
-});
 
 export default (devMode == 'development'
   ? [mainDevConfig]
