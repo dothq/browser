@@ -4,6 +4,7 @@ import { AppWindow } from '../app-window';
 import { platform } from 'os';
 
 import colors from 'colors';
+import { windowsManager } from '..';
 
 interface IOptions {
   name: string;
@@ -45,6 +46,8 @@ export class Dialog extends BrowserView {
         contextIsolation: false,
       },
     });
+
+    console.log(`${colors.blue.bold('Dialog')} Loaded ${name} dialog in ${Date.now() - windowsManager.performanceStart}ms`);
 
     this.appWindow = appWindow;
     this.bounds = { ...this.bounds, ...bounds };
