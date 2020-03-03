@@ -3,7 +3,7 @@ import { centerIcon } from '../../../../shared/mixins';
 
 export const StyledApp = styled.div`
     display: block;
-    transition: 0.4s opacity;
+    transition: 0.2s opacity;
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 4px;

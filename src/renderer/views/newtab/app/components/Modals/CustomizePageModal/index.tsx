@@ -33,8 +33,6 @@ const customStyles = {
   },
 };
 
-// ReactModal.defaultStyles.overlay.backgroundColor = 'rgba(0, 0, 0, 0.4)';
-
 class CustomizePageModal extends React.Component {
   public state = {
     showModal: false,

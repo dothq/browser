@@ -10,6 +10,7 @@ export const StyledApp = styled.div`
     border-radius: 4px;
     padding: 20px;
     box-shadow: 1px 1px 6px 2px #00000017;
+    height: 120px;
 
     ${({ visible }: { visible: boolean }) => css`
         opacity: ${visible ? 1 : 0};

@@ -25,7 +25,6 @@ export class Store {
         `${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`,
       );
     }
-    console.log(`${process.cwd()}/src/renderer/views/app/locale/${this.currentLanguage}.json`)
     this.lang = languageJSON.toObject();
   }
 

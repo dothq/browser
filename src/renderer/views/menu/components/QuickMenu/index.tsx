@@ -18,20 +18,6 @@ import store from '../../store';
 import { ipcRenderer } from 'electron';
 import { icons, NEWTAB_URL } from '../../../../views/app/constants';
 
-const changeContent = () => () => {
-  // store.overlay.currentContent = content;
-};
-
-const onFindClick = () => {
-  /*store.overlay.visible = false;
-
-  ipcRenderer.send(
-    `find-show-${store.windowId}`,
-    store.tabs.selectedTab.id,
-    store.tabs.selectedTab.findInfo,
-  );*/
-};
-
 const onDarkClick = () => {
   
 };

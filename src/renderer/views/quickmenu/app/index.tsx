@@ -26,6 +26,16 @@ const onPrintClick = () => {
   store.hide();
 }
 
+const onViewSourceClick = () => {
+  callViewMethod(store.tabId, 'webContents.loadURL', `view-source:${store.url}`);
+  store.hide();
+}
+
+const onInspectClick = () => {
+  callViewMethod(store.tabId, 'webContents.inspectElement', 0, 0)
+  store.hide();
+}
+
 const Navigation = () => (
   <Category>
     <MenuItem disabled={!store.navigationState.back} onClick={onBackClick}>
@@ -62,11 +72,11 @@ const Multimedia = () => (
 
 const Developer = () => (
   <Category>
-    <MenuItem>
+    <MenuItem onClick={onViewSourceClick}>
       <Label>View page source</Label>
       <Hotkey>Ctrl+U</Hotkey>
     </MenuItem>
-    <MenuItem>
+    <MenuItem onClick={onInspectClick}>
       <Icon icon={icons.extensions} size={18} />
       <Label hasIcon>Inspect</Label>
       <Hotkey>Ctrl+P</Hotkey>
