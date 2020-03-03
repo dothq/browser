@@ -2,6 +2,7 @@ import {
   BrowserWindow,
   app,
   nativeImage,
+  session,
 } from 'electron';
 
 import { resolve } from 'path';
@@ -18,17 +19,28 @@ import { SearchDialog } from './dialogs/search';
 import { PermissionsDialog } from './dialogs/permissions';
 import { QuickMenuDialog } from './dialogs/quickmenu';
 
-import { startMessagingService } from './services';
+import { startMessagingService, runAdblockService } from './services';
 import { windowsManager } from '.';
+import { defaultTabOptions } from '~/renderer/views/app/constants';
+import { Dialog } from './dialogs/dialog';
+
+interface IDialogs {
+  search?: SearchDialog;
+
+  menu?: MenuDialog;
+  print?: PrintDialog;
+
+  alert?: AlertDialog;
+  permissions?: PermissionsDialog;
+  
+  [key: string]: Dialog;
+}
 
 export class AppWindow extends BrowserWindow {
   public viewManager: ViewManager = new ViewManager();
-  public permissions: PermissionsDialog = new PermissionsDialog(this);
-  public menu: MenuDialog = new MenuDialog(this);
-  public search: SearchDialog = new SearchDialog(this);
-  public print: PrintDialog = new PrintDialog(this);
-  public alert: AlertDialog = new AlertDialog(this);
-  public quickMenu: QuickMenuDialog = new QuickMenuDialog(this);
+  public dialogs: IDialogs = {
+    search: new SearchDialog(this)
+  }
 
   constructor() {
     super({
@@ -62,68 +74,63 @@ export class AppWindow extends BrowserWindow {
     app.commandLine.appendSwitch('--enable-transparent-visuals');
     app.commandLine.appendSwitch('auto-detect', 'false');
 
-    this.on('resize', () => {
-      this.viewManager.fixBounds();
-      this.search.rearrange();
-      this.permissions.hide();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.menu.hide()
+    this.webContents.once('dom-ready', () => {
+      this.dialogs.menu = new MenuDialog(this);
+      this.dialogs.print = new PrintDialog(this);
+
+      this.dialogs.alert = new AlertDialog(this);
+      this.dialogs.permissions = new PermissionsDialog(this);
     });
 
-    this.on('move', () => {
-      this.search.rearrange();
-      this.permissions.hide();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.menu.rearrange();
+    this.on('resize', () => {
+      this.viewManager.fixBounds();
     });
 
     this.on('maximize', () => {
       this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
-      this.search.rearrange();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.permissions.rearrange();
-      this.menu.hide()
+      this.dialogs.search.rearrange();
+      this.dialogs.alert.rearrange();
+      this.dialogs.print.rearrange();
+      this.dialogs.permissions.rearrange();
+      this.dialogs.menu.hide()
     });
 
     this.on('unmaximize', () => {
       this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
-      this.search.rearrange();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.permissions.rearrange();
-      this.menu.hide()
+      this.dialogs.search.rearrange();
+      this.dialogs.alert.rearrange();
+      this.dialogs.print.rearrange();
+      this.dialogs.permissions.rearrange();
+      this.dialogs.menu.hide()
     });
 
     this.on('resize', () => {
-      this.menu.hide();
+      this.dialogs.menu.hide();
       this.viewManager.fixBounds();
-      this.permissions.hide();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.search.hide();
+      this.dialogs.permissions.hide();
+      this.dialogs.alert.rearrange();
+      this.dialogs.print.rearrange();
+      this.dialogs.search.hide();
     });
 
     this.on('move', () => {
-      this.menu.hide();
+      this.dialogs.menu.hide();
       this.viewManager.fixBounds();
-      this.permissions.hide();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.search.hide();
+      this.dialogs.permissions.hide();
+      this.dialogs.alert.rearrange();
+      this.dialogs.print.rearrange();
+      this.dialogs.search.hide();
     });
 
     const resize = () => {
       this.viewManager.fixBounds();
       this.webContents.send('tabs-resize');
-      this.permissions.hide();
-      this.alert.rearrange();
-      this.print.rearrange();
-      this.search.hide();
+      this.dialogs.permissions.hide();
+      this.dialogs.alert.rearrange();
+      this.dialogs.print.rearrange();
+      this.dialogs.search.hide();
     };
 
     this.on('maximize', resize);
@@ -148,8 +155,15 @@ export class AppWindow extends BrowserWindow {
 
     this.once('ready-to-show', async () => {
       this.show();
+      runAdblockService(session.fromPartition("persist:view"));
 
       console.log(`${colors.blue.bold('Performance')} Loaded application in ${Date.now() - windowsManager.performanceStart}ms`);
+
+      this.focus()
+      this.dialogs.search.show({
+        url: defaultTabOptions.url,
+        tabId: 0
+      })
     });
 
     this.on('enter-full-screen', () => {
