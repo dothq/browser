@@ -73,10 +73,9 @@ export class HistoryStore {
         ipcRenderer.send('update-top-sites');
 
         ipcRenderer.once('get-top-sites', () => {
-          console.log(items)
           ipcRenderer.send('receive-top-sites', items);
         })
-      }, 5000);
+      }, 2000);
     });
   }
 

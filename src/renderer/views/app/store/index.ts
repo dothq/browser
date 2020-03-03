@@ -5,7 +5,6 @@ import { TabsStore } from './tabs';
 import { TabGroupsStore } from './tab-groups';
 import { AddTabStore } from './add-tab';
 import { ipcRenderer, remote, IpcRendererEvent } from 'electron';
-import { OverlayStore } from './overlay';
 import { HistoryStore } from './history';
 import { FaviconsStore } from './favicons';
 import { SuggestionsStore } from './suggestions';
@@ -31,7 +30,6 @@ export class Store {
   public addTab = new AddTabStore();
   public tabGroups = new TabGroupsStore();
   public tabs = new TabsStore();
-  public overlay = new OverlayStore();
   public downloads = new DownloadsStore();
   public adblockwindow = new AbStore();
   public weather = new WeatherStore();
@@ -128,7 +126,6 @@ export class Store {
       (e: IpcRendererEvent, url: string) => {
         
         this.tabs.addTab({ url, active: true })
-        this.overlay.visible = false;
       },
     );
 

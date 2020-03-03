@@ -24,7 +24,6 @@ export class LocaleStore {
   @action
   public setLanguage(language: string) {
     this.currentLanguage = language;
-    store.overlay.currentContent = 'preload';
     remote.webContents.getFocusedWebContents().reload();
   }
 
