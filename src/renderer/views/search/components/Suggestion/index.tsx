@@ -28,23 +28,25 @@ const onMouseLeave = (suggestion: any) => () => {
 };
 
 const onClick = (suggestion: any) => () => {
-  let url = suggestion.primaryText;
+  if(suggestion) {
+    let url = suggestion.primaryText;
 
-  if (suggestion.isSearch) {
-    url = `https://google.com/search?q=${url}`;
-  } else if (url.indexOf('://') === -1) {
-    url = `http://${url}`;
+    if (suggestion.isSearch) {
+      url = `https://google.com/search?q=${url}`;
+    } else if (url.indexOf('://') === -1) {
+      url = `http://${url}`;
+    }
+  
+    callViewMethod(
+      store.tabId,
+      'webContents.loadURL',
+      url,
+    );
+  
+    setTimeout(() => {
+      ipcRenderer.send(`hide-${store.id}`);
+    });
   }
-
-  callViewMethod(
-    store.tabId,
-    'webContents.loadURL',
-    url,
-  );
-
-  setTimeout(() => {
-    ipcRenderer.send(`hide-${store.id}`);
-  });
 };
 
 export const Suggestion = observer(({ suggestion }: Props) => {

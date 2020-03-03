@@ -57,7 +57,7 @@ export class SuggestionsStore {
   
         historySuggestions.splice(1, 0, {
           primaryText: filter,
-          secondaryText: `search in Google`,
+          secondaryText: `search on Google`,
           favicon: icons.search,
           isSearch: true,
         });

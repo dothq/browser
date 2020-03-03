@@ -4,12 +4,14 @@ import {
   SearchContainer,
   SearchIcon,
   Input,
+  SecurityIcon,
 } from './style';
 import store from '../../store';
 import { callViewMethod } from '~/shared/utils/view';
 import { ipcRenderer } from 'electron';
 import { Suggestions } from '../Suggestions';
 import { observer } from 'mobx-react';
+import { icons } from '~/renderer/views/app/constants';
 
 const urlRegex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/
 

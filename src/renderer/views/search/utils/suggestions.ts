@@ -26,8 +26,6 @@ export const getHistorySuggestions = (filter: string) => {
   for (const i in history) {
     let item = history[i];
 
-    console.log("historyItem", item, item.url.replace(regex, ''), item.url)
-
     let urlPart = item.url.replace(regex, '');
 
     if (urlPart.endsWith('/')) {

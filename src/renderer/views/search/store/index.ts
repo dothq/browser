@@ -2,7 +2,7 @@ import { observable } from "mobx";
 import { ipcRenderer, remote } from 'electron';
 import React from 'react';
 import { SuggestionsStore } from './suggestions';
-import { Suggestion } from '../../app/models';
+import { Suggestion } from '../../app/models/suggestion';
 
 let lastSuggestion;
 
@@ -16,7 +16,6 @@ class Store {
     @observable
     public tabId: number = 1;
 
-    @observable
     public history: Suggestion[] = [];
 
     public constructor() {
@@ -42,9 +41,7 @@ class Store {
         })
 
         ipcRenderer.on('history-items', (e, items) => {
-            console.log("Got history items!")
-            this.history = items;
-            console.log(this.history)
+            // this.history = items;
         })
 
         window.addEventListener('blur', () => {
@@ -78,7 +75,7 @@ class Store {
 
         const input = this.inputRef.current;
 
-        const start = inputValue;
+        const start = inputValue.length;
 
         if (input.selectionStart !== inputValue.length) return;
 
@@ -98,6 +95,8 @@ class Store {
         const { suggestions } = this;
         const input = this.inputRef.current;
     
+        if(input.value.length == 0) input.selectionStart = 1;
+
         if (this.canSuggest) {
           this.autoComplete(input.value, lastSuggestion);
         }
