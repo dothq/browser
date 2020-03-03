@@ -30,6 +30,8 @@ export const lightTheme: ITheme = {
     "context-menu-item-color": "black",
     "context-menu-icon-filter": "invert(0%)",
 
+    "tab-inactive-color": "#EEEEEE",
+    "tab-text-color": "black",
     "tab-group-filter": "invert(0%)",
     "tab-vibrant-opacity": 0.4,
     "tab-preloader-vibrant-opacity": 0.2,
@@ -115,6 +117,8 @@ export const darkTheme: ITheme = {
     "context-menu-item-color": "white", 
     "context-menu-icon-filter": "invert(100%)", 
 
+    "tab-inactive-color": "#2d2d2d",
+    "tab-text-color": "white",
     "tab-group-filter": "invert(100%)", 
     "tab-vibrant-opacity": 0.8,
     "tab-preloader-vibrant-opacity": 0.4,

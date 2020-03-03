@@ -28,6 +28,8 @@ export interface ITheme {
     "context-menu-item-color": string,
     "context-menu-icon-filter": string,
 
+    "tab-inactive-color": string,
+    "tab-text-color": string,
     "tab-group-filter": string,
     "tab-vibrant-opacity": number,
     "tab-preloader-vibrant-opacity": number,
