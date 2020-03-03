@@ -4,10 +4,10 @@ import { ipcRenderer } from 'electron';
 class Store {
 
     public constructor() {
-        ipcRenderer.on('visible', (e, flag, tabId) => {
+        ipcRenderer.on('visible', (e, flag, tabId, url) => {
             this.visible = flag;
             this.tabId = tabId;
-            console.log("visible", flag)
+            this.url = url;
         });
 
         ipcRenderer.on('update-navigation-flags', (e, flags) => {
@@ -24,6 +24,9 @@ class Store {
 
     @observable
     public tabId: number = 1;
+
+    @observable
+    public url: string = 'about:blank';
 
     @observable
     public navigationState = {

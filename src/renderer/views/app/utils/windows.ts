@@ -1,24 +1,24 @@
-import { remote } from 'electron';
+import { remote, ipcRenderer } from 'electron';
 import store from '../store';
 import { resolve } from 'path';
 
 export const getCurrentWindow = () => remote.getCurrentWindow();
 
 export const closeWindow = () => {
-  getCurrentWindow().close();
+  ipcRenderer.send('window-close');
 };
 
 export const minimizeWindow = () => {
-  getCurrentWindow().minimize();
+  ipcRenderer.send('window-minimize');
 };
 
 export const maximizeWindow = () => {
   const currentWindow = getCurrentWindow();
 
   if (currentWindow.isMaximized()) {
-    currentWindow.unmaximize();
+    ipcRenderer.send('window-restore');
   } else {
-    currentWindow.maximize();
+    ipcRenderer.send('window-maximize');
   }
 
   isMaximized();

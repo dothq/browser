@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { render } from 'react-dom';;
-import { Settings } from './app/index';
 import { fonts } from '../app/constants/fonts';
+import { App } from './app';
 
 const styleElement = document.createElement('style');
 
@@ -28,9 +28,5 @@ styleElement.textContent = `
 `;
 
 document.head.appendChild(styleElement);
-
-const App = () => {
-  return <Settings />;
-};
 
 render(<App />, document.getElementById('app'));

@@ -22,7 +22,6 @@ export class PreferencesStore {
 
     ipcRenderer.on('update-settings', (e, settings: DEFAULT_PREFERENCES) => {
       this.updatePreferences(settings);
-      console.log("store", this.conf)
     });
 
     let userData = remote.app.getPath('userData')
