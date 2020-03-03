@@ -5,9 +5,14 @@ import {
 import { resolve } from 'path';
 import { platform, homedir } from 'os';
 
+import * as Sentry from '@sentry/electron';
+
 import { WindowsManager } from './windows-manager';
 
+process.throwDeprecation = true;
+
 ipcMain.setMaxListeners(0);
+app.allowRendererProcessReuse = true;
 
 export const windowsManager = new WindowsManager();
 
@@ -21,3 +26,5 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+Sentry.init({ dsn: 'https://cad9bc83aced486abc1324821d166af9@sentry.io/3378655' });
