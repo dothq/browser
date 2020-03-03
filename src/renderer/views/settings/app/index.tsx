@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { StyledSettings } from '../components/Settings/style';
 
-export const Settings = () => {
-  return <StyledSettings />;
+import { Settings } from '@dothq/components/settings/build/main'
+
+export const App = () => {
+  console.log(Settings);
+  return <Settings />;
 };
