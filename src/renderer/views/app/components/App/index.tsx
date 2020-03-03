@@ -4,16 +4,13 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { Style } from '../../style';
 import { Toolbar } from '../Toolbar';
-import { Overlay } from '../Overlay';
-import { Line, StyledApp, Screenshot } from './style';
+import { Line, StyledApp } from './style';
 import { WindowsButtons } from '../WindowsButtons';
 
 import store from '../../store';
 import { platform } from 'os';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
-
-store.tabGroups.addGroup();
 
 const App = observer(() => {
   return (
@@ -22,8 +19,6 @@ const App = observer(() => {
         <GlobalStyle />
         <Toolbar />
         <Line />
-        <Screenshot img={store.overlay.screenshot} />
-        <Overlay />
         {platform() !== 'darwin' && <WindowsButtons />}
       </StyledApp>
     </ThemeProvider>

@@ -43,6 +43,11 @@ export const StyledClose = styled.div`
   transition: 0.1s opacity;
   z-index: 10;
   ${centerIcon(16)};
+
+  ${({ theme }: { theme: ITheme }) => css`
+    filter: ${theme["general-element"]};
+  `};
+
   opacity: ${({ visible }: CloseProps) =>
     visible ? transparency.icons.inactive : 0};
 
@@ -51,6 +56,8 @@ export const StyledClose = styled.div`
       opacity: 1;
     }
   }
+
+  
 
   &:after {
     content: '';
@@ -107,14 +114,20 @@ interface TitleProps {
 export const StyledTitle = styled.div`
   ${body2()};
   font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   transition: 0.2s margin-left;
   margin-left: 8px;
 
   ${({ isIcon, tab, theme }: TitleProps) => css`
     margin-left: ${!isIcon ? 0 : 12}px;
+
+    &:* {
+      -webkit-mask-image: linear-gradient(to right, ${tab.background} 60%, rgba(255, 255, 255, 0) 80%);
+      background-clip: border-box;
+      -webkit-background-clip: text;
+      width: 121px;
+      min-width: 121px;
+      max-width: 121px;
+    }
   `};
 `;
 

@@ -17,9 +17,8 @@ export const StyledToolbar = styled.div`
   padding-right: ${platform() !== 'darwin' ? 138 : 0}px;
   transition: 0.3s margin-top 0.2s, 0.2s background-color 0s;
 
-  ${({ isHTMLFullscreen, isDisabled, theme }: { isHTMLFullscreen: boolean; isDisabled: boolean, theme: ITheme }) => css`
+  ${({ isHTMLFullscreen, theme }: { isHTMLFullscreen: boolean; isDisabled: boolean, theme: ITheme }) => css`
     margin-top: ${isHTMLFullscreen ? -TOOLBAR_HEIGHT : 0}px;
-    background-color: ${isDisabled ? `${theme['active-toolbar-color']}` : `${theme['inactive-toolbar-color']}`}
   `};
 `;
 
@@ -30,10 +29,6 @@ export const Buttons = styled.div`
 
 export const ToolbarWrap = styled.div`
   display: contents;
-
-  ${({ isDisabled }: { isDisabled: boolean }) => css`
-    visibility: ${isDisabled ? '' : 'hidden'};
-  `};
 `;
 
 export const Separator = styled.div`

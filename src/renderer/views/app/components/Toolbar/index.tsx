@@ -18,26 +18,6 @@ const onUpdateClick = () => {
   ipcRenderer.send('update-install');
 };
 
-export const viewLauncher = () => {
-  store.overlay.visible = true;
-  store.overlay.scrollRef.current.scrollTop = 0;
-}
-
-export const viewHistory = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "history";
-}
-
-export const viewBm = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "bookmarks";
-}
-
-export const viewPrefs = () => {
-  store.overlay.visible = true;
-  store.overlay.currentContent = "settings";
-}
-
 export const audioPlaying = () => {
   if(store.tabs.selectedTab) {
     if(store.tabs.selectedTab.audioPlaying == true) {
@@ -72,8 +52,8 @@ export const onMoreClick = (event: MouseEvent) => {
 
 export const Toolbar = observer(() => {
   return (
-    <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen} isDisabled={store.overlay.currentContent == 'default'}>
-      <ToolbarWrap isDisabled={store.overlay.currentContent == 'default'}>
+    <StyledToolbar isHTMLFullscreen={store.isHTMLFullscreen}>
+      <ToolbarWrap>
         <NavigationButtons />
         <Tabbar />
         <Find />
@@ -104,7 +84,7 @@ export const Toolbar = observer(() => {
               }}
             />          
           </AbButton>
-          <AbButton onClick={viewLauncher}>
+          <AbButton>
             <BrowserAction
               size={16}
               style={{ marginLeft: 0 }}

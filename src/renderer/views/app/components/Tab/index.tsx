@@ -71,16 +71,13 @@ const contextMenu = (tab: Tab) => () => {
       label: 'New tab',
       accelerator: 'CmdOrCtrl+T',
       click: () => {
-        store.overlay.isNewTab = true;
-        store.overlay.visible = true;
+
       },
     },
     {
       label: 'Navigate here',
       click: () => {
-        store.overlay.show();
-        store.overlay.inputRef.current.focus();
-        store.overlay.inputRef.current.select();
+
       },
     },
     {
@@ -182,17 +179,11 @@ const Content = observer(({ tab }: { tab: Tab }) => {
       )}
       <StyledTitle
         isIcon={tab.isIconSet}
+        tab={tab}
         style={{ 
-          color: `${
-            tab.isSelected
-              ? store.preferences.conf.appearance.theme == 'light'
-                ? tab.background
-                : shadeBlendConvert(
-                    store.theme['tab-vibrant-opacity'],
-                    tab.background,
-                  )
-            : colors.grey['100']
-          }`
+          color: tab.isSelected ?
+            tab.background
+          : store.theme["tab-text-color"]
         }}
       >
         <span>{tab.title}</span>
@@ -251,12 +242,11 @@ export default observer(({ tab }: { tab: Tab }) => {
       <TabContainer
         selected={tab.isSelected}
         style={{
-          backgroundColor: store.preferences.conf.appearance.theme == 'light' 
+          backgroundColor: tab.isSelected 
           ? shadeBlendConvert(
             store.theme['tab-vibrant-opacity']+0.3,
             tab.background,
-          )
-          : tab.background
+          ) : store.theme['tab-inactive-color']
         }}
       >
         <Content tab={tab} />
