@@ -10,7 +10,7 @@ export const startMessagingService = (window: AppWindow) => {
         autoUpdater.quitAndInstall();
     });
     
-    ipcMain.on('open-omnibox', (event: IpcMainEvent) => {
+    ipcMain.on('open-search', (event: IpcMainEvent) => {
         window.dialogs.search.show({
             url: window.viewManager.selected.url,
             tabId: window.viewManager.selected.tabId

@@ -59,7 +59,7 @@ const onMouseLeave = () => {
 const onClick = (tab: Tab) => (e: React.MouseEvent<HTMLDivElement>) => {
   if(store.canToggleMenu) {
     store.canToggleMenu = false;
-    ipcRenderer.send('open-omnibox');
+    ipcRenderer.send('open-search');
   }
 }
 
