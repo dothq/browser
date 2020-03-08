@@ -1,14 +1,17 @@
 import path from 'path';
 
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WriteFilePlugin from 'write-file-webpack-plugin';
 
-import { devMode, scTransformer, aliases } from './webpack.config';
-import webpack from 'webpack';
+import { devMode, aliases } from './webpack.config';
 
 import * as Sentry from '@sentry/node';
 
+console.log(path.resolve(__dirname, 'static', 'pages', 'app.html'))
+
 const webConfig = {
     mode: devMode,
+    target: 'web',
     entry: {
       newtab: path.resolve(__dirname, 'src', 'renderer', 'views', 'newtab', 'index.tsx'),
       settings: path.resolve(__dirname, 'src', 'renderer', 'views', 'settings', 'index.tsx'),
@@ -33,15 +36,15 @@ const webConfig = {
         chunks: ['error'],
         filename: `error.html`
       }),
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: devMode
-      }),
+      new WriteFilePlugin()
     ],
     devServer: {
         contentBase: path.join(__dirname, 'build', 'web'),
         port: 4445,
-        inline: false,
         disableHostCheck: true,
+        hot: false,
+        inline: false,
+        liveReload: false,
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
@@ -70,13 +73,11 @@ const webConfig = {
           {
             test: /\.tsx?$/,
             exclude: /node_modules/,
-            loader: 'ts-loader',
+            loader: 'awesome-typescript-loader',
             options: {
               transpileOnly: true,
               experimentalWatchApi: true,
-              getCustomTransformers: () => ({
-                before: [scTransformer],
-              }),
+              useCache: true
             },
           },
           {

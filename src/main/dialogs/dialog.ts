@@ -44,6 +44,7 @@ export class Dialog extends BrowserView {
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
+        preload: `${process.cwd()}/build/preloads/dialog-preload.js`
       },
     });
 

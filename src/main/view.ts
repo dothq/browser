@@ -44,11 +44,11 @@ export class View extends BrowserView {
 
     this.setBackgroundColor("#fff");
 
-    this.webContents.userAgent =
-      this.webContents.userAgent
-      .replace(/ dot\\?.([^\s]+)/g, '')
-      .replace(/ Electron\\?.([^\s]+)/g, '')
-      .replace(/Chrome\\?.([^\s]+)/g, `Chrome/${windowsManager.versions.chromium}`)
+    // this.webContents.userAgent =
+    //   this.webContents.userAgent
+    //   .replace(/ dot\\?.([^\s]+)/g, '')
+    //   .replace(/ Electron\\?.([^\s]+)/g, '')
+    //   .replace(/Chrome\\?.([^\s]+)/g, `Chrome/${windowsManager.versions.chromium}`)
 
       this.webContents.on('context-menu', (e, params) => {
         let menuItems: Electron.MenuItemConstructorOptions[] = [];

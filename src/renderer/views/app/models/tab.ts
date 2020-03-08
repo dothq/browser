@@ -11,11 +11,13 @@ import {
   defaultTabOptions,
   TAB_ANIMATION_DURATION,
   TAB_MAX_WIDTH,
+  NEWTAB_URL,
 } from '~/renderer/views/app/constants';
 import { getColorBrightness } from '../utils';
 import { colors } from '~/renderer/constants';
 import { makeId } from '~/shared/utils/string';
 import { ClosedTabs } from './closed-tabs';
+import { getHostname } from '~/shared/utils/url';
 
 let id = 1;
 
@@ -172,19 +174,16 @@ export class Tab {
     this.position = this.tabGroup.nextPosition++;
     this.tempPosition = this.position;
 
-    if (new URL(url).hostname === 'localhost') {
-      const newURL = new URL(url);
-      newURL.hostname = '127.0.0.1';
-      url = newURL.href;
-    }
-
     ipcRenderer.send('browserview-create', { tabId: this.id, url });
 
     ipcRenderer.once(`browserview-created-${this.id}`, (e: any, id: number) => {
       this.webContentsId = id;
       if (active) {
         this.select();
-      }
+
+        if(url == NEWTAB_URL) {
+          ipcRenderer.send("open-search");
+        }
     });
 
     ipcRenderer.on(

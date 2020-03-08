@@ -9,6 +9,12 @@ class Store {
         });
 
         ipcRenderer.on('content', (e, action, content) => {
+            this.content.shift()
+
+            if(!content || content.length == 0) {
+                content = " ";
+            }
+
             this.content.push({
                 content,
                 action

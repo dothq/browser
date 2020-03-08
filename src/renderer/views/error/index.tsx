@@ -3,6 +3,7 @@ import * as React from 'react';
 import { render } from 'react-dom';;
 import Error from './app/index';
 import { fonts } from '../app/constants/fonts';
+import { createMount } from '~/shared/utils/webui';
 
 const styleElement = document.createElement('style');
 
@@ -32,5 +33,7 @@ styleElement.textContent = `
 `;
 
 document.head.appendChild(styleElement);
+
+createMount(document);
 
 render(<Error />, document.getElementById('app'));

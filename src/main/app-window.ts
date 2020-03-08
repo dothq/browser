@@ -3,6 +3,7 @@ import {
   app,
   nativeImage,
   session,
+  ipcRenderer,
 } from 'electron';
 
 import { resolve } from 'path';
@@ -23,6 +24,20 @@ import { startMessagingService, runAdblockService } from './services';
 import { windowsManager } from '.';
 import { defaultTabOptions } from '~/renderer/views/app/constants';
 import { Dialog } from './dialogs/dialog';
+
+const showSearchOnStartup = (window: AppWindow) => {
+  const { search } = window.dialogs;
+
+  const url = "";
+  const tabId = 0;
+
+  search.show({
+    url,
+    tabId
+  });
+
+  search.webContents.focus()
+}
 
 interface IDialogs {
   search?: SearchDialog;
@@ -80,6 +95,8 @@ export class AppWindow extends BrowserWindow {
 
       this.dialogs.alert = new AlertDialog(this);
       this.dialogs.permissions = new PermissionsDialog(this);
+
+      showSearchOnStartup(this);
     });
 
     this.on('resize', () => {
@@ -87,7 +104,6 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.on('maximize', () => {
-      this.webContents.send('window-state', 'maximize');
       this.viewManager.fixBounds();
       this.dialogs.search.rearrange();
       this.dialogs.alert.rearrange();
@@ -97,7 +113,6 @@ export class AppWindow extends BrowserWindow {
     });
 
     this.on('unmaximize', () => {
-      this.webContents.send('window-state', 'minimize');
       this.viewManager.fixBounds();
       this.dialogs.search.rearrange();
       this.dialogs.alert.rearrange();
@@ -160,10 +175,6 @@ export class AppWindow extends BrowserWindow {
       console.log(`${colors.blue.bold('Performance')} Loaded application in ${Date.now() - windowsManager.performanceStart}ms`);
 
       this.focus()
-      this.dialogs.search.show({
-        url: defaultTabOptions.url,
-        tabId: 0
-      })
     });
 
     this.on('enter-full-screen', () => {

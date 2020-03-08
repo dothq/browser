@@ -7,6 +7,7 @@ import { icons } from '~/renderer/views/app/constants/icons';
 import { AddTab, StyledTabbar, TabsContainer } from './style';
 import { Tabs } from '../Tabs';
 import { NEWTAB_URL } from '../../constants';
+import { ipcRenderer } from 'electron';
 
 const getContainer = () => store.tabs.containerRef.current;
 
@@ -16,7 +17,7 @@ const onMouseLeave = () => (store.tabs.scrollbarVisible = false);
 
 const onAddTabClick = () => {
   const url = NEWTAB_URL;
-  store.tabs.addTab({ url, active: true })
+  store.tabs.addTab({ url, active: true });
 };
 
 export const Tabbar = observer(() => {

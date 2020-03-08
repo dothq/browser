@@ -158,7 +158,7 @@ remote.Menu.setApplicationMenu(
   ]),
 );
 
-store.tabGroups.addGroup()
+store.tabGroups.addGroup();
 store.tabs.addTab(defaultTabOptions);
 
 Sentry.init({ dsn: 'https://cad9bc83aced486abc1324821d166af9@sentry.io/3378655' });

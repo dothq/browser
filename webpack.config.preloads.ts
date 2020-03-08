@@ -9,6 +9,7 @@ const preloadConfig = {
     target: 'electron-renderer',
     entry: {
       'view-preload': './src/preloads/view-preload.ts',
+      'dialog-preload': './src/preloads/dialog-preload.ts'
     },
     output: {
         path: path.resolve(__dirname, 'build', 'preloads'),

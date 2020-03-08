@@ -11,36 +11,29 @@ protocol.registerSchemesAsPrivileged([
       standard: true,
       supportFetchAPI: true,
       allowServiceWorkers: true,
-      corsEnabled: true,
+      corsEnabled: false,
     },
   },
 ]);
 
 export const registerProtocol = (session: Electron.Session) => {
-  if(process.env.ENV === "dev") {
-    session.protocol.registerHttpProtocol(
-      'dot', (request, callback) => {
-        const parsed = parse(request.url);
-
-        const baseUrl = 'http://localhost:4445/';
-
-        if (parsed.path === '/') {
-          return callback({ url: `${baseUrl}${parsed.hostname}.html` })
-        }
-
-        callback({ url: `${baseUrl}${parsed.path}` })
-      }
-    );
-  } else {
+  if (process.env.NODE_ENV !== 'development') {
     session.protocol.registerFileProtocol(
-      'dot', (request, callback) => {
+      'dot',
+      (request, callback: any) => {
         const parsed = parse(request.url);
-  
+
         if (parsed.path === '/') {
-          return callback({ path: join(__dirname, 'web', `${parsed.hostname}.html`) })
+          return callback({
+            path: join(__dirname, "web", `${parsed.hostname}.html`),
+          });
         }
-  
-        callback({ path: join(__dirname, 'web', parsed.path) })
-      })
+
+        callback({ path: join(__dirname, parsed.path) });
+      },
+      error => {
+        if (error) console.error(error);
+      },
+    );
   }
 };
