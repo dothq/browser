@@ -1,13 +1,6 @@
 import { observable } from 'mobx';
 import { DownloadItem } from '../models/download-item';
-import { ipcRenderer, remote } from 'electron';
-import store from '../store';
-import console = require('console');
-import { homedir } from 'os';
-import { resolve } from 'path';
-import { rename } from 'fs';
-
-const app = remote.app;
+import { ipcRenderer } from 'electron';
 
 export class DownloadsStore {
   @observable

@@ -184,6 +184,7 @@ export class Tab {
         if(url == NEWTAB_URL) {
           ipcRenderer.send("open-search");
         }
+      }
     });
 
     ipcRenderer.on(

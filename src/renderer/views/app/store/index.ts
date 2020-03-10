@@ -17,7 +17,6 @@ import { AbStore } from './adblockwindow';
 import { WeatherStore } from './weather';
 import { NewsStore } from './news';
 import { UserStore } from './user';
-import * as isDev from 'electron-is-dev';
 import { OptionsStore } from './settings';
 import { getTheme } from '~/shared/utils/themes';
 import { PreferencesStore } from './preferences';
@@ -139,7 +138,7 @@ export class Store {
     // ipcRenderer.send('update-check');
 
     requestAnimationFrame(() => {
-      if (remote.process.argv.length > 1 && isDev == false) {
+      if (remote.process.argv.length > 1) {
         const path = remote.process.argv[1];
         const ext = extname(path);
 
