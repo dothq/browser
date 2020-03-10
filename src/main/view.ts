@@ -2,18 +2,13 @@ import {
   BrowserView,
   BrowserWindow,
   shell,
-  ContextMenuParams,
   Menu,
   clipboard,
   nativeImage,
 } from 'electron';
 import { windowsManager } from '.';
-import { parse } from 'tldts';
 import { resolve } from 'path';
-import * as isDev from 'electron-is-dev';
 import { ViewError } from '../renderer/views/app/models/error';
-import { TOOLBAR_HEIGHT } from '~/renderer/views/app/constants';
-import { engine } from './services';
 import { truncateStr } from '~/shared/mixins';
 
 export class View extends BrowserView {
@@ -35,7 +30,8 @@ export class View extends BrowserView {
         partition: 'persist:view',
         scrollBounce: true,
         plugins: true,
-        javascript: true
+        javascript: true,
+        enableRemoteModule: true
       },
     });
 
@@ -44,11 +40,11 @@ export class View extends BrowserView {
 
     this.setBackgroundColor("#fff");
 
-    // this.webContents.userAgent =
-    //   this.webContents.userAgent
-    //   .replace(/ dot\\?.([^\s]+)/g, '')
-    //   .replace(/ Electron\\?.([^\s]+)/g, '')
-    //   .replace(/Chrome\\?.([^\s]+)/g, `Chrome/${windowsManager.versions.chromium}`)
+    this.webContents.userAgent =
+      this.webContents.userAgent
+      .replace(/ dot\\?.([^\s]+)/g, '')
+      .replace(/ Electron\\?.([^\s]+)/g, '')
+      .replace(/Chrome\\?.([^\s]+)/g, `Chrome/${windowsManager.versions.chromium}`)
 
       this.webContents.on('context-menu', (e, params) => {
         let menuItems: Electron.MenuItemConstructorOptions[] = [];
@@ -58,7 +54,6 @@ export class View extends BrowserView {
             {
               label: 'Open ' + params.mediaType + ' in new tab',
               enabled: params.srcURL.includes('blob:') == false,
-              icon: process.cwd() + '\\static\\app-icons\\add.png',
               click: () => {
                 windowsManager.window.webContents.send('api-tabs-create', {
                   url: params.srcURL,
@@ -437,9 +432,6 @@ export class View extends BrowserView {
               child.once('ready-to-show', () => {
                 child.show();
                 child.webContents.send('load-url', url);
-                if (isDev) {
-                  child.webContents.toggleDevTools();
-                }
               });
             }
           }

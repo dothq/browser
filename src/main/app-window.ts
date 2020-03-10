@@ -75,7 +75,8 @@ export class AppWindow extends BrowserWindow {
         experimentalFeatures: true,
         enableBlinkFeatures: 'OverlayScrollbars',
         webviewTag: true,
-        webSecurity: false
+        webSecurity: false,
+        enableRemoteModule: true
       },
     });
 
