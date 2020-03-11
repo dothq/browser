@@ -160,21 +160,19 @@ const contextMenu = (tab: Tab) => () => {
 const Content = observer(({ tab }: { tab: Tab }) => {
   return (
     <StyledContent collapsed={tab.isExpanded}>
-      {!tab.loading && tab.favicon !== undefined && (
+      {!tab.loading && tab.favicon !== '' && (
         <StyledIcon
-          isIconSet={true}
-          favicon={tab.favicon}
-        />
+          isIconSet={tab.favicon !== ''}
+          style={{ backgroundImage: `url(${tab.favicon})` }}
+        ></StyledIcon>
       )}
+
       {tab.loading && (
         <Preloader
-          color={shadeBlendConvert(
-            store.theme['tab-preloader-vibrant-opacity'],
-            tab.background,
-          )}
+          color={tab.background}
           thickness={6}
           size={16}
-          style={{ minWidth: 16, marginLeft: '12px' }}
+          style={{ minWidth: 16 }}
         />
       )}
       <StyledTitle
@@ -182,8 +180,10 @@ const Content = observer(({ tab }: { tab: Tab }) => {
         tab={tab}
         style={{ 
           color: tab.isSelected ?
-            tab.background
-          : store.theme["tab-text-color"]
+            shadeBlendConvert(
+              store.theme['tab-text-vibrant-opacity'],
+              tab.background,
+            ) : store.theme["tab-text-color"]
         }}
       >
         <span>{tab.title}</span>
@@ -214,12 +214,7 @@ const Overlay = observer(({ tab }: { tab: Tab }) => {
     <StyledOverlay
       hovered={tab.isHovered}
       style={{
-        backgroundColor: tab.isSelected
-          ? shadeBlendConvert(
-              store.preferences.conf.appearance.theme == 'light' ? 0.6 : 0.3,
-              tab.background,
-            )
-          : 'rgba(0, 0, 0, 0.04)',
+        backgroundColor: store.theme["tab-overlay-color"],
       }}
     />
   );
@@ -244,7 +239,7 @@ export default observer(({ tab }: { tab: Tab }) => {
         style={{
           backgroundColor: tab.isSelected 
           ? shadeBlendConvert(
-            store.theme['tab-vibrant-opacity']+0.3,
+            store.theme['tab-vibrant-opacity'],
             tab.background,
           ) : store.theme['tab-inactive-color']
         }}

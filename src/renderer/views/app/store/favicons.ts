@@ -4,9 +4,9 @@ import { Favicon } from '../models';
 import { getPath } from '~/shared/utils/paths';
 import { requestURL } from '../utils/network';
 import { observable } from 'mobx';
+import { fromBuffer } from 'file-type';
 
 import * as icojs from 'icojs';
-import fileType from 'file-type';
 
 const convertIcoToPng = async (icoData: Buffer): Promise<ArrayBuffer> => {
   return (await icojs.parse(icoData, 'image/png'))[0].buffer;
@@ -43,18 +43,18 @@ export class FaviconsStore {
           const res = await requestURL(url);
 
           if (res.statusCode === 404) {
-            console.warn("No favicon found for this webpage.")
+            throw new Error('404 favicon not found');
           }
-
+    
           let data = Buffer.from(res.data, 'binary');
-
-          const type = fileType(data);
-
+    
+          const type = await fromBuffer(data);
+    
           if (type && type.ext === 'ico') {
             data = Buffer.from(new Uint8Array(await convertIcoToPng(data)));
           }
-
-          const str = `data:${fileType(data).ext};base64,${data.toString(
+    
+          const str = `data:${(await fromBuffer(data)).ext};base64,${data.toString(
             'base64',
           )}`;
 

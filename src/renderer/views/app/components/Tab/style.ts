@@ -131,18 +131,15 @@ export const StyledTitle = styled.div`
   `};
 `;
 
-export const StyledIcon = styled.div`
+  export const StyledIcon = styled.div`
   height: 16px;
   min-width: 16px;
   transition: 0.2s opacity, 0.2s min-width;
   ${centerIcon()};
-  
-  ${({ isIconSet, favicon }: { isIconSet: boolean; favicon: string }) => css`
-    min-width: ${favicon !== '' ? '16px' : '0px'};
-    opacity: ${favicon !== '' ? 1 : 0};
-    margin-left: ${favicon !== '' ? '12px' : '0px'};
 
-    background-image: url(${favicon});
+  ${({ isIconSet }: { isIconSet: boolean }) => css`
+    min-width: ${isIconSet ? 16 : 0};
+    opacity: ${isIconSet ? 1 : 0};
   `};
 `;
 
@@ -156,6 +153,7 @@ export const StyledContent = styled.div`
   z-index: 2;
   align-items: center;
   display: flex;
+  padding-left: 12px;
   ${({ collapsed }: ContentProps) => css`
     max-width: calc(100% - ${24 + (collapsed ? 24 : 0)}px);
   `};

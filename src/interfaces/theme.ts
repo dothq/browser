@@ -32,8 +32,10 @@ export interface ITheme {
     "tab-text-color": string,
     "tab-group-filter": string,
     "tab-vibrant-opacity": number,
+    "tab-text-vibrant-opacity": number,
     "tab-preloader-vibrant-opacity": number,
     "tab-text-opacity": number,
+    "tab-overlay-color": string,
 
     "bubble-background": string,
     "bubble-should-invert": string,
