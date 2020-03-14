@@ -29,7 +29,23 @@ const preloadConfig = {
               experimentalWatchApi: true,
               useCache: true
             },
-          }
+          },
+          {
+            test: /\.(png|jpg|gif|svg)$/,
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]',
+            },
+          },
+          {
+            test: /\.(ttf|eot|woff|woff2)$/,
+            use: {
+              loader: 'url-loader',
+              options: {
+                name: 'fonts/[name].[ext]',
+              },
+            },
+          },
         ],
     },
     resolve: {
