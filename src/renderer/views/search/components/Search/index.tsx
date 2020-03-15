@@ -5,6 +5,7 @@ import {
   SearchIcon,
   Input,
   SecurityIcon,
+  GOOGLE_ICON,
 } from './style';
 import store from '../../store';
 import { callViewMethod } from '~/shared/utils/view';
@@ -12,6 +13,7 @@ import { ipcRenderer } from 'electron';
 import { Suggestions } from '../Suggestions';
 import { observer } from 'mobx-react';
 import { icons } from '~/renderer/views/app/constants';
+import { Spotlight } from '../Spotlight';
 
 const urlRegex = /([--:\w?@%&+~#=]*\.[a-z]{2,4}\/{0,2})((?:[?&](?:\w+)=(?:\w+))+|[--:\w?@%&+~#=]+)?/
 
@@ -24,10 +26,16 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     let url = text;
 
     if(!urlRegex.test(url)) {
-      url = `https://google.com/search?q=${text}`
+      url = `https://duckduckgo.com/${text}`
     } else if(url.indexOf("://") === -1) {
       url = `http://${text}`
     }
+
+    if(text.startsWith("dot://")) {
+      url = text;
+    }
+
+    console.log(url, url.startsWith("dot://"))
 
     callViewMethod(
       store.tabId,
@@ -84,7 +92,9 @@ export const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       suggestion = store.history.find(x => x.id === suggestions.selected);
     }
 
-    input.value = suggestion.primaryText;
+    if(suggestion) {
+      input.value = suggestion.primaryText;
+    }
   }
 }
 
@@ -131,6 +141,8 @@ export class Search extends React.Component {
       if (store.history.length > 0) {
         height += 30;
       }
+    } else {
+      height = 100;
     }
 
     ipcRenderer.send(`height-${store.id}`, height);
@@ -138,7 +150,16 @@ export class Search extends React.Component {
     return (
       <StyledSearchBox isFixed={isFixed} style={style} isFocused={true} visible={visible}>
         <SearchContainer>
-          <SearchIcon isFocused={store.details.url == ''} />
+          <SearchIcon 
+            isFocused={store.details.url !== ""} 
+            icon={
+              store.details.url == "" 
+                ? icons.search 
+                : store.inputRef.current.value.length == 0 
+                  ? store.details.favicon 
+                  : GOOGLE_ICON
+            }
+          />
           <Input
             autoComplete="off"
             autoCorrect="off"
@@ -146,14 +167,15 @@ export class Search extends React.Component {
             spellCheck={false}
             onChange={onChange}
             defaultValue={store.details.url}
-            placeholder="Search Google or enter address"
+            placeholder={`Search or enter address`}
             onKeyDown={onKeyDown}
             onKeyPress={onKeyPress}
             onInput={onInput}
+            suggestionsVisible={suggestionsVisible}
             ref={store.inputRef}
           />
         </SearchContainer>
-        <Suggestions visible={suggestionsVisible}></Suggestions>
+        <Suggestions visible={suggestionsVisible} style={{ height: `${height}px` }}></Suggestions>
       </StyledSearchBox>
     );
   }
