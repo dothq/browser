@@ -1,179 +1,42 @@
-
-import {
-  StyledNewTab,
-  Columns,
-  Column,
-  CardImage,
-  CardDescription,
-  CardHeading,
-  CardTitle,
-  CardSourceIcon,
-  Card,
-  CardLongDescription,
-  CardAttribution,
-  CardTimestamp,
-  Style,
-  Section,
-  DotLogo,
-  Icon,
-  Section_Left,
-  Section_Right,
-  Section_Middle,
-} from './style';
 import * as React from 'react';
-import Skeleton from 'react-skeleton-loader';
-const moment = require('moment');
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import { icons } from '../../app/constants';
-import { Search } from './components/Search';
-import { Tiles } from './components/Tiles';
-import store from './store';
 
-export const FeedCard = ({
-  category,
-  title,
-  description,
-  source,
-  timestamp,
-  icon,
-  image,
-  uri,
-  index,
-}: {
-  category: any;
-  title: any;
-  description: any;
-  source: any;
-  timestamp: any;
-  icon: any;
-  image: any;
-  uri: any;
-  index: any;
-}) => {
-  var a = moment(timestamp);
-  var b = moment(new Date().getTime());
+import { observer } from 'mobx-react';
+import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-  return (
-    <Column key={index}>
-      <Card>
-        <a href={uri} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <CardImage image={image} />
-          <CardDescription>
-            <CardHeading>{category}</CardHeading>
-            <CardTitle>{title}</CardTitle>
-            <CardLongDescription>{description}</CardLongDescription>
-            <CardAttribution>
-              <CardSourceIcon icon={icon} />
-              <CardTimestamp>
-                {source} - {b.to(a)}
-              </CardTimestamp>
-            </CardAttribution>
-          </CardDescription>
-        </a>
-      </Card>
-    </Column>
-  );
-};
-
-export const SkeletonCard = () => {
-  return (
-    <Column>
-      <Card>
-        <CardImage image={'transparent'}>
-          <Skeleton
-            widthRandomness={0}
-            width={'344px'}
-            color={'var(--skeleton-color)'}
-            borderRadius={'0px'}
-          />
-        </CardImage>
-        <CardDescription>
-          <CardHeading>
-            <Skeleton color={'var(--skeleton-color)'} />
-          </CardHeading>
-          <CardTitle>
-            <Skeleton color={'var(--skeleton-color)'} />
-          </CardTitle>
-          <CardLongDescription>
-            <Skeleton count={5} color={'var(--skeleton-color)'} />
-          </CardLongDescription>
-          <CardAttribution>
-            <CardSourceIcon icon={'transparent'}>
-              <Skeleton
-                widthRandomness={0}
-                width={'16px'}
-                color={'var(--skeleton-color)'}
-              />
-            </CardSourceIcon>
-            <CardTimestamp>
-              <Skeleton color={'var(--skeleton-color)'} />
-            </CardTimestamp>
-          </CardAttribution>
-        </CardDescription>
-      </Card>
-    </Column>
-  );
-};
-
-export const SkeletonFeed = () => {
-  return (
-    <Columns>
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-      <SkeletonCard />
-    </Columns>
-  );
-};
+import { Style, StyledApp } from './style';
+import store from '../store';
+import { Update } from '../components/Alert.Update';
+import { Header } from '../components/Header';
+import { News } from '../components/News';
 
 const GlobalStyle = createGlobalStyle`${Style}`;
 
-const openWebView = (view: any) => {
-  window.location.href = `dot://${view}`
-}
+const blobHTML = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>window.location.href = "$1"</script>
+</head>
+</html>
+`
 
-class NewTab extends React.Component {
-  public list: any = [];
+setInterval(() => {
+    document.querySelectorAll("[href]").forEach(node => {
+        if(!node.getAttribute("href").startsWith("blob:")) {
+            const blob = new Blob([Buffer.from(blobHTML.replace("$1", node.getAttribute("href")), 'utf8')], { type: "text/html" })
+            node.setAttribute("data-native-href", node.getAttribute("href"))
+            node.href = URL.createObjectURL(blob)
+        }
+    });
+}, 100)
 
-  public state: any = {
-    news: [],
-    newsLoaded: false,
-    ironBarFixed: false,
-    topSitesVisibility: true,
-    feedVisibility: true,
-    banner: ''
-  };
-
-  constructor(props: any) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={store.theme}>
-        <StyledNewTab>
-          <GlobalStyle />
-          <Section>
-            <Section_Left>
-              <DotLogo color={'#434343'} />
-            </Section_Left>
-            <Section_Middle>
-              <Search />
-              <Tiles />
-            </Section_Middle>
-            <Section_Right>
-              <Icon icon={icons.settings} onClick={() => openWebView('settings')} />
-            </Section_Right>
-          </Section>
-        </StyledNewTab>
-      </ThemeProvider>
-    );
-  }
-}
-
-export default NewTab;
+export const App = observer(() => (
+    <ThemeProvider theme={store.theme}>
+        <StyledApp>
+            <GlobalStyle />
+            {/* <Update /> */}
+            <Header />
+            <News />
+        </StyledApp>
+    </ThemeProvider>
+))

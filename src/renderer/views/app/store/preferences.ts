@@ -6,6 +6,7 @@ import { Store } from '.';
 import watch from 'node-watch';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
+import colors from 'colors';
 
 export type SettingsSection =
   | 'appearance'
@@ -29,7 +30,7 @@ export class PreferencesStore {
     const self = this;
 
     watch(resolve(userData, 'preferences.json'), () => {
-        console.log(`[PreferencesStore] The preferences file has been updated.`);
+        console.log(`${colors.blue.bold('Preferences')} Preferences file updated`);
 
         const file = readFileSync(resolve(userData, 'preferences.json'), 'utf-8');
         const newPrefs = JSON.parse(file)
