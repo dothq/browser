@@ -5,11 +5,15 @@ import {
   Menu,
   clipboard,
   nativeImage,
+  dialog,
 } from 'electron';
 import { windowsManager } from '.';
 import { resolve } from 'path';
 import { ViewError } from '../renderer/views/app/models/error';
 import { truncateStr } from '~/shared/mixins';
+import { writeFileSync } from 'fs';
+import colors from 'colors';
+import { zoom } from '~/shared/events';
 
 export class View extends BrowserView {
   public title: string = '';
@@ -53,7 +57,6 @@ export class View extends BrowserView {
           menuItems = menuItems.concat([
             {
               label: 'Open ' + params.mediaType + ' in new tab',
-              enabled: params.srcURL.includes('blob:') == false,
               click: () => {
                 windowsManager.window.webContents.send('api-tabs-create', {
                   url: params.srcURL,
@@ -63,14 +66,12 @@ export class View extends BrowserView {
             },
             {
               label: 'Save ' + params.mediaType,
-              enabled: params.srcURL.includes('blob:') == false,
               click: () => {
                 this.webContents.downloadURL(params.srcURL);
               },
             },
             {
               label: 'Copy link',
-              enabled: params.srcURL.includes('blob:') == false,
               click: () => {
                 clipboard.clear();
                 clipboard.writeText(params.srcURL);
@@ -86,7 +87,6 @@ export class View extends BrowserView {
           menuItems = menuItems.concat([
             {
               label: 'Open link in new tab',
-              icon: process.cwd() + '\\static\\app-icons\\add.png',
               click: () => {
                 windowsManager.window.webContents.send('api-tabs-create', {
                   url: params.linkURL,
@@ -243,6 +243,45 @@ export class View extends BrowserView {
             {
               type: 'separator',
             },
+            {
+              label: 'Save as',
+              accelerator: 'CmdOrCtrl+S',
+              click: () => {
+                dialog.showSaveDialog(windowsManager.window, {
+                  defaultPath: `${windowsManager.window.viewManager.selected.title}.html`,
+                  filters: [
+                    {
+                      name: "Web Page, HTML Only",
+                      extensions: ["html", "htm"]
+                    },
+                    {
+                      name: "Web Page, Single File",
+                      extensions: ["mhtml"]
+                    },
+                    {
+                      name: "Web Page, Complete",
+                      extensions: ["htm", "html"]
+                    },
+                    { name: 'All Files', extensions: ['*'] }
+                  ]
+                }).then(result => {
+                  if(result.filePath == undefined) return;
+ 
+                  windowsManager.window.viewManager.selected.webContents.savePage(result.filePath, "HTMLComplete")
+                }).catch(err => {
+                  console.log(`${colors.blue.bold('View')} Failed to save page`, err);
+                })
+              },
+            },
+            {
+              label: 'Print',
+              accelerator: 'CmdOrCtrl+P',
+              click: () => {
+                windowsManager.window.dialogs.alert.show();
+                windowsManager.window.dialogs.alert.action = "alert";
+                windowsManager.window.dialogs.alert.send("Print is disabled right now. However, you can expect it to return soon!");
+              },
+            },
           ]);
         }
   
@@ -337,7 +376,7 @@ export class View extends BrowserView {
 
       let url = this.webContents.getURL();
 
-      // windowsManager.window.webContents.send(`load-commit-${this.webContents.id}`, ...args);
+      windowsManager.window.webContents.send(`load-commit-${this.webContents.id}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,

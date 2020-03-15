@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+  <desc>Created with Lunacy</desc>
+  <g id="gmail">
+    <path d="M3.5 33L40.5 33C42.433 33 44 31.433 44 29.5L44 3.5C44 1.567 42.433 0 40.5 0L3.5 0C1.567 0 0 1.567 0 3.5L0 29.5C0 31.433 1.567 33 3.5 33L3.5 33Z" transform="translate(2 7.5)" id="Shape" fill="#E0E0E0" stroke="none" />
+    <path d="M24 33L40.5 33C42.433 33 44 31.433 44 29.5L44 3.5C44 1.567 42.433 0 40.5 0L3.5 0C1.567 0 0 1.567 0 3.5L24 33L24 33Z" transform="translate(2 7.5)" id="Shape" fill="#D9D9D9" stroke="none" />
+    <path d="M0 29L35.755 29C37.688 29 39.255 27.433 39.255 25.5L39.255 0L0 29L0 29Z" transform="translate(6.744995 11.5)" id="Shape" fill="#DDDDDD" stroke="none" />
+    <path d="M6.974 29L23.729 29C25.662 29 27.229 27.433 27.229 25.5L27.229 0L0 20.116L6.974 29L6.974 29Z" transform="translate(18.771 11.5)" id="Shape" fill="#E0E0E0" stroke="none" />
+    <path d="M40.5 0.0414495L3.5 0.0414495C1.567 0.0414495 0 -0.39155 0 1.54145L0 27.5414C0 29.4744 1.567 31.0414 3.5 31.0414L5 31.0414L5 2.54145L39 2.54145L39 31.0414L40.5 31.0414C42.433 31.0414 44 29.4744 44 27.5414L44 1.54145C44 -0.39155 42.433 0.0414495 40.5 0.0414495L40.5 0.0414495Z" transform="translate(2 9.458557)" id="Shape" fill="#CA3737" stroke="none" />
+    <path d="M40.5 0L22 0L3.5 0C1.567 0 0 1.536 0 3.5C0 4.706 1.518 5.758 1.518 5.758L22 20.256L42.482 5.759C42.482 5.759 44 4.706 44 3.501C44 1.536 42.433 0 40.5 0L40.5 0Z" transform="translate(2 7.5)" id="Shape" fill="#F5F5F5" stroke="none" />
+    <path d="M41.246 0L22 13.418L2.754 0C1.18 0.337 0 1.715 0 3.418C0 4.624 1.518 5.676 1.518 5.676L22 20.174L42.482 5.677C42.482 5.677 44 4.624 44 3.419C44 1.715 42.82 0.337 41.246 0L41.246 0Z" transform="translate(2 7.58197)" id="Shape" fill="#E84F4B" stroke="none" />
+  </g>
+</svg>
