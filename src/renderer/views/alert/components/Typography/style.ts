@@ -13,7 +13,8 @@ export const Subtitle = styled.h1`
   font-weight: 400;
   opacity: 0.8;
   height: 60px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  white-space: normal;
 
   ::selection {
     background-color: #1a73e845;
