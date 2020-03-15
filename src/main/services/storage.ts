@@ -11,5 +11,7 @@ export const startStorageService = () => {
         app.setPath('userData', resolve(homedir(), '.local', 'share', 'Dot Browser'));
     }
 
+    process.env.__DOT_USERDATA_PATH = app.getPath('userData')
+
     return app.getPath('userData')
 }

@@ -3,7 +3,7 @@ import { Dialog } from './dialog';
 import { ipcMain } from 'electron';
 
 const WIDTH = 650;
-const HEIGHT = 78;
+const HEIGHT = 110;
 
 export class SearchDialog extends Dialog {
   public visible = false;
