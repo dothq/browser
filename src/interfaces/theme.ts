@@ -17,8 +17,12 @@ export interface ITheme {
     "general-title": string,
     "general-subtitle": string,
 
+    "omnibox-background-color": string,
+    "omnibox-subheading-background-color": string,
     "omnibox-text-color": string,
     "omnibox-placeholder-color": string,
+    "omnibox-suggestion-hover": string,
+    "omnibox-suggestion-selected": string,
     "omnibox-icon": string,
     "omnibox-search-icons": string,
 
@@ -85,4 +89,7 @@ export interface ITheme {
     "webui-newtab-icon-filter": string,
     "webui-newtab-icon-opacity": number,
     "webui-newtab-search-shadow": string,
+    "webui-newtab-hyperlink-color": string,
+    "webui-newtab-inactive-hyperlink-color": string,
+    "webui-newtab-alert-action-hover": string,
 }
