@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { transparency } from '~/renderer/constants';
 import { body2, centerIcon } from '~/shared/mixins';
+import { ITheme } from '~/interfaces/theme';
 
 export const StyledSuggestion = styled.div`
   width: 100%;
@@ -13,15 +14,17 @@ export const StyledSuggestion = styled.div`
   ${({
     selected,
     hovered,
+    theme
   }: {
     selected: boolean;
     hovered: boolean;
+    theme: ITheme
   }) => {
     let backgroundColor = 'transparent';
     if (selected) {
-      backgroundColor = 'rgba(0, 0, 0, 0.06)'
+      backgroundColor = theme["omnibox-suggestion-selected"]
     } else if (hovered) {
-      backgroundColor = 'rgba(0, 0, 0, 0.03)'
+      backgroundColor = theme["omnibox-suggestion-hover"]
     }
     return css`
       background-color: ${backgroundColor};
@@ -38,6 +41,10 @@ export const PrimaryText = styled.div`
   font-size: 13px;
   opacity: ${transparency.text.high};
   user-select: none;
+
+  ${({ theme }: { theme: ITheme }) => css`
+    color: ${theme["omnibox-text-color"]};
+  `};
 `;
 
 export const SecondaryText = styled.div`
@@ -49,6 +56,10 @@ export const SecondaryText = styled.div`
   font-size: 13px;
   opacity: ${transparency.text.medium};
   user-select: none;
+
+  ${({ theme }: { theme: ITheme }) => css`
+    color: ${theme["omnibox-text-color"]};
+  `};
 `;
 
 export const Icon = styled.div`
@@ -57,10 +68,18 @@ export const Icon = styled.div`
   min-width: 16px;
   height: 16px;
   ${centerIcon()};
+
+  ${({ theme }: { theme: ITheme }) => css`
+    filter: ${theme["general-element"]};
+  `};
 `;
 
 export const Dash = styled.div`
   margin-left: 4px;
   margin-right: 4px;
   opacity: ${transparency.text.medium};
+
+  ${({ theme }: { theme: ITheme }) => css`
+    color: ${theme["omnibox-text-color"]};
+  `};
 `;
