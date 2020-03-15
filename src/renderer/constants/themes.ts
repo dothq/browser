@@ -19,8 +19,12 @@ export const lightTheme: ITheme = {
     "general-title": "black",
     "general-subtitle": "gray",
 
+    "omnibox-background-color": "#fffffffc",
+    "omnibox-subheading-background-color": "#fafafa",
     "omnibox-text-color": "dark",
     "omnibox-placeholder-color": "rgba(0, 0, 0, 0.54)",
+    "omnibox-suggestion-hover": "rgba(0, 0, 0, 0.03)",
+    "omnibox-suggestion-selected": "rgba(0, 0, 0, 0.06)",
     "omnibox-icon": "invert(100%)",
     "omnibox-search-icons": "invert(0%)",
 
@@ -86,7 +90,10 @@ export const lightTheme: ITheme = {
     "webui-newtab-tile-shadow-hover": "0 0 0 3px #accdef, 0 0 0 5px rgb(0,124,251)",
     "webui-newtab-icon-filter": "invert(0)",
     "webui-newtab-icon-opacity": 0.5,
-    "webui-newtab-search-shadow": "0 0 0 1px #d2d2d2, 0 0 0 4px rgb(255, 255, 255)"
+    "webui-newtab-search-shadow": "0 0 0 1px #d2d2d2, 0 0 0 4px rgb(255, 255, 255)",
+    "webui-newtab-hyperlink-color": "#0066FF",
+    "webui-newtab-inactive-hyperlink-color": "#4B4B4B",
+    "webui-newtab-alert-action-hover": "rgba(0, 0, 0, 0.05)"
 }
 
 export const darkTheme: ITheme = {
@@ -108,8 +115,12 @@ export const darkTheme: ITheme = {
     "general-title": "white", 
     "general-subtitle": "rgb(218, 218, 218)", 
 
+    "omnibox-background-color": "#171717fc",
+    "omnibox-subheading-background-color": "#141414",
     "omnibox-text-color": "white", 
     "omnibox-placeholder-color": "rgba(255, 255, 255, 0.54)", 
+    "omnibox-suggestion-hover": "#ffffff0d",
+    "omnibox-suggestion-selected": "#ffffff0f",
     "omnibox-icon": "invert(0%)", 
     "omnibox-search-icons": "invert(100%)", 
 
@@ -175,10 +186,16 @@ export const darkTheme: ITheme = {
     "webui-newtab-tile-shadow-hover": "0 0 0 3px #dedede, 0 0 0 5px rgb(128, 128, 128)",
     "webui-newtab-icon-filter": "invert(1)",
     "webui-newtab-icon-opacity": 1,
-    "webui-newtab-search-shadow": "0 0 0 1px #444444, 0 0 0 4px rgba(255,255,255,0)"
+    "webui-newtab-search-shadow": "0 0 0 1px #444444, 0 0 0 4px rgba(255,255,255,0)",
+    "webui-newtab-hyperlink-color": "#fff",
+    "webui-newtab-inactive-hyperlink-color": "#A4A4A4",
+    "webui-newtab-alert-action-hover": "rgba(255, 255, 255, 0.05)"
 }
 
 export const oledTheme: ITheme = { ...darkTheme, 
+    "omnibox-background-color": "#000000",
+    "omnibox-subheading-background-color": "#000000",
+
     "active-toolbar-color": "#020202", 
     
     "webui-newtab-background-color": "#020202"

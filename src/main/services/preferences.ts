@@ -6,7 +6,7 @@ import { startStorageService } from './storage';
 
 import colors from 'colors';
 
-let userData = startStorageService()
+export let userData = startStorageService()
 
 export const preferencesExist = () => { 
     return existsSync(resolve(userData, 'preferences.json'))

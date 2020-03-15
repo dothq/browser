@@ -4,6 +4,7 @@ import { autoUpdater } from 'electron-updater';
 
 import colors from 'colors';
 import { callViewMethod } from '~/shared/utils/view';
+import { zoom } from '~/shared/events';
 
 export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('update-install', () => {
@@ -13,7 +14,8 @@ export const startMessagingService = (window: AppWindow) => {
     ipcMain.on('open-search', (event: IpcMainEvent) => {
         window.dialogs.search.show({
             url: window.viewManager.selected.url,
-            tabId: window.viewManager.selected.tabId
+            tabId: window.viewManager.selected.tabId,
+            favicon: window.viewManager.selected.favicon
         });
     });
     
