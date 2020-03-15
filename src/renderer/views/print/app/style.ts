@@ -23,8 +23,9 @@ export const Preview = styled.div`
 `;
 
 export const Page = styled.div`
-    width: 350px;
-    height: 500px;
+    width: 465px;
+    height: 684px;
+    background-size: 482px;
 
     ${({ image }: { image: string }) => css`
         background-image: url(${image});

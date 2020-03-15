@@ -16,9 +16,9 @@ class Store {
             this.preview = image;
         });
 
-        window.addEventListener('blur', () => {
-            this.hide()
-        })
+        // window.addEventListener('blur', () => {
+        //     this.hide()
+        // })
     }
 
     @observable
