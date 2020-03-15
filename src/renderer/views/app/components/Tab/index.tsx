@@ -18,6 +18,7 @@ import { shadeBlendConvert } from '../../utils';
 import { remote, ipcRenderer } from 'electron';
 import Ripple from '../../../../components/Ripple';
 import { colors } from '../../../../constants';
+import { NEWTAB_URL } from '../../constants';
 
 const removeTab = (tab: Tab) => () => {
   tab.close();
@@ -71,7 +72,8 @@ const contextMenu = (tab: Tab) => () => {
       label: 'New tab',
       accelerator: 'CmdOrCtrl+T',
       click: () => {
-
+        const url = NEWTAB_URL;
+        store.tabs.addTab({ url, active: true });
       },
     },
     {
@@ -162,8 +164,8 @@ const Content = observer(({ tab }: { tab: Tab }) => {
     <StyledContent collapsed={tab.isExpanded}>
       {!tab.loading && tab.favicon !== '' && (
         <StyledIcon
-          isIconSet={tab.favicon !== ''}
-          style={{ backgroundImage: `url(${tab.favicon})` }}
+          isIconSet={tab.favicon == undefined}
+          style={{ backgroundImage: `url(${tab.favicon == undefined ? '' : tab.favicon})` }}
         ></StyledIcon>
       )}
 
@@ -172,7 +174,7 @@ const Content = observer(({ tab }: { tab: Tab }) => {
           color={tab.background}
           thickness={6}
           size={16}
-          style={{ minWidth: 16 }}
+          style={{ minWidth: 16, marginLeft: '12px' }}
         />
       )}
       <StyledTitle

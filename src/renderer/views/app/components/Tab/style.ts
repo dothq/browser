@@ -131,15 +131,16 @@ export const StyledTitle = styled.div`
   `};
 `;
 
-  export const StyledIcon = styled.div`
+export const StyledIcon = styled.div`
   height: 16px;
-  min-width: 16px;
-  transition: 0.2s opacity, 0.2s min-width;
+  min-width: 0px;
+  transition: 0.2s opacity, 0.2s min-width, 0.2s margin-left;
   ${centerIcon()};
 
   ${({ isIconSet }: { isIconSet: boolean }) => css`
-    min-width: ${isIconSet ? 16 : 0};
-    opacity: ${isIconSet ? 1 : 0};
+    min-width: ${isIconSet ? 0 : 16}px;
+    margin-left: ${isIconSet ? 0 : 12}px;
+    opacity: ${isIconSet ? 0 : 1};
   `};
 `;
 
@@ -153,7 +154,6 @@ export const StyledContent = styled.div`
   z-index: 2;
   align-items: center;
   display: flex;
-  padding-left: 12px;
   ${({ collapsed }: ContentProps) => css`
     max-width: calc(100% - ${24 + (collapsed ? 24 : 0)}px);
   `};
