@@ -320,6 +320,8 @@ export class View extends BrowserView {
         menu.popup();
     });
 
+    this.webContents.addListener('zoom-changed', (e, zoomDirection) => zoom(zoomDirection, windowsManager.window))
+
     this.webContents.addListener('found-in-page', (e, result) => {
       windowsManager.window.webContents.send('found-in-page', result);
     });

@@ -6,9 +6,10 @@ import { fonts } from './constants/fonts';
 import store from './store';
 import { ipcRenderer, remote } from 'electron';
 import { AppWindow } from '../../../main/app-window';
-import { defaultTabOptions } from './constants';
+import { defaultTabOptions, NEWTAB_URL } from './constants';
 
 import * as Sentry from '@sentry/electron';
+import { zoom } from '~/shared/events';
 
 ipcRenderer.setMaxListeners(0);
 
@@ -46,6 +47,68 @@ export let appWindow: AppWindow;
 remote.Menu.setApplicationMenu(
   remote.Menu.buildFromTemplate([
     {
+      label: "File",
+      type: 'submenu',
+      submenu: [
+        { 
+          label: 'New tab',
+          accelerator: 'CmdOrCtrl+T',
+          click() { 
+            store.isHTMLFullscreen = false;
+            store.isFullscreen = false;
+            
+            const url = NEWTAB_URL;
+            store.tabs.addTab({ url, active: true });
+          } 
+        },
+        { 
+          label: 'Re-open closed tab',
+          accelerator: 'CmdOrCtrl+Shift+T',
+          click() { 
+            if(store.tabs) {
+              var url = store.tabs.lastUrl[store.tabs.lastUrl.length - 1];
+              if (url != '') {
+                store.tabs.addTab({ url, active: true });
+                store.tabs.lastUrl.splice(-1, 1);
+              }
+            }
+          } 
+        },
+        { type: 'separator' },
+        { 
+          label: 'Close Window',
+          accelerator: 'CmdOrCtrl+Shift+W',
+          click() { 
+            process.exit(0)
+          } 
+        },
+        { 
+          label: 'Close Tab',
+          accelerator: 'CmdOrCtrl+W',
+          click() { 
+            if(store.tabs.selectedTab) {
+              if (store.tabs.selectedTab.loading) {
+                store.tabs.selectedTab.callViewMethod('webContents.stop');
+                store.tabs.selectedTab.close()
+              }
+              else {
+                store.tabs.selectedTab.close()
+              }
+            }
+          } 
+        },
+        { type: 'separator' },
+        { 
+          label: 'Print',
+          accelerator: 'CmdOrCtrl+P',
+          click() { 
+            ipcRenderer.send("show-alert", "alert", "Print is disabled right now. However, you can expect it to return soon!")
+          } 
+        },
+        { role: 'reload', label: 'Reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
+      ]
+    },
+    {
       label: 'Edit',
       type: 'submenu',
       submenu: [
@@ -55,11 +118,10 @@ remote.Menu.setApplicationMenu(
         { role: 'cut', label: 'Cut' },
         { role: 'copy', label: 'Copy' },
         { role: 'paste', label: 'Paste' },
-        { role: 'pasteandmatchstyle', label: 'Paste and match style' },
+        { role: 'pasteandmatchstyle', label: 'Paste and Match Style' },
         { role: 'delete', label: 'Delete' },
         { role: 'selectall', label: 'Select all' },
-        { role: 'quit', label: 'Quit app' },
-        { role: 'reload', label: 'Reload', accelerator: 'CmdOrCtrl+Shift+Alt+R' },
+        { type: 'separator' },
         {
           accelerator: 'CmdOrCtrl+F',
           label: 'Find in page',
@@ -73,24 +135,22 @@ remote.Menu.setApplicationMenu(
             }
           },
         },
+      ],
+    },
+    {
+      label: "View",
+      type: "submenu",
+      submenu: [
         {
-          accelerator: 'CmdOrCtrl+P',
-          label: 'Print',
+          accelerator: 'CmdOrCtrl+.',
+          label: 'Stop',
+          enabled: store.tabs.selectedTab ? store.tabs.selectedTab.loading : false,
           click() {
-            ipcRenderer.send('open-print');
+            store.tabs.selectedTab.callViewMethod('webContents.stop');
           },
         },
         { 
-          label: 'Reload Page',
-          accelerator: 'F5',
-          click() { 
-            if(store.tabs.selectedTab) {
-              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
-            }
-          } 
-        },
-        { 
-          label: 'Reload Webpage',
+          label: 'Reload',
           accelerator: 'CmdOrCtrl+R',
           click() { 
             if(store.tabs.selectedTab) {
@@ -99,62 +159,32 @@ remote.Menu.setApplicationMenu(
           } 
         },
         { 
-          label: 'Close tab',
-          accelerator: 'CmdOrCtrl+W',
+          label: 'Reload',
+          accelerator: 'F5',
+          visible: false,
           click() { 
             if(store.tabs.selectedTab) {
-              if (store.tabs.selectedTab.loading) {
-                store.tabs.selectedTab.callViewMethod('webContents.stop');
-                store.tabs.selectedTab.close()
-              }
-              else {
-                store.tabs.selectedTab.close()
-              }
-            }
-            
-          } 
-        },
-        { 
-          label: 'New tab',
-          accelerator: 'CmdOrCtrl+T',
-          click() { 
-            store.isHTMLFullscreen = false;
-            store.isFullscreen = false;
-          } 
-        },
-        { type: 'separator' },
-        { 
-          label: 'Back',
-          accelerator: 'Alt+Left',
-          click() { 
-            if(store.tabs.selectedTab) {
-              if(store.navigationState.canGoBack == true) {
-                store.tabs.selectedTab.callViewMethod('webContents.goBack');
-              }
-            }
-          } 
-        },
-        { 
-          label: 'Forward',
-          accelerator: 'Alt+Right',
-          click() { 
-            if(store.tabs.selectedTab) {
-              if(store.navigationState.canGoForward == true) {
-                store.tabs.selectedTab.callViewMethod('webContents.goForward');
-              }
+              store.tabs.selectedTab.callViewMethod('webContents.reload'); 
             }
           } 
         },
         { type: 'separator' },
         { 
-          label: 'Open Browser Developer Tools',
-          accelerator: 'CmdOrCtrl+Shift+U+I',
+          label: 'Zoom In',
+          accelerator: 'CmdOrCtrl+=',
           click() { 
-            ipcRenderer.send('app-open-dev-tools');
+            ipcRenderer.send("set-zoom", "in")
           } 
         },
-      ],
-    },
+        { 
+          label: 'Zoom Out',
+          accelerator: 'CmdOrCtrl+-',
+          click() { 
+            ipcRenderer.send("set-zoom", "out")
+          } 
+        },
+      ]
+    }
   ]),
 );
 
