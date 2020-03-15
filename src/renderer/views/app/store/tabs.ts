@@ -110,6 +110,20 @@ export class TabsStore {
         }
       },
     );
+
+    ipcRenderer.on(
+      `zoom-level-changed`,
+      (
+        e: any,
+        zoomFactor: number,
+      ) => {
+        const tab = this.selectedTab
+
+        if (tab) {
+          tab.zoomAmount = zoomFactor;
+        }
+      },
+    );
   }
 
   public resetRearrangeTabsTimer() {

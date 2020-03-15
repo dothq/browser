@@ -6,13 +6,14 @@ import { StyledToolbar, Buttons, Separator, ToolbarWrap } from './style';
 import { NavigationButtons } from '../NavigationButtons';
 import { Tabbar } from '../Tabbar';
 import ToolbarButton from "../ToolbarButton";
-import { icons } from '../../constants';
-import { ipcRenderer } from 'electron';
+import { icons, TOOLBAR_HEIGHT } from '../../constants';
+import { ipcRenderer, remote } from 'electron';
 import BrowserAction from '../BrowserAction';
 import { Find } from '../Find';
 import { AbButton } from '../ToolbarButton/style';
 import { shadeBlendConvert } from '../../utils';
 import { colors } from '~/renderer/constants';
+import { appMenu } from '~/main/menus/app';
 
 const onUpdateClick = () => {
   ipcRenderer.send('update-install');
@@ -46,8 +47,9 @@ export const audioVisible = () => {
   }
 }
 
-export const onMoreClick = (event: MouseEvent) => {
-  ipcRenderer.send('show-dialog', 'menu');
+const resetZoom = () => {
+  ipcRenderer.send("reset-zoom");
+  store.tabs.selectedTab.zoomAmount = 1;
 }
 
 export const Toolbar = observer(() => {
@@ -107,6 +109,28 @@ export const Toolbar = observer(() => {
               }}
             />          
           </AbButton>
+          <AbButton onClick={resetZoom}>
+            <BrowserAction
+              size={18}
+              style={{ marginLeft: 0 }}
+              opacity={0.8}
+              visible={store.tabs.selectedTab ? store.tabs.selectedTab.zoomAmount !== 1 : false}
+              data={{
+                badgeBackgroundColor: store.tabs.selectedTab
+                  ? store.preferences.conf.appearance.theme == 'light'
+                    ? store.tabs.selectedTab.background
+                    : shadeBlendConvert(store.preferences.conf.appearance.theme !== 'dark' && store.preferences.conf.appearance.theme !== 'oled' ? 0.85 : 0.3, store.tabs.selectedTab.background)
+                  : 'transparent',
+                badgeText: store.tabs.selectedTab
+                  ? store.tabs.selectedTab.zoomAmount !== 1
+                    ? (store.tabs.selectedTab.zoomAmount * 100).toFixed(0).toString() + "%"
+                    : ''
+                  : '',
+                icon: icons.zoom,
+                badgeTextColor: colors.grey['100']
+              }}
+            />
+          </AbButton>
           <AbButton title="Dot Ad-Blocker" id="dab">
             <BrowserAction
               size={16}
@@ -131,29 +155,6 @@ export const Toolbar = observer(() => {
             />
           </AbButton>
           <Separator />
-          <AbButton title="View more options" onClick={() => onMoreClick}>
-            <BrowserAction
-              size={17}
-              style={{ marginLeft: 0 }}
-              opacity={0.8}
-              title="View more options"
-              visible={true}
-              data={{
-                badgeBackgroundColor: store.tabs.selectedTab
-                  ? store.tabs.selectedTab.background
-                  : 'transparent',
-                badgeText: store.tabs.selectedTab
-                  ? ''
-                    ? ''
-                    : ''
-                  : '',
-                icon: icons.more,
-                badgeTextColor: store.tabs.selectedTab
-                  ? shadeBlendConvert(store.preferences.conf.appearance.theme == 'light' ? 0.85 : 0.3, store.tabs.selectedTab.background)
-                  : 'transparent',
-              }}
-            />
-          </AbButton>
         </Buttons>
       </ToolbarWrap>
     </StyledToolbar>

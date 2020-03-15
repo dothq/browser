@@ -93,11 +93,13 @@ export class ViewManager {
         const view = this.views[key];
         const title = view.webContents.getTitle();
         const url = view.webContents.getURL();
+        const zoomAmount = view.webContents.zoomFactor;
 
         if (title !== view.title) {
           windowsManager.window.webContents.send(`browserview-data-updated-${key}`, {
             title,
             url,
+            zoomAmount,
           });
           view.url = url;
           view.title = title;

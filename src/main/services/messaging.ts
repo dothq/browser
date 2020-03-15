@@ -120,4 +120,12 @@ export const startMessagingService = (window: AppWindow) => {
             `)
         }, 3000);
     })
+
+    ipcMain.on('reset-zoom', (e) => {
+        window.viewManager.selected.webContents.zoomFactor = 1;
+    })
+
+    ipcMain.on('set-zoom', (e, dir) => {
+        zoom(dir, window);
+    })
 }
