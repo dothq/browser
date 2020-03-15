@@ -79,9 +79,6 @@ export class Tab {
   @observable
   public zoomAmount: number = 1;
 
-  @observable
-  public screenshot: any = '';
-
   @computed
   public get findVisible() {
     return this._findVisible;
@@ -189,7 +186,7 @@ export class Tab {
 
     ipcRenderer.on(
       `browserview-data-updated-${this.id}`,
-      async (e: any, { title, url }: any) => {
+      async (e: any, { title, url, zoomAmount }: any) => {
         let updated = null;
 
         const protocol = new URL(url).protocol;
@@ -221,6 +218,7 @@ export class Tab {
 
         this.title = title;
         this.url = url;
+        this.zoomAmount = zoomAmount;
 
         this.updateData();
       },
@@ -237,6 +235,7 @@ export class Tab {
       ) => {
         if (isMainFrame) {
           this.blockedAds = 0;
+          this.zoomAmount = 1;
         }
       },
     );
