@@ -9,8 +9,7 @@ import { readFileSync } from 'fs';
 
 import { 
   startSessionManager, 
-  preferencesLoad,
-  runAdblockService
+  preferencesLoad
 } from './services';
 
 export class WindowsManager {
@@ -69,6 +68,13 @@ export class WindowsManager {
 
     if(currentVersion <= cleanLatestVersion) {
       console.log(`${colors.blue.bold('Updates')} Update available. \n   Current version: ${pkg.version} \n   Update version: ${this.versions.browser}`);
+      process.env.__DOT_UPDATE_AVAILABLE = "true";
+    } else if(currentVersion >= cleanLatestVersion) {
+      console.log(`${colors.blue.bold('Updates')} Uh oh, time traveller detected!`);
+      process.env.__DOT_UPDATE_AVAILABLE = "false";
+    } else {
+      console.log(`${colors.blue.bold('Updates')} You're all up to date!`);
+      process.env.__DOT_UPDATE_AVAILABLE = "false";
     }
   }
 
