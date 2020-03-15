@@ -1,8 +1,9 @@
-import { observable } from "mobx";
+import { observable, computed } from "mobx";
 import { ipcRenderer, remote } from 'electron';
 import React from 'react';
 import { SuggestionsStore } from './suggestions';
 import { Suggestion } from '../../app/models/suggestion';
+import { icons } from '../../app/constants';
 
 let lastSuggestion;
 
@@ -61,7 +62,8 @@ class Store {
     @observable
     public details = { 
         url: '',
-        tabId: 1
+        tabId: 1,
+        favicon: icons.search
     }
 
     public hide() {
