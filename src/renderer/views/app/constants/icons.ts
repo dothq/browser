@@ -47,6 +47,7 @@ const light = require('../../../../shared/resources/icons/light.svg');
 const dark = require('../../../../shared/resources/icons/dark.svg');
 const print = require('../../../../shared/resources/icons/print.svg');
 const home = require('../../../../shared/resources/icons/home.svg');
+const ring = require('../../../../shared/resources/icons/ring.svg');
 
 const notifications = require('../../../../shared/resources/icons/notifications.svg');
 const location = require('../../../../shared/resources/icons/location.svg');
@@ -97,6 +98,15 @@ const smoke = require('../../../../shared/resources/icons/weather/smoke.svg');
 const snow = require('../../../../shared/resources/icons/weather/snow.svg');
 const snow_night = require('../../../../shared/resources/icons/weather/snow_night.svg');
 const tornado = require('../../../../shared/resources/icons/weather/tornado.svg');
+
+const google = require('../../../../shared/resources/icons/touch/google.svg');
+const gmail = require('../../../../shared/resources/icons/touch/gmail.svg');
+const youtube = require('../../../../shared/resources/icons/touch/youtube.svg');
+const amazon = require('../../../../shared/resources/icons/touch/amazon.svg');
+const amazonLight = require('../../../../shared/resources/icons/touch/amazon-light.svg');
+const twitter = require('../../../../shared/resources/icons/touch/twitter.svg');
+
+const missing = require('../../../../shared/resources/icons/images/missingImage.svg');
 
 export const icons = {
   windowsClose,
@@ -195,4 +205,16 @@ export const icons = {
   fullscreen,
   pointerLock,
   location,
+  ring,
+  touch: {
+    google,
+    gmail,
+    youtube,
+    amazon,
+    amazonLight,
+    twitter,
+  },
+  images: {
+    missing,
+  }
 };
