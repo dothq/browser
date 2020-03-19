@@ -10,6 +10,7 @@ export class Header extends React.Component {
         window.addEventListener("scroll", () => {
             if(window.scrollY <= 550) {
                 document.getElementById("webui-newtab-header-container").style.filter = `brightness(${1 - window.scrollY/400})`
+                document.getElementById("webui-newtab-header-container").style.backgroundSize = `${100 + window.scrollY/25}%`
             }
         })
     }

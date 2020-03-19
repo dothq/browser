@@ -27,7 +27,8 @@ export const Container = styled.div.attrs(props => ({
 
     width: -webkit-fill-available;
 
-    background-size: cover;
+    background-position-x: center;
+    background-size: 100%;
     background-attachment: fixed;
 
     @keyframes fadein {

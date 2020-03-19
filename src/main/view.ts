@@ -378,7 +378,7 @@ export class View extends BrowserView {
 
       let url = this.webContents.getURL();
 
-      windowsManager.window.webContents.send(`load-commit-${this.webContents.id}`, ...args);
+      windowsManager.window.webContents.send(`load-commit-${this.tabId}`, ...args);
 
       this.emitWebNavigationEvent('onBeforeNavigate', {
         tabId: this.tabId,

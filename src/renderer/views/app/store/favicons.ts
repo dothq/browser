@@ -43,7 +43,7 @@ export class FaviconsStore {
           const res = await requestURL(url);
 
           if (res.statusCode === 404) {
-            throw new Error('404 favicon not found');
+            return console.log("No favicon found")
           }
     
           let data = Buffer.from(res.data, 'binary');
