@@ -1,0 +1,32 @@
+name: Build (stable)
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+
+      - name: Build App and Release
+        uses: samuelmeuli/action-electron-builder@v1
+        with:        
+          github_token: ${{ secrets.github_token }}
+          release: true
