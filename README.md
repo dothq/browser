@@ -51,7 +51,7 @@ A privacy-centric web browser, with an elegant UI and a robust built-in ad block
 
 |  [<img src="https://i.imgur.com/POJjnum.png" alt="Windows" width="24px" height="24px" />]()</br> Windows  |          [<img src="https://i.imgur.com/V0YkvU5.png" alt="Mac" width="24px" height="24px" />]()</br> Mac          |         [<img src="https://i.imgur.com/khCS5Ll.png" alt="Linux" width="24px" height="24px" />]()</br> Linux         |
 |:---------:|:---------------------:|:---------------------:|
-| [Download](https://edge.dotbrowser.me/stable/download/windows) | [Download](https://edge.dotbrowser.me/stable/download/mac) | [Download](https://edge.dotbrowser.me/stable/download/linux) |
+| [Download](https://dothq.co) | [Download](https://dothq.co) | [Download](https://dothq.co) |
 
 ####
 
