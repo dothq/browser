@@ -1,7 +1,7 @@
 {
   "name": "dot",
   "version": "3.0.0",
-  "description": "A beautiful browser with darn-simple UI, based on Wexond.",
+  "description": "Take back your privacy with Dot Browser",
   "keywords": [
     "web-browser",
     "material",
@@ -13,8 +13,9 @@
   "homepage": "https://github.com/dothq/browser#readme",
   "main": "build/main.js",
   "author": {
-    "name": "Dot Technologies",
-    "email": "hello@dotbrowser.me"
+    "name": "Dot HQ",
+    "email": "hello@dotbrowser.me",
+    "url": "https://dothq.co"
   },
   "contributors": [
     {
@@ -103,7 +104,7 @@
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "4.1.0",
     "cross-env": "5.2.0",
-    "electron": "^9.0.0-beta.6",
+    "electron": "^9.0.0-beta.17",
     "electron-builder": "^21.2.0",
     "electron-is-dev": "^1.1.0",
     "electron-rebuild": "^1.10.0",
@@ -121,7 +122,6 @@
     "react-hot-loader": "^4.12.19",
     "run-electron": "^1.0.0",
     "spectron": "^9.0.0",
-    "styled-components": "^5.0.1",
     "terser": "^4.6.6",
     "timeago.js": "^4.0.2",
     "tslint": "5.15.0",
@@ -145,6 +145,7 @@
     "@babel/core": "^7.8.6",
     "@cliqz/adblocker-electron": "^1.9.2",
     "@dothq/components": "^1.1.3",
+    "@dothq/electron-privacy": "^2.2.0",
     "@material-ui/core": "^3.9.4",
     "@sentry/electron": "^1.2.1",
     "@types/discord-rpc": "^3.0.2",
@@ -182,7 +183,6 @@
     "eslint": "^6.8.0",
     "express": "^4.17.1",
     "fbjs": "^1.0.0",
-    "file-type": "^14.1.3",
     "folder-delete": "^1.0.4",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "gsap": "2.1.2",
@@ -220,6 +220,7 @@
     "psl": "^1.7.0",
     "pusher-js": "^4.4.0",
     "react": "16.8.6",
+    "react-click-outside": "^3.0.1",
     "react-confetti": "^3.1.2",
     "react-cookie": "^4.0.3",
     "react-cookies": "^0.1.1",
@@ -236,7 +237,7 @@
     "rimraf": "^3.0.2",
     "semantic-ui-react": "^0.86.0",
     "style-loader": "^1.1.3",
-    "styled-components": "^5.0.1",
+    "styled-components": "^5.1.0",
     "tldts": "4.0.6",
     "tree-kill": "^1.2.2",
     "ts-jest": "^24.3.0",
