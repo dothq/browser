@@ -25,13 +25,13 @@ export const registerProtocol = (session: Electron.Session) => {
 
         if (parsed.path === '/') {
           return callback({
-            path: join(__dirname, "web", `${parsed.hostname}.html`),
+            path: join(__dirname, `web/${parsed.hostname}.html`),
           });
         }
 
-        callback({ path: join(__dirname, parsed.path) });
+        callback({ path: join(__dirname, "web/", parsed.path) });
       },
-      error => {
+      (error) => {
         if (error) console.error(error);
       },
     );
