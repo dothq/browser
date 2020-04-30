@@ -2,25 +2,34 @@
   "name": "dot",
   "version": "0.0.0",
   "description": "A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.",
-  "main": "index.js",
+  "main": "dist/main.js",
   "repository": "https://github.com/browser-loquat/browser.git",
   "author": "Dot HQ (contact@dothq.co)",
   "license": "AGPL-3.0",
   "private": false,
   "scripts": {
+    "dev": "cross-env ENV=development gulp start",
     "start": "electron ."
   },
   "devDependencies": {
+    "@types/electron": "^1.6.10",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "@types/styled-components": "^5.1.0",
+    "cross-env": "^7.0.2",
+    "electron": "^9.0.0-beta.21",
+    "gulp": "^4.0.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.2",
     "typescript": "^3.8.3",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "html-webpack-plugin": "^4.3.0",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
   }
 }
