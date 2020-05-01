@@ -17,4 +17,6 @@ export const App = () => (
     </StyledApp>
 )
 
-dot.tabs.add({ id: 4, url: "https://google.com" })
+setTimeout(() => {
+    dot.tabs.add({ id: 4, url: "https://google.com" })
+}, 5000);

@@ -7,8 +7,9 @@ export const StyledAddressbar = styled.div`
     height: 32px;
     align-self: center;
     background-color: #f3f3f3;
-    margin: 0 4px;
+    margin: 0 120px;
     border-radius: 3px;
+    -webkit-app-region: no-drag;
 `;
 
 export const SearchIcon = styled(StyledNavigationButton)`
@@ -31,5 +32,7 @@ export const Input = styled.input`
     background-color: transparent;
     width: 100%;
     font-size: 14px;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.2px;
+    font-family: 'Inter';
+    line-height: 18px;
 `;

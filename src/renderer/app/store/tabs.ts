@@ -10,10 +10,10 @@ export class TabsStore {
     public list: Tab[] = []
 
     add(options: ViewCreateOptions) {
-        const view = ipcRenderer.sendSync('view-create', options);
+        // ipcRenderer.send('view-create', options);
 
-        const tab = new Tab({ id: view.id, url: view.url });
+        // const tab = new Tab({ id: view.id, url: view.url });
 
-        this.list.push(tab);
+        // this.list.push(tab);
     }
 }

@@ -40,5 +40,13 @@ export class AppWindow {
         this.window.on('ready-to-show', () => {
           this.window.show()
         })
+
+        this.window.on('maximize', () => {
+          this.window.webContents.send('app-display-changed', true)
+        })
+
+        this.window.on('restore', () => {
+          this.window.webContents.send('app-display-changed', false)
+        })
     };
 }

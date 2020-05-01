@@ -1,0 +1,8 @@
+import styled from "styled-components";
+
+export const StyledWindowsButtons = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    -webkit-app-region: no-drag;
+    user-drag: none;
+`;

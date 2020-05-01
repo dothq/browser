@@ -9,7 +9,7 @@
   "private": false,
   "scripts": {
     "dev": "cross-env ENV=development gulp start",
-    "start": "electron ."
+    "start": "cross-env ENV=development electron ."
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
@@ -17,14 +17,18 @@
     "@types/react-dom": "^16.9.7",
     "@types/styled-components": "^5.1.0",
     "cross-env": "^7.0.2",
-    "electron": "^9.0.0-beta.21",
+    "electron": "^8.2.5",
+    "file-loader": "^6.0.0",
     "gulp": "^4.0.2",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.2",
+    "ts-node": "^8.9.1",
     "typescript": "^3.8.3",
+    "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3"
+    "webpack-dev-server": "^3.10.3",
+    "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
     "feather-icons-react": "^0.4.1",

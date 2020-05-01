@@ -2,10 +2,10 @@ import React from "react";
 import { StyledNavigationButton } from "./style";
 import { Icon } from '../Icon'
 
-export const NavigationButton = ({ icon, size }: { icon: any, size?: number }) => {
+export const NavigationButton = ({ icon, size, onClick, iconStyle }: { icon: any, size?: number; onClick?: any; iconStyle?: any }) => {
     return (
-        <StyledNavigationButton>
-            <Icon icon={icon} size={size} />
+        <StyledNavigationButton onClick={onClick}>
+            <Icon icon={icon} size={size} style={iconStyle} />
         </StyledNavigationButton>
     )
 }

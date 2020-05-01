@@ -6,4 +6,5 @@ export const StyledNavigationButtons = styled.div`
     width: 100%;
     margin-left: 4px;
     flex: 1;
+    -webkit-app-region: no-drag;
 `;

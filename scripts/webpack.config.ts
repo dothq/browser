@@ -1,6 +1,6 @@
-const path = require('path');
+export const path = require('path');
 
-const mode = process.env.ENV
+export const mode = process.env.ENV
 
 console.log(mode)
 
@@ -11,6 +11,7 @@ module.exports = {
         main: './src/main/index.ts',
     },
     mode: mode,
+    watch: mode == "development",
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
       },

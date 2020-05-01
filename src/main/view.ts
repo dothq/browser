@@ -1,5 +1,7 @@
 import { BrowserView, app } from "electron";
 import { resolve } from "path";
+import { appWindow } from ".";
+import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 
 export class View {
     public view: BrowserView;
@@ -27,6 +29,15 @@ export class View {
           .replace(/ Electron\\?.([^\s]+)/g, '')
           .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
 
+        appWindow.window.on('resize', () => {
+            const { width, height } = appWindow.window.getBounds()
+
+            this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        })
+
+        const { width, height } = appWindow.window.getBounds()
+
+        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         this.view.webContents.loadURL(url);
     }
