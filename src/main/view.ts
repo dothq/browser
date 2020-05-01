@@ -27,7 +27,7 @@ export class View {
           .replace(/ Electron\\?.([^\s]+)/g, '')
           .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
 
-        this.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
-        this.webContents.loadURL(url);
+        this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
+        this.view.webContents.loadURL(url);
     }
 }
