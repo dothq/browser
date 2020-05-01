@@ -26,7 +26,11 @@ export class AppWindow {
           },
         })
 
-        this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/src/renderer/app/index.html`))
+        if(process.env.ENV == "development") {
+          this.window.loadURL('http://localhost:9010/app.html')
+        } else {
+          this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/dist/app.html`))
+        }
 
         this.window.webContents.on('dom-ready', () => {
             this.window.show()
