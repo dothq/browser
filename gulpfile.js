@@ -26,7 +26,7 @@ const launchWebpack = (friendlyName, name, options) => {
                 if(electronStarted == false) {
                     electronStarted = true;
                     console.log("🚀 Starting Electron...")
-                    spawn('cross-env ENV=development electron', ['.'], { stdio: 'inherit', shell: true });
+                    spawn('cross-env ENV=development electron', [require("os").platform() == "linux" ? "--no-sandbox " : "", '.'], { stdio: 'inherit', shell: true });
                 }
             }, 2000);
         }
