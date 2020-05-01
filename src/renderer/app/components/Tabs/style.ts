@@ -4,5 +4,6 @@ export const StyledTabs = styled.div`
     display: flex;
     width: 100%;
     height: 40px;
-    background-color: white // TODO: Themes
+    background-color: white; // TODO: Themes
+    -webkit-app-region: drag;
 `;

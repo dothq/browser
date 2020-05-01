@@ -1,8 +1,11 @@
 import { BrowserWindow, app } from 'electron';
 import { resolve } from 'path';
+import { View } from './view';
 
 export class AppWindow {
     public window: BrowserWindow;
+
+    public views: View[] = [];
 
     constructor() {
         this.window = new BrowserWindow({
@@ -26,14 +29,16 @@ export class AppWindow {
           },
         })
 
+        this.window.setBackgroundColor('#000000')
+
         if(process.env.ENV == "development") {
           this.window.loadURL('http://localhost:9010/app.html')
         } else {
           this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/dist/app.html`))
         }
 
-        this.window.webContents.on('dom-ready', () => {
-            this.window.show()
+        this.window.on('ready-to-show', () => {
+          this.window.show()
         })
     };
 }
