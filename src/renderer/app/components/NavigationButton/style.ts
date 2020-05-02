@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const StyledNavigationButton = styled.div`
     display: flex;
-    width: 36px;
+    width: 32px;
     height: 32px;
     align-self: center;
     text-align: center;
     justify-content: center;
     border-radius: 3px;
-    margin: 0 2px;
+    margin: 0 3px;
     transition: 0.2s box-shadow, 0.2s background-color;
 
     svg {
@@ -16,10 +16,10 @@ export const StyledNavigationButton = styled.div`
     }
 
     &:hover {
-        background-color: #f3f3f3;
+        background-color: rgba(0, 0, 0, 0.05);
     }
 
     &:active {
-        background-color: #e8e8e8;
+        background-color: rgba(0, 0, 0, 0.10);
     }
 `;

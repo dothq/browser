@@ -1,9 +1,9 @@
 {
   "name": "dot",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha",
   "description": "A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.",
   "main": "dist/main.js",
-  "repository": "https://github.com/browser-loquat/browser.git",
+  "repository": "https://github.com/dothq/browser",
   "author": "Dot HQ (contact@dothq.co)",
   "license": "AGPL-3.0",
   "private": false,

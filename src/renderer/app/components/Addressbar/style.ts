@@ -6,24 +6,22 @@ export const StyledAddressbar = styled.div`
     display: flex;
     height: 32px;
     align-self: center;
-    background-color: #f3f3f3;
-    margin: 0 120px;
+    box-shadow: 0 0 8px 0px #00000017;
+    border: 1px solid #eaeaea;
+    margin: 0 6px;
     border-radius: 3px;
     -webkit-app-region: no-drag;
+    transition: 0.15s border, 0.25s padding;
+
+    &:focus-within {
+        border: 1px solid #c7c7c7;
+    }
 `;
 
 export const SearchIcon = styled(StyledNavigationButton)`
-    height: 25px;
+    height: 26px;
     margin: 0 4px;
     width: 32px;
-
-    &:hover {
-        background-color: #e6e6e6;
-    }
-
-    &:active {
-        background-color: #dedede;
-    }
 `;
 
 export const Input = styled.input`
@@ -33,6 +31,8 @@ export const Input = styled.input`
     width: 100%;
     font-size: 14px;
     letter-spacing: 0.2px;
-    font-family: 'Inter';
+    font-family: BlinkMacSystemFont, 'Inter';
     line-height: 18px;
+    padding: 0 2px;
+    padding-right: 6px;
 `;

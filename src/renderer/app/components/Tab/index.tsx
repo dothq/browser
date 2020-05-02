@@ -1,10 +1,17 @@
 import React from "react"
-import { StyledTab } from "./style"
+import { StyledTab, StyledTabContent } from "./style"
+import { Tab as ITab } from "../../mixins/tab"
 
-export const Tab = () => {
+const TabContent = ({ tab }: { tab: ITab }) => (
+    <StyledTabContent>
+        
+    </StyledTabContent>
+)
+
+export const Tab = ({ tab }: { tab: ITab }) => {
     return (
         <StyledTab>
-
+            <TabContent tab={tab} />
         </StyledTab>
     )
 }

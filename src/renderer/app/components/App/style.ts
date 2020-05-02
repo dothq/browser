@@ -2,14 +2,6 @@ import styled, { css } from "styled-components";
 import { fonts } from "../../../constants/fonts";
 
 export const Style = css`
-    @font-face {
-        font-family: 'Inter';
-        font-style:  normal;
-        font-weight: 100;
-        font-display: swap;
-        src: url(${fonts.inter.thin}) format("woff2");
-    }
-
     body {
         margin: 0;
         padding: 0;

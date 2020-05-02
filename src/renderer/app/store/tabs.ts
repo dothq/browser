@@ -9,6 +9,16 @@ export class TabsStore {
     @observable
     public list: Tab[] = []
 
+    constructor() {
+        ipcRenderer.on('view-created', (e, params) => {
+            const tab = new Tab(params);
+
+            this.list.push(tab);
+
+            console.log(tab, this)
+        })
+    }
+
     add(options: ViewCreateOptions) {
         // ipcRenderer.send('view-create', options);
 

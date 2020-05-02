@@ -7,4 +7,20 @@ export const StyledNavigationButtons = styled.div`
     margin-left: 4px;
     flex: 1;
     -webkit-app-region: no-drag;
+    display: relative;
+`;
+
+export const Badge = styled.div`
+    width: 6px;
+    height: 6px;
+    position: absolute;
+`;
+
+export const Seperator = styled.div`
+    display: flex;
+    margin: 0 4px;
+    height: calc(100% - 24px);
+    width: 1px;
+    background-color: #eaeaea;
+    align-self: center;
 `;

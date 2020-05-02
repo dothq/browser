@@ -37,7 +37,7 @@ export class AppWindow {
           this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/dist/app.html`))
         }
 
-        this.window.on('ready-to-show', () => {
+        this.window.webContents.on('dom-ready', () => {
           this.window.show()
         })
 

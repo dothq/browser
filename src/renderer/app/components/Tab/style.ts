@@ -9,3 +9,7 @@ export const StyledTab = styled.div`
     border-radius: 6px 6px 0 0;
     -webkit-app-region: no-drag;
 `;
+
+export const StyledTabContent = styled.div`
+
+`;

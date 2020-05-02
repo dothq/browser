@@ -3,6 +3,12 @@ import { StyledAddressbar, SearchIcon, Input } from "./style"
 import { Icon } from '../Icon';
 
 export const Addressbar = () => {
+    const onKeyUp = (event) => {
+        if(event.which == 13) {
+            
+        }
+    }
+
     return (
         <StyledAddressbar>
             <SearchIcon>

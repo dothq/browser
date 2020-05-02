@@ -1,7 +1,8 @@
-import { BrowserView, app } from "electron";
+import { BrowserView, app, ContextMenuParams, ipcRenderer } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
+import { generalMenu } from "./menus/general";
 
 export class View {
     public view: BrowserView;
@@ -23,6 +24,10 @@ export class View {
 
         this.view.setBackgroundColor("#fff");
 
+        this.view.webContents.on('did-start-loading', (e) => {
+            appWindow.window.webContents.send('view-created', { id, url })
+        })
+
         this.view.webContents.userAgent =
           this.view.webContents.userAgent
           .replace(/ dot\\?.([^\s]+)/g, '')
@@ -35,10 +40,13 @@ export class View {
             this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
         })
 
-        const { width, height } = appWindow.window.getBounds()
-
-        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         this.view.webContents.loadURL(url);
+
+        this.view.webContents.on('context-menu', (event, params: ContextMenuParams) => {
+            const { x, y } = params;
+
+            generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
+        })
     }
 }
