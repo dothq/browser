@@ -16,7 +16,7 @@ export const Badge = styled.div`
     position: absolute;
 `;
 
-export const Seperator = styled.div`
+export const Separator = styled.div`
     display: flex;
     margin: 0 4px;
     height: calc(100% - 24px);

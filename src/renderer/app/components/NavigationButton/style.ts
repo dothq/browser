@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledNavigationButton = styled.div`
     display: flex;
@@ -10,6 +10,14 @@ export const StyledNavigationButton = styled.div`
     border-radius: 3px;
     margin: 0 3px;
     transition: 0.2s box-shadow, 0.2s background-color;
+
+    ${({ size }: { size?: number }) => css`
+        width: ${size}px;
+        height: ${size}px;
+
+        min-width: ${size}px;
+        min-height: ${size}px;
+    `};
 
     svg {
         align-self: center;

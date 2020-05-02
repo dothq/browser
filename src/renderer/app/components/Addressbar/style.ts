@@ -6,15 +6,17 @@ export const StyledAddressbar = styled.div`
     display: flex;
     height: 32px;
     align-self: center;
-    box-shadow: 0 0 8px 0px #00000017;
+    box-shadow: 0 0 4px 0px #00000017;
     border: 1px solid #eaeaea;
     margin: 0 6px;
     border-radius: 3px;
     -webkit-app-region: no-drag;
+    user-select: none;
     transition: 0.15s border, 0.25s padding;
 
     &:focus-within {
-        border: 1px solid #c7c7c7;
+        border: 1px solid #a7a7a7;
+        user-select: unset;
     }
 `;
 
@@ -32,7 +34,6 @@ export const Input = styled.input`
     font-size: 14px;
     letter-spacing: 0.2px;
     font-family: BlinkMacSystemFont, 'Inter';
-    line-height: 18px;
     padding: 0 2px;
     padding-right: 6px;
 `;

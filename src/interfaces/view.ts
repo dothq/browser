@@ -1,4 +1,5 @@
 export interface ViewCreateOptions {
-    id: number;
+    active: boolean;
     url: string;
+    id?: string;
 }

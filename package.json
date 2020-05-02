@@ -33,10 +33,12 @@
   "dependencies": {
     "feather-icons-react": "^0.4.1",
     "html-webpack-plugin": "^4.3.0",
-    "mobx": "^5.15.4",
-    "mobx-react": "^6.2.2",
+    "mobx": "5.9.4",
+    "mobx-react": "5.4.3",
+    "mobx-react-lite": "1.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "uuid": "^8.0.0"
   }
 }

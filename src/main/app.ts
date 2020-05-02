@@ -1,11 +1,14 @@
 import { BrowserWindow, app } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
+import { startMessagingAgent } from './messaging';
+import { NAVIGATION_HEIGHT } from '../renderer/app/constants/window';
 
 export class AppWindow {
     public window: BrowserWindow;
 
     public views: View[] = [];
+    public selectedId: string;
 
     constructor() {
         this.window = new BrowserWindow({
@@ -31,13 +34,15 @@ export class AppWindow {
 
         this.window.setBackgroundColor('#000000')
 
+        startMessagingAgent()
+
         if(process.env.ENV == "development") {
           this.window.loadURL('http://localhost:9010/app.html')
         } else {
           this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/dist/app.html`))
         }
 
-        this.window.webContents.on('dom-ready', () => {
+        this.window.on('ready-to-show', () => {
           this.window.show()
         })
 

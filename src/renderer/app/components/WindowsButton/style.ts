@@ -7,6 +7,7 @@ export const StyledWindowsButton = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-app-region: no-drag;
 
     &:hover {
         ${({ isClose }: { isClose?: boolean }) => css`

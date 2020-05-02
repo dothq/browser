@@ -5,17 +5,16 @@ import { NavigationButton } from '../NavigationButton'
 import { Addressbar } from "../Addressbar";
 import { WindowsButtons } from "../WindowsButtons";
 import { ExtensionButtons } from "../ExtensionButtons";
-import { Seperator, Badge } from "../NavigationButtons/style";
+import { Separator, Badge } from "../NavigationButtons/style";
+import { observer } from "mobx-react-lite";
 
-export const Navigation = () => {
+import dot from '../../store'
+
+export const Navigation = observer(() => {
     const [refreshAnimStarted, setRefreshAnimStarted] = React.useState(false)
 
     const onRefreshClick = () => {
-        setRefreshAnimStarted(true)
-
-        setTimeout(() => {
-            setRefreshAnimStarted(false);
-        }, 200);
+        dot.tabs.selectedTab.refresh()
     }
 
     return (
@@ -28,10 +27,10 @@ export const Navigation = () => {
             <Addressbar />
             <ExtensionButtons>
                 <NavigationButton icon={"shield"} size={18} />
-                <Seperator />
+                <Separator />
                 <NavigationButton icon={"user"} size={18} />
                 <NavigationButton icon={"more-horizontal"} size={18} />
             </ExtensionButtons>
         </StyledNavigation>
     )
-}
+})

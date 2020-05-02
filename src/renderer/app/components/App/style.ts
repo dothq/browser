@@ -7,6 +7,7 @@ export const Style = css`
         padding: 0;
         font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui;
         background-color: white;
+        overflow: hidden;
     }
 
     *::selection {
@@ -19,6 +20,10 @@ export const Style = css`
         -moz-user-drag: none;
         -o-user-drag: none;
         user-drag: none;
+    }
+
+    *:not(input) {
+        user-select: none;
     }
 
     @font-face {
