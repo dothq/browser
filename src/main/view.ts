@@ -45,8 +45,6 @@ export class View {
 
             const id = this.id;
 
-            console.log(id)
-
             const generalMenu = getGeneralMenu(id)
 
             generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })

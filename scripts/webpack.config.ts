@@ -2,8 +2,6 @@ export const path = require('path');
 
 export const mode = process.env.ENV
 
-console.log(mode)
-
 module.exports = {
     target: 'electron-main',
     name: 'main',

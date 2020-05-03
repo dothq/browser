@@ -20,31 +20,25 @@ export const startMessagingAgent = () => {
         const view = appWindow.views.find(view => view.id == id);
         if(!view) return;
 
-        view.rearrange()
-
         appWindow.selectedId = view.id;
         appWindow.window.setBrowserView(view.view)
+
+        view.rearrange()
     })
 
-    ipcMain.on('view-destroy', (e, id, previousId) => {
-        const view = appWindow.views.find(view => view.id == id);
-        if(!view) return;
+    ipcMain.on('view-destroy', (e, id, replacingId) => {
+        const index = appWindow.views.findIndex(view => view.id == id)
+        const view = appWindow.views[index];
+        const replacingView = appWindow.views.find(view => view.id == replacingId);
 
-        const previousView = appWindow.views.find(view => view.id == previousId);
-        if(!previousView) return;
+        if(view.id !== id || replacingView.id !== replacingId) return;
 
-        if(appWindow.views.length == 1) return appWindow.window.close();
+        appWindow.selectedId = replacingView.id;
+        appWindow.window.setBrowserView(replacingView.view);
 
-        console.log(view)
+        replacingView.rearrange()
 
         view.view.destroy()
-
-        appWindow.views = appWindow.views.filter(view => view.id !== id);
-
-        previousView.rearrange()
-
-        appWindow.selectedId = previousView.id;
-        appWindow.window.setBrowserView(previousView.view)
     })
 
     ipcMain.on('view-refresh', (e, id, ignoreCache?: boolean) => {
@@ -58,8 +52,6 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-navigate', (e, id, url) => {
         const { view } = appWindow.views.find(view => view.id == id);
         if(!view) return;
-
-        console.log(id)
 
         view.webContents.loadURL(url)
     })

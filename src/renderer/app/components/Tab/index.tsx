@@ -29,8 +29,6 @@ const Close = ({ tab }: { tab: ITab }) => (
 )
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
-    console.log(dot.tabs.list.findIndex(tab => tab.id == dot.tabs.selectedId), dot.tabs.list.length)
-
     return (
         <>
             <StyledTab selected={tab.id == dot.tabs.selectedId} onMouseDown={() => onTabMouseDown(tab)}>

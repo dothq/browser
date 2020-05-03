@@ -13,7 +13,7 @@ export const TabSeparator = styled(Separator)`
     transition: 0.3s opacity;
 
     ${({ tab }: { tab: Tab }) => css`
-        opacity: ${dot.tabs.list.findIndex(tab => tab.id == dot.tabs.selectedId) !== dot.tabs.list.length - 1 ? 1 : 0};
+        // opacity: ${dot.tabs.list.findIndex(tab => tab.id == dot.tabs.selectedId) !== dot.tabs.list.length - 1 ? 1 : 0};
     `};
 `;
 

@@ -1,5 +1,6 @@
 import { ipcRenderer } from "electron";
 import { ViewCreateOptions } from "../../../interfaces/view";
+import { observable } from "mobx";
 
 export class Tab {
     public id: string;
@@ -7,9 +8,10 @@ export class Tab {
     public title: string;
     public status: 'loading' | 'idle' | 'crashed' | 'suspended';
 
-    constructor({ id, url, active }: ViewCreateOptions) {
-        console.log(id, url, active)
+    @observable
+    public isClosing: boolean = false;
 
+    constructor({ id, url, active }: ViewCreateOptions) {
         this.id = id;
         this.url = url;
 

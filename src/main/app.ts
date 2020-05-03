@@ -2,7 +2,6 @@ import { BrowserWindow, app } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
-import { NAVIGATION_HEIGHT } from '../renderer/app/constants/window';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -20,6 +19,7 @@ export class AppWindow {
           show: false,
           title: 'Dot Browser',
           titleBarStyle: 'hiddenInset',
+          icon: resolve(app.getAppPath(), "src", "resources", "icons", "dot.icns"),
           maximizable: true,
           webPreferences: {
             plugins: true,

@@ -8,7 +8,6 @@ import { ipcRenderer } from 'electron';
 
 export const Addressbar = observer(() => {
     const onSearchBlur = () => {
-        console.log("blur")
         window.getSelection().removeAllRanges()
     }
 
