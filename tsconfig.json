@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "target": "es2018",
+        "module": "commonjs",
+        "lib": ["dom", "es2018"],
+        "noImplicitAny": false,
+        "jsx": "react",
+        "outDir": "built",
+        "rootDir": ".",
+        "sourceMap": false,
+        "esModuleInterop": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
