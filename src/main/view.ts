@@ -19,9 +19,7 @@ export class View {
                 additionalArguments: [`--tab-id=${id}`],
                 contextIsolation: true,
                 partition: 'persist:view',
-                scrollBounce: true,
-                plugins: true,
-                javascript: true
+                scrollBounce: true
             }
         })
 
