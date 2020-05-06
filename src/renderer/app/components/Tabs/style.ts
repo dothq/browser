@@ -6,7 +6,7 @@ export const StyledTabs = styled.div`
     display: flex;
     width: 100%;
     height: ${TABBAR_HEIGHT}px;
-    background-color: #e9e9e9; // TODO: Themes
+    background-color: white; // TODO: Themes
     -webkit-app-region: drag;
 `;
 
@@ -16,7 +16,8 @@ export const TabsContainer = styled.div`
     -webkit-app-region: no-drag;
     ${require("os").platform() == "darwin" ? "margin-left: 76px;" : ""}
     max-width: calc(100% - 200px);
-    overflow-x: overlay;
+    overflow-x: visible;
+    margin-left: 2px;
 
     ::-webkit-scrollbar {
         // width: 0px;
@@ -30,10 +31,10 @@ export const AddTab = styled(NavigationButton).attrs(props => ({
     size: 18,
     onClick: props.onClick,
     iconStyle: { paddingTop: '3px' },
-    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px' }
+    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px', height: 'calc(43px - 7px)' }
 }))`
     min-width: 33px;
-    min-height: calc(43px - 8px);
+    min-height: calc(43px - 7px);
     position: absolute;
     height: 33px;
     -webkit-app-region: no-drag;

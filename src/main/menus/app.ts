@@ -13,6 +13,10 @@ export const getAppMenu = (appName) => {
                 {
                     label: "Check for Updates",
                 },
+                {
+                    role: 'toggleDevTools',
+                    visible: process.env.ENV == "development"
+                },
                 { 
                     type: "separator" as "separator"
                 },

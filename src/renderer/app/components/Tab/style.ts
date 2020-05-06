@@ -6,29 +6,32 @@ import { Tab } from '../../mixins/tab';
 import { NavigationButton } from "../NavigationButton";
 import { motion } from "framer-motion";
 
+import { TAB_WIDTH } from '../../constants/tab'
+
 export const TabMotion = styled(motion.div)`
     min-width: 93px;
     display: flex;
 `;
 
 export const StyledTab = styled.div`
-    width: 218px;
+    width: ${TAB_WIDTH}px;
     height: calc(100% - 4px);
     display: flex;
     align-self: flex-end;
-    border-radius: 6px 6px 0 0;
     -webkit-app-region: no-drag;
     padding-right: 4px;
-    margin: 0 0.5px;
     overflow: hidden;
     position: relative;
-    transition: 0.2s background-color;
+    border-radius: 6px 6px 0 0;
+    transition: 0.2s background-color, 0.2s box-shadow;
 
-    ${({ selected }: { selected: boolean }) => css`
+    ${({ selected, tab }: { selected: boolean; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
-        
+        box-shadow: ${selected ? '0px 0px 20px 4px rgba(0,0,0,0.08), inset 0px -3px 0px #0070F3' : ''};
+
         &:hover {
             background-color: ${selected ? '' : '#0000000d'};
+            box-shadow: ${selected ? '' : 'inset 0px -3px 0px rgba(0, 0, 0, 0.15)'}
         }
     `};
 `;
@@ -40,7 +43,8 @@ export const StyledTabContent = styled.div`
 `;
 
 export const TabTitle = styled.div`
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 400;
     white-space: nowrap;
     display: flex;
     height: 100%;
@@ -51,6 +55,8 @@ export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: an
     icon: 'x',
     size: 15,
     buttonSize: 24,
+    iconStyle: { strokeWidth: 1 },
+    style: { position: 'absolute', right: '4px' },
     onClick: () => { 
         props.hook(a => !a);
         dot.tabs.close(props.tab.id) ;

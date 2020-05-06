@@ -10,6 +10,7 @@ module.exports = {
     },
     mode: mode,
     watch: mode == "development",
+    devtool: mode == "development" ? "eval-source-map" : "cheap-source-map",
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
       },

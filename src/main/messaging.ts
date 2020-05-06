@@ -24,26 +24,13 @@ export const startMessagingAgent = () => {
         appWindow.selectedId = view.id;
         appWindow.window.setBrowserView(view.view)
 
-        view.rearrange()
+        if(view.view.isDestroyed() == false) view.rearrange()
     })
 
-    ipcMain.on('view-destroy', (e, id, replacingId) => {
-        let index = appWindow.views.findIndex(view => view.id == id)
-        let view = appWindow.views[index];
-        let replacingView = appWindow.getViewFromId(replacingId);
+    ipcMain.on('view-destroy', (e, id) => {
+        const { view } = appWindow.getViewFromId(id)
 
-        if(view.id !== id || replacingView.id !== replacingId) return;
-
-        if(view !== null) {
-            appWindow.selectedId = replacingView.id;
-            appWindow.window.setBrowserView(replacingView.view);
-    
-            replacingView.rearrange()
-    
-            view.view.destroy()
-            view = null;
-        }
-
+        view.destroy()
     })
 
     ipcMain.on('view-refresh', (e, id, ignoreCache?: boolean) => {

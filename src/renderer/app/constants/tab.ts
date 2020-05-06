@@ -1,0 +1,1 @@
+export const TAB_WIDTH = 260;

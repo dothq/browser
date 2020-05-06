@@ -4,4 +4,5 @@ import { StyledNavigationButtons } from "../NavigationButtons/style";
 export const StyledExtensionButtons = styled(StyledNavigationButtons)`
     margin-right: 4px;
     margin-left: 0;
+    justify-content: flex-end;
 `;

@@ -4,7 +4,7 @@ export const Style = css`
     body {
         margin: 0;
         padding: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui;
+        font-family: system-ui;
         background-color: white;
         overflow: hidden;
     }

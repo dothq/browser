@@ -3,7 +3,7 @@ import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion } from "./style
 import { Tab as ITab } from "../../mixins/tab"
 import { observer } from "mobx-react-lite"
 
-import { motion, AnimatePresence} from 'framer-motion';
+import { TAB_WIDTH } from '../../constants/tab'
 
 import dot from '../../store'
 import { ipcRenderer } from "electron"
@@ -17,7 +17,7 @@ const onTabMouseDown = (tab: ITab) => {
 
 const TabContent = ({ tab, onMouseDown }: { tab: ITab; onMouseDown: any }) => (
     <StyledTabContent onMouseDown={onMouseDown}>
-        <TabTitle>{tab.url}</TabTitle>
+        <TabTitle>New Tab</TabTitle>
     </StyledTabContent>
 )
 
@@ -26,8 +26,11 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
 
     React.useEffect(() => {
         if(visible == false) {
-            dot.tabs.list = dot.tabs.list.filter(ctab => ctab.id !== tab.id);
+            dot.tabs.list = dot.tabs.list.splice(0, dot.tabs.list.findIndex(dotTab => dotTab == tab))
             dot.tabs.selectedId = dot.tabs.replacingId;
+
+            ipcRenderer.send('view-destroy', tab.id)
+            ipcRenderer.send('view-select', dot.tabs.replacingId)
         }
     }, [visible])
 
@@ -35,7 +38,7 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
         opening: {
             x: 0, 
             opacity: 1, 
-            width: 218, 
+            width: TAB_WIDTH, 
             display: 'flex'
         },
         closing: {
@@ -48,18 +51,16 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
     }
 
     return (
-        <AnimatePresence>
-            <TabMotion
-                initial={{ x: -218, opacity: 0, width: 0 }}
-                animate={visible ? 'opening' : 'closing'}
-                variants={variants}
-                transition={{ duration: 0.2, type: "tween" }}
-            >
-                <StyledTab selected={tab.id == dot.tabs.selectedId}>
-                    <TabContent tab={tab} onMouseDown={() => onTabMouseDown(tab)} />
-                    <Close tab={tab} hook={setVisible} />
-                </StyledTab>
-            </TabMotion>
-        </AnimatePresence>
+        <TabMotion
+            initial={{ x: -TAB_WIDTH, opacity: 0, width: 0 }}
+            animate={visible ? 'opening' : 'closing'}
+            variants={variants}
+            transition={{ duration: 0.2, type: "tween" }}
+        >
+            <StyledTab selected={tab.id == dot.tabs.selectedId} tab={tab}>
+                <TabContent tab={tab} onMouseDown={() => onTabMouseDown(tab)} />
+                <Close tab={tab} hook={setVisible} />
+            </StyledTab>
+        </TabMotion>
     )
 })
