@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "HVENetworks",
+      "name": "HVENetworks",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/36706682?v=4",
+      "profile": "https://github.com/HVENetworks",
+      "contributions": [
+        "security"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "browser",
+  "projectOwner": "dothq",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "badgeTemplate": ""
+}
