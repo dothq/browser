@@ -4,7 +4,7 @@ import { TOOLBAR_HEIGHT } from "../../constants/window";
 export const StyledNavigation = styled.div`
     display: flex;
     width: 100%;
-    height: ${TOOLBAR_HEIGHT}px;
+    height: ${TOOLBAR_HEIGHT - 2}px;
     background-color: #ffffff;
     border: 1px solid #EAEAEA;
     position: absolute;

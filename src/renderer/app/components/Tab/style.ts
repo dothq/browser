@@ -27,11 +27,11 @@ export const StyledTab = styled.div`
 
     ${({ selected, tab }: { selected: boolean; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
-        box-shadow: ${selected ? '0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108), inset 0px -3px 0px #0070F3' : ''};
+        box-shadow: ${selected ? '0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108), inset 0px -3px 0px #1499ff' : ''};
 
         &:hover {
             background-color: ${selected ? '' : '#0000000d'};
-            box-shadow: ${selected ? '' : 'inset 0px -3px 0px rgba(0, 0, 0, 0.15)'}
+            box-shadow: ${selected ? '' : 'inset 0px -3px 0px #e1dfdd'}
         }
     `};
 `;
