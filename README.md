@@ -24,5 +24,10 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 - [React](https://reactjs.org)
 - [Styled Components](https://styled-components.com/)
 
+## 💸 Donations
+We accept one-time donations on Ko-Fi, (you'll have to pay each month if you want a monthly payment)
+
+<img alt="Ko-Fi" width="180" src="https://i.imgur.com/Di0tfki.png" />
+
 ## 📜 License
 **Dot Browser** is licensed under the [AGPL-3.0](https://opensource.org/licenses/AGPL-3.0). Quick rundown, whilst other licenses are intended to take away your freedoms, **AGPL-3.0** intends to allow to exercise your freedoms with this open-sourced software.
