@@ -43,7 +43,8 @@ export const StyledTabContent = styled.div`
 `;
 
 export const TabTitle = styled.div`
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 16px;
     font-weight: 400;
     white-space: nowrap;
     display: flex;
@@ -65,5 +66,6 @@ export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: an
     ${({ tab, hook }: { tab: Tab; hook: any }) => css`
         position: absolute;
         right: 4px;
+        z-index: 5;
     `}
 `;
