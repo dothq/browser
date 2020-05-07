@@ -50,8 +50,13 @@ export class View {
     }
 
     public rearrange() {
-        const { width, height } = appWindow.window.getBounds()
+        let { width, height } = appWindow.window.getBounds()
     
+        if(appWindow.window.isMaximized()) {
+            width = width - 15
+            height = height - 15
+        }
+
         this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
     }
 }
