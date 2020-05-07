@@ -32,7 +32,6 @@
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
-    "electron-log": "^4.1.2",
     "feather-icons-react": "^0.4.1",
     "framer-motion": "^1.10.3",
     "mobx": "5.9.4",
