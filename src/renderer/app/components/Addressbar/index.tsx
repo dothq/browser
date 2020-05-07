@@ -6,6 +6,15 @@ import { observer } from 'mobx-react-lite';
 import dot from '../../store'
 import { ipcRenderer } from 'electron';
 
+const isURLRegex = /\s+/g;
+const createURL = (url: string) => {
+	if (!url.includes('http')) {
+		return new URL(`http://${url}`).href;
+	}
+
+	return new URL(url).href;
+}
+
 export const Addressbar = observer(() => {
     const [inputFocused, setInputFocused] = React.useState(true);
     const [placeholderVisible, setPlaceholderVisibility] = React.useState(true);
@@ -39,11 +48,13 @@ export const Addressbar = observer(() => {
         }
     }
 
-    const onKeyUp = (e) => {
+    const onKeyUp = async (e: React.KeyboardEvent<HTMLInputElement>) => {
         if(e.keyCode == 13) {
-            const url = dot.searchRef.current.value;
-
-            ipcRenderer.send('view-navigate', dot.tabs.selectedTab.id, url)
+						const { value } = dot.searchRef.current;
+						const url = createURL(value);
+						const result = await fetch(url);
+						dot.searchRef.current.value = result.url;
+						ipcRenderer.send('view-navigate', dot.tabs.selectedTab.id, url);
 
             dot.searchRef.current.blur();
         }
