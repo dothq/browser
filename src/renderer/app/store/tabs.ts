@@ -50,7 +50,7 @@ export class TabsStore {
     public close(id: string) {
         const index = this.list.findIndex(tab => tab.id == id)
 
-        if(this.list.length == -1) return ipcRenderer.send('app-close')
+        if(this.list.length == 1) return ipcRenderer.send('app-close')
         
         let replacingIndex: number;
 
