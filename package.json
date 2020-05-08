@@ -15,6 +15,7 @@
     "@types/electron": "^1.6.10",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.7",
+    "@types/request": "^2.48.4",
     "@types/styled-components": "^5.1.0",
     "cross-env": "^7.0.2",
     "electron": "^8.2.5",
@@ -32,6 +33,7 @@
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "feather-icons-react": "^0.4.1",
     "framer-motion": "^1.10.3",
     "mobx": "5.9.4",
@@ -39,6 +41,7 @@
     "mobx-react-lite": "1.5.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "request": "^2.88.2",
     "styled-components": "^5.1.0",
     "uuid": "^8.0.0"
   }

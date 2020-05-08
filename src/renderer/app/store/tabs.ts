@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron";
 
-import { ViewCreateOptions } from "../../../interfaces/view";
+import { ViewCreateOptions, ViewUpdateOptions } from "../../../interfaces/view";
 import { Tab } from "../mixins/tab";
 
 import { observable, computed, action } from 'mobx';
@@ -44,7 +44,14 @@ export class TabsStore {
 
         this.store.searchRef.current.focus()
         this.store.searchRef.current.select()
-    }
+		}
+		
+		@action
+		public update(option: ViewUpdateOptions) {
+			const tab = this.list.findIndex(tab => tab.id == option.id);
+
+			this.list[tab].title = option.title;
+		}
 
     @action
     public close(id: string) {

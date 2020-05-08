@@ -2,12 +2,17 @@ import React from 'react';
 import { StyledAddressbar, SearchIcon, Input, InputPlaceholder } from "./style"
 import { Icon } from '../Icon';
 import { observer } from 'mobx-react-lite';
+import cheerio from 'cheerio';
+import request from 'request';
 
 import dot from '../../store'
 import { ipcRenderer } from 'electron';
 
-const isURLRegex = /\s+/g;
+const isURL = /(?:[-a-zA-Z0-9@:%_\+~.#=]{2,256}\.)?([-a-zA-Z0-9@:%_\+~#=]*)\.[a-z]{2,6}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/g;
 const createURL = (url: string) => {
+	if (!isURL.test(url)) {
+		return new URL(`http://www.google.com/search?q=${url}`).href;
+	} 
 	if (!url.includes('http')) {
 		return new URL(`http://${url}`).href;
 	}
@@ -52,11 +57,17 @@ export const Addressbar = observer(() => {
         if(e.keyCode == 13) {
 						const { value } = dot.searchRef.current;
 						const url = createURL(value);
-						const result = await fetch(url);
-						dot.searchRef.current.value = result.url;
+						await request({uri: url}, ((_error, response, body) => {
+							const $ = cheerio.load(body);
+							const title = $('head > title').text();
+
+							dot.searchRef.current.value = url;
+							dot.tabs.update({ id: dot.tabs.selectedTab.id, title });
+						});
+
 						ipcRenderer.send('view-navigate', dot.tabs.selectedTab.id, url);
 
-            dot.searchRef.current.blur();
+						dot.searchRef.current.blur();
         }
     }
 

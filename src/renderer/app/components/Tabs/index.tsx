@@ -10,7 +10,7 @@ import { remote } from "electron";
 import { AnimatePresence } from "framer-motion";
 
 const onAddTabClick = () => {
-    dot.tabs.add({ url: "https://web.tabliss.io/", active: true })
+    dot.tabs.add({ url: "https://web.tabliss.io/", active: true, title: 'New Tab' })
 }
 
 export const Tabs = observer(() => {

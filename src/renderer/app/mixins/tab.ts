@@ -11,11 +11,12 @@ export class Tab {
     @observable
     public isClosing: boolean = false;
 
-    constructor({ id, url, active }: ViewCreateOptions) {
+    constructor({ id, url, active, title }: ViewCreateOptions) {
         this.id = id;
-        this.url = url;
+				this.url = url;
+				this.title = title;
 
-        ipcRenderer.send('view-create', { id, url, active })
+        ipcRenderer.send('view-create', { id, url, active, title })
     }
 
     public refresh() {
