@@ -14,10 +14,10 @@ export const TabsContainer = styled.div`
     display: flex;
     padding: 0 4px;
     -webkit-app-region: no-drag;
-    ${require("os").platform() == "darwin" ? "margin-left: 76px;" : ""}
     max-width: calc(100% - 200px);
     overflow-x: visible;
     margin-left: 2px;
+    ${require("os").platform() == "darwin" ? "margin-left: 76px;" : ""}
 
     ::-webkit-scrollbar {
         // width: 0px;
