@@ -33,6 +33,11 @@ export const SearchIcon = styled(StyledNavigationButton)`
         margin-left: ${!focused ? 'calc(100% / 2 - 128px)' : '2px'};
         pointer-events: ${!focused ? 'none' : 'all'};
         color: ${!focused ? '#7C7C7C' : '#303030'};
+        background-color: ${!focused ? 'transparent' : ''};
+
+        &:active, &:hover {
+            background-color: ${!focused ? 'transparent' : ''}
+        }
     `};
 `;
 
@@ -65,8 +70,7 @@ export const InputPlaceholder = styled.div`
     padding-left: 38px;
     transition: padding-left 0.3s cubic-bezier(0.1, 0.9, 0.2, 1), opacity 0.2s 0.04s;
 
-    ${({ visible, focused }: { visible?: boolean; focused: boolean }) => css`
+    ${({ focused }: { focused: boolean }) => css`
         padding-left: ${!focused ? 'calc(100% / 2 - 73px - 17px)' : '38px'};
-        // opacity: ${visible ? 1 : 0};
     `};
 `;
