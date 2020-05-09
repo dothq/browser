@@ -32,6 +32,10 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
     },
+    output: {
+      filename: "[name].bundle.js",
+      path: path.resolve(__dirname, '../build')
+    },
     module: {
       rules: [
         { test: /\.tsx?$/, loader: "ts-loader" },
@@ -56,7 +60,7 @@ module.exports = {
     },
     watch: mode == "development",
     devServer: {
-      contentBase: path.join(__dirname, 'dist'),
+      contentBase: path.join(__dirname, 'build'),
       port: 9010,
       hot: false,
       inline: false

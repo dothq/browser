@@ -20,7 +20,6 @@ export class AppWindow {
           show: false,
           title: app.name,
           titleBarStyle: 'hiddenInset',
-          icon: resolve(app.getAppPath(), "src", "resources", "icons", "dot.icns"),
           maximizable: true,
           webPreferences: {
             plugins: true,
@@ -42,7 +41,7 @@ export class AppWindow {
         if(process.env.ENV == "development") {
           this.window.loadURL('http://localhost:9010/app.html')
         } else {
-          this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/dist/app.html`))
+          this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/build/app.html`))
         }
 
         this.window.on('ready-to-show', () => {

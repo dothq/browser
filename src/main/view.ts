@@ -14,7 +14,7 @@ export class View {
         this.view = new BrowserView({
             webPreferences: {
                 sandbox: true,
-                preload: resolve(app.getAppPath(), "dist", "preload.js"),
+                preload: resolve(app.getAppPath(), "build", "preload.js"),
                 nodeIntegration: false,
                 additionalArguments: [`--tab-id=${id}`],
                 contextIsolation: true,
