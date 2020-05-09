@@ -1,0 +1,54 @@
+{
+    "asar": true,
+    "productName": "Dot Browser",
+    "appId": "co.dothq.browser",
+    "copyright": "© 2020, ${author}",
+    "files": [
+        "build/**/**/*", 
+        "package.json", 
+        "static/icons/**/*"
+    ],
+    "directories": {
+        "output": "dist",
+        "buildResources": "static"
+    },
+    "nsis": {
+        "installerIcon": "icons/installerIcon.ico",
+        "oneClick": false,
+        "displayLanguageSelector": true,
+        "license": "./LICENSE"
+    },
+    "nsisWeb": {
+        "installerIcon": "icons/installerIcon.ico",
+        "oneClick": false,
+        "displayLanguageSelector": true,
+        "license": "./LICENSE"
+    },
+    "mac": {
+        "artifactName": "Install ${productName} ${version}.${ext}",
+        "category": "public.app-category.productivity",
+        "icon": "icons/icon.icns",
+        "target": [
+            "dmg",
+            "zip"
+        ]
+    },
+    "linux": {
+        "artifactName": "Install ${productName} ${version}.${ext}",
+        "icon": "icons/icon.png",
+        "target": [
+            "tar.gz",
+            "AppImage",
+            "deb",
+            "rpm"
+        ]
+    },
+    "win": {
+        "artifactName": "Install ${productName} ${version}.${ext}",
+        "icon": "icons/icon.ico",
+        "target": [
+            "nsis",
+            "nsis-web"
+        ]
+    }
+}
