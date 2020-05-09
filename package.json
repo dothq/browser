@@ -1,18 +1,19 @@
 {
   "name": "dot",
   "version": "0.0.1-alpha",
-  "description": "A privacy-centric web browser, with an elegant UI and a robust built-in ad blocker, all designed with anonymity in mind.",
-  "main": "dist/main.js",
+  "description": "Take back your privacy with Dot Browser, the privacy-conscious web browser that protects you from being tracked and monitored.",
+  "main": "build/main.bundle.js",
   "repository": "https://github.com/dothq/browser",
   "author": "Dot HQ (contact@dothq.co)",
   "license": "AGPL-3.0",
   "private": false,
   "scripts": {
     "dev": "cross-env ENV=development gulp start",
+    "prod": "cross-env ENV=production gulp start",
     "start": "cross-env ENV=development electron .",
-    "build:macos": "electron-builder -m",
-    "build:windows": "electron-builder -w",
-    "build:linux": "electron-builder -l"
+    "build:macos": "yarn prod && electron-builder -m",
+    "build:windows": "yarn prod && electron-builder -w",
+    "build:linux": "yarn prod && electron-builder -l"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
