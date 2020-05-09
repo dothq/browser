@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import dot from '../../store'
 import { ipcRenderer } from 'electron';
+import { PROTOCOL_REGEX, NAKED_DOMAIN_REGEX } from '../../../constants/url';
 
 export const Addressbar = observer(() => {
     const [inputFocused, setInputFocused] = React.useState(true);
@@ -25,8 +26,13 @@ export const Addressbar = observer(() => {
         dot.searchRef.current.select();
     }
 
+    const onChange = (e) => {
+        dot.addressbar.rawValue = e.target.value;
+        dot.addressbar.isEditing = true;
+    }
+
     const onMouseDown = () => {
-        if(dot.searchRef.current.value.length == 0) {
+        if(dot.searchRef.current.value.length == 0 && inputFocused == false) {
             setInputFocused(a => !a)
         }
     }
@@ -41,7 +47,19 @@ export const Addressbar = observer(() => {
 
     const onKeyUp = (e) => {
         if(e.keyCode == 13) {
-            const url = dot.searchRef.current.value;
+            let url = dot.searchRef.current.value;
+            let text = url;
+
+            if(url.match(NAKED_DOMAIN_REGEX)) {
+                url = "http://" + text;
+            }
+
+            if(!url.match(PROTOCOL_REGEX)) {
+                url = `https://duckduckgo.com/${encodeURIComponent(text)}`
+            }
+
+            dot.addressbar.isEditing = false;
+            dot.tabs.selectedTab.url = url;
 
             ipcRenderer.send('view-navigate', dot.tabs.selectedTab.id, url)
 
@@ -58,10 +76,12 @@ export const Addressbar = observer(() => {
                 placeholder={""} 
                 ref={dot.searchRef} 
                 onBlur={onSearchBlur} 
-                onClick={onClick} 
                 onMouseDown={onMouseDown}
+                onClick={onClick} 
                 onInput={onInput}
                 onKeyUp={(event) => onKeyUp(event)}
+                onChange={(event) => onChange(event)}
+                value={dot.addressbar.value}
             />
             {placeholderVisible && <InputPlaceholder focused={inputFocused}>Search Google or type a URL</InputPlaceholder>}
         </StyledAddressbar>
