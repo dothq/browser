@@ -1,6 +1,6 @@
 import React from "react"
 import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion } from "./style"
-import { Tab as ITab } from "../../mixins/tab"
+import { Tab as ITab } from "../../models/tab"
 import { observer } from "mobx-react-lite"
 
 import { TAB_WIDTH } from '../../constants/tab'

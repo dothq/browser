@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import { Separator } from "../NavigationButtons/style";
 
 import dot from '../../store';
-import { Tab } from '../../mixins/tab';
+import { Tab } from '../../models/tab';
 import { NavigationButton } from "../NavigationButton";
 import { motion } from "framer-motion";
 
