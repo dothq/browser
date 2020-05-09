@@ -9,7 +9,10 @@
   "private": false,
   "scripts": {
     "dev": "cross-env ENV=development gulp start",
-    "start": "cross-env ENV=development electron ."
+    "start": "cross-env ENV=development electron .",
+    "build:macos": "electron-builder -m",
+    "build:windows": "electron-builder -w",
+    "build:linux": "electron-builder -l"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
