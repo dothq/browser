@@ -1,12 +1,14 @@
 import React from "react";
 
 import { TabsStore } from "./tabs";
+import { AddressbarStore } from "./addressbar";
 
 import { observable } from 'mobx';
 import { ipcRenderer } from "electron";
 
 class Dot {
     public tabs = new TabsStore(this);
+    public addressbar = new AddressbarStore(this);
 
     @observable
     public isMaximised: boolean = false;
