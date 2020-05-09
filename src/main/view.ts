@@ -25,7 +25,7 @@ export class View {
 
         this.view.setBackgroundColor("#fff");
 
-        this.view.webContents.on('did-start-loading', (e) => {
+        this.view.webContents.on('did-start-loading', (_e) => {
             appWindow.window.webContents.send('view-created', { id, url })
         })
 
@@ -38,7 +38,7 @@ export class View {
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         this.view.webContents.loadURL(url);
 
-        this.view.webContents.on('context-menu', (event, params: ContextMenuParams) => {
+        this.view.webContents.on('context-menu', (_event, params: ContextMenuParams) => {
             const { x, y } = params;
 
             const id = this.id;
@@ -47,6 +47,9 @@ export class View {
 
             generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
         })
+
+        this.view.webContents.on('did-navigate', this.events.viewNavigate)
+        this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
     }
 
     public rearrange() {
@@ -58,5 +61,18 @@ export class View {
         }
 
         this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+    }
+
+    private get events() {
+        return {
+            viewNavigate: (_event: any, url: string, httpResponseCode: number, httpStatusText: string) => {
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+            },
+            viewNavigateInPage: (_event: any, url: string, isMainFrame: boolean) => {
+                if(isMainFrame) {
+                    appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+                }
+            }
+        }
     }
 }
