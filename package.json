@@ -18,6 +18,7 @@
     "@types/styled-components": "^5.1.0",
     "cross-env": "^7.0.2",
     "electron": "^8.2.5",
+    "electron-builder": "^22.6.0",
     "file-loader": "^6.0.0",
     "gulp": "^4.0.2",
     "html-webpack-plugin": "^4.3.0",
