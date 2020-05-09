@@ -16,7 +16,10 @@ export class Tab {
     public status: 'loading' | 'idle' | 'crashed' | 'suspended';
 
     @observable
-    public isClosing: boolean = false;
+    public inputFocused: boolean = true;
+
+    @observable
+    public showInputPlaceholder: boolean = true;
 
     constructor({ id, url, active }: ViewCreateOptions) {
         this.id = id;

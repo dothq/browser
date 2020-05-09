@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 
 import { ViewCreateOptions } from "../../../interfaces/view";
-import { Tab } from "../mixins/tab";
+import { Tab } from "../models/tab";
 
 import { observable, computed, action } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';

@@ -16,8 +16,8 @@ export const Addressbar = observer(() => {
 
         if(dot.searchRef.current.value.length == 0) {
             dot.searchRef.current.blur()
-            setPlaceholderVisibility(true)
-            setInputFocused(false)
+            dot.tabs.selectedTab.showInputPlaceholder = true;
+            dot.tabs.selectedTab.inputFocused = false;
         }
     }
 
@@ -32,16 +32,16 @@ export const Addressbar = observer(() => {
     }
 
     const onMouseDown = () => {
-        if(dot.searchRef.current.value.length == 0 && inputFocused == false) {
-            setInputFocused(a => !a)
+        if(dot.searchRef.current.value.length == 0 && dot.tabs.selectedTab.inputFocused == false) {
+            dot.tabs.selectedTab.inputFocused = !dot.tabs.selectedTab.inputFocused
         }
     }
 
     const onInput = () => {
         if(dot.searchRef.current.value.length !== 0) {
-            setPlaceholderVisibility(false)
+            dot.tabs.selectedTab.showInputPlaceholder = false;
         } else {
-            setPlaceholderVisibility(true)
+            dot.tabs.selectedTab.showInputPlaceholder = true;
         }
     }
 
@@ -69,7 +69,7 @@ export const Addressbar = observer(() => {
 
     return (
         <StyledAddressbar>
-            <SearchIcon focused={inputFocused}>
+            <SearchIcon focused={dot.tabs.selectedTab && dot.tabs.selectedTab.inputFocused}>
                 <Icon icon={"search"} size={14} />
             </SearchIcon>
             <Input 
@@ -83,7 +83,7 @@ export const Addressbar = observer(() => {
                 onChange={(event) => onChange(event)}
                 value={dot.addressbar.value}
             />
-            {placeholderVisible && <InputPlaceholder focused={inputFocused}>Search Google or type a URL</InputPlaceholder>}
+            {dot.tabs.selectedTab && dot.tabs.selectedTab.showInputPlaceholder && <InputPlaceholder focused={dot.tabs.selectedTab && dot.tabs.selectedTab.inputFocused}>Search Google or type a URL</InputPlaceholder>}
         </StyledAddressbar>
     )
 })
