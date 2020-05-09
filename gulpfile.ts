@@ -10,5 +10,5 @@ const launchWebpack = (name: string, options?: any) => {
 
 gulp.task('start', async () => {
     launchWebpack('scripts/webpack.config.ts') // Main
-    launchWebpack('scripts/webpack.renderer.config.ts', { dev: true }) // Renderer
+    launchWebpack('scripts/webpack.renderer.config.ts', { dev: process.env.ENV == "development" }) // Renderer
 });
