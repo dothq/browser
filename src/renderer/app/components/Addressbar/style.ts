@@ -27,17 +27,10 @@ export const SearchIcon = styled(StyledNavigationButton)`
     margin: 0 2px;
     width: 34px;
     position: absolute;
-    transition: margin-left 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+    transition: 0.3s color;
 
     ${({ focused }: { focused: boolean }) => css`
-        margin-left: ${!focused ? 'calc(100% / 2 - 128px)' : '2px'};
-        pointer-events: ${!focused ? 'none' : 'all'};
         color: ${!focused ? '#7C7C7C' : '#303030'};
-        background-color: ${!focused ? 'transparent' : ''};
-
-        &:active, &:hover {
-            background-color: ${!focused ? 'transparent' : ''}
-        }
     `};
 `;
 
