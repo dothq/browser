@@ -15,23 +15,12 @@ export const StyledAddressbar = styled.div`
     max-width: calc(1200px + 24px + 2 * 6px);
     box-shadow: 0 -0.1px 3.6px 0 rgba(0,0,0,.132), 0 0.3px 0.9px 0 rgba(0,0,0,.108);
     position: relative;
+    overflow: hidden;
 
     &:focus-within {
         border: 1px solid #1499ff;
         user-select: unset;
     }
-`;
-
-export const SearchIcon = styled(StyledNavigationButton)`
-    height: 30px;
-    margin: 0 2px;
-    width: 34px;
-    position: absolute;
-    transition: 0.3s color;
-
-    ${({ focused }: { focused: boolean }) => css`
-        color: ${!focused ? '#7C7C7C' : '#303030'};
-    `};
 `;
 
 export const Input = styled.input`
