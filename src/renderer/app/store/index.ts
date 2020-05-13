@@ -2,11 +2,14 @@ import React from "react";
 
 import { TabsStore } from "./tabs";
 import { AddressbarStore } from "./addressbar";
+import { EventsStore } from "./events";
 
 import { observable } from 'mobx';
 import { ipcRenderer } from "electron";
 
 class Dot {
+    public events = new EventsStore(this);
+
     public tabs = new TabsStore(this);
     public addressbar = new AddressbarStore(this);
 
