@@ -5,6 +5,8 @@ import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => {
+        appWindow.lastViewId = appWindow.selectedId;
+
         const view = new View(options.id, options.url);
 
         appWindow.views.push(view)
@@ -28,6 +30,8 @@ export const startMessagingAgent = () => {
     })
 
     ipcMain.on('view-destroy', (e, id) => {
+        appWindow.lastViewId = appWindow.selectedId;
+
         const { view } = appWindow.getViewFromId(id)
 
         view.destroy()

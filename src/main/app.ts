@@ -8,7 +8,9 @@ export class AppWindow {
     public window: BrowserWindow;
 
     public views: View[] = [];
+    
     public selectedId: string;
+    public lastViewId: string;
 
     constructor() {
         this.window = new BrowserWindow({
