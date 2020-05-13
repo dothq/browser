@@ -1,24 +1,38 @@
 import { observable, computed } from "mobx";
-import { CLEAN_URL_REGEX, REMOVE_TRAILING_SLASH_REGEX } from "../../constants/url";
+
+import { 
+    CLEAN_URL_REGEX, 
+    REMOVE_TRAILING_SLASH_REGEX, 
+    NAKED_DOMAIN_REGEX, 
+    PROTOCOL_REGEX 
+} from "../../constants/url";
 import { NEWTAB_URL } from "../../constants/web";
+
 import { parse } from "url";
 import { v4 as uuidv4 } from 'uuid';
+
+import { ipcRenderer } from "electron";
+
+import store from ".";
 
 export class AddressbarStore {
     public store;
 
     @observable
-    public rawValue: string = "";
+    public rawValue: string = "aaa";
 
     @observable
     public isEditing: boolean = false;
 
+    @observable
+    public isNTP: boolean = false;
+
     @computed
     public get value(): string {
-        // if(this.isEditing) return this.rawValue;
-
         const tab = this.store.tabs && this.store.tabs.selectedTab;
-        // if(!tab) return ""
+        if(!tab) return ""
+        // if(tab.url == NEWTAB_URL) return "";
+        if(this.isEditing) return this.rawValue;
 
         let url = tab.url;
 
@@ -32,7 +46,7 @@ export class AddressbarStore {
 
     public urlParts(url) {
         if(!url) return [];
-        if(url == NEWTAB_URL) return [{ id: uuidv4(), value: "Search Google or type a URL", opacity: 0.8 }];
+        if(url == NEWTAB_URL) return [];
 
         const parsed = parse(url);
 
@@ -61,14 +75,16 @@ export class AddressbarStore {
     }
 
     public inputValue() {
-        if(this.store.tabs && !this.store.tabs.selectedTab) return ""
-        if(this.store.tabs && this.store.tabs.selectedTab && !this.store.tabs.selectedTab.inputFocused) return ""
-        if(this.store.tabs.selectedTab.url == NEWTAB_URL) return ""
+        if(this.store.tabs && !this.store.tabs.selectedTab) return;
+        if(!this.store.tabs.selectedTab.inputFocused) return;
+        if(this.store.tabs.selectedTab.url == NEWTAB_URL) return;
 
-        return this.isEditing == true ? this.value : this.store.tabs.selectedTab.url;
+        return this.isEditing ? this.value : this.store.tabs.selectedTab.url;
     }
 
     constructor(store) {
         this.store = store;
+
+        console.log(this)
     }
 }
