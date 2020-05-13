@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledAddressbar, Input } from "./style"
-import { observer } from 'mobx-react-lite';
+import { observer } from 'mobx-react';
 
 import dot from '../../store'
 import { Parts } from './Parts';

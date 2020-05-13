@@ -2,18 +2,12 @@ import { observable, computed } from "mobx";
 
 import { 
     CLEAN_URL_REGEX, 
-    REMOVE_TRAILING_SLASH_REGEX, 
-    NAKED_DOMAIN_REGEX, 
-    PROTOCOL_REGEX 
+    REMOVE_TRAILING_SLASH_REGEX,
 } from "../../constants/url";
 import { NEWTAB_URL } from "../../constants/web";
 
 import { parse } from "url";
 import { v4 as uuidv4 } from 'uuid';
-
-import { ipcRenderer } from "electron";
-
-import store from ".";
 
 export class AddressbarStore {
     public store;
