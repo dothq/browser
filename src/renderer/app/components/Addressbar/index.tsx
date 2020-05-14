@@ -7,26 +7,19 @@ import { Parts } from './Parts';
 import { SearchIcon } from './SearchIcon';
 
 export const Addressbar = observer(() => {
-    const { 
-        inputOnBlur, 
-        inputOnMouseDown, 
-        inputOnClick, 
-        inputOnInput, 
-        inputOnKeyUp, 
-        inputOnChange
-    } = dot.events;
+    const events = dot.events;
 
     return (
         <StyledAddressbar>
             <SearchIcon />
             <Input 
                 ref={dot.searchRef} 
-                onBlur={inputOnBlur} 
-                onMouseDown={inputOnMouseDown}
-                onClick={inputOnClick} 
-                onInput={inputOnInput}
-                onKeyUp={(event) => inputOnKeyUp(event)}
-                onChange={(event) => inputOnChange(event)}
+                onBlur={() => events.inputOnBlur()} 
+                onMouseDown={() => events.inputOnMouseDown()}
+                onClick={() => events.inputOnClick()} 
+                onInput={() => events.inputOnInput()}
+                onKeyUp={(event) => events.inputOnKeyUp(event)}
+                onChange={(event) => events.inputOnChange(event)}
                 value={dot.addressbar.inputValue()}
             />
             <Parts />
