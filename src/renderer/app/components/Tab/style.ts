@@ -40,10 +40,11 @@ export const StyledTabContent = styled.div`
     width: 100%;
     overflow: hidden;
     padding-left: 12px;
+    max-width: 214px;
 `;
 
 export const TabTitle = styled.div`
-    font-size: 14px;
+    font-size: 12px;
     line-height: 16px;
     font-weight: 400;
     white-space: nowrap;
