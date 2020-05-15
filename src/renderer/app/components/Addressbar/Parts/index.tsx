@@ -2,8 +2,9 @@ import React from "react";
 import { StyledParts, Part } from "./style";
 
 import dot from '../../../store';
+import { observer } from "mobx-react";
 
-export const Parts = () => {
+export const Parts = observer(() => {
     const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
     const isFocused = dot.tabs.selectedTab && !dot.tabs.selectedTab.inputFocused
 
@@ -16,4 +17,4 @@ export const Parts = () => {
             ))}
         </StyledParts>
     )
-}
+})
