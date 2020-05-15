@@ -50,6 +50,8 @@ export class View {
 
         this.view.webContents.on('did-navigate', this.events.viewNavigate)
         this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
+        this.view.webContents.on('page-title-updated', this.events.viewTitleUpdated)
+        this.view.webContents.on('page-favicon-updated', this.events.viewFaviconUpdated)
     }
 
     public rearrange() {
@@ -72,6 +74,16 @@ export class View {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
                 }
+            },
+            viewTitleUpdated: (_event: any, title: string) => {
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
+            },
+            viewFaviconUpdated: (_event: any, favicons: any[]) => {
+                const favicon = favicons[0];
+
+                console.log(favicon)
+
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon })
             }
         }
     }

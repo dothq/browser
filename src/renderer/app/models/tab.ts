@@ -10,7 +10,7 @@ export class Tab {
     public url: string;
 
     @observable
-    public title: string;
+    public title: string = "New Tab";
 
     @observable
     public status: 'loading' | 'idle' | 'crashed' | 'suspended';

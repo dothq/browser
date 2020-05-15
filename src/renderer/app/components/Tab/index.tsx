@@ -15,11 +15,11 @@ const onTabMouseDown = (tab: ITab) => {
     }
 }
 
-const TabContent = ({ tab, onMouseDown }: { tab: ITab; onMouseDown: any }) => (
-    <StyledTabContent onMouseDown={onMouseDown}>
-        <TabTitle>New Tab</TabTitle>
+const TabContent = observer(({ tab, onMouseDown }: { tab: ITab; onMouseDown: any }) => (
+    <StyledTabContent onMouseDown={onMouseDown} title={tab.title}>
+        <TabTitle>{tab.title}</TabTitle>
     </StyledTabContent>
-)
+))
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
     const [visible, setVisible] = React.useState(true);

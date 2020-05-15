@@ -6,12 +6,13 @@ import { EventsStore } from "./events";
 
 import { observable } from 'mobx';
 import { ipcRenderer } from "electron";
+import { FaviconsStore } from "./favicons";
 
 class Dot {
-    public events = new EventsStore(this);
-
     public tabs = new TabsStore(this);
     public addressbar = new AddressbarStore(this);
+    public events = new EventsStore(this);
+    public favicons = new FaviconsStore(this);
 
     @observable
     public isMaximised: boolean = false;
