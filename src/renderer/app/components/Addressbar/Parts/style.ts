@@ -9,6 +9,8 @@ export const StyledParts = styled.div`
     pointer-events: none;
     width: 100%;
     padding-left: 38px;
+    overflow: hidden;
+    white-space: nowrap;
 
     ${({ visible }: { visible: boolean }) => css`
         display: ${visible ? "flex" : "none"};
