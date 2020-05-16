@@ -7,6 +7,7 @@ module.exports = {
     name: 'main',
     entry: {
         main: './src/main/index.ts',
+        preload: './src/main/preload.ts'
     },
     output: {
       filename: "[name].bundle.js",
