@@ -25,15 +25,12 @@ export class AddressbarStore {
     public get value(): string {
         const tab = this.store.tabs && this.store.tabs.selectedTab;
         if(!tab) return ""
-        // if(tab.url == NEWTAB_URL) return "";
         if(this.isEditing) return this.rawValue;
 
         let url = tab.url;
 
         url = url.replace(CLEAN_URL_REGEX, "");
         url = url.replace(REMOVE_TRAILING_SLASH_REGEX, "");
-
-        console.log(url)
 
         return url
     }
@@ -78,7 +75,5 @@ export class AddressbarStore {
 
     constructor(store) {
         this.store = store;
-
-        console.log(this)
     }
 }
