@@ -4,7 +4,10 @@
   "description": "Take back your privacy with Dot Browser, the privacy-conscious web browser that protects you from being tracked and monitored.",
   "main": "build/main.bundle.js",
   "repository": "https://github.com/dothq/browser",
-  "author": "Dot HQ (contact@dothq.co)",
+  "author": {
+    "name": "Dot HQ",
+    "email": "contact@dothq.co"
+  },
   "license": "AGPL-3.0",
   "private": false,
   "scripts": {
