@@ -3,6 +3,10 @@ import { resolve } from "path";
 import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 import { getGeneralMenu } from "./menus/general";
+import { downloadFaviconFromUrl } from "./tools/favicon";
+import { BLUE_1, GRAY_5 } from "../renderer/constants/colors";
+import { NEWTAB_URL } from "../renderer/constants/web";
+import { createView } from "./tools/view";
 
 export class View {
     public view: BrowserView;
@@ -14,7 +18,7 @@ export class View {
         this.view = new BrowserView({
             webPreferences: {
                 sandbox: true,
-                preload: resolve(app.getAppPath(), "build", "preload.js"),
+                preload: resolve(app.getAppPath(), "build", "preload.bundle.js"),
                 nodeIntegration: false,
                 additionalArguments: [`--tab-id=${id}`],
                 contextIsolation: true,
@@ -50,8 +54,14 @@ export class View {
 
         this.view.webContents.on('did-navigate', this.events.viewNavigate)
         this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
+        this.view.webContents.on('did-start-loading', this.events.viewStartedLoading)
+        this.view.webContents.on('did-stop-loading', this.events.viewStoppedLoading)
+
+        this.view.webContents.on('new-window', this.events.viewWindowOpened)
+
         this.view.webContents.on('page-title-updated', this.events.viewTitleUpdated)
         this.view.webContents.on('page-favicon-updated', this.events.viewFaviconUpdated)
+        this.view.webContents.on('did-change-theme-color', this.events.viewThemeColorUpdated)
     }
 
     public rearrange() {
@@ -67,24 +77,73 @@ export class View {
 
     private get events() {
         return {
-            viewNavigate: (_event: any, url: string, httpResponseCode: number, httpStatusText: string) => {
+            viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+
+                this.updateNavigationButtons()
             },
-            viewNavigateInPage: (_event: any, url: string, isMainFrame: boolean) => {
+            viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+
+                    this.updateNavigationButtons()
                 }
             },
-            viewTitleUpdated: (_event: any, title: string) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
+            viewStartedLoading: (_event: Electron.Event) => {
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'loading' })
+
+                this.updateNavigationButtons()
             },
-            viewFaviconUpdated: (_event: any, favicons: any[]) => {
-                const favicon = favicons[0];
+            viewStoppedLoading: (_event: Electron.Event) => {
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'idle' })
 
-                console.log(favicon)
+                this.updateNavigationButtons()
+            },
+            viewWindowOpened: (
+                _event: Electron.Event,
+                url: string, 
+                frameName: string, 
+                disposition: "new-window" | "default" | "foreground-tab" | "background-tab" | "save-to-disk" | "other", 
+                options: Electron.BrowserWindowConstructorOptions, 
+                additionalFeatures: string[], 
+                referrer: Electron.Referrer
+            ) => {
+                _event.preventDefault()
 
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon })
+                if(disposition == "foreground-tab" || disposition == "background-tab") {
+                    appWindow.window.webContents.send('add-tab', { url, active: disposition == "foreground-tab" })
+                }
+            },
+            viewTitleUpdated: (_event: Electron.Event, title: string) => {
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
+
+                this.updateNavigationButtons()
+            },
+            viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
+                if(this.url === NEWTAB_URL) return;
+                const faviconUrl = favicons[0];
+
+                downloadFaviconFromUrl(faviconUrl).then(favicon => {
+                    appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon })
+                })
+
+                this.updateNavigationButtons()
+            },
+            viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
+                if(themeColor == null) themeColor = BLUE_1
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
             }
         }
+    }
+
+    private updateNavigationButtons() {
+        const canGoForward = this.view.webContents.canGoForward()
+        const canGoBack = this.view.webContents.canGoBack()
+
+        appWindow.window.webContents.send(`view-data-updated-${this.id}`, { navigationStatus: { canGoForward, canGoBack } })
+    }
+
+    public get url() {
+        return this.view.webContents.getURL()
     }
 }
