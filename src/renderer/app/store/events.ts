@@ -1,5 +1,7 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
+import { Tab as ITab } from "../models/tab"
+import { NEWTAB_URL } from "../../constants/web";
 
 export class EventsStore {
     public store;
@@ -69,7 +71,38 @@ export class EventsStore {
 
         this.store.searchRef.current.value = "";
         this.store.searchRef.current.blur();
-    } 
+    }
+
+    public navigationOnRefreshClick() {
+        const tab = this.store.tabs.selectedTab;
+        if(tab.status == "loading") this.store.tabs.selectedTab.stop()
+        else this.store.tabs.selectedTab.refresh()
+    }
+
+    public navigationOnBackClick() {
+        this.store.tabs.selectedTab.goBack()
+    }
+
+    public navigationOnForwardClick() {
+        this.store.tabs.selectedTab.goForward()
+    }
+
+    public tabOnMouseDown(tab: ITab) {
+        this.store.tabs.select(tab.id)
+    }
+
+    public windowsOnClick(type: string) {
+        const window = remote.getCurrentWindow()
+
+        if(type == "close") {
+            window.close()
+        } else if(type == "minimise") {
+            window.minimize()
+        } else if(type == "maximise") {
+            if(window.isMaximized()) return window.unmaximize()
+            window.maximize()
+        }
+    }
 
     constructor(store) {
         this.store = store;
