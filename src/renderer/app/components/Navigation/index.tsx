@@ -11,18 +11,34 @@ import { observer } from "mobx-react-lite";
 import dot from '../../store'
 
 export const Navigation = observer(() => {
-    const [refreshAnimStarted, setRefreshAnimStarted] = React.useState(false)
+    const isLoading = dot.tabs.selectedTab && dot.tabs.selectedTab.status == "loading"
+    const navStatus = dot.tabs.selectedTab && dot.tabs.selectedTab.navigationStatus
+    const isNTP = dot.tabs.selectedTab && dot.tabs.selectedTab.isNTP
 
-    const onRefreshClick = () => {
-        dot.tabs.selectedTab.refresh()
-    }
+    const events = dot.events;
 
     return (
         <StyledNavigation>
             <NavigationButtons>
-                <NavigationButton icon={"arrow-left"} size={18} />
-                <NavigationButton icon={"arrow-right"} size={18} />
-                <NavigationButton icon={"rotate-cw"} size={16} onClick={onRefreshClick} />
+                <NavigationButton 
+                    icon={"arrow-left"} 
+                    size={18} 
+                    disabled={navStatus && !navStatus.canGoBack} 
+                    onClick={() => events.navigationOnBackClick()}
+                />
+                <NavigationButton 
+                    icon={"arrow-right"} 
+                    size={18} 
+                    disabled={navStatus && !navStatus.canGoForward}
+                    onClick={() => events.navigationOnForwardClick()}
+                />
+                <NavigationButton icon={
+                    isLoading ? 
+                        !isNTP 
+                            ? "x" 
+                            : "rotate-cw" 
+                    : "rotate-cw"
+                } size={isLoading ? !isNTP ? 18 : 16 : 16} onClick={() => events.navigationOnRefreshClick()} />
             </NavigationButtons>
             <Addressbar />
             <ExtensionButtons>
