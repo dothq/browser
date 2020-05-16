@@ -8,6 +8,7 @@ export const StyledParts = styled.div`
     top: 9px;
     pointer-events: none;
     width: 100%;
+    height: 100%;
     padding-left: 38px;
     overflow: hidden;
     white-space: nowrap;
