@@ -11,12 +11,15 @@ export const StyledNavigationButton = styled.div`
     margin: 0 3px;
     transition: 0.2s box-shadow, 0.2s background-color;
 
-    ${({ size }: { size?: number }) => css`
+    ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
         width: ${size}px;
         height: ${size}px;
 
         min-width: ${size}px;
         min-height: ${size}px;
+
+        pointer-events: ${disabled ? 'none' : 'all'};
+        opacity: ${disabled ? 0.5 : 1};
     `};
 
     svg {
