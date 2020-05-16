@@ -8,6 +8,8 @@ import { motion } from "framer-motion";
 
 import { TAB_WIDTH } from '../../constants/tab'
 
+import throbber from '../../../../resources/icons/throbber.svg'
+
 export const TabMotion = styled(motion.div)`
     min-width: 93px;
     display: flex;
@@ -25,9 +27,9 @@ export const StyledTab = styled.div`
     border-radius: 6px 6px 0 0;
     transition: 0.2s background-color, 0.2s box-shadow;
 
-    ${({ selected, tab }: { selected: boolean; tab: Tab }) => css`
+    ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
-        box-shadow: ${selected ? '0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108), inset 0px -3px 0px #1499ff' : ''};
+        box-shadow: ${selected ? `0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108), inset 0px -3px 0px ${themeColor}` : ''};
 
         &:hover {
             background-color: ${selected ? '' : '#0000000d'};
@@ -41,6 +43,7 @@ export const StyledTabContent = styled.div`
     overflow: hidden;
     padding-left: 12px;
     max-width: 214px;
+    display: flex;
 `;
 
 export const TabTitle = styled.div`
@@ -53,6 +56,32 @@ export const TabTitle = styled.div`
     align-items: center;
 `;
 
+const TabIcon = styled.div`
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    display: flex;
+    align-self: center;
+    margin-right: 8px;
+`;
+
+export const TabFavicon = styled(TabIcon)`
+    ${({ src }: { src: any }) => css`
+        background-image: url(${src});
+        background-size: cover;
+        background-repeat: no-repeat;
+    `}
+`;
+
+export const TabThrobber = styled(TabIcon)`
+    mask-image: url(${throbber});
+
+    ${({ color }: { color: any }) => css`
+        background-color: ${color};
+    `}
+`;
+
 export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: any }) => ({
     icon: 'x',
     size: 15,
@@ -61,7 +90,7 @@ export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: an
     style: { position: 'absolute', right: '4px' },
     onClick: () => { 
         props.hook(a => !a);
-        dot.tabs.close(props.tab.id) ;
+        dot.tabs.close(props.tab.id);
     }
 }))`
     ${({ tab, hook }: { tab: Tab; hook: any }) => css`
