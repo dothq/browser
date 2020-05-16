@@ -8,10 +8,7 @@ import dot from '../../store'
 import { observer } from "mobx-react";
 import { remote } from "electron";
 import { AnimatePresence } from "framer-motion";
-
-const onAddTabClick = () => {
-    dot.tabs.add({ url: "https://web.tabliss.io/", active: true })
-}
+import { NEWTAB_URL } from "../../../constants/web";
 
 export const Tabs = observer(() => {
     const tabsRef = React.createRef<HTMLDivElement>();
@@ -19,6 +16,10 @@ export const Tabs = observer(() => {
     remote.globalShortcut.register('CmdOrCtrl+Alt+Shift+]', () => {
         dot.debugMode = !dot.debugMode;
     })
+
+    const onAddTabClick = () => {
+        dot.tabs.add({ url: NEWTAB_URL, active: true })
+    }
 
     return (
         <StyledTabs>
@@ -29,7 +30,7 @@ export const Tabs = observer(() => {
                     ))}
                 </AnimatePresence>
             </TabsContainer>
-            <AddTab onClick={onAddTabClick} left={tabsRef.current && tabsRef.current.getBoundingClientRect().width} />
+            <AddTab onClick={() => onAddTabClick()} left={tabsRef.current && tabsRef.current.getBoundingClientRect().width} />
             {dot.debugMode && <div>
                 <p>{dot.tabs.selectedTab.url}</p>
                 <p>{dot.tabs.selectedId}</p>
