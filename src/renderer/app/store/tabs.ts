@@ -5,6 +5,7 @@ import { Tab } from "../models/tab";
 
 import { observable, computed, action } from 'mobx';
 import { v4 as uuidv4 } from 'uuid';
+import { NEWTAB_URL } from "../../constants/web";
 
 export class TabsStore {
     public store;
@@ -16,7 +17,7 @@ export class TabsStore {
     public selectedId: string;
 
     @observable
-    public replacingId: string;
+    public lastInteractedViews: string[] = [];
 
     @computed
     public get selectedTab() {
@@ -25,6 +26,8 @@ export class TabsStore {
 
     constructor(store) {
         this.store = store;
+        
+        ipcRenderer.on('add-tab', (e, options: ViewCreateOptions) => this.add(options))
     }
 
     @action
@@ -34,33 +37,36 @@ export class TabsStore {
 
     @action
     public add(options: ViewCreateOptions) {
+        this.lastInteractedViews.push(this.selectedId);
+
         options.id = uuidv4();
 
         const tab = new Tab(options);
 
         this.list.push(tab);
 
-        this.selectedId = tab.id;
+        if(options.active) this.selectedId = tab.id;
 
-        this.store.searchRef.current.focus()
-        this.store.searchRef.current.select()
+        if(options.url == NEWTAB_URL) {
+            this.store.searchRef.current.focus()
+            this.store.searchRef.current.select()
+        }
     }
 
     @action
     public close(id: string) {
-        const index = this.list.findIndex(tab => tab.id == id)
-
+        ipcRenderer.send('view-destroy', id)
         if(this.list.length == 1) return ipcRenderer.send('app-close')
-        
-        let replacingIndex: number;
+    }
 
-        if(index - 1 !== -1) replacingIndex = index - 1;
-        if(index + 1 <= this.list.length - 1) replacingIndex = index + 1;
+    @action
+    public select(id: string) {
+        this.lastInteractedViews.push(this.selectedId);
+        this.lastInteractedViews.shift();
 
-        if(replacingIndex == undefined) return;
-
-        this.replacingId = this.list[replacingIndex].id;
-
-        if(this.selectedId !== id) this.replacingId = this.selectedId;
+        if(id !== this.selectedId) {
+            ipcRenderer.send('view-select', id);
+            this.selectedId = id;
+        }
     }
 }
