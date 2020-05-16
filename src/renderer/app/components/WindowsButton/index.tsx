@@ -1,6 +1,7 @@
 import React from "react";
 import { StyledWindowsButton } from "./style";
-import { ipcRenderer, remote } from "electron";
+
+import dot from '../../store'
 
 import { observer } from 'mobx-react';
 
@@ -17,21 +18,10 @@ export const WindowsButton = observer(({ type }: { type: 'close' | 'maximise' | 
     if(type == "maximise") path = maximise;
     if(type == "restore") path = restore;
 
-    const onWindowsButtonClick = () => {
-        const window = remote.getCurrentWindow()
-
-        if(type == "close") {
-            window.close()
-        } else if(type == "minimise") {
-            window.minimize()
-        } else if(type == "maximise") {
-            if(window.isMaximized()) return window.unmaximize()
-            window.maximize()
-        }
-    }
+    const events = dot.events;
 
     return (
-        <StyledWindowsButton isClose={type == "close"} onClick={onWindowsButtonClick}>
+        <StyledWindowsButton isClose={type == "close"} onClick={() => events.windowsOnClick(type)}>
             <svg aria-hidden="true" version="1.1" width="10" height="10">
                 <path d={path}></path>
             </svg>
