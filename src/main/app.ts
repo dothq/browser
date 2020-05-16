@@ -10,7 +10,6 @@ export class AppWindow {
     public views: View[] = [];
     
     public selectedId: string;
-    public lastViewId: string;
 
     constructor() {
         this.window = new BrowserWindow({
