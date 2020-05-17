@@ -130,7 +130,7 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
-                if(themeColor == null) themeColor = BLUE_1
+                if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
             }
         }

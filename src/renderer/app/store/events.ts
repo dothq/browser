@@ -88,7 +88,8 @@ export class EventsStore {
     }
 
     public tabOnMouseDown(tab: ITab) {
-        this.store.tabs.select(tab.id)
+        this.store.tabs.select(tab.id);
+        this.store.tabs.selectedTab.inputFocused = false;
     }
 
     public windowsOnClick(type: string) {

@@ -27,7 +27,7 @@ export class Tab {
     public navigationStatus: { canGoForward: boolean, canGoBack: boolean };
 
     @observable
-    public inputFocused: boolean = true;
+    public inputFocused: boolean = false;
 
     @observable
     public showInputPlaceholder: boolean = true;
