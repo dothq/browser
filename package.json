@@ -1,6 +1,6 @@
 {
   "name": "dot",
-  "version": "3.0.1-alpha",
+  "version": "3.0.3-alpha",
   "description": "Take back your privacy with Dot Browser, the privacy-conscious web browser that protects you from being tracked and monitored.",
   "main": "build/main.bundle.js",
   "repository": "https://github.com/dothq/browser",
