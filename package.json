@@ -11,6 +11,7 @@
   "license": "AGPL-3.0",
   "private": false,
   "scripts": {
+    "build": "yarn prod",
     "dev": "cross-env ENV=development gulp start",
     "prod": "cross-env ENV=production gulp start",
     "start": "cross-env ENV=development electron .",
