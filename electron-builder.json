@@ -28,6 +28,7 @@
         "artifactName": "Install ${productName} ${version}.${ext}",
         "category": "public.app-category.productivity",
         "icon": "icons/icon.icns",
+        "publish": ["github"],
         "target": [
             "dmg",
             "zip"
@@ -36,6 +37,7 @@
     "linux": {
         "artifactName": "Install ${productName} ${version}.${ext}",
         "icon": "icons/icon.png",
+        "publish": ["github"],
         "target": [
             "deb"
         ]
@@ -43,6 +45,7 @@
     "win": {
         "artifactName": "Install ${productName} ${version}.${ext}",
         "icon": "icons/icon.ico",
+        "publish": ["github"],
         "target": [
             "nsis",
             "nsis-web"
