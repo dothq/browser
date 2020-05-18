@@ -1,4 +1,5 @@
 export const path = require('path');
+import nodeExternals from 'webpack-node-externals';
 
 export const mode = process.env.ENV
 
@@ -16,6 +17,7 @@ module.exports = {
     mode: mode,
     watch: mode == "development",
     devtool: mode == "development" ? "eval-source-map" : "cheap-source-map",
+    externals: [nodeExternals()],
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
       },

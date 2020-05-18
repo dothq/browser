@@ -1,12 +1,12 @@
-import { BrowserView, app, ContextMenuParams, ipcRenderer } from "electron";
+import { BrowserView, app, ContextMenuParams } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
-import { BLUE_1, GRAY_5 } from "../renderer/constants/colors";
 import { NEWTAB_URL } from "../renderer/constants/web";
-import { createView } from "./tools/view";
+import Vibrant = require("node-vibrant");
+import { BLUE_1 } from "../renderer/constants/colors";
 
 export class View {
     public view: BrowserView;
@@ -54,6 +54,7 @@ export class View {
 
         this.view.webContents.on('did-navigate', this.events.viewNavigate)
         this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
+
         this.view.webContents.on('did-start-loading', this.events.viewStartedLoading)
         this.view.webContents.on('did-stop-loading', this.events.viewStoppedLoading)
 
@@ -81,6 +82,7 @@ export class View {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
 
                 this.updateNavigationButtons()
+                this.resetTabAppearance()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
@@ -123,15 +125,26 @@ export class View {
                 if(this.url === NEWTAB_URL) return;
                 const faviconUrl = favicons[0];
 
-                downloadFaviconFromUrl(faviconUrl).then(favicon => {
+                downloadFaviconFromUrl(faviconUrl).then(({ buffer, mimeType }) => {
+                    const favicon = `data:${mimeType};base64,${buffer.toString('base64')}`
+
                     appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon })
+
+                    Vibrant.from(buffer).getPalette()
+                        .then(({ Vibrant }) => {
+                            if(!Vibrant) return;
+
+                            const themeColor = Vibrant.getHex()
+
+                            appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
+                        }).catch(error => console.log(error))
                 })
 
                 this.updateNavigationButtons()
             },
             viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
-                if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
+                // if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
+                // appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
             }
         }
     }
@@ -141,6 +154,10 @@ export class View {
         const canGoBack = this.view.webContents.canGoBack()
 
         appWindow.window.webContents.send(`view-data-updated-${this.id}`, { navigationStatus: { canGoForward, canGoBack } })
+    }
+
+    private resetTabAppearance() {
+        appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon: null, themeColor: BLUE_1 })
     }
 
     public get url() {
