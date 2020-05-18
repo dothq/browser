@@ -37,10 +37,7 @@
         "artifactName": "Install ${productName} ${version}.${ext}",
         "icon": "icons/icon.png",
         "target": [
-            "tar.gz",
-            "AppImage",
-            "deb",
-            "rpm"
+            "deb"
         ]
     },
     "win": {
