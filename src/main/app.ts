@@ -3,9 +3,11 @@ import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
+import { Storage } from './storage';
 
 export class AppWindow {
     public window: BrowserWindow;
+    public storage: Storage;
 
     public views: View[] = [];
     
@@ -34,6 +36,7 @@ export class AppWindow {
         })
 
         this.window.setBackgroundColor('#000000')
+        this.storage = new Storage()
 
         startMessagingAgent()
 
