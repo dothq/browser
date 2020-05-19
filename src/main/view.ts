@@ -12,6 +12,8 @@ export class View {
     public view: BrowserView;
     public id: string;
 
+    private historyId: string;
+
     constructor(id: string, url: any) {
         this.id = id;
 
@@ -56,6 +58,7 @@ export class View {
         this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
         this.view.webContents.on('did-start-loading', this.events.viewStartedLoading)
         this.view.webContents.on('did-stop-loading', this.events.viewStoppedLoading)
+        this.view.webContents.on('did-finish-load', this.events.viewFinishedLoading)
 
         this.view.webContents.on('new-window', this.events.viewWindowOpened)
 
@@ -81,12 +84,14 @@ export class View {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
 
                 this.updateNavigationButtons()
+                this.addItemToHistory()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
 
                     this.updateNavigationButtons()
+                    this.addItemToHistory()
                 }
             },
             viewStartedLoading: (_event: Electron.Event) => {
@@ -98,6 +103,9 @@ export class View {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'idle' })
 
                 this.updateNavigationButtons()
+            },
+            viewFinishedLoading: (_event: Electron.Event) => {
+                
             },
             viewWindowOpened: (
                 _event: Electron.Event,
@@ -143,7 +151,29 @@ export class View {
         appWindow.window.webContents.send(`view-data-updated-${this.id}`, { navigationStatus: { canGoForward, canGoBack } })
     }
 
+    private addItemToHistory() {
+        const lastHistoryItem = appWindow.storage.get('history', this.historyId)
+
+        if(lastHistoryItem !== undefined && this.url == lastHistoryItem.url) return;
+
+        const { url, title } = this;
+
+        const now = Date.now()
+
+        const { id } = appWindow.storage.add('history', {
+            url,
+            title,
+            visited: now
+        })
+
+        this.historyId = id;
+    }
+
     public get url() {
         return this.view.webContents.getURL()
+    }
+
+    public get title() {
+        return this.view.webContents.getTitle()
     }
 }
