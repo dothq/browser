@@ -19,7 +19,7 @@ export class Storage {
             .push(data)
             .write()
 
-        return this.get(database, data.id)
+        return this.get(database, { id: data.id })
     }
 
     public remove(database: 'history' | 'bookmarks', id: string) {
@@ -30,16 +30,25 @@ export class Storage {
         return this.exists(database, id);
     }
 
-    public get(database: 'history' | 'bookmarks', id: string) {
+    public get(database: 'history' | 'bookmarks', query: any) {
         return this.databases[database].get('r')
-            .find({ id })
+            .find(query)
             .value()
     }
 
     public exists(database: 'history' | 'bookmarks', id: string) {
-        const exists = this.get(database, id)
+        const exists = this.get(database, { id })
 
         return typeof(exists) == "undefined" ? true : false;
+    }
+
+    public update(database: 'history' | 'bookmarks', id: string, data: any) {
+        this.databases[database].get('r')
+            .find({ id })
+            .assign({ ...data })
+            .write()
+
+        return this.get(database, { id: id })
     }
 
     private userData = null

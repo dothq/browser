@@ -126,6 +126,7 @@ export class View {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
 
                 this.updateNavigationButtons()
+                this.updateItemInHistory(this.id, { title })
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
@@ -161,12 +162,19 @@ export class View {
         const now = Date.now()
 
         const { id } = appWindow.storage.add('history', {
+            tabId: this.id,
             url,
             title,
             visited: now
         })
 
         this.historyId = id;
+    }
+
+    private updateItemInHistory(tabId: string, data: any) {
+        const updated = appWindow.storage.update('history', this.historyId, data)
+
+        console.log(updated)
     }
 
     public get url() {
