@@ -1,12 +1,11 @@
-import { BrowserView, app, ContextMenuParams, ipcRenderer } from "electron";
+import { BrowserView, app, ContextMenuParams } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
-import { BLUE_1, GRAY_5 } from "../renderer/constants/colors";
+import { BLUE_1 } from "../renderer/constants/colors";
 import { NEWTAB_URL } from "../renderer/constants/web";
-import { createView } from "./tools/view";
 
 export class View {
     public view: BrowserView;
@@ -95,7 +94,7 @@ export class View {
                 }
             },
             viewStartedLoading: (_event: Electron.Event) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'loading' })
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'loading', themeColor: BLUE_1 })
 
                 this.updateNavigationButtons()
             },
@@ -126,7 +125,7 @@ export class View {
                 appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
 
                 this.updateNavigationButtons()
-                this.updateItemInHistory(this.id, { title })
+                this.updateItemInHistory({ title })
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
@@ -171,10 +170,8 @@ export class View {
         this.historyId = id;
     }
 
-    private updateItemInHistory(tabId: string, data: any) {
-        const updated = appWindow.storage.update('history', this.historyId, data)
-
-        console.log(updated)
+    private updateItemInHistory(data: any) {
+        appWindow.storage.update('history', this.historyId, data)
     }
 
     public get url() {
