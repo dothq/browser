@@ -14,7 +14,9 @@ Take back your privacy with Dot Browser, the privacy-conscious web browser that 
 ## ❗ Issues / Support
 Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, join by clicking the banner below.
 
-![Discord Banner](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2)
+<a href="https://invite.gg/dot">
+  <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
+</a>
 
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
