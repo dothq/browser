@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import dot from '../../store'
 import { Parts } from './Parts';
 import { SearchIcon } from './SearchIcon';
+import { FavouriteIcon } from './FavouriteIcon';
 
 export const Addressbar = observer(() => {
     const events = dot.events;
@@ -23,6 +24,7 @@ export const Addressbar = observer(() => {
                 value={dot.addressbar.inputValue()}
             />
             <Parts />
+            <FavouriteIcon />
         </StyledAddressbar>
     )
 })
