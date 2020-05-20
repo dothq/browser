@@ -17,8 +17,12 @@ export const StyledAddressbar = styled.div`
     position: relative;
     overflow: hidden;
 
+    &:hover {
+        border: 1px solid #aeaeae;
+    }
+
     &:focus-within {
-        border: 1px solid #1499ff;
+        border: 1px solid #1499ff !important;
         user-select: unset;
     }
 `;
