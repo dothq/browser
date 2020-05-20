@@ -1,7 +1,7 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
 import { ipcRenderer, remote } from "electron";
 import { Tab as ITab } from "../models/tab"
-import { NEWTAB_URL } from "../../constants/web";
+import { SEARCH_ENGINE_URL } from "../../constants/web";
 
 export class EventsStore {
     public store;
@@ -14,7 +14,7 @@ export class EventsStore {
             if(url.match(NAKED_DOMAIN_REGEX) && url.includes(".")) {
                 url = "http://" + text;
             } else if(!url.match(PROTOCOL_REGEX)) {
-                url = `https://startpage.com/sp/search?query=${encodeURIComponent(text)}`
+                url = `${SEARCH_ENGINE_URL}${encodeURIComponent(text)}`
             }
 
             this.inputNavigate(url);
