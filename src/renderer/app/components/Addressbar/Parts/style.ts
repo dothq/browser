@@ -7,7 +7,7 @@ export const StyledParts = styled.div`
     position: absolute;
     top: 9px;
     pointer-events: none;
-    width: 100%;
+    width: 944px;
     height: 100%;
     padding-left: 38px;
     overflow: hidden;
