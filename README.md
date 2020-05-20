@@ -4,7 +4,9 @@
 # Dot Browser
 Take back your privacy with Dot Browser, the privacy-conscious web browser that protects you from being tracked and monitored.
 
-![Discord Shield](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=shield) ![Style](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-ff69b4) ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social)
+<a href="https://invite.gg/dot">
+  <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=shield" />
+</a> ![Style](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-ff69b4) ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
