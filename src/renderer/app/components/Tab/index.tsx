@@ -22,19 +22,7 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
 
     React.useEffect(() => {
         if(visible == false) {
-            const tabId = tab.id;
-
-            dot.tabs.list = dot.tabs.list.filter(tab => tab.id !== tabId)
-
-            console.log("Selected View", dot.tabs.lastInteractedViews[0])
-            console.log("Destroying View", tabId)
-
-            if(dot.tabs.lastInteractedViews[0] !== tabId) {
-                ipcRenderer.send('view-select', dot.tabs.lastInteractedViews[0])
-                dot.tabs.selectedId = dot.tabs.lastInteractedViews[0];
-            }
-
-            ipcRenderer.send('view-destroy', tabId)
+            dot.tabs.close(tab.id)
 
             setTimeout(() => {
                 setKilled(true)

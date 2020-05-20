@@ -16,9 +16,6 @@ export class TabsStore {
     @observable
     public selectedId: string;
 
-    @observable
-    public lastInteractedViews: string[] = [];
-
     @computed
     public get selectedTab() {
         return this.list.find(tab => tab.id == this.selectedId)
@@ -37,8 +34,6 @@ export class TabsStore {
 
     @action
     public add(options: ViewCreateOptions) {
-        this.lastInteractedViews.push(this.selectedId);
-
         options.id = uuidv4();
 
         const tab = new Tab(options);
@@ -55,15 +50,21 @@ export class TabsStore {
 
     @action
     public close(id: string) {
+        const index = this.list.findIndex(tab => tab.id == id)
+
+        this.list.splice(index, 1)
+
+        if(this.list.length == 0) return ipcRenderer.send('app-close')
+
         ipcRenderer.send('view-destroy', id)
-        if(this.list.length == 1) return ipcRenderer.send('app-close')
+
+        this.selectedId = this.list[!this.list[index-1] && this.list[index] ? index : index-1].id;
+
+        ipcRenderer.send('view-select', this.selectedId);
     }
 
     @action
     public select(id: string) {
-        this.lastInteractedViews.push(this.selectedId);
-        this.lastInteractedViews.shift();
-
         if(id !== this.selectedId) {
             ipcRenderer.send('view-select', id);
             this.selectedId = id;

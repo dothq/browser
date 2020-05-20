@@ -63,7 +63,7 @@ const TabIcon = styled.div`
     min-height: 16px;
     display: flex;
     align-self: center;
-    margin-right: 8px;
+    transition: 0.3s margin-right;
 `;
 
 export const TabFavicon = styled(TabIcon)`
@@ -71,6 +71,7 @@ export const TabFavicon = styled(TabIcon)`
         background-image: url(${src});
         background-size: cover;
         background-repeat: no-repeat;
+        margin-right: ${src ? '8px' : '0px'};
     `}
 `;
 
@@ -79,6 +80,7 @@ export const TabThrobber = styled(TabIcon)`
 
     ${({ color }: { color: any }) => css`
         background-color: ${color};
+        margin-right: ${color ? '8px' : '0px'};
     `}
 `;
 
@@ -90,7 +92,6 @@ export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: an
     style: { position: 'absolute', right: '4px' },
     onClick: () => { 
         props.hook(a => !a);
-        dot.tabs.close(props.tab.id);
     }
 }))`
     ${({ tab, hook }: { tab: Tab; hook: any }) => css`
