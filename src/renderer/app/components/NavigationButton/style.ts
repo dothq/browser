@@ -19,7 +19,7 @@ export const StyledNavigationButton = styled.div`
         min-height: ${size}px;
 
         pointer-events: ${disabled ? 'none' : 'all'};
-        opacity: ${disabled ? 0.5 : 1};
+        opacity: ${disabled ? 0.5 : 0.9};
     `};
 
     svg {
