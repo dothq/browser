@@ -18,7 +18,7 @@ export const SearchIcon = observer(() => {
     }
 
     return (
-        <StyledSearchIcon>
+        <StyledSearchIcon isNTP={url == NEWTAB_URL}>
             <Icon icon={icon} size={14} />
         </StyledSearchIcon>
     )
