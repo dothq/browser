@@ -8,9 +8,9 @@ import {
     stopView, 
     backView, 
     forwardView, 
-    navigateView, 
-    closeApp 
+    navigateView
 } from "./tools/view";
+import { appWindow } from ".";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -24,5 +24,5 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 
-    ipcMain.on('app-close', (e) => closeApp)
+    ipcMain.on('app-close', (e) => { appWindow.window.close() })
 }

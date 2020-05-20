@@ -65,7 +65,3 @@ export const navigateView = (id, url) => {
 
     view.webContents.loadURL(url)
 }
-
-export const closeApp = () => {
-    appWindow.window.close()
-}
