@@ -38,7 +38,9 @@ export class View {
           this.view.webContents.userAgent
           .replace(/ DotBrowser\\?.([^\s]+)/g, '')
           .replace(/ Electron\\?.([^\s]+)/g, '')
-          .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
+          .replace(/ AppleWebKit\\?.([^\s]+)/g, '')
+          .replace(/ Safari\\?.([^\s]+)/g, '')
+          .replace(/Chrome\\?.([^\s]+)/g, `Gecko/20100101 Firefox/76.0`)
 
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         this.view.webContents.loadURL(url);
