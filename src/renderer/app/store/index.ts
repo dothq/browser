@@ -18,6 +18,9 @@ class Dot {
     @observable
     public debugMode: boolean = false;
 
+    @observable
+    public confettiMode: boolean = true;
+
     public searchRef = React.createRef<HTMLInputElement>()
 
     constructor() {

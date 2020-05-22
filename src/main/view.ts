@@ -76,7 +76,7 @@ export class View {
             height = height - 15
         }
 
-        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        this.view.setBounds({ x: 0, y: 0, width, height: height - NAVIGATION_HEIGHT });
     }
 
     private get events() {

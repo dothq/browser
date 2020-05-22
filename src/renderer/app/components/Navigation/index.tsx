@@ -25,12 +25,14 @@ export const Navigation = observer(() => {
                     size={18} 
                     disabled={navStatus && !navStatus.canGoBack} 
                     onClick={() => events.navigationOnBackClick()}
+                    style={{ transform: 'none' }}
                 />
                 <NavigationButton 
                     icon={"arrow-right"} 
                     size={18} 
                     disabled={navStatus && !navStatus.canGoForward}
                     onClick={() => events.navigationOnForwardClick()}
+                    style={{ transform: 'none' }}
                 />
                 <NavigationButton icon={
                     isLoading ? 

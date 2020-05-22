@@ -2,12 +2,18 @@ import styled, { css } from "styled-components";
 import { TABBAR_HEIGHT } from "../../constants/window";
 import { NavigationButton } from "../NavigationButton";
 
+import dot from '../../store'
+
 export const StyledTabs = styled.div`
     display: flex;
     width: 100%;
     height: ${TABBAR_HEIGHT}px;
     background-color: #fafafa; // TODO: Themes
     -webkit-app-region: drag;
+    ${dot.confettiMode ? `
+        position: absolute;
+        bottom: 0;
+    ` : ''};
 `;
 
 export const TabsContainer = styled.div`

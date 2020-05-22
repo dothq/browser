@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import dot from '../../store';
+
 export const StyledNavigationButton = styled.div`
     display: flex;
     width: 32px;
@@ -10,6 +12,9 @@ export const StyledNavigationButton = styled.div`
     border-radius: 3px;
     margin: 0 3px;
     transition: 0.2s box-shadow, 0.2s background-color;
+    ${dot.confettiMode ? `
+        ${Buffer.from('dHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTs=').toString('utf-8')};
+    ` : ''}
 
     ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
         width: ${size}px;
