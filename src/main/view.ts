@@ -36,7 +36,7 @@ export class View {
 
         this.view.webContents.userAgent =
           this.view.webContents.userAgent
-          .replace(/ dot\\?.([^\s]+)/g, '')
+          .replace(/ DotBrowser\\?.([^\s]+)/g, '')
           .replace(/ Electron\\?.([^\s]+)/g, '')
           .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
 
