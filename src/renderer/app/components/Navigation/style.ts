@@ -8,5 +8,4 @@ export const StyledNavigation = styled.div`
     background-color: #ffffff;
     border: 1px solid #EAEAEA;
     position: absolute;
-    bottom: 44px;
 `;

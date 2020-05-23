@@ -9,10 +9,11 @@ import { v4 as uuidv4 } from 'uuid';
 export class Storage {    
     public databases = {
         history: null,
-        bookmarks: null
+        bookmarks: null,
+        settings: null
     }
     
-    public add(database: 'history' | 'bookmarks', data: any) {
+    public add(database: 'history' | 'bookmarks' | 'settings', data: any) {
         if(!data.id) data.id = uuidv4()
 
         this.databases[database].get('r')
@@ -22,7 +23,7 @@ export class Storage {
         return this.get(database, { id: data.id })
     }
 
-    public remove(database: 'history' | 'bookmarks', id: string) {
+    public remove(database: 'history' | 'bookmarks' | 'settings', id: string) {
         this.databases[database].get('r')
             .remove({ id })
             .write()
@@ -30,19 +31,19 @@ export class Storage {
         return this.exists(database, id);
     }
 
-    public get(database: 'history' | 'bookmarks', query: any) {
+    public get(database: 'history' | 'bookmarks' | 'settings', query: any) {
         return this.databases[database].get('r')
             .find(query)
             .value()
     }
 
-    public exists(database: 'history' | 'bookmarks', id: string) {
+    public exists(database: 'history' | 'bookmarks' | 'settings', id: string) {
         const exists = this.get(database, { id })
 
         return typeof(exists) == "undefined" ? true : false;
     }
 
-    public update(database: 'history' | 'bookmarks', id: string, data: any) {
+    public update(database: 'history' | 'bookmarks' | 'settings', id: string, data: any) {
         this.databases[database].get('r')
             .find({ id })
             .assign({ ...data })
@@ -53,7 +54,7 @@ export class Storage {
 
     private userData = null
 
-    private connect(database: 'history' | 'bookmarks') {
+    private connect(database: 'history' | 'bookmarks' | 'settings') {
         const adapter = new FileSync(resolve(this.userData, `${database}.db`))
         this.databases[database] = low(adapter)
 

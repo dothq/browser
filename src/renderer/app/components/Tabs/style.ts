@@ -10,8 +10,6 @@ export const StyledTabs = styled.div`
     height: ${TABBAR_HEIGHT}px;
     background-color: #fafafa; // TODO: Themes
     -webkit-app-region: drag;
-    position: absolute;
-    bottom: 0;
 `;
 
 export const TabsContainer = styled.div`

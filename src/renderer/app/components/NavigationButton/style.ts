@@ -12,7 +12,6 @@ export const StyledNavigationButton = styled.div`
     border-radius: 3px;
     margin: 0 3px;
     transition: 0.2s box-shadow, 0.2s background-color;
-    transform: rotate(180deg);
 
     ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
         width: ${size}px;

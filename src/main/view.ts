@@ -50,7 +50,7 @@ export class View {
 
             const generalMenu = getGeneralMenu(id)
 
-            generalMenu.popup({ x, y })
+            generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
         })
 
         this.view.webContents.on('did-navigate', this.events.viewNavigate)
@@ -74,7 +74,7 @@ export class View {
             height = height - 15
         }
 
-        this.view.setBounds({ x: 0, y: 0, width, height: height - NAVIGATION_HEIGHT });
+        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
     }
 
     private get events() {
