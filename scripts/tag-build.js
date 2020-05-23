@@ -9,7 +9,7 @@ if(process.env.GITHUB_RUN_ID) {
     const items = [
         pkg.version.split(".")[0], 
         pkg.version.split(".")[1], 
-        process.env.GITHUB_RUN_ID || 0, 
+        process.env.GITHUB_RUN_ID.substr(0, 4) || 0, 
         pkg.version.split(".")[2]
     ]
 
