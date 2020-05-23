@@ -25,11 +25,8 @@ export const StyledTab = styled.div`
     overflow: hidden;
     position: relative;
     border-radius: 6px 6px 0 0;
-    transition: 0.2s background-color, 0.2s box-shadow;
-        
-    ${dot.confettiMode ? `
-        ${Buffer.from('dHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTs=').toString('utf-8')};
-    ` : ''}
+    transition: 0.2s background-color, 0.2s box-shadow; 
+    transform: rotate(180deg);
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
@@ -58,9 +55,7 @@ export const TabTitle = styled.div`
     display: flex;
     height: 100%;
     align-items: center;
-    ${dot.confettiMode ? `
-        ${Buffer.from('dHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTs=').toString('utf-8')};
-    ` : ''}
+    transform: rotate(180deg);
 `;
 
 const TabIcon = styled.div`
@@ -71,9 +66,7 @@ const TabIcon = styled.div`
     display: flex;
     align-self: center;
     transition: 0.3s margin-right;
-    ${dot.confettiMode ? `
-        ${Buffer.from('dHJhbnNmb3JtOiByb3RhdGUoMTgwZGVnKTs=').toString('utf-8')};
-    ` : ''}
+    transform: rotate(180deg);
 `;
 
 export const TabFavicon = styled(TabIcon)`
