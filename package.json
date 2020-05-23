@@ -17,7 +17,8 @@
     "start": "cross-env ENV=development electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
-    "build:linux": "yarn prod && electron-builder -l"
+    "build:linux": "yarn prod && electron-builder -l",
+    "tag-build": "ts-node scripts/tag-build.ts"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
@@ -32,7 +33,7 @@
     "html-webpack-plugin": "^4.3.0",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.2",
-    "ts-node": "^8.9.1",
+    "ts-node": "^8.10.1",
     "typescript": "^3.8.3",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",

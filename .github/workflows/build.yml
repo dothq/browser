@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 12
 
+      - name: Tag the build with the build number
+        run: yarn tag-build
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
