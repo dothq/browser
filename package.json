@@ -18,7 +18,7 @@
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
     "build:linux": "yarn prod && electron-builder -l",
-    "tag-build": "ts-node scripts/tag-build.ts"
+    "tag-build": "node_modules/.bin/ts-node scripts/tag-build.ts"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",
