@@ -1,7 +1,7 @@
 const { writeFileSync, readFileSync } = require("fs");
 const { resolve } = require('path');
 
-if(process.env.GITHUB_RUN_ID) {
+if(process.env.BUILD_NUMBER) {
     const json = readFileSync(resolve(__dirname, "../package.json"))
 
     const pkg = JSON.parse(json)
@@ -9,7 +9,7 @@ if(process.env.GITHUB_RUN_ID) {
     const items = [
         pkg.version.split(".")[0], 
         pkg.version.split(".")[1], 
-        `${process.env.GITHUB_RUN_ID}`.substr(0, 4).replace(/-/g, "") || 0, 
+        process.env.BUILD_NUMBER || 0, 
         pkg.version.split(".")[2]
     ]
 
