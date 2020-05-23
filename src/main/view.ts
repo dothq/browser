@@ -50,7 +50,7 @@ export class View {
 
             const generalMenu = getGeneralMenu(id)
 
-            generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
+            generalMenu.popup({ x, y })
         })
 
         this.view.webContents.on('did-navigate', this.events.viewNavigate)
