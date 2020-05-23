@@ -1,10 +1,10 @@
-import { writeFileSync, readFileSync } from "fs";
-import { resolve } from 'path';
+const { writeFileSync, readFileSync } = require("fs");
+const { resolve } = require('path');
 
 if(process.env.GITHUB_BUILD_NUMBER) {
     const json = readFileSync(resolve(__dirname, "../package.json"))
 
-    const pkg = JSON.parse((json as unknown as string))
+    const pkg = JSON.parse(json)
     
     const items = [
         pkg.version.split(".")[0], 
