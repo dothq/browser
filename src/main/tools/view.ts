@@ -63,5 +63,21 @@ export const navigateView = (id, url) => {
     const { view } = appWindow.getViewFromId(id);
     if(!view) return;
 
+    if (url.includes('google.com' || url.includes('youtube.com')) === true) {
+        view.webContents.userAgent =
+          view.webContents.userAgent
+            .replace(/ DotBrowser\\?.([^\s]+)/g, '')
+            .replace(/ Electron\\?.([^\s]+)/g, '')
+            .replace(/ AppleWebKit\\?.([^\s]+)/g, '')
+            .replace(/ Safari\\?.([^\s]+)/g, '')
+            .replace(/Chrome\\?.([^\s]+)/g, `Gecko/20100101 Firefox/76.0`)
+    } else {
+        view.webContents.userAgent =
+          view.webContents.userAgent
+          .replace(/ dot\\?.([^\s]+)/g, '')
+          .replace(/ Electron\\?.([^\s]+)/g, '')
+          .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
+    }
+
     view.webContents.loadURL(url)
 }
