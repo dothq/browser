@@ -6,6 +6,7 @@ import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "../renderer/constants/colors";
 import { NEWTAB_URL } from "../renderer/constants/web";
+import { parse } from "url";
 
 export class View {
     public view: BrowserView;
@@ -30,15 +31,14 @@ export class View {
 
         this.view.setBackgroundColor("#fff");
 
+        this.view.webContents.userAgent = this.view.webContents.userAgent
+            .replace(/ DotBrowser\\?.([^\s]+)/g, '')
+            .replace(/ Electron\\?.([^\s]+)/g, '')
+            .replace(/Chrome\\?.([^\s]+)/g, `Chrome/85.0.4152.0 Edg/83.0.478.37`)
+
         this.view.webContents.on('did-start-loading', (_e) => {
             appWindow.window.webContents.send('view-created', { id, url })
         })
-
-        this.view.webContents.userAgent =
-          this.view.webContents.userAgent
-          .replace(/ dot\\?.([^\s]+)/g, '')
-          .replace(/ Electron\\?.([^\s]+)/g, '')
-          .replace(/Chrome\\?.([^\s]+)/g, `Chrome/81.0.4044.122`)
 
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         this.view.webContents.loadURL(url);
