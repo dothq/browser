@@ -59,7 +59,12 @@ export class AddressbarStore {
                 id: uuidv4(),
                 value: parsed.path,
                 opacity: 0.5
-            }
+            },
+            {
+                id: uuidv4(),
+                value: parsed.hash,
+                opacity: !parsed.hash ? 0 : 0.5
+            },
         ]
 
         return parts
