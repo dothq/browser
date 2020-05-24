@@ -27,6 +27,8 @@ export const selectView = (id) => {
 export const destroyView = (id) => {
     const { view } = appWindow.getViewFromId(id)
 
+    console.log(view, id)
+
     view.destroy()
 }
 

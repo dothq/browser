@@ -27,6 +27,12 @@ export class Tab {
     public navigationStatus: { canGoForward: boolean, canGoBack: boolean };
 
     @observable
+    public visible: boolean = true;
+
+    @observable
+    public killed: boolean = false;
+
+    @observable
     public inputFocused: boolean = false;
 
     @observable
@@ -36,7 +42,7 @@ export class Tab {
         this.id = id;
         this.url = url;
 
-        console.log("tab created")
+        console.log("tab =>", this)
 
         ipcRenderer.send('view-create', { id, url, active })
 

@@ -25,7 +25,17 @@ export class TabsStore {
         this.store = store;
         
         ipcRenderer.on('add-tab', (e, options: ViewCreateOptions) => this.add(options))
-        ipcRenderer.on('close-tab', (e, id: string) => this.close(id))
+        ipcRenderer.on('close-tab', (e, id: string) => {
+            const tab = this.getTabById(id)
+
+            tab.visible = !tab.visible
+
+            this.close(tab.id);
+    
+            setTimeout(() => {
+                tab.killed = true
+            }, 200);
+        })
     }
 
     @action

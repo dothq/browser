@@ -22,7 +22,6 @@ export class AppWindow {
           height: 720,
           show: false,
           title: app.name,
-          titleBarStyle: 'hiddenInset',
           maximizable: true,
           webPreferences: {
             plugins: true,

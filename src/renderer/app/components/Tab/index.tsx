@@ -6,7 +6,6 @@ import { observer } from "mobx-react-lite"
 import { TAB_WIDTH } from '../../constants/tab'
 
 import dot from '../../store'
-import { ipcRenderer } from "electron"
 
 const TabContent = observer(({ tab, onMouseDown }: { tab: ITab; onMouseDown: any }) => (
     <StyledTabContent onMouseDown={onMouseDown} title={tab.title}>
@@ -17,18 +16,15 @@ const TabContent = observer(({ tab, onMouseDown }: { tab: ITab; onMouseDown: any
 ))
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
-    const [visible, setVisible] = React.useState(true);
-    const [killed, setKilled] = React.useState(false);
+    const onCloseClick = () => {
+        tab.visible = !tab.visible
 
-    React.useEffect(() => {
-        if(visible == false) {
-            dot.tabs.close(tab.id)
+        dot.tabs.close(tab.id);
 
-            setTimeout(() => {
-                setKilled(true)
-            }, 200);
-        }
-    }, [visible])
+        setTimeout(() => {
+            tab.killed = true
+        }, 200);
+    }
 
     const variants = {
         opening: {
@@ -49,16 +45,16 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
 
     return (
         <>
-            {!killed && (
+            {!tab.killed && (
                 <TabMotion
                     initial={{ x: -TAB_WIDTH, opacity: 0, width: 0 }}
-                    animate={visible ? 'opening' : 'closing'}
+                    animate={tab.visible ? 'opening' : 'closing'}
                     variants={variants}
                     transition={{ duration: 0.2, type: "tween" }}
                 >
                     <StyledTab selected={tab.id == dot.tabs.selectedId} themeColor={tab.themeColor} tab={tab}>
                         <TabContent tab={tab} onMouseDown={() => events.tabOnMouseDown(tab)} />
-                        <Close tab={tab} hook={setVisible} />
+                        <Close onClick={() => onCloseClick()} />
                     </StyledTab>
                 </TabMotion>
             )}

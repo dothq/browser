@@ -98,9 +98,7 @@ export const getAppMenu = (appName) => {
                     label: "Close Tab",
                     accelerator: "CmdOrCtrl+W",
                     click: () => {
-                        const view = appWindow.getViewFromId(appWindow.selectedId)
-
-                        // WIP
+                        appWindow.window.webContents.send('close-tab', appWindow.selectedId)
                     }
                 },
                 {
@@ -390,8 +388,20 @@ export const getAppMenu = (appName) => {
             ]
         },
         {
-            role: "windowMenu",
-            id: "window"
+            label: "Window",
+            type: "submenu" as "submenu",
+            submenu: [
+                {
+                    label: "Downloads",
+                    accelerator: "CmdOrCtrl+Shift+J"
+                },
+                {
+                    label: "Extensions",
+                },
+                {
+                    label: "Task Manager",
+                }
+            ]
         },
         {
             label: "Help",
@@ -414,29 +424,6 @@ export const getAppMenu = (appName) => {
             ]
         }
     ])
-
-    const webUI = [
-        new MenuItem({
-            label: "Downloads",
-            accelerator: "CmdOrCtrl+Shift+J"
-        }),
-        new MenuItem({
-            label: "Extensions",
-        }),
-        new MenuItem({
-            label: "Task Manager",
-        }),
-        new MenuItem({
-            type: "separator"
-        })
-    ]
-
-    let i = 3;
-
-    webUI.forEach(ui => {
-        menu.getMenuItemById("window").submenu.insert(i, ui)
-        ++i;
-    })
 
     return menu;
 }

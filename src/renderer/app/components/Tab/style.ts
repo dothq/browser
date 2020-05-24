@@ -84,19 +84,10 @@ export const TabThrobber = styled(TabIcon)`
     `}
 `;
 
-export const Close = styled(NavigationButton).attrs((props: { tab: Tab, hook: any }) => ({
+export const Close = styled(NavigationButton).attrs(() => ({
     icon: 'x',
     size: 15,
     buttonSize: 24,
     iconStyle: { strokeWidth: 1 },
-    style: { position: 'absolute', right: '4px' },
-    onClick: () => { 
-        props.hook(a => !a);
-    }
-}))`
-    ${({ tab, hook }: { tab: Tab; hook: any }) => css`
-        position: absolute;
-        right: 4px;
-        z-index: 5;
-    `}
-`;
+    style: { position: 'absolute', right: '4px' }
+}))``;
