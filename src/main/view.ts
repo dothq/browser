@@ -80,7 +80,7 @@ export class View {
     private get events() {
         return {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url, favicon: null })
 
                 this.updateNavigationButtons()
                 this.addItemToHistory()
