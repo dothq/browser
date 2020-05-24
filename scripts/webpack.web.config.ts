@@ -10,7 +10,7 @@ const generateHTML = (entryPoints) => {
 
   entries.forEach((entry) => {
     returnValue.push(new HtmlWebpackPlugin({  
-      title: `Unknown`,
+      title: entry.substr(0, 1).toUpperCase() + entry.substr(1, entry.length),
       inject: true,
       chunks: [entry],
       filename: `${entry}.html`
