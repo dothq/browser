@@ -16,10 +16,9 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    min-width: 78vw;
-    display: block;
     height: -webkit-fill-available;
-    margin: 0 auto;
+    max-width: 1052px;
+    margin: 0px 48px;
 
     &:last-child {
         margin-bottom: 76px;
@@ -36,8 +35,14 @@ export const ViewHeader = styled.div`
 `;
 
 export const ViewTitle = styled.div`
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 500;
+`;
+
+export const ViewSubtitle = styled(ViewTitle)`
+    margin-left: 12px;
+    font-size: 22px;
+    opacity: 0.5;
 `;
 
 export const ViewSearchContainer = styled.div`
@@ -71,6 +76,7 @@ export const ViewSearch = styled.input`
     padding: 0 10px;
     background-color: transparent;
     transition: 0.2s border;
+    font-family: system-ui;
 
     &::placeholder {
         color: gray;
