@@ -17,8 +17,7 @@
     "start": "cross-env ENV=development electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
-    "build:linux": "yarn prod && electron-builder -l",
-    "tag-build": "node scripts/tag-build"
+    "build:linux": "yarn prod && electron-builder -l"
   },
   "devDependencies": {
     "@types/electron": "^1.6.10",

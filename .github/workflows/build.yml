@@ -19,15 +19,6 @@ jobs:
         with:
           node-version: 12
 
-      - name: Generate build number
-        id: buildnumber
-        uses: einaregilsson/build-number@v2 
-        with:
-          token: ${{secrets.github_token}}  
-
-      - name: Tag the build with the build number
-        run: yarn tag-build
-
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
