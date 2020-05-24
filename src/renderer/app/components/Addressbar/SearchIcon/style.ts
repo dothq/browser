@@ -31,10 +31,10 @@ export const StyledSearchIcon = styled(StyledNavigationButton)`
             }
         }
 
-        width: ${isDotPage && !isFocused ? '108px' : '34px'};
+        width: ${isDotPage ? '108px' : '34px'};
 
         svg {
-            padding-right: ${isDotPage && !isFocused ? '8px' : '0px'};
+            padding-right: ${isDotPage ? '8px' : '0px'};
         }
 
         &:after {

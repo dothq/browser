@@ -17,13 +17,12 @@ export const SearchIcon = observer(() => {
         if(url.startsWith("https")) icon = "lock"
         if(url == NEWTAB_URL) icon = "search"
         if(url.startsWith(EXPO_URL)) icon = "circle"
-        if(isFocused) icon = "search"
     }
 
     return (
-        <StyledSearchIcon isNTP={url == NEWTAB_URL} isDotPage={url && !isFocused && url.startsWith(EXPO_URL)} isFocused={isFocused}>
+        <StyledSearchIcon isNTP={url == NEWTAB_URL} isDotPage={url && url.startsWith(EXPO_URL)} isFocused={isFocused}>
             <Icon icon={icon} size={14} />
-            <SearchIconText visible={url && !isFocused && url.startsWith(EXPO_URL)}>Dot Browser</SearchIconText>
+            <SearchIconText visible={url && url.startsWith(EXPO_URL)}>Dot Browser</SearchIconText>
         </StyledSearchIcon>
     )
 })

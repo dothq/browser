@@ -44,7 +44,7 @@ export const Input = styled.input`
     }
 
     ${({ isDotPage, isFocused }: { isDotPage: boolean; isFocused: boolean }) => css`
-        padding-left: ${isDotPage && !isFocused ? '118px' : '38px'};
+        padding-left: ${isDotPage ? '118px' : '38px'};
     `};
 `;
 
