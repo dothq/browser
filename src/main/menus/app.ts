@@ -142,6 +142,7 @@ export const getAppMenu = (appName) => {
                 {
                     label: "Stop",
                     accelerator: "CmdOrCtrl+Period",
+                    enabled: appWindow && appWindow.getViewFromId(appWindow.selectedId).view.webContents.isLoading(),
                     click: () => {
                         const view = appWindow.getViewFromId(appWindow.selectedId)
 
@@ -151,6 +152,19 @@ export const getAppMenu = (appName) => {
                 {
                     label: "Reload This Page",
                     accelerator: "CmdOrCtrl+R",
+                    enabled: appWindow && !appWindow.getViewFromId(appWindow.selectedId).view.webContents.isLoading(),
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.reload()
+                    }
+                },
+                {
+                    label: "Refresh This Page",
+                    accelerator: "F5",
+                    acceleratorWorksWhenHidden: true,
+                    visible: false,
+                    enabled: appWindow && !appWindow.getViewFromId(appWindow.selectedId).view.webContents.isLoading(),
                     click: () => {
                         const view = appWindow.getViewFromId(appWindow.selectedId)
 
