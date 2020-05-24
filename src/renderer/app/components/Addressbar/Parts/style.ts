@@ -9,12 +9,12 @@ export const StyledParts = styled.div`
     pointer-events: none;
     width: 944px;
     height: 100%;
-    padding-left: 38px;
     overflow: hidden;
     white-space: nowrap;
 
-    ${({ visible }: { visible: boolean }) => css`
+    ${({ visible, isDotPage }: { visible: boolean, isDotPage: boolean }) => css`
         display: ${visible ? "flex" : "none"};
+        padding-left: ${isDotPage ? '118px' : '38px'};
     `};
 `;
 

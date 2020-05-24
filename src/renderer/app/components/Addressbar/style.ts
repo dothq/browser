@@ -37,12 +37,15 @@ export const Input = styled.input`
     color: #303030;
     font-family: system-ui;
     padding: 0 2px;
-    padding-left: 38px;
     padding-right: 6px;
 
     ::placeholder {
         color: transparent;
     }
+
+    ${({ isDotPage, isFocused }: { isDotPage: boolean; isFocused: boolean }) => css`
+        padding-left: ${isDotPage && !isFocused ? '118px' : '38px'};
+    `};
 `;
 
 export const InputPlaceholder = styled.div`
