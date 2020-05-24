@@ -25,6 +25,7 @@ export class TabsStore {
         this.store = store;
         
         ipcRenderer.on('add-tab', (e, options: ViewCreateOptions) => this.add(options))
+        ipcRenderer.on('close-tab', (e, id: string) => this.close(id))
     }
 
     @action

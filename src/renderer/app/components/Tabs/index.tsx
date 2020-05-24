@@ -17,6 +17,11 @@ export const Tabs = observer(() => {
         dot.debugMode = !dot.debugMode;
     })
 
+    remote.globalShortcut.register('F5', () => {
+        if(!remote.webContents.getFocusedWebContents()) return;
+        dot.tabs.selectedTab.refresh()
+    })
+
     const onAddTabClick = () => {
         dot.tabs.add({ url: NEWTAB_URL, active: true })
     }

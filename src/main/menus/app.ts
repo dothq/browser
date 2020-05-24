@@ -1,5 +1,6 @@
 import { Menu, MenuItem, app } from "electron";
 import { appWindow } from "..";
+import { NEWTAB_URL } from "../../renderer/constants/web";
 
 export const getAppMenu = (appName) => {
     const menu = Menu.buildFromTemplate([
@@ -58,7 +59,10 @@ export const getAppMenu = (appName) => {
             submenu: [
                 {
                     label: "New Tab",
-                    accelerator: "CmdOrCtrl+T"
+                    accelerator: "CmdOrCtrl+T",
+                    click: () => {
+                        appWindow.window.webContents.send('add-tab', { url: NEWTAB_URL, active: true })
+                    }
                 },
                 {
                     label: "New Window",
@@ -85,11 +89,19 @@ export const getAppMenu = (appName) => {
                 },
                 {
                     label: "Close Window",
-                    accelerator: "CmdOrCtrl+Shift+W"
+                    accelerator: "CmdOrCtrl+Q",
+                    click: () => {
+                        appWindow.window.close()
+                    }
                 },
                 {
                     label: "Close Tab",
-                    accelerator: "CmdOrCtrl+W"
+                    accelerator: "CmdOrCtrl+W",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        // WIP
+                    }
                 },
                 {
                     label: "Save Page As...",
@@ -129,17 +141,21 @@ export const getAppMenu = (appName) => {
                 },
                 {
                     label: "Stop",
-                    accelerator: "CmdOrCtrl+Period"
+                    accelerator: "CmdOrCtrl+Period",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.stop()
+                    }
                 },
                 {
                     label: "Reload This Page",
-                    accelerator: "CmdOrCtrl+R"
-                },
-                {
-                    label: "Reload This Page",
-                    acceleratorWorksWhenHidden: true,
-                    visible: false,
-                    accelerator: "F5"
+                    accelerator: "CmdOrCtrl+R",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.reload()
+                    }
                 },
                 {
                     type: "separator" as "separator"
@@ -175,7 +191,12 @@ export const getAppMenu = (appName) => {
                     submenu: [
                         {
                             label: "Toggle Developer Tools",
-                            accelerator: "CmdOrCtrl+Alt+I"
+                            accelerator: "CmdOrCtrl+Option+I",
+                            click: () => {
+                                const view = appWindow.getViewFromId(appWindow.selectedId)
+        
+                                view.view.webContents.toggleDevTools()
+                            }
                         },
                         {
                             label: "Toggle App Developer Tools",
@@ -194,15 +215,30 @@ export const getAppMenu = (appName) => {
             submenu: [
                 {
                     label: "Home",
-                    accelerator: "CmdOrCtrl+Shift+H"
+                    accelerator: "CmdOrCtrl+Shift+H",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.loadURL(NEWTAB_URL)
+                    }
                 },
                 {
                     label: "Back",
-                    accelerator: "CmdOrCtrl+["
+                    accelerator: "CmdOrCtrl+[",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.goBack()
+                    }
                 },
                 {
                     label: "Forward",
-                    accelerator: "CmdOrCtrl+]"
+                    accelerator: "CmdOrCtrl+]",
+                    click: () => {
+                        const view = appWindow.getViewFromId(appWindow.selectedId)
+
+                        view.view.webContents.goForward()
+                    }
                 },
                 {
                     type: "separator" as "separator"
