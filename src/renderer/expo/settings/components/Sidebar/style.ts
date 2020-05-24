@@ -1,13 +1,14 @@
 import styled, { css } from "styled-components";
 
 export const StyledSidebar = styled.div`
-    width: 56px;
-    min-width: 56px;
+    width: 72px;
+    min-width: 72px;
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: auto;
-    box-shadow: 4px 0px 8px 0px #0000000a;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 6.4px 14.4px 0 rgba(0,0,0,.132), 0 1.2px 3.6px 0 rgba(0,0,0,.108);
 `;
 
 export const SidebarContainer = styled.div`
@@ -47,7 +48,7 @@ export const SidebarItem = styled.div`
 
         &:hover {
             &:before {
-                border-left: 4.5px solid #04040445;
+                border-left: 5px solid #040404b8;
             }
 
             svg {
