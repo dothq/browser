@@ -1,7 +1,7 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
 import { ipcRenderer, remote } from "electron";
 import { Tab as ITab } from "../models/tab"
-import { SEARCH_ENGINE_URL } from "../../constants/web";
+import { SEARCH_ENGINE_URL, EXPO_URL } from "../../constants/web";
 
 export class EventsStore {
     public store;
@@ -15,6 +15,8 @@ export class EventsStore {
                 url = "http://" + text;
             } else if(!url.match(PROTOCOL_REGEX)) {
                 url = `${SEARCH_ENGINE_URL}${encodeURIComponent(text)}`
+            } else if(process.env.ENV == "development" && url.startsWith("dot://")) {
+                url = `${EXPO_URL}${url.split("dot://")[1]}.html`
             }
 
             this.inputNavigate(url);

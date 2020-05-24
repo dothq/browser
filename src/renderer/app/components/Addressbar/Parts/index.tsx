@@ -3,6 +3,7 @@ import { StyledParts, Part } from "./style";
 
 import dot from '../../../store';
 import { observer } from "mobx-react";
+import { EXPO_URL } from "../../../../constants/web";
 
 export const Parts = observer(({ isDotPage }: { isDotPage: boolean }) => {
     const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
