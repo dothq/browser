@@ -16,7 +16,6 @@ export const downloadFaviconFromUrl = async (url) => {
             return favicon;
         }
     } catch(error) {
-        console.log(error)
         return null;
     }
 }
