@@ -20,7 +20,7 @@ jobs:
           node-version: 12
       
       - name: Install Electron for release channel
-        run: yarn remove electron && yarn add electron-nightly --dev
+        run: yarn remove electron && yarn add electron-nightly --dev && yarn global add electron-nightly
 
       - name: Set the release channel for this build
         run: node scripts/tag-version.js tag=nightly
