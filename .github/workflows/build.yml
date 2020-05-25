@@ -19,6 +19,12 @@ jobs:
         with:
           node-version: 12
 
+      - name: Install Electron for release channel
+        run: yarn remove electron && yarn add electron@latest --dev && yarn global add electron@latest
+  
+      - name: Set the release channel for this build
+        run: node scripts/tag-version.js tag=
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
