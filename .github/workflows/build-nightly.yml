@@ -19,11 +19,11 @@ jobs:
         with:
           node-version: 12
       
-      - name: Set the release channel for this build
-        run: node scripts/tag-version.js tag=nightly
-
       - name: Install Electron for release channel
         run: yarn add electron-nightly --dev
+
+      - name: Set the release channel for this build
+        run: node scripts/tag-version.js tag=nightly
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1

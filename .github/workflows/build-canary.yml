@@ -18,12 +18,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12
-      
-      - name: Set the release channel for this build
-        run: node scripts/tag-version.js tag=canary
 
       - name: Install Electron for release channel
         run: yarn add electron@beta --dev
+
+      - name: Set the release channel for this build
+        run: node scripts/tag-version.js tag=canary
 
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
