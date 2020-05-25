@@ -18,3 +18,4 @@ pkg.version = parts.join("");
 fs.writeFileSync(resolve(__dirname, "../package.json"), JSON.stringify(pkg))
 
 console.log(`Tagged this build with the version ${pkg.version}`)
+console.log(pkg.devDependencies)
