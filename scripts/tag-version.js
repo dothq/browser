@@ -2,10 +2,8 @@ const fs = require("fs")
 const { resolve } = require("path")
 
 const p = fs.readFileSync(resolve(__dirname, "../package.json"))
-const pl = fs.readFileSync(resolve(__dirname, "../package.json"))
 
 const pkg = JSON.parse(p)
-const pkglock = JSON.parse(pl)
 
 const args = process.argv.splice(process.execArgv.length + 2);
 
@@ -16,9 +14,7 @@ let parts = [
 ]
 
 pkg.version = parts.join("");
-pkglock.version = parts.join("");
 
 fs.writeFileSync(resolve(__dirname, "../package.json"), JSON.stringify(pkg))
-fs.writeFileSync(resolve(__dirname, "../package-lock.json"), JSON.stringify(pkglock))
 
 console.log(`Tagged this build with the version ${pkg.version}`)
