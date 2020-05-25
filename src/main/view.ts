@@ -34,7 +34,7 @@ export class View {
         this.view.webContents.userAgent = this.view.webContents.userAgent
             .replace(/ DotBrowser\\?.([^\s]+)/g, '')
             .replace(/ Electron\\?.([^\s]+)/g, '')
-            .replace(/Chrome\\?.([^\s]+)/g, `Chrome/85.0.4152.0 Edg/83.0.478.37`)
+            + " Edg/83.0.478.37"
 
         this.view.webContents.on('did-start-loading', (_e) => {
             appWindow.window.webContents.send('view-created', { id, url })
