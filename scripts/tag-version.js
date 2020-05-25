@@ -20,3 +20,5 @@ pkglock.version = parts.join("");
 
 fs.writeFileSync(resolve(__dirname, "../package.json"), JSON.stringify(pkg))
 fs.writeFileSync(resolve(__dirname, "../package-lock.json"), JSON.stringify(pkglock))
+
+console.log(`Tagged this build with the version ${pkg.version}`)
