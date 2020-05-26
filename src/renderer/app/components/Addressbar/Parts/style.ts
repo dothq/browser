@@ -12,9 +12,9 @@ export const StyledParts = styled.div`
     overflow: hidden;
     white-space: nowrap;
 
-    ${({ visible, isDotPage }: { visible: boolean, isDotPage: boolean }) => css`
+    ${({ visible, showSearchText, searchWidth }: { visible: boolean, showSearchText: boolean; searchWidth: number }) => css`
         display: ${visible ? "flex" : "none"};
-        padding-left: ${isDotPage ? '118px' : '38px'};
+        padding-left: ${showSearchText ? searchWidth : 38}px;
     `};
 `;
 

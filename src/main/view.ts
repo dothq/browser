@@ -41,6 +41,8 @@ export class View {
         })
 
         this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
+        let { width, height } = appWindow.window.getBounds()
+        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
         this.view.webContents.loadURL(url);
 
         this.view.webContents.on('context-menu', (_event, params: ContextMenuParams) => {
@@ -80,7 +82,7 @@ export class View {
     private get events() {
         return {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url, favicon: null })
+                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
 
                 this.updateNavigationButtons()
                 this.addItemToHistory()

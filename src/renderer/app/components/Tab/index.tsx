@@ -17,13 +17,17 @@ const TabContent = observer(({ tab, onMouseDown }: { tab: ITab; onMouseDown: any
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
     const onCloseClick = () => {
-        tab.visible = !tab.visible
+        tab.visible = !tab.visible;
 
-        dot.tabs.close(tab.id);
+        const length = dot.tabs.list.length;
+
+        length >= 2 && dot.tabs.close(tab.id);
 
         setTimeout(() => {
-            tab.killed = true
+            tab.killed = true;
+            length == 1 && dot.tabs.close(tab.id);
         }, 200);
+
     }
 
     const variants = {

@@ -56,19 +56,21 @@ export class AppWindow {
           this.rearrangeView()
         })
 
-        this.window.on('restore', () => {
+        this.window.on('unmaximize', () => {
           this.window.webContents.send('app-display-changed', false)
           this.rearrangeView()
         })
-
-        this.window.on('resize', () => this.rearrangeView())
     };
 
     rearrangeView() {
-      this.views.find(view => view.id == this.selectedId).rearrange()
+      this.selectedView.rearrange()
     }
 
     public getViewFromId(id: string) {
       return this.views.find(view => view.id == id)
+    }
+
+    public get selectedView() {
+      return this.getViewFromId(this.selectedId);
     }
 }

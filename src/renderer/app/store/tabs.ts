@@ -61,6 +61,7 @@ export class TabsStore {
 
     @action
     public close(id: string) {
+        const currentIndex = this.list.findIndex(tab => tab.id == this.selectedId)
         const index = this.list.findIndex(tab => tab.id == id)
 
         this.list.splice(index, 1)
@@ -69,7 +70,7 @@ export class TabsStore {
 
         ipcRenderer.send('view-destroy', id)
 
-        this.selectedId = this.list[!this.list[index-1] && this.list[index] ? index : index-1].id;
+        this.selectedId = this.list[!this.list[currentIndex-1] && this.list[currentIndex] ? currentIndex : currentIndex-1].id;
 
         ipcRenderer.send('view-select', this.selectedId);
     }

@@ -13,6 +13,9 @@ export const Addressbar = observer(() => {
     const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
     const isFocused = dot.tabs.selectedTab && dot.tabs.selectedTab.inputFocused
 
+    const searchWidth = url && url.startsWith(EXPO_URL) ? 118 : url && url.startsWith("http://") ? 114 : 0;
+    const showSearchText = url && url.startsWith(EXPO_URL) || url && url.startsWith("http://");
+
     return (
         <StyledAddressbar>
             <SearchIcon />
@@ -25,10 +28,11 @@ export const Addressbar = observer(() => {
                 onKeyUp={(event) => events.inputOnKeyUp(event)}
                 onChange={(event) => events.inputOnChange(event)}
                 value={dot.addressbar.inputValue()}
-                isDotPage={url && url.startsWith(EXPO_URL)}
+                showSearchText={showSearchText}
+                searchWidth={searchWidth}
                 isFocused={isFocused}
             />
-            <Parts isDotPage={url && url.startsWith(EXPO_URL)} />
+            <Parts searchWidth={searchWidth} showSearchText={showSearchText} />
             <FavouriteIcon />
         </StyledAddressbar>
     )

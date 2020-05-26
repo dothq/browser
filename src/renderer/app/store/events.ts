@@ -16,7 +16,7 @@ export class EventsStore {
             } else if(!url.match(PROTOCOL_REGEX)) {
                 url = `${SEARCH_ENGINE_URL}${encodeURIComponent(text)}`
             } else if(process.env.ENV == "development" && url.startsWith("dot://")) {
-                url = `${EXPO_URL}${url.split("dot://")[1]}.html`
+                url = `${EXPO_URL}${url.split("dot://")[1]}`
             }
 
             this.inputNavigate(url);

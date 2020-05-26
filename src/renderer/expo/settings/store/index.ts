@@ -4,10 +4,11 @@ import { observable } from 'mobx';
 
 class Dot {
     @observable
-    public selectedSection: 'home' | 'appearance' | 'search' | 'downloads' | 'languages' | 'user' | 'about' = 'home'
+    public selectedSection: 'general' | 'privacy' | 'appearance' | 'search' | 'downloads' | 'languages' | 'user' | 'about' = 'general'
 
     public get sectionName() {
-        if(this.selectedSection == "home") return "General"
+        if(this.selectedSection == "general") return "General"
+        if(this.selectedSection == "privacy") return "Privacy and services"
         if(this.selectedSection == "appearance") return "Appearance"
         if(this.selectedSection == "search") return "Search Engines"
         if(this.selectedSection == "downloads") return "Downloads"

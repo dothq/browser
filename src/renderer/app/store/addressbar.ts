@@ -52,6 +52,12 @@ export class AddressbarStore {
         const parts = [
             {
                 id: uuidv4(),
+                value: parsed.protocol + "//",
+                opacity: 0.5,
+                hide: parsed.protocol.startsWith("http")
+            },
+            {
+                id: uuidv4(),
                 value: parsed.host,
                 opacity: 1
             },

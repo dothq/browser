@@ -1,9 +1,10 @@
 import React from "react";
 
-import { StyledView, Container, Content, ViewTitle, ViewHeader, ViewSearch, ViewSearchContainer, ViewSubtitle } from "./style";
+import { StyledView, Container, Content, ViewTitle, ViewHeader, ViewSearch, ViewSearchContainer, ViewSubtitle, ViewContent } from "./style";
 import { Icon } from "../../../../app/components/Icon";
 
 import dot from '../../store';
+import { router } from "../../router";
 
 export const View = ({ selectedView }: { selectedView: any }) => (
     <StyledView>
@@ -17,6 +18,9 @@ export const View = ({ selectedView }: { selectedView: any }) => (
                         <Icon icon={"search"} style={{ stroke: 'gray' }}/>
                     </ViewSearchContainer>
                 </ViewHeader>
+                <ViewContent>
+                    {router[dot.selectedSection]}
+                </ViewContent>
             </Content>
         </Container>
     </StyledView>

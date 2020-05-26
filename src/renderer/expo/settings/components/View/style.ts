@@ -18,7 +18,8 @@ export const Container = styled.div`
 export const Content = styled.div`
     height: -webkit-fill-available;
     max-width: 1052px;
-    margin: 0px 48px;
+    margin: 0 auto;
+    width: 100%;
 
     &:last-child {
         margin-bottom: 76px;
@@ -82,3 +83,5 @@ export const ViewSearch = styled.input`
         color: gray;
     }
 `;
+
+export const ViewContent = styled.div``;

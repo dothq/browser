@@ -22,7 +22,7 @@ export const StyledSearchIcon = styled(StyledNavigationButton)`
         fill: black;
     }
     
-    ${({ isNTP, isDotPage, isFocused }: { isNTP: boolean; isDotPage: boolean; isFocused: boolean }) => css`
+    ${({ isNTP, showSearchText, isFocused, searchWidth }: { isNTP: boolean; showSearchText: boolean; isFocused: boolean; searchWidth: number; }) => css`
         &:hover, &:active { background-color: ${isNTP || isFocused ? "transparent" : ""}; }
 
         &:hover {
@@ -31,14 +31,14 @@ export const StyledSearchIcon = styled(StyledNavigationButton)`
             }
         }
 
-        width: ${isDotPage ? '108px' : '34px'};
+        width: ${showSearchText ? searchWidth : '34'}px;
 
         svg {
-            padding-right: ${isDotPage ? '8px' : '0px'};
+            padding-right: ${showSearchText ? '8px' : '0px'};
         }
 
         &:after {
-            content: ${isDotPage ? "''" : ""};
+            content: ${showSearchText ? "''" : ""};
             position: absolute;
             right: 0;
             height: 18px;
@@ -54,8 +54,8 @@ export const SearchIconText = styled.span`
     white-space: nowrap;
     transition: 0.2s width, 0.1s padding-left 0.3s, 0.2s opacity;
 
-    ${({ visible }: { visible: boolean }) => css`
-        width: ${visible ? '68px' : "0px"};
+    ${({ visible, textWidth }: { visible: boolean; textWidth: number }) => css`
+        width: ${visible ? textWidth : 0}px;
         opacity: ${visible ? 1 : 0};
     `};
 `;

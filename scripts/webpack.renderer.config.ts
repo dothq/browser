@@ -36,6 +36,9 @@ module.exports = {
       filename: "[name].bundle.js",
       path: path.resolve(__dirname, '../build')
     },
+    optimization: {
+      usedExports: true,
+    },
     module: {
       rules: [
         { test: /\.tsx?$/, loader: "ts-loader" },

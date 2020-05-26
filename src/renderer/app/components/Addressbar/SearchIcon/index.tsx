@@ -20,9 +20,10 @@ export const SearchIcon = observer(() => {
     }
 
     return (
-        <StyledSearchIcon isNTP={url == NEWTAB_URL} isDotPage={url && url.startsWith(EXPO_URL)} isFocused={isFocused}>
-            <Icon icon={icon} size={14} />
-            <SearchIconText visible={url && url.startsWith(EXPO_URL)}>Dot Browser</SearchIconText>
+        <StyledSearchIcon isNTP={url == NEWTAB_URL} searchWidth={url && url.startsWith(EXPO_URL) ? 108 : url && url.startsWith("http://") ? 102 : 0} showSearchText={url && url.startsWith(EXPO_URL) || url && url.startsWith("http://")} isFocused={isFocused}>
+            <Icon icon={icon} size={icon == "alert-circle" ? 16 : 14} />
+            <SearchIconText visible={url && url.startsWith(EXPO_URL)} textWidth={65}>Dot Browser</SearchIconText>
+            <SearchIconText visible={url && url.startsWith("http://")} textWidth={58}>Not secure</SearchIconText>
         </StyledSearchIcon>
     )
 })

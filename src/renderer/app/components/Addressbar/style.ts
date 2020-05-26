@@ -43,8 +43,8 @@ export const Input = styled.input`
         color: transparent;
     }
 
-    ${({ isDotPage, isFocused }: { isDotPage: boolean; isFocused: boolean }) => css`
-        padding-left: ${isDotPage ? '118px' : '38px'};
+    ${({ showSearchText, isFocused, searchWidth }: { showSearchText: boolean; isFocused: boolean; searchWidth: number }) => css`
+        padding-left: ${showSearchText ? searchWidth : 38}px;
     `};
 `;
 

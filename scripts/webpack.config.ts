@@ -16,6 +16,9 @@ module.exports = {
     mode: mode,
     watch: mode == "development",
     devtool: mode == "development" ? "eval-source-map" : "cheap-source-map",
+    optimization: {
+      usedExports: true,
+    },
     resolve: {
         extensions: [".ts", ".tsx", ".js"]
       },
