@@ -2808,6 +2808,13 @@ get-value@^2.0.3, get-value@^2.0.6:
   resolved "https://registry.yarnpkg.com/get-value/-/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
   integrity sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=
 
+glasstron@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/glasstron/-/glasstron-0.0.3.tgz#3934d9e9b51dd2fd6b07eff8395493b3361ab917"
+  integrity sha512-yJ8+8gkGXXBlnI+4j6i8N+SaeZcswtrO82M863zQkCc5BQfC5fTXcwj9+v80f0jYUfZLFigsgaFuKoFmlVsOdw==
+  dependencies:
+    x11 "^2.3.0"
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -4575,6 +4582,11 @@ os-browserify@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/os-browserify/-/os-browserify-0.3.0.tgz#854373c7f5c2315914fc9bfc6bd8238fdda1ec27"
   integrity sha1-hUNzx/XCMVkU/Jv8a9gjj92h7Cc=
+
+os-homedir@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
+  integrity sha1-/7xJiDNuDoM94MFox+8VISGqf7M=
 
 os-locale@^1.4.0:
   version "1.4.0"
@@ -6808,6 +6820,13 @@ ws@^6.2.1:
   integrity sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA==
   dependencies:
     async-limiter "~1.0.0"
+
+x11@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/x11/-/x11-2.3.0.tgz#bdaccedccdac2482fd560f0511e7bf2bd9e1dbf2"
+  integrity sha1-vazO3M2sJIL9Vg8FEee/K9nh2/I=
+  dependencies:
+    os-homedir "^1.0.1"
 
 xdg-basedir@^4.0.0:
   version "4.0.0"

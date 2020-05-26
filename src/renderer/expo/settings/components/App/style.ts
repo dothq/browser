@@ -5,7 +5,7 @@ export const Style = css`
         margin: 0;
         padding: 0;
         font-family: system-ui;
-        background-color: white;
+        background-color: transparent;
         overflow: hidden;
     }
 
