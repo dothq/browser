@@ -3,10 +3,12 @@ import { observer } from 'mobx-react';
 
 import { StyledSuggestionBox } from './style';
 import { Suggestion } from './Suggestion';
+import { SuggestionIcon } from './SuggestionIcon';
 
 
 export const SuggestionBox = observer(() => (
   <StyledSuggestionBox>
-    <Suggestion suggestion={"What are you searching for?"} suggestionType={"search"} icon={"search"} size={14}/>
+    <SuggestionIcon />
+    <Suggestion suggestion={"What are you searching for?"} suggestionType={"search"} />
   </StyledSuggestionBox>
 ))
