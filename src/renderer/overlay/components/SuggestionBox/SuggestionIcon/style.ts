@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { StyledNavigationButton } from "../../../../app/components/NavigationButton/style"; // TODO move this to the Overlay react element, so im not spreading code across multiple react elements.
+import { StyledNavigationButton } from "../../NavigationButton/style"; 
 
 export const StyledSuggestionIcon = styled(StyledNavigationButton)`
     height: 30px;
