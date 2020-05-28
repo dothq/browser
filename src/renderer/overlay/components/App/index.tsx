@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledOverlay, Style } from './style';
+import { StyledApp, Style } from './style';
 import { createGlobalStyle } from 'styled-components';
 
 import { SuggestionBox } from '../SuggestionBox';
@@ -89,9 +89,9 @@ style.textContent = `
 document.head.appendChild(style)
 
 
-export const Overlay = observer(() => (
-  <StyledOverlay>
+export const App = observer(() => (
+  <StyledApp>
     <GlobalStyle />
     <SuggestionBox />
-  </StyledOverlay>
+  </StyledApp>
 ))

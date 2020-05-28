@@ -9,6 +9,6 @@ export const Style = css`
   }
 `
 
-export const StyledOverlay = styled.div`
+export const StyledApp = styled.div`
   height: 100vh;
 `
