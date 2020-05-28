@@ -25,4 +25,7 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
+
+    ipcMain.on('ignore-mouse-overlay', () => {appWindow.overlay.setIgnoreMouseEvents(true, { forward: true })})
+    ipcMain.on('allow-mouse-overlay', () => {appWindow.overlay.setIgnoreMouseEvents(false, { forward: true })})
 }

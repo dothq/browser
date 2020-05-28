@@ -12,4 +12,5 @@ gulp.task('start', async () => {
     launchWebpack('scripts/webpack.config.ts') // Main
     launchWebpack('scripts/webpack.renderer.config.ts', { dev: process.env.ENV == "development" }) // Renderer
     launchWebpack('scripts/webpack.web.config.ts', { dev: process.env.ENV == "development" }) // Web
+    launchWebpack('scripts/webpack.overlay.config.ts', { dev: process.env.ENV == "development" }) // Overlay
 });

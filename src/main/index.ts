@@ -29,7 +29,7 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 app.on('ready', () => {
-    appWindow = new AppWindow();
+    setTimeout(() => {appWindow = new AppWindow();}, 500)
 
     startProtocolService()
 })
