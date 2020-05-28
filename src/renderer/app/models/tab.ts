@@ -4,6 +4,8 @@ import { observable } from "mobx";
 import { BLUE_1 } from "../../constants/colors";
 import { NEWTAB_URL } from "../../constants/web";
 
+const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus']
+
 export class Tab {
     @observable
     public id: string;
@@ -46,11 +48,10 @@ export class Tab {
 
         ipcRenderer.send('view-create', { id, url, active })
 
-        ipcRenderer.on(`view-data-updated-${this.id}`, (event, data) => {
-            for (const [key, value] of Object.entries(data)) {
-                console.log(`tab.${key}`, "=>", data[key])
-                this[key] = data[key]
-            }
+        DataTypes.forEach(dataType => {
+            ipcRenderer.on(`view-${dataType}-updated-${this.id}`, (event, data) => {
+                this[dataType] = data
+            })
         })
     }
 
