@@ -14,4 +14,12 @@ export const StyledSuggestionIcon = styled(StyledNavigationButton)`
         min-width: 14px;
         padding-right: 0px;
     }
+
+    &:hover, &:active { background-color: transparent }
+
+    &:hover {
+        &:after {
+            opacity: 0;
+        }
+    }
 `;
