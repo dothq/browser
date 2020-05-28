@@ -22,6 +22,7 @@ const generateHTML = (entryPoints) => {
 
 const entry = {
   settings: './src/renderer/expo/settings',
+  error: './src/renderer/expo/error',
 };
 
 module.exports = {
@@ -56,7 +57,12 @@ module.exports = {
       contentBase: path.join(__dirname, 'build'),
       port: 9015,
       hot: false,
-      inline: false
+      inline: false,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+      }
     },
     plugins: [
       ...generateHTML(entry)
