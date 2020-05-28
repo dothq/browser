@@ -3,10 +3,13 @@ import { AppWindow } from './app';
 import { resolve } from 'path';
 
 export class Overlay {
-    public window: BrowserWindow;
+    private window: BrowserWindow;
+    private appWindow: AppWindow;
 
     constructor(w: AppWindow) {
         const { window } = w;
+
+        this.appWindow = w;
 
         this.window = new BrowserWindow({
             frame: false,
@@ -39,5 +42,15 @@ export class Overlay {
 
     public get webContents() {
         return this.window.webContents
+    }
+
+    public rearrange() {
+        const { width, height, x, y } = this.appWindow.window.getBounds()
+
+        this.window.setBounds({ width, height, x, y })
+    }
+
+    public setPointerEvents(allowed: boolean) {
+        this.window.setIgnoreMouseEvents(!allowed, { forward: true })
     }
 }
