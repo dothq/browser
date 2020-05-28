@@ -1,4 +1,4 @@
-import { BrowserWindow, app, Menu } from 'electron';
+import { BrowserWindow, app, Menu, ipcMain } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
