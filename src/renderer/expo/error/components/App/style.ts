@@ -6,7 +6,6 @@ export const Style = css`
         padding: 0;
         font-family: system-ui;
         background-color: white;
-        overflow: hidden;
     }
 
     *::selection {
@@ -20,12 +19,10 @@ export const Style = css`
         -o-user-drag: none;
         user-drag: none;
     }
-
-    *:not(input) {
-        user-select: none;
-    }
 `;
 
 export const StyledApp = styled.div`
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;
