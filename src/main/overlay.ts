@@ -1,4 +1,4 @@
-import { BrowserWindow, app } from 'electron';
+import { BrowserWindow, app, ipcMain } from 'electron';
 import { AppWindow } from './app';
 import { resolve } from 'path';
 
@@ -25,6 +25,8 @@ export class Overlay {
             }
         })
 
+        this.window.webContents.openDevTools({ mode: 'detach' })
+
         if(process.env.ENV == "development") {
             this.window.loadURL('http://localhost:9010/overlay.html')
         } else {
@@ -34,10 +36,14 @@ export class Overlay {
 
     public show() {
         this.window.show()
+
+        this.setPointerEvents(true)
     }
 
     public hide() {
         this.window.hide()
+
+        this.setPointerEvents(false)
     }
 
     public get webContents() {
@@ -51,6 +57,7 @@ export class Overlay {
     }
 
     public setPointerEvents(allowed: boolean) {
-        this.window.setIgnoreMouseEvents(!allowed, { forward: true })
+        console.log("received")
+        this.window.setIgnoreMouseEvents(allowed, { forward: true })
     }
 }
