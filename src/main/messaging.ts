@@ -11,6 +11,7 @@ import {
     navigateView
 } from "./tools/view";
 import { appWindow } from ".";
+import { updateMouseBoundries } from "./tools/overlay";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -26,6 +27,6 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
 
-    ipcMain.on('ignore-mouse-overlay', () => {appWindow.overlay.setIgnoreMouseEvents(true, { forward: true })})
-    ipcMain.on('allow-mouse-overlay', () => {appWindow.overlay.setIgnoreMouseEvents(false, { forward: true })})
+    ipcMain.on('ignore-pointer-events', () => updateMouseBoundries(false))
+    ipcMain.on('allow-pointer-events', () => updateMouseBoundries(true))
 }
