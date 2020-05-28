@@ -5,11 +5,8 @@ import { Icon } from "../../Icon";
 
 import { observer } from "mobx-react";
 
-export const SuggestionIcon = observer(() => {
-
-    return (
+export const SuggestionIcon = ({ icon }: { icon: string }) => (
         <StyledSuggestionIcon>
-            <Icon icon={"search"} size={14} />
+            <Icon icon={icon} size={14} />
         </StyledSuggestionIcon>
-    )
-})
+)

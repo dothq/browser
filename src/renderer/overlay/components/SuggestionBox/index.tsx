@@ -9,7 +9,7 @@ import dot from '../../store'
 
 export const SuggestionBox = observer(() => (
   <StyledSuggestionBox ref={dot.suggestionsRef}>
-    <SuggestionIcon />
-    <Suggestion suggestion={"What are you searching for?"} suggestionType={"search"} />
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
   </StyledSuggestionBox>
 ))

@@ -4,6 +4,6 @@ import { Icon } from "../../Icon"
 
 export const Suggestion = ({ suggestion, suggestionType }: { suggestion: any, suggestionType?: any }) => (
     <StyledSuggestion>
-      <SuggestionText>suggestion</SuggestionText>
+      <SuggestionText>{suggestion}</SuggestionText>
     </StyledSuggestion>
 )

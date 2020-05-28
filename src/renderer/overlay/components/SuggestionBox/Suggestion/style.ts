@@ -25,11 +25,8 @@ export const SuggestionText = styled.span`
   color: #303030;
   font-family: system-ui;
   padding: 6px 6px 6px 33px;
-  padding-right: 6px;
 
   ::placeholder {
     color: transparent;
   }
-
-  padding-left: 33px;
 `
