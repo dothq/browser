@@ -17,19 +17,19 @@ export const StyledSuggestion = styled.span`
 
 export const SuggestionText = styled.span`
   border: none;
-    outline: none;
-    background-color: transparent;
-    width: 100%;
-    font-size: 14px;
-    line-height: 16px;
-    color: #303030;
-    font-family: system-ui;
-    padding: 0 2px;
-    padding-right: 6px;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  color: #303030;
+  font-family: system-ui;
+  padding: 6px 6px 6px 33px;
+  padding-right: 6px;
 
-    ::placeholder {
-        color: transparent;
-    }
+  ::placeholder {
+    color: transparent;
+  }
 
-    padding-left: 38px;
+  padding-left: 33px;
 `
