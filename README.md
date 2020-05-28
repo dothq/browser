@@ -23,6 +23,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
 - [xMinota](https://github.com/xMinota) - ***Contributor***
 - [GamingGeek](https://github.com/GamingGeek) - ***Contributor***
+- [AwesomeTech10](https://github.com/AwesomeTech10) - **Contributor**
 
 ## 🧱 Built with
 - [Electron](https://www.electronjs.org/)
