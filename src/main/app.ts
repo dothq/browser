@@ -59,6 +59,10 @@ export class AppWindow {
             this.overlay.show()
         })
 
+        this.window.on('move', () => {
+          this.overlay.rearrange()
+        })
+
         this.window.on('maximize', () => {
           this.rearrangeView()
         })
