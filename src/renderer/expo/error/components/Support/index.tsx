@@ -2,12 +2,20 @@ import React from 'react';
 
 import { StyledSupport, SupportHeading, SupportItem, SupportContainer } from "./style";
 
-export const Support = () => (
+import { v4 as uuidv4 } from 'uuid';
+
+import { parse } from 'url';
+
+import dot from '../../store'
+import { observer } from 'mobx-react';
+
+export const Support = observer(() => (
     <StyledSupport>
         <SupportContainer>
-            <SupportHeading>Here’s what you can try to get connected again:</SupportHeading>
-            <SupportItem>• Check the cables on your router and modem.</SupportItem>
-            <SupportItem>• Reconnecting to your Wi-Fi network</SupportItem>
+            <SupportHeading>{dot.error && dot.error.solutionHeading}</SupportHeading>
+            {dot.error && dot.error.solutions.map(solution => (
+                <SupportItem dangerouslySetInnerHTML={{ __html: `• ${solution.replace(/%url/g, `<strong>${dot.viewError && parse(dot.viewError.validatedURL).host}</strong>`)}` }} key={uuidv4()} />
+            ))}
         </SupportContainer>
     </StyledSupport>
-)
+))
