@@ -12,3 +12,7 @@ export const updateOverlayCursor = (cursor: string) => {
 export const showSuggestionBox = () => {
     appWindow.overlay.webContents.send('activate-suggestionbox')
 }
+
+export const hideSuggestionBox = () => {
+    appWindow.overlay.webContents.send('disable-suggestionbox')
+}

@@ -20,6 +20,7 @@ export class EventsStore {
             }
 
             this.inputNavigate(url);
+            ipcRenderer.send('suggestionbox-disable');
         }
     }
 

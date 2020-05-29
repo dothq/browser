@@ -27,7 +27,10 @@ class Dot {
 
         ipcRenderer.on('activate-suggestionbox', () => {
             this.suggestionBoxActivate = true;
-            console.log('update suggestionbox')
+        })
+
+        ipcRenderer.on('disable-suggestionbox', () => {
+            this.suggestionBoxActivate = false;
         })
 
         window.addEventListener('DOMContentLoaded', () => {
