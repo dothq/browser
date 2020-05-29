@@ -25,4 +25,8 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
+
+    ipcMain.handle('get-error-data', async (e, id) => {
+        return appWindow.getViewFromId(id).errorData
+    })
 }

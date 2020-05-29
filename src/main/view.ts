@@ -1,11 +1,11 @@
-import { BrowserView, app, ContextMenuParams } from "electron";
+import { BrowserView, app, ContextMenuParams, ipcMain } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "../renderer/constants/colors";
-import { NEWTAB_URL } from "../renderer/constants/web";
+import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "../renderer/constants/web";
 import { parse } from "url";
 
 export class View {
@@ -13,7 +13,8 @@ export class View {
     public id: string;
 
     private historyId: string;
-    private lastTitle: string;
+    
+    public errorData: any;
 
     constructor(id: string, url: any) {
         this.id = id;
@@ -99,6 +100,7 @@ export class View {
                 }
             },
             viewStartedLoading: (_event: Electron.Event) => {
+                appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
                 appWindow.window.webContents.send(`view-status-updated-${this.id}`, 'loading')
                 appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
 
@@ -110,7 +112,7 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewFinishedLoading: (_event: Electron.Event) => {
-                
+                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
             },
             viewWindowOpened: (
                 _event: Electron.Event,
@@ -136,15 +138,18 @@ export class View {
                 frameProcessId: number, 
                 frameRoutingId: number
             ) => {
-                console.log(errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId)
+                if(!isMainFrame || errorCode == -3) return;
+
+                const error = { errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId };
+
+                appWindow.window.webContents.send(`view-error-updated-${this.id}`, error)
+
+                this.view.webContents.loadURL(`${EXPO_PREFIX}error${EXPO_SUFFIX}`)
+                this.errorData = error
             },
             viewTitleUpdated: async (_event: Electron.Event, title: string) => {
-                // if(title == this.lastTitle) return;
-                // this.lastTitle = title;
-
                 appWindow.window.webContents.send(`view-title-updated-${this.id}`, title)
 
-                // this.updateNavigationButtons()
                 await this.updateItemInHistory({ title })
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {

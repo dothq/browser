@@ -4,7 +4,7 @@ import {
     CLEAN_URL_REGEX, 
     REMOVE_TRAILING_SLASH_REGEX,
 } from "../../constants/url";
-import { NEWTAB_URL } from "../../constants/web";
+import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "../../constants/web";
 
 import { parse } from "url";
 import { v4 as uuidv4 } from 'uuid';
@@ -58,8 +58,14 @@ export class AddressbarStore {
             },
             {
                 id: uuidv4(),
-                value: parsed.host,
+                value: parsed.hostname,
                 opacity: 1
+            },
+            {
+                id: uuidv4(),
+                value: ":" + parsed.port,
+                opacity: 0.5,
+                hide: parsed.port == null
             },
             {
                 id: uuidv4(),

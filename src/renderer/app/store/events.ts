@@ -1,7 +1,7 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
 import { ipcRenderer, remote } from "electron";
 import { Tab as ITab } from "../models/tab"
-import { SEARCH_ENGINE_URL, EXPO_URL } from "../../constants/web";
+import { SEARCH_ENGINE_URL, EXPO_PREFIX } from "../../constants/web";
 
 export class EventsStore {
     public store;
@@ -15,8 +15,8 @@ export class EventsStore {
                 url = "http://" + text;
             } else if(!url.match(PROTOCOL_REGEX)) {
                 url = `${SEARCH_ENGINE_URL}${encodeURIComponent(text)}`
-            } else if(process.env.ENV == "development" && url.startsWith("dot://")) {
-                url = `${EXPO_URL}${url.split("dot://")[1]}`
+            } else if(process.env.ENV == "development" && url.startsWith(EXPO_PREFIX)) {
+                url = `${EXPO_PREFIX}${url.split(EXPO_PREFIX)[1]}`
             }
 
             this.inputNavigate(url);
@@ -77,15 +77,38 @@ export class EventsStore {
 
     public navigationOnRefreshClick() {
         const tab = this.store.tabs.selectedTab;
+
+        if(tab.isError) {
+            this.store.tabs.selectedTab.goto(this.store.tabs.selectedTab.error.validatedURL)
+            this.store.tabs.selectedTab.url = this.store.tabs.selectedTab.error.validatedURL
+            return tab.error = undefined;
+        }
+
         if(tab.status == "loading") this.store.tabs.selectedTab.stop()
         else this.store.tabs.selectedTab.refresh()
     }
 
     public navigationOnBackClick() {
+        const tab = this.store.tabs.selectedTab;
+
+        if(tab.isError) {
+            this.store.tabs.selectedTab.goto(this.store.tabs.selectedTab.error.validatedURL)
+            this.store.tabs.selectedTab.url = this.store.tabs.selectedTab.error.validatedURL
+            return tab.error = undefined;
+        }
+
         this.store.tabs.selectedTab.goBack()
     }
 
     public navigationOnForwardClick() {
+        const tab = this.store.tabs.selectedTab;
+
+        if(tab.isError) {
+            this.store.tabs.selectedTab.goto(this.store.tabs.selectedTab.error.validatedURL)
+            this.store.tabs.selectedTab.url = this.store.tabs.selectedTab.error.validatedURL
+            return tab.error = undefined;
+        }
+
         this.store.tabs.selectedTab.goForward()
     }
 

@@ -5,7 +5,6 @@ import { AddressbarStore } from "./addressbar";
 import { EventsStore } from "./events";
 
 import { observable } from 'mobx';
-import { ipcRenderer } from "electron";
 import { ConnectivityStore } from "./connectivity";
 
 class Dot {
@@ -19,9 +18,6 @@ class Dot {
 
     @observable
     public debugMode: boolean = false;
-
-    @observable
-    public confettiMode: boolean = true;
 
     @observable
     public isOnline: boolean = true;

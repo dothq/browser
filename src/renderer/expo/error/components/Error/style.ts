@@ -37,6 +37,10 @@ export const Summary = styled.div`
     text-align: center;
     color: #000000;
     margin-bottom: 14px;
+
+    b {
+        font-weight: 600;
+    }
 `;
 
 export const Code = styled.div`
