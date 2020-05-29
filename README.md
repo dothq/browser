@@ -7,7 +7,7 @@ Take back your privacy with Dot Browser, the privacy-conscious web browser that 
 [![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=shield)](https://invite.gg/dot)
 ![Style](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-ff69b4) ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 </div>
@@ -51,6 +51,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/HVENetworks"><img src="https://avatars2.githubusercontent.com/u/36706682?v=4" width="100px;" alt=""/><br /><sub><b>HVENetworks</b></sub></a><br /><a href="#security-HVENetworks" title="Security">🛡️</a></td>
     <td align="center"><a href="http://awesometech10.js.org"><img src="https://avatars1.githubusercontent.com/u/22264706?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=AwesomeTech10" title="Code">💻</a></td>
+    <td align="center"><a href="https://gaminggeek.dev/"><img src="https://avatars1.githubusercontent.com/u/29981918?v=4" width="100px;" alt=""/><br /><sub><b>Jake Ward</b></sub></a><br /><a href="#ideas-GamingGeek" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
