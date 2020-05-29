@@ -38,6 +38,7 @@ class Dot {
                 if(r.connected == 0) this.isOnline = false;
             })
             ipcRenderer.send('suggestionbox-width', `${this.searchRef.current.getBoundingClientRect().width}`);
+            ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
         })
     }
 }

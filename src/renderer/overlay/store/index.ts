@@ -13,6 +13,12 @@ class Dot {
     @observable
     public suggestionBoxActivate: boolean = false;
 
+    @observable
+    public suggestionBoxWidth: number = 0;
+
+    @observable
+    public suggestionBoxLeft: number = 0;
+
     public updatePointerEvents() {
         console.log(this.hovering ? 'allow' : 'ignore')
         ipcRenderer.send(`${!this.hovering ? 'allow' : 'ignore'}-pointer-events`)
@@ -34,7 +40,11 @@ class Dot {
         })
 
         ipcRenderer.on('width-suggestionbox', (e, width) => {
-            this.suggestionsRef.current.style.width = +width + 30 + 'px';
+            this.suggestionBoxWidth = +width + 38;
+        })
+
+        ipcRenderer.on('left-suggestionbox', (e, width) => {
+            this.suggestionBoxLeft = +width - 1;
         })
 
         window.addEventListener('DOMContentLoaded', () => {
