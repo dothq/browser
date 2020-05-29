@@ -61,6 +61,7 @@ export class EventsStore {
         } else {
             this.store.tabs.selectedTab.showInputPlaceholder = true;
         }
+        ipcRenderer.send('suggestionbox-activate');
     }
 
     public inputNavigate(url) {

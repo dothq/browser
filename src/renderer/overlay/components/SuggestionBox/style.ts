@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { NAVIGATION_HEIGHT } from '../../../constants/window';
-import { remote } from 'electron';
+import dot from '../../store';
 
 export const StyledSuggestionBox = styled.div`
   width: 100%;
@@ -14,4 +14,6 @@ export const StyledSuggestionBox = styled.div`
   border-right: 1px solid #1499ff !important;
   border-bottom: 1px solid #1499ff !important;
   position: relative;
+
+  ${dot.suggestionBoxActivate == true ? "display: inherit" : "display: none"};
 `

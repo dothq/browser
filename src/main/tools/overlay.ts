@@ -8,3 +8,7 @@ export const updateMouseBoundries = (allowed: boolean) => {
 export const updateOverlayCursor = (cursor: string) => {
     appWindow.overlay.webContents.send('update-cursor', cursor)
 }
+
+export const showSuggestionBox = () => {
+    appWindow.overlay.webContents.send('activate-suggestionbox')
+}

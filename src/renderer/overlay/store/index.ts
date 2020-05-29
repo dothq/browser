@@ -10,6 +10,8 @@ class Dot {
     public outsideRef = React.createRef<HTMLDivElement>();
     public suggestionsRef = React.createRef<HTMLDivElement>();
 
+    public suggestionBoxActivate: boolean = false;
+
     public updatePointerEvents() {
         console.log(this.hovering ? 'allow' : 'ignore')
         ipcRenderer.send(`${!this.hovering ? 'allow' : 'ignore'}-pointer-events`)
@@ -20,6 +22,10 @@ class Dot {
             if(this.hovering == false) {
                 document.body.style.cursor = cursor;
             }
+        })
+
+        ipcRenderer.on('suggestionbox-activate', () => {
+            this.suggestionBoxActivate = true;
         })
 
         window.addEventListener('DOMContentLoaded', () => {
