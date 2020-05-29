@@ -70,9 +70,9 @@ export class AddressbarStore {
             },
             {
                 id: uuidv4(),
-                value: parsed.pathname + parsed.search,
+                value: `${decodeURIComponent(parsed.pathname)}${!parsed.search ? "" : parsed.search}`,
                 opacity: 0.5,
-                hide: parsed.pathname == "/" && !parsed.search
+                hide: parsed.pathname == "/"
             },
             {
                 id: uuidv4(),
