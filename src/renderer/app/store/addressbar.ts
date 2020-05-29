@@ -56,7 +56,6 @@ export class AddressbarStore {
                 id: uuidv4(),
                 value: parsed.protocol + "//",
                 opacity: 0.5,
-                hide: parsed.protocol.startsWith("http")
             },
             {
                 id: uuidv4(),
@@ -71,13 +70,13 @@ export class AddressbarStore {
             },
             {
                 id: uuidv4(),
-                value: parsed.pathname,
+                value: parsed.pathname + parsed.search,
                 opacity: 0.5,
-                hide: parsed.pathname == "/"
+                hide: parsed.pathname == "/" && !parsed.search
             },
             {
                 id: uuidv4(),
-                value: parsed.hash,
+                value: parsed.pathname == "/" ? "/" : "" + parsed.hash,
                 opacity: !parsed.hash ? 0 : 0.5
             },
         ]
