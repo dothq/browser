@@ -49,6 +49,8 @@ export class AddressbarStore {
             parsed.host = parsed.host.replace(/^(?:https?:\/\/)?(?:www\.)?/i, "")
         }
 
+        console.log(parsed)
+
         const parts = [
             {
                 id: uuidv4(),
@@ -69,8 +71,9 @@ export class AddressbarStore {
             },
             {
                 id: uuidv4(),
-                value: parsed.path,
-                opacity: 0.5
+                value: parsed.pathname,
+                opacity: 0.5,
+                hide: parsed.pathname == "/"
             },
             {
                 id: uuidv4(),
