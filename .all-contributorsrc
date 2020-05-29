@@ -13,6 +13,15 @@
       "contributions": [
         "security"
       ]
+    },
+    {
+      "login": "AwesomeTech10",
+      "name": "Trevor",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/22264706?v=4",
+      "profile": "http://awesometech10.js.org",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
