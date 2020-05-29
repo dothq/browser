@@ -34,8 +34,7 @@ class Dot {
         })
 
         ipcRenderer.on('width-suggestionbox', (e, width) => {
-            console.log(width + 'sugbox')
-            this.suggestionsRef.current.style.width = `${width}px`;
+            this.suggestionsRef.current.style.width = +width + 30 + 'px';
         })
 
         window.addEventListener('DOMContentLoaded', () => {
