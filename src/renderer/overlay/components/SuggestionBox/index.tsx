@@ -11,5 +11,26 @@ export const SuggestionBox = observer(() => (
   <StyledSuggestionBox ref={dot.suggestionsRef}>
     <SuggestionIcon icon={"search"}/>
     <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
+
+    <SuggestionIcon icon={"search"}/>
+    <Suggestion suggestion={"What are you searching for?"} />
   </StyledSuggestionBox>
 ))

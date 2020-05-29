@@ -6,6 +6,7 @@ export const Style = css`
     padding: 0;
     background: transparent;
     overflow: hidden;
+    width: 100%;
   }
 `
 

@@ -9,6 +9,4 @@ app.id = "app"
 
 document.body.appendChild(app)
 
-electron.ipcRenderer.send('ignore-pointer-events') // temporary
-
 ReactDOM.render(<App />, document.getElementById("app"))

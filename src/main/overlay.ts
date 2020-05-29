@@ -57,7 +57,6 @@ export class Overlay {
     }
 
     public setPointerEvents(allowed: boolean) {
-        console.log("received")
         this.window.setIgnoreMouseEvents(allowed, { forward: true })
     }
 }
