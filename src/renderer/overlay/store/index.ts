@@ -10,6 +10,7 @@ class Dot {
     public outsideRef = React.createRef<HTMLDivElement>();
     public suggestionsRef = React.createRef<HTMLDivElement>();
 
+    @observable
     public suggestionBoxActivate: boolean = false;
 
     public updatePointerEvents() {
@@ -24,8 +25,9 @@ class Dot {
             }
         })
 
-        ipcRenderer.on('suggestionbox-activate', () => {
+        ipcRenderer.on('activate-suggestionbox', () => {
             this.suggestionBoxActivate = true;
+            console.log('update suggestionbox')
         })
 
         window.addEventListener('DOMContentLoaded', () => {

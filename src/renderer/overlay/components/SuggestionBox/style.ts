@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { NAVIGATION_HEIGHT } from '../../../constants/window';
 import dot from '../../store';
+import { observer } from 'mobx-react';
 
 export const StyledSuggestionBox = styled.div`
   width: 100%;
@@ -15,5 +16,7 @@ export const StyledSuggestionBox = styled.div`
   border-bottom: 1px solid #1499ff !important;
   position: relative;
 
-  ${dot.suggestionBoxActivate == true ? "display: inherit" : "display: none"};
+  ${({ visible }: { visible: boolean }) => css`
+    display: ${visible ? '' : 'none'};
+  `};
 `
