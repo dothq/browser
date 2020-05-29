@@ -33,6 +33,11 @@ class Dot {
             this.suggestionBoxActivate = false;
         })
 
+        ipcRenderer.on('width-suggestionbox', (e, width) => {
+            console.log(width + 'sugbox')
+            this.suggestionsRef.current.style.width = `${width}px`;
+        })
+
         window.addEventListener('DOMContentLoaded', () => {
             this.suggestionsRef.current.addEventListener('mouseenter', () => {
                 this.hovering = true;

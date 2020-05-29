@@ -16,3 +16,7 @@ export const showSuggestionBox = () => {
 export const hideSuggestionBox = () => {
     appWindow.overlay.webContents.send('disable-suggestionbox')
 }
+
+export const setSuggestionBoxWidth = (width: string) => {
+    appWindow.overlay.webContents.send('width-suggestionbox', width)
+}
