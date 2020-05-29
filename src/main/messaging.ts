@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { ipcMain, app } from "electron";
 
 import { 
     createView, 
@@ -11,6 +11,7 @@ import {
     navigateView
 } from "./tools/view";
 import { appWindow } from ".";
+import { updateMouseBoundries, updateOverlayCursor } from "./tools/overlay";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -29,4 +30,9 @@ export const startMessagingAgent = () => {
     ipcMain.handle('get-error-data', async (e, id) => {
         return appWindow.getViewFromId(id).errorData
     })
+  
+    ipcMain.on('ignore-pointer-events', () => updateMouseBoundries(false))
+    ipcMain.on('allow-pointer-events', () => updateMouseBoundries(true))
+
+    ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 }

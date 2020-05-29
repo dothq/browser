@@ -1,17 +1,22 @@
-import { BrowserWindow, app, Menu } from 'electron';
+import { BrowserWindow, app, Menu, ipcMain } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
 import { Storage } from './storage';
+import { path } from '../../scripts/webpack.config';
+import { Overlay } from './overlay';
 
 export class AppWindow {
     public window: BrowserWindow;
+    public overlay: Overlay;
+
     public storage: Storage;
 
     public views: View[] = [];
     
     public selectedId: string;
+
 
     constructor() {
         this.window = new BrowserWindow({
@@ -34,6 +39,8 @@ export class AppWindow {
           },
         })
 
+        this.overlay = new Overlay(this);
+
         this.window.setBackgroundColor('#000000')
         this.storage = new Storage()
 
@@ -48,16 +55,19 @@ export class AppWindow {
         }
 
         this.window.on('ready-to-show', () => {
-          this.window.show()
+            this.window.show()
+            this.overlay.show()
+        })
+
+        this.window.on('move', () => {
+          this.overlay.rearrange()
         })
 
         this.window.on('maximize', () => {
-          this.window.webContents.send('app-display-changed', true)
           this.rearrangeView()
         })
 
         this.window.on('unmaximize', () => {
-          this.window.webContents.send('app-display-changed', false)
           this.rearrangeView()
         })
     };

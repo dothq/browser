@@ -22,6 +22,7 @@ export const StyledAddressbar = styled.div`
     }
 
     &:focus-within {
+        border-radius: 3px 3px 0 0;
         border: 1px solid #1499ff !important;
         user-select: unset;
     }
