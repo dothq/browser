@@ -1,21 +1,24 @@
 import { observable } from 'mobx';
 
 import { ERRORS } from '../../../app/constants/errors'
+import { parse } from 'url';
 
 class Dot {
     @observable
     public error = null;
 
     constructor() {
-        setTimeout(() => {
-            if((window as any).errorData) {
-                const error = (window as any).errorData
-    
-                this.error = error
-            } else {
-                document.write("")
-            }
-        }, 4000);
+        window.addEventListener('DOMContentLoaded', () => {
+            const data = (window as any).errorData
+
+            const url = parse(data.viewError.validatedURL);
+
+            data.error.summary = data.error.summary.replace(/%url/g, `[b]${url.hostname}[/b]`)
+
+            this.error = data.error
+
+            document.title = url.hostname
+        })
     }
 }
 

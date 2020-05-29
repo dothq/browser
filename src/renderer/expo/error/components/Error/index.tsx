@@ -12,7 +12,7 @@ export const Error = observer(() => {
         <StyledError>
             {dot.error && dot.error.emote && <Emoji src={emoji.default} />}
             <Heading>{dot.error && dot.error.heading}</Heading>
-            <Summary>{dot.error && dot.error.summary}</Summary>
+            <Summary dangerouslySetInnerHTML={{ __html: dot.error && dot.error.summary.replace(/\[b]/g, "<b>").replace(/\[\/b\]/g, "</b>") }} />
             <Code>{dot.error && dot.error.code}</Code>
         </StyledError>
     )

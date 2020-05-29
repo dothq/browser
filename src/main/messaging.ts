@@ -27,6 +27,10 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
 
+    ipcMain.handle('get-error-data', async (e, id) => {
+        return appWindow.getViewFromId(id).errorData
+    })
+  
     ipcMain.on('ignore-pointer-events', () => updateMouseBoundries(false))
     ipcMain.on('allow-pointer-events', () => updateMouseBoundries(true))
 
