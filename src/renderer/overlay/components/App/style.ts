@@ -7,6 +7,7 @@ export const Style = css`
     background: transparent;
     overflow: hidden;
     width: 100%;
+    display: flex;
   }
 `
 

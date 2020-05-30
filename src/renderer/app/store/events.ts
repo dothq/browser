@@ -2,6 +2,7 @@ import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
 import { ipcRenderer, remote } from "electron";
 import { Tab as ITab } from "../models/tab"
 import { SEARCH_ENGINE_URL, EXPO_PREFIX } from "../../constants/web";
+import dot from '.'
 
 export class EventsStore {
     public store;
@@ -20,6 +21,7 @@ export class EventsStore {
             }
 
             this.inputNavigate(url);
+            ipcRenderer.send('suggestionbox-disable');
         }
     }
 
@@ -61,6 +63,7 @@ export class EventsStore {
         } else {
             this.store.tabs.selectedTab.showInputPlaceholder = true;
         }
+        ipcRenderer.send('suggestionbox-activate');
     }
 
     public inputNavigate(url) {
@@ -127,6 +130,8 @@ export class EventsStore {
         } else if(type == "maximise") {
             if(window.isMaximized()) return window.unmaximize()
             window.maximize()
+            ipcRenderer.send('suggestionbox-width', `${dot.searchRef.current.getBoundingClientRect().width}`);
+            ipcRenderer.send('suggestionbox-left', `${dot.searchRef.current.getBoundingClientRect().left}`);
         }
     }
 

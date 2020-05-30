@@ -22,6 +22,7 @@ class Dot {
     @observable
     public isOnline: boolean = true;
 
+    @observable
     public searchRef = React.createRef<HTMLInputElement>()
 
     constructor() {
@@ -32,6 +33,8 @@ class Dot {
                 if(r.connected == -1 || r.connected == 1) this.isOnline = true;
                 if(r.connected == 0) this.isOnline = false;
             })
+            ipcRenderer.send('suggestionbox-width', `${this.searchRef.current.getBoundingClientRect().width}`);
+            ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
         })
     }
 }

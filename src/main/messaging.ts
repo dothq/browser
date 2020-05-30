@@ -11,7 +11,14 @@ import {
     navigateView
 } from "./tools/view";
 import { appWindow } from ".";
-import { updateMouseBoundries, updateOverlayCursor } from "./tools/overlay";
+import { 
+  updateMouseBoundries, 
+  updateOverlayCursor, 
+  showSuggestionBox, 
+  hideSuggestionBox, 
+  setSuggestionBoxWidth, 
+  setSuggestionBoxLeft 
+} from "./tools/overlay";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -27,12 +34,13 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
 
-    ipcMain.handle('get-error-data', async (e, id) => {
-        return appWindow.getViewFromId(id).errorData
-    })
-  
     ipcMain.on('ignore-pointer-events', () => updateMouseBoundries(false))
     ipcMain.on('allow-pointer-events', () => updateMouseBoundries(true))
+
+    ipcMain.on('suggestionbox-activate', () => showSuggestionBox())
+    ipcMain.on('suggestionbox-disable', () => hideSuggestionBox())
+    ipcMain.on('suggestionbox-width', (e, args) => setSuggestionBoxWidth(args))
+    ipcMain.on('suggestionbox-left', (e, args) => setSuggestionBoxLeft(args))
 
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 }

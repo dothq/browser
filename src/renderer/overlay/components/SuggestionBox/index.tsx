@@ -8,7 +8,8 @@ import { SuggestionIcon } from './SuggestionIcon';
 import dot from '../../store'
 
 export const SuggestionBox = observer(() => (
-  <StyledSuggestionBox ref={dot.suggestionsRef}>
+
+   <StyledSuggestionBox ref={dot.suggestionsRef} visible={dot.suggestionBoxActivate} width={dot.suggestionBoxWidth} left={dot.suggestionBoxLeft}>
     <SuggestionIcon icon={"search"}/>
     <Suggestion suggestion={"What are you searching for?"} />
 
