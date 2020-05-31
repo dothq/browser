@@ -58,7 +58,7 @@ export class AppWindow {
 
         this.window.on('ready-to-show', () => {
             this.window.show()
-            this.overlay.show()
+            // this.overlay.show()
         })
 
         this.window.on('move', () => {

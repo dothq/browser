@@ -6,6 +6,7 @@ import { EventsStore } from "./events";
 
 import { observable } from 'mobx';
 import { ConnectivityStore } from "./connectivity";
+import { ipcRenderer } from "electron";
 
 class Dot {
     public tabs = new TabsStore(this);
