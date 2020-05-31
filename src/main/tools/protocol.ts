@@ -10,8 +10,7 @@ export const startProtocolService = () => {
         ses.protocol.registerFileProtocol('dot', (request, callback) => {
             const parsed = parse(request.url)
 
-
-            callback({ path: resolve(__dirname, parsed.path == "/" ? parsed.host + ".html" : parsed.path.split("/")[1] + `?t=${Date.now()}`) })
+            callback({ path: resolve(app.getAppPath(), parsed.path == "/" ? parsed.host + ".html" : parsed.path.split("/")[1] + `?t=${Date.now()}`) })
         }, (error) => {
           if (error) console.error('Failed to register protocol')
         })

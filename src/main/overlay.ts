@@ -25,10 +25,9 @@ export class Overlay {
             }
         })
 
-        this.window.webContents.openDevTools({ mode: 'detach' })
-
         if(process.env.ENV == "development") {
             this.window.loadURL('http://localhost:9010/overlay.html')
+            this.window.webContents.openDevTools({ mode: 'detach' })
         } else {
             this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/build/overlay.html`))
         }

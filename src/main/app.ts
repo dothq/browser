@@ -48,10 +48,9 @@ export class AppWindow {
 
         Menu.setApplicationMenu(getAppMenu(app.name))
 
-        this.window.webContents.openDevTools({ mode: 'detach' })
-
         if(process.env.ENV == "development") {
           this.window.loadURL('http://localhost:9010/app.html')
+          this.window.webContents.openDevTools({ mode: 'detach' })
         } else {
           this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/build/app.html`))
         }
