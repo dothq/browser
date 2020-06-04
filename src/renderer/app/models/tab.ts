@@ -3,13 +3,16 @@ import { ViewCreateOptions } from "../../../interfaces/view";
 import { observable } from "mobx";
 import { BLUE_1 } from "../../constants/colors";
 import { NEWTAB_URL } from "../../constants/web";
+import { parse } from "url";
+
+const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error']
 
 export class Tab {
     @observable
     public id: string;
 
     @observable
-    public url: string;
+    public originalUrl: string;
 
     @observable
     public title: string = "New Tab";
@@ -33,6 +36,9 @@ export class Tab {
     public killed: boolean = false;
 
     @observable
+    public error: any;
+
+    @observable
     public inputFocused: boolean = false;
 
     @observable
@@ -40,22 +46,30 @@ export class Tab {
 
     constructor({ id, url, active }: ViewCreateOptions) {
         this.id = id;
-        this.url = url;
+        this.originalUrl = url;
 
         console.log("tab =>", this)
 
         ipcRenderer.send('view-create', { id, url, active })
 
-        ipcRenderer.on(`view-data-updated-${this.id}`, (event, data) => {
-            for (const [key, value] of Object.entries(data)) {
-                console.log(`tab.${key}`, "=>", data[key])
-                this[key] = data[key]
-            }
+        DataTypes.forEach(dataType => {
+            ipcRenderer.on(`view-${dataType}-updated-${this.id}`, (event, data) => {
+                if(dataType == "url") {
+                    dataType = "originalUrl"
+                }
+
+                console.log(`tab.${dataType} =>`, data)
+                this[dataType] = data
+            })
         })
     }
 
     public get isNTP() {
         return this.url == NEWTAB_URL
+    }
+
+    public goto(url) {
+        ipcRenderer.send('view-navigate', this.id, url);
     }
 
     public refresh() {
@@ -72,5 +86,18 @@ export class Tab {
 
     public goForward() {
         ipcRenderer.send('view-forward', this.id);
+    }
+
+    public get url() {
+        if(this.error && this.error.validatedURL) return this.error.validatedURL
+        return this.originalUrl;
+    }
+
+    public set url(url) {
+        this.originalUrl = url;
+    }
+
+    public get isError() {
+        return this.error && this.error.validatedURL;
     }
 }

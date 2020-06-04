@@ -3,7 +3,7 @@ import { StyledParts, Part } from "./style";
 
 import dot from '../../../store';
 import { observer } from "mobx-react";
-import { EXPO_URL } from "../../../../constants/web";
+import { EXPO_PREFIX } from "../../../../constants/web";
 
 export const Parts = observer(({ showSearchText, searchWidth }: { showSearchText: boolean; searchWidth: number }) => {
     const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;

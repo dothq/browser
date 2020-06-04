@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { TOOLBAR_HEIGHT } from "../../constants/window";
+import { TOOLBAR_HEIGHT } from "../../../constants/window";
 
 export const StyledNavigation = styled.div`
     display: flex;

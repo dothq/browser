@@ -25,9 +25,6 @@ jobs:
       - name: Set the release channel for this build
         run: node scripts/tag-version.js tag=
 
-      - name: Load files
-        run: node scripts/checkout.js days=2
-
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:

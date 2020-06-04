@@ -1,11 +1,11 @@
-import { BrowserView, app, ContextMenuParams } from "electron";
+import { BrowserView, app, ContextMenuParams, ipcMain } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
-import { NAVIGATION_HEIGHT } from "../renderer/app/constants/window";
+import { NAVIGATION_HEIGHT } from "../renderer/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "../renderer/constants/colors";
-import { NEWTAB_URL } from "../renderer/constants/web";
+import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "../renderer/constants/web";
 import { parse } from "url";
 
 export class View {
@@ -13,6 +13,8 @@ export class View {
     public id: string;
 
     private historyId: string;
+    
+    public errorData: any;
 
     constructor(id: string, url: any) {
         this.id = id;
@@ -55,17 +57,19 @@ export class View {
             generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
         })
 
-        this.view.webContents.on('did-navigate', this.events.viewNavigate)
-        this.view.webContents.on('did-navigate-in-page', this.events.viewNavigateInPage)
-        this.view.webContents.on('did-start-loading', this.events.viewStartedLoading)
-        this.view.webContents.on('did-stop-loading', this.events.viewStoppedLoading)
-        this.view.webContents.on('did-finish-load', this.events.viewFinishedLoading)
+        this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
+        this.view.webContents.addListener('did-navigate-in-page', this.events.viewNavigateInPage)
+        this.view.webContents.addListener('did-start-loading', this.events.viewStartedLoading)
+        this.view.webContents.addListener('did-stop-loading', this.events.viewStoppedLoading)
+        this.view.webContents.addListener('did-finish-load', this.events.viewFinishedLoading)
 
-        this.view.webContents.on('new-window', this.events.viewWindowOpened)
+        this.view.webContents.addListener('new-window', this.events.viewWindowOpened)
 
-        this.view.webContents.on('page-title-updated', this.events.viewTitleUpdated)
-        this.view.webContents.on('page-favicon-updated', this.events.viewFaviconUpdated)
-        this.view.webContents.on('did-change-theme-color', this.events.viewThemeColorUpdated)
+        this.view.webContents.addListener('did-fail-load', this.events.viewFailedLoading)
+
+        this.view.webContents.addListener('page-title-updated', this.events.viewTitleUpdated)
+        this.view.webContents.addListener('page-favicon-updated', this.events.viewFaviconUpdated)
+        this.view.webContents.addListener('did-change-theme-color', this.events.viewThemeColorUpdated)
     }
 
     public rearrange() {
@@ -82,31 +86,33 @@ export class View {
     private get events() {
         return {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+                appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
 
                 this.updateNavigationButtons()
                 this.addItemToHistory()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
-                    appWindow.window.webContents.send(`view-data-updated-${this.id}`, { url })
+                    appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
 
                     this.updateNavigationButtons()
                     this.addItemToHistory()
                 }
             },
             viewStartedLoading: (_event: Electron.Event) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'loading', themeColor: BLUE_1 })
+                appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
+                appWindow.window.webContents.send(`view-status-updated-${this.id}`, 'loading')
+                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
 
                 this.updateNavigationButtons()
             },
             viewStoppedLoading: (_event: Electron.Event) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { status: 'idle' })
+                appWindow.window.webContents.send(`view-status-updated-${this.id}`, 'idle')
 
                 this.updateNavigationButtons()
             },
             viewFinishedLoading: (_event: Electron.Event) => {
-                
+                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
             },
             viewWindowOpened: (
                 _event: Electron.Event,
@@ -123,25 +129,42 @@ export class View {
                     appWindow.window.webContents.send('add-tab', { url, active: disposition == "foreground-tab" })
                 }
             },
-            viewTitleUpdated: (_event: Electron.Event, title: string) => {
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { title })
+            viewFailedLoading: (
+                _event: Electron.Event, 
+                errorCode: number, 
+                errorDescription: string, 
+                validatedURL: string, 
+                isMainFrame: boolean, 
+                frameProcessId: number, 
+                frameRoutingId: number
+            ) => {
+                if(!isMainFrame || errorCode == -3 || validatedURL == `${EXPO_PREFIX}error${EXPO_SUFFIX}`) return;
 
-                this.updateNavigationButtons()
-                this.updateItemInHistory({ title })
+                const error = { errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId };
+
+                appWindow.window.webContents.send(`view-error-updated-${this.id}`, error)
+
+                this.view.webContents.loadURL(`${EXPO_PREFIX}error${EXPO_SUFFIX}`)
+                this.errorData = error
+            },
+            viewTitleUpdated: async (_event: Electron.Event, title: string) => {
+                appWindow.window.webContents.send(`view-title-updated-${this.id}`, title)
+
+                await this.updateItemInHistory({ title })
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
                 const faviconUrl = favicons[0];
 
                 downloadFaviconFromUrl(faviconUrl).then(favicon => {
-                    appWindow.window.webContents.send(`view-data-updated-${this.id}`, { favicon })
+                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
                 })
 
                 this.updateNavigationButtons()
             },
             viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
                 if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
-                appWindow.window.webContents.send(`view-data-updated-${this.id}`, { themeColor })
+                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
             }
         }
     }
@@ -150,7 +173,7 @@ export class View {
         const canGoForward = this.view.webContents.canGoForward()
         const canGoBack = this.view.webContents.canGoBack()
 
-        appWindow.window.webContents.send(`view-data-updated-${this.id}`, { navigationStatus: { canGoForward, canGoBack } })
+        appWindow.window.webContents.send(`view-navigationStatus-updated-${this.id}`, { canGoForward, canGoBack })
     }
 
     private addItemToHistory() {
@@ -162,14 +185,12 @@ export class View {
 
         const now = Date.now()
 
-        const { id } = appWindow.storage.add('history', {
+        appWindow.storage.add('history', {
             tabId: this.id,
             url,
             title,
             visited: now
         })
-
-        this.historyId = id;
     }
 
     private updateItemInHistory(data: any) {

@@ -10,7 +10,7 @@ export const Style = css`
     }
 
     *::selection {
-        background-color: rgb(190, 215, 248)	
+        background-color: rgba(190, 215, 248, 0.4)	
     }
     
     * {

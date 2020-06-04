@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { TABBAR_HEIGHT } from "../../constants/window";
+import { TABBAR_HEIGHT } from "../../../constants/window";
 import { NavigationButton } from "../NavigationButton";
 
 import dot from '../../store'
