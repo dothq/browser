@@ -22,7 +22,7 @@ export class AppWindow {
     constructor() {
         this.window = new BrowserWindow({
           frame: false,
-          titleBarStyle: "hidden",
+          titleBarStyle: "hiddenInset",
           minWidth: 500,
           minHeight: 450,
           width: 1280,
