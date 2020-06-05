@@ -20,11 +20,14 @@ module.exports = {
       usedExports: true,
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
-      },
-      module: {
-        rules: [
-          { test: /\.tsx?$/, loader: "ts-loader" }
-        ]
+      extensions: [".ts", ".tsx", ".js"]
+    },
+    module: {
+      rules: [
+        { test: /\.tsx?$/, loader: "ts-loader" }
+      ]
+    },
+    externals: {
+      glasstron: "commonjs glasstron"
     }
 };
