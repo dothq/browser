@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { StyledNavigationButton } from "../NavigationButton/style";
+import { BLUE_1 } from "../../../constants/colors";
 
 export const StyledAddressbar = styled.div`
     width: 100%;
@@ -22,7 +23,7 @@ export const StyledAddressbar = styled.div`
 
     &:focus-within {
         border-radius: 3px;
-        border: 1px solid #1499ff !important;
+        border: 1px solid ${BLUE_1} !important;
         user-select: unset;
     }
 `;
