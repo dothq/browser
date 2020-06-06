@@ -17,23 +17,26 @@ export const TabMotion = styled(motion.div)`
 
 export const StyledTab = styled.div`
     width: ${TAB_WIDTH}px;
-    height: calc(100% - 4px);
+    height: calc(100% + 1px);
     display: flex;
     align-self: flex-end;
     -webkit-app-region: no-drag;
     padding-right: 4px;
     overflow: hidden;
     position: relative;
-    border-radius: 6px 6px 0 0;
-    transition: 0.2s background-color, 0.2s box-shadow; 
+    transition: 0.1s background-color, 0.1s box-shadow;
+    border: 1px solid #eaeaea;
+    border-bottom: none;
+    z-index: 1;
+    top: 1px;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
-        box-shadow: ${selected ? `0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108), inset 0px -3px 0px ${themeColor}` : ''};
+        box-shadow: ${selected ? `inset 0px 3px 0px ${themeColor}, 0px 1px 0px white` : 'inset 0px 3px 0px transparent, 0px 1px 0px transparent'};
 
         &:hover {
-            background-color: ${selected ? '' : '#0000000d'};
-            box-shadow: ${selected ? '' : 'inset 0px -3px 0px #e1dfdd'}
+            background-color: ${selected ? '' : '#eeeff2'};
+            box-shadow: ${selected ? '' : 'inset 0px 3px 0px #e1dfdd'}
         }
     `};
 `;
@@ -89,5 +92,6 @@ export const Close = styled(NavigationButton).attrs(() => ({
     size: 15,
     buttonSize: 24,
     iconStyle: { strokeWidth: 1 },
-    style: { position: 'absolute', right: '4px' }
+    style: { position: 'absolute', right: '4px', zIndex: '100000' },
+    className: 'close'
 }))``;

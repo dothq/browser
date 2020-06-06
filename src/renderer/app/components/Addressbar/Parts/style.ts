@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 
 export const StyledParts = styled.div`
-    font-size: 14px;
+    font-size: 16px;
     line-height: 16px;
     color: #303030;
     position: absolute;
-    top: 9px;
+    top: 7px;
     pointer-events: none;
     width: 944px;
     height: 100%;
