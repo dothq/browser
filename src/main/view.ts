@@ -11,6 +11,7 @@ import { parse } from "url";
 export class View {
     public view: BrowserView;
     public id: string;
+    public favicon: string;
 
     private historyId: string;
     
@@ -157,7 +158,10 @@ export class View {
                 const faviconUrl = favicons[0];
 
                 downloadFaviconFromUrl(faviconUrl).then(favicon => {
+                    if(this.favicon == favicon) return;
+
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
+                    this.favicon = favicon;
                 })
 
                 this.updateNavigationButtons()
