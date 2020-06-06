@@ -42,6 +42,7 @@
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
+    "@dothq/icon": "^1.0.0",
     "@dothq/system-buttons": "^1.0.0",
     "axios": "^0.19.2",
     "electron-updater": "^4.3.1",
