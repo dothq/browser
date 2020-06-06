@@ -14,7 +14,7 @@
     "prod-start": "cross-env ENV=production electron .",
     "build": "yarn prod",
     "dev": "cross-env ENV=development gulp start",
-    "prod": "cross-env ENV=production gulp start",
+    "prod": "node scripts/generate-plugins-list.js && cross-env ENV=production gulp start",
     "start": "cross-env ENV=development electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
