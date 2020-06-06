@@ -1,5 +1,5 @@
 import { webFrame, app, remote, ipcRenderer } from "electron";
-import { ERRORS } from "../renderer/app/constants/errors";
+import { ERRORS } from "@dothq/errors";
 import { EXPO_PREFIX } from "../renderer/constants/web";
 
 const id = process.argv.find(a => a.includes("--tab-id=")).split("--tab-id=")[1]

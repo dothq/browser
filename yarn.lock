@@ -126,6 +126,11 @@
   resolved "https://registry.yarnpkg.com/@dothq/colors/-/colors-1.0.0.tgz#ba7d54152460d2dd2c0539a271b97d7ccdac5e9a"
   integrity sha512-B8ZDDOCGCfUp2eApMaHF1wc+xCYWbfhjTEjVyi2h3LL/mQYUXg36Zet00kOpmW9I2KZV3+LEtue+QVlkga0rug==
 
+"@dothq/errors@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@dothq/errors/-/errors-1.0.0.tgz#8804c500d1a8361942c01fb16e7ffffe71f7210e"
+  integrity sha512-ldSKFGkEgyxzEXSGeKeQZg9CAW/dQu2vRiYv/gQpptIktBh6XxbKwAkovnfft17ekX7F8IjpPXifDJGQvUqoCA==
+
 "@dothq/icon@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@dothq/icon/-/icon-1.0.0.tgz#8d23adbd3835c1ffd08e49d933b540ea9c61208e"
