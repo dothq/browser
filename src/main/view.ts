@@ -138,7 +138,7 @@ export class View {
                 frameProcessId: number, 
                 frameRoutingId: number
             ) => {
-                if(!isMainFrame || errorCode == -3 || validatedURL == `${EXPO_PREFIX}error${EXPO_SUFFIX}`) return;
+                if(!isMainFrame || errorCode == -3 || validatedURL.startsWith(`${EXPO_PREFIX}error${EXPO_SUFFIX}`)) return;
 
                 const error = { errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId };
 
