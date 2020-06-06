@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { NAVIGATION_HEIGHT } from '../../../constants/window';
 
-import { BLUE_1 } from '../../../constants/colors';
+import { BLUE_1 } from '@dothq/colors';
 
 export const StyledSuggestionBox = styled.div`
   margin-top: ${NAVIGATION_HEIGHT - 6}px;

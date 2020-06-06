@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { StyledNavigationButton } from "../NavigationButton/style";
-import { BLUE_1 } from "../../../constants/colors";
+import { BLUE_1 } from "@dothq/colors";
 
 export const StyledAddressbar = styled.div`
     width: 100%;
