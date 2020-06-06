@@ -9,7 +9,7 @@ export const StyledAddressbar = styled.div`
     align-self: center;
     border: 1px solid #e5e5e5;
     margin: 0 6px;
-    border-radius: 3px;
+    border-radius: 5px;
     -webkit-app-region: no-drag;
     user-select: none;
     transition: 0.15s border, 0.25s padding;
@@ -22,7 +22,6 @@ export const StyledAddressbar = styled.div`
     }
 
     &:focus-within {
-        border-radius: 3px;
         border: 1px solid ${BLUE_1} !important;
         user-select: unset;
     }
