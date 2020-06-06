@@ -3,7 +3,6 @@ import { StyledNavigation } from "./style";
 import { NavigationButtons } from "../NavigationButtons";
 import { NavigationButton } from '../NavigationButton'
 import { Addressbar } from "../Addressbar";
-import { WindowsButtons } from "../WindowsButtons";
 import { ExtensionButtons } from "../ExtensionButtons";
 import { Separator, Badge } from "../NavigationButtons/style";
 import { observer } from "mobx-react-lite";

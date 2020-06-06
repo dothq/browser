@@ -5,7 +5,7 @@ import { BLUE_1 } from "../../../constants/colors";
 export const StyledAddressbar = styled.div`
     width: 100%;
     display: flex;
-    height: 30px;
+    height: 32px;
     align-self: center;
     border: 1px solid #e5e5e5;
     margin: 0 6px;
@@ -44,8 +44,8 @@ export const Input = styled.input`
         color: transparent;
     }
 
-    ${({ showSearchText, isFocused, searchWidth }: { showSearchText: boolean; isFocused: boolean; searchWidth: number }) => css`
-        padding-left: ${showSearchText ? searchWidth : 38}px;
+    ${({ showSearchText, isFocused, searchWidth }: { showSearchText?: boolean; isFocused?: boolean; searchWidth?: number }) => css`
+        // padding-left: ${showSearchText ? searchWidth : 38}px;
     `};
 `;
 

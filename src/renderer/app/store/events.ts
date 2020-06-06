@@ -125,21 +125,6 @@ export class EventsStore {
         this.store.tabs.selectedTab.inputFocused = false;
     }
 
-    public windowsOnClick(type: string) {
-        const window = remote.getCurrentWindow()
-
-        if(type == "close") {
-            window.close()
-        } else if(type == "minimise") {
-            window.minimize()
-        } else if(type == "maximise") {
-            if(window.isMaximized()) return window.unmaximize()
-            window.maximize()
-            ipcRenderer.send('suggestionbox-width', `${dot.searchRef.current.getBoundingClientRect().width}`);
-            ipcRenderer.send('suggestionbox-left', `${dot.searchRef.current.getBoundingClientRect().left}`);
-        }
-    }
-
     constructor(store) {
         this.store = store;
     }

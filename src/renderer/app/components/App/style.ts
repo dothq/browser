@@ -10,7 +10,8 @@ export const Style = css`
     }
 
     *::selection {
-        background-color: rgba(190, 215, 248, 0.4)	
+        background-color: #0078d4;
+        color: white;
     }
     
     * {
