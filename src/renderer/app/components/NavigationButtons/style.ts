@@ -10,12 +10,6 @@ export const StyledNavigationButtons = styled.div`
     display: relative;
 `;
 
-export const Badge = styled.div`
-    width: 6px;
-    height: 6px;
-    position: absolute;
-`;
-
 export const Separator = styled.div`
     display: flex;
     margin: 0 4px;

@@ -4,10 +4,11 @@ import { NavigationButtons } from "../NavigationButtons";
 import { NavigationButton } from '../NavigationButton'
 import { Addressbar } from "../Addressbar";
 import { ExtensionButtons } from "../ExtensionButtons";
-import { Separator, Badge } from "../NavigationButtons/style";
+import { Separator } from "../NavigationButtons/style";
 import { observer } from "mobx-react-lite";
 
 import dot from '../../store'
+import { Badge } from "../NavigationButton/style";
 
 export const Navigation = observer(() => {
     const isLoading = dot.tabs.selectedTab && dot.tabs.selectedTab.status == "loading"
@@ -41,7 +42,9 @@ export const Navigation = observer(() => {
             </NavigationButtons>
             <Addressbar />
             <ExtensionButtons>
-                <NavigationButton icon={"shield"} size={18} />
+                <NavigationButton icon={"shield"} size={18}>
+                    {dot.tabs.selectedTab && dot.tabs.selectedTab.blockedAds !== 0 && <Badge>{dot.tabs.selectedTab.blockedAds.toString()}</Badge>}
+                </NavigationButton>
                 <Separator />
                 <NavigationButton icon={"user"} size={18} />
                 <NavigationButton icon={"more-horizontal"} size={18} />
