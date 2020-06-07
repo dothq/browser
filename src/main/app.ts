@@ -4,12 +4,14 @@ import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
 import { Storage } from './storage';
-import { path } from '../../scripts/webpack.config';
 import { Overlay } from './overlay';
+import { ServiceManager } from './services';
+import { log } from '@dothq/log';
 
 export class AppWindow {
     public window: BrowserWindow;
     public overlay: Overlay;
+    public services: ServiceManager = new ServiceManager()
 
     public storage: Storage;
 
@@ -18,6 +20,8 @@ export class AppWindow {
     public selectedId: string;
 
     constructor() {
+        const t = Date.now()
+
         const { height } = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workAreaSize
 
         this.window = new BrowserWindow({
@@ -59,6 +63,8 @@ export class AppWindow {
         }
 
         this.window.on('ready-to-show', () => {
+            log(`Loaded application in ${Date.now() - t}ms`)
+
             this.window.show()
             // this.overlay.show()
         })
