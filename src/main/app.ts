@@ -1,4 +1,4 @@
-import { BrowserWindow, app, Menu, ipcMain } from 'electron';
+import { BrowserWindow, app, Menu, screen } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
@@ -17,14 +17,17 @@ export class AppWindow {
     
     public selectedId: string;
 
-
     constructor() {
+        const { height } = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workAreaSize
+
         this.window = new BrowserWindow({
           frame: false,
           minWidth: 500,
           minHeight: 450,
-          width: 1280,
-          height: 720,
+          x: 15,
+          y: 15,
+          width: 1300,
+          height: height-(15 * 2),
           show: false,
           title: app.name,
           maximizable: true,
@@ -60,15 +63,7 @@ export class AppWindow {
             // this.overlay.show()
         })
 
-        this.window.on('move', () => {
-          this.overlay.rearrange()
-        })
-
-        this.window.on('maximize', () => {
-          this.rearrangeView()
-        })
-
-        this.window.on('unmaximize', () => {
+        this.window.on('resize', () => {
           this.rearrangeView()
         })
     };

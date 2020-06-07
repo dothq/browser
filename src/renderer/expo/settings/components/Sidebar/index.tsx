@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledSidebar, SidebarContainer, SidebarItem, Avatar } from "./style";
 
 import { observer } from 'mobx-react';
-import { Icon } from '../../../../app/components/Icon';
+import { Icon } from '@dothq/icon';
 
 import dot from '../../store';
 

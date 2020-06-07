@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StyledSuggestionIcon } from "./style";
-import { Icon } from "../../Icon";
+import { Icon } from "@dothq/icon";
 
 export const SuggestionIcon = ({ icon }: { icon: string }) => (
         <StyledSuggestionIcon>

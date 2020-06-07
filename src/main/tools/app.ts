@@ -1,6 +1,7 @@
 import { platform, homedir } from "os";
 import { app } from "electron";
 import { resolve } from "path";
+import { appWindow } from "..";
 
 export const setAppDataLocation = () => {
     if(platform() == 'darwin') {
@@ -10,4 +11,8 @@ export const setAppDataLocation = () => {
     } else {
         app.setPath('userData', resolve(homedir(), '.local', 'share', 'Dot Browser'));
     }
+}
+
+export const focusAddressbar = () => {
+    appWindow.window.webContents.send('focus-addressbar')
 }

@@ -1,6 +1,7 @@
 import { webFrame, app, remote, ipcRenderer } from "electron";
-import { ERRORS } from "../renderer/app/constants/errors";
-import { EXPO_PREFIX } from "../renderer/constants/web";
+import { ERRORS } from "@dothq/errors";
+import { EXPO_PREFIX, NEWTAB_URL } from "../renderer/constants/web";
+import { focusAddressbar } from "./tools/app";
 
 const id = process.argv.find(a => a.includes("--tab-id=")).split("--tab-id=")[1]
 
@@ -48,3 +49,12 @@ document.addEventListener('mouseover', (e: Event) => {
 
     ipcRenderer.send('transport-active-cursor', cursor)
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener("message", (event) => {
+        if(event.data == "focus-addressbar") {
+            console.log(event)
+            ipcRenderer.send('focus-addressbar')
+        }
+    }, false);
+})

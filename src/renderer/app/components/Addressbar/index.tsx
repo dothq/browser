@@ -30,11 +30,13 @@ export const Addressbar = observer(() => {
                 onKeyUp={(event) => events.inputOnKeyUp(event)}
                 onChange={(event) => events.inputOnChange(event)}
                 value={dot.addressbar.inputValue()}
-                showSearchText={showSearchText}
                 searchWidth={searchWidth}
-                isFocused={isFocused}
+                autoComplete={"off"}
+                autoCorrect={"off"} 
+                autoCapitalize={"off"} 
+                spellCheck={"false"}
             />
-            <Parts searchWidth={searchWidth} showSearchText={showSearchText} />
+            {/* <Parts searchWidth={searchWidth} showSearchText={showSearchText} /> */}
             <FavouriteIcon />
         </StyledAddressbar>
     )

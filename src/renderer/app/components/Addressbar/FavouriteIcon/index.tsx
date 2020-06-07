@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StyledFavouriteIcon } from "./style";
-import { Icon } from "../../Icon";
+import { Icon } from "@dothq/icon";
 
 import dot from '../../../store';
 import { observer } from "mobx-react";

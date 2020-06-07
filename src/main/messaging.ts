@@ -19,6 +19,7 @@ import {
   setSuggestionBoxWidth, 
   setSuggestionBoxLeft 
 } from "./tools/overlay";
+import { focusAddressbar } from "./tools/app";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -33,6 +34,11 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
+    ipcMain.on('app-minimise', (e) => { appWindow.window.minimize() })
+    ipcMain.on('app-maximise', (e) => { 
+      if(appWindow.window.isMaximized()) return appWindow.window.unmaximize()
+      return appWindow.window.maximize()
+    })
 
     ipcMain.on('ignore-pointer-events', () => updateMouseBoundries(false))
     ipcMain.on('allow-pointer-events', () => updateMouseBoundries(true))
@@ -43,4 +49,6 @@ export const startMessagingAgent = () => {
     ipcMain.on('suggestionbox-left', (e, args) => setSuggestionBoxLeft(args))
 
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
+
+    ipcMain.on('focus-addressbar', () => focusAddressbar())
 }

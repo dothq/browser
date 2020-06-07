@@ -6,12 +6,10 @@ export const Style = css`
         padding: 0;
         font-family: system-ui;
         background-color: white;
-        overflow: hidden;
     }
 
     *::selection {
-        background-color: #0078d4;
-        color: white;
+        background-color: rgba(190, 215, 248, 0.4)	
     }
     
     * {
@@ -29,4 +27,6 @@ export const Style = css`
 
 export const StyledApp = styled.div`
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 `;

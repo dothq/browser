@@ -5,6 +5,7 @@ export const createView = (options) => {
     const view = new View(options.id, options.url);
 
     appWindow.views.push(view)
+    appWindow.window.addBrowserView(view.view)
 
     if(options.active == true) {
         appWindow.window.setBrowserView(view.view)
