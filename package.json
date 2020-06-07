@@ -42,11 +42,14 @@
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
+    "@cliqz/adblocker-electron": "^1.15.1",
     "@dothq/colors": "^1.0.0",
     "@dothq/errors": "^1.0.0",
     "@dothq/icon": "^1.0.0",
+    "@dothq/log": "^1.0.1",
     "@dothq/system-buttons": "^1.1.0",
     "axios": "^0.19.2",
+    "cross-fetch": "^3.0.4",
     "electron-updater": "^4.3.1",
     "feather-icons-react": "^0.4.1",
     "framer-motion": "^1.10.3",

@@ -12,6 +12,7 @@ export const StyledNavigationButton = styled.div`
     border-radius: 3px;
     margin: 0 3px;
     transition: 0.1s box-shadow, 0.1s background-color;
+    position: relative;
 
     ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
         width: ${size}px;
@@ -35,4 +36,16 @@ export const StyledNavigationButton = styled.div`
     &:active {
         background-color: rgba(0, 0, 0, 0.10);
     }
+`;
+
+export const Badge = styled.div`
+    width: 14px;
+    height: 14px;
+    background-color: #0070f3;
+    color: white;
+    font-size: 9.5px;
+    position: absolute;
+    border-radius: 100px;
+    right: 0;
+    border: 2px solid white;
 `;

@@ -30,6 +30,9 @@ export class Tab {
     public navigationStatus: { canGoForward: boolean, canGoBack: boolean };
 
     @observable
+    public blockedAds: number = 0;
+
+    @observable
     public visible: boolean = true;
 
     @observable
@@ -61,6 +64,10 @@ export class Tab {
                 console.log(`tab.${dataType} =>`, data)
                 this[dataType] = data
             })
+        })
+
+        ipcRenderer.on(`blocked-ad-${this.id}`, () => {
+            ++this.blockedAds
         })
     }
 
