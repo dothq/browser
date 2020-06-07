@@ -6,12 +6,14 @@ import { observer } from 'mobx-react';
 import { Hero } from '../Hero';
 import { News } from '../News';
 
+import dot from '../../store'
+
 const GlobalStyle = createGlobalStyle`${Style}`;
 
 export const App = observer(() => (
     <StyledApp>
         <GlobalStyle />
         <Hero />
-        <News />
+        {dot.news && <News />}
     </StyledApp>
 ))

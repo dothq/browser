@@ -50,19 +50,11 @@ document.addEventListener('mouseover', (e: Event) => {
     ipcRenderer.send('transport-active-cursor', cursor)
 });
 
+if(window.location.href.startsWith(`${EXPO_PREFIX}newtab${EXPO_SUFFIX}`)) {
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    if(window.location.href.startsWith(`${EXPO_PREFIX}newtab${EXPO_SUFFIX}`)) {
-        fetch("https://dothq.co/api/browser.news", ({ headers: { 'X-Dot-NTP': true } } as any))
-            .then(res => res.json())
-            .then(async res => {
-                const w = await webFrame.executeJavaScript('window');
-
-                w.ntp = {
-                    news: res
-                } 
-            })
-    }
-
     window.addEventListener("message", (event) => {
         if(event.data == "focus-addressbar") {
             console.log(event)
