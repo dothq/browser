@@ -36,7 +36,7 @@ export const Tabs = observer(() => {
                 <p>{dot.tabs.selectedTab.url}</p>
                 <p>{dot.tabs.selectedId}</p>
             </div>}
-            {platform() !== "darwin" && <WindowsButtons window={remote.getCurrentWindow()} />}
+            {platform() !== "darwin" && <WindowsButtons ipcPrefix={"app"} />}
         </StyledTabs>
     )
 })

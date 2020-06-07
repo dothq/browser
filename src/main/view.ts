@@ -43,9 +43,10 @@ export class View {
             appWindow.window.webContents.send('view-created', { id, url })
         })
 
-        this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         let { width, height } = appWindow.window.getBounds()
         this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+
+        this.view.setAutoResize({ width: true, height: true });
         this.view.webContents.loadURL(url);
 
         this.view.webContents.on('context-menu', (_event, params: ContextMenuParams) => {
@@ -81,7 +82,9 @@ export class View {
             height = height - 15
         }
 
-        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        setTimeout(() => {
+            this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        }, 0)
     }
 
     private get events() {

@@ -143,10 +143,10 @@
     react-dom "^16.13.1"
     styled-components "^5.1.1"
 
-"@dothq/system-buttons@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@dothq/system-buttons/-/system-buttons-1.0.0.tgz#eb59e214076856474bce62017dde1a9b373636b6"
-  integrity sha512-sOnoP2LF+b8YNJ0TLsFtjwgjf8xFTXodtzvhcJaET4lOWqk/xNNPfd5lns8wp2oIbemOziCkQbz/UZBv13q8sQ==
+"@dothq/system-buttons@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@dothq/system-buttons/-/system-buttons-1.1.0.tgz#92086fa3ea67b2025808eb51f460dcbf607b0029"
+  integrity sha512-GpFT+dIHktrPAnyY9gu5mzjiUk+FKubdPgQqrDy1NQFkDTpYAjBf73G/6qbq07S7BQmGhskPxLiKsXwCiV8TpA==
   dependencies:
     mobx "^5.15.4"
     mobx-react "^6.2.2"
