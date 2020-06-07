@@ -2,13 +2,14 @@ import React from "react";
 import { StyledNavigation } from "./style";
 import { NavigationButtons } from "../NavigationButtons";
 import { NavigationButton } from '../NavigationButton'
-import { Addressbar } from "../Addressbar";
+import { Addressbar } from "@dothq/addressbar";
 import { ExtensionButtons } from "../ExtensionButtons";
 import { Separator } from "../NavigationButtons/style";
 import { observer } from "mobx-react-lite";
 
 import dot from '../../store'
 import { Badge } from "../NavigationButton/style";
+import { EXPO_PREFIX, EXPO_SUFFIX, NEWTAB_URL } from "../../../constants/web";
 
 export const Navigation = observer(() => {
     const isLoading = dot.tabs.selectedTab && dot.tabs.selectedTab.status == "loading"
@@ -40,7 +41,7 @@ export const Navigation = observer(() => {
                     : "rotate-cw"
                 } size={isLoading ? !isNTP ? 18 : 16 : 16} onClick={() => events.navigationOnRefreshClick()} />
             </NavigationButtons>
-            <Addressbar />
+            <Addressbar EXPO_PREFIX={EXPO_PREFIX} EXPO_SUFFIX={EXPO_SUFFIX} NEWTAB_URL={NEWTAB_URL} dot={dot}/>
             <ExtensionButtons>
                 <NavigationButton icon={"shield"} size={18}>
                     {dot.tabs.selectedTab && dot.tabs.selectedTab.blockedAds !== 0 && <Badge>{dot.tabs.selectedTab.blockedAds.toString()}</Badge>}

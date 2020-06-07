@@ -154,6 +154,19 @@
     ajv "^6.12.0"
     ajv-keywords "^3.4.1"
 
+"@dothq/addressbar@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@dothq/addressbar/-/addressbar-1.0.1.tgz#75a59b23ab0aec1126945c3be945e8e9e4ceac29"
+  integrity sha512-A+/p3wkhu8MWZI+5WsB74LfjAn8lb+pjww7asZ1yvB+hUCoWeiSCvo5gFtV37PumDPGkZWWnyoSxPNbaq6Jt7g==
+  dependencies:
+    "@dothq/colors" "^1.0.0"
+    "@dothq/icon" "^1.0.0"
+    mobx "^5.15.4"
+    mobx-react "^6.2.2"
+    react "^16.13.1"
+    react-dom "^16.13.1"
+    styled-components "^5.1.1"
+
 "@dothq/colors@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@dothq/colors/-/colors-1.0.0.tgz#ba7d54152460d2dd2c0539a271b97d7ccdac5e9a"
@@ -176,10 +189,12 @@
     react-dom "^16.13.1"
     styled-components "^5.1.1"
 
-"@dothq/log@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@dothq/log/-/log-1.0.1.tgz#b311f754cc6cc29dacde1748ebe7133e7075e6cf"
-  integrity sha512-glC0JN/EPC1L4Gvax9butQQVeIb3uCZj74Ud4OXDlpbdoKTgQF6Q2rrdyeU45zsPqV9bUhFc9xKvZBWAuTw+Fw==
+"@dothq/log@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@dothq/log/-/log-1.0.2.tgz#6bf8575e9482ae86e3fdd8d0c64c170618e69bea"
+  integrity sha512-AIZxymWf6odW0UFL3YwMuaRhaZ2AuerXWkuOwUjxy4OntrF9YKPE1pZhdH+Q5kpR24i4IIZZfJ18Wj6BTCBW5Q==
+  dependencies:
+    colors "^1.4.0"
 
 "@dothq/system-buttons@^1.1.0":
   version "1.1.0"
@@ -1591,6 +1606,11 @@ color-support@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-support/-/color-support-1.1.3.tgz#93834379a1cc9a0c61f82f52f0d04322251bd5a2"
   integrity sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==
+
+colors@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
+  integrity sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
 
 commander@^2.20.0:
   version "2.20.3"
