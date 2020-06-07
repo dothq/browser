@@ -91,6 +91,7 @@ export class View {
         return {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
+                appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
 
                 this.updateNavigationButtons()
                 this.addItemToHistory()
@@ -171,8 +172,8 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
-                if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
-                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
+                // if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
+                // appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
             }
         }
     }
