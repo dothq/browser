@@ -45,7 +45,7 @@
     "@dothq/colors": "^1.0.0",
     "@dothq/errors": "^1.0.0",
     "@dothq/icon": "^1.0.0",
-    "@dothq/system-buttons": "^1.0.0",
+    "@dothq/system-buttons": "^1.1.0",
     "axios": "^0.19.2",
     "electron-updater": "^4.3.1",
     "feather-icons-react": "^0.4.1",
