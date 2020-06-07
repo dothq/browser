@@ -6,14 +6,10 @@ class Dot {
     public news = []
 
     constructor() {
-        window.addEventListener('DOMContentLoaded', () => {
-            document.title = "New Tab"
-            console.log(this)
+        document.title = "New Tab"
+        console.log(this)
 
-            fetch('https://dothq.co/api/browser.news')
-                .then(res => res.json())
-                .then(res => this.news = res)
-        })
+
     }
 }
 

@@ -1,6 +1,6 @@
 import { webFrame, app, remote, ipcRenderer } from "electron";
 import { ERRORS } from "@dothq/errors";
-import { EXPO_PREFIX, NEWTAB_URL } from "../renderer/constants/web";
+import { EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX } from "../renderer/constants/web";
 import { focusAddressbar } from "./tools/app";
 
 const id = process.argv.find(a => a.includes("--tab-id=")).split("--tab-id=")[1]
@@ -51,6 +51,18 @@ document.addEventListener('mouseover', (e: Event) => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    if(window.location.href.startsWith(`${EXPO_PREFIX}newtab${EXPO_SUFFIX}`)) {
+        fetch("https://dothq.co/api/browser.news", ({ headers: { 'X-Dot-NTP': true } } as any))
+            .then(res => res.json())
+            .then(async res => {
+                const w = await webFrame.executeJavaScript('window');
+
+                w.ntp = {
+                    news: res
+                } 
+            })
+    }
+
     window.addEventListener("message", (event) => {
         if(event.data == "focus-addressbar") {
             console.log(event)
