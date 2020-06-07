@@ -98,6 +98,7 @@ export class View {
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
+                    appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
 
                     this.updateNavigationButtons()
                     this.addItemToHistory()
