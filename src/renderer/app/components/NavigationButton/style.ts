@@ -39,13 +39,16 @@ export const StyledNavigationButton = styled.div`
 `;
 
 export const Badge = styled.div`
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 15px;
     background-color: #0070f3;
     color: white;
-    font-size: 9.5px;
+    font-size: 8.6px;
     position: absolute;
     border-radius: 100px;
     right: 0;
     border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
