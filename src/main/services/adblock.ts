@@ -1,8 +1,9 @@
-import { ElectronBlocker } from '@cliqz/adblocker-electron';
+import { ElectronBlocker, Request } from '@cliqz/adblocker-electron';
 import fetch from 'cross-fetch';
 import { promises as fs } from 'fs';
 import Electron, { session } from 'electron';
 import { log } from '@dothq/log';
+import { appWindow } from '..';
 
 export class AdblockService {
     public blocker: ElectronBlocker
@@ -16,6 +17,14 @@ export class AdblockService {
         this.blocker.enableBlockingInSession(session)
 
         this.running = true;
+
+        this.blocker.on('request-blocked', (req: Request) => {
+            const wcID = req._originalRequestDetails.webContentsId;
+            const view = appWindow.views.find(v => v.view.webContents.id == wcID)
+            if(!view) return;
+
+            appWindow.window.webContents.send(`blocked-ad-${view.id}`)
+        })
     }
 
     stop(session: Electron.Session) {
