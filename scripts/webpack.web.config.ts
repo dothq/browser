@@ -23,6 +23,7 @@ const generateHTML = (entryPoints) => {
 const entry = {
   settings: './src/renderer/expo/settings',
   error: './src/renderer/expo/error',
+  newtab: './src/renderer/expo/newtab',
 };
 
 module.exports = {
