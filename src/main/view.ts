@@ -56,7 +56,7 @@ export class View {
 
             const generalMenu = getGeneralMenu(id)
 
-            generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
+            generalMenu.popup({ x, y: y + (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) })
         })
 
         this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
@@ -76,8 +76,6 @@ export class View {
 
     public rearrange() {
         let { width, height } = appWindow.window.getBounds()
-
-        console.log(appWindow.fullscreen)
 
         if(appWindow.window.isMaximized()) {
             width = width - 15
