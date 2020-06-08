@@ -76,14 +76,16 @@ export class View {
 
     public rearrange() {
         let { width, height } = appWindow.window.getBounds()
-    
+
+        console.log(appWindow.fullscreen)
+
         if(appWindow.window.isMaximized()) {
             width = width - 15
             height = height - 15
         }
 
         setTimeout(() => {
-            this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+            this.view.setBounds({ x: 0, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, width, height: height - (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) });
         }, 0)
     }
 

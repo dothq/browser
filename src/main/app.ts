@@ -18,6 +18,7 @@ export class AppWindow {
     public views: View[] = [];
     
     public selectedId: string;
+    public fullscreen: boolean;
 
     constructor() {
         const t = Date.now()
@@ -72,6 +73,18 @@ export class AppWindow {
         this.window.on('resize', () => {
           this.rearrangeView()
         })
+
+        this.window.on('enter-html-full-screen', () => {
+          this.fullscreen = true;
+          this.rearrangeView()
+          this.window.webContents.send('fullscreen', true);
+        });
+    
+        this.window.on('leave-html-full-screen', () => {
+          this.fullscreen = false;
+          this.rearrangeView()
+          this.window.webContents.send('fullscreen', false);
+        });
     };
 
     rearrangeView() {
