@@ -12,6 +12,7 @@ export class View {
     public view: BrowserView;
     public id: string;
     public favicon: string;
+    public previousURL: string = '';
 
     private historyId: string;
     
@@ -61,6 +62,8 @@ export class View {
 
         this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
         this.view.webContents.addListener('did-navigate-in-page', this.events.viewNavigateInPage)
+
+        this.view.webContents.addListener('did-start-navigation', this.events.viewStartedNavigation)
         this.view.webContents.addListener('did-start-loading', this.events.viewStartedLoading)
         this.view.webContents.addListener('did-stop-loading', this.events.viewStoppedLoading)
         this.view.webContents.addListener('did-finish-load', this.events.viewFinishedLoading)
@@ -93,17 +96,22 @@ export class View {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
                 appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
 
-                this.updateNavigationButtons()
                 this.addItemToHistory()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
-                    appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
 
-                    this.updateNavigationButtons()
                     this.addItemToHistory()
                 }
+            },
+            viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
+                if(isMainFrame) {
+                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
+                    appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
+                }
+
+                this.updateNavigationButtons()
             },
             viewStartedLoading: (_event: Electron.Event) => {
                 appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
