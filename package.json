@@ -15,7 +15,7 @@
     "build": "yarn prod",
     "dev": "cross-env ENV=development gulp start",
     "prod": "node scripts/generate-plugins-list.js && cross-env ENV=production gulp start",
-    "start": "cross-env ENV=development electron .",
+    "start": "cross-env ENV=development ELECTRON_ENABLE_STACK_DUMPING=true electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
     "build:linux": "yarn prod && electron-builder -l"
@@ -61,6 +61,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0",
+    "tinycolor2": "^1.4.1",
     "uuid": "^8.0.0"
   }
 }

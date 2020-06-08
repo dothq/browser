@@ -6332,6 +6332,11 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tinycolor2@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+  integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
+
 tldts-core@^5.6.29:
   version "5.6.29"
   resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-5.6.29.tgz#7a7ef68760e80a3fdf0eac47eb91c9f825156f2f"
