@@ -16,7 +16,7 @@ class Dot {
     public events = new EventsStore(this);
 
     @observable
-    public isMaximised: boolean = false;
+    public fullscreen: boolean = false;
 
     @observable
     public debugMode: boolean = false;
@@ -41,6 +41,10 @@ class Dot {
 
         ipcRenderer.on('focus-addressbar', () => {
             // @todo Make fake addressbar focus real addressbar
+        })
+
+        ipcRenderer.on('fullscreen', (e, isFullscreen) => {
+            this.fullscreen = isFullscreen;
         })
     }
 }
