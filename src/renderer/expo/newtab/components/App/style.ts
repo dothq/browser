@@ -29,4 +29,11 @@ export const StyledApp = styled.div`
     height: 100vh;
     display: flex;
     flex-direction: column;
+
+    animation: fadein 0.5s;
+
+    @keyframes fadein {
+        from { opacity: 0; }
+        to   { opacity: 1; }
+    }
 `;
