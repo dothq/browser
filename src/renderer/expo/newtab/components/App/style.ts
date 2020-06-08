@@ -6,6 +6,8 @@ export const Style = css`
         padding: 0;
         font-family: system-ui;
         background-color: white;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     *::selection {
@@ -30,7 +32,7 @@ export const StyledApp = styled.div`
     display: flex;
     flex-direction: column;
 
-    animation: fadein 0.5s;
+    animation: fadein .5s ease 0s;
 
     @keyframes fadein {
         from { opacity: 0; }
