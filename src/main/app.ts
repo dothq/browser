@@ -1,5 +1,6 @@
 import { BrowserWindow, app, Menu, screen } from 'electron';
 import { resolve } from 'path';
+import glasstron from 'glasstron';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
@@ -27,6 +28,7 @@ export class AppWindow {
 
         this.window = new BrowserWindow({
           frame: false,
+          titleBarStyle: "hiddenInset",
           minWidth: 500,
           minHeight: 450,
           x: 15,
@@ -47,9 +49,14 @@ export class AppWindow {
           },
         })
 
+        glasstron.update(this.window, {
+            macos: {vibrancy: "fullscreen-ui"},
+            linux: {requestBlur: true},
+            windows: {blurType: "blurbehind"}
+        })
+
         this.overlay = new Overlay(this);
 
-        this.window.setBackgroundColor('#000000')
         this.storage = new Storage()
 
         startMessagingAgent()

@@ -6,7 +6,7 @@ export const Style = css`
         margin: 0;
         padding: 0;
         font-family: system-ui;
-        background-color: white;
+        background-color: transparent;
         overflow: hidden;
     }
 
@@ -30,6 +30,7 @@ export const Style = css`
 
 export const StyledApp = styled.div`
     height: 100vh;
+
     transition: 0.3s margin-top;
 
     ${({ isFullscreen }: { isFullscreen: boolean }) => css`
