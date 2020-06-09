@@ -14,8 +14,8 @@
     "prod-start": "cross-env ENV=production electron .",
     "build": "yarn prod",
     "dev": "cross-env ENV=development gulp start",
-    "prod": "cross-env ENV=production gulp start",
-    "start": "cross-env ENV=development electron .",
+    "prod": "node scripts/generate-plugins-list.js && cross-env ENV=production gulp start",
+    "start": "cross-env ENV=development ELECTRON_ENABLE_STACK_DUMPING=true electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
     "build:linux": "yarn prod && electron-builder -l"
@@ -26,7 +26,7 @@
     "@types/react-dom": "^16.9.7",
     "@types/styled-components": "^5.1.0",
     "cross-env": "^7.0.2",
-    "electron": "^8.2.5",
+    "electron": "^9.0.2",
     "electron-builder": "^22.6.0",
     "file-loader": "^6.0.0",
     "gulp": "^4.0.2",
@@ -42,7 +42,15 @@
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
+    "@cliqz/adblocker-electron": "^1.15.1",
+    "@dothq/addressbar": "^1.0.1",
+    "@dothq/colors": "^1.0.0",
+    "@dothq/errors": "^1.0.0",
+    "@dothq/icon": "^1.0.0",
+    "@dothq/log": "^1.0.2",
+    "@dothq/system-buttons": "^1.1.0",
     "axios": "^0.19.2",
+    "cross-fetch": "^3.0.4",
     "electron-updater": "^4.3.1",
     "feather-icons-react": "^0.4.1",
     "framer-motion": "^1.10.3",
@@ -54,6 +62,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "styled-components": "^5.1.0",
+    "tinycolor2": "^1.4.1",
     "uuid": "^8.0.0"
   }
 }

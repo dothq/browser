@@ -6,7 +6,8 @@
     "files": [
         "build/**/**/*", 
         "package.json", 
-        "static/icons/**/*"
+        "static/icons/**/*",
+        "Adblock Filters"
     ],
     "directories": {
         "output": "dist",

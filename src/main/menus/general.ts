@@ -67,9 +67,9 @@ export const getGeneralMenu = (tabId) => {
             label: "View Page Source",
             accelerator: "CmdOrCtrl+U",
             click: () => {
-                // const url = view.webContents.getURL()
+                const url = appWindow.getViewFromId(tabId).url
 
-                // view.webContents.loadURL(`view-source:${url}`)
+                view.webContents.loadURL(`view-source:${url}`)
             }
         },
         {

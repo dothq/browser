@@ -1,11 +1,11 @@
 import { ipcRenderer } from "electron";
 import { ViewCreateOptions } from "../../../interfaces/view";
 import { observable } from "mobx";
-import { BLUE_1 } from "../../constants/colors";
+import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL } from "../../constants/web";
 import { parse } from "url";
 
-const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error']
+const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds']
 
 export class Tab {
     @observable
@@ -15,7 +15,7 @@ export class Tab {
     public originalUrl: string;
 
     @observable
-    public title: string = "New Tab";
+    public title: string = "Untitled";
 
     @observable
     public status: 'loading' | 'idle' | 'crashed' | 'suspended' = 'loading';
@@ -28,6 +28,9 @@ export class Tab {
     
     @observable
     public navigationStatus: { canGoForward: boolean, canGoBack: boolean };
+
+    @observable
+    public blockedAds: number = 0;
 
     @observable
     public visible: boolean = true;
@@ -61,6 +64,10 @@ export class Tab {
                 console.log(`tab.${dataType} =>`, data)
                 this[dataType] = data
             })
+        })
+
+        ipcRenderer.on(`blocked-ad-${this.id}`, () => {
+            ++this.blockedAds
         })
     }
 

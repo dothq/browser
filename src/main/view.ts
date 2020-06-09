@@ -4,13 +4,15 @@ import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../renderer/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
-import { BLUE_1 } from "../renderer/constants/colors";
+import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "../renderer/constants/web";
 import { parse } from "url";
 
 export class View {
     public view: BrowserView;
     public id: string;
+    public favicon: string;
+    public previousURL: string = '';
 
     private historyId: string;
     
@@ -42,9 +44,10 @@ export class View {
             appWindow.window.webContents.send('view-created', { id, url })
         })
 
-        this.view.setAutoResize({ width: true, height: true, horizontal: false, vertical: false });
         let { width, height } = appWindow.window.getBounds()
         this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+
+        this.view.setAutoResize({ width: true, height: true });
         this.view.webContents.loadURL(url);
 
         this.view.webContents.on('context-menu', (_event, params: ContextMenuParams) => {
@@ -54,11 +57,13 @@ export class View {
 
             const generalMenu = getGeneralMenu(id)
 
-            generalMenu.popup({ x, y: y + NAVIGATION_HEIGHT })
+            generalMenu.popup({ x, y: y + (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) })
         })
 
         this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
         this.view.webContents.addListener('did-navigate-in-page', this.events.viewNavigateInPage)
+
+        this.view.webContents.addListener('did-start-navigation', this.events.viewStartedNavigation)
         this.view.webContents.addListener('did-start-loading', this.events.viewStartedLoading)
         this.view.webContents.addListener('did-stop-loading', this.events.viewStoppedLoading)
         this.view.webContents.addListener('did-finish-load', this.events.viewFinishedLoading)
@@ -74,30 +79,39 @@ export class View {
 
     public rearrange() {
         let { width, height } = appWindow.window.getBounds()
-    
+
         if(appWindow.window.isMaximized()) {
             width = width - 15
             height = height - 15
         }
 
-        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        setTimeout(() => {
+            this.view.setBounds({ x: 0, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, width, height: height - (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) });
+        }, 0)
     }
 
     private get events() {
         return {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
+                appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
 
-                this.updateNavigationButtons()
                 this.addItemToHistory()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
 
-                    this.updateNavigationButtons()
                     this.addItemToHistory()
                 }
+            },
+            viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
+                if(isMainFrame) {
+                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
+                    appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
+                }
+
+                this.updateNavigationButtons()
             },
             viewStartedLoading: (_event: Electron.Event) => {
                 appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
@@ -138,7 +152,7 @@ export class View {
                 frameProcessId: number, 
                 frameRoutingId: number
             ) => {
-                if(!isMainFrame || errorCode == -3 || validatedURL == `${EXPO_PREFIX}error${EXPO_SUFFIX}`) return;
+                if(!isMainFrame || errorCode == -3 || validatedURL.startsWith(`${EXPO_PREFIX}error${EXPO_SUFFIX}`)) return;
 
                 const error = { errorCode, errorDescription, validatedURL, isMainFrame, frameProcessId, frameRoutingId };
 
@@ -157,14 +171,17 @@ export class View {
                 const faviconUrl = favicons[0];
 
                 downloadFaviconFromUrl(faviconUrl).then(favicon => {
+                    if(this.favicon == favicon) return;
+
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
+                    this.favicon = favicon;
                 })
 
                 this.updateNavigationButtons()
             },
             viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
-                if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
-                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
+                // if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
+                // appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
             }
         }
     }

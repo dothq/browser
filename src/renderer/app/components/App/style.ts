@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { NAVIGATION_HEIGHT } from "../../../constants/window";
 
 export const Style = css`
     body {
@@ -10,7 +11,8 @@ export const Style = css`
     }
 
     *::selection {
-        background-color: rgba(190, 215, 248, 0.4)	
+        background-color: #0078d4;
+        color: white;
     }
     
     * {
@@ -28,4 +30,10 @@ export const Style = css`
 
 export const StyledApp = styled.div`
     height: 100vh;
+
+    transition: 0.3s margin-top;
+
+    ${({ isFullscreen }: { isFullscreen: boolean }) => css`
+        margin-top: ${isFullscreen ? `-${NAVIGATION_HEIGHT}px` : ``};
+    `};
 `;

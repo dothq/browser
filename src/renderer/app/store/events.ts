@@ -115,24 +115,14 @@ export class EventsStore {
         this.store.tabs.selectedTab.goForward()
     }
 
-    public tabOnMouseDown(tab: ITab) {
+    public tabOnMouseDown(e, tab: ITab) {
+        const el = e.target.tagName == "svg" ? e.target.parentElement : e.target
+        const elevation = getComputedStyle(el).getPropertyValue('z-index');
+
+        if(elevation == "100000") return;
+        
         this.store.tabs.select(tab.id);
         this.store.tabs.selectedTab.inputFocused = false;
-    }
-
-    public windowsOnClick(type: string) {
-        const window = remote.getCurrentWindow()
-
-        if(type == "close") {
-            window.close()
-        } else if(type == "minimise") {
-            window.minimize()
-        } else if(type == "maximise") {
-            if(window.isMaximized()) return window.unmaximize()
-            window.maximize()
-            ipcRenderer.send('suggestionbox-width', `${dot.searchRef.current.getBoundingClientRect().width}`);
-            ipcRenderer.send('suggestionbox-left', `${dot.searchRef.current.getBoundingClientRect().left}`);
-        }
     }
 
     constructor(store) {

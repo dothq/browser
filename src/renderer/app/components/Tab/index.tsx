@@ -7,8 +7,8 @@ import { TAB_WIDTH } from '../../constants/tab'
 
 import dot from '../../store'
 
-const TabContent = observer(({ tab, onMouseDown }: { tab: ITab; onMouseDown: any }) => (
-    <StyledTabContent onMouseDown={onMouseDown} title={tab.title}>
+const TabContent = observer(({ tab }: { tab: ITab }) => (
+    <StyledTabContent title={tab.title}>
         {tab.status == "loading" && !tab.isNTP && <TabThrobber color={tab.themeColor} />}
         {tab.status == "idle" && <TabFavicon style={{ width: !tab.favicon ? '0px' : '', minWidth: !tab.favicon ? '0px' : '' }} src={tab.favicon} />}
         <TabTitle>{tab.title}</TabTitle>
@@ -38,7 +38,7 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
             display: 'flex'
         },
         closing: {
-            x: -20, 
+            x: 0, 
             opacity: 0, 
             width: 0, 
             minWidth: 0,
@@ -51,13 +51,14 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
         <>
             {!tab.killed && (
                 <TabMotion
-                    initial={{ x: -TAB_WIDTH, opacity: 0, width: 0 }}
+                    initial={{ x: 0, opacity: 0, width: 0 }}
                     animate={tab.visible ? 'opening' : 'closing'}
                     variants={variants}
                     transition={{ duration: 0.2, type: "tween" }}
+                    onMouseDown={(e) => events.tabOnMouseDown(e, tab)}
                 >
                     <StyledTab selected={tab.id == dot.tabs.selectedId} themeColor={tab.themeColor} tab={tab}>
-                        <TabContent tab={tab} onMouseDown={() => events.tabOnMouseDown(tab)} />
+                        <TabContent tab={tab} />
                         <Close onClick={() => onCloseClick()} />
                     </StyledTab>
                 </TabMotion>

@@ -32,13 +32,13 @@ export const AddTab = styled(NavigationButton).attrs(props => ({
     icon: 'plus',
     size: 18,
     onClick: props.onClick,
-    iconStyle: { paddingTop: '3px' },
-    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px', height: 'calc(43px - 7px)' }
+    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px', height: 'calc(30px)', width: '30px' }
 }))`
     min-width: 33px;
     min-height: calc(43px - 7px);
     position: absolute;
     height: 33px;
+    width: 30px;
     -webkit-app-region: no-drag;
 
     ${({ left }: { left: number }) => css`

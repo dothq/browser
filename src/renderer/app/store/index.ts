@@ -7,6 +7,7 @@ import { EventsStore } from "./events";
 import { observable } from 'mobx';
 import { ConnectivityStore } from "./connectivity";
 import { ipcRenderer } from "electron";
+import { NEWTAB_URL } from "../../constants/web";
 
 class Dot {
     public tabs = new TabsStore(this);
@@ -15,7 +16,7 @@ class Dot {
     public events = new EventsStore(this);
 
     @observable
-    public isMaximised: boolean = false;
+    public fullscreen: boolean = false;
 
     @observable
     public debugMode: boolean = false;
@@ -28,7 +29,7 @@ class Dot {
 
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
-            this.tabs.add({ url: "https://web.tabliss.io/", active: true })
+            this.tabs.add({ url: NEWTAB_URL, active: true })
 
             this.connectivity.checkForConnection().then((r: any) => {
                 if(r.connected == -1 || r.connected == 1) this.isOnline = true;
@@ -36,6 +37,14 @@ class Dot {
             })
             ipcRenderer.send('suggestionbox-width', `${this.searchRef.current.getBoundingClientRect().width}`);
             ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
+        })
+
+        ipcRenderer.on('focus-addressbar', () => {
+            // @todo Make fake addressbar focus real addressbar
+        })
+
+        ipcRenderer.on('fullscreen', (e, isFullscreen) => {
+            this.fullscreen = isFullscreen;
         })
     }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StyledView, Container, Content, ViewTitle, ViewHeader, ViewSearch, ViewSearchContainer, ViewSubtitle, ViewContent } from "./style";
-import { Icon } from "../../../../app/components/Icon";
+import { Icon } from "@dothq/icon";
 
 import dot from '../../store';
 import { router } from "../../router";

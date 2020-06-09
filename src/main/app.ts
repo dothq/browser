@@ -1,32 +1,40 @@
-import { BrowserWindow, app, Menu, ipcMain } from 'electron';
+import { BrowserWindow, app, Menu, screen } from 'electron';
 import { resolve } from 'path';
 import glasstron from 'glasstron';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
 import { Storage } from './storage';
-import { path } from '../../scripts/webpack.config';
 import { Overlay } from './overlay';
+import { ServiceManager } from './services';
+import { log } from '@dothq/log';
 
 export class AppWindow {
     public window: BrowserWindow;
     public overlay: Overlay;
+    public services: ServiceManager = new ServiceManager()
 
     public storage: Storage;
 
     public views: View[] = [];
     
     public selectedId: string;
-
+    public fullscreen: boolean;
 
     constructor() {
+        const t = Date.now()
+
+        const { height } = screen.getDisplayNearestPoint(screen.getCursorScreenPoint()).workAreaSize
+
         this.window = new BrowserWindow({
           frame: false,
           titleBarStyle: "hiddenInset",
           minWidth: 500,
           minHeight: 450,
-          width: 1280,
-          height: 720,
+          x: 15,
+          y: 15,
+          width: 1300,
+          height: height-(15 * 2),
           show: false,
           title: app.name,
           maximizable: true,
@@ -63,21 +71,27 @@ export class AppWindow {
         }
 
         this.window.on('ready-to-show', () => {
+            log(`Loaded application in ${Date.now() - t}ms`)
+
             this.window.show()
             // this.overlay.show()
         })
 
-        this.window.on('move', () => {
-          this.overlay.rearrange()
-        })
-
-        this.window.on('maximize', () => {
+        this.window.on('resize', () => {
           this.rearrangeView()
         })
 
-        this.window.on('unmaximize', () => {
+        this.window.on('enter-html-full-screen', () => {
+          this.fullscreen = true;
           this.rearrangeView()
-        })
+          this.window.webContents.send('fullscreen', true);
+        });
+    
+        this.window.on('leave-html-full-screen', () => {
+          this.fullscreen = false;
+          this.rearrangeView()
+          this.window.webContents.send('fullscreen', false);
+        });
     };
 
     rearrangeView() {

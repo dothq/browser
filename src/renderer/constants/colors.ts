@@ -13,7 +13,7 @@ export const GREEN_1 = "#00d45b"
 export const GREEN_2 = "#1bf878"
 export const GREEN_3 = "#7affb1"
 
-export const BLUE_1 = "#1499ff"
+export const BLUE_1 = "#0070f3"
 export const BLUE_2 = "#56c2ff"
 export const BLUE_3 = "#79deff"
 
