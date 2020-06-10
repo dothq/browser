@@ -14,7 +14,7 @@ Take back your privacy with Dot Browser, the privacy-conscious web browser that 
 
 ## 🚀 Features
 
-<img src="https://cdn.dothq.co/assets/features.png" />
+<img src="https://cdn.dothq.co/assets/features_lg.png" />
 
 ## ❗ Issues / Support
 Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, join by clicking the banner below.
