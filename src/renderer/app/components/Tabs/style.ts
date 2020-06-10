@@ -8,7 +8,7 @@ export const StyledTabs = styled.div`
     display: flex;
     width: 100%;
     height: ${TABBAR_HEIGHT}px;
-    background-color: #fafafac0; // TODO: Themes
+    background-color: #ffffffed; // TODO: Themes
     -webkit-app-region: drag;
 `;
 
