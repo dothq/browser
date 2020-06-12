@@ -32,9 +32,10 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
+- [AwesomeTech10](https://github.com/AwesomeTech10) - ***Developer***
+- [GamingGeek](https://github.com/GamingGeek) - ***Developer***
+- [Lokey](https://github.com/yourboilokey) - ***Developer***
 - [xMinota](https://github.com/xMinota) - ***Contributor***
-- [GamingGeek](https://github.com/GamingGeek) - ***Contributor***
-- [AwesomeTech10](https://github.com/AwesomeTech10) - ***Contributor***
 
 ## 🧱 Built with
 - [Electron](https://www.electronjs.org/)
