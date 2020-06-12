@@ -14,7 +14,13 @@ Take back your privacy with Dot Browser, the privacy-conscious web browser that 
 
 ## 🚀 Features
 
-<img src="https://cdn.dothq.co/assets/features_lg.png" />
+* **Built-in adblocker** - Dot Browser automatically blocks advertisements and trackers out of the box so you can get back to what you do best, browsing!
+* **Clean and familiar UI** - You won’t need to re-invent the wheel to understand the layout.
+* **No Google tracking or bloat** - We use Electron which is a stripped-down version of Chromium without all the tracking nonsense.
+* **Sync all your important data to your Dot ID** - You can backup and sync all your browsing history, bookmarks and even passwords. You can even encrypt your data with a master key which only you would know.
+* **Modify every aspect of the browser** - With our `config` page, you can tweak and fine-tune anything in the browser. 
+* **Modern New Tab Page** - Our New Tab page features a search box and the latest news in your area. Anything is customisable.
+* **All our code is open-source** - We love transparency, which is why all our code is open-source and publically-available on GitHub.
 
 ## ❗ Issues / Support
 Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, join by clicking the banner below.
