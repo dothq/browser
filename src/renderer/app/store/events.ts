@@ -125,6 +125,10 @@ export class EventsStore {
         this.store.tabs.selectedTab.inputFocused = false;
     }
 
+    public menuOnActivate() {
+        ipcRenderer.send('menu-activate')
+    }
+
     constructor(store) {
         this.store = store;
     }

@@ -11,6 +11,10 @@ import dot from '../../store'
 import { Badge } from "../NavigationButton/style";
 import { EXPO_PREFIX, EXPO_SUFFIX, NEWTAB_URL } from "../../../constants/web";
 
+// remove this. 
+import { Icon } from "../../../overlay/components/Icon";
+import { StyledNavigationButton } from "../NavigationButton/style"
+
 export const Navigation = observer(() => {
     const isLoading = dot.tabs.selectedTab && dot.tabs.selectedTab.status == "loading"
     const navStatus = dot.tabs.selectedTab && dot.tabs.selectedTab.navigationStatus
@@ -48,8 +52,13 @@ export const Navigation = observer(() => {
                 </NavigationButton>
                 <Separator />
                 <NavigationButton icon={"user"} size={18} />
-                <NavigationButton icon={"more-horizontal"} size={18} />
+                
+                <StyledNavigationButton onClick={dot.events.menuOnActivate} ref={dot.menuButtonRef}>
+                    <Icon icon={"more-horizontal"} size={18} />
+                </StyledNavigationButton>
             </ExtensionButtons>
         </StyledNavigation>
     )
 })
+
+// <NavigationButton icon={"more-horizontal"} size={18} ref={dot.menuButtonRef} onClick={dot.events.menuOnActivate()}/>

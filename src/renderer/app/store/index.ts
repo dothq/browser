@@ -27,6 +27,9 @@ class Dot {
     @observable
     public searchRef = React.createRef<HTMLInputElement>()
 
+    @observable
+    public menuButtonRef = React.createRef<HTMLDivElement>();
+
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
             this.tabs.add({ url: NEWTAB_URL, active: true })
@@ -37,6 +40,8 @@ class Dot {
             })
             ipcRenderer.send('suggestionbox-width', `${this.searchRef.current.getBoundingClientRect().width}`);
             ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
+
+            ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
         })
 
         ipcRenderer.on('focus-addressbar', () => {

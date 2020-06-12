@@ -74,7 +74,7 @@ export class AppWindow {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
-            // this.overlay.show()
+            this.overlay.show()
         })
 
         this.window.on('resize', () => {

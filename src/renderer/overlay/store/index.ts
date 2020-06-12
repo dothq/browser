@@ -9,6 +9,7 @@ class Dot {
 
     public outsideRef = React.createRef<HTMLDivElement>();
     public suggestionsRef = React.createRef<HTMLDivElement>();
+    public menuRef = React.createRef<HTMLDivElement>();
 
     @observable
     public suggestionBoxActivate: boolean = false;
@@ -18,6 +19,15 @@ class Dot {
 
     @observable
     public suggestionBoxLeft: number = 0;
+
+    @observable
+    public menuActivate: boolean = false;
+
+    @observable
+    public menuWidth: number = 0;
+
+    @observable
+    public menuLeft: number = 0;
 
     public updatePointerEvents() {
         console.log(this.hovering ? 'allow' : 'ignore')
@@ -45,6 +55,18 @@ class Dot {
 
         ipcRenderer.on('left-suggestionbox', (e, width) => {
             this.suggestionBoxLeft = +width - 1;
+        })
+
+        ipcRenderer.on('activate-menu', () => {
+            this.menuActivate = true;
+        })
+
+        ipcRenderer.on('disable-menu', () => {
+            this.menuActivate = false;
+        })
+
+        ipcRenderer.on('left-menu', (e, width) => {
+            this.menuLeft = +width - 1;
         })
 
         window.addEventListener('DOMContentLoaded', () => {
