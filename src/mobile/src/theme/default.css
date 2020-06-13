@@ -1,0 +1,40 @@
+.dot-tabbar {
+    box-shadow: 0 -6.4px 14.4px 0 rgba(0,0,0,.132), 0px 0 0 0 rgba(0,0,0,.108)
+}
+
+.dot-toolbar {
+    box-shadow: 0 3.2px 7.2px 0 rgba(0,0,0,.132), 0 0.6px 1.8px 0 rgba(0,0,0,.108);
+}
+
+.dot-toolbar-container {
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+}
+
+.dot-searchbox {
+    background-color: #f0f0f0;
+    margin-right: 8px;
+    border-radius: 100px;
+    width: auto;
+}
+
+.dot-searchbox input {
+    padding-left: 12px !important;
+}
+
+.dot-tabs-icon {
+    --padding-start: 6px;
+    --padding-end: 6px;
+    --color: #7c7c7c;
+}
+
+.dot-tabs-icon-text {
+    position: absolute;
+    font-size: 11.5px;
+    letter-spacing: -0.5px;
+}
+
+.header-md::after {
+    display: none
+}

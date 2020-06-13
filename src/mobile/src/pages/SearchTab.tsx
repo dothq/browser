@@ -1,16 +1,12 @@
 import React from 'react';
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
+import Header from '../components/Header';
 
-const Tab1: React.FC = () => {
+const SearchTab: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header />
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>
@@ -23,4 +19,4 @@ const Tab1: React.FC = () => {
   );
 };
 
-export default Tab1;
+export default SearchTab;
