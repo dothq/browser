@@ -1,6 +1,6 @@
 import glasstron from "glasstron";
-glasstron.init(); // we must call it before requiring electron
-// one call in the app entrypoint is enough
+// glasstron.init(); // we must call it before requiring electron
+// // one call in the app entrypoint is enough
 
 import { AppWindow } from "./app";
 import { app, ipcMain, protocol } from "electron";

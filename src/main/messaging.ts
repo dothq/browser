@@ -39,6 +39,8 @@ export const startMessagingAgent = () => {
     ipcMain.on('app-close', (e) => { appWindow.window.close() })
     ipcMain.on('app-minimise', (e) => { appWindow.window.minimize() })
     ipcMain.on('app-maximise', (e) => { 
+      appWindow.window.webContents.send('maximised', appWindow.window.isMaximized())
+
       if(appWindow.window.isMaximized()) return appWindow.window.unmaximize()
       return appWindow.window.maximize()
     })

@@ -19,6 +19,9 @@ class Dot {
     public fullscreen: boolean = false;
 
     @observable
+    public maximised: boolean = false;
+
+    @observable
     public debugMode: boolean = false;
 
     @observable
@@ -50,6 +53,10 @@ class Dot {
 
         ipcRenderer.on('fullscreen', (e, isFullscreen) => {
             this.fullscreen = isFullscreen;
+        })
+
+        ipcRenderer.on('maximised', (e, isMaximised) => {
+            this.maximised = isMaximised;
         })
     }
 }

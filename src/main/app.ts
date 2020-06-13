@@ -49,11 +49,11 @@ export class AppWindow {
           },
         })
 
-        glasstron.update(this.window, {
-            macos: {vibrancy: "fullscreen-ui"},
-            linux: {requestBlur: true},
-            windows: {blurType: "blurbehind"}
-        })
+        // glasstron.update(this.window, {
+        //     macos: {vibrancy: "fullscreen-ui"},
+        //     linux: {requestBlur: true},
+        //     windows: {blurType: "blurbehind"}
+        // })
 
         this.overlay = new Overlay(this);
 
@@ -74,7 +74,7 @@ export class AppWindow {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
-            this.overlay.show()
+            // this.overlay.show()
         })
 
         this.window.on('resize', () => {

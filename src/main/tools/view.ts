@@ -20,14 +20,16 @@ export const selectView = (id) => {
     if(!view) return;
 
     appWindow.selectedId = view.id;
-    appWindow.window.setBrowserView(view.view)
 
     if(view.view.isDestroyed() == false) view.rearrange()
+
+    appWindow.window.setBrowserView(view.view)
 }
 
 export const destroyView = (id) => {
     const { view } = appWindow.getViewFromId(id)
 
+    appWindow.window.removeBrowserView(view)
     view.destroy()
 }
 
