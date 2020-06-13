@@ -1,3 +1,7 @@
+.tabs-inner {
+    margin-top: 56px;
+}
+
 .dot-tabbar {
     box-shadow: 0 -6.4px 14.4px 0 rgba(0,0,0,.132), 0px 0 0 0 rgba(0,0,0,.108)
 }

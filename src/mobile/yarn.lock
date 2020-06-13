@@ -1131,7 +1131,7 @@
     which "^1.3.0"
     xml2js "^0.4.19"
 
-"@capacitor/core@2.2.0":
+"@capacitor/core@2.2.0", "@capacitor/core@latest":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.2.0.tgz#60f7b2126a5a223cb1ede055a65df6ad0d719f4b"
   integrity sha512-ClxXjOUCF0wZpznZI6f6uXK2LLzWBx5Ly/g7Hqu8R8wNdaKYoh83eMuT+m5G1gfxhcALAAJNUhHccnCW3ohftg==
@@ -1495,6 +1495,14 @@
     "@svgr/plugin-jsx" "^4.3.3"
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
+
+"@teamhive/capacitor-webview-overlay@^1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@teamhive/capacitor-webview-overlay/-/capacitor-webview-overlay-1.6.4.tgz#2d13324d8cd746478d46f79e1a31f1c6af8ba724"
+  integrity sha512-pbXmpCblvdsa9lv1dxo6JV7kwFyJKLjDjch8lLa6YQ4uHDnl5SABIltEI0F9LcvLGq4LnGKY3Zn8eQfgjs5jRw==
+  dependencies:
+    "@capacitor/core" latest
+    resize-observer-polyfill "^1.5.1"
 
 "@testing-library/dom@^6.15.0":
   version "6.16.0"
@@ -9257,6 +9265,11 @@ requires-port@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-cwd@^2.0.0:
   version "2.0.0"

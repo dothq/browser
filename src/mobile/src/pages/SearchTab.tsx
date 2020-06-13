@@ -6,7 +6,6 @@ import Header from '../components/Header';
 const SearchTab: React.FC = () => {
   return (
     <IonPage>
-      <Header />
       <IonContent>
         <IonHeader collapse="condense">
           <IonToolbar>

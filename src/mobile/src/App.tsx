@@ -5,7 +5,14 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs
+  IonTabs,
+  IonSelect,
+  IonSelectOption,
+  IonList,
+  IonListHeader,
+  IonItem,
+  IonPopover,
+  IonActionSheet
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import FeatherIcon from 'feather-icons-react';
@@ -32,31 +39,52 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import './theme/default.css';
+import Header from './components/Header';
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route path="/search" component={SearchTab} exact={true} />
-          <Route path="/tab2" component={Tab2} exact={true} />
-          <Route path="/tab3" component={Tab3} />
-          <Route path="/" render={() => <Redirect to="/search" />} exact={true} />
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom" className={"dot-tabbar"}>
-          <IonTabButton>
-            <FeatherIcon icon={"home"} />
-          </IonTabButton>
-          <IonTabButton tab="search" href="/search">
-            <FeatherIcon icon={"search"} />
-          </IonTabButton>
-          <IonTabButton>
-            <FeatherIcon icon={"more-horizontal"} />
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [menuVisible, setMenuVisible] = React.useState(false);
+
+  return (
+    <IonApp>
+      <IonActionSheet
+        isOpen={menuVisible}
+        onDidDismiss={() => setMenuVisible(false)}
+        cssClass='my-custom-class'
+        buttons={[{
+          text: 'Forward',
+        }, {
+          text: 'Favourite',
+        }, {
+          text: 'Page Info',
+        }, {
+          text: 'Reload',
+        }]}
+      >
+      </IonActionSheet>
+      <Header />
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route path="/search" component={SearchTab} exact={true} />
+            <Route path="/tab2" component={Tab2} exact={true} />
+            <Route path="/tab3" component={Tab3} />
+            <Route path="/" render={() => <Redirect to="/search" />} exact={true} />
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom" className={"dot-tabbar"}>
+            <IonTabButton>
+              <FeatherIcon icon={"home"} />
+            </IonTabButton>
+            <IonTabButton tab="search" href="/search">
+              <FeatherIcon icon={"search"} />
+            </IonTabButton>
+            <IonTabButton onClick={() => setMenuVisible(true)}>
+              <FeatherIcon icon={"more-horizontal"} />
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  )
+};
 
 export default App;
