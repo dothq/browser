@@ -66,7 +66,7 @@ For example, the addressbar's plugin name is [`@dothq/addressbar`](https://npm.i
 
 ## File Structure
 
-You can find the `main` electron side of Dot in `src/main` and you can find the `renderer` side which includes all the UI components and React code at `src/renderer`.
+You can find the `main` electron side of Dot in `src/browser` and you can find the `renderer` side which includes all the UI components and React code at `src/desktop/renderer`.
 
 ## Environment Variables
 

@@ -21,8 +21,8 @@ const generateHTML = (entryPoints) => {
 }
 
 const entry = {
-  app: './src/renderer/app',
-  overlay: './src/renderer/overlay'
+  app: './src/desktop/renderer/app',
+  overlay: './src/desktop/renderer/overlay'
 };
 
 module.exports = {

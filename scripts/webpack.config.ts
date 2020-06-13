@@ -6,8 +6,8 @@ module.exports = {
     target: 'electron-main',
     name: 'main',
     entry: {
-        main: './src/main/index.ts',
-        preload: './src/main/preload.ts'
+        main: './src/browser/index.ts',
+        preload: './src/browser/preload.ts'
     },
     output: {
       filename: "[name].bundle.js",
