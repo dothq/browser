@@ -1,0 +1,7 @@
+{
+  "name": "Dot Browser",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
