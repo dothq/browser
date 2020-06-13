@@ -1,6 +1,6 @@
 {
-  "short_name": "Ionic App",
-  "name": "My Ionic App",
+  "short_name": "Dot Browser",
+  "name": "Dot Browser",
   "icons": [
     {
       "src": "assets/icon/favicon.png",
