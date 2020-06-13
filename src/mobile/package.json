@@ -30,7 +30,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build-assets": "cordova-res --skip-config --copy"
+    "build-assets": "cordova-res --skip-config --copy",
+    "android": "npx cap open android",
+    "ios": "npx cap open ios"
   },
   "eslintConfig": {
     "extends": "react-app"
