@@ -8,14 +8,14 @@ Take back your privacy with Dot Browser, the privacy-conscious web browser that 
 ![Style](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-ff69b4) ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<img src="https://i.imgur.com/M6AuUpS.png"/>
+<img src="https://i.imgur.com/M6AuUpS.png" />
 
 </div>
 
 ## 🚀 Features
 
 * **Built-in adblocker** - Dot Browser automatically blocks advertisements and trackers out of the box so you can get back to what you do best, browsing!
-* **Clean and familiar UI** - You won’t need to re-invent the wheel to understand the layout.
+* **Clean and familiar UI** - You won't need to re-invent the wheel to understand the layout.
 * **No Google tracking or bloat** - We use Electron which is a stripped-down version of Chromium without all the tracking nonsense.
 * **You won't be compromising anything** - It's all good, you'll still be able to access your Google Account and login to sites unlike some Electron-based browsers.
 * **Sync all your important data to your Dot ID** - You can backup and sync all your browsing history, bookmarks and even passwords. You can even encrypt your data with a master key which only you would know.
