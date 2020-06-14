@@ -1,3 +1,8 @@
+body {
+    margin-top: 22px;
+    height: calc(100% - 22px)
+}
+
 .tabs-inner {
     margin-top: 56px;
 }

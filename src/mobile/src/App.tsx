@@ -36,8 +36,23 @@ import './theme/default.css';
 import Header from './components/Header';
 import NTPPage from './pages/NTPPage';
 
+import {
+  Plugins,
+  StatusBarStyle,
+} from '@capacitor/core';
+
+const { StatusBar } = Plugins;
+
 const App: React.FC = () => {
   const [menuVisible, setMenuVisible] = React.useState(false);
+
+  StatusBar.setStyle({
+    style: StatusBarStyle.Light
+  });
+
+  StatusBar.setOverlaysWebView({
+    overlay: true
+  });
 
   return (
     <IonApp>

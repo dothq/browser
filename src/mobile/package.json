@@ -8,7 +8,6 @@
     "@capacitor/ios": "2.2.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
-    "@teamhive/capacitor-webview-overlay": "^1.6.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
@@ -35,7 +34,8 @@
     "eject": "react-scripts eject",
     "build-assets": "cordova-res --skip-config --copy",
     "android": "npx cap open android",
-    "ios": "npx cap open ios"
+    "ios": "npx cap open ios",
+    "prod": "react-scripts build && npx cap copy && npx cap open && npx cap update"
   },
   "eslintConfig": {
     "extends": "react-app"
