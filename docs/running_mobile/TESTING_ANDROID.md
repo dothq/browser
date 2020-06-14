@@ -111,7 +111,7 @@ yarn android
 
 4. In Android Studio, click the Run button and then select the target simulator or device.
 
-## #Live Reload
+### Live Reload
 To start a live-reload server, run the following command.
 
 ```bash
