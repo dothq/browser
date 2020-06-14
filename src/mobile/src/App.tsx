@@ -1,23 +1,17 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
+
 import {
   IonApp,
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
   IonTabs,
-  IonSelect,
-  IonSelectOption,
-  IonList,
-  IonListHeader,
-  IonItem,
-  IonPopover,
   IonActionSheet
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import FeatherIcon from 'feather-icons-react';
 import SearchTab from './pages/SearchTab';
-import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 
 /* Core CSS required for Ionic components to work properly */
@@ -40,6 +34,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './theme/default.css';
 import Header from './components/Header';
+import NTPPage from './pages/NTPPage';
 
 const App: React.FC = () => {
   const [menuVisible, setMenuVisible] = React.useState(false);
@@ -66,16 +61,19 @@ const App: React.FC = () => {
         <IonTabs>
           <IonRouterOutlet>
             <Route path="/search" component={SearchTab} exact={true} />
-            <Route path="/tab2" component={Tab2} exact={true} />
+            <Route path="/newtab" component={NTPPage} exact={true}  />
             <Route path="/tab3" component={Tab3} />
             <Route path="/" render={() => <Redirect to="/search" />} exact={true} />
           </IonRouterOutlet>
           <IonTabBar slot="bottom" className={"dot-tabbar"}>
-            <IonTabButton>
+            <IonTabButton tab="newtab" href="/newtab">
               <FeatherIcon icon={"home"} />
             </IonTabButton>
             <IonTabButton tab="search" href="/search">
               <FeatherIcon icon={"search"} />
+            </IonTabButton>
+            <IonTabButton>
+              <FeatherIcon icon={"share"} />
             </IonTabButton>
             <IonTabButton onClick={() => setMenuVisible(true)}>
               <FeatherIcon icon={"more-horizontal"} />
