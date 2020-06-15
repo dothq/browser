@@ -8,9 +8,9 @@ import { motion } from "framer-motion";
 
 import { TAB_WIDTH } from '../../constants/tab'
 
-import throbber from '../../../../resources/icons/throbber.svg'
-import tab_corner_left from '../../../../resources/icons/tab_corner_left.svg'
-import tab_corner_right from '../../../../resources/icons/tab_corner_right.svg'
+import throbber from '../../../../../resources/icons/throbber.svg'
+import tab_corner_left from '../../../../../resources/icons/tab_corner_left.svg'
+import tab_corner_right from '../../../../../resources/icons/tab_corner_right.svg'
 
 export const TabMotion = styled(motion.div)`
     min-width: 93px;

@@ -2,7 +2,7 @@ import * as ReactDOM from "react-dom";
 import React from 'react';
 import { App } from "./components/App";
 
-import settings from '../../../resources/icons/settings.png'
+import settings from '../../../../resources/icons/settings.png'
 
 const app = document.createElement("div")
 app.id = "app"

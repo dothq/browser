@@ -1,6 +1,6 @@
 import { Menu, MenuItem, app } from "electron";
 import { appWindow } from "..";
-import { NEWTAB_URL } from "../../renderer/constants/web";
+import { NEWTAB_URL } from "../renderer/constants/web";
 
 export const getAppMenu = (appName) => {
     const menu = Menu.buildFromTemplate([

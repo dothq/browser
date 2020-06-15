@@ -1,6 +1,6 @@
 import { webFrame, app, remote, ipcRenderer } from "electron";
 import { ERRORS } from "@dothq/errors";
-import { EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX } from "../renderer/constants/web";
+import { EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX } from "./renderer/constants/web";
 import tinycolor from 'tinycolor2';
 
 const id = process.argv.find(a => a.includes("--tab-id=")).split("--tab-id=")[1]

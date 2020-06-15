@@ -1,11 +1,11 @@
 import { BrowserView, app, ContextMenuParams, ipcMain } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
-import { NAVIGATION_HEIGHT } from "../renderer/constants/window";
+import { NAVIGATION_HEIGHT } from "./renderer/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "@dothq/colors";
-import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "../renderer/constants/web";
+import { NEWTAB_URL, EXPO_PREFIX, EXPO_SUFFIX } from "./renderer/constants/web";
 import { parse } from "url";
 
 export class View {

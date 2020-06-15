@@ -1,5 +1,5 @@
 import { session, app } from "electron"
-import { EXPO_PREFIX } from "../../renderer/constants/web"
+import { EXPO_PREFIX } from "../renderer/constants/web"
 import { parse } from "url"
 import { resolve } from "path"
 
