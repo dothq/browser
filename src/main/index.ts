@@ -21,14 +21,13 @@ app.name = "Dot Browser"
 protocol.registerSchemesAsPrivileged([
     { 
         scheme: 'dot', 
-        privileges: {       
-            bypassCSP: true,
-            secure: true,
-            standard: true,
+        privileges: { 
+            standard: true, 
+            secure: true, 
+            corsEnabled: true,
             supportFetchAPI: true,
-            allowServiceWorkers: true,
-            corsEnabled: false
-        } 
+            allowServiceWorkers: true
+        }
     }
 ])
 
