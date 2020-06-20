@@ -11,7 +11,7 @@ class Dot {
     public viewError = null;
 
     private async getSSLCertificate(url) {
-        const res = await axios.get(`https://dothq.co/api/browser.cert/${url}`)
+        const res = await axios.get(`https://dothq.co/api/browser/cert/${url}`)
 
         return res.data
     }
