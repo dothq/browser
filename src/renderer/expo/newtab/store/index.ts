@@ -7,7 +7,7 @@ class Dot {
 
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
-            fetch("https://dothq.co/api/browser.news", ({ headers: { 'X-Dot-NTP': true } } as any))
+            fetch("https://dothq.co/api/browser/news", ({ headers: { 'X-Dot-NTP': true } } as any))
                 .then(res => res.json())
                 .then(async res => {
                     // res.articles = res.articles.filter(a => a.urlToImage !== null)
