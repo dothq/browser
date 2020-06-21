@@ -1,6 +1,5 @@
 import { BrowserWindow, app, Menu, screen } from 'electron';
 import { resolve } from 'path';
-import glasstron from 'glasstron';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
 import { getAppMenu } from './menus/app';
@@ -39,21 +38,9 @@ export class AppWindow {
           title: app.name,
           maximizable: true,
           webPreferences: {
-            plugins: true,
-            nodeIntegration: true,
-            contextIsolation: false,
-            experimentalFeatures: true,
-            webviewTag: true,
-            webSecurity: false,
-            enableRemoteModule: true
+            nodeIntegration: true
           },
         })
-
-        // glasstron.update(this.window, {
-        //     macos: {vibrancy: "fullscreen-ui"},
-        //     linux: {requestBlur: true},
-        //     windows: {blurType: "blurbehind"}
-        // })
 
         this.overlay = new Overlay(this);
 
@@ -74,7 +61,6 @@ export class AppWindow {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
-            // this.overlay.show()
         })
 
         this.window.on('resize', () => {
