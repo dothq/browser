@@ -19,7 +19,7 @@ export const getAppMenu = (appName) => {
                     type: "separator" as "separator"
                 },
                 {
-                    label: "Preferences",
+                    label: "Browser Settings",
                     accelerator: "CmdOrCtrl+Shift+P",
                 },
                 {

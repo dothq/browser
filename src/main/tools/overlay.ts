@@ -24,15 +24,3 @@ export const setSuggestionBoxWidth = (width: string) => {
 export const setSuggestionBoxLeft = (width: string) => {
     appWindow.overlay.webContents.send('left-suggestionbox', width)
 }
-
-export const showMenu = () => {
-    appWindow.overlay.webContents.send('activate-menu')
-}
-
-export const hideMenu = () => {
-    appWindow.overlay.webContents.send('disable-menu')
-}
-
-export const setMenuLeft = (left: string) => {
-    appWindow.overlay.webContents.send('left-menu', left)
-}

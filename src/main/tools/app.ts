@@ -1,7 +1,8 @@
 import { platform, homedir } from "os";
-import { app } from "electron";
+import { app, Menu } from "electron";
 import { resolve } from "path";
 import { appWindow } from "..";
+import { NAVIGATION_HEIGHT } from "../../renderer/constants/window";
 
 export const setAppDataLocation = () => {
     if(platform() == 'darwin') {
@@ -15,4 +16,16 @@ export const setAppDataLocation = () => {
 
 export const focusAddressbar = () => {
     appWindow.window.webContents.send('focus-addressbar')
+}
+
+export const popupMenu = () => {
+    if(!appWindow.menuVisible) {
+        const { width } = appWindow.window.getBounds()
+
+        appWindow.menu.popup({ x: width - 238, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, window: appWindow.window })
+    }
+}
+
+export const hideMenu = (menu: Menu) => {
+    menu.closePopup(appWindow.window)
 }

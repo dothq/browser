@@ -17,12 +17,9 @@ import {
   showSuggestionBox, 
   hideSuggestionBox, 
   setSuggestionBoxWidth, 
-  setSuggestionBoxLeft, 
-  showMenu,
-  hideMenu,
-  setMenuLeft
+  setSuggestionBoxLeft
 } from "./tools/overlay";
-import { focusAddressbar } from "./tools/app";
+import { focusAddressbar, popupMenu, hideMenu } from "./tools/app";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -53,9 +50,7 @@ export const startMessagingAgent = () => {
     ipcMain.on('suggestionbox-width', (e, args) => setSuggestionBoxWidth(args))
     ipcMain.on('suggestionbox-left', (e, args) => setSuggestionBoxLeft(args))
 
-    ipcMain.on('menu-activate', () => showMenu())
-    ipcMain.on('menu-disable', () => hideMenu())
-    ipcMain.on('menu-left', (e, args) => setMenuLeft(args))
+    ipcMain.on('menu-popup', () => popupMenu())
 
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 

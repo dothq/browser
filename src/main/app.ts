@@ -7,6 +7,7 @@ import { Storage } from './storage';
 import { Overlay } from './overlay';
 import { ServiceManager } from './services';
 import { log } from '@dothq/log';
+import { getMoreMenu } from './menus/more';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -19,6 +20,9 @@ export class AppWindow {
     
     public selectedId: string;
     public fullscreen: boolean;
+
+    public menu: Menu | null = getMoreMenu(app.name);
+    public menuVisible: boolean = false;
 
     constructor() {
         const t = Date.now()
@@ -78,6 +82,14 @@ export class AppWindow {
           this.rearrangeView()
           this.window.webContents.send('fullscreen', false);
         });
+
+        this.menu.addListener('menu-will-show', () => {
+          this.menuVisible = true;
+        })
+    
+        this.menu.addListener('menu-will-close', () => {
+          setTimeout(() => this.menuVisible = false, 100);
+        })
     };
 
     rearrangeView() {
