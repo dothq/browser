@@ -10,7 +10,7 @@ export const StyledNavigationButton = styled.div`
     text-align: center;
     justify-content: center;
     border-radius: 3px;
-    margin: 0 3px;
+    margin: 0 1px;
     transition: 0.1s box-shadow, 0.1s background-color;
     position: relative;
 

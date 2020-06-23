@@ -1,0 +1,112 @@
+import React from 'react';
+import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part } from "./style"
+import { observer } from 'mobx-react';
+import { Icon } from "@dothq/icon";
+
+export const Addressbar = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot }: { EXPO_PREFIX: string;  NEWTAB_URL: string; EXPO_SUFFIX?: string; dot: any }) => {
+    const events = dot.events;
+    const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
+    const isIdle = dot.tabs.selectedTab && dot.tabs.selectedTab.status == "idle";
+    const isError = dot.tabs.selectedTab && dot.tabs.selectedTab.isError;
+    const isFocused = dot.tabs.selectedTab && dot.tabs.selectedTab.inputFocused
+
+    const searchWidth = url && url.startsWith(EXPO_PREFIX) ? 118 : url && isIdle ? isError ? 0 : url.startsWith("http://") ? 114 : 0 : 0;
+    const showSearchText = url && url.startsWith(EXPO_PREFIX) || url && isIdle ? isError ? false : url.startsWith("http://") : false;
+
+    return (
+        <StyledAddressbar>
+            <SearchIcon EXPO_PREFIX={EXPO_PREFIX} EXPO_SUFFIX={EXPO_SUFFIX} NEWTAB_URL={NEWTAB_URL} dot={dot}/>
+            <Input 
+                ref={dot.searchRef} 
+                onBlur={() => events.inputOnBlur()} 
+                onMouseDown={() => events.inputOnMouseDown()}
+                onClick={() => events.inputOnClick()} 
+                onInput={() => events.inputOnInput()}
+                onKeyUp={(event) => events.inputOnKeyUp(event)}
+                onChange={(event) => events.inputOnChange(event)}
+                value={dot.addressbar.inputValue()}
+                searchWidth={searchWidth}
+                autoComplete={"off"}
+                autoCorrect={"off"} 
+                autoCapitalize={"off"} 
+                spellCheck={"false"}
+                placeholder={"Search Google or enter website address"}
+            />
+            {/* <Parts searchWidth={searchWidth} showSearchText={showSearchText} dot={dot}/> */}
+            <FavouriteIcon dot={dot}/>
+        </StyledAddressbar>
+    )
+})
+
+const FavouriteIcon = observer(({ dot }: { dot: any }) => {
+    const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
+
+    return (
+        <StyledFavouriteIcon>
+            <Icon icon={"star"} size={15} />
+        </StyledFavouriteIcon>
+    )
+})
+
+const SearchIcon = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot }: { EXPO_PREFIX: string; NEWTAB_URL: string; EXPO_SUFFIX?: string; dot: any }) => {
+    const tab = dot.tabs.selectedTab && dot.tabs.selectedTab;
+    
+    const isFocused = dot.tabs.selectedTab && dot.tabs.selectedTab.inputFocused
+    let icon = "search";
+
+    if(dot.tabs.selectedTab) {
+        if(tab && tab.url.startsWith("http")) icon = "alert-circle"
+        if(tab && tab.url.startsWith("https")) icon = "lock"
+        if(tab && tab.url == NEWTAB_URL) icon = "search"
+        // if(tab && tab.url.startsWith(EXPO_PREFIX)) icon = "circle"
+        // if(tab && tab.isError) icon = "alert-circle"
+    }
+
+    return (
+        <StyledSearchIcon 
+            isNTP={tab && tab.url == NEWTAB_URL} 
+            searchWidth={0} 
+            showSearchText={false} 
+            isFocused={isFocused}
+        >
+            <Icon icon={icon} size={icon == "alert-circle" ? 16 : 14} />
+            {/* <SearchIconText 
+                visible={
+                    tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
+                        ? tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
+                        : tab && tab.url && tab && tab && tab.status == "idle" 
+                            ? tab.url.startsWith("http://")
+                                ? tab.isError
+                                    ? false
+                                    : true
+                                : false
+                            : false
+                } 
+                textWidth={
+                    tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
+                        ? 65 
+                        : tab && tab.status == "idle" ? tab.isError ? 0 : 58 : 0
+                }
+            >
+                {tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) ? "Dot Browser" : tab && tab.status == "idle" ? tab.isError ? "" : "Not secure" : ""}
+            </SearchIconText> */}
+        </StyledSearchIcon>
+    )
+})
+
+const Parts = observer(({ showSearchText, searchWidth, dot }: { showSearchText: boolean; searchWidth: number; dot: any }) => {
+    const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
+    const isFocused = dot.tabs.selectedTab && !dot.tabs.selectedTab.inputFocused
+
+    return (
+        <StyledParts
+            visible={isFocused}
+            showSearchText={showSearchText}
+            searchWidth={searchWidth}
+        >
+            {dot.addressbar.urlParts(url).map(part => ( 
+                <Part key={part.id} opacity={part.opacity} style={{ display: part.hide ? "none" : "" }}>{part.value}</Part> 
+            ))}
+        </StyledParts>
+    )
+})

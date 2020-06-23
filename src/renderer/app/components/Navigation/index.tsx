@@ -2,7 +2,7 @@ import React from "react";
 import { StyledNavigation } from "./style";
 import { NavigationButtons } from "../NavigationButtons";
 import { NavigationButton } from '../NavigationButton'
-import { Addressbar } from "@dothq/addressbar";
+import { Addressbar } from "../Addressbar"; // @todo swap out the dev addressbar for the prod addressbar
 import { ExtensionButtons } from "../ExtensionButtons";
 import { Separator } from "../NavigationButtons/style";
 import { observer } from "mobx-react-lite";
@@ -53,12 +53,10 @@ export const Navigation = observer(() => {
                 <Separator />
                 <NavigationButton icon={"user"} size={18} />
                 
-                <StyledNavigationButton onClick={dot.events.menuOnActivate} ref={dot.menuButtonRef}>
+                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef}>
                     <Icon icon={"more-horizontal"} size={18} />
                 </StyledNavigationButton>
             </ExtensionButtons>
         </StyledNavigation>
     )
 })
-
-// <NavigationButton icon={"more-horizontal"} size={18} ref={dot.menuButtonRef} onClick={dot.events.menuOnActivate()}/>
