@@ -196,10 +196,10 @@
   dependencies:
     colors "^1.4.0"
 
-"@dothq/system-buttons@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@dothq/system-buttons/-/system-buttons-1.1.0.tgz#92086fa3ea67b2025808eb51f460dcbf607b0029"
-  integrity sha512-GpFT+dIHktrPAnyY9gu5mzjiUk+FKubdPgQqrDy1NQFkDTpYAjBf73G/6qbq07S7BQmGhskPxLiKsXwCiV8TpA==
+"@dothq/system-buttons@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@dothq/system-buttons/-/system-buttons-1.1.1.tgz#4443e99f3e7289192e6ff5e9fd076e23086f2804"
+  integrity sha512-fjiDoIIuCRXMmgNH9Nhe/63Kont8YhY+ipPPjFYxcjp7KslekI0T/zcaXLheW1CCCGHtHdDK1ki/MD+GBb98ag==
   dependencies:
     mobx "^5.15.4"
     mobx-react "^6.2.2"

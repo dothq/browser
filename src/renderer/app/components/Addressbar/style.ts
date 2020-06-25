@@ -114,6 +114,11 @@ export const StyledFavouriteIcon = styled(StyledNavigationButton)`
     margin: 0 1px;
     border-radius: 32px;
     width: 36px;
+
+    :hover < & {
+        background-color: #f1f3f4;
+        border: 1.5px solid transparent;
+    }
 `;
 
 // Search Icon

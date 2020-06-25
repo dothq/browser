@@ -21,8 +21,17 @@ export const Style = css`
         user-drag: none;
     }
 
-    *:not(input) {
-        user-select: none;
+    .tb-tpgrpy-center {
+        height: 64px;
+        display: flex;
+        align-items: center;
+
+        padding-left: 20px;
+        margin-top: -2.5px;
+    }
+
+    .sb-tab-item {
+        margin-bottom: 36px;
     }
 `;
 

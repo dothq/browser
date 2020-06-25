@@ -48,7 +48,7 @@
     "@dothq/errors": "^1.0.0",
     "@dothq/icon": "^1.0.0",
     "@dothq/log": "^1.0.2",
-    "@dothq/system-buttons": "^1.1.0",
+    "@dothq/system-buttons": "^1.1.1",
     "axios": "^0.19.2",
     "cross-fetch": "^3.0.4",
     "electron-updater": "^4.3.1",
