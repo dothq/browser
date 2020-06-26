@@ -31,7 +31,20 @@ export const Style = css`
     }
 
     .sb-tab-item {
-        margin-bottom: 36px;
+        width: 100%;
+        height: 64px;
+        min-height: 64px;
+    }
+
+    .sb-end {
+        display: flex;
+        flex-direction: column;
+        place-content: flex-end;
+        flex: 1;
+    }
+
+    .sb-tab-selected svg {
+        stroke: #0075FF !important;
     }
 `;
 

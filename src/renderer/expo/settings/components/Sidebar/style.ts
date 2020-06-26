@@ -8,6 +8,7 @@ export const StyledSidebar = styled.div`
     position: absolute;
     left: 0;
     overflow-y: auto;
+    overflow-x: hidden;
 
     &::before {
         content: "";
@@ -23,8 +24,6 @@ export const StyledSidebar = styled.div`
 
 export const Container = styled.div`
     width: 100%;
-    height: calc(100% - 92px);
-    padding: 14px;
     display: flex;
     margin-top: 64px;
     z-index: 11;
