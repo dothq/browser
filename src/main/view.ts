@@ -101,8 +101,6 @@ export class View {
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
-
-                    this.addItemToHistory()
                 }
             },
             viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
@@ -175,6 +173,8 @@ export class View {
 
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
                     this.favicon = favicon;
+
+                    this.cacheFavicon(favicon)
                 })
 
                 this.updateNavigationButtons()
@@ -194,24 +194,26 @@ export class View {
     }
 
     private addItemToHistory() {
-        const lastHistoryItem = appWindow.storage.get('history', this.historyId)
+        appWindow.storage.db.history.insert([
+            {
+                url: this.url,
+                favicon: this.favicon,
+                title: this.title
+            }
+        ])
+    }
 
-        if(lastHistoryItem !== undefined && this.url == lastHistoryItem.url) return;
-
-        const { url, title } = this;
-
-        const now = Date.now()
-
-        appWindow.storage.add('history', {
-            tabId: this.id,
-            url,
-            title,
-            visited: now
-        })
+    private cacheFavicon(favicon) {
+        appWindow.storage.db.favicons.insert([
+            {
+                url: this.url,
+                base64: favicon
+            }
+        ])
     }
 
     private updateItemInHistory(data: any) {
-        appWindow.storage.update('history', this.historyId, data)
+        // appWindow.storage.update('history', this.historyId, data)
     }
 
     public get url() {
