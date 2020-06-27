@@ -32,13 +32,11 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
 
     const variants = {
         opening: {
-            x: 0, 
             opacity: 1, 
             width: TAB_WIDTH, 
             display: 'flex'
         },
         closing: {
-            x: 0, 
             opacity: 0, 
             width: 0, 
             minWidth: 0,

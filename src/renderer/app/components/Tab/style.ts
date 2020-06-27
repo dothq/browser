@@ -18,7 +18,7 @@ export const TabMotion = styled(motion.div)`
 `;
 
 export const StyledTab = styled.div`
-    width: ${TAB_WIDTH}px;
+    width: -webkit-fill-available;
     height: calc(100%);
     display: flex;
     align-self: flex-end;
