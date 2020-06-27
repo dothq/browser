@@ -20,7 +20,7 @@ export class AdblockService {
 
         this.blocker.on('request-blocked', (req: Request) => {
             const wcID = req._originalRequestDetails.webContentsId;
-            const view = appWindow.views.find(v => v.view.webContents.id == wcID)
+            const view = appWindow.views.find(v => v.view && v.view.webContents.id == wcID)
             if(!view) return;
 
             appWindow.window.webContents.send(`blocked-ad-${view.id}`)
