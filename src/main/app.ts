@@ -65,6 +65,11 @@ export class AppWindow {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
+
+            setTimeout(() => {
+              this.window.webContents.send('refetch-storage');
+              console.log("fetch")
+            }, 3000);
         })
 
         this.window.on('resize', () => {

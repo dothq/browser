@@ -44,6 +44,12 @@ export const Navigation = observer(() => {
                             : "rotate-cw" 
                     : "rotate-cw"
                 } size={isLoading ? !isNTP ? 18 : 16 : 16} onClick={() => events.navigationOnRefreshClick()} />
+                <NavigationButton 
+                    icon={"home"} 
+                    size={16} 
+                    visible={true}
+                    onClick={() => events.navigationOnHomeClick()}
+                />
             </NavigationButtons>
             <Addressbar EXPO_PREFIX={EXPO_PREFIX} EXPO_SUFFIX={EXPO_SUFFIX} NEWTAB_URL={NEWTAB_URL} dot={dot}/>
             <ExtensionButtons>
@@ -53,7 +59,7 @@ export const Navigation = observer(() => {
                 <Separator />
                 <NavigationButton icon={"user"} size={18} />
                 
-                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef}>
+                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef} visible={true}>
                     <Icon icon={"more-horizontal"} size={18} />
                 </StyledNavigationButton>
             </ExtensionButtons>

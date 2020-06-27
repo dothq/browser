@@ -88,6 +88,8 @@ export class View {
         setTimeout(() => {
             this.view.setBounds({ x: 0, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, width, height: height - (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) });
         }, 0)
+
+        this.updateZoomFactor()
     }
 
     private get events() {
@@ -98,6 +100,7 @@ export class View {
                 appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
 
                 this.addItemToHistory()
+                this.updateZoomFactor()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
@@ -219,6 +222,10 @@ export class View {
                 }
             ])
         }
+    }
+
+    private updateZoomFactor() {
+        this.view.webContents.zoomFactor = appWindow.storage.db.settings.getAllData()[0].appearance.pageZoom/100
     }
 
     public get url() {

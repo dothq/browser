@@ -1,7 +1,7 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
 import { ipcRenderer, remote } from "electron";
 import { Tab as ITab } from "../models/tab"
-import { SEARCH_ENGINE_URL, EXPO_PREFIX } from "../../constants/web";
+import { SEARCH_ENGINE_URL, EXPO_PREFIX, NEWTAB_URL } from "../../constants/web";
 import dot from '.'
 
 export class EventsStore {
@@ -113,6 +113,12 @@ export class EventsStore {
         }
 
         this.store.tabs.selectedTab.goForward()
+    }
+
+    public navigationOnHomeClick() {
+        const tab = this.store.tabs.selectedTab;
+
+        tab.goto(NEWTAB_URL)
     }
 
     public tabOnMouseDown(e, tab: ITab) {

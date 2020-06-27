@@ -55,4 +55,16 @@ export const startMessagingAgent = () => {
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 
     ipcMain.on('focus-addressbar', () => focusAddressbar())
+
+    ipcMain.handle('get-storage', async (event) => {
+      const storage = {}
+
+      for (const database of Object.entries(appWindow.storage.db)) {
+        storage[database[0]] = database[1].getAllData()
+      }
+
+      console.log(storage)
+
+      return storage
+    })
 }

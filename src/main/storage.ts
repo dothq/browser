@@ -3,6 +3,9 @@ import Datastore from 'nedb';
 import { resolve } from 'path';
 import { app } from 'electron';
 
+import { defaultSettings } from '../constants/settings';
+import { appWindow } from '.';
+
 const databases = ['history', 'bookmarks', 'downloads', 'passwords', 'settings', 'session', 'favicons']
 
 export class Storage {
@@ -25,5 +28,11 @@ export class Storage {
 
             this.db[item].loadDatabase();
         }
+
+        this.db.settings.count({}, (err, count) => {
+            if(err || !count) {
+                this.db.settings.insert([ defaultSettings ])
+            }
+        });
     }
 }

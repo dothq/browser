@@ -3,7 +3,6 @@ import styled, { css } from "styled-components";
 import dot from '../../store';
 
 export const StyledNavigationButton = styled.div`
-    display: flex;
     width: 32px;
     height: 32px;
     align-self: center;
@@ -14,7 +13,7 @@ export const StyledNavigationButton = styled.div`
     transition: 0.1s box-shadow, 0.1s background-color;
     position: relative;
 
-    ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
+    ${({ size, disabled, visible }: { size?: number; disabled?: boolean; visible?: boolean }) => css`
         width: ${size}px;
         height: ${size}px;
 
@@ -23,6 +22,7 @@ export const StyledNavigationButton = styled.div`
 
         pointer-events: ${disabled ? 'none' : 'all'};
         opacity: ${disabled ? 0.5 : 0.9};
+        display: ${visible ? 'flex' : 'none'};
     `};
 
     svg {

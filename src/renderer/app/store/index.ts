@@ -16,6 +16,9 @@ class Dot {
     public events = new EventsStore(this);
 
     @observable
+    public db;
+
+    @observable
     public fullscreen: boolean = false;
 
     @observable
@@ -58,6 +61,19 @@ class Dot {
         ipcRenderer.on('maximised', (e, isMaximised) => {
             this.maximised = isMaximised;
         })
+
+        ipcRenderer.on('refetch-storage', (e) => {
+            this.fetchStorage()
+        })
+    }
+
+    private async fetchStorage() {
+        console.log("hello")
+        const storage = await ipcRenderer.invoke('get-storage')
+
+        console.log(storage)
+
+        this.db = storage;
     }
 }
 
