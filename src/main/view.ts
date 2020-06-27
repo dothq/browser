@@ -95,6 +95,7 @@ export class View {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
                 appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
+                appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
 
                 this.addItemToHistory()
             },
@@ -105,7 +106,6 @@ export class View {
             },
             viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
                 if(isMainFrame) {
-                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
                     appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
                 }
 
@@ -161,8 +161,6 @@ export class View {
             },
             viewTitleUpdated: async (_event: Electron.Event, title: string) => {
                 appWindow.window.webContents.send(`view-title-updated-${this.id}`, title)
-
-                await this.updateItemInHistory({ title })
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
@@ -197,23 +195,30 @@ export class View {
         appWindow.storage.db.history.insert([
             {
                 url: this.url,
-                favicon: this.favicon,
                 title: this.title
             }
         ])
     }
 
     private cacheFavicon(favicon) {
-        appWindow.storage.db.favicons.insert([
-            {
-                url: this.url,
-                base64: favicon
-            }
-        ])
-    }
+        const exists = appWindow.storage.db.favicons.find({ url: this.url }, (e, docs) => {
+            return docs.length <= 1
+        })
 
-    private updateItemInHistory(data: any) {
-        // appWindow.storage.update('history', this.historyId, data)
+        if(exists) {
+            appWindow.storage.db.favicons.update({
+                url: this.url
+            },
+                favicon
+            )
+        } else {
+            appWindow.storage.db.favicons.insert([
+                {
+                    url: this.url,
+                    base64: favicon
+                }
+            ])
+        }
     }
 
     public get url() {
