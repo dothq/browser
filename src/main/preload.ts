@@ -103,7 +103,7 @@ const runScrollbarService = (target?: any) => {
         webFrame.removeInsertedCSS(existingKey)
         existingKey = undefined
     }
-    existingKey = webFrame.insertCSS(`::-webkit-scrollbar {background-color: ${isDark ? '#131313' : '#f1f1f1'};} ::-webkit-scrollbar-thumb {transition: 0.3s background-color;background-color: ${isDark ? '#454545' : '#9b9b9b'};border-radius: 10px;border: solid ${isDark ? '#131313' : '#f1f1f1'};}`)
+    existingKey = webFrame.insertCSS(`::-webkit-scrollbar {background-color: ${isDark ? '#131313' : '#f1f1f1'};} ::-webkit-scrollbar-thumb {transition: 0.3s background-color;background-color: ${isDark ? '#454545' : '#9b9b9b'};border-radius: 10px;border: solid ${isDark ? '#131313' : '#f1f1f1'};} ::-webkit-scrollbar-corner {background-color: ${isDark ? '#131313' : '#f1f1f1'};}`)
 }
 
 // setInterval(runScrollbarService, 50)
