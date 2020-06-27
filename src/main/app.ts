@@ -68,7 +68,6 @@ export class AppWindow {
 
             setTimeout(() => {
               this.window.webContents.send('refetch-storage');
-              console.log("fetch")
             }, 3000);
         })
 

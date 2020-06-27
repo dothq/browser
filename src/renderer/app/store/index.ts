@@ -68,12 +68,11 @@ class Dot {
     }
 
     private async fetchStorage() {
-        console.log("hello")
         const storage = await ipcRenderer.invoke('get-storage')
 
-        console.log(storage)
-
         this.db = storage;
+
+        console.log("settings => refetched settings")
     }
 }
 
