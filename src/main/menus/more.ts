@@ -103,7 +103,7 @@ export const getMoreMenu = (appName) => {
                 },
                 {
                     label: "Report an issue...",
-                    accelerator: "Alt+Shift+I",
+                    accelerator: "Option+Shift+I",
                     click: () => {
                         appWindow.window.webContents.send('add-tab', { url: REPORT_ISSUES_URL, active: true })
                     }

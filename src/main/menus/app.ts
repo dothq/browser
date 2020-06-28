@@ -203,7 +203,7 @@ export const getAppMenu = (appName) => {
                     submenu: [
                         {
                             label: "Toggle Developer Tools",
-                            accelerator: "CmdOrCtrl+Option+I",
+                            accelerator: "CmdOrCtrl+Shift+I",
                             click: () => {
                                 const view = appWindow.getViewFromId(appWindow.selectedId)
         

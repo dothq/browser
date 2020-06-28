@@ -42,25 +42,6 @@ export const getGeneralMenu = (tabId) => {
             accelerator: "CmdOrCtrl+I"
         },
         {
-            type: "separator"
-        },
-        {
-            label: "Zoom In",
-            role: "zoomIn",
-            accelerator: "CmdOrCtrl+=",
-        },
-        {
-            label: "Zoom Out",
-            role: "zoomOut",
-            accelerator: "CmdOrCtrl+-",
-        },
-        {
-            label: "Reset Zoom",
-            role: "resetZoom",
-            accelerator: "CmdOrCtrl+0",
-            visible: view.webContents.zoomFactor !== 1
-        },
-        {
             type: "separator",
         },
         {
