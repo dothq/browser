@@ -92,4 +92,6 @@ export const bookmarkView = (id) => {
         }
     })
 
+    appWindow.window.webContents.send('refetch-storage');
+
 }
