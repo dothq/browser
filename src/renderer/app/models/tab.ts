@@ -5,7 +5,7 @@ import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL } from "../../constants/web";
 import { parse } from "url";
 
-const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds']
+const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds', 'isBookmarked']
 
 export class Tab {
     @observable
@@ -31,6 +31,9 @@ export class Tab {
 
     @observable
     public blockedAds: number = 0;
+
+    @observable
+    public isBookmarked: boolean = false;
 
     @observable
     public visible: boolean = true;
@@ -93,6 +96,12 @@ export class Tab {
 
     public goForward() {
         ipcRenderer.send('view-forward', this.id);
+    }
+
+    public bookmark() {
+        this.isBookmarked = !this.isBookmarked;
+
+        ipcRenderer.send('view-bookmark', this.id);
     }
 
     public get url() {

@@ -8,7 +8,8 @@ import {
     stopView, 
     backView, 
     forwardView, 
-    navigateView
+    navigateView,
+    bookmarkView
 } from "./tools/view";
 import { appWindow } from ".";
 import { 
@@ -30,6 +31,8 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-stop', (e, id) => stopView(id))
     ipcMain.on('view-back', (e, id) => backView(id))
     ipcMain.on('view-forward', (e, id) => forwardView(id))
+
+    ipcMain.on('view-bookmark', (e, id) => bookmarkView(id))
 
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 

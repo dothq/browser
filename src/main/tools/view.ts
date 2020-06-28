@@ -68,3 +68,28 @@ export const navigateView = (id, url) => {
 
     view.webContents.loadURL(url)
 }
+
+export const bookmarkView = (id) => {
+    const view = appWindow.getViewFromId(id);
+    if(!view) return;
+
+    appWindow.storage.db.bookmarks.count({
+        url: view.url
+    }, (e, count) => {
+        if(count == 0) {
+            appWindow.storage.db.bookmarks.insert([
+                {
+                    tabId: view.id,
+                    url: view.url,
+                    title: view.title,
+                    favicon: view.favicon
+                }
+            ])
+        } else {
+            appWindow.storage.db.bookmarks.remove({
+                url: view.url
+        }, { multi: true })
+        }
+    })
+
+}

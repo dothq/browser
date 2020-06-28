@@ -12,6 +12,7 @@ export class View {
     public view: BrowserView;
     public id: string;
     public favicon: string;
+    public faviconURL: string;
     public previousURL: string = '';
 
     private historyId: string;
@@ -115,6 +116,7 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewStartedLoading: (_event: Electron.Event) => {
+                appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, false)
                 appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
                 appWindow.window.webContents.send(`view-status-updated-${this.id}`, 'loading')
                 appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
@@ -127,6 +129,10 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewFinishedLoading: (_event: Electron.Event) => {
+                appWindow.storage.db.bookmarks.count({ url: this.url }, (e, count) => {
+                    appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, count >= 1)
+                })
+
                 appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
             },
             viewWindowOpened: (
@@ -174,6 +180,7 @@ export class View {
 
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
                     this.favicon = favicon;
+                    this.faviconURL = faviconUrl;
 
                     this.cacheFavicon(favicon)
                 })

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part } from "./style"
 import { observer } from 'mobx-react';
 import { Icon } from "@dothq/icon";
+import { BLUE_1 } from '../../../constants/colors';
 
 export const Addressbar = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot }: { EXPO_PREFIX: string;  NEWTAB_URL: string; EXPO_SUFFIX?: string; dot: any }) => {
     const events = dot.events;
@@ -39,11 +40,11 @@ export const Addressbar = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot 
 })
 
 const FavouriteIcon = observer(({ dot }: { dot: any }) => {
-    const url = dot.tabs.selectedTab && dot.tabs.selectedTab.url;
+    const isBookmarked = dot.tabs.selectedTab && dot.tabs.selectedTab.isBookmarked;
 
     return (
-        <StyledFavouriteIcon>
-            <Icon icon={"star"} size={15} />
+        <StyledFavouriteIcon title={"Bookmark this tab"} onClick={() => dot.tabs.selectedTab.bookmark()}>
+            <Icon icon={"star"} size={15} stroke={isBookmarked ? BLUE_1 : "currentColor"} fill={isBookmarked ? BLUE_1 : ""} />
         </StyledFavouriteIcon>
     )
 })
@@ -68,6 +69,7 @@ const SearchIcon = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot }: { EX
             searchWidth={0} 
             showSearchText={false} 
             isFocused={isFocused}
+            title={icon !== "search" ? "View site information" : ""}
         >
             <Icon icon={icon} size={icon == "alert-circle" ? 16 : 14} />
             {/* <SearchIconText 
