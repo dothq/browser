@@ -75,8 +75,12 @@ class Dot {
         })
     }
 
-    private async fetchStorage() {
+    public async fetchStorage() {
         const storage = await ipcRenderer.invoke('get-storage')
+
+        storage.settings = storage.settings[storage.settings.length-1]
+
+        console.log(storage)
 
         this.db = storage;
 
