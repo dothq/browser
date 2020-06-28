@@ -8,7 +8,6 @@ export const StyledNavigationButton = styled.div`
     align-self: center;
     text-align: center;
     justify-content: center;
-    border-radius: 3px;
     margin: 0 1px;
     transition: 0.1s box-shadow, 0.1s background-color;
     position: relative;
@@ -16,6 +15,8 @@ export const StyledNavigationButton = styled.div`
     ${({ size, disabled, visible }: { size?: number; disabled?: boolean; visible?: boolean }) => css`
         width: ${size}px;
         height: ${size}px;
+
+        border-radius: 100%;
 
         min-width: ${size}px;
         min-height: ${size}px;

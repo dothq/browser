@@ -30,36 +30,44 @@ export const Navigation = observer(() => {
                     size={18} 
                     disabled={navStatus && !navStatus.canGoBack} 
                     onClick={() => events.navigationOnBackClick()}
+                    title={"Click to go back"}
                 />
                 <NavigationButton 
                     icon={"arrow-right"} 
                     size={18} 
                     disabled={navStatus && !navStatus.canGoForward}
                     onClick={() => events.navigationOnForwardClick()}
+                    title={"Click to go forward"}
                 />
-                <NavigationButton icon={
-                    isLoading ? 
-                        !isNTP 
-                            ? "x" 
-                            : "rotate-cw" 
-                    : "rotate-cw"
-                } size={isLoading ? !isNTP ? 18 : 16 : 16} onClick={() => events.navigationOnRefreshClick()} />
+                <NavigationButton 
+                    icon={
+                        isLoading ? 
+                            !isNTP 
+                                ? "x" 
+                                : "rotate-cw" 
+                        : "rotate-cw"
+                    } 
+                    size={isLoading ? !isNTP ? 18 : 16 : 16} 
+                    onClick={() => events.navigationOnRefreshClick()}
+                    title={"Reload this page"}
+                />
                 <NavigationButton 
                     icon={"home"} 
                     size={16} 
                     visible={dot.dbReady ? dot.db.settings.appearance.showHomeButton : false}
                     onClick={() => events.navigationOnHomeClick()}
+                    title={"Open the homepage"}
                 />
             </NavigationButtons>
             <Addressbar EXPO_PREFIX={EXPO_PREFIX} EXPO_SUFFIX={EXPO_SUFFIX} NEWTAB_URL={NEWTAB_URL} dot={dot}/>
             <ExtensionButtons>
-                <NavigationButton icon={"shield"} size={18}>
+                <NavigationButton icon={"shield"} size={18} title={"Adblock"}>
                     {dot.tabs.selectedTab && dot.tabs.selectedTab.blockedAds !== 0 && <Badge>{dot.tabs.selectedTab.blockedAds.toString()}</Badge>}
                 </NavigationButton>
                 <Separator />
-                <NavigationButton icon={"user"} size={18} />
+                <NavigationButton icon={"user"} size={18} title={"People"} />
                 
-                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef} visible={true}>
+                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef} visible={true} title={"Customise and control Dot Browser."}>
                     <Icon icon={"more-horizontal"} size={18} />
                 </StyledNavigationButton>
             </ExtensionButtons>
