@@ -8,7 +8,7 @@ import { Overlay } from './overlay';
 import { ServiceManager } from './services';
 import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
-import { NAVIGATION_HEIGHT } from '../renderer/constants/window';
+import { NAVIGATION_HEIGHT, BOOKMARKS_BAR_HEIGHT } from '../renderer/constants/window';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -65,9 +65,7 @@ export class AppWindow {
 
             this.window.show()
 
-            setTimeout(() => {
-              this.window.webContents.send('refetch-storage');
-            }, 3000);
+            this.window.webContents.send('refetch-storage');
         })
 
         this.window.on('resize', () => {
@@ -108,6 +106,6 @@ export class AppWindow {
     }
 
     public get navigationHeight() {
-      return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? 32 : 0 : 0)) : 0)
+      return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? BOOKMARKS_BAR_HEIGHT : 0 : 0)) : 0)
     }
 }
