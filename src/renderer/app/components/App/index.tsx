@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledApp, Style } from "./style";
+import { StyledApp, Style, Line } from "./style";
 import { createGlobalStyle } from 'styled-components';
 
 import { Tabs } from '../Tabs';
@@ -108,5 +108,6 @@ export const App = observer(() => (
         <GlobalStyle />
         <Tabs />
         <Navigation />
+        <Line fromTop={dot.navigationHeight} />
     </StyledApp>
 ))

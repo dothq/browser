@@ -47,7 +47,7 @@ export const Navigation = observer(() => {
                 <NavigationButton 
                     icon={"home"} 
                     size={16} 
-                    visible={true}
+                    visible={dot.dbReady ? dot.db.settings.appearance.showHomeButton : false}
                     onClick={() => events.navigationOnHomeClick()}
                 />
             </NavigationButtons>

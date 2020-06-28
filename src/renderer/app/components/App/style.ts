@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { NAVIGATION_HEIGHT } from "../../../constants/window";
+
+import dot from '../../store';
 
 export const Style = css`
     body {
@@ -34,6 +35,17 @@ export const StyledApp = styled.div`
     transition: 0.3s margin-top;
 
     ${({ isFullscreen }: { isFullscreen: boolean }) => css`
-        margin-top: ${isFullscreen ? `-${NAVIGATION_HEIGHT}px` : ``};
+        margin-top: ${isFullscreen ? `-${dot.navigationHeight}px` : ``};
+    `};
+`;
+
+export const Line = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: #eaeaea;
+    
+    ${({ fromTop }: { fromTop: number }) => css`
+        top: ${fromTop - 1}px;
     `};
 `;

@@ -8,13 +8,14 @@ import { Overlay } from './overlay';
 import { ServiceManager } from './services';
 import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
+import { NAVIGATION_HEIGHT } from '../renderer/constants/window';
 
 export class AppWindow {
     public window: BrowserWindow;
     public overlay: Overlay;
     public services: ServiceManager = new ServiceManager()
 
-    public storage: Storage;
+    public storage: Storage = new Storage();
 
     public views: View[] = [];
     
@@ -47,8 +48,6 @@ export class AppWindow {
         })
 
         this.overlay = new Overlay(this);
-
-        this.storage = new Storage()
 
         startMessagingAgent()
 
@@ -106,5 +105,9 @@ export class AppWindow {
 
     public get selectedView() {
       return this.getViewFromId(this.selectedId);
+    }
+
+    public get navigationHeight() {
+      return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? 32 : 0 : 0)) : 0)
     }
 }

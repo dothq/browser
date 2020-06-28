@@ -45,7 +45,7 @@ export class View {
         })
 
         let { width, height } = appWindow.window.getBounds()
-        this.view.setBounds({ x: 0, y: NAVIGATION_HEIGHT, width, height: height - NAVIGATION_HEIGHT });
+        this.view.setBounds({ x: 0, y: appWindow.navigationHeight, width, height: height - appWindow.navigationHeight });
 
         this.view.setAutoResize({ width: true, height: true });
         this.view.webContents.loadURL(url);
@@ -57,7 +57,7 @@ export class View {
 
             const generalMenu = getGeneralMenu(id)
 
-            generalMenu.popup({ x, y: y + (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) })
+            generalMenu.popup({ x, y: y + appWindow.navigationHeight })
         })
 
         this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
@@ -86,7 +86,7 @@ export class View {
         }
 
         setTimeout(() => {
-            this.view.setBounds({ x: 0, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, width, height: height - (appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT) });
+            this.view.setBounds({ x: 0, y: appWindow.navigationHeight, width, height: height - appWindow.navigationHeight });
         }, 0)
 
         this.updateZoomFactor()

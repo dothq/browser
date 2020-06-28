@@ -8,6 +8,7 @@ import { observable } from 'mobx';
 import { ConnectivityStore } from "./connectivity";
 import { ipcRenderer } from "electron";
 import { NEWTAB_URL } from "../../constants/web";
+import { NAVIGATION_HEIGHT } from "../../constants/window";
 
 class Dot {
     public tabs = new TabsStore(this);
@@ -17,6 +18,9 @@ class Dot {
 
     @observable
     public db;
+
+    @observable
+    public dbReady: boolean = false;
 
     @observable
     public fullscreen: boolean = false;
@@ -38,6 +42,8 @@ class Dot {
 
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
+            this.fetchStorage()
+
             this.tabs.add({ url: NEWTAB_URL, active: true })
 
             this.connectivity.checkForConnection().then((r: any) => {
@@ -49,6 +55,8 @@ class Dot {
 
             ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
         })
+
+        window.addEventListener('focus', () => this.fetchStorage())
 
         ipcRenderer.on('focus-addressbar', () => {
             // @todo Make fake addressbar focus real addressbar
@@ -73,6 +81,12 @@ class Dot {
         this.db = storage;
 
         console.log("settings => refetched settings")
+
+        this.dbReady = true;
+    }
+
+    public get navigationHeight() {
+        return (NAVIGATION_HEIGHT + (this.dbReady ? this.db.settings.appearance.showBookmarksBar ? 32 : 0 : 0))
     }
 }
 
