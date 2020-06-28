@@ -59,8 +59,6 @@ export const startMessagingAgent = () => {
     ipcMain.handle('get-storage', async (event) => {
       const storage = {}
 
-      console.log(appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar)
-
       for (const database of Object.entries(appWindow.storage.db)) {
         storage[database[0]] = database[1].getAllData()[0]
       }
