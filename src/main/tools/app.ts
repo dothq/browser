@@ -3,6 +3,7 @@ import { app, Menu } from "electron";
 import { resolve } from "path";
 import { appWindow } from "..";
 import { NAVIGATION_HEIGHT } from "../../renderer/constants/window";
+import { showBookmarkMenu } from "../menus/bookmark";
 
 export const setAppDataLocation = () => {
     if(platform() == 'darwin') {
@@ -24,6 +25,10 @@ export const popupMenu = () => {
 
         appWindow.menu.popup({ x: width - 238, y: appWindow.fullscreen ? 0 : NAVIGATION_HEIGHT, window: appWindow.window })
     }
+}
+
+export const popupBookmarkMenu = (args) => {
+    showBookmarkMenu(args.bookmark, args.x, args. y)
 }
 
 export const hideMenu = (menu: Menu) => {

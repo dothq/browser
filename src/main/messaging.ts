@@ -20,7 +20,7 @@ import {
   setSuggestionBoxWidth, 
   setSuggestionBoxLeft
 } from "./tools/overlay";
-import { focusAddressbar, popupMenu, hideMenu } from "./tools/app";
+import { focusAddressbar, popupMenu, hideMenu, popupBookmarkMenu } from "./tools/app";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -54,6 +54,7 @@ export const startMessagingAgent = () => {
     ipcMain.on('suggestionbox-left', (e, args) => setSuggestionBoxLeft(args))
 
     ipcMain.on('menu-popup', () => popupMenu())
+    ipcMain.on('bookmark-menu-popup', (e, args) => popupBookmarkMenu(args))
 
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 
@@ -63,7 +64,7 @@ export const startMessagingAgent = () => {
       const storage = {}
 
       for (const database of Object.entries(appWindow.storage.db)) {
-        storage[database[0]] = database[1].getAllData()[0]
+        storage[database[0]] = database[1].getAllData()
       }
 
       return storage
