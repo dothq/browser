@@ -98,7 +98,15 @@ export class AppWindow {
     }
 
     public getViewFromId(id: string) {
-      return this.views.find(view => view.id == id)
+      return this.views.find(view => { if(view !== null) return view.id == id })
+    }
+
+    public getViewFromWebContentsId(id: number) {
+      return this.views.find(view => { if(view !== null) return view.view.webContents.id == id })
+    }
+
+    public getViewIndex(id: string) {
+      return this.views.findIndex(view => { if(view !== null) return view.id == id })
     }
 
     public get selectedView() {

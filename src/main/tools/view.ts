@@ -27,10 +27,14 @@ export const selectView = (id) => {
 }
 
 export const destroyView = (id) => {
-    const { view } = appWindow.getViewFromId(id)
+    const viewIndex = appWindow.getViewIndex(id)
+
+    const { view } = appWindow.views[viewIndex];
 
     appWindow.window.removeBrowserView(view)
     view.destroy()
+
+    appWindow.views[viewIndex] = null;
 }
 
 export const refreshView = (id, ignoreCache: boolean) => {
