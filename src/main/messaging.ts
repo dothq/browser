@@ -67,6 +67,8 @@ export const startMessagingAgent = () => {
         storage[database[0]] = database[1].getAllData()
       }
 
+      if(appWindow.selectedView) appWindow.selectedView.rearrange()
+
       return storage
     })
 }

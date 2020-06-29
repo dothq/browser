@@ -15,7 +15,7 @@ export class Tab {
     public originalUrl: string;
 
     @observable
-    public title: string = "Untitled";
+    public title: string = "";
 
     @observable
     public status: 'loading' | 'idle' | 'crashed' | 'suspended' = 'loading';

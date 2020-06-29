@@ -33,4 +33,9 @@ export const BookmarksTitle = styled.div`
     font-size: 12px;
     color: #000;
     margin-left: 8px;
+
+    max-width: 112px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 `;

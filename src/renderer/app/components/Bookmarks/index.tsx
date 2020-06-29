@@ -11,7 +11,7 @@ export const Bookmarks = observer(() => {
     return (
         <StyledBookmarks>
             {dot.dbReady && dot.db.bookmarks.map(({ url, title, favicon, _id }) => (
-                <>{url && <BookmarksItem key={_id} url={url} title={title} favicon={favicon || require("../../../../resources/icons/blank.svg").default} />}</>
+                <React.Fragment key={_id}>{url && <BookmarksItem url={url} title={title} favicon={favicon || require("../../../../resources/icons/blank.svg").default} />}</React.Fragment>
             ))}
 
             {dot.dbReady && dot.db.bookmarks.filter(b => b.url).length == 0 && <BookmarksPlaceholder>For quick access, place your bookmarks and favourite pages in the bookmarks bar.</BookmarksPlaceholder>}

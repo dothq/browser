@@ -43,7 +43,7 @@ const FavouriteIcon = observer(({ dot }: { dot: any }) => {
     const isBookmarked = dot.tabs.selectedTab && dot.tabs.selectedTab.isBookmarked;
 
     return (
-        <StyledFavouriteIcon title={"Bookmark this tab"} onClick={() => dot.tabs.selectedTab.bookmark()}>
+        <StyledFavouriteIcon title={isBookmarked ? `Edit bookmark for this tab` : `Bookmark this tab`} onClick={() => dot.tabs.selectedTab.bookmark()}>
             <Icon icon={"star"} size={15} stroke={isBookmarked ? BLUE_1 : "currentColor"} fill={isBookmarked ? BLUE_1 : ""} />
         </StyledFavouriteIcon>
     )

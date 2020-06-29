@@ -16,4 +16,6 @@ export const BookmarksPlaceholder = styled(BookmarksTitle)`
     margin-left: 5px;
     margin-top: 5px;
     opacity: 0.8;
+
+    max-width: unset;
 `;

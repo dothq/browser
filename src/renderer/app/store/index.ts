@@ -70,8 +70,8 @@ class Dot {
             this.maximised = isMaximised;
         })
 
-        ipcRenderer.on('refetch-storage', (e) => {
-            this.fetchStorage()
+        ipcRenderer.on('refetch-storage', (e, sleepBeforeRerender) => {
+            setTimeout(() => this.fetchStorage(), sleepBeforeRerender ? 5 : 0)
         })
     }
 

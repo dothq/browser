@@ -125,9 +125,17 @@ export const getAppMenu = (appName) => {
                 {
                     label: "Always Show Bookmarks Bar",
                     accelerator: "CmdOrCtrl+Shift+B",
-                    enabled: false,
-                    checked: true,
-                    type: "checkbox" as "checkbox"
+                    type: ("checkbox" as any),
+                    checked: appWindow && appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar,
+                    click: () => {
+                        const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
+        
+                        appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
+                    
+                        appWindow.storage.db.settings.getAllData()[0].appearance
+        
+                        appWindow.window.webContents.send('refetch-storage')
+                    }
                 },
                 {
                     label: "Always Show Toolbar in Full Screen",

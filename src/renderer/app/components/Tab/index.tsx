@@ -11,7 +11,13 @@ const TabContent = observer(({ tab }: { tab: ITab }) => (
     <StyledTabContent title={tab.title}>
         {tab.status == "loading" && !tab.isNTP && <TabThrobber color={tab.themeColor} />}
         {tab.status == "idle" && <TabFavicon style={{ width: !tab.favicon ? '0px' : '', minWidth: !tab.favicon ? '0px' : '' }} src={tab.favicon} />}
-        <TabTitle>{tab.title == "Untitled" ? tab.status == "idle" ? tab.url : tab.title : tab.title}</TabTitle>
+        <TabTitle>{
+            tab.title == "" 
+                ? tab.status == "idle" 
+                    ? tab.url 
+                    : "Loading..."
+                : tab.title
+            }</TabTitle>
     </StyledTabContent>
 ))
 

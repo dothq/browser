@@ -34,13 +34,13 @@ export const showBookmarkMenu = (bookmark, x, y) => {
             click: () => {
                 const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
 
-                console.log(currentValue)
-
                 appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
             
                 appWindow.storage.db.settings.getAllData()[0].appearance
 
-                appWindow.window.webContents.send('refetch-storage')
+                appWindow.window.webContents.send('refetch-storage', true)
+
+                appWindow.selectedView.rearrange()
             }
         },
     ])
