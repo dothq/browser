@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part } from "./style"
+import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part, PadlockIcon } from "./style"
 import { observer } from 'mobx-react';
 import { Icon } from "@dothq/icon";
 import { BLUE_1 } from '../../../constants/colors';
@@ -71,27 +71,8 @@ const SearchIcon = observer(({ EXPO_PREFIX, NEWTAB_URL, EXPO_SUFFIX, dot }: { EX
             isFocused={isFocused}
             title={icon !== "search" ? "View site information" : ""}
         >
-            <Icon icon={icon} size={icon == "alert-circle" ? 16 : 14} />
-            {/* <SearchIconText 
-                visible={
-                    tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
-                        ? tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
-                        : tab && tab.url && tab && tab && tab.status == "idle" 
-                            ? tab.url.startsWith("http://")
-                                ? tab.isError
-                                    ? false
-                                    : true
-                                : false
-                            : false
-                } 
-                textWidth={
-                    tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) 
-                        ? 65 
-                        : tab && tab.status == "idle" ? tab.isError ? 0 : 58 : 0
-                }
-            >
-                {tab && tab.url && tab && tab.url.startsWith(EXPO_PREFIX) ? "Dot Browser" : tab && tab.status == "idle" ? tab.isError ? "" : "Not secure" : ""}
-            </SearchIconText> */}
+            {icon !== "lock" && <Icon icon={icon} size={icon == "alert-circle" ? 16 : 14} />}
+            {icon == "lock" && <PadlockIcon />}
         </StyledSearchIcon>
     )
 })

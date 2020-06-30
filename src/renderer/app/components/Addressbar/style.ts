@@ -208,3 +208,11 @@ export const Part = styled.div`
         opacity: ${opacity};
     `};
 `
+
+export const PadlockIcon = styled.div`
+    mask-image: url(${require("../../../../resources/icons/lock.svg").default});
+    background-color: #5F6368;
+    -webkit-mask-size: cover;
+    width: 8px;
+    height: 11px;
+`;

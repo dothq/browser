@@ -14,7 +14,7 @@ export const StyledTabs = styled.div`
 
 export const TabsContainer = styled.div`
     display: flex;
-    padding: 0 4px;
+    padding: 0 8px;
     -webkit-app-region: no-drag;
     max-width: calc(100% - 200px);
     overflow-x: visible;

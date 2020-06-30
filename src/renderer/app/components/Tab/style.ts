@@ -41,8 +41,8 @@ export const StyledTab = styled.div`
             width: 8.5px;
             height: 8px;
             background-image: url(${tab_corner_left});
-            bottom: -1px;
-            left: -7px;
+            bottom: 0;
+            left: -8px;
             opacity: ${selected ? 1 : 0};
         }
 
@@ -52,7 +52,7 @@ export const StyledTab = styled.div`
             width: 8.5px;
             height: 8px;
             background-image: url(${tab_corner_right});
-            bottom: -1px;
+            bottom: 0px;
             right: -8px;
             opacity: ${selected ? 1 : 0};
         }
