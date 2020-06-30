@@ -15,7 +15,11 @@ export const showBookmarkMenu = (bookmark, x, y) => {
         {
             label: "Delete",
             click: () => {
-                appWindow.window.webContents.send('bookmark-delete', bookmark.id)
+                appWindow.storage.db.bookmarks.remove({ _id: bookmark.bookmarkId })
+
+                appWindow.window.webContents.send('refetch-storage', true)
+
+                appWindow.selectedView.rearrange()
             }
         },
         {
