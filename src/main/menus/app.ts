@@ -126,7 +126,7 @@ export const getAppMenu = (appName) => {
                     label: "Always Show Bookmarks Bar",
                     accelerator: "CmdOrCtrl+Shift+B",
                     type: ("checkbox" as any),
-                    checked: appWindow && appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar,
+                    checked: typeof(appWindow) !== "undefined" && appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar,
                     click: () => {
                         const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
         

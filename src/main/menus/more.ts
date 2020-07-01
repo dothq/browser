@@ -1,7 +1,7 @@
-import { Menu, MenuItem } from "electron";
+import { Menu, MenuItem, ipcRenderer } from "electron";
 import { appWindow } from "..";
 import { NAVIGATION_HEIGHT } from "../../renderer/constants/window";
-import { NEWTAB_URL, REPORT_ISSUES_URL, HELP_CENTRE_URL } from "../../renderer/constants/web";
+import { NEWTAB_URL, REPORT_ISSUES_URL, HELP_CENTRE_URL, BOOKMARKS_URL, SETTINGS_URL } from "../../renderer/constants/web";
 
 export const getMoreMenu = (appName) => {
     const menu = Menu.buildFromTemplate([
@@ -46,10 +46,43 @@ export const getMoreMenu = (appName) => {
         {
             label: "Bookmarks",
             type: ("submenu" as any),
+            id: "bookmarksMenu",
             submenu: [
                 {
-                    label: "No items",
-                    enabled: false
+                    label: "Bookmark this tab...",
+                    accelerator: "Ctrl+D",
+                    click: () => {
+                        appWindow.window.webContents.send(`tab-bookmark-${appWindow.selectedId}`)
+                    }
+                },
+                {
+                    type: ("separator" as any)
+                },
+                {
+                    label: "Show bookmarks bar",
+                    type: ("checkbox" as any),
+                    id: "showBookmarksBar",
+                    checked: true,
+                    click: () => {
+                        const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
+        
+                        appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
+        
+                        setTimeout(() => {
+                            appWindow.window.webContents.send('refetch-storage', true)
+                            appWindow.selectedView.rearrange()
+                        }, 100);
+                    }
+                },
+                {
+                    label: "Bookmark manager",
+                    accelerator: "Ctrl+Shift+O",
+                    click: () => {
+                        appWindow.window.webContents.send('add-tab', { url: BOOKMARKS_URL, active: true })
+                    }
+                },
+                {
+                    type: ("separator" as any)
                 }
             ]
         },
@@ -85,7 +118,9 @@ export const getMoreMenu = (appName) => {
         },
         {
             label: "Settings",
-            accelerator: "CmdOrCtrl+Shift+P"
+            click: () => {
+                appWindow.window.webContents.send('add-tab', { url: SETTINGS_URL, active: true })
+            }
         },
         {
             label: "Help",

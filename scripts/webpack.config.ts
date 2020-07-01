@@ -24,7 +24,14 @@ module.exports = {
     },
     module: {
       rules: [
-        { test: /\.tsx?$/, loader: "ts-loader" }
+        { test: /\.tsx?$/, loader: "ts-loader" },
+        {
+          test: /\.(png|jpg|gif|svg)$/,
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]',
+          },
+        },
       ]
     },
     externals: {

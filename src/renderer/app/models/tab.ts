@@ -72,6 +72,8 @@ export class Tab {
         ipcRenderer.on(`blocked-ad-${this.id}`, () => {
             ++this.blockedAds
         })
+
+        ipcRenderer.on(`tab-bookmark-${this.id}`, () => this.bookmark())
     }
 
     public get isNTP() {

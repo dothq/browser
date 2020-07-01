@@ -1,4 +1,4 @@
-import { BrowserWindow, app, Menu, screen } from 'electron';
+import { BrowserWindow, app, Menu, screen, MenuItem, NativeImage } from 'electron';
 import { resolve } from 'path';
 import { View } from './view';
 import { startMessagingAgent } from './messaging';
@@ -9,6 +9,7 @@ import { ServiceManager } from './services';
 import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
 import { NAVIGATION_HEIGHT, BOOKMARKS_BAR_HEIGHT } from '../renderer/constants/window';
+import { RESERVED_BOOKMARKS_SPACES } from '../renderer/constants/menu';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -86,6 +87,12 @@ export class AppWindow {
         });
 
         this.menu.addListener('menu-will-show', () => {
+          this.storage.db.settings.findOne({}, (e, docs: any) => {
+            this.menu.getMenuItemById('showBookmarksBar').checked = docs.appearance.showBookmarksBar
+
+            this.menu = this.menu;
+          })
+
           this.menuVisible = true;
         })
     
