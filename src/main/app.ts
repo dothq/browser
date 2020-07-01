@@ -64,6 +64,7 @@ export class AppWindow {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
+            this.window.focus()
 
             this.window.webContents.send('refetch-storage');
         })

@@ -67,7 +67,7 @@ export const Navigation = observer(() => {
                 <Separator />
                 <NavigationButton icon={"user"} size={18} title={"People"} />
                 
-                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef} visible={true} title={"Customise and control Dot Browser."}>
+                <StyledNavigationButton onClick={dot.events.menuOnClick} ref={dot.menuButtonRef} visible={true} title={"Customise and control Dot Browser"}>
                     <Icon icon={"more-horizontal"} size={18} />
                 </StyledNavigationButton>
             </ExtensionButtons>
