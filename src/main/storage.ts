@@ -27,6 +27,8 @@ const createConnection = async (name, defaults?: any) => {
 export class Storage {
     public settings: Endb<any>;
     public history: Endb<any>;
+    public bookmarks: Endb<any>;
+    public favicons: Endb<any>;
 
     constructor() {
         this.init()
@@ -35,5 +37,7 @@ export class Storage {
     public async init() {
         this.settings = await createConnection("settings", [{ 'appearance.theme': 'light' }]);
         this.history = await createConnection("history");
+        this.bookmarks = await createConnection("bookmarks");
+        this.favicons = await createConnection("favicons");
     }
 }
