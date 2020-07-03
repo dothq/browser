@@ -1,38 +1,39 @@
-import Datastore from 'nedb';
+import Endb from 'endb';
+import EndbSqlite from '@endb/sqlite';
 
-import { resolve } from 'path';
-import { app } from 'electron';
+const createConnection = async (name, defaults?: any) => {
+    const store = new EndbSqlite({
+        uri: `sqlite://${__dirname}\\storage.db`,
+        table: name,
+        busyTimeout: 10000
+    });
 
-import { defaultSettings } from '../constants/settings';
-import { appWindow } from '.';
+    const db = new Endb(({ store, namespace: "dot" } as Endb.EndbOptions<any>));
 
-const databases = ['history', 'bookmarks', 'downloads', 'passwords', 'settings', 'session', 'favicons']
+    if(!defaults) return db;
+
+    for (const def of defaults) {
+        const key = Object.keys(def)[0];
+        const value = def[key]
+
+        const exists = await db.has(key)
+
+        if(exists) return;
+        db.set(key, value)
+    }
+    return db;
+}
 
 export class Storage {
-    public db = {
-        history: new Datastore,
-        bookmarks: new Datastore,
-        downloads: new Datastore,
-        passwords: new Datastore,
-        settings: new Datastore,
-        session: new Datastore,
-        favicons: new Datastore
-    }
+    public settings: Endb<any>;
+    public history: Endb<any>;
 
     constructor() {
-        for (const item of databases) {
-            this.db[item] = new Datastore({ 
-                filename: resolve(app.getPath('userData'), 'User Data', item),
-                timestampData: true
-            });
+        this.init()
+    }
 
-            this.db[item].loadDatabase();
-        }
-
-        this.db.settings.count({}, (err, count) => {
-            if(err || !count) {
-                this.db.settings.insert([ defaultSettings ])
-            }
-        });
+    public async init() {
+        this.settings = await createConnection("settings", [{ 'appearance.theme': 'light' }]);
+        this.history = await createConnection("history");
     }
 }
