@@ -74,28 +74,29 @@ export const navigateView = (id, url) => {
 }
 
 export const bookmarkView = (id) => {
-    const view = appWindow.getViewFromId(id);
-    if(!view) return;
+     // todo: migrate old nedb code to sqlite
+    // const view = appWindow.getViewFromId(id);
+    // if(!view) return;
 
-    appWindow.storage.db.bookmarks.count({
-        url: view.url
-    }, (e, count) => {
-        if(count == 0) {
-            appWindow.storage.db.bookmarks.insert([
-                {
-                    tabId: view.id,
-                    url: view.url,
-                    title: view.title,
-                    favicon: view.favicon
-                }
-            ])
-        } else {
-            appWindow.storage.db.bookmarks.remove({
-                url: view.url
-        }, { multi: true })
-        }
-    })
+    // appWindow.storage.db.bookmarks.count({
+    //     url: view.url
+    // }, (e, count) => {
+    //     if(count == 0) {
+    //         appWindow.storage.db.bookmarks.insert([
+    //             {
+    //                 tabId: view.id,
+    //                 url: view.url,
+    //                 title: view.title,
+    //                 favicon: view.favicon
+    //             }
+    //         ])
+    //     } else {
+    //         appWindow.storage.db.bookmarks.remove({
+    //             url: view.url
+    //     }, { multi: true })
+    //     }
+    // })
 
-    appWindow.window.webContents.send('refetch-storage');
+    // appWindow.window.webContents.send('refetch-storage');
 
 }

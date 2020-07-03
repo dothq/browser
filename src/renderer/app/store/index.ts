@@ -42,7 +42,8 @@ class Dot {
 
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
-            this.fetchStorage()
+             // todo: migrate old nedb code to sqlite
+            // this.fetchStorage()
 
             this.tabs.add({ url: NEWTAB_URL, active: true })
 
@@ -56,7 +57,8 @@ class Dot {
             ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
         })
 
-        window.addEventListener('focus', () => this.fetchStorage())
+         // todo: migrate old nedb code to sqlite
+        // window.addEventListener('focus', () => this.fetchStorage())
 
         ipcRenderer.on('focus-addressbar', () => {
             // @todo Make fake addressbar focus real addressbar
@@ -70,23 +72,25 @@ class Dot {
             this.maximised = isMaximised;
         })
 
-        ipcRenderer.on('refetch-storage', (e, sleepBeforeRerender) => {
-            setTimeout(() => this.fetchStorage(), sleepBeforeRerender ? 5 : 0)
-        })
+        // todo: migrate old nedb code to sqlite
+        // ipcRenderer.on('refetch-storage', (e, sleepBeforeRerender) => {
+        //     setTimeout(() => this.fetchStorage(), sleepBeforeRerender ? 5 : 0)
+        // })
     }
 
     public async fetchStorage() {
-        const storage = await ipcRenderer.invoke('get-storage')
+         // todo: migrate old nedb code to sqlite
+        // const storage = await ipcRenderer.invoke('get-storage')
 
-        storage.settings = storage.settings[storage.settings.length-1]
+        // storage.settings = storage.settings[storage.settings.length-1]
 
-        console.log(storage)
+        // console.log(storage)
 
-        this.db = storage;
+        // this.db = storage;
 
-        console.log("settings => refetched settings")
+        // console.log("settings => refetched settings")
 
-        this.dbReady = true;
+        // this.dbReady = true;
     }
 
     public get navigationHeight() {

@@ -61,14 +61,15 @@ export const startMessagingAgent = () => {
     ipcMain.on('focus-addressbar', () => focusAddressbar())
 
     ipcMain.handle('get-storage', async (event) => {
-      const storage = {}
+       // todo: migrate old nedb code to sqlite
+      // const storage = {}
 
-      for (const database of Object.entries(appWindow.storage.db)) {
-        storage[database[0]] = database[1].getAllData()
-      }
+      // for (const database of Object.entries(appWindow.storage.db)) {
+      //   storage[database[0]] = database[1].getAllData()
+      // }
 
-      if(appWindow.selectedView) appWindow.selectedView.rearrange()
+      // if(appWindow.selectedView) appWindow.selectedView.rearrange()
 
-      return storage
+      // return storage
     })
 }

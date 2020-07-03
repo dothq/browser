@@ -64,14 +64,15 @@ export const getMoreMenu = (appName) => {
                     id: "showBookmarksBar",
                     checked: true,
                     click: () => {
-                        const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
+                         // todo: migrate old nedb code to sqlite
+                        // const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
         
-                        appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
+                        // appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
         
-                        setTimeout(() => {
-                            appWindow.window.webContents.send('refetch-storage', true)
-                            appWindow.selectedView.rearrange()
-                        }, 100);
+                        // setTimeout(() => {
+                        //     appWindow.window.webContents.send('refetch-storage', true)
+                        //     appWindow.selectedView.rearrange()
+                        // }, 100);
                     }
                 },
                 {

@@ -126,15 +126,17 @@ export const getAppMenu = (appName) => {
                     label: "Always Show Bookmarks Bar",
                     accelerator: "CmdOrCtrl+Shift+B",
                     type: ("checkbox" as any),
-                    checked: typeof(appWindow) !== "undefined" && appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar,
+                     // todo: migrate old nedb code to sqlite
+                    // checked: typeof(appWindow) !== "undefined" && appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar,
                     click: () => {
-                        const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
+                         // todo: migrate old nedb code to sqlite
+                        // const currentValue = appWindow.storage.db.settings.getAllData()[0].appearance.showBookmarksBar
         
-                        appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
+                        // appWindow.storage.db.settings.update({ "appearance.showBookmarksBar": currentValue }, { $set: { "appearance.showBookmarksBar": !currentValue } }, { multi: true })
                     
-                        appWindow.storage.db.settings.getAllData()[0].appearance
+                        // appWindow.storage.db.settings.getAllData()[0].appearance
         
-                        appWindow.window.webContents.send('refetch-storage')
+                        // appWindow.window.webContents.send('refetch-storage')
                     }
                 },
                 {
