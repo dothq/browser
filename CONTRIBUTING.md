@@ -66,13 +66,16 @@ For example, the addressbar's plugin name is [`@dothq/addressbar`](https://npm.i
 
 ## File Structure
 
-You can find the `main` electron side of Dot in `src/main` and you can find the `renderer` side which includes all the UI components and React code at `src/renderer`.
+`src/desktop` - Electron files for Dot Browser.
+`src/android` - Android files for Dot Browser.
+`src/ios` - iOS files for Dot Browser.
+`src/ui` - React files for Dot Browser.
 
 ## Environment Variables
 
 - `NODE_ENV` is set to `production` when compiled and distributed. This has a number of effects:
   - All files are uglified and minified
-  - Dot switches to using the `dot://` protocol for Expo pages
+  - Dot switches to using the `dot://` protocol for Web UI pages
   - The code will be harder to modify in `production`
 
 [electronjs.org]: https://electronjs.org
