@@ -1,14 +1,21 @@
-import Endb from 'endb';
-import EndbSqlite from '@endb/sqlite';
+import Database from 'keyv';
+import KeyvFile from 'keyv-file';
 
+import { resolve } from 'path';
+import { USER_DATA } from '../constants/storage';
+ 
 const createConnection = async (name, defaults?: any) => {
-    const store = new EndbSqlite({
-        uri: `sqlite://${__dirname}\\storage.db`,
-        table: name,
-        busyTimeout: 10000
-    });
+    const cleanName = name[0].toUpperCase() + name.slice(1)
 
-    const db = new Endb(({ store, namespace: "dot" } as Endb.EndbOptions<any>));
+    const db: Database = new Database({
+        namespace: name,
+        store: new KeyvFile({
+            filename: resolve(USER_DATA, cleanName),
+            expiredCheckDelay: 300000
+        })
+    })
+
+    db.set("v", 1)
 
     if(!defaults) return db;
 
@@ -16,19 +23,20 @@ const createConnection = async (name, defaults?: any) => {
         const key = Object.keys(def)[0];
         const value = def[key]
 
-        const exists = await db.has(key)
+        const exists = await db.get(key)
 
         if(exists) return;
         db.set(key, value)
     }
+
     return db;
 }
 
 export class Storage {
-    public settings: Endb<any>;
-    public history: Endb<any>;
-    public bookmarks: Endb<any>;
-    public favicons: Endb<any>;
+    public settings: Database;
+    public history: Database;
+    public bookmarks: Database;
+    public favicons: Database;
 
     constructor() {
         this.init()
