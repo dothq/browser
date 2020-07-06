@@ -86,11 +86,12 @@ export class AppWindow {
         });
 
         this.menu.addListener('menu-will-show', () => {
-          this.storage.db.settings.findOne({}, (e, docs: any) => {
-            this.menu.getMenuItemById('showBookmarksBar').checked = docs.appearance.showBookmarksBar
+          // todo: migrate old nedb code to sqlite
+          // this.storage.db.settings.findOne({}, (e, docs: any) => {
+          //   this.menu.getMenuItemById('showBookmarksBar').checked = docs.appearance.showBookmarksBar
 
-            this.menu = this.menu;
-          })
+          //   this.menu = this.menu;
+          // })
 
           this.menuVisible = true;
         })
@@ -121,6 +122,7 @@ export class AppWindow {
     }
 
     public get navigationHeight() {
-      return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? BOOKMARKS_BAR_HEIGHT : 0 : 0)) : 0)
+      return (!this.fullscreen ? (NAVIGATION_HEIGHT + 0) : 0)
+      // return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? BOOKMARKS_BAR_HEIGHT : 0 : 0)) : 0)
     }
 }

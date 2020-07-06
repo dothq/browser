@@ -129,9 +129,10 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewFinishedLoading: (_event: Electron.Event) => {
-                appWindow.storage.db.bookmarks.count({ url: this.url }, (e, count) => {
-                    appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, count >= 1)
-                })
+                 // todo: migrate old nedb code to sqlite
+                // appWindow.storage.db.bookmarks.count({ url: this.url }, (e, count) => {
+                //     appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, count >= 1)
+                // })
 
                 appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
             },
@@ -202,37 +203,40 @@ export class View {
     }
 
     private addItemToHistory() {
-        appWindow.storage.db.history.insert([
-            {
-                url: this.url,
-                title: this.title
-            }
-        ])
+         // todo: migrate old nedb code to sqlite
+        // appWindow.storage.db.history.insert([
+        //     {
+        //         url: this.url,
+        //         title: this.title
+        //     }
+        // ])
     }
 
     private cacheFavicon(favicon) {
-        const exists = appWindow.storage.db.favicons.find({ url: this.url }, (e, docs) => {
-            return docs.length <= 1
-        })
+         // todo: migrate old nedb code to sqlite
+        // const exists = appWindow.storage.db.favicons.find({ url: this.url }, (e, docs) => {
+        //     return docs.length <= 1
+        // })
 
-        if(exists) {
-            appWindow.storage.db.favicons.update({
-                url: this.url
-            },
-                favicon
-            )
-        } else {
-            appWindow.storage.db.favicons.insert([
-                {
-                    url: this.url,
-                    base64: favicon
-                }
-            ])
-        }
+        // if(exists) {
+        //     appWindow.storage.db.favicons.update({
+        //         url: this.url
+        //     },
+        //         favicon
+        //     )
+        // } else {
+        //     appWindow.storage.db.favicons.insert([
+        //         {
+        //             url: this.url,
+        //             base64: favicon
+        //         }
+        //     ])
+        // }
     }
 
     private updateZoomFactor() {
-        this.view.webContents.zoomFactor = appWindow.storage.db.settings.getAllData()[0].appearance.pageZoom/100
+         // todo: migrate old nedb code to sqlite
+        // this.view.webContents.zoomFactor = appWindow.storage.db.settings.getAllData()[0].appearance.pageZoom/100
     }
 
     public get url() {

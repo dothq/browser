@@ -1,38 +1,51 @@
-import Datastore from 'nedb';
+import Database from 'keyv';
+import KeyvFile from 'keyv-file';
 
 import { resolve } from 'path';
-import { app } from 'electron';
+import { USER_DATA } from '../constants/storage';
+ 
+const createConnection = async (name, defaults?: any) => {
+    const cleanName = name[0].toUpperCase() + name.slice(1)
 
-import { defaultSettings } from './constants/settings';
-import { appWindow } from '.';
+    const db: Database = new Database({
+        namespace: name,
+        store: new KeyvFile({
+            filename: resolve(USER_DATA, cleanName),
+            expiredCheckDelay: 300000
+        })
+    })
 
-const databases = ['history', 'bookmarks', 'downloads', 'passwords', 'settings', 'session', 'favicons']
+    db.set("v", 1)
 
-export class Storage {
-    public db = {
-        history: new Datastore,
-        bookmarks: new Datastore,
-        downloads: new Datastore,
-        passwords: new Datastore,
-        settings: new Datastore,
-        session: new Datastore,
-        favicons: new Datastore
+    if(!defaults) return db;
+
+    for (const def of defaults) {
+        const key = Object.keys(def)[0];
+        const value = def[key]
+
+        const exists = await db.get(key)
+
+        if(exists) return;
+        db.set(key, value)
     }
 
+    return db;
+}
+
+export class Storage {
+    public settings: Database;
+    public history: Database;
+    public bookmarks: Database;
+    public favicons: Database;
+
     constructor() {
-        for (const item of databases) {
-            this.db[item] = new Datastore({ 
-                filename: resolve(app.getPath('userData'), 'User Data', item),
-                timestampData: true
-            });
+        this.init()
+    }
 
-            this.db[item].loadDatabase();
-        }
-
-        this.db.settings.count({}, (err, count) => {
-            if(err || !count) {
-                this.db.settings.insert([ defaultSettings ])
-            }
-        });
+    public async init() {
+        this.settings = await createConnection("settings", [{ 'appearance.theme': 'light' }]);
+        this.history = await createConnection("history");
+        this.bookmarks = await createConnection("bookmarks");
+        this.favicons = await createConnection("favicons");
     }
 }
