@@ -38,7 +38,7 @@
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
+    "webpack-dev-server": "^3.11.0",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
   "dependencies": {
@@ -49,6 +49,7 @@
     "@dothq/icon": "^1.0.0",
     "@dothq/log": "^1.0.2",
     "@dothq/system-buttons": "^1.1.1",
+    "@types/keyv": "^3.1.1",
     "axios": "^0.19.2",
     "cross-fetch": "^3.0.4",
     "electron-updater": "^4.3.1",
