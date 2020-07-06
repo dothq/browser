@@ -84,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener("message", (event) => {
         if(event.data == "focus-addressbar") {
-            console.log(event)
             ipcRenderer.send('focus-addressbar')
         }
     }, false);

@@ -4,7 +4,7 @@ import { appWindow } from ".";
 import { NAVIGATION_HEIGHT } from "../ui/constants/window";
 import { getGeneralMenu } from "./menus/general";
 import { downloadFaviconFromUrl } from "./tools/favicon";
-import { BLUE_1 } from "@dothq/colors";
+import { BLUE_1, GRAY_4 } from "@dothq/colors";
 import { NEWTAB_URL, WEBUI_PREFIX, WEBUI_SUFFIX } from "../ui/constants/web";
 import { parse } from "url";
 
@@ -75,7 +75,6 @@ export class View {
 
         this.view.webContents.addListener('page-title-updated', this.events.viewTitleUpdated)
         this.view.webContents.addListener('page-favicon-updated', this.events.viewFaviconUpdated)
-        this.view.webContents.addListener('did-change-theme-color', this.events.viewThemeColorUpdated)
     }
 
     public rearrange() {
@@ -98,7 +97,6 @@ export class View {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
                 appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
-                appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
 
                 this.addItemToHistory()
                 this.updateZoomFactor()
@@ -110,16 +108,18 @@ export class View {
             },
             viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
                 if(isMainFrame) {
+                    appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, GRAY_4)
                     appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
+                    
+                    this.resetFavicon(url);
                 }
 
                 this.updateNavigationButtons()
             },
-            viewStartedLoading: (_event: Electron.Event) => {
+            viewStartedLoading: (_event: Electron.Event) => {                
                 appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, false)
                 appWindow.window.webContents.send(`view-error-updated-${this.id}`, undefined)
                 appWindow.window.webContents.send(`view-status-updated-${this.id}`, 'loading')
-                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
 
                 this.updateNavigationButtons()
             },
@@ -133,8 +133,6 @@ export class View {
                 // appWindow.storage.db.bookmarks.count({ url: this.url }, (e, count) => {
                 //     appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, count >= 1)
                 // })
-
-                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
             },
             viewWindowOpened: (
                 _event: Electron.Event,
@@ -170,27 +168,26 @@ export class View {
                 this.errorData = error
             },
             viewTitleUpdated: async (_event: Electron.Event, title: string) => {
+                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
                 appWindow.window.webContents.send(`view-title-updated-${this.id}`, title)
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
                 const faviconUrl = favicons[0];
 
-                downloadFaviconFromUrl(faviconUrl).then(favicon => {
+                if(faviconUrl == this.faviconURL) return;
+
+                downloadFaviconFromUrl(faviconUrl).then((favicon: string) => {
                     if(this.favicon == favicon) return;
 
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
                     this.favicon = favicon;
                     this.faviconURL = faviconUrl;
 
-                    this.cacheFavicon(favicon)
+                    // this.cacheFavicon(favicon)
                 })
 
-                this.updateNavigationButtons()
-            },
-            viewThemeColorUpdated: (_event: Electron.Event, themeColor: any) => {
-                // if(themeColor == null || this.url == NEWTAB_URL) themeColor = BLUE_1
-                // appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, themeColor)
+                // this.updateNavigationButtons()
             }
         }
     }
@@ -232,6 +229,16 @@ export class View {
         //         }
         //     ])
         // }
+    }
+
+    private resetFavicon(url: string) {
+        const { host } = parse(url)
+        const currentHost = parse(this.url).host
+
+        if(currentHost == host) return;
+
+        this.favicon = null;
+        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
     }
 
     private updateZoomFactor() {

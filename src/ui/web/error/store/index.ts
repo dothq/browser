@@ -32,7 +32,6 @@ class Dot {
             document.body.innerHTML = document.body.innerHTML.replace(/%certExpiredWhen/g, `<b>Calculating...</b>`)
 
             this.error.certificate = await this.getSSLCertificate(url.hostname)
-            console.log(this.error)
 
             document.body.innerHTML = document.body.innerHTML.replace(/Calculating.../g, data.error.certificate.certificateExpired)
         })
