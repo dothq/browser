@@ -33,8 +33,5 @@ module.exports = {
           },
         },
       ]
-    },
-    externals: {
-      glasstron: "commonjs glasstron"
     }
 };
