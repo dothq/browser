@@ -1,38 +1,22 @@
 export const defaultSettings = {
-    privacy: {
-        trackingProtection: 'strict',
-        clearBrowsingOnExit: false,
-        doNotTrack: true,
-        anonymiseFingerprint: true
-    },
-    appearance: {
-        theme: 'light',
-        customTheme: 'unset',
-        pageZoom: 100,
-        showHomeButton: false,
-        showBookmarksBar: true,
-        fontSize: "m"
-    },
-    search: {
-        suggestionsFromKeywords: true,
-        engine: 'duckduckgo',
-        customEngine: 'unset'
-    },
-    keychain: {
-        masterPasswordHint: ''
-    },
-    downloads: {
-        location: 'defaultDownloadsFolder',
-        askWhereToSave: false
-    },
-    languages: {
-        language: 'en-US',
-        spellCheck: true
-    },
-    eoa: {
-        highContrastMode: false
-    },
-    system: {
-        hardwareAcceleration: true
-    }
+    trackingProtection: 'strict',
+    clearBrowsingOnExit: false,
+    doNotTrack: true,
+    anonymiseFingerprint: true,
+    theme: 'light',
+    customTheme: 'unset',
+    pageZoom: 100,
+    showHomeButton: false,
+    showBookmarksBar: true,
+    fontSize: "m",
+    suggestionsFromKeywords: true,
+    engine: 'duckduckgo',
+    customEngine: 'unset',
+    masterPasswordHint: '',
+    location: 'defaultDownloadsFolder',
+    askWhereToSave: false,
+    language: 'en-US',
+    spellCheck: true,
+    highContrastMode: false,
+    hardwareAcceleration: true
 }

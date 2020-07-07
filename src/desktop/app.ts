@@ -9,6 +9,7 @@ import { ServiceManager } from './services';
 import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
 import { NAVIGATION_HEIGHT, BOOKMARKS_BAR_HEIGHT } from '../ui/constants/window';
+import { defaultSettings } from './constants/settings';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -66,19 +67,7 @@ export class AppWindow {
             this.window.show()
             this.window.focus()
 
-            this.window.webContents.send('storage-import');
-
-            this.storage.db.$.subscribe(payload => {
-              this.window.webContents.send(
-                'storage-update', 
-                { 
-                  op: payload.operation, 
-                  collection: payload.collectionName, 
-                  data: payload.documentData,
-                  t: Date.now() 
-                }
-              )
-            })
+            this.storageReady()
         })
 
         this.window.on('resize', () => {
@@ -136,5 +125,26 @@ export class AppWindow {
     public get navigationHeight() {
       return (!this.fullscreen ? (NAVIGATION_HEIGHT + 0) : 0)
       // return (!this.fullscreen ? (NAVIGATION_HEIGHT + (this.storage.db.settings ? this.storage.db.settings.getAllData()[0].appearance.showBookmarksBar ? BOOKMARKS_BAR_HEIGHT : 0 : 0)) : 0)
+    }
+
+    public async storageReady() {
+      this.window.webContents.send('storage-import');
+
+      this.storage.db.$.subscribe(payload => {
+        this.window.webContents.send(
+          'storage-update', 
+          { 
+            op: payload.operation, 
+            collection: payload.collectionName, 
+            data: payload.documentData,
+            t: Date.now() 
+          }
+        )
+      })
+
+      for (const [key, value] of Object.entries(defaultSettings)) {
+        const exists = await this.storage.get('settings', { key })
+        if(exists == []) await this.storage.insert('settings', { key, value })
+      }
     }
 }
