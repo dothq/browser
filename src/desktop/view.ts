@@ -97,8 +97,6 @@ export class View {
             viewNavigate: (_event: Electron.Event, url: string, httpResponseCode: number, httpStatusText: string) => {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
                 appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
-
-                this.addItemToHistory()
                 this.updateZoomFactor()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
@@ -129,6 +127,8 @@ export class View {
                 this.updateNavigationButtons()
             },
             viewFinishedLoading: (_event: Electron.Event) => {
+                this.addItemToHistory()
+
                  // todo: migrate old nedb code to sqlite
                 // appWindow.storage.db.bookmarks.count({ url: this.url }, (e, count) => {
                 //     appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, count >= 1)
@@ -200,13 +200,13 @@ export class View {
     }
 
     private addItemToHistory() {
-         // todo: migrate old nedb code to sqlite
-        // appWindow.storage.db.history.insert([
-        //     {
-        //         url: this.url,
-        //         title: this.title
-        //     }
-        // ])
+        const { url, title } = this;
+
+        appWindow.storage.insert('history', {
+            url,
+            title,
+            dateVisited: Date.now()
+        })
     }
 
     private cacheFavicon(favicon) {

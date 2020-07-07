@@ -1,3 +1,5 @@
+import webpack from "webpack";
+
 export const path = require('path');
 
 export const mode = process.env.ENV
@@ -19,8 +21,16 @@ module.exports = {
     optimization: {
       usedExports: true,
     },
+    externals: {
+      sqlite3: 'commonjs sqlite3'
+    },
+    node: {
+      __dirname: false,
+      __filename: false
+    },
     resolve: {
-      extensions: [".ts", ".tsx", ".js"]
+      modules: ['node_modules'],
+      extensions: ['.ts', '.tsx', '.jsx', '.js', '.json'],
     },
     module: {
       rules: [

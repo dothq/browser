@@ -60,7 +60,7 @@ export class AppWindow {
           this.window.loadURL("file:///" + resolve(`${app.getAppPath()}/build/app.html`))
         }
 
-        this.window.on('ready-to-show', () => {
+        this.window.on('ready-to-show', async () => {
             log(`Loaded application in ${Date.now() - t}ms`)
 
             this.window.show()
