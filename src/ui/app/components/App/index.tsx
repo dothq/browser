@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyledApp, Style, Line } from "./style";
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { Tabs } from '../Tabs';
 import { Navigation } from '../Navigation';
@@ -30,7 +30,7 @@ export const App = observer(() => (
         <GlobalStyle />
         <Tabs />
         <Navigation />
-        {dot.dbReady && dot.db.settings.appearance.showBookmarksBar && <Bookmarks />}
+        {/* {dot.dbReady && dot.db.settings.appearance.showBookmarksBar && <Bookmarks />} */}
         <Line fromTop={dot.navigationHeight} />
     </StyledApp>
 ))

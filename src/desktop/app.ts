@@ -66,7 +66,19 @@ export class AppWindow {
             this.window.show()
             this.window.focus()
 
-            this.window.webContents.send('refetch-storage');
+            this.window.webContents.send('storage-import');
+
+            this.storage.db.$.subscribe(payload => {
+              this.window.webContents.send(
+                'storage-update', 
+                { 
+                  op: payload.operation, 
+                  collection: payload.collectionName, 
+                  data: payload.documentData,
+                  t: Date.now() 
+                }
+              )
+            })
         })
 
         this.window.on('resize', () => {

@@ -9,15 +9,21 @@ import { ConnectivityStore } from "./connectivity";
 import { ipcRenderer } from "electron";
 import { NEWTAB_URL } from "../../constants/web";
 import { NAVIGATION_HEIGHT } from "../../constants/window";
+import { ThemesStore } from "./themes";
 
 class Dot {
     public tabs = new TabsStore(this);
     public addressbar = new AddressbarStore(this);
     public connectivity = new ConnectivityStore(this);
+    public themes = new ThemesStore(this);
     public events = new EventsStore(this);
 
     @observable
-    public db;
+    public db = {
+        settings: [],
+        history: [],
+        bookmarks: [],
+    };
 
     @observable
     public dbReady: boolean = false;
@@ -42,9 +48,6 @@ class Dot {
 
     constructor() {
         window.addEventListener('DOMContentLoaded', () => {
-             // todo: migrate old nedb code to sqlite
-            // this.fetchStorage()
-
             this.tabs.add({ url: NEWTAB_URL, active: true })
 
             this.connectivity.checkForConnection().then((r: any) => {
@@ -57,11 +60,8 @@ class Dot {
             ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
         })
 
-         // todo: migrate old nedb code to sqlite
-        // window.addEventListener('focus', () => this.fetchStorage())
-
         ipcRenderer.on('focus-addressbar', () => {
-            // @todo Make fake addressbar focus real addressbar
+
         })
 
         ipcRenderer.on('fullscreen', (e, isFullscreen) => {
@@ -72,29 +72,41 @@ class Dot {
             this.maximised = isMaximised;
         })
 
-        // todo: migrate old nedb code to sqlite
-        // ipcRenderer.on('refetch-storage', (e, sleepBeforeRerender) => {
-        //     setTimeout(() => this.fetchStorage(), sleepBeforeRerender ? 5 : 0)
-        // })
-    }
+        ipcRenderer.on('storage-import', async () => {
+            const t = Date.now()
 
-    public async fetchStorage() {
-         // todo: migrate old nedb code to sqlite
-        // const storage = await ipcRenderer.invoke('get-storage')
+            const imported = await ipcRenderer.invoke('db-import')
 
-        // storage.settings = storage.settings[storage.settings.length-1]
+            for (const data of imported) {
+                const { collection, documents } = data;  
 
-        // console.log(storage)
+                if(this.db[collection].length == 0) {
+                    this.db[collection] = documents;
+                    this.sendDbDebug("IMPORT", collection, documents, t)
+                }
+            }
+        })
 
-        // this.db = storage;
+        ipcRenderer.on('storage-update', (e, payload) => {
+            const { collection, op, data, t } = payload;
 
-        // console.log("settings => refetched settings")
+            this.db[collection].push(data)
 
-        // this.dbReady = true;
+            this.sendDbDebug(op, collection, data, t)
+        })
     }
 
     public get navigationHeight() {
-        return (NAVIGATION_HEIGHT + (this.dbReady ? this.db.settings.appearance.showBookmarksBar ? 32 : 0 : 0))
+        return (NAVIGATION_HEIGHT + 0)
+        // return (NAVIGATION_HEIGHT + (this.dbReady ? this.db.settings.appearance.showBookmarksBar ? 32 : 0 : 0))
+    }
+
+    public get theme() {
+        return ""
+    }
+
+    public sendDbDebug(op, collection, data, t) {
+        console.log(`storage.${collection} => ${op}(${Date.now() - t}ms)`, data)
     }
 }
 

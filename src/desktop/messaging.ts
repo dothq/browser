@@ -21,6 +21,7 @@ import {
   setSuggestionBoxLeft
 } from "./tools/overlay";
 import { focusAddressbar, popupMenu, hideMenu, popupBookmarkMenu } from "./tools/app";
+import { dbImport } from "./tools/storage";
 
 export const startMessagingAgent = () => {
     ipcMain.on('view-create', (e, options) => createView(options))
@@ -60,16 +61,5 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('focus-addressbar', () => focusAddressbar())
 
-    ipcMain.handle('get-storage', async (event) => {
-       // todo: migrate old nedb code to sqlite
-      // const storage = {}
-
-      // for (const database of Object.entries(appWindow.storage.db)) {
-      //   storage[database[0]] = database[1].getAllData()
-      // }
-
-      // if(appWindow.selectedView) appWindow.selectedView.rearrange()
-
-      // return storage
-    })
+    ipcMain.handle('db-import', () => dbImport())
 }

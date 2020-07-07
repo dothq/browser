@@ -106,7 +106,6 @@ export class View {
             },
             viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
                 if(isMainFrame) {
-                    appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, GRAY_4)
                     appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
                     
                     this.resetFavicon(url);

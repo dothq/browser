@@ -11,6 +11,7 @@ import { USER_DATA } from '../../constants/storage';
 import { schemas } from './schemas';
 
 import { v4 as uuidv4 } from 'uuid';
+import { appWindow } from '..';
 
 addRxPlugin(require('pouchdb-adapter-node-websql'));
 
@@ -74,7 +75,7 @@ export class Storage {
     public async insert(collection: string, document: any) {
         if(!document.id && schemas[collection].properties.id) document.id = uuidv4()
 
-        const q = this.db.collections[collection].insert(document)
+        this.db.collections[collection].insert(document)
 
         return true;
     }
