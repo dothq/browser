@@ -62,12 +62,6 @@ class Dot {
             ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
 
             ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
-
-            console.log(this.theme)
-
-            setTimeout(() => {
-                console.log(this.theme)
-            }, 1200)
         })
 
         ipcRenderer.on('focus-addressbar', () => {
@@ -116,11 +110,11 @@ class Dot {
     }
 
     public get themeData() {
-        console.log("xd", this.themes.getThemeData())
         return this.themes.getThemeData()
     }
 
     public sendDbDebug(op, collection, data, t) {
+        if(process.env.ENV && process.env.ENV !== "development") return;
         console.log(`storage.${collection} => ${op}(${Date.now() - t}ms)`, data)
     }
 

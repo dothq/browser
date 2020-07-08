@@ -54,7 +54,7 @@ export class Tab {
         this.id = id;
         this.originalUrl = url;
 
-        console.log("tab =>", this)
+        if(process.env.ENV && process.env.ENV == "development") console.log("tab =>", this)
 
         ipcRenderer.send('view-create', { id, url, active })
 
@@ -64,8 +64,9 @@ export class Tab {
                     dataType = "originalUrl"
                 }
 
-                console.log(`tab.${dataType} =>`, data)
                 this[dataType] = data
+                if(dataType == "favicon" || (process.env.ENV && process.env.ENV !== "development")) return;
+                console.log(`tab.${dataType} =>`, data);
             })
         })
 

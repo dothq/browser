@@ -1,5 +1,5 @@
 import { NAKED_DOMAIN_REGEX, PROTOCOL_REGEX } from "../../constants/url";
-import { ipcRenderer, remote } from "electron";
+import { ipcRenderer } from "electron";
 import { Tab as ITab } from "../models/tab"
 import { SEARCH_ENGINE_URL, WEBUI_PREFIX, NEWTAB_URL } from "../../constants/web";
 import dot from '.'
