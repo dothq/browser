@@ -128,6 +128,21 @@ export class AppWindow {
     }
 
     public async storageReady() {
+      const dump = await this.storage.db.settings.dump()
+      const size = defaultSettings.length;
+      const keys = defaultSettings.map(d => d.key);
+      var i = 0;
+
+      for (const doc of dump.docs) {
+        if(keys.includes(doc.key)) ++i;
+      }
+
+      if(i !== size) {
+        log(`Values were missing from settings, resetting.`, { caller: 'Storage' })
+
+        await this.storage.db.collections.settings.bulkInsert(defaultSettings)
+      }
+
       this.window.webContents.send('storage-import');
 
       this.storage.db.$.subscribe(payload => {
@@ -141,10 +156,5 @@ export class AppWindow {
           }
         )
       })
-
-      for (const [key, value] of Object.entries(defaultSettings)) {
-        const exists = await this.storage.get('settings', { key })
-        if(exists == []) await this.storage.insert('settings', { key, value })
-      }
     }
 }
