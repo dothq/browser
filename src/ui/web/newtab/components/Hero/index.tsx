@@ -9,7 +9,7 @@ export const Hero = observer(() => (
     <StyledHero>
         <IconBar />
         <GreetingTitle>
-            Good morning, Kieran
+            Good morning
         </GreetingTitle>
         <FakeSearch />
     </StyledHero>

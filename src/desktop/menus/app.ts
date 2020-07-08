@@ -327,29 +327,8 @@ export const getAppMenu = (appName) => {
             type: "submenu" as "submenu",
             submenu: [
                 {
-                    label: "Me",
+                    label: "No items",
                     enabled: false
-                },
-                {
-                    label: "   Username: EnderDev",
-                    enabled: false
-                },
-                {
-                    label: "   Email: kieran@dothq.co",
-                    enabled: false
-                },
-                {
-                    type: "separator" as "separator"
-                },
-                {
-                    label: "View my Account Details"
-                },
-                {
-                    label: "Sync 3 items...",
-                    accelerator: "CmdOrCtrl+;"
-                },
-                {
-                    label: "Log out of EnderDev"
                 },
             ]
         },

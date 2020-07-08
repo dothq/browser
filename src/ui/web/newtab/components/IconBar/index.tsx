@@ -12,7 +12,7 @@ export const IconBar = observer(() => (
         </IconButton>
         <IBEnd>
             <IconButton>
-                <img src={"https://cdn.dothq.co/avatars/47fe3dc1-094e-474e-9c16-fc20dbf0e728.png"} width={32} style={{ borderRadius: '100%' }} />
+                <img src={"https://cdn.dothq.co/assets/defaultAvatar.png"} width={32} style={{ borderRadius: '100%' }} />
             </IconButton>
         </IBEnd>
     </StyledIconBar>
