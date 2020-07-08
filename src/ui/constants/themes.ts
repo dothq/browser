@@ -116,7 +116,8 @@ export const lightTheme = {
                 backgroundColor: 'rgba(0,0,0,0.20)'
             }
         },
-        padlockBackgroundColor: '#5F6368'
+        padlockBackgroundColor: '#5F6368',
+        bookmarkIconColor: '#1499ff'
     },
     line: {
         backgroundColor: '#eaeaea'
@@ -208,7 +209,8 @@ export const darkTheme = {
                 backgroundColor: 'rgba(255,255,255,0.20)'
             }
         },
-        padlockBackgroundColor: '#eaeaea'
+        padlockBackgroundColor: '#eaeaea',
+        bookmarkIconColor: '#56c2ff'
     },
     line: {
         backgroundColor: '#282828'

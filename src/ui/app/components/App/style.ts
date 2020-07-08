@@ -32,15 +32,26 @@ export const Style = css`
         display: flex;
         justify-content: flex-end;
         flex: 1;
-        filter: ${props => props.theme.windowsButtons.invert ? 'invert(1)' : 'invert(0)'}; 
+    }
+
+    .windows-buttons div {
+        background-color: ${props => props.theme.tabsBar.backgroundColor};
+        flex: unset;
+    }
+
+    .windows-buttons div:hover {
+        --c: ${props => props.theme.windowsButtons.invert ? 255 : 0};
+        background-color: rgba(var(--c), var(--c), var(--c), 0.025);
+        flex: unset;
     }
 
     .windows-buttons div div:last-of-type:hover {
-        background-color: ${props => props.theme.windowsButtons.invert ? '#17eedc' : '#e81123'};
+        background-color: #e81123;
+        flex: unset;
     }
 
-    .windows-buttons div div:last-of-type:hover svg {
-        filter: ${props => props.theme.windowsButtons.invert ? 'invert(0)' : 'invert(1)'}; 
+    .windows-buttons svg {
+        filter: ${props => props.theme.windowsButtons.invert ? 'invert(1)' : 'invert(0)'}; 
     }
 `;
 

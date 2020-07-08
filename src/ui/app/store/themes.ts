@@ -19,7 +19,13 @@ export class ThemesStore {
                 const data = readFileSync(themePath, 'utf-8')
 
                 if(!this.validateJSON(data)) return;
-                const json = JSON.parse(data);
+                let json = JSON.parse(data);
+
+                const lt = lightTheme
+
+                delete lt.metadata;
+
+                json = this.merge({}, lt, json)
 
                 if(
                     !json.metadata || 
@@ -66,6 +72,21 @@ export class ThemesStore {
         catch (e) { }
     
         return false;
+    }
+
+    private merge(target: any, a?: any, b?: any) {
+        for(var i=1; i<arguments.length; ++i) {
+            var from = arguments[i];
+            if(typeof from !== 'object') continue;
+            for(var j in from) {
+              if(from.hasOwnProperty(j)) {
+                target[j] = typeof from[j]==='object' && !Array.isArray(from[j])
+                  ? this.merge({}, target[j], from[j])
+                  : from[j];
+              }
+            }
+          }
+          return target;
     }
 
     constructor(store) {

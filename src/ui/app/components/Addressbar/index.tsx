@@ -44,7 +44,7 @@ const FavouriteIcon = observer(({ dot }: { dot: any }) => {
 
     return (
         <StyledFavouriteIcon title={isBookmarked ? `Edit bookmark for this tab` : `Bookmark this tab`} onClick={() => dot.tabs.selectedTab.bookmark()}>
-            <Icon icon={"star"} size={15} stroke={isBookmarked ? dot.theme == "light" ? BLUE_1 : BLUE_2 : "currentColor"} fill={isBookmarked ? dot.theme == "light" ? BLUE_1 : BLUE_2 : ""} />
+            <Icon icon={"star"} size={15} stroke={isBookmarked ? dot.themeData.omnibox.bookmarkIconColor : "currentColor"} fill={isBookmarked ? dot.themeData.omnibox.bookmarkIconColor : ""} />
         </StyledFavouriteIcon>
     )
 })
