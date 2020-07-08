@@ -27,8 +27,6 @@ export const StyledTab = styled.div`
     position: relative;
     border-radius: 6px 6px 0 0;
     border-bottom: none;
-    top: 1px;
-    box-shadow: 0 1px white;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? 'white' : '#ffffff00'};
@@ -53,7 +51,7 @@ export const StyledTab = styled.div`
             height: 8px;
             background-image: url(${tab_corner_right});
             bottom: 0px;
-            right: -8px;
+            right: -8.9px;
             opacity: ${selected ? 1 : 0};
         }
 

@@ -6,6 +6,5 @@ export const StyledNavigation = styled.div`
     width: 100%;
     height: ${TOOLBAR_HEIGHT - 2}px;
     background-color: #ffffff;
-    border-top: 1px solid #EAEAEA;
     position: absolute;
 `;
