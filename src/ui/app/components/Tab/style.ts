@@ -25,23 +25,35 @@ export const StyledTab = styled.div`
     -webkit-app-region: no-drag;
     padding-right: 4px;
     position: relative;
-    border-radius: 6px 6px 0 0;
+    border-radius: ${props => props.theme.tab.borderRadius.map(b => b + "px").join(" ")};
     border-bottom: none;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
-        background-color: ${selected ? 'white' : '#ffffff00'};
+        background-color: ${selected ? props => props.theme.tab.backgroundColor : props => props.theme.tab.defaultBackgroundColor};
         z-index: ${selected ? 2 : 1};
-        opacity: ${selected ? 1 : 0.7};
+        opacity: ${selected ? props => props.theme.tab.selectedOpacity : props => props.theme.tab.defaultOpacity};
 
         &:before {
             content: "";
             position: absolute;
             width: 8.5px;
             height: 8px;
-            background-image: url(${tab_corner_left});
+            mask-image: url(${tab_corner_left});
             bottom: 0;
             left: -8px;
-            opacity: ${selected ? 1 : 0};
+            background-color: ${
+                props => props.theme.tab.cornerPieces.left
+                    ? props => props.theme.tab.cornerPieces.backgroundColor
+                    : 'transparent'
+            };
+            opacity: ${
+                props => props.theme.tab.cornerPieces.left 
+                    ? selected
+                        ? 1
+                        : 0
+                    : 0
+            };
+
         }
 
         &:after {
@@ -49,15 +61,26 @@ export const StyledTab = styled.div`
             position: absolute;
             width: 8.5px;
             height: 8px;
-            background-image: url(${tab_corner_right});
+            mask-image: url(${tab_corner_right});
             bottom: 0px;
             right: -8.9px;
-            opacity: ${selected ? 1 : 0};
+            background-color: ${
+                props => props.theme.tab.cornerPieces.right
+                    ? props => props.theme.tab.cornerPieces.backgroundColor
+                    : 'transparent'
+            };
+            opacity: ${
+                props => props.theme.tab.cornerPieces.right
+                    ? selected
+                        ? 1
+                        : 0
+                    : 0
+            };
         }
 
         &:hover {
-            background-color: ${selected ? '' : '#e0e0e0'};
-            opacity: ${selected ? '' : 1};
+            background-color: ${selected ? props => props.theme.tab.hover.selected : props => props.theme.tab.hover.default};
+            opacity: ${selected ? '' : props => props.theme.tab.hover.opacity};
         }
     `};
 `;
@@ -71,13 +94,23 @@ export const StyledTabContent = styled.div`
 `;
 
 export const TabTitle = styled.div`
-    font-size: 12px;
+    font-size: ${props => props.theme.tab.textSize};
     line-height: 16px;
     font-weight: 400;
     white-space: nowrap;
     display: flex;
     height: 100%;
     align-items: center;
+    color: ${props => props.theme.tab.textColor};
+    font-family: ${
+        props => props.theme.tab.font == "inherit" 
+            ? props => props.theme.global.font == "default"
+                ? "system-ui"
+                : props => props.theme.global.font
+            : props => props.theme.tab.font == "default"
+                ? "system-ui"
+                : props => props.theme.tab.font
+    };
 `;
 
 const TabIcon = styled.div`
@@ -101,11 +134,8 @@ export const TabFavicon = styled(TabIcon)`
 
 export const TabThrobber = styled(TabIcon)`
     mask-image: url(${throbber});
-
-    ${({ color }: { color: any }) => css`
-        background-color: ${color};
-        margin-right: ${color ? '8px' : '0px'};
-    `}
+    background-color: ${props => props.theme.tab.throbber.backgroundColor};
+    margin-right: 8px;
 `;
 
 export const Close = styled(NavigationButton).attrs(() => ({

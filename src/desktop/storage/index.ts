@@ -1,8 +1,7 @@
 import { 
     createRxDatabase, 
     addRxPlugin, 
-    RxDatabase, 
-    RxCollection
+    RxDatabase
 } from 'rxdb';
 
 import { resolve } from 'path';
@@ -11,7 +10,8 @@ import { USER_DATA } from '../../constants/storage';
 import { schemas } from './schemas';
 
 import { v4 as uuidv4 } from 'uuid';
-import { appWindow } from '..';
+
+import { existsSync, mkdirSync } from 'fs';
 
 addRxPlugin(require('pouchdb-adapter-node-websql'));
 
@@ -35,9 +35,11 @@ const createConnection = async (name, collections: string[]) => {
 
 export class Storage {
     public db: RxDatabase;
+    public dirs = ['themes']
 
     constructor() {
         this.init()
+        this.initDir()
     }
 
     public async get(collection: string, query: any) {
@@ -106,5 +108,11 @@ export class Storage {
 
     public async init() {
         this.db = await createConnection("storage", ['settings', 'history']);
+    }
+
+    public async initDir() {
+        for (const dir of this.dirs) {
+            if (!existsSync(resolve(USER_DATA, dir))) mkdirSync(resolve(USER_DATA, dir));  
+        }
     }
 }
