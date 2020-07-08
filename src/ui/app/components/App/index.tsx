@@ -26,11 +26,13 @@ remote.globalShortcut.register(`CmdOrCtrl+0`, () => {
 }) 
 
 export const App = observer(() => (
-    <StyledApp isFullscreen={dot.fullscreen}>
-        <GlobalStyle />
-        <Tabs />
-        <Navigation />
-        {/* {dot.dbReady && dot.db.settings.appearance.showBookmarksBar && <Bookmarks />} */}
-        <Line fromTop={dot.navigationHeight} />
-    </StyledApp>
+    <ThemeProvider theme={dot.themeData}>
+        <StyledApp isFullscreen={dot.fullscreen}>
+            <GlobalStyle />
+            <Tabs />
+            <Navigation />
+            {/* {dot.dbReady && dot.db.settings.appearance.showBookmarksBar && <Bookmarks />} */}
+            <Line fromTop={dot.navigationHeight} />
+        </StyledApp>
+    </ThemeProvider>
 ))

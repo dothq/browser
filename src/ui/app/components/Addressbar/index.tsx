@@ -2,7 +2,7 @@ import React from 'react';
 import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part, PadlockIcon } from "./style"
 import { observer } from 'mobx-react';
 import { Icon } from "@dothq/icon";
-import { BLUE_1 } from '@dothq/colors';
+import { BLUE_1, BLUE_2 } from '@dothq/colors';
 
 export const Addressbar = observer(({ WEBUI_PREFIX, NEWTAB_URL, WEBUI_SUFFIX, dot }: { WEBUI_PREFIX: string;  NEWTAB_URL: string; WEBUI_SUFFIX?: string; dot: any }) => {
     const events = dot.events;
@@ -44,7 +44,7 @@ const FavouriteIcon = observer(({ dot }: { dot: any }) => {
 
     return (
         <StyledFavouriteIcon title={isBookmarked ? `Edit bookmark for this tab` : `Bookmark this tab`} onClick={() => dot.tabs.selectedTab.bookmark()}>
-            <Icon icon={"star"} size={15} stroke={isBookmarked ? BLUE_1 : "currentColor"} fill={isBookmarked ? BLUE_1 : ""} />
+            <Icon icon={"star"} size={15} stroke={isBookmarked ? dot.theme == "light" ? BLUE_1 : BLUE_2 : "currentColor"} fill={isBookmarked ? dot.theme == "light" ? BLUE_1 : BLUE_2 : ""} />
         </StyledFavouriteIcon>
     )
 })

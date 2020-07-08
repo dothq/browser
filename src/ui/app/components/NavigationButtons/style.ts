@@ -15,6 +15,6 @@ export const Separator = styled.div`
     margin: 0 4px;
     height: calc(100% - 24px);
     width: 1px;
-    background-color: #eaeaea;
+    background-color: ${props => props.theme.line.backgroundColor};
     align-self: center;
 `;

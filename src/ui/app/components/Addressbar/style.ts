@@ -1,43 +1,6 @@
 import styled, { css } from "styled-components";
 import { BLUE_1 } from "@dothq/colors";
-
-// Styled Navigation Button
-
-const StyledNavigationButton = styled.div`
-    display: flex;
-    width: 32px;
-    height: 32px;
-    align-self: center;
-    text-align: center;
-    justify-content: center;
-    border-radius: 3px;
-    margin: 0 3px;
-    transition: 0.1s box-shadow, 0.1s background-color;
-    position: relative;
-
-    ${({ size, disabled }: { size?: number; disabled?: boolean }) => css`
-        width: ${size}px;
-        height: ${size}px;
-
-        min-width: ${size}px;
-        min-height: ${size}px;
-
-        pointer-events: ${disabled ? 'none' : 'all'};
-        opacity: ${disabled ? 0.5 : 0.9};
-    `};
-
-    svg {
-        align-self: center;
-    }
-
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    &:active {
-        background-color: rgba(0, 0, 0, 0.10);
-    }
-`;
+import { StyledNavigationButton } from "../NavigationButton/style";
 
 // Addressbar
 
@@ -54,16 +17,16 @@ export const StyledAddressbar = styled.div`
     overflow: hidden;
     margin: 0 4px;
     border-radius: 32px;
-    background-color: #f1f3f4;
+    background-color: ${props => props.theme.omnibox.backgroundColor};
     border: 1.5px solid transparent;
 
     &:hover {
-        background-color: #e9ebec;
+        background-color: ${props => props.theme.omnibox.hover.backgroundColor};
     }
 
     &:focus-within {
-        border: 1.5px solid #b9d5f8;
-        background-color: #fff;
+        border: ${props => props.theme.omnibox.focus.border.width}px solid ${props => props.theme.omnibox.focus.border.color};
+        background-color: ${props => props.theme.omnibox.focus.backgroundColor};
     }
 `;
 
@@ -72,16 +35,24 @@ export const Input = styled.input`
     outline: none;
     background-color: transparent;
     width: 100%;
-    font-size: 14px;
-    color: #303030;
-    font-family: system-ui;
+    font-size: ${props => props.theme.omnibox.textSize};
+    color: ${props => props.theme.omnibox.textColor};
+    font-family: ${
+        props => props.theme.omnibox.font == "inherit" 
+            ? props => props.theme.global.font == "default"
+                ? "system-ui"
+                : props => props.theme.global.font
+            : props => props.theme.omnibox.font == "default"
+                ? "system-ui"
+                : props => props.theme.omnibox.font
+    };
     padding: 0 2px;
     padding-right: 6px;
     padding-bottom: 1px;
 
     ::placeholder {
-        opacity: 0.75;
-        font-size: 14px;
+        opacity: ${props => props.theme.omnibox.placeholder.opacity};
+        font-size: ${props => props.theme.omnibox.fontSize};
     }
 
     ${({ showSearchText, isFocused, searchWidth }: { showSearchText?: boolean; isFocused?: boolean; searchWidth?: number }) => css`
@@ -110,15 +81,8 @@ export const InputPlaceholder = styled.div`
 // Faviorite Icon
 
 export const StyledFavouriteIcon = styled(StyledNavigationButton)`
-    height: 28px;
-    margin: 0 1px;
-    border-radius: 32px;
-    width: 36px;
-
-    :hover < & {
-        background-color: #f1f3f4;
-        border: 1.5px solid transparent;
-    }
+    display: flex;
+    width: 38px;
 `;
 
 // Search Icon
@@ -131,7 +95,8 @@ export const StyledSearchIcon = styled(StyledNavigationButton)`
     flex-direction: row;
     font-size: 12px;
     place-items: center;
-    border-radius: 32px;
+    display: flex;
+    color: ${props => props.theme.navigationButton.color};
 
     svg {
         min-width: 14px;
@@ -142,7 +107,7 @@ export const StyledSearchIcon = styled(StyledNavigationButton)`
     }
 
     svg.feather.feather-lock g rect {
-        fill: black;
+        fill: ${props => props.theme.navigationButton.color};
     }
     
     ${({ isNTP, showSearchText, isFocused, searchWidth }: { isNTP: boolean; showSearchText: boolean; isFocused: boolean; searchWidth: number; }) => css`
@@ -211,7 +176,7 @@ export const Part = styled.div`
 
 export const PadlockIcon = styled.div`
     mask-image: url(${require("../../../resources/icons/lock.svg").default});
-    background-color: #5F6368;
+    background-color: ${props => props.theme.omnibox.padlockBackgroundColor};
     -webkit-mask-size: cover;
     width: 8px;
     height: 11px;

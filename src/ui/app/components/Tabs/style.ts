@@ -2,13 +2,12 @@ import styled, { css } from "styled-components";
 import { TABBAR_HEIGHT } from "../../../constants/window";
 import { NavigationButton } from "../NavigationButton";
 
-import dot from '../../store'
-
 export const StyledTabs = styled.div`
     display: flex;
     width: 100%;
     height: ${TABBAR_HEIGHT}px;
-    background-color: #eaeaea; // TODO: Themes
+    background: ${props => props.theme.tabsBar.backgroundColor};
+    background-size: contain;
     -webkit-app-region: drag;
 `;
 
@@ -32,7 +31,7 @@ export const AddTab = styled(NavigationButton).attrs(props => ({
     icon: 'plus',
     size: 18,
     onClick: props.onClick,
-    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px', height: 'calc(30px)', width: '30px' },
+    style: { WebkitAppRegion: 'no-drag', marginLeft: '-1px', height: 'calc(30px)', width: '30px', color: props.theme.tabsBar.addTabBackgroundColor },
     title: "New tab"
 }))`
     min-width: 33px;

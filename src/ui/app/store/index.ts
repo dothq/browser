@@ -10,6 +10,7 @@ import { ipcRenderer } from "electron";
 import { NEWTAB_URL } from "../../constants/web";
 import { NAVIGATION_HEIGHT } from "../../constants/window";
 import { ThemesStore } from "./themes";
+import { defaultSettings } from "../../../desktop/constants/settings";
 
 class Dot {
     public tabs = new TabsStore(this);
@@ -20,13 +21,16 @@ class Dot {
 
     @observable
     public db = {
-        settings: [],
+        settings: defaultSettings,
         history: [],
         bookmarks: [],
     };
 
     @observable
     public dbReady: boolean = false;
+
+    @observable
+    public userDataLocation: string = '';
 
     @observable
     public fullscreen: boolean = false;
@@ -58,6 +62,12 @@ class Dot {
             ipcRenderer.send('suggestionbox-left', `${this.searchRef.current.getBoundingClientRect().left}`);
 
             ipcRenderer.send('menu-left', `${this.menuButtonRef.current.getBoundingClientRect().left}`);
+
+            console.log(this.theme)
+
+            setTimeout(() => {
+                console.log(this.theme)
+            }, 1200)
         })
 
         ipcRenderer.on('focus-addressbar', () => {
@@ -77,13 +87,13 @@ class Dot {
 
             const imported = await ipcRenderer.invoke('db-import')
 
-            for (const data of imported) {
+            this.userDataLocation = imported.userData;
+
+            for (const data of imported.items) {
                 const { collection, documents } = data;  
 
-                if(this.db[collection].length == 0) {
-                    this.db[collection] = documents;
-                    this.sendDbDebug("IMPORT", collection, documents, t)
-                }
+                this.db[collection] = documents;
+                this.sendDbDebug("IMPORT", collection, documents, t)
             }
         })
 
@@ -102,11 +112,20 @@ class Dot {
     }
 
     public get theme() {
-        return ""
+        return this.getSetting("theme")
+    }
+
+    public get themeData() {
+        console.log("xd", this.themes.getThemeData())
+        return this.themes.getThemeData()
     }
 
     public sendDbDebug(op, collection, data, t) {
         console.log(`storage.${collection} => ${op}(${Date.now() - t}ms)`, data)
+    }
+
+    public getSetting(key: string) {
+        return this.db.settings.find(s => s.key == key).value
     }
 }
 

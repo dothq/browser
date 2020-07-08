@@ -4,7 +4,6 @@ export const defaultSettings = [
     { key: 'doNotTrack', value: true },
     { key: 'anonymiseFingerprint', value: true },
     { key: 'theme', value: 'light' },
-    { key: 'customTheme', value: 'unset' },
     { key: 'pageZoom', value: 100 },
     { key: 'showHomeButton', value: false },
     { key: 'showBookmarksBar', value: true },

@@ -86,6 +86,8 @@ export class AppWindow {
           this.window.webContents.send('fullscreen', false);
         });
 
+        this.window.webContents.on('dom-ready', () => this.window.webContents.send('storage-import'))
+
         this.menu.addListener('menu-will-show', () => {
           // todo: migrate old nedb code to sqlite
           // this.storage.db.settings.findOne({}, (e, docs: any) => {
@@ -142,8 +144,6 @@ export class AppWindow {
 
         await this.storage.db.collections.settings.bulkInsert(defaultSettings)
       }
-
-      this.window.webContents.send('storage-import');
 
       this.storage.db.$.subscribe(payload => {
         this.window.webContents.send(
