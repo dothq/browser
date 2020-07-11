@@ -5,8 +5,6 @@ import { StyledError, Emoji, Heading, Summary, Code } from "./style";
 import dot from '../../store'
 import { observer } from 'mobx-react';
 
-import { v4 as uuidv4 } from 'uuid';
-
 export const Error = observer(() => {
     const emoji = dot.error && require(`../../../../resources/icons/${dot.error.emote}.svg`)
 

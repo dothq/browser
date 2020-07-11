@@ -4,7 +4,7 @@ import {
     CLEAN_URL_REGEX, 
     REMOVE_TRAILING_SLASH_REGEX,
 } from "../../constants/url";
-import { NEWTAB_URL, WEBUI_PREFIX, WEBUI_SUFFIX } from "../../constants/web";
+import { NEWTAB_URL } from "../../constants/web";
 
 import { parse } from "url";
 import { v4 as uuidv4 } from 'uuid';

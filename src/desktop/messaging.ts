@@ -1,4 +1,4 @@
-import { ipcMain, app } from "electron";
+import { ipcMain } from "electron";
 
 import { 
     createView, 
@@ -20,7 +20,7 @@ import {
   setSuggestionBoxWidth, 
   setSuggestionBoxLeft
 } from "./tools/overlay";
-import { focusAddressbar, popupMenu, hideMenu, popupBookmarkMenu } from "./tools/app";
+import { focusAddressbar, popupMenu, popupBookmarkMenu } from "./tools/app";
 import { dbImport } from "./tools/storage";
 
 export const startMessagingAgent = () => {

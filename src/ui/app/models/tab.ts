@@ -3,7 +3,6 @@ import { ViewCreateOptions } from "../../../desktop/interfaces/view";
 import { observable } from "mobx";
 import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL } from "../../constants/web";
-import { parse } from "url";
 
 const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds', 'isBookmarked']
 

@@ -8,7 +8,7 @@ import { Overlay } from './overlay';
 import { ServiceManager } from './services';
 import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
-import { NAVIGATION_HEIGHT, BOOKMARKS_BAR_HEIGHT } from '../ui/constants/window';
+import { NAVIGATION_HEIGHT } from '../ui/constants/window';
 import { defaultSettings } from './constants/settings';
 
 export class AppWindow {

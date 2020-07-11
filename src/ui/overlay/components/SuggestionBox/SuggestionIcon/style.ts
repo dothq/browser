@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { StyledNavigationButton } from "../../NavigationButton/style"; 
 
 export const StyledSuggestionIcon = styled(StyledNavigationButton)`

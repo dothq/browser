@@ -1,7 +1,6 @@
-import { webFrame, app, remote, ipcRenderer } from "electron";
+import { webFrame, remote, ipcRenderer } from "electron";
 import { ERRORS } from "@dothq/errors";
-import { WEBUI_PREFIX, NEWTAB_URL, WEBUI_SUFFIX } from "../ui/constants/web";
-import tinycolor from 'tinycolor2';
+import { WEBUI_PREFIX } from "../ui/constants/web";
 
 const id = process.argv.find(a => a.includes("--tab-id=")).split("--tab-id=")[1]
 

@@ -4,8 +4,6 @@ import { createGlobalStyle } from 'styled-components';
 
 import { observer } from 'mobx-react';
 
-import dot from '../../store';
-
 import { Toolbar } from '../Toolbar';
 import { Sidebar } from '../Sidebar';
 

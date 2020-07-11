@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { BLUE_1 } from "@dothq/colors";
 import { StyledNavigationButton } from "../NavigationButton/style";
 
 // Addressbar

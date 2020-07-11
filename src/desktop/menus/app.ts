@@ -1,4 +1,4 @@
-import { Menu, MenuItem, app } from "electron";
+import { Menu } from "electron";
 import { appWindow } from "..";
 import { NEWTAB_URL } from "../../ui/constants/web";
 

@@ -1,12 +1,7 @@
 import styled, { css } from "styled-components";
-import { Separator } from "../NavigationButtons/style";
-
-import dot from '../../store';
 import { Tab } from '../../models/tab';
 import { NavigationButton } from "../NavigationButton";
 import { motion } from "framer-motion";
-
-import { TAB_WIDTH } from '../../constants/tab'
 
 import throbber from '../../../resources/icons/throbber.svg'
 import tab_corner_left from '../../../resources/icons/tab_corner_left.svg'

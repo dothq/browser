@@ -2,8 +2,6 @@ import React from 'react';
 import { StyledToolbar, Container } from "./style";
 
 import { observer } from 'mobx-react';
-
-import { Icon } from '@dothq/icon'
 import { IconButton } from '../IconButton';
 import { H1 } from '../Typography';
 import { Searchbox } from '../Searchbox';
