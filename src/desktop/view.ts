@@ -11,7 +11,7 @@ import { setFontSizeView, setPageSizeView } from "./tools/view";
 export class View {
     public view: BrowserView;
     public id: string;
-    public favicon: string;
+    public favicon: { favicon: string, isCached: boolean };
     public faviconURL: string;
     public previousURL: string = '';
 
@@ -102,6 +102,7 @@ export class View {
                 appWindow.window.webContents.send(`view-url-updated-${this.id}`, url)
                 appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
                 this.updateZoomFactor()
+                this.checkFaviconCache()
             },
             viewNavigateInPage: (_event: Electron.Event, url: string, isMainFrame: boolean) => {
                 if(isMainFrame) {
@@ -117,7 +118,7 @@ export class View {
 
                 this.updateNavigationButtons()
 
-                appWindow.storage.get('settings', { key: 'fontSize' }).then(fs => setFontSizeView(this.id, fs[0]))
+                appWindow.storage.get('settings', { key: 'fontSize' }).then(fs => setFontSizeView(this.id, fs[0].value))
             },
             viewStartedLoading: (_event: Electron.Event) => {                
                 appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, false)
@@ -178,21 +179,21 @@ export class View {
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
+                if(this.favicon !== null && this.favicon.isCached) return;
+
                 const faviconUrl = favicons[0];
 
                 if(faviconUrl == this.faviconURL) return;
 
                 downloadFaviconFromUrl(faviconUrl).then((favicon: string) => {
-                    if(this.favicon == favicon) return;
+                    if(this.favicon !== null && this.favicon.favicon == favicon) return;
 
                     appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
-                    this.favicon = favicon;
+                    this.favicon = { favicon, isCached: false };
                     this.faviconURL = faviconUrl;
 
-                    // this.cacheFavicon(favicon)
+                    this.cacheFavicon(favicon)
                 })
-
-                // this.updateNavigationButtons()
             }
         }
     }
@@ -214,26 +215,16 @@ export class View {
         })
     }
 
-    private cacheFavicon(favicon) {
-         // todo: migrate old nedb code to sqlite
-        // const exists = appWindow.storage.db.favicons.find({ url: this.url }, (e, docs) => {
-        //     return docs.length <= 1
-        // })
+    private async cacheFavicon(favicon) {
+        if(favicon == null) return;
+        const { url } = this;
 
-        // if(exists) {
-        //     appWindow.storage.db.favicons.update({
-        //         url: this.url
-        //     },
-        //         favicon
-        //     )
-        // } else {
-        //     appWindow.storage.db.favicons.insert([
-        //         {
-        //             url: this.url,
-        //             base64: favicon
-        //         }
-        //     ])
-        // }
+        const faviconExists = await appWindow.storage.get('favicons', { url })
+
+        if(faviconExists.length == 0) appWindow.storage.insert('favicons', {
+            url,
+            base64: encodeURIComponent(favicon)
+        })
     }
 
     private resetFavicon(url: string) {
@@ -247,7 +238,19 @@ export class View {
     }
 
     private updateZoomFactor() {
-        appWindow.storage.get('settings', { key: 'pageZoom' }).then(pz => setPageSizeView(this.id, pz[0]))
+        appWindow.storage.get('settings', { key: 'pageZoom' }).then(pz => setPageSizeView(this.id, pz[0].value))
+    }
+
+    private async checkFaviconCache() {
+        const f = await appWindow.storage.get('favicons', { url: this.url })
+
+        if(f.length == 0 || !f[0]) return;
+
+        const favicon = decodeURIComponent(f[0].base64)
+
+        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
+        this.favicon = { favicon, isCached: true };
+        this.faviconURL = f[0].url;
     }
 
     public get url() {

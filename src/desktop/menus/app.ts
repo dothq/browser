@@ -162,9 +162,10 @@ export const getAppMenu = (appName) => {
                     accelerator: "CmdOrCtrl+R",
                     enabled: appWindow && !appWindow.getViewFromId(appWindow.selectedId).view.webContents.isLoading(),
                     click: () => {
-                        const view = appWindow.getViewFromId(appWindow.selectedId)
+                        const { view } = appWindow.getViewFromId(appWindow.selectedId)
 
-                        view.view.webContents.reload()
+                        if(view.webContents.isLoading()) return;
+                        view.webContents.reload()
                     }
                 },
                 {
@@ -174,9 +175,10 @@ export const getAppMenu = (appName) => {
                     visible: false,
                     enabled: appWindow && !appWindow.getViewFromId(appWindow.selectedId).view.webContents.isLoading(),
                     click: () => {
-                        const view = appWindow.getViewFromId(appWindow.selectedId)
+                        const { view } = appWindow.getViewFromId(appWindow.selectedId)
 
-                        view.view.webContents.reload()
+                        if(view.webContents.isLoading()) return;
+                        view.webContents.reload()
                     }
                 },
                 {

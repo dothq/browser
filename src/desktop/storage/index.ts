@@ -55,7 +55,7 @@ export class Storage {
         for (const r of results) {
             const document = this.getValue(r)
 
-            res.push(document.value)
+            res.push(document)
         }
 
         return res;
@@ -107,7 +107,7 @@ export class Storage {
     }
 
     public async init() {
-        this.db = await createConnection("storage", ['settings', 'history']);
+        this.db = await createConnection("storage", ['settings', 'history', 'favicons']);
     }
 
     public async initDir() {
