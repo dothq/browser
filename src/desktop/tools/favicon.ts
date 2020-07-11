@@ -14,7 +14,7 @@ export const downloadFaviconFromUrl = async (url) => {
                     const favicon = `data:${res.headers['content-type']};base64,${buffer.toString('base64')}`
         
                     resolve(favicon);
-                })
+                }).catch(e => resolve(null))
             }
         } catch(error) {
             resolve(null)

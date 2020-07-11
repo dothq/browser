@@ -100,3 +100,29 @@ export const bookmarkView = (id) => {
     // appWindow.window.webContents.send('refetch-storage');
 
 }
+
+export const setFontSizeView = (id: any, size: "vs" | "s" | "m" | "l" | "vl") => {
+    const sizes = {
+        vs: 8,
+        s: 12,
+        m: 16,
+        l: 20,
+        vl: 72
+    }
+
+    if(size == "m") return;
+
+    const view = appWindow.getViewFromId(id);
+    if(!view) return;
+
+    if(view.injectedCss.fontSize !== '') view.view.webContents.removeInsertedCSS(view.injectedCss.fontSize)
+    view.view.webContents.insertCSS(`html { font-size: ${sizes[size]}px !important }`, { cssOrigin: 'user' }).then(v => { view.injectedCss.fontSize = v })
+}
+
+export const setPageSizeView = (id: any, size: number) => {
+    const { view } = appWindow.getViewFromId(id);
+    if(!view) return;
+
+    view.webContents.zoomFactor = 1;
+    view.webContents.zoomFactor = size/100;
+}

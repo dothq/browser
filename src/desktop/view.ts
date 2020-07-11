@@ -6,6 +6,7 @@ import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL, WEBUI_PREFIX, WEBUI_SUFFIX } from "../ui/constants/web";
 import { parse } from "url";
+import { setFontSizeView, setPageSizeView } from "./tools/view";
 
 export class View {
     public view: BrowserView;
@@ -17,6 +18,10 @@ export class View {
     private historyId: string;
     
     public errorData: any;
+
+    public injectedCss = {
+        fontSize: ''
+    };
 
     constructor(id: string, url: any) {
         this.id = id;
@@ -111,6 +116,8 @@ export class View {
                 }
 
                 this.updateNavigationButtons()
+
+                appWindow.storage.get('settings', { key: 'fontSize' }).then(fs => setFontSizeView(this.id, fs[0]))
             },
             viewStartedLoading: (_event: Electron.Event) => {                
                 appWindow.window.webContents.send(`view-isBookmarked-updated-${this.id}`, false)
@@ -240,8 +247,7 @@ export class View {
     }
 
     private updateZoomFactor() {
-         // todo: migrate old nedb code to sqlite
-        // this.view.webContents.zoomFactor = appWindow.storage.db.settings.getAllData()[0].appearance.pageZoom/100
+        appWindow.storage.get('settings', { key: 'pageZoom' }).then(pz => setPageSizeView(this.id, pz[0]))
     }
 
     public get url() {
