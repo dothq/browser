@@ -1,4 +1,4 @@
-import webpack from "webpack";
+
 
 export const path = require('path');
 

@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
 
-import dot from '../../store';
-
 export const StyledNavigationButton = styled.div`
     width: 32px;
     height: 32px;

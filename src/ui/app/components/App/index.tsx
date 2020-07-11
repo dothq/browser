@@ -4,7 +4,6 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import { Tabs } from '../Tabs';
 import { Navigation } from '../Navigation';
-import { Bookmarks } from '../Bookmarks';
 
 import dot from '../../store'
 import { observer } from 'mobx-react';

@@ -5,7 +5,6 @@ import { observer } from 'mobx-react';
 import { BookmarksItem } from "../BookmarksItem";
 
 import dot from '../../store'
-import { BookmarksTitle } from "../BookmarksItem/style";
 
 export const Bookmarks = observer(() => {
     return (

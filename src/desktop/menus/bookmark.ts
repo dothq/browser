@@ -1,4 +1,4 @@
-import { Menu, MenuItem } from "electron";
+import { Menu } from "electron";
 import { appWindow } from "..";
 
 export const showBookmarkMenu = (bookmark, x, y) => {

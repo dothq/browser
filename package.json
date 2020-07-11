@@ -18,7 +18,8 @@
     "start": "cross-env ENV=development ELECTRON_ENABLE_STACK_DUMPING=true electron .",
     "build:macos": "yarn prod && electron-builder -m",
     "build:windows": "yarn prod && electron-builder -w",
-    "build:linux": "yarn prod && electron-builder -l"
+    "build:linux": "yarn prod && electron-builder -l",
+    "lint": "tslint --fix --project ."
   },
   "devDependencies": {
     "@types/keyv": "^3.1.1",
@@ -35,6 +36,8 @@
     "source-map-loader": "^0.2.4",
     "ts-loader": "^7.0.2",
     "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
+    "tslint-etc": "^1.11.1",
     "typescript": "^3.8.3",
     "url-loader": "^4.1.0",
     "webpack": "^4.43.0",

@@ -1,6 +1,5 @@
-import { Menu, MenuItem, ipcRenderer } from "electron";
+import { Menu } from "electron";
 import { appWindow } from "..";
-import { NAVIGATION_HEIGHT } from "../../ui/constants/window";
 import { NEWTAB_URL, REPORT_ISSUES_URL, HELP_CENTRE_URL, BOOKMARKS_URL, SETTINGS_URL } from "../../ui/constants/web";
 
 export const getMoreMenu = (appName) => {

@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon, SearchIconText,  StyledParts, Part, PadlockIcon } from "./style"
+import { StyledAddressbar, Input, StyledFavouriteIcon, StyledSearchIcon,  StyledParts, Part, PadlockIcon } from "./style"
 import { observer } from 'mobx-react';
 import { Icon } from "@dothq/icon";
-import { BLUE_1, BLUE_2 } from '@dothq/colors';
 
 export const Addressbar = observer(({ WEBUI_PREFIX, NEWTAB_URL, WEBUI_SUFFIX, dot }: { WEBUI_PREFIX: string;  NEWTAB_URL: string; WEBUI_SUFFIX?: string; dot: any }) => {
     const events = dot.events;

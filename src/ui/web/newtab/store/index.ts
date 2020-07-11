@@ -1,4 +1,4 @@
-import React from "react";
+
 import { observable } from "mobx";
 
 class Dot {

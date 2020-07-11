@@ -7,8 +7,6 @@ import { observer } from 'mobx-react';
 import { Error } from '../Error'
 import { Support } from '../Support'
 
-import dot from '../../store';
-
 const GlobalStyle = createGlobalStyle`${Style}`;
 
 export const App = observer(() => (

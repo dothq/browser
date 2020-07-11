@@ -1,5 +1,4 @@
 import { session, app } from "electron"
-import { WEBUI_PREFIX } from "../../ui/constants/web"
 import { parse } from "url"
 import { resolve } from "path"
 

@@ -2,10 +2,7 @@ import React from 'react';
 import { StyledSidebar, Container } from "./style";
 
 import { observer } from 'mobx-react';
-
-import { Icon } from '@dothq/icon'
 import { IconButton } from '../IconButton';
-import { H1 } from '../Typography';
 
 import dot from '../../store'
 
