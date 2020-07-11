@@ -8,7 +8,7 @@ export let appWindow: AppWindow;
 ipcMain.setMaxListeners(0);
 app.allowRendererProcessReuse = true;
 
-autoUpdater.checkForUpdatesAndNotify();
+if(process.env.ENV == "production") autoUpdater.checkForUpdatesAndNotify();
 
 if(process.env.ENV == "development") process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true.toString();
 
