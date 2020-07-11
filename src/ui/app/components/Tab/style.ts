@@ -111,6 +111,16 @@ export const TabTitle = styled.div`
                 ? "system-ui"
                 : props => props.theme.tab.font
     };
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 32px;
+        height: 100%;
+        width: 50px;
+        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+    }
 `;
 
 const TabIcon = styled.div`

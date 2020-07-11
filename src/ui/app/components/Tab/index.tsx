@@ -7,17 +7,13 @@ import { TAB_WIDTH } from '../../constants/tab'
 
 import dot from '../../store'
 
+import blank from '../../../resources/icons/blank.svg'
+
 const TabContent = observer(({ tab }: { tab: ITab }) => (
     <StyledTabContent title={tab.title}>
         {tab.status == "loading" && !tab.isNTP && <TabThrobber color={tab.themeColor} />}
-        {tab.status == "idle" && <TabFavicon style={{ width: !tab.favicon ? '0px' : '', minWidth: !tab.favicon ? '0px' : '' }} src={tab.favicon} />}
-        <TabTitle>{
-            tab.title == "" 
-                ? tab.status == "idle" 
-                    ? tab.url 
-                    : "Loading..."
-                : tab.title
-            }</TabTitle>
+        {tab.status == "idle" && <TabFavicon style={{ width: tab.isNTP ? '0px' : '', minWidth: tab.isNTP ? '0px' : '' }} src={tab.isNTP ? '' : tab.favicon || blank} />}
+        <TabTitle>{tab.title}</TabTitle>
     </StyledTabContent>
 ))
 

@@ -3,10 +3,6 @@ import { app, ipcMain, protocol } from "electron";
 import { autoUpdater } from 'electron-updater';
 import { startProtocolService } from "./tools/protocol";
 
-import { existsSync, mkdirSync } from 'fs';
-import { resolve } from 'path';
-import { USER_DATA } from "../constants/storage";
-
 export let appWindow: AppWindow;
 
 ipcMain.setMaxListeners(0);
