@@ -22,6 +22,7 @@ export const StyledTab = styled.div`
     position: relative;
     border-radius: ${props => props.theme.tab.borderRadius.map(b => b + "px").join(" ")};
     border-bottom: none;
+    transition: 0.3s ease-in-out background-color;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? props => props.theme.tab.backgroundColor : props => props.theme.tab.defaultBackgroundColor};
@@ -43,12 +44,9 @@ export const StyledTab = styled.div`
             };
             opacity: ${
                 props => props.theme.tab.cornerPieces.left 
-                    ? selected
-                        ? 1
-                        : 0
+                    ? 1
                     : 0
             };
-
         }
 
         &:after {
@@ -66,16 +64,33 @@ export const StyledTab = styled.div`
             };
             opacity: ${
                 props => props.theme.tab.cornerPieces.right
-                    ? selected
-                        ? 1
-                        : 0
+                    ? 1
                     : 0
             };
+        }
+
+        &:after {
+            opacity: ${selected ? 1 : 0};
+        }
+
+        &:before {
+            opacity: ${selected ? 1 : 0};
+            background-color: ${selected ? props => props.theme.tab.hover.selected : props => props.theme.tab.hover.default};
         }
 
         &:hover {
             background-color: ${selected ? props => props.theme.tab.hover.selected : props => props.theme.tab.hover.default};
             opacity: ${selected ? '' : props => props.theme.tab.hover.opacity};
+
+            &:after {
+                opacity: 1;
+                background-color: ${selected ? props => props.theme.tab.hover.selected : props => props.theme.tab.hover.default};
+            }
+
+            &:before {
+                opacity: 1;
+                background-color: ${selected ? props => props.theme.tab.hover.selected : props => props.theme.tab.hover.default};
+            }
         }
     `};
 `;
@@ -84,18 +99,17 @@ export const StyledTabContent = styled.div`
     width: 100%;
     overflow: hidden;
     padding-left: 12px;
-    max-width: 214px;
+    max-width: 220px;
     display: flex;
 `;
 
 export const TabTitle = styled.div`
     font-size: ${props => props.theme.tab.textSize};
-    line-height: 16px;
+    line-height: 34px;
     font-weight: 400;
     white-space: nowrap;
-    display: flex;
+    display: block;
     height: 100%;
-    align-items: center;
     color: ${props => props.theme.tab.textColor};
     font-family: ${
         props => props.theme.tab.font == "inherit" 
@@ -106,16 +120,9 @@ export const TabTitle = styled.div`
                 ? "system-ui"
                 : props => props.theme.tab.font
     };
-
-    &:before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 32px;
-        height: 100%;
-        width: 50px;
-        background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-    }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 const TabIcon = styled.div`
@@ -129,18 +136,37 @@ const TabIcon = styled.div`
 `;
 
 export const TabFavicon = styled(TabIcon)`
-    ${({ src }: { src: any }) => css`
+    ${({ src, visible, isCached }: { src: any; visible: boolean; isCached: boolean }) => css`
+        width: ${visible ? '' : 0}px;
+        min-width: ${visible ? '' : 0}px;
+
+        transform: scale(${isCached ? 0.55 : 1});
+        border-radius: ${isCached ? 36 : 2}px;
+
+        position: absolute;
+
         background-image: url(${src});
         background-size: cover;
         background-repeat: no-repeat;
         margin-right: ${src ? '8px' : '0px'};
+
+        transition: 0.3s transform, 0.3s border-radius;
     `}
 `;
 
 export const TabThrobber = styled(TabIcon)`
     mask-image: url(${throbber});
     background-color: ${props => props.theme.tab.throbber.backgroundColor};
-    margin-right: 8px;
+
+    ${({ visible, isNTP }: { visible: boolean; isNTP: boolean }) => css`
+        width: ${isNTP ? '' : 0}px;
+        min-width: ${isNTP ? '' : 0}px;
+
+        margin-right: ${isNTP ? 8 : 0}px;
+
+        opacity: ${visible ? 1 : 0};
+        transition: 0.3s opacity, 0.3s width;
+    `}
 `;
 
 export const Close = styled(NavigationButton).attrs(() => ({
@@ -151,3 +177,14 @@ export const Close = styled(NavigationButton).attrs(() => ({
     style: { position: 'absolute', right: '4px', zIndex: '100000' },
     className: 'close'
 }))``;
+
+export const StyledAction = styled(NavigationButton)`
+    transition: 0.8s opacity cubic-bezier(0.33, 1, 0.68, 1), 0s width 0.8s;
+
+    ${({ visible }: { visible: boolean; }) => css`
+        width: ${visible ? '' : 0}px;
+        min-width: ${visible ? '' : 0}px;
+
+        opacity: ${visible ? 1 : 0};
+    `}
+`;

@@ -79,6 +79,9 @@ export class View {
 
         this.view.webContents.addListener('page-title-updated', this.events.viewTitleUpdated)
         this.view.webContents.addListener('page-favicon-updated', this.events.viewFaviconUpdated)
+
+        this.view.webContents.addListener('media-started-playing', this.events.viewMediaStartedPlaying)
+        this.view.webContents.addListener('media-paused', this.events.viewMediaPaused)
     }
 
     public rearrange() {
@@ -179,21 +182,27 @@ export class View {
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
                 if(this.url === NEWTAB_URL) return;
-                if(this.favicon !== null && this.favicon.isCached) return;
+                if(this.favicon && this.favicon.isCached) return;
 
                 const faviconUrl = favicons[0];
 
                 if(faviconUrl == this.faviconURL) return;
 
                 downloadFaviconFromUrl(faviconUrl).then((favicon: string) => {
-                    if(this.favicon !== null && this.favicon.favicon == favicon) return;
+                    if(this.favicon && this.favicon.favicon == favicon) return;
 
-                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
+                    appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, { favicon, isCached: false })
                     this.favicon = { favicon, isCached: false };
                     this.faviconURL = faviconUrl;
 
                     this.cacheFavicon(favicon)
                 })
+            },
+            viewMediaStartedPlaying: () => {
+                appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'playing')
+            },
+            viewMediaPaused: () => {
+                appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'paused')
             }
         }
     }
@@ -234,7 +243,7 @@ export class View {
         if(currentHost == host) return;
 
         this.favicon = null;
-        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, null)
+        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, { favicon: null, isCached: false })
     }
 
     private updateZoomFactor() {
@@ -248,7 +257,7 @@ export class View {
 
         const favicon = decodeURIComponent(f[0].base64)
 
-        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, favicon)
+        appWindow.window.webContents.send(`view-favicon-updated-${this.id}`, { favicon, isCached: true })
         this.favicon = { favicon, isCached: true };
         this.faviconURL = f[0].url;
     }

@@ -1,5 +1,5 @@
 import React from "react"
-import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion, TabFavicon, TabThrobber } from "./style"
+import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion, TabFavicon, TabThrobber, StyledAction } from "./style"
 import { Tab as ITab } from "../../models/tab"
 import { observer } from "mobx-react-lite"
 
@@ -8,14 +8,41 @@ import { TAB_WIDTH } from '../../constants/tab'
 import dot from '../../store'
 
 import blank from '../../../resources/icons/blank.svg'
+import { NavigationButton } from "../NavigationButton"
 
 const TabContent = observer(({ tab }: { tab: ITab }) => (
-    <StyledTabContent title={tab.title}>
-        {tab.status == "loading" && !tab.isNTP && <TabThrobber color={tab.themeColor} />}
-        {tab.status == "idle" && <TabFavicon style={{ width: tab.isNTP ? '0px' : '', minWidth: tab.isNTP ? '0px' : '' }} src={tab.isNTP ? '' : tab.favicon || blank} />}
-        <TabTitle>{tab.title}</TabTitle>
+    <StyledTabContent title={`${tab.title}${tab.isBookmarked ? ` ⭐` : ''}\n${tab.url}`}>
+        <TabThrobber 
+            visible={tab.status == "loading"} 
+            isNTP={!tab.isNTP}
+            color={tab.themeColor} 
+        />
+        <TabFavicon visible={!tab.isNTP} isCached={tab.status == "loading" && true} src={tab.isNTP ? '' : (tab.favicon && tab.favicon.favicon) || ''} />
+        <TabTitle>{tab.title || (tab.status == "loading" ? tab.isNTP ? "New Tab" : "Loading..." : tab.url)}</TabTitle>
     </StyledTabContent>
 ))
+
+const Action = observer(({ tab, action, onClick, visible }: { tab: ITab; action: 'close' | 'mediaPlaying' | 'mediaPaused'; onClick?: any; visible?: boolean; }) => {
+    const icons = {
+        close: 'x',
+        mediaPlaying: 'volume-2',
+        mediaPaused: 'pause'
+    }
+
+    const icon = icons[action]
+
+    return (
+        <StyledAction
+            icon={icon} 
+            onClick={() => onClick()}
+            visible={visible}
+            size={15} 
+            buttonSize={24}
+            iconStyle={{ strokeWidth: 1 }}
+            style={{ transition: '0.8s opacity cubic-bezier(0.33, 1, 0.68, 1), 0s width 0.8s' }}
+        />
+    )
+});
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
     const onCloseClick = () => {
@@ -59,7 +86,10 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
                 >
                     <StyledTab selected={tab.id == dot.tabs.selectedId} themeColor={tab.themeColor} tab={tab}>
                         <TabContent tab={tab} />
-                        <Close onClick={() => onCloseClick()} />
+
+                        <Action visible={tab.mediaState == 'playing'} tab={tab} action={"mediaPlaying"} />
+
+                        <Action tab={tab} action={"close"} onClick={onCloseClick} />
                     </StyledTab>
                 </TabMotion>
             )}

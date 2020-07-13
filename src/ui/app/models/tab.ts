@@ -4,7 +4,7 @@ import { observable } from "mobx";
 import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL } from "../../constants/web";
 
-const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds', 'isBookmarked']
+const DataTypes = ['id', 'url', 'title', 'status', 'favicon', 'themeColor', 'navigationStatus', 'error', 'blockedAds', 'isBookmarked', 'mediaState']
 
 export class Tab {
     @observable
@@ -20,7 +20,7 @@ export class Tab {
     public status: 'loading' | 'idle' | 'crashed' | 'suspended' = 'loading';
 
     @observable
-    public favicon: string;
+    public favicon: { favicon: string, isCached: boolean } = { favicon: null, isCached: false };
 
     @observable
     public themeColor: string = BLUE_1;
@@ -33,6 +33,9 @@ export class Tab {
 
     @observable
     public isBookmarked: boolean = false;
+
+    @observable
+    public mediaState: 'playing' | 'paused' | null;
 
     @observable
     public visible: boolean = true;
