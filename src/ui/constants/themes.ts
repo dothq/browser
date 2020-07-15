@@ -219,3 +219,100 @@ export const darkTheme = {
         invert: true
     }
 }
+
+export const highContrastTheme = {
+    metadata: {
+        name: "High Contrast",
+        description: "The default high contrast theme for assisting people with vision impairment.",
+        author: "Dot HQ"
+    },
+    ...defaultPalette,
+    global: {
+        selection: {
+            backgroundColor: '#1aebff',
+            color: 'black'
+        },
+        font: 'default'
+    },
+    tab: {
+        backgroundColor: 'black',
+        defaultBackgroundColor: '#c3b2d3',
+        textColor: '#ffffff',
+        borderRadius: [6, 6, 0, 0],
+        defaultOpacity: 0.7,
+        selectedOpacity: 1,
+        textSize: '12px',
+        font: 'inherit',
+        hover: {
+            selected: 'black',
+            default: 'darkgray',
+            opacity: 1
+        },
+        cornerPieces: {
+            left: true,
+            right: true,
+            backgroundColor: 'black'
+        },
+        throbber: {
+            backgroundColor: '#000000'
+        }
+    },
+    navigationButton: {
+        color: '#ffffff',
+        borderRadius: '0%',
+        opacity: 0.9,
+        hover: {
+            backgroundColor: '#ffff0025'
+        },
+        active: {
+            backgroundColor: '#3ff23f25'
+        }
+
+    },
+    tabsBar: {
+        backgroundColor: '#37006e',
+        addTabBackgroundColor: 'white'
+    },
+    navigationBar: {
+        backgroundColor: '#000000'
+    },
+    omnibox: {
+        backgroundColor: 'black',
+        textColor: '#ffffff',
+        textSize: '14px',
+        font: 'inherit',
+        border: {
+            width: 0.5,
+            color: 'white'
+        },
+        hover: {
+            backgroundColor: '#292a2d'
+        },
+        focus: {
+            backgroundColor: 'black',
+            border: {
+                width: 1.5,
+                color: 'white'
+            }
+        },
+        placeholder: {
+            opacity: 0.75
+        },
+        icons: {
+            hover: {
+                backgroundColor: 'rgba(255,255,255,0.15)'
+            },
+            active: {
+                backgroundColor: 'rgba(255,255,255,0.20)'
+            }
+        },
+        padlockBackgroundColor: '#eaeaea',
+        bookmarkIconColor: '#56c2ff'
+    },
+    line: {
+        backgroundColor: 'white'
+    },
+    windowsButtons: {
+        invert: true
+    }
+}

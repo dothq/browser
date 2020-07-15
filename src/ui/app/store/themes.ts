@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 import { existsSync, readFileSync } from "fs";
 import { resolve } from 'path';
-import { lightTheme, darkTheme } from "../../constants/themes";
+import { lightTheme, darkTheme, highContrastTheme } from "../../constants/themes";
 
 export class ThemesStore {
     public store;
@@ -55,7 +55,8 @@ export class ThemesStore {
                 return ipcRenderer.send('app-close')
             }
         } else { 
-            if(this.store.theme == "light") return lightTheme
+            if(this.store.getSetting("highContrastMode") == true) return highContrastTheme;
+            else if(this.store.theme == "light") return lightTheme
             else if(this.store.theme == "dark") return darkTheme
             else return lightTheme
         }

@@ -17,7 +17,7 @@ export const StyledAddressbar = styled.div`
     margin: 0 4px;
     border-radius: 32px;
     background-color: ${props => props.theme.omnibox.backgroundColor};
-    border: 1.5px solid transparent;
+    border: ${props => props.theme.omnibox.border == undefined ? 1.5 : props.theme.omnibox.border.width}px solid ${props => props.theme.omnibox.border == undefined ? "transparent" : props.theme.omnibox.border.color};
 
     &:hover {
         background-color: ${props => props.theme.omnibox.hover.backgroundColor};
