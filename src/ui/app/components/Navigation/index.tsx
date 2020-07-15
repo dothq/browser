@@ -54,7 +54,7 @@ export const Navigation = observer(() => {
                 <NavigationButton 
                     icon={"home"} 
                     size={16} 
-                    visible={false}
+                    visible={(dot.getSetting('showHomeButton') as boolean)}
                     onClick={() => events.navigationOnHomeClick()}
                     title={"Open the homepage"}
                 />
