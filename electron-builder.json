@@ -40,7 +40,9 @@
         "icon": "icons/icon.png",
         "publish": ["github"],
         "target": [
-            "deb"
+            "deb",
+            "rpm",
+            "AppImage"
         ]
     },
     "win": {
