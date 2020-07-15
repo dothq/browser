@@ -14,6 +14,8 @@ export class View {
     public favicon: { favicon: string, isCached: boolean };
     public faviconURL: string;
     public previousURL: string = '';
+    public mediaState: 'playing' | '' = '';
+    public pinned: boolean = false;
 
     private historyId: string;
     
@@ -200,9 +202,11 @@ export class View {
             },
             viewMediaStartedPlaying: () => {
                 appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'playing')
+                this.mediaState = 'playing'
             },
             viewMediaPaused: () => {
                 appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'paused')
+                this.mediaState = ''
             }
         }
     }

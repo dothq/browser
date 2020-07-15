@@ -9,6 +9,7 @@ import dot from '../../store'
 
 import blank from '../../../resources/icons/blank.svg'
 import { NavigationButton } from "../NavigationButton"
+import { ipcRenderer } from "electron"
 
 const TabContent = observer(({ tab }: { tab: ITab }) => (
     <StyledTabContent title={`${tab.title}${tab.isBookmarked ? ` ⭐` : ''}\n${tab.url}`}>
@@ -17,16 +18,17 @@ const TabContent = observer(({ tab }: { tab: ITab }) => (
             isNTP={!tab.isNTP}
             color={tab.themeColor} 
         />
-        <TabFavicon visible={!tab.isNTP} isCached={tab.status == "loading" && true} src={tab.isNTP ? '' : (tab.favicon && tab.favicon.favicon) || ''} />
-        <TabTitle>{tab.title || (tab.status == "loading" ? tab.isNTP ? "New Tab" : "Loading..." : tab.url)}</TabTitle>
+        <TabFavicon visible={!tab.isNTP} isCached={tab.status == "loading" && true} src={tab.isNTP ? '' : (tab.favicon && tab.favicon.favicon) || blank} />
+        <TabTitle visible={!tab.isPinned}>{tab.title || (tab.status == "loading" ? tab.isNTP ? "New Tab" : "Loading..." : tab.url)}</TabTitle>
     </StyledTabContent>
 ))
 
-const Action = observer(({ tab, action, onClick, visible }: { tab: ITab; action: 'close' | 'mediaPlaying' | 'mediaPaused'; onClick?: any; visible?: boolean; }) => {
+const Action = observer(({ tab, action, onClick, visible }: { tab: ITab; action: 'close' | 'mediaPlaying' | 'mediaPaused' | 'mediaMuted'; onClick?: any; visible?: boolean; }) => {
     const icons = {
         close: 'x',
         mediaPlaying: 'volume-2',
-        mediaPaused: 'pause'
+        mediaPaused: 'pause',
+        mediaMuted: 'volume-x'
     }
 
     const icon = icons[action]
@@ -59,6 +61,11 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
 
     }
 
+    const onMediaClick = () => {
+        ipcRenderer.send(`view-mute`, tab.id)
+        tab.mediaState = tab.mediaState == "playing" ? "muted" : "playing"
+    }
+
     const variants = {
         opening: {
             opacity: 1, 
@@ -83,13 +90,20 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
                     variants={variants}
                     transition={{ duration: 0.2, type: "tween" }}
                     onMouseDown={(e) => events.tabOnMouseDown(e, tab)}
+                    onContextMenu={(e) => events.tabOnContextMenu(e, tab)}
+                    isPinned={tab.isPinned}
                 >
-                    <StyledTab selected={tab.id == dot.tabs.selectedId} themeColor={tab.themeColor} tab={tab}>
+                    <StyledTab 
+                        selected={tab.id == dot.tabs.selectedId} 
+                        themeColor={tab.themeColor} 
+                        tab={tab}
+                    >
                         <TabContent tab={tab} />
 
-                        <Action visible={tab.mediaState == 'playing'} tab={tab} action={"mediaPlaying"} />
+                        <Action visible={!tab.isPinned && tab.mediaState == 'playing'} tab={tab} action={"mediaPlaying"} onClick={onMediaClick} />
+                        <Action visible={!tab.isPinned && tab.mediaState == 'muted'} tab={tab} action={"mediaMuted"} onClick={onMediaClick} />
 
-                        <Action tab={tab} action={"close"} onClick={onCloseClick} />
+                        <Action visible={!tab.isPinned} tab={tab} action={"close"} onClick={onCloseClick} />
                     </StyledTab>
                 </TabMotion>
             )}

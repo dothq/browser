@@ -6,15 +6,21 @@ import { motion } from "framer-motion";
 import throbber from '../../../resources/icons/throbber.svg'
 import tab_corner_left from '../../../resources/icons/tab_corner_left.svg'
 import tab_corner_right from '../../../resources/icons/tab_corner_right.svg'
+import { TAB_WIDTH } from "../../constants/tab";
 
 export const TabMotion = styled(motion.div)`
-    min-width: 93px;
+    min-width: 38px;
     display: flex;
+
+    ${({ isPinned }: { isPinned: boolean }) => css`
+        transition: ${isPinned ? '0.3s width' : ''};
+        width: ${isPinned ? '38px !important' : ''};
+    `};
 `;
 
 export const StyledTab = styled.div`
-    width: -webkit-fill-available;
-    height: calc(100%);
+    width: 100%;
+    height: 100%;
     display: flex;
     align-self: flex-end;
     -webkit-app-region: no-drag;
@@ -22,12 +28,14 @@ export const StyledTab = styled.div`
     position: relative;
     border-radius: ${props => props.theme.tab.borderRadius.map(b => b + "px").join(" ")};
     border-bottom: none;
-    transition: 0.3s ease-in-out background-color;
+    transition: 0.2s ease-in-out background-color, 0.3s width;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? props => props.theme.tab.backgroundColor : props => props.theme.tab.defaultBackgroundColor};
         z-index: ${selected ? 2 : 1};
         opacity: ${selected ? props => props.theme.tab.selectedOpacity : props => props.theme.tab.defaultOpacity};
+
+        width: ${tab.isPinned ? 38 : ''}px;
 
         &:before {
             content: "";
@@ -123,6 +131,11 @@ export const TabTitle = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    ${({ visible }: { visible: boolean }) => css`
+        transition: 0.3s opacity;
+        opacity: ${visible ? 1 : 0};
+    `};
 `;
 
 const TabIcon = styled.div`
@@ -150,7 +163,7 @@ export const TabFavicon = styled(TabIcon)`
         background-repeat: no-repeat;
         margin-right: ${src ? '8px' : '0px'};
 
-        transition: 0.3s transform, 0.3s border-radius;
+        transition: 0.15s transform, 0.15s border-radius;
     `}
 `;
 

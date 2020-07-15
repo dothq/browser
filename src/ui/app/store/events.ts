@@ -130,6 +130,10 @@ export class EventsStore {
         this.store.tabs.selectedTab.inputFocused = false;
     }
 
+    public tabOnContextMenu(e, tab: ITab) {
+        ipcRenderer.send('tab-menu-popup', { tabId: tab.id, x: e.clientX, y: e.clientY })
+    }
+
     public menuOnClick() {
         ipcRenderer.send('menu-popup')
     }

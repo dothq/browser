@@ -101,6 +101,13 @@ export const bookmarkView = (id) => {
 
 }
 
+export const muteView = (id) => {
+    const view = appWindow.getViewFromId(id);
+    if(!view) return;
+
+    view.view.webContents.audioMuted = !view.view.webContents.audioMuted
+}
+
 export const setFontSizeView = (id: any, size: "vs" | "s" | "m" | "l" | "vl") => {
     const sizes = {
         vs: 8,

@@ -9,7 +9,8 @@ import {
     backView, 
     forwardView, 
     navigateView,
-    bookmarkView
+    bookmarkView,
+    muteView
 } from "./tools/view";
 import { appWindow } from ".";
 import { 
@@ -20,7 +21,7 @@ import {
   setSuggestionBoxWidth, 
   setSuggestionBoxLeft
 } from "./tools/overlay";
-import { focusAddressbar, popupMenu, popupBookmarkMenu } from "./tools/app";
+import { focusAddressbar, popupMenu, popupBookmarkMenu, popupTabMenu } from "./tools/app";
 import { dbImport } from "./tools/storage";
 
 export const startMessagingAgent = () => {
@@ -34,6 +35,7 @@ export const startMessagingAgent = () => {
     ipcMain.on('view-forward', (e, id) => forwardView(id))
 
     ipcMain.on('view-bookmark', (e, id) => bookmarkView(id))
+    ipcMain.on('view-mute', (e, id) => muteView(id))
 
     ipcMain.on('view-navigate', (e, id, url) => navigateView(id, url))
 
@@ -56,6 +58,7 @@ export const startMessagingAgent = () => {
 
     ipcMain.on('menu-popup', () => popupMenu())
     ipcMain.on('bookmark-menu-popup', (e, args) => popupBookmarkMenu(args))
+    ipcMain.on('tab-menu-popup', (e, args) => popupTabMenu(args))
 
     ipcMain.on(`transport-active-cursor`, (e, cursor) => updateOverlayCursor(cursor))
 

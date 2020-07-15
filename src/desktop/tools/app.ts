@@ -4,6 +4,7 @@ import { resolve } from "path";
 import { appWindow } from "..";
 import { NAVIGATION_HEIGHT } from "../../ui/constants/window";
 import { showBookmarkMenu } from "../menus/bookmark";
+import { showTabMenu } from "../menus/tab";
 
 export const setAppDataLocation = () => {
     if(platform() == 'darwin') {
@@ -29,6 +30,10 @@ export const popupMenu = () => {
 
 export const popupBookmarkMenu = (args) => {
     showBookmarkMenu(args.bookmark, args.x, args. y)
+}
+
+export const popupTabMenu = (args) => {
+    showTabMenu(args.tabId, args.x, args. y)
 }
 
 export const hideMenu = (menu: Menu) => {
