@@ -254,7 +254,7 @@ export const highContrastTheme = {
             backgroundColor: 'black'
         },
         throbber: {
-            backgroundColor: '#000000'
+            backgroundColor: 'white'
         }
     },
     navigationButton: {
