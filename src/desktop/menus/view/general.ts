@@ -1,29 +1,26 @@
-import { Menu } from "electron";
-import { appWindow } from "..";
+import { View } from "../../view";
 
-export const getGeneralMenu = (tabId) => {
-    const { view } = appWindow.getViewFromId(tabId)
-
-    return Menu.buildFromTemplate([
+export const getGeneralMenu = (view: View) => {
+    return [
         {
             label: "Back",
             accelerator: "Alt+Left",
             click: () => {
-                view.webContents.goBack()
+                view.view.webContents.goBack()
             }
         },
         {
             label: "Forward",
             accelerator: "Alt+Right",
             click: () => {
-                view.webContents.goForward()
+                view.view.webContents.goForward()
             }
         },
         {
             label: "Reload",
             accelerator: "CmdOrCtrl+R",
             click: () => {
-                view.webContents.reload()
+                view.view.webContents.reload()
             }
         },
         {
@@ -48,17 +45,8 @@ export const getGeneralMenu = (tabId) => {
             label: "View Page Source",
             accelerator: "CmdOrCtrl+U",
             click: () => {
-                const url = appWindow.getViewFromId(tabId).url
-
-                view.webContents.loadURL(`view-source:${url}`)
-            }
-        },
-        {
-            label: "Inspect",
-            accelerator: "CmdOrCtrl+Shift+I",
-            click: () => {
-                view.webContents.toggleDevTools()
+                view.view.webContents.loadURL(`view-source:${view.url}`)
             }
         }
-    ])
+    ]
 }

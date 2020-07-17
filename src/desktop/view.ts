@@ -1,7 +1,7 @@
 import { BrowserView, app, ContextMenuParams } from "electron";
 import { resolve } from "path";
 import { appWindow } from ".";
-import { getGeneralMenu } from "./menus/general";
+import { getViewMenu } from "./menus/view";
 import { downloadFaviconFromUrl } from "./tools/favicon";
 import { BLUE_1 } from "@dothq/colors";
 import { NEWTAB_URL, WEBUI_PREFIX, WEBUI_SUFFIX } from "../ui/constants/web";
@@ -57,14 +57,14 @@ export class View {
         this.view.setAutoResize({ width: true, height: true });
         this.view.webContents.loadURL(url);
 
-        this.view.webContents.on('context-menu', (_event, params: ContextMenuParams) => {
+        this.view.webContents.on('context-menu', (_event, params: any) => {
             const { x, y } = params;
 
             const id = this.id;
 
-            const generalMenu = getGeneralMenu(id)
+            const menu = getViewMenu(id, params)
 
-            generalMenu.popup({ x, y: y + appWindow.navigationHeight })
+            menu.popup({ x, y: y + appWindow.navigationHeight })
         })
 
         this.view.webContents.addListener('did-navigate', this.events.viewNavigate)
@@ -117,6 +117,8 @@ export class View {
             viewStartedNavigation: (_event: Electron.Event, url: string, isInPlace: boolean, isMainFrame: boolean) => {
                 if(isMainFrame) {
                     appWindow.window.webContents.send(`view-blockedAds-updated-${this.id}`, 0)
+                    appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'paused')
+                    this.mediaState = ''
                     
                     this.resetFavicon(url);
                 }
@@ -179,7 +181,6 @@ export class View {
                 this.errorData = error
             },
             viewTitleUpdated: async (_event: Electron.Event, title: string) => {
-                appWindow.window.webContents.send(`view-themeColor-updated-${this.id}`, BLUE_1)
                 appWindow.window.webContents.send(`view-title-updated-${this.id}`, title)
             },
             viewFaviconUpdated: (_event: Electron.Event, favicons: any[]) => {
@@ -201,10 +202,12 @@ export class View {
                 })
             },
             viewMediaStartedPlaying: () => {
+                if(this.mediaState == 'playing') return;
                 appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'playing')
                 this.mediaState = 'playing'
             },
             viewMediaPaused: () => {
+                if(this.mediaState == '') return;
                 appWindow.window.webContents.send(`view-mediaState-updated-${this.id}`, 'paused')
                 this.mediaState = ''
             }
