@@ -28,7 +28,7 @@
     "@types/styled-components": "^5.1.0",
     "aws-sdk": "^2.710.0",
     "cross-env": "^7.0.2",
-    "electron": "^9.0.2",
+    "electron": "^9.1.0",
     "electron-builder": "^22.6.0",
     "file-loader": "^6.0.0",
     "gulp": "^4.0.2",
