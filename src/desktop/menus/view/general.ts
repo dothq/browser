@@ -4,6 +4,7 @@ export const getGeneralMenu = (view: View) => {
     return [
         {
             label: "Back",
+            enabled: view.view.webContents.canGoBack(),
             accelerator: "Alt+Left",
             click: () => {
                 view.view.webContents.goBack()
@@ -11,6 +12,7 @@ export const getGeneralMenu = (view: View) => {
         },
         {
             label: "Forward",
+            enabled: view.view.webContents.canGoForward(),
             accelerator: "Alt+Right",
             click: () => {
                 view.view.webContents.goForward()
@@ -29,6 +31,9 @@ export const getGeneralMenu = (view: View) => {
         {
             label: "Save As",
             accelerator: "CmdOrCtrl+S",
+            click: () => {
+                view.view.webContents.downloadURL(view.url)
+            }
         },
         {
             label: "Print",

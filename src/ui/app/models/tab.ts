@@ -39,7 +39,7 @@ export class Tab {
     public themeColor: string = BLUE_1;
     
     @observable
-    public navigationStatus: { canGoForward: boolean, canGoBack: boolean };
+    public navigationStatus: { canGoForward: boolean, canGoBack: boolean } = { canGoForward: false, canGoBack: false };
 
     @observable
     public blockedAds: number = 0;

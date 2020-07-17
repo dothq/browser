@@ -28,14 +28,14 @@ export const Navigation = observer(() => {
                 <NavigationButton 
                     icon={"arrow-left"} 
                     size={18} 
-                    disabled={navStatus && !navStatus.canGoBack || true} 
+                    disabled={navStatus && !navStatus.canGoBack} 
                     onClick={() => events.navigationOnBackClick()}
                     title={"Click to go back"}
                 />
                 <NavigationButton 
                     icon={"arrow-right"} 
                     size={18} 
-                    disabled={navStatus && !navStatus.canGoForward || true}
+                    disabled={navStatus && !navStatus.canGoForward}
                     onClick={() => events.navigationOnForwardClick()}
                     title={"Click to go forward"}
                 />
