@@ -10,6 +10,8 @@ import { log } from '@dothq/log';
 import { getMoreMenu } from './menus/more';
 import { NAVIGATION_HEIGHT } from '../ui/constants/window';
 import { defaultSettings } from './constants/settings';
+import { promises } from 'fs';
+import { USER_DATA } from '../constants/storage';
 
 export class AppWindow {
     public window: BrowserWindow;
@@ -68,6 +70,15 @@ export class AppWindow {
             this.window.focus()
 
             this.storageReady()
+            this.getWindowBounds()
+        })
+
+        this.window.on('close', async () => {
+          const path = resolve(USER_DATA, "window.json");
+
+          const currentBounds = this.window.getBounds()
+
+          await promises.writeFile(path, JSON.stringify(currentBounds))
         })
 
         this.window.on('resize', () => {
@@ -156,5 +167,21 @@ export class AppWindow {
           }
         )
       })
+    }
+
+    public async getWindowBounds() {
+      const path = resolve(USER_DATA, "window.json");
+      let bounds = {}
+
+      try {
+        bounds = JSON.parse(await promises.readFile(path, "utf-8"))
+      } catch(error) {
+        const currentBounds = this.window.getBounds()
+
+        await promises.writeFile(path, JSON.stringify(currentBounds))
+        bounds = {}
+      }
+
+      this.window.setBounds(bounds)
     }
 }
