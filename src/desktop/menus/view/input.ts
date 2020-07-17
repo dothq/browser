@@ -2,10 +2,10 @@ import { View } from "../../view";
 import { Flags } from ".";
 import { app } from "electron";
 import { platform } from 'os';
+import { SEARCH_ENGINE_URL } from "../../../ui/constants/web";
+import { appWindow } from "../..";
 
 export const getInputMenu = (view: View, flags: Flags) => {
-    const { x, y } = flags;
-
     const os = platform();
     const emojiPanelVisible = os == "win32" || os == "darwin"
 
@@ -71,7 +71,9 @@ export const getInputMenu = (view: View, flags: Flags) => {
             label: `Search for "${flags.selectionSnippet}"`,
             visible: flags.selectionText !== '' && flags.inputFieldType !== "password",
             click: () => {
-                app.showEmojiPanel()
+                const url = `${SEARCH_ENGINE_URL}${flags.selectionText}`
+
+                appWindow.window.webContents.send('add-tab', { url, active: true })
             }
         },
         {
