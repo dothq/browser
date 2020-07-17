@@ -1,5 +1,5 @@
 import React from "react"
-import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion, TabFavicon, TabThrobber, StyledAction } from "./style"
+import { StyledTab, StyledTabContent, TabTitle, Close, TabMotion, TabFavicon, TabThrobber, StyledAction, ActionContainer } from "./style"
 import { Tab as ITab } from "../../models/tab"
 import { observer } from "mobx-react-lite"
 
@@ -18,10 +18,40 @@ const TabContent = observer(({ tab }: { tab: ITab }) => (
             isNTP={!tab.isNTP}
             color={tab.themeColor} 
         />
-        <TabFavicon visible={!tab.isNTP} isCached={tab.status == "loading" && true} src={tab.isNTP ? '' : (tab.favicon && tab.favicon.favicon) || blank} />
+        {tab.favicon && tab.favicon.favicon && <TabFavicon visible={!tab.isNTP} isCached={tab.status == "loading" && true} src={tab.isNTP ? '' : (tab.favicon && tab.favicon.favicon)} />}
         <TabTitle visible={!tab.isPinned}>{tab.title || (tab.status == "loading" ? tab.isNTP ? "New Tab" : "Loading..." : tab.url)}</TabTitle>
     </StyledTabContent>
 ))
+
+const TabActions = observer(({ tab }: { tab: ITab }) => {
+    const onCloseClick = () => {
+        tab.visible = !tab.visible;
+
+        const length = dot.tabs.list.length;
+
+        length >= 2 && dot.tabs.close(tab.id);
+
+        setTimeout(() => {
+            tab.killed = true;
+            length == 1 && dot.tabs.close(tab.id);
+        }, 200);
+
+    }
+
+    const onMediaClick = () => {
+        ipcRenderer.send(`view-mute`, tab.id)
+        tab.mediaState = tab.mediaState == "playing" ? "muted" : "playing"
+    }
+
+    return (
+        <ActionContainer>
+            <Action visible={!tab.isPinned && tab.mediaState == 'playing'} tab={tab} action={"mediaPlaying"} onClick={onMediaClick} />
+            <Action visible={!tab.isPinned && tab.mediaState == 'muted'} tab={tab} action={"mediaMuted"} onClick={onMediaClick} />
+
+            <Action visible={!tab.isPinned} tab={tab} action={"close"} onClick={onCloseClick} />
+        </ActionContainer>
+    )
+})
 
 const Action = observer(({ tab, action, onClick, visible }: { tab: ITab; action: 'close' | 'mediaPlaying' | 'mediaPaused' | 'mediaMuted'; onClick?: any; visible?: boolean; }) => {
     const icons = {
@@ -47,25 +77,6 @@ const Action = observer(({ tab, action, onClick, visible }: { tab: ITab; action:
 });
 
 export const Tab = observer(({ tab }: { tab: ITab }) => {
-    const onCloseClick = () => {
-        tab.visible = !tab.visible;
-
-        const length = dot.tabs.list.length;
-
-        length >= 2 && dot.tabs.close(tab.id);
-
-        setTimeout(() => {
-            tab.killed = true;
-            length == 1 && dot.tabs.close(tab.id);
-        }, 200);
-
-    }
-
-    const onMediaClick = () => {
-        ipcRenderer.send(`view-mute`, tab.id)
-        tab.mediaState = tab.mediaState == "playing" ? "muted" : "playing"
-    }
-
     const variants = {
         opening: {
             opacity: 1, 
@@ -100,10 +111,7 @@ export const Tab = observer(({ tab }: { tab: ITab }) => {
                     >
                         <TabContent tab={tab} />
 
-                        <Action visible={!tab.isPinned && tab.mediaState == 'playing'} tab={tab} action={"mediaPlaying"} onClick={onMediaClick} />
-                        <Action visible={!tab.isPinned && tab.mediaState == 'muted'} tab={tab} action={"mediaMuted"} onClick={onMediaClick} />
-
-                        <Action visible={!tab.isPinned} tab={tab} action={"close"} onClick={onCloseClick} />
+                        <TabActions tab={tab} />
                     </StyledTab>
                 </TabMotion>
             )}

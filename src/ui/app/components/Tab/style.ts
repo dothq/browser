@@ -29,6 +29,7 @@ export const StyledTab = styled.div`
     border-radius: ${props => props.theme.tab.borderRadius.map(b => b + "px").join(" ")};
     border-bottom: none;
     transition: 0.2s ease-in-out background-color, 0.3s width;
+    overflow: hidden;
 
     ${({ selected, themeColor, tab }: { selected: boolean; themeColor: string; tab: Tab }) => css`
         background-color: ${selected ? props => props.theme.tab.backgroundColor : props => props.theme.tab.defaultBackgroundColor};
@@ -200,4 +201,8 @@ export const StyledAction = styled(NavigationButton)`
 
         opacity: ${visible ? 1 : 0};
     `}
+`;
+
+export const ActionContainer = styled.div`
+    display: flex;
 `;
