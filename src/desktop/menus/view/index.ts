@@ -72,7 +72,7 @@ export const getViewMenu = (tabId, flags: Flags) => {
 
     if(flags.linkURL) menu = menu.concat(link)
     if(flags.mediaType == 'image' && flags.srcURL !== '') menu = menu.concat(image)
-    if(flags.inputFieldType == "plainText" || flags.inputFieldType == "other") menu = menu.concat(input)
+    if(flags.inputFieldType !== "none") menu = menu.concat(input)
     if(flags.inputFieldType == "none" && flags.selectionText !== '') menu = menu.concat(text)
     if(flags.misspelledWord !== '') menu = spellcheck
     if(menu.length == 0) menu = menu.concat(general)
