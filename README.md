@@ -35,6 +35,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
 - [AwesomeTech10](https://github.com/AwesomeTech10) - ***Main Developer***
+- [KaiLikesLinux](https://github.com/KaiLikesLinux) - ***Documentation***
 
 ## 💸 Donations
 We accept one-time donations on Ko-Fi to keep our servers running, (you'll have to pay each month if you want a monthly payment)
