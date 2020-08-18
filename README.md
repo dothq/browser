@@ -30,7 +30,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 </a>
 
 ## ❤️ Acknowledgements
-- Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla].(https://mozilla.org)
+- Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
 
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
