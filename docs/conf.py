@@ -1,0 +1,1 @@
+html_theme = "sphinx_documatt_theme"
