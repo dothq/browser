@@ -1,1 +1,0 @@
-# Removed Documatt Theme
