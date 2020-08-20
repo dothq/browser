@@ -30,24 +30,22 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 </a>
 
 ## 💻 Build Dot Browser
-If you are on `Windows` please refer to [this doc](https://firefox-source-docs.mozilla.org/setup/windows_build.html) from Mozilla.
+> The following steps are designed for unix-based operating systems, refer to [this doc](https://firefox-source-docs.mozilla.org/setup/windows_build.html) if you are on Windows.
 
-#### 1. Clone Dot Browser
-    git clone https://github.com/dothq/browser dotbrowser
-#### 2. `cd` into the cloned repository
-    cd dotbrowser
-   
-#### 3. Bootstrap the project using `mach`
-    ./mach bootstrap
-    
-#### 4. Pick what target you want to build as
-If you want a fast build, type `1` for Artifact builds, or type `2` for a full-fat build (this may take a few hours depending on your system).
+**1.** Open your terminal and `git clone` this repository.
 
-#### 5. Run the build
-    ./mach build
+**2.** Now inside the respository folder run `./mach bootstrap`, this will setup the project and make sure everything is ready.
+
+**3.** You can now pick which build type you want to do when `mach` asks you to choose a build type.
+  * You'll need to pick the appropriate build type as different parts of the project require different methods of being built.
+  
+    * **Artifact builds** - When building with the Artifact type instead of compiling the C++ code on your system, `mach` will fetch pre-built binaries from Mozilla and then   will link the frontend (html, js, css) with the binary. Artifact builds take under a minute to build on a mid-range system.
     
-#### 6. Run the Dot Browser binary
-    ./mach run
+    * **Full builds** - Full builds are used when you want to modify the C++ code or want to generate a custom binary for distribution.
+    
+**4.** You can then start the build once `mach` says your system is ready, the command to build the project is `./mach build`. This may take a few seconds up to a few hours.
+
+**5.** If you've made it this far, you've successfully built Dot! Now, you'll want to run the binary you built, you can do this by running `./mach run`.
 
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
