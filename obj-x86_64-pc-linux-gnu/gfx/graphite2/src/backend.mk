@@ -1,4 +1,0 @@
-# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT EDIT.
-
-DEFINES += -DNDEBUG=1 -DTRIMMED=1 -DGRAPHITE2_STATIC '-DPACKAGE_VERSION="moz"' '-DPACKAGE_BUGREPORT="http://bugzilla.mozilla.org/"' -DGRAPHITE2_NFILEFACE -DGRAPHITE2_NTRACING -DGRAPHITE2_NSEGCACHE '-DGRAPHITE2_CUSTOM_HEADER="MozGrMalloc.h"'
-COMPUTED_LDFLAGS += -Wl,-rpath-link,/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu/dist/bin -Wl,-rpath-link,/usr/local/lib

@@ -1,2 +1,0 @@
-﻿/*! Simple test for bug 1271796 */
-p::before { content: "\2014"; }

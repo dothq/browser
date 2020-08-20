@@ -1,7 +1,0 @@
-//error: argument typename `FARGLEGARGLE' of message `Msg' has not been declared
-
-sync protocol undeclReturnType {
-
-child:  sync Msg() returns (FARGLEGARGLE r);
-
-};

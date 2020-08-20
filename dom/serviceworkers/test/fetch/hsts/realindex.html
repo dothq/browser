@@ -1,8 +1,0 @@
-<!DOCTYPE html>
-<script>
-  var securityInfoPresent = !!SpecialPowers.wrap(window).docShell.currentDocumentChannel.securityInfo;
-  window.parent.postMessage({status: "protocol",
-                             data: location.protocol,
-                             securityInfoPresent},
-                            "*");
-</script>

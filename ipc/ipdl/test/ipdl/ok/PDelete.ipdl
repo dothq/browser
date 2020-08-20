@@ -1,8 +1,0 @@
-include protocol PDeleteSub;
-
-sync protocol PDelete {
-    manages PDeleteSub;
-
-child:
-    async PDeleteSub();
-};

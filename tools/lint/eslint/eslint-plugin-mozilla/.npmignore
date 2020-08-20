@@ -1,8 +1,0 @@
-.eslintrc.js
-.npmignore
-node_modules
-reporters
-scripts
-tests
-package-lock.json
-update.sh

@@ -1,8 +1,0 @@
-{
-    "configure-args": "--enable-rust-simd --enable-smoosh",
-    "optimize": true,
-    "env": {
-        "JSTESTS_EXTRA_ARGS": "--args='--smoosh' --jitflags=jstests",
-        "JITTEST_EXTRA_ARGS": "--args='--smoosh'"
-    }
-}

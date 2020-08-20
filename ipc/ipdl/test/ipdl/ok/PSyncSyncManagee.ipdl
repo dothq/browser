@@ -1,7 +1,0 @@
-include protocol PSyncSyncManager;
-
-sync protocol PSyncSyncManagee {
-    manager PSyncSyncManager;
-child:
-    async __delete__();
-};

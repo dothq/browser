@@ -1,4 +1,0 @@
-protocol PUniquePtrBasic {
-child:
-    async Msg(UniquePtr<int> maybe);
-};

@@ -1,3 +1,0 @@
-skip_on(android) == rounded-rects.yaml rounded-rects-ref.png  # Too wide for Android
-== aa-dist-bug.yaml aa-dist-bug-ref.yaml
-== fractional-radii.yaml fractional-radii-ref.yaml

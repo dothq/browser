@@ -1,1 +1,0 @@
-export FOUND_MOZCONFIG

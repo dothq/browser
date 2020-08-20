@@ -1,8 +1,0 @@
-include protocol PmanagerProtocol;
-
-protocol PmanagedProtocol {
-    manager PmanagerProtocol;
-
-child:
-    async __delete__();
-};

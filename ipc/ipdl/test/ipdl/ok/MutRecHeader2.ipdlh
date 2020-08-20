@@ -1,8 +1,0 @@
-include MutRecHeader3;
-
-// See MutRecHeader1.ipdlh for explanation.
-
-struct Struct2
-{
-  bool b;
-};

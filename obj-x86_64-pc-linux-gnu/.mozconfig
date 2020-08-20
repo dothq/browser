@@ -1,2 +1,0 @@
-# Automatically download and use compiled C++ components:
-ac_add_options --enable-artifact-builds

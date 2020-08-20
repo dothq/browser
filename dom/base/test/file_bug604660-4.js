@@ -1,1 +1,0 @@
-parent.scriptRan(4);

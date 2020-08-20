@@ -1,6 +1,0 @@
-//error: message `foo' in protocol `syncMessageCompress' requests compression but is not async
-
-sync protocol syncMessageCompress {
-parent:
-    sync foo() compress;
-};

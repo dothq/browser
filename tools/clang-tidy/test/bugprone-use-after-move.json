@@ -1,1 +1,0 @@
-[["warning", "'ptr' used after it was moved", "bugprone-use-after-move"], {"reliability": "high"}]

@@ -1,8 +1,0 @@
-@font-face {
-  font-family: dejavu;
-  src: url(DejaVuSans.ttf);
-}
-
-#test1 {
-  font-family: dejavu, serif;
-}
