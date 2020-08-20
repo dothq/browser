@@ -22,13 +22,13 @@ panel[type="autocomplete-richlistbox"] {
   padding: 0;
   color: -moz-FieldText;
   background-color: -moz-Field;
-  appearance: none;
+  -moz-appearance: none;
 }
 
 /* ::::: richlistbox autocomplete ::::: */
 
 .autocomplete-richlistbox {
-  appearance: none;
+  -moz-appearance: none;
   margin: 1px;
   background-color: transparent;
 }

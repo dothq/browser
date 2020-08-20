@@ -1,0 +1,7 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT EDIT.
+
+DEFINES += -DNDEBUG=1 -DTRIMMED=1
+XPI_NAME = mochijar
+FINAL_TARGET = $(if $(XPI_NAME),$(DIST)/xpi-stage/$(XPI_NAME),$(DIST)/bin)$(DIST_SUBDIR:%=/%)
+DIRS := manifests tests ssltunnel BrowserTestUtils
+USE_EXTENSION_MANIFEST := 1

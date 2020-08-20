@@ -18,8 +18,7 @@
 }
 
 .update-header {
-  appearance: auto;
-  -moz-default-appearance: dialog;
+  -moz-appearance: dialog;
   margin: 12px 12px 0 12px;
 }
 
@@ -48,14 +47,12 @@
 
 #update-button-box {
   padding: 10px 12px 12px 12px;
-  appearance: auto;
-  -moz-default-appearance: statusbar;
+  -moz-appearance: statusbar;
   -moz-window-dragging: drag;
 }
 
 #update-button-box button {
-  appearance: auto;
-  -moz-default-appearance: toolbarbutton;
+  -moz-appearance: toolbarbutton;
   color: ButtonText;
   min-height: 22px;
 }

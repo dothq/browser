@@ -1889,7 +1889,7 @@ var gMainPane = {
 
   // nsISupports
 
-  QueryInterface: ChromeUtils.generateQI(["nsIObserver"]),
+  QueryInterface: ChromeUtils.generateQI([Ci.nsIObserver]),
 
   // nsIObserver
 

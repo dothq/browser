@@ -38,11 +38,6 @@
   margin-bottom: .3em !important;
 }
 
-.popup-notification-hint-text {
-  opacity: 0.6;
-  margin-top: .5em !important;
-}
-
 .popup-notification-learnmore-link {
   margin-top: .5em !important;
 }
@@ -52,7 +47,7 @@
 }
 
 .popup-notification-button-container > toolbarseparator {
-  appearance: none;
+  -moz-appearance: none;
   border: 0;
   border-left: 1px solid var(--panel-separator-color);
   margin: 7px 0 7px;
@@ -86,7 +81,7 @@
 
 .popup-notification-dropmarker > .button-box > .button-menu-dropmarker {
   /* This is to override the linux !important */
-  appearance: none !important;
+  -moz-appearance: none !important;
   display: -moz-box;
   padding: 0;
   margin: 0;

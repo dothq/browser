@@ -8,8 +8,7 @@
 /* ::::: search textbox ::::: */
 
 :host {
-  appearance: auto;
-  -moz-default-appearance: textfield;
+  -moz-appearance: textfield;
   cursor: text;
   margin: 2px 4px; /* matches <input> global.css margin */
   padding: 2px 2px 3px;

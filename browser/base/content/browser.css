@@ -93,7 +93,7 @@ body {
 #toolbar-menubar[autohide="true"][inactive="true"]:not([customizing="true"]) {
   min-height: 0 !important;
   height: 0 !important;
-  appearance: none !important;
+  -moz-appearance: none !important;
 }
 %endif
 
@@ -350,8 +350,7 @@ toolbar[customizing] #whats-new-menu-button {
 }
 
 .titlebar-buttonbox {
-  appearance: auto;
-  -moz-default-appearance: -moz-window-button-box;
+  -moz-appearance: -moz-window-button-box;
   position: relative;
 }
 
@@ -370,8 +369,7 @@ toolbarpaletteitem {
 
 %ifdef XP_MACOSX
 #titlebar-fullscreen-button {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-fullscreen-button;
+  -moz-appearance: -moz-mac-fullscreen-button;
 }
 
 /**
@@ -648,12 +646,9 @@ toolbar:not(#TabsToolbar) > #personal-bookmarks {
 }
 
 #urlbar[actionoverride] > #urlbar-input-container > #urlbar-label-box,
-#urlbar:not([actiontype="switchtab"]):not([actiontype="extension"]):not([searchmode]) > #urlbar-input-container > #urlbar-label-box,
+#urlbar:not([actiontype="switchtab"]):not([actiontype="extension"]) > #urlbar-input-container > #urlbar-label-box,
 #urlbar:not([actiontype="switchtab"]) > #urlbar-input-container > #urlbar-label-box > #urlbar-label-switchtab,
-#urlbar:not([actiontype="extension"]) > #urlbar-input-container > #urlbar-label-box > #urlbar-label-extension,
-#urlbar[searchmode][breakout-extend] > #urlbar-input-container > #urlbar-label-box,
-#urlbar:not([searchmode]) > #urlbar-input-container > #urlbar-label-box > #urlbar-label-search-mode,
-#urlbar[breakout-extend] > #urlbar-input-container > #urlbar-label-box > #urlbar-label-search-mode {
+#urlbar:not([actiontype="extension"]) > #urlbar-input-container > #urlbar-label-box > #urlbar-label-extension {
   display: none;
 }
 
@@ -865,13 +860,6 @@ menupopup[emptyplacesresult="true"] > .hide-if-empty-places-result {
   transform: rotate(180deg);
 }
 
-/* Pocket */
-:root[pocketdisabled=true] #context-pocket,
-:root[pocketdisabled=true] #context-savelinktopocket,
-:root[pocketdisabled=true] #appMenu-library-pocket-button {
-  display: none;
-}
-
 /*  Full Screen UI */
 
 #fullscr-toggler {
@@ -1041,7 +1029,7 @@ toolbarpaletteitem[place="palette"] > #downloads-button[indicator] > .toolbarbut
 
 /* Give this menupopup an arrow panel styling */
 #BMB_bookmarksPopup {
-  appearance: none;
+  -moz-appearance: none;
   background: transparent;
   border: none;
   /* The popup inherits -moz-image-region from the button, must reset it */
@@ -1327,7 +1315,7 @@ toolbarpaletteitem > toolbaritem {
 }
 
 .dragfeedback-tab {
-  appearance: none;
+  -moz-appearance: none;
   opacity: 0.65;
   -moz-window-shadow: none;
 }
@@ -1403,4 +1391,267 @@ iframe.devtools-highlighter-renderer {
 /* Highlighter for web content */
 .browserStack > iframe.devtools-highlighter-renderer {
   -moz-box-flex: 1;
+}
+
+/* Custom Dot Browser styles */
+::root {
+  --toolbarbutton-border-radius: 32px;
+  --urlbar-height: 32px !important;
+  --arrowpanel-border-color: transparent !important;
+  --animation-easing-function: cubic-bezier(.1,.9,.2,1);
+}
+
+.tab-stack {
+  margin-top: 2px;
+}
+
+.tab-line[multiselected], .tab-line[selected="true"] {
+  background-color: var(--lwt-accent-color) !important;
+}
+
+.tab-line {
+  height: 0px !important;
+}
+
+.tab-background {
+  border-radius: 6px 6px 0 0;
+}
+
+.tabbrowser-tab::after {
+  display: none !important;
+}
+
+.titlebar-spacer[type="pre-tabs"], .titlebar-spacer[type="post-tabs"] {
+  width: 12px !important;
+  border-inline-end: none !important;
+}
+
+#nav-bar:not([tabs-hidden="true"]) {
+  box-shadow: none !important;
+}
+
+.close-icon {
+  border-radius: 12px;
+}
+
+.tab-label {
+  font-size: 12px;
+}
+
+.tab-loading-burst {
+  border-radius: 6px 6px 0 0;
+}
+
+#urlbar-background:not([focused="true"]), #searchbar {
+  border: 1px solid transparent !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0) !important;
+}
+
+#searchbar:focus-within:-moz-lwtheme {
+  background-color: var(--lwt-toolbar-field-background-color, hsla(0,0%,100%,.8)) !important;
+}
+
+#identity-box {
+  padding-inline: 8px !important;
+}
+
+#urlbar {
+  transition: 0.3s height;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+  background-color: var(--urlbar-focused-background);
+}
+
+#urlbar[focused="true"] {
+  border-radius: 6px;
+  box-shadow: 0 6.4px 14.4px 0 rgba(0, 0, 0, 0.07),0 1.2px 3.6px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+#urlbar[focused="true"] > #urlbar-input-container > #identity-box {
+  border-radius: 4px !important;
+}
+
+#urlbar[focused="true"] > #urlbar-input-container > #page-action-buttons > .urlbar-icon {
+  border-radius: 3px !important;
+}
+
+#pageActionSeparator {
+  margin-inline: 4px !important;
+}
+
+#urlbar[focused="true"] > #urlbar-input-container > #page-action-buttons > #pageActionSeparator {
+  border-color: transparent !important;
+}
+
+#tracking-protection-icon-container {
+  display: none; /* TODO: Move shield icon outside of addressbar */
+}
+
+.urlbarView-row-inner {
+  border-radius: 4px !important;
+}
+
+#urlbar .searchbar-engine-one-off-item {
+  border-radius: 4px;
+}
+
+.search-one-offs {
+  border-color: var(--urlbar-separator-color) !important;
+}
+
+#tabs-newtab-button > .toolbarbutton-icon {
+  margin-top: 2px;
+}
+
+.tab-content {
+  padding: 0 10px !important;
+}
+
+.customizationmode-button {
+  color: var(--toolbar-color) !important;
+  background-color: var(--lwt-toolbar-field-background-color, white);
+  padding: 6px 20px;
+  border-radius: 100px;
+  font-size: 13.3333px;
+  font-stretch: 100%;
+  font-weight: 400;
+  -moz-appearance: none;
+}
+
+.customizationmode-button:hover {
+  filter: brightness(120%);
+}
+
+.customizationmode-button:active {
+  filter: brightness(135%);
+}
+
+.customizationmode-button > .button-box > .button-menu-dropmarker {
+  margin-left: 8px;
+}
+
+.checkbox-check {
+  margin: 4px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--lwt-toolbar-field-background-color, white);
+  border-radius: 2px;
+  list-style-image: none;
+  color: var(--toolbar-color);
+  fill: currentColor;
+  -moz-context-properties: fill, fill-opacity;
+  -moz-appearance: none;
+  padding: 2px;
+}
+
+.checkbox-check:hover {
+  filter: brightness(120%);
+}
+
+.checkbox-check:active {
+  filter: brightness(135%);
+}
+
+.checkbox-check[checked="true"] {
+  list-style-image: url(chrome://browser/skin/checked.svg);
+}
+
+.checkbox-check[disabled="true"] {
+  opacity: 0.4;
+}
+
+#identity-icon-label {
+  padding-inline-start: 8px !important;
+}
+
+panelview {
+  background: var(--arrowpanel-background) !important;
+  border-radius: 6px !important;
+}
+
+#appMenu-mainView > .panel-subview-body > toolbaritem,
+#appMenu-mainView > .panel-subview-body > toolbaritem > toolbarbutton,
+#appMenu-mainView > .panel-subview-body > toolbarbutton {
+  height: 32px;
+}
+
+panelview .toolbarbutton-1, .subviewbutton, .widget-overflow-list .toolbarbutton-1 {
+  min-height: 32px !important;
+}
+
+#appMenu-mainView > .panel-subview-body,
+.panel-subview-body {
+  padding: 4px 0 !important;
+}
+
+.panel-header {
+  border-color: var(--chrome-content-separator-color) !important;
+}
+
+#appMenu-mainView > .panel-subview-body > toolbarseparator,
+#widget-overflow-mainView > .panel-subview-body > toolbarseparator, .PanelUI-subView toolbarseparator, .cui-widget-panelview menuseparator, .cui-widget-panel toolbarseparator {
+  margin: 2px 0 !important;
+  border-color: var(--chrome-content-separator-color) !important;
+}
+
+#appMenu-mainView > .panel-subview-body > toolbaritem > toolbarbutton > label, 
+#appMenu-mainView > .panel-subview-body > toolbarbutton > label {
+  padding-inline-start: 12px;
+  font-size: 12px;
+}
+
+.subviewbutton[shortcut]::after {
+  opacity: 0.7;
+  font-size: 12px;
+}
+
+.subviewbutton > image {
+  width: 16px;
+  height: 16px;
+}
+
+#appMenu-zoomReset-button {
+  height: 0 !important;
+  min-height: 22px !important;
+}
+
+#appMenu-zoomReset-button > .toolbarbutton-text {
+  padding-inline: 0 !important;
+}
+
+.panel-header > .subviewbutton-back {
+  border-radius: 4px;
+}
+
+panelmultiview .toolbaritem-combined-buttons > label {
+  margin-left: 0px !important;
+  font-size: 12px;
+}
+
+panelview:not([mainview]) .toolbarbutton-text, .cui-widget-panel .toolbarbutton-text, #overflowMenu-customize-button > .toolbarbutton-text,
+.subview-subheader {
+  font-size: 12px;
+}
+
+.subviewbutton > .toolbarbutton-text {
+  padding-inline-start: 8px !important;
+}
+
+menupopup {
+  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132),0 .3px .9px 0 rgba(0,0,0,.108);
+  -moz-appearance: none;
+  border: none;
+  padding: 4px;
+  background-color: var(--arrowpanel-background);
+}
+
+.menu-text {
+  font-size: 12px;
+}
+
+.tabbrowser-tab[label="New Tab"] .tab-icon-image[src="chrome://branding/content/icon32.png"],
+.tabbrowser-tab[label="Welcome to Dot Browser"] .tab-icon-image[src="chrome://branding/content/icon32.png"],
+.tabbrowser-tab[label="Important News"] .tab-icon-image[src="chrome://branding/content/icon32.png"] {
+  display: none !important;
 }

@@ -15,8 +15,7 @@ tree {
   margin: 0 4px;
   background-color: -moz-Field;
   color: -moz-FieldText;
-  appearance: auto;
-  -moz-default-appearance: listbox;
+  -moz-appearance: listbox;
 }
 
 /* ::::: tree rows ::::: */
@@ -115,8 +114,7 @@ treechildren::-moz-tree-drop-feedback {
 
 treecol,
 treecolpicker {
-  appearance: auto;
-  -moz-default-appearance: treeheadercell;
+  -moz-appearance: treeheadercell;
   -moz-box-align: center;
   -moz-box-pack: center;
   color: -moz-ColHeaderText;
@@ -137,7 +135,7 @@ treecolpicker:hover {
 }
 
 treecol[hideheader="true"] {
-  appearance: none;
+  -moz-appearance: none;
 }
 
 /* ::::: column drag and drop styles ::::: */
@@ -207,7 +205,7 @@ html|input.tree-input {
   position: absolute;
   top: 0;
   left: 0;
-  appearance: none;
+  -moz-appearance: none;
   -moz-box-flex: 1;
   border: 1px solid Highlight;
   margin: 0;

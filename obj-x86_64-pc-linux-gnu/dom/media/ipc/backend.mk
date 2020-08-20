@@ -1,0 +1,22 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT EDIT.
+
+DEFINES += -DNDEBUG=1 -DTRIMMED=1 -DOS_POSIX=1 -DOS_LINUX=1
+LOCAL_INCLUDES += -I$(topsrcdir)/xpcom/base
+LOCAL_INCLUDES += -I$(topobjdir)/ipc/ipdl/_ipdlheaders
+LOCAL_INCLUDES += -I$(topsrcdir)/ipc/chromium/src
+LOCAL_INCLUDES += -I$(topsrcdir)/ipc/glue
+CPPSRCS += $(srcdir)/GpuDecoderModule.cpp
+CPPSRCS += $(srcdir)/RDDChild.cpp
+CPPSRCS += $(srcdir)/RDDParent.cpp
+CPPSRCS += $(srcdir)/RDDProcessHost.cpp
+CPPSRCS += $(srcdir)/RDDProcessImpl.cpp
+CPPSRCS += $(srcdir)/RDDProcessManager.cpp
+CPPSRCS += $(srcdir)/RemoteAudioDecoder.cpp
+CPPSRCS += $(srcdir)/RemoteDecoderChild.cpp
+CPPSRCS += $(srcdir)/RemoteDecoderManagerChild.cpp
+CPPSRCS += $(srcdir)/RemoteDecoderManagerParent.cpp
+CPPSRCS += $(srcdir)/RemoteDecoderModule.cpp
+CPPSRCS += $(srcdir)/RemoteDecoderParent.cpp
+CPPSRCS += $(srcdir)/RemoteMediaDataDecoder.cpp
+CPPSRCS += $(srcdir)/RemoteVideoDecoder.cpp
+COMPUTED_LDFLAGS += -Wl,-rpath-link,/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu/dist/bin -Wl,-rpath-link,/usr/local/lib

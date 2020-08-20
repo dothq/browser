@@ -5,8 +5,7 @@
 %include ../shared/compacttheme.inc.css
 
 #TabsToolbar:-moz-lwtheme-darktext {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-vibrant-titlebar-light;
+  -moz-appearance: -moz-mac-vibrant-titlebar-light;
   -moz-font-smoothing-background-color: -moz-mac-vibrant-titlebar-light;
 }
 

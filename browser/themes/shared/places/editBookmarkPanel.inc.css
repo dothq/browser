@@ -87,7 +87,7 @@
 }
 
 #editBookmarkPanelRecommendationCta {
-  appearance: none;
+  -moz-appearance: none;
   background: transparent;
   border: none;
   color: inherit;

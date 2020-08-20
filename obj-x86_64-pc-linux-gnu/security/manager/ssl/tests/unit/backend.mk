@@ -1,0 +1,4 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT EDIT.
+
+DEFINES += -DNDEBUG=1 -DTRIMMED=1
+DIRS := tlsserver pkcs11testmodule bad_certs ocsp_certs test_baseline_requirements test_cert_eku test_cert_embedded_null test_cert_keyUsage test_cert_sha1 test_cert_signatures test_cert_trust test_cert_utf8 test_cert_version test_certDB_import test_content_signing test_ct test_delegated_credentials test_ev_certs test_intermediate_basic_usage_constraints test_intermediate_preloads test_keysize test_keysize_ev test_missing_intermediate test_name_constraints test_ocsp_url test_onecrl test_sanctions test_signed_apps test_startcom_wosign test_validity

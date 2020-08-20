@@ -11,8 +11,7 @@
 /* ::::: tabpanels ::::: */
 
 tabpanels {
-  appearance: auto;
-  -moz-default-appearance: tabpanels;
+  -moz-appearance: tabpanels;
   padding: 8px;
   color: -moz-DialogText;
 }
@@ -20,8 +19,7 @@ tabpanels {
 /* ::::: tab ::::: */
 
 tab {
-  appearance: auto;
-  -moz-default-appearance: tab;
+  -moz-appearance: tab;
   margin-top: 2px;
   padding: 1px 4px 2px;
   color: -moz-DialogText;

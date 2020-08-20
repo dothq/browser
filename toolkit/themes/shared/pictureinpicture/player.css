@@ -44,7 +44,7 @@ browser {
 }
 
 #controls button {
-  appearance: none;
+  -moz-appearance: none;
   border: 0;
 }
 

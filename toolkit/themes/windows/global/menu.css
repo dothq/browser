@@ -18,8 +18,7 @@ menubar {
 menu,
 menuitem,
 menucaption {
-  appearance: auto;
-  -moz-default-appearance: menuitem;
+  -moz-appearance: menuitem;
   -moz-box-align: center;
   list-style-image: none;
   -moz-image-region: auto;
@@ -60,8 +59,7 @@ menucaption {
 
 .menu-text {
   padding-inline-start: 1.45em !important;
-  appearance: auto;
-  -moz-default-appearance: menuitemtext;
+  -moz-appearance: menuitemtext;
 }
 
 .menu-text,
@@ -86,16 +84,14 @@ menucaption {
 
 .menu-iconic > .menu-iconic-left,
 .menuitem-iconic > .menu-iconic-left {
-  appearance: auto;
-  -moz-default-appearance: menuimage;
+  -moz-appearance: menuimage;
   padding-top: 2px;
 }
 
 /* ..... menu arrow box ..... */
 
 .menu-right {
-  appearance: auto;
-  -moz-default-appearance: menuarrow;
+  -moz-appearance: menuarrow;
   margin-inline-end: -2px;
   list-style-image: none;
   min-width: 1.28em;
@@ -119,7 +115,7 @@ menubar > menu[_moz-menuactive="true"]:not([disabled="true"]) {
 }
 
 menubar > menu:-moz-lwtheme {
-  appearance: none;
+  -moz-appearance: none;
   border-color: transparent;
 }
 
@@ -135,8 +131,7 @@ menubar > menu:-moz-lwtheme[_moz-menuactive="true"]:not([disabled="true"]) {
 
 @media (-moz-windows-default-theme) {
   menubar > menu:-moz-lwtheme {
-    appearance: auto;
-    -moz-default-appearance: menuitem;
+    -moz-appearance: menuitem;
   }
 
   menubar > menu:-moz-lwtheme[_moz-menuactive="true"]:not([disabled="true"]) {
@@ -180,7 +175,7 @@ menulist > menupopup {
 menulist > menupopup > menuitem,
 menulist > menupopup > menucaption,
 menulist > menupopup > menu {
-  appearance: none !important;
+  -moz-appearance: none !important;
   border: 1px solid transparent;
   padding-inline: 5px;
   max-width: none;
@@ -229,23 +224,19 @@ menulist > menupopup > :-moz-any(menuitem, menucaption):not(.menuitem-iconic) > 
 
 menuitem[type="checkbox"],
 menuitem[checked="true"] {
-  appearance: auto;
-  -moz-default-appearance: checkmenuitem;
+  -moz-appearance: checkmenuitem;
 }
 menuitem[type="checkbox"] > .menu-iconic-left,
 menuitem[checked="true"] > .menu-iconic-left {
-  appearance: auto;
-  -moz-default-appearance: menucheckbox;
+  -moz-appearance: menucheckbox;
   padding-top: 0;
 }
 
 menuitem[type="radio"] {
-  appearance: auto;
-  -moz-default-appearance: radiomenuitem;
+  -moz-appearance: radiomenuitem;
 }
 menuitem[type="radio"] > .menu-iconic-left {
-  appearance: auto;
-  -moz-default-appearance: menuradio;
+  -moz-appearance: menuradio;
   padding-top: 0;
 }
 
@@ -260,8 +251,7 @@ menuitem[type="radio"] > .menu-iconic-left > .menu-iconic-icon {
 /* ::::: menuseparator ::::: */
 
 menuseparator {
-  appearance: auto;
-  -moz-default-appearance: menuseparator;
+  -moz-appearance: menuseparator;
   padding: 3px 1px 4px;
   border-top: 1px solid ThreeDShadow;
   border-bottom: 1px solid ThreeDHighlight;

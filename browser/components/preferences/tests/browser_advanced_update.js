@@ -16,7 +16,7 @@ const mockUpdateManager = {
 
   _originalClassId: "",
 
-  QueryInterface: ChromeUtils.generateQI(["nsIUpdateManager"]),
+  QueryInterface: ChromeUtils.generateQI([Ci.nsIUpdateManager]),
 
   createInstance(outer, iiD) {
     if (outer) {

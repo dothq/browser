@@ -40,12 +40,16 @@ const PanelUI = {
     return {
       mainView: "appMenu-mainView",
       multiView: "appMenu-multiView",
+      helpView: "PanelUI-helpView",
+      libraryView: "appMenu-libraryView",
+      libraryRecentHighlights: "appMenu-library-recentHighlights",
       menuButton: "PanelUI-menu-button",
       panel: "appMenu-popup",
       addonNotificationContainer: "appMenu-addon-banners",
       overflowFixedList: "widget-overflow-fixed-list",
       overflowPanel: "widget-overflow",
       navbar: "nav-bar",
+      whatsNewPanel: "PanelUI-whatsNew",
     };
   },
 
@@ -156,10 +160,7 @@ const PanelUI = {
       this.panel.addEventListener(event, this);
     }
 
-    PanelMultiView.getViewNode(document, "PanelUI-helpView").addEventListener(
-      "ViewShowing",
-      this._onHelpViewShow
-    );
+    this.helpView.addEventListener("ViewShowing", this._onHelpViewShow);
     this._eventListenersAdded = true;
   },
 
@@ -167,10 +168,7 @@ const PanelUI = {
     for (let event of this.kEvents) {
       this.panel.removeEventListener(event, this);
     }
-    PanelMultiView.getViewNode(
-      document,
-      "PanelUI-helpView"
-    ).removeEventListener("ViewShowing", this._onHelpViewShow);
+    this.helpView.removeEventListener("ViewShowing", this._onHelpViewShow);
     this._eventListenersAdded = false;
   },
 
@@ -194,12 +192,8 @@ const PanelUI = {
     this.menuButton.removeEventListener("mousedown", this);
     this.menuButton.removeEventListener("keypress", this);
     CustomizableUI.removeListener(this);
-    if (this.libraryView) {
-      this.libraryView.removeEventListener("ViewShowing", this);
-    }
-    if (this.whatsNewPanel) {
-      this.whatsNewPanel.removeEventListener("ViewShowing", this);
-    }
+    this.libraryView.removeEventListener("ViewShowing", this);
+    this.whatsNewPanel.removeEventListener("ViewShowing", this);
   },
 
   /**
@@ -439,8 +433,7 @@ const PanelUI = {
     }
 
     this._ensureEventListenersAdded();
-
-    let viewNode = PanelMultiView.getViewNode(document, aViewId);
+    let viewNode = document.getElementById(aViewId);
     if (!viewNode) {
       Cu.reportError("Could not show panel subview with id: " + aViewId);
       return;
@@ -455,7 +448,6 @@ const PanelUI = {
 
     this.ensureLibraryInitialized(viewNode);
     this.ensureWhatsNewInitialized(viewNode);
-    this.ensurePanicViewInitialized(viewNode);
 
     let container = aAnchor.closest("panelmultiview");
     if (container) {
@@ -488,9 +480,8 @@ const PanelUI = {
       multiView.setAttribute("id", "customizationui-widget-multiview");
       multiView.setAttribute("viewCacheId", "appMenu-viewCache");
       multiView.setAttribute("mainViewId", viewNode.id);
-      multiView.appendChild(viewNode);
       tempPanel.appendChild(multiView);
-      viewNode.classList.add("cui-widget-panelview", "PanelUI-subView");
+      viewNode.classList.add("cui-widget-panelview");
 
       let viewShown = false;
       let panelRemover = () => {
@@ -538,12 +529,8 @@ const PanelUI = {
    * @param {panelview} viewNode The library view.
    */
   ensureLibraryInitialized(viewNode) {
-    if (viewNode.id != "appMenu-libraryView" || viewNode._initialized) {
+    if (viewNode != this.libraryView || viewNode._initialized) {
       return;
-    }
-
-    if (!this.libraryView) {
-      this.libraryView = viewNode;
     }
 
     viewNode._initialized = true;
@@ -563,12 +550,6 @@ const PanelUI = {
     // we keep the space currently reserved for the items, but we hide them.
     if (this._loadingRecentHighlights || !this.libraryRecentHighlightsEnabled) {
       return;
-    }
-
-    if (!this.libraryRecentHighlights) {
-      this.libraryRecentHighlights = document.getElementById(
-        "appMenu-library-recentHighlights"
-      );
     }
 
     // Make the elements invisible synchronously, before the view is shown.
@@ -685,34 +666,12 @@ const PanelUI = {
    * @param {panelview} panelView The What's New panelview.
    */
   ensureWhatsNewInitialized(panelView) {
-    if (panelView.id != "PanelUI-whatsNew" || panelView._initialized) {
+    if (panelView != this.whatsNewPanel || panelView._initialized) {
       return;
-    }
-
-    if (!this.whatsNewPanel) {
-      this.whatsNewPanel = panelView;
     }
 
     panelView._initialized = true;
     panelView.addEventListener("ViewShowing", this);
-  },
-
-  /**
-   * Adds FTL before appending the panic view markup to the main DOM.
-   *
-   * @param {panelview} panelView The Panic View panelview.
-   */
-  ensurePanicViewInitialized(panelView) {
-    if (panelView.id != "PanelUI-panicView" || panelView._initialized) {
-      return;
-    }
-
-    if (!this.panic) {
-      this.panic = panelView;
-    }
-
-    MozXULElement.insertFTLIfNeeded("browser/panicButton.ftl");
-    panelView._initialized = true;
   },
 
   /**

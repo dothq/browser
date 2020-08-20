@@ -76,23 +76,7 @@ const PREF_PDFJS_ISDEFAULT_CACHE_STATE = "pdfjs.enabledCache.state";
  * Detailed documentation of these options is in dom/docs/Fission.rst,
  * available at https://firefox-source-docs.mozilla.org/dom/Fission.html#jsprocessactor
  */
-let JSPROCESSACTORS = {
-  // Miscellaneous stuff that needs to be initialized per process.
-  BrowserProcess: {
-    child: {
-      moduleURI: "resource:///actors/BrowserProcessChild.jsm",
-      observers: [
-        // WebRTC related notifications. They are here to avoid loading WebRTC
-        // components when not needed.
-        "getUserMedia:request",
-        "recording-device-stopped",
-        "PeerConnection:request",
-        "recording-device-events",
-        "recording-window-ended",
-      ],
-    },
-  },
-};
+let JSPROCESSACTORS = {};
 
 /**
  * Fission-compatible JSWindowActor implementations.
@@ -112,8 +96,7 @@ let JSWINDOWACTORS = {
         AboutLoginsDeleteLogin: { wantUntrusted: true },
         AboutLoginsDismissBreachAlert: { wantUntrusted: true },
         AboutLoginsHideFooter: { wantUntrusted: true },
-        AboutLoginsImportFromBrowser: { wantUntrusted: true },
-        AboutLoginsImportFromFile: { wantUntrusted: true },
+        AboutLoginsImport: { wantUntrusted: true },
         AboutLoginsInit: { wantUntrusted: true },
         AboutLoginsGetHelp: { wantUntrusted: true },
         AboutLoginsOpenMobileAndroid: { wantUntrusted: true },
@@ -158,6 +141,8 @@ let JSWINDOWACTORS = {
     matches: ["about:home", "about:welcome", "about:newtab*"],
     remoteTypes: ["privilegedabout"],
   },
+
+
 
   AboutPlugins: {
     parent: {
@@ -247,6 +232,25 @@ let JSWINDOWACTORS = {
       },
     },
     matches: ["about:welcome"],
+
+    // See Bug 1618306
+    // Remove this preference check when we turn on separate about:welcome for all users.
+    enablePreference: "browser.aboutwelcome.enabled",
+  },
+
+  AboutTest: {
+    parent: {
+      moduleURI: "resource:///actors/AboutTestParent.jsm",
+    },
+    child: {
+      moduleURI: "resource:///actors/AboutTestChild.jsm",
+      events: {
+        // This is added so the actor instantiates immediately and makes
+        // methods available to the page js on load.
+        DOMWindowCreated: {},
+      },
+    },
+    matches: ["about:test"],
 
     // See Bug 1618306
     // Remove this preference check when we turn on separate about:welcome for all users.
@@ -369,19 +373,6 @@ let JSWINDOWACTORS = {
     allFrames: true,
   },
 
-  EncryptedMedia: {
-    parent: {
-      moduleURI: "resource:///actors/EncryptedMediaParent.jsm",
-    },
-
-    child: {
-      moduleURI: "resource:///actors/EncryptedMediaChild.jsm",
-      observers: ["mediakeys-request"],
-    },
-
-    allFrames: true,
-  },
-
   FormValidation: {
     parent: {
       moduleURI: "resource:///actors/FormValidationParent.jsm",
@@ -410,6 +401,7 @@ let JSWINDOWACTORS = {
       "about:home",
       "about:newtab",
       "about:welcome",
+      "about:preferences",
       "chrome://browser/content/syncedtabs/sidebar.xhtml",
       "chrome://browser/content/places/historySidebar.xhtml",
       "chrome://browser/content/places/bookmarksSidebar.xhtml",
@@ -469,7 +461,7 @@ let JSWINDOWACTORS = {
 
     // Only matching web pages, as opposed to internal about:, chrome: or
     // resource: pages. See https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Match_patterns
-    matches: ["*://*/*", "file:///*"],
+    matches: ["*://*/*"],
     messageManagerGroups: ["browsers"],
     allFrames: true,
   },
@@ -600,6 +592,16 @@ let JSWINDOWACTORS = {
   },
 };
 
+let LEGACY_ACTORS = {
+  URIFixup: {
+    child: {
+      module: "resource:///actors/URIFixupChild.jsm",
+      group: "browsers",
+      observers: ["keyword-uri-fixup"],
+    },
+  },
+};
+
 (function earlyBlankFirstPaint() {
   if (
     AppConstants.platform == "macosx" ||
@@ -710,7 +712,6 @@ XPCOMUtils.defineLazyModuleGetters(this, {
     "resource://gre/modules/ContextualIdentityService.jsm",
   Corroborate: "resource://gre/modules/Corroborate.jsm",
   Discovery: "resource:///modules/Discovery.jsm",
-  DoHController: "resource:///modules/DoHController.jsm",
   ExtensionsUI: "resource:///modules/ExtensionsUI.jsm",
   FirefoxMonitor: "resource:///modules/FirefoxMonitor.jsm",
   FxAccounts: "resource://gre/modules/FxAccounts.jsm",
@@ -817,6 +818,19 @@ const listeners = {
     "plugin-crashed": ["PluginManager"],
   },
 
+  ppmm: {
+    // PLEASE KEEP THIS LIST IN SYNC WITH THE LISTENERS ADDED IN ContentPrefServiceParent.init
+    "ContentPrefs:FunctionCall": ["ContentPrefServiceParent"],
+    "ContentPrefs:AddObserverForName": ["ContentPrefServiceParent"],
+    "ContentPrefs:RemoveObserverForName": ["ContentPrefServiceParent"],
+    // PLEASE KEEP THIS LIST IN SYNC WITH THE LISTENERS ADDED IN ContentPrefServiceParent.init
+
+    // PLEASE KEEP THIS LIST IN SYNC WITH THE LISTENERS ADDED IN AsyncPrefs.init
+    "AsyncPrefs:SetPref": ["AsyncPrefs"],
+    "AsyncPrefs:ResetPref": ["AsyncPrefs"],
+    // PLEASE KEEP THIS LIST IN SYNC WITH THE LISTENERS ADDED IN AsyncPrefs.init
+  },
+
   observe(subject, topic, data) {
     for (let module of this.observers[topic]) {
       try {
@@ -827,9 +841,26 @@ const listeners = {
     }
   },
 
+  receiveMessage(modules, data) {
+    let val;
+    for (let module of modules[data.name]) {
+      try {
+        val = global[module].receiveMessage(data) || val;
+      } catch (e) {
+        Cu.reportError(e);
+      }
+    }
+    return val;
+  },
+
   init() {
     for (let observer of Object.keys(this.observers)) {
       Services.obs.addObserver(this, observer);
+    }
+
+    let receiveMessagePPMM = this.receiveMessage.bind(this, this.ppmm);
+    for (let message of Object.keys(this.ppmm)) {
+      Services.ppmm.addMessageListener(message, receiveMessagePPMM);
     }
   },
 };
@@ -856,9 +887,9 @@ const OBSERVE_LASTWINDOW_CLOSE_TOPICS = AppConstants.platform != "macosx";
 function BrowserGlue() {
   XPCOMUtils.defineLazyServiceGetter(
     this,
-    "_userIdleService",
-    "@mozilla.org/widget/useridleservice;1",
-    "nsIUserIdleService"
+    "_idleService",
+    "@mozilla.org/widget/idleservice;1",
+    "nsIIdleService"
   );
 
   XPCOMUtils.defineLazyGetter(this, "_distributionCustomizer", function() {
@@ -1168,6 +1199,7 @@ BrowserGlue.prototype = {
 
     ActorManagerParent.addJSProcessActors(JSPROCESSACTORS);
     ActorManagerParent.addJSWindowActors(JSWINDOWACTORS);
+    ActorManagerParent.addLegacyActors(LEGACY_ACTORS);
     ActorManagerParent.flush();
 
     this._flashHangCount = 0;
@@ -1207,14 +1239,11 @@ BrowserGlue.prototype = {
     os.removeObserver(this, "weave:engine:clients:display-uris");
     os.removeObserver(this, "session-save");
     if (this._bookmarksBackupIdleTime) {
-      this._userIdleService.removeIdleObserver(
-        this,
-        this._bookmarksBackupIdleTime
-      );
+      this._idleService.removeIdleObserver(this, this._bookmarksBackupIdleTime);
       delete this._bookmarksBackupIdleTime;
     }
     if (this._lateTasksIdleObserver) {
-      this._userIdleService.removeIdleObserver(
+      this._idleService.removeIdleObserver(
         this._lateTasksIdleObserver,
         LATE_TASKS_IDLE_TIME_SEC
       );
@@ -1419,14 +1448,6 @@ BrowserGlue.prototype = {
     averageTime = totalTime / samples;
 
     Services.telemetry.scalarSet("browser.startup.average_time", averageTime);
-    Services.telemetry.scalarSet(
-      "browser.startup.slow_startup_notified",
-      false
-    );
-    Services.telemetry.scalarSet(
-      "browser.startup.too_new_for_notification",
-      false
-    );
 
     if (
       samples >= Services.prefs.getIntPref("browser.slowStartup.maxSamples")
@@ -2016,10 +2037,7 @@ BrowserGlue.prototype = {
     }
 
     if (this._bookmarksBackupIdleTime) {
-      this._userIdleService.removeIdleObserver(
-        this,
-        this._bookmarksBackupIdleTime
-      );
+      this._idleService.removeIdleObserver(this, this._bookmarksBackupIdleTime);
       delete this._bookmarksBackupIdleTime;
     }
 
@@ -2088,32 +2106,6 @@ BrowserGlue.prototype = {
 
     Services.prefs.addObserver(PREF_ENABLED, _checkHTTPSOnlyPref);
     _checkHTTPSOnlyPref();
-
-    const PREF_PBM_WAS_ENABLED =
-      "dom.security.https_only_mode_ever_enabled_pbm";
-    const PREF_PBM_ENABLED = "dom.security.https_only_mode_pbm";
-
-    const _checkHTTPSOnlyPBMPref = async () => {
-      const enabledPBM = Services.prefs.getBoolPref(PREF_PBM_ENABLED, false);
-      const was_enabledPBM = Services.prefs.getBoolPref(
-        PREF_PBM_WAS_ENABLED,
-        false
-      );
-      let valuePBM = 0;
-      if (enabledPBM) {
-        valuePBM = 1;
-        Services.prefs.setBoolPref(PREF_PBM_WAS_ENABLED, true);
-      } else if (was_enabledPBM) {
-        valuePBM = 2;
-      }
-      Services.telemetry.scalarSet(
-        "security.https_only_mode_enabled_pbm",
-        valuePBM
-      );
-    };
-
-    Services.prefs.addObserver(PREF_PBM_ENABLED, _checkHTTPSOnlyPBMPref);
-    _checkHTTPSOnlyPBMPref();
   },
 
   _monitorPioneerPref() {
@@ -2273,10 +2265,10 @@ BrowserGlue.prototype = {
           LATE_TASKS_IDLE_TIME_SEC
         );
         delete this._lateTasksIdleObserver;
-        this._scheduleBestEffortUserIdleTasks();
+        this._scheduleArbitrarilyLateIdleTasks();
       }
     };
-    this._userIdleService.addIdleObserver(
+    this._idleService.addIdleObserver(
       this._lateTasksIdleObserver,
       LATE_TASKS_IDLE_TIME_SEC
     );
@@ -2294,7 +2286,6 @@ BrowserGlue.prototype = {
       this._showNewInstallModal();
     }
 
-    DoHController.init();
     FirefoxMonitor.init();
   },
 
@@ -2310,9 +2301,8 @@ BrowserGlue.prototype = {
    * (from _schedulePerWindowIdleTasks in browser.js).
    *
    * If you have something that can wait even further than the
-   * per-window initialization, and is okay with not being run in some
-   * sessions, please schedule them using
-   * _scheduleBestEffortUserIdleTasks.
+   * per-window initialization, please schedule them using
+   * _scheduleArbitrarilyLateIdleTasks.
    * Don't be fooled by thinking that the use of the timeout parameter
    * will delay your function: it will just ensure that it potentially
    * happens _earlier_ than expected (when the timeout limit has been reached),
@@ -2570,19 +2560,17 @@ BrowserGlue.prototype = {
   },
 
   /**
-   * Use this function as an entry point to schedule tasks that we hope
-   * to run once per session, at any arbitrary point in time, and which we
-   * are okay with sometimes not running at all.
-   *
+   * Use this function as an entry point to schedule tasks that need
+   * to run once per session, at any arbitrary point in time.
    * This function will be called from an idle observer. Check the value of
    * LATE_TASKS_IDLE_TIME_SEC to see the current value for this idle
    * observer.
    *
    * Note: this function may never be called if the user is never idle for the
-   * requisite time (LATE_TASKS_IDLE_TIME_SEC). Be certain before adding
-   * something here that it's okay that it never be run.
+   * full length of the period of time specified. But given a reasonably low
+   * value, this is unlikely.
    */
-  _scheduleBestEffortUserIdleTasks() {
+  _scheduleArbitrarilyLateIdleTasks() {
     const idleTasks = [
       () => {
         this._sendMediaTelemetry();
@@ -3021,10 +3009,7 @@ BrowserGlue.prototype = {
             }
           }
         }
-        this._userIdleService.addIdleObserver(
-          this,
-          this._bookmarksBackupIdleTime
-        );
+        this._idleService.addIdleObserver(this, this._bookmarksBackupIdleTime);
       }
 
       if (this._isNewProfile) {
@@ -4205,8 +4190,8 @@ BrowserGlue.prototype = {
   },
 
   QueryInterface: ChromeUtils.generateQI([
-    "nsIObserver",
-    "nsISupportsWeakReference",
+    Ci.nsIObserver,
+    Ci.nsISupportsWeakReference,
   ]),
 };
 
@@ -4488,7 +4473,7 @@ function ContentPermissionPrompt() {}
 ContentPermissionPrompt.prototype = {
   classID: Components.ID("{d8903bf6-68d5-4e97-bcd1-e4d3012f721a}"),
 
-  QueryInterface: ChromeUtils.generateQI(["nsIContentPermissionPrompt"]),
+  QueryInterface: ChromeUtils.generateQI([Ci.nsIContentPermissionPrompt]),
 
   /**
    * This implementation of nsIContentPermissionPrompt.prompt ensures
@@ -4909,8 +4894,8 @@ var JawsScreenReaderVersionCheck = {
   },
 
   QueryInterface: ChromeUtils.generateQI([
-    "nsIObserver",
-    "nsISupportsWeakReference",
+    Ci.nsIObserver,
+    Ci.nsISupportsWeakReference,
   ]),
 
   observe(subject, topic, data) {
@@ -5022,7 +5007,6 @@ var AboutHomeStartupCache = {
   // to create the cached document, and then to receive that document.
   CACHE_REQUEST_MESSAGE: "AboutHomeStartupCache:CacheRequest",
   CACHE_RESPONSE_MESSAGE: "AboutHomeStartupCache:CacheResponse",
-  CACHE_USAGE_RESULT_MESSAGE: "AboutHomeStartupCache:UsageResult",
 
   // When a "privileged about content process" is launched, this message is
   // sent to give it some nsIInputStream's for the about:home document they
@@ -5033,27 +5017,6 @@ var AboutHomeStartupCache = {
   // all about:newtab's, or the preloaded about:newtab. We use those
   // messages as a signal that it's likely time to refresh the cache.
   CACHE_DEBOUNCE_RATE_MS: 5000,
-
-  // The following values are as possible values for the
-  // browser.startup.abouthome_cache_result scalar. Keep these in sync with the
-  // scalar definition in Scalars.yaml. See setDeferredResult for more
-  // information.
-  CACHE_RESULT_SCALARS: {
-    UNSET: 0,
-    DOES_NOT_EXIST: 1,
-    CORRUPT_PAGE: 2,
-    CORRUPT_SCRIPT: 3,
-    INVALIDATED: 4,
-    LATE: 5,
-    VALID_AND_USED: 6,
-    DISABLED: 7,
-    NOT_LOADING_ABOUTHOME: 8,
-    PRELOADING_DISABLED: 9,
-  },
-
-  // This will be set to one of the values of CACHE_RESULT_SCALARS
-  // once it is determined which result best suits what occurred.
-  _cacheDeferredResultScalar: -1,
 
   // A reference to the nsICacheEntry to read from and write to.
   _cacheEntry: null,
@@ -5074,19 +5037,15 @@ var AboutHomeStartupCache = {
   _enabled: false,
   _initted: false,
   _hasWrittenThisSession: false,
-  _finalized: false,
 
   init() {
     if (this._initted) {
       throw new Error("AboutHomeStartupCache already initted.");
     }
 
-    this.setDeferredResult(this.CACHE_RESULT_SCALARS.UNSET);
-
     this._enabled = Services.prefs.getBoolPref(this.ENABLED_PREF, false);
 
     if (!this._enabled) {
-      this.recordResult(this.CACHE_RESULT_SCALARS.DISABLED);
       return;
     }
 
@@ -5106,13 +5065,11 @@ var AboutHomeStartupCache = {
 
     if (!willLoadAboutHome) {
       this.log.trace("Not configured to load about:home by default.");
-      this.recordResult(this.CACHE_RESULT_SCALARS.NOT_LOADING_ABOUTHOME);
       return;
     }
 
     if (!Services.prefs.getBoolPref(this.PRELOADED_NEWTAB_PREF, false)) {
       this.log.trace("Preloaded about:newtab disabled.");
-      this.recordResult(this.CACHE_RESULT_SCALARS.PRELOADING_DISABLED);
       return;
     }
 
@@ -5155,25 +5112,15 @@ var AboutHomeStartupCache = {
     this.log.trace("Initialized.");
   },
 
-  get initted() {
-    return this._initted;
-  },
-
   uninit() {
-    if (!this._enabled) {
+    if (!this._enabled || !this._initted) {
       return;
     }
 
-    try {
-      Services.obs.removeObserver(this, "ipc:content-created");
-      Services.obs.removeObserver(this, "process-type-set");
-      Services.obs.removeObserver(this, "ipc:content-shutdown");
-      Services.obs.removeObserver(this, "intl:app-locales-changed");
-    } catch (e) {
-      // If we failed to initialize and register for these observer
-      // notifications, then attempting to remove them will throw.
-      // It's fine to ignore that case on shutdown.
-    }
+    Services.obs.removeObserver(this, "ipc:content-created");
+    Services.obs.removeObserver(this, "process-type-set");
+    Services.obs.removeObserver(this, "ipc:content-shutdown");
+    Services.obs.removeObserver(this, "intl:app-locales-changed");
 
     if (this._cacheTask) {
       this._cacheTask.disarm();
@@ -5187,17 +5134,12 @@ var AboutHomeStartupCache = {
     this._hasWrittenThisSession = false;
     this._cacheEntryPromise = null;
     this._cacheEntryResolver = null;
-    this._cacheDeferredResultScalar = -1;
 
-    if (this.log) {
-      this.log.trace("Uninitialized.");
-      this.log.removeAppender(this._appender);
-      this.log = null;
-    }
-
+    this.log.trace("Uninitialized.");
+    this.log.removeAppender(this._appender);
+    this.log = null;
     this._appender = null;
     this._cacheDeferred = null;
-    this._finalized = false;
   },
 
   _aboutHomeURI: null,
@@ -5235,14 +5177,8 @@ var AboutHomeStartupCache = {
       this._cacheTask.arm();
     }
 
-    Services.telemetry.scalarSet(
-      "browser.startup.abouthome_cache_shutdownwrite",
-      this._cacheTask.isArmed
-    );
-
     if (this._cacheTask.isArmed) {
       this.log.trace("Finalizing cache task on shutdown");
-      this._finalized = true;
       await this._cacheTask.finalize();
     }
   },
@@ -5376,7 +5312,6 @@ var AboutHomeStartupCache = {
         this.log.debug("Cache meta data does not exist. Closing streams.");
         this.pagePipe.outputStream.close();
         this.scriptPipe.outputStream.close();
-        this.setDeferredResult(this.CACHE_RESULT_SCALARS.DOES_NOT_EXIST);
         return;
       }
 
@@ -5391,7 +5326,6 @@ var AboutHomeStartupCache = {
       this.clearCache();
       this.pagePipe.outputStream.close();
       this.scriptPipe.outputStream.close();
-      this.setDeferredResult(this.CACHE_RESULT_SCALARS.INVALIDATED);
       return;
     }
 
@@ -5403,7 +5337,6 @@ var AboutHomeStartupCache = {
       this.log.error("Failed to open main input stream for cache entry", e);
       this.pagePipe.outputStream.close();
       this.scriptPipe.outputStream.close();
-      this.setDeferredResult(this.CACHE_RESULT_SCALARS.CORRUPT_PAGE);
       return;
     }
 
@@ -5433,13 +5366,11 @@ var AboutHomeStartupCache = {
         // to dynamically generating the page.
         this.log.error("Script stream not available! Closing pipe.");
         this.scriptPipe.outputStream.close();
-        this.setDeferredResult(this.CACHE_RESULT_SCALARS.CORRUPT_SCRIPT);
       } else {
         throw e;
       }
     }
 
-    this.setDeferredResult(this.CACHE_RESULT_SCALARS.VALID_AND_USED);
     this.log.trace("Streams connected to pipes. Dropping references to pipes.");
     this._pagePipe = null;
     this._scriptPipe = null;
@@ -5452,10 +5383,8 @@ var AboutHomeStartupCache = {
    * @param aProcManager (ContentProcessMessageManager)
    *   The message manager for the newly created "privileged about
    *   content process".
-   * @param aProcessParent
-   *   The nsIDOMProcessParent for the tab.
    */
-  sendCacheInputStreams(aProcManager, aProcessParent) {
+  sendCacheInputStreams(aProcManager) {
     if (aProcManager.remoteType != E10SUtils.PRIVILEGEDABOUT_REMOTE_TYPE) {
       throw new Error(
         "Cannot send about:home cache to a non-privileged content process."
@@ -5465,8 +5394,7 @@ var AboutHomeStartupCache = {
     // can occur if the nsICacheEntry hasn't been retrieved yet.
     this.makePipes();
     this.log.info("Sending input streams down to content process.");
-    let actor = aProcessParent.getActor("BrowserProcess");
-    actor.sendAsyncMessage(this.SEND_STREAMS_MESSAGE, {
+    aProcManager.sendAsyncMessage(this.SEND_STREAMS_MESSAGE, {
       pageInputStream: this.pagePipe.inputStream,
       scriptInputStream: this.scriptPipe.inputStream,
     });
@@ -5619,18 +5547,15 @@ var AboutHomeStartupCache = {
    *   ipc:content-created.
    * @param procManager (ProcessMessageManager)
    *   The ProcessMessageManager for the created content process.
-   * @param processParent
-   *   The nsIDOMProcessParent for the tab.
    */
-  onContentProcessCreated(childID, procManager, processParent) {
+  onContentProcessCreated(childID, procManager) {
     if (procManager.remoteType == E10SUtils.PRIVILEGEDABOUT_REMOTE_TYPE) {
       this.log.trace(
         `A privileged about content process is launching with ID ${childID}.` +
           "Sending it the cache input streams."
       );
-      this.sendCacheInputStreams(procManager, processParent);
+      this.sendCacheInputStreams(procManager);
       procManager.addMessageListener(this.CACHE_RESPONSE_MESSAGE, this);
-      procManager.addMessageListener(this.CACHE_USAGE_RESULT_MESSAGE, this);
       this._procManager = procManager;
       this._procManagerID = childID;
     }
@@ -5651,10 +5576,6 @@ var AboutHomeStartupCache = {
         this.CACHE_RESPONSE_MESSAGE,
         this
       );
-      this._procManager.removeMessageListener(
-        this.CACHE_USAGE_RESULT_MESSAGE,
-        this
-      );
       this._procManager = null;
       this._procManagerID = null;
     }
@@ -5670,101 +5591,15 @@ var AboutHomeStartupCache = {
     if (!this._initted || !this._enabled) {
       return;
     }
-
-    if (this._finalized) {
-      this.log.trace("Ignoring preloaded newtab update after finalization.");
-      return;
-    }
-
     this.log.trace("Preloaded about:newtab was updated.");
 
     this._cacheTask.disarm();
     this._cacheTask.arm();
   },
 
-  /**
-   * Stores the CACHE_RESULT_SCALARS value that most accurately represents
-   * the current notion of how the cache has operated so far. It is stored
-   * temporarily like this because we need to hear from the privileged
-   * about content process to hear whether or not retrieving the cache
-   * actually worked on that end. The success state reported back from
-   * the privileged about content process will be compared against the
-   * deferred result scalar to compute what will be recorded to
-   * Telemetry.
-   *
-   * Note that this value will only be recorded if its value is GREATER
-   * than the currently recorded value. This is because it's possible for
-   * certain functions that record results to re-enter - but we want to record
-   * the _first_ condition that caused the cache to not be read from.
-   *
-   * @param result (Number)
-   *   One of the CACHE_RESULT_SCALARS values. If this value is less than
-   *   the currently recorded value, it is ignored.
-   */
-  setDeferredResult(result) {
-    if (this._cacheDeferredResultScalar < result) {
-      this._cacheDeferredResultScalar = result;
-    }
-  },
-
-  /**
-   * Records the final result of how the cache operated for the user
-   * during this session to Telemetry.
-   */
-  recordResult(result) {
-    // Note: this can be called very early on in the lifetime of
-    // AboutHomeStartupCache, so things like this.log might not exist yet.
-    Services.telemetry.scalarSet(
-      "browser.startup.abouthome_cache_result",
-      result
-    );
-  },
-
-  /**
-   * Called when the parent process receives a message from the privileged
-   * about content process saying whether or not reading from the cache
-   * was successful.
-   *
-   * @param success (boolean)
-   *   True if reading from the cache succeeded.
-   */
-  onUsageResult(success) {
-    this.log.trace(`Received usage result. Success = ${success}`);
-    if (success) {
-      if (
-        this._cacheDeferredResultScalar !=
-        this.CACHE_RESULT_SCALARS.VALID_AND_USED
-      ) {
-        this.log.error(
-          "Somehow got a success result despite having never " +
-            "successfully sent down the cache streams"
-        );
-        this.recordResult(this._cacheDeferredResultScalar);
-      } else {
-        this.recordResult(this.CACHE_RESULT_SCALARS.VALID_AND_USED);
-      }
-
-      return;
-    }
-
-    if (
-      this._cacheDeferredResultScalar ==
-      this.CACHE_RESULT_SCALARS.VALID_AND_USED
-    ) {
-      // We failed to read from the cache despite having successfully
-      // sent it down to the content process. We presume then that the
-      // streams just didn't provide any bytes in time.
-      this.recordResult(this.CACHE_RESULT_SCALARS.LATE);
-    } else {
-      // We failed to read the cache, but already knew why. We can
-      // now record that value.
-      this.recordResult(this._cacheDeferredResultScalar);
-    }
-  },
-
   QueryInterface: ChromeUtils.generateQI([
-    "nsICacheEntryOpenallback",
-    "nsIObserver",
+    Ci.nsICacheEntryOpenallback,
+    Ci.nsIObserver,
   ]),
 
   /** MessageListener **/
@@ -5778,22 +5613,15 @@ var AboutHomeStartupCache = {
       return;
     }
 
-    switch (message.name) {
-      case this.CACHE_RESPONSE_MESSAGE: {
-        this.log.trace("Parent received cache streams.");
-        if (!this._cacheDeferred) {
-          this.log.error("Parent doesn't have _cacheDeferred set up!");
-          return;
-        }
+    if (message.name == this.CACHE_RESPONSE_MESSAGE) {
+      this.log.trace("Parent received cache streams.");
+      if (!this._cacheDeferred) {
+        this.log.error("Parent doesn't have _cacheDeferred set up!");
+        return;
+      }
 
-        this._cacheDeferred(message.data);
-        this._cacheDeferred = null;
-        break;
-      }
-      case this.CACHE_USAGE_RESULT_MESSAGE: {
-        this.onUsageResult(message.data.success);
-        break;
-      }
+      this._cacheDeferred(message.data);
+      this._cacheDeferred = null;
     }
   },
 
@@ -5812,8 +5640,7 @@ var AboutHomeStartupCache = {
         let procManager = aSubject
           .QueryInterface(Ci.nsIInterfaceRequestor)
           .getInterface(Ci.nsIMessageSender);
-        let pp = aSubject.QueryInterface(Ci.nsIDOMProcessParent);
-        this.onContentProcessCreated(childID, procManager, pp);
+        this.onContentProcessCreated(childID, procManager);
         break;
       }
 

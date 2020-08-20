@@ -12,8 +12,7 @@
 /* ::::: scrollbar ::::: */
 
 scrollbar {
-  appearance: auto;
-  -moz-default-appearance: scrollbar-horizontal;
+  -moz-appearance: scrollbar-horizontal;
   cursor: default;
   background-color: #f0f0f0;
 }
@@ -31,19 +30,16 @@ scrollbar {
 }
 
 scrollbar[orient="vertical"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbar-vertical;
+  -moz-appearance: scrollbar-vertical;
 }
 
 /* ::::: slider - a thumb is inside  ::::: */
 slider {
-  appearance: auto;
-  -moz-default-appearance: scrollbartrack-horizontal;
+  -moz-appearance: scrollbartrack-horizontal;
 }
 
 slider[orient="vertical"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbartrack-vertical;
+  -moz-appearance: scrollbartrack-vertical;
 }
 
 /* ::::: thumb (horizontal) ::::: */
@@ -53,22 +49,19 @@ thumb {
 }
 
 thumb[orient="vertical"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarthumb-vertical;
+  -moz-appearance: scrollbarthumb-vertical;
   min-height: 8px;
 }
 
 thumb[orient="horizontal"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarthumb-horizontal;
+  -moz-appearance: scrollbarthumb-horizontal;
   min-width: 8px;
 }
 
 /* ::::: square at the corner of two scrollbars ::::: */
 
 scrollcorner {
-  appearance: auto;
-  -moz-default-appearance: scrollcorner;
+  -moz-appearance: scrollcorner;
   width: 16px;
   cursor: default;
   background-color: -moz-Dialog;
@@ -77,24 +70,20 @@ scrollcorner {
 /* ..... increment .... */
 
 scrollbarbutton[type="increment"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-right;
+  -moz-appearance: scrollbarbutton-right;
 }
 
 scrollbar[orient="vertical"] > scrollbarbutton[type="increment"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-down;
+  -moz-appearance: scrollbarbutton-down;
 }
 
 /* ..... decrement .... */
 
 scrollbarbutton[type="decrement"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-left;
+  -moz-appearance: scrollbarbutton-left;
 }
 
 scrollbar[orient="vertical"] > scrollbarbutton[type="decrement"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-up;
+  -moz-appearance: scrollbarbutton-up;
 }
 

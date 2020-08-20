@@ -209,7 +209,7 @@ bookmark-panel =
 
 identity-connection-not-secure = Connection not secure
 identity-connection-secure = Connection secure
-identity-connection-internal = This is a secure { -brand-short-name } page.
+identity-connection-internal = You're viewing a secure { -brand-short-name } page.
 identity-connection-file = This page is stored on your computer.
 identity-extension-page = This page is loaded from an extension.
 identity-active-blocked = { -brand-short-name } has blocked parts of this page that are not secure.
@@ -301,9 +301,9 @@ enable-devtools-popup-description = To use the F12 shortcut, first open DevTools
 ## URL Bar
 
 urlbar-default-placeholder =
-  .defaultPlaceholder = Search or enter address
+  .defaultPlaceholder = Search or enter website name
 urlbar-placeholder =
-  .placeholder = Search or enter address
+  .placeholder = Search or enter website name
 urlbar-remote-control-notification-anchor =
   .tooltiptext = Browser is under remote control
 urlbar-permissions-granted =

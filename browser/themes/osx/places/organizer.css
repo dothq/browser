@@ -5,8 +5,7 @@
 /* Places Organizer Sidebars */
 
 #placesList {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-source-list;
+  -moz-appearance: -moz-mac-source-list;
   width: 160px;
 }
 
@@ -21,14 +20,12 @@
 }
 
 #placesList > treechildren::-moz-tree-row(selected) {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-source-list-selection;
+  -moz-appearance: -moz-mac-source-list-selection;
   -moz-font-smoothing-background-color: -moz-mac-source-list-selection;
 }
 
 #placesList > treechildren::-moz-tree-row(selected,focus) {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-active-source-list-selection;
+  -moz-appearance: -moz-mac-active-source-list-selection;
   -moz-font-smoothing-background-color: -moz-mac-active-source-list-selection;
 }
 
@@ -76,8 +73,7 @@
   margin: 4px 4px 5px;
   padding: 0;
   height: 22px;
-  appearance: auto;
-  -moz-default-appearance: toolbarbutton;
+  -moz-appearance: toolbarbutton;
 }
 
 #placesToolbar > toolbarbutton > .toolbarbutton-icon {
@@ -169,7 +165,7 @@
 }
 
 #placeContent {
-  appearance: none;
+  -moz-appearance: none;
   border: none;
 }
 

@@ -9,14 +9,14 @@
 }
 
 notification {
-  padding: 2px 0 3px;
-  padding-inline-start: 12px;
-  background: -moz-dialog;
-  color: -moz-dialogText;
-  border-color: ThreeDLightShadow;
+  padding-inline-start: 18px;
+  background: var(--toolbar-bgcolor);
+  color: var(--toolbar-color);
+  border-color: var(--chrome-content-separator-color);
   border-style: solid;
   border-width: 1px 0;
   text-shadow: none;
+  height: 44px;
 }
 
 notification.animated {
@@ -31,24 +31,8 @@ notification.animated {
   border-bottom-style: none;
 }
 
-notification[type="warning"],
-notification[type="critical"] {
-  border-color: rgba(12, 12, 13, 0.2);
-}
-
-notification[type="warning"] {
-  background: #ffe900;
-  color: #0c0c0d;
-}
-
-notification[type="critical"] {
-  background: #d70022;
-  color: #fff;
-}
-
 .messageText {
-  margin-inline-start: 12px !important;
-  margin-bottom: 1px !important;
+  margin-inline-start: 18px !important;
 }
 
 .messageText > .text-link {
@@ -61,8 +45,8 @@ notification[type="critical"] {
 }
 
 .messageImage {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   -moz-context-properties: fill;
   fill: currentColor;
 }
@@ -82,10 +66,10 @@ notification[type="critical"] > hbox > .messageImage {
 .messageCloseButton {
   margin: 0;
   padding: 0;
+  margin-left: 8px;
 }
 
 /* Close button needs to be clickable from the edge of the window */
 .messageCloseButton > .toolbarbutton-icon {
   margin-inline-end: 12px;
 }
-

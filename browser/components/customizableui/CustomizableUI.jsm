@@ -1757,9 +1757,24 @@ var CustomizableUIInternal = {
             aWidget.id +
             " has a view. Auto-registering event handlers."
         );
+        let viewNode = aDocument.getElementById(aWidget.viewId);
 
-        if (aWidget.source == CustomizableUI.SOURCE_BUILTIN) {
-          nodeClasses.push("subviewbutton-nav");
+        if (viewNode) {
+          // PanelUI relies on the .PanelUI-subView class to be able to show only
+          // one sub-view at a time.
+          viewNode.classList.add("PanelUI-subView");
+          if (aWidget.source == CustomizableUI.SOURCE_BUILTIN) {
+            nodeClasses.push("subviewbutton-nav");
+          }
+          this.ensureSubviewListeners(viewNode);
+        } else {
+          log.error(
+            "Could not find the view node with id: " +
+              aWidget.viewId +
+              ", for widget: " +
+              aWidget.id +
+              "."
+          );
         }
 
         let keyPressHandler = this.handleWidgetKeyPress.bind(

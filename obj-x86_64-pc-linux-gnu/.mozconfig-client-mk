@@ -1,0 +1,4 @@
+MOZ_OBJDIR=/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu
+OBJDIR=/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu
+FOUND_MOZCONFIG=/home/kieran/Documents/browser/mozconfig
+export FOUND_MOZCONFIG

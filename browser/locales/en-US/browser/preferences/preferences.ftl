@@ -935,37 +935,26 @@ forms-fill-logins-and-passwords =
 forms-saved-logins =
     .label = Saved Logins…
     .accesskey = L
-forms-primary-pw-use =
-    .label = Use a Primary Password
+forms-master-pw-use =
+    .label = Use a master password
     .accesskey = U
-forms-primary-pw-learn-more-link = Learn more
-# This string uses the former name of the Primary Password feature
-# ("Master Password" in English) so that the preferences can be found
-# when searching for the old name. The accesskey is unused.
 forms-master-pw-change =
     .label = Change Master Password…
     .accesskey = M
-forms-primary-pw-change =
-    .label = Change Primary Password…
-    .accesskey = P
-# Leave this message empty if the translation for "Primary Password" matches
-# "Master Password" in your language. If you're editing the FTL file directly,
-# use { "" } as the value.
-forms-primary-pw-former-name = Formerly known as Master Password
 
-forms-primary-pw-fips-title = You are currently in FIPS mode. FIPS requires a non-empty Primary Password.
+forms-master-pw-fips-title = You are currently in FIPS mode. FIPS requires a non-empty Master Password.
 forms-master-pw-fips-desc = Password Change Failed
 
 ## OS Authentication dialog
 
-# This message can be seen by trying to add a Primary Password.
-primary-password-os-auth-dialog-message-win = To create a Primary Password, enter your Windows login credentials. This helps protect the security of your accounts.
+# This message can be seen by trying to add a Master Password.
+master-password-os-auth-dialog-message-win = To create a Master Password, enter your Windows login credentials. This helps protect the security of your accounts.
 
-# This message can be seen by trying to add a Primary Password.
+# This message can be seen by trying to add a Master Password.
 # The macOS strings are preceded by the operating system with "Firefox is trying to "
 # and includes subtitle of "Enter password for the user "xxx" to allow this." These
 # notes are only valid for English. Please test in your locale.
-primary-password-os-auth-dialog-message-macosx = create a Primary Password
+master-password-os-auth-dialog-message-macosx = create a Master Password
 master-password-os-auth-dialog-caption = { -brand-full-name }
 
 ## Privacy Section - History
@@ -1347,23 +1336,6 @@ space-alert-under-5gb-ok-button =
     .accesskey = K
 
 space-alert-under-5gb-message = { -brand-short-name } is running out of disk space. Website contents may not display properly. Visit “Learn More” to optimize your disk usage for better browsing experience.
-
-## Privacy Section - HTTPS-Only
-
-httpsonly-header = HTTPS-Only Mode
-
-httpsonly-description = HTTPS provides a secure, encrypted connection between { -brand-short-name } and the websites you visit. Most websites support HTTPS, and if HTTPS-Only Mode is enabled, then { -brand-short-name } will upgrade all connections to HTTPS.
-
-httpsonly-learn-more = Learn more
-
-httpsonly-radio-enabled =
-    .label = Enable HTTPS-Only Mode in all windows
-
-httpsonly-radio-enabled-pbm =
-    .label = Enable HTTPS-Only Mode in private windows only
-
-httpsonly-radio-disabled =
-    .label = Don’t enable HTTPS-Only Mode
 
 ## The following strings are used in the Download section of settings
 desktop-folder-name = Desktop

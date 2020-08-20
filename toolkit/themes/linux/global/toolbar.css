@@ -9,21 +9,18 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 toolbox {
-  appearance: auto;
-  -moz-default-appearance: toolbox;
+  -moz-appearance: toolbox;
 }
 
 toolbar {
-  appearance: auto;
-  -moz-default-appearance: toolbar;
+  -moz-appearance: toolbar;
   min-width: 1px;
   min-height: 20px;
   padding: 2px 0;
 }
 
 toolbar[type="menubar"] {
-  appearance: auto;
-  -moz-default-appearance: menubar;
+  -moz-appearance: menubar;
   color: -moz-menubartext;
   min-width: 1px;
   min-height: 20px;
@@ -31,13 +28,12 @@ toolbar[type="menubar"] {
 }
 
 toolbar:-moz-lwtheme {
-  appearance: none;
+  -moz-appearance: none;
   color: inherit;
 }
 
 toolbarseparator {
-  appearance: auto;
-  -moz-default-appearance: separator;
+  -moz-appearance: separator;
   margin: 0;
   min-width: 2px;
 }

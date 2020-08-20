@@ -6,8 +6,7 @@
 @namespace html url("http://www.w3.org/1999/xhtml");
 
 scrollbar {
-  appearance: auto;
-  -moz-default-appearance: scrollbar;
+  -moz-appearance: scrollbar;
   cursor: default;
   background-color: white;
 }
@@ -19,8 +18,7 @@ scrollbar[root="true"] {
 
 html|select[size]:not([size="0"]):not([size="1"]) > scrollbar,
 html|select[multiple] > scrollbar {
-  appearance: auto;
-  -moz-default-appearance: scrollbar-small;
+  -moz-appearance: scrollbar-small;
 }
 
 @media all and (-moz-overlay-scrollbars) {
@@ -33,56 +31,47 @@ html|select[multiple] > scrollbar {
 /* ..... track ..... */
 
 slider {
-  appearance: auto;
-  -moz-default-appearance: scrollbartrack-horizontal;
+  -moz-appearance: scrollbartrack-horizontal;
 }
 
 slider[orient="vertical"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbartrack-vertical;
+  -moz-appearance: scrollbartrack-vertical;
 }
 
 /* ..... thumb ..... */
 
 thumb[orient="vertical"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarthumb-vertical;
+  -moz-appearance: scrollbarthumb-vertical;
 }
 
 thumb[orient="horizontal"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarthumb-horizontal;
+  -moz-appearance: scrollbarthumb-horizontal;
 }
 
 /* ..... increment ..... */
 
 scrollbarbutton[type="increment"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-right;
+  -moz-appearance: scrollbarbutton-right;
 }
 
 scrollbar[orient="vertical"] > scrollbarbutton[type="increment"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-down;
+  -moz-appearance: scrollbarbutton-down;
 }
 
 /* ..... decrement ..... */
 
 scrollbarbutton[type="decrement"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-left;
+  -moz-appearance: scrollbarbutton-left;
 }
 
 scrollbar[orient="vertical"] > scrollbarbutton[type="decrement"] {
-  appearance: auto;
-  -moz-default-appearance: scrollbarbutton-up;
+  -moz-appearance: scrollbarbutton-up;
 }
 
 /* ::::: square at the corner of two scrollbars ::::: */
 
 scrollcorner {
-  appearance: auto;
-  -moz-default-appearance: scrollcorner;
+  -moz-appearance: scrollcorner;
   width: 16px;
   cursor: default;
   background-color: white;

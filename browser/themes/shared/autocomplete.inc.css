@@ -46,15 +46,9 @@
   margin: 0;
 }
 
-#PopupAutoComplete > richlistbox > richlistitem[originaltype="login"] > .ac-site-icon,
-#PopupAutoComplete > richlistbox > richlistitem[originaltype="possible-username"] > .ac-site-icon,
 #PopupAutoComplete > richlistbox > richlistitem > .two-line-wrapper > .ac-site-icon {
   display: block;
-  margin-inline: 4px;
-}
-
-#PopupAutoComplete > richlistbox > richlistitem[originaltype="possible-username"] > .ac-site-icon {
-  visibility: hidden;
+  margin-inline: auto 4px;
 }
 
 #PopupAutoComplete > richlistbox > richlistitem > .two-line-wrapper > .labels-wrapper {
@@ -115,7 +109,6 @@
 #PopupAutoComplete > richlistbox > richlistitem[originaltype="importableLogins"] > .two-line-wrapper,
 #PopupAutoComplete > richlistbox > richlistitem[originaltype="loginWithOrigin"] > .two-line-wrapper {
   padding: 4px;
-  padding-inline-start: 0;
 }
 
 #PopupAutoComplete > richlistbox > richlistitem[originaltype="generatedPassword"]:not([collapsed="true"]) {

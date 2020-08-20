@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 .close-icon {
-  appearance: none;
+  -moz-appearance: none;
   -moz-context-properties: fill, fill-opacity;
   list-style-image: url(chrome://global/skin/icons/close.svg);
   color: inherit !important;
@@ -24,9 +24,4 @@
 .close-icon > .toolbarbutton-icon {
   width: 20px;
   height: 20px;
-}
-
-.close-icon > .button-box > .button-text,
-.close-icon > .toolbarbutton-text {
-  display: none;
 }

@@ -1,8 +1,5 @@
 ChromeUtils.import("resource://testing-common/OSKeyStoreTestUtils.jsm", this);
 ChromeUtils.import("resource://gre/modules/OSKeyStore.jsm", this);
-var { XPCOMUtils } = ChromeUtils.import(
-  "resource://gre/modules/XPCOMUtils.jsm"
-);
 
 add_task(async function() {
   let prefs = await openPreferencesViaOpenPreferencesAPI("panePrivacy", {
@@ -15,15 +12,14 @@ add_task(async function() {
   let win = doc.defaultView;
   let dialogURL = "";
   let dialogOpened = false;
-  XPCOMUtils.defineLazyGetter(win, "gSubDialog", () => ({
+  win.gSubDialog = {
     open(aDialogURL, unused, unused2, aCallback) {
       dialogOpened = true;
       dialogURL = aDialogURL;
       masterPasswordSet = masterPasswordNextState;
       aCallback();
     },
-  }));
-
+  };
   let masterPasswordSet = false;
   win.LoginHelper = {
     isMasterPasswordSet() {

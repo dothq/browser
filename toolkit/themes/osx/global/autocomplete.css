@@ -16,13 +16,13 @@ panel[type="autocomplete-richlistbox"] {
   color: -moz-FieldText;
   background-color: -moz-Field;
   font: icon;
-  appearance: none;
+  -moz-appearance: none;
 }
 
 /* ::::: richlistbox autocomplete ::::: */
 
 .autocomplete-richlistbox {
-  appearance: none;
+  -moz-appearance: none;
   margin: 0;
 }
 

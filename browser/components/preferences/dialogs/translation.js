@@ -71,7 +71,7 @@ Tree.prototype = {
   getCellProperties(row, column) {
     return "";
   },
-  QueryInterface: ChromeUtils.generateQI(["nsITreeView"]),
+  QueryInterface: ChromeUtils.generateQI([Ci.nsITreeView]),
 };
 
 function Lang(aCode, label) {

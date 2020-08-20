@@ -70,6 +70,12 @@ const ThemeVariableMap = [
     },
   ],
   [
+    "--urlbar-focused-separator-color",
+    {
+      lwtProperty: "toolbar_focused_field_separator",
+    },
+  ],
+  [
     "--tabs-border-color",
     {
       lwtProperty: "toolbar_top_separator",

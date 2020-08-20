@@ -38,13 +38,10 @@
   list-style-image: url(chrome://browser/skin/notification-icons/focus-tab-by-prompt.svg);
 }
 
-.popup-notification-icon[popupid="storage-access"],
-.storage-access-icon {
-  list-style-image: url(chrome://browser/skin/controlcenter/3rdpartycookies.svg);
-}
-
 .popup-notification-icon[popupid="persistent-storage"],
-.persistent-storage-icon {
+.popup-notification-icon[popupid="storage-access"],
+.persistent-storage-icon,
+.storage-access-icon {
   list-style-image: url(chrome://browser/skin/notification-icons/persistent-storage.svg);
 }
 
@@ -175,10 +172,6 @@
 .popup-notification-icon[popupid="midi"],
 .popup-notification-icon[popupid="midi-sysex"] {
   list-style-image: url(chrome://browser/skin/notification-icons/midi.svg);
-}
-
-.https-only-load-insecure-icon {
-  list-style-image: url(chrome://browser/skin/notification-icons/https-only-load-insecure-blocked.svg);
 }
 
 #canvas-notification-icon,

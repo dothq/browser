@@ -20,10 +20,10 @@ add_task(async function test_character_encoding_menu() {
   );
 
   const button = document.getElementById("characterencoding-button");
-  EventUtils.synthesizeMouseAtCenter(button, { ctrlKey: true });
-
   const view = document.getElementById("PanelUI-characterEncodingView");
+
   let shownPromise = subviewShown(view);
+  EventUtils.synthesizeMouseAtCenter(button, { ctrlKey: true });
   await shownPromise;
   ok(true, "Character encoding menu shown after button pressed");
 

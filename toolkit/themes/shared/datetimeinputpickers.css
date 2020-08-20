@@ -50,7 +50,7 @@ body {
 }
 
 button {
-  appearance: none;
+  -moz-appearance: none;
   background: none;
   border: none;
 }

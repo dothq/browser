@@ -33,13 +33,11 @@
 }
 
 .expander-up > .button-box {
-  appearance: auto;
-  -moz-default-appearance: button-arrow-up;
+  -moz-appearance: button-arrow-up;
 }
 
 .expander-down > .button-box {
-  appearance: auto;
-  -moz-default-appearance: button-arrow-down;
+  -moz-appearance: button-arrow-down;
 }
 
 #editBMPanel_folderTree {
@@ -56,8 +54,7 @@
 }
 
 #editBMPanel_tagsSelector > richlistitem > image {
-  appearance: auto;
-  -moz-default-appearance: checkbox;
+  -moz-appearance: checkbox;
   -moz-box-align: center;
   margin: 0 2px;
   min-width: 13px;

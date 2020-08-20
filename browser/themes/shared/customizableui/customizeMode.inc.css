@@ -8,12 +8,6 @@
   --drag-drop-transition-duration: .3s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  :root {
-    --drag-drop-transition-duration: 0s;
-  }
-}
-
 :root[customizing] .customization-target:not(#widget-overflow-fixed-list) {
   min-width: 100px;
 }
@@ -66,7 +60,7 @@
   border: 1px solid #b1b1b1;
   border-radius: 2px;
   background-color: #fcfcfd;
-  appearance: none;
+  -moz-appearance: none;
 }
 
 .customizationmode-checkbox,
@@ -176,17 +170,17 @@
   background-image: url("chrome://browser/skin/customizableui/density-normal.svg");
 }
 
-#widget-overflow-fixed-list > toolbarpaletteitem:not([notransition])[place="menu-panel"],
-toolbarpaletteitem:not([notransition])[place="toolbar"] {
-  transition: border-width var(--drag-drop-transition-duration) ease-in-out;
+#widget-overflow-fixed-list > toolbarpaletteitem[place="menu-panel"],
+toolbarpaletteitem[place="toolbar"] {
+  transition: border-width 250ms ease-in-out;
 }
 
 toolbarpaletteitem[mousedown] {
   cursor: -moz-grabbing;
 }
 
-toolbarpaletteitem:not([notransition])[place="palette"],
-toolbarpaletteitem:not([notransition])[place="menu-panel"] {
+toolbarpaletteitem[place="palette"],
+toolbarpaletteitem[place="menu-panel"] {
   transition: transform var(--drag-drop-transition-duration) ease-in-out;
 }
 
@@ -201,6 +195,13 @@ toolbarpaletteitem:not([notransition])[place="menu-panel"] {
 
 toolbarpaletteitem toolbarbutton[disabled] {
   color: inherit !important;
+}
+
+#widget-overflow-fixed-list > toolbarpaletteitem[notransition][place="menu-panel"],
+toolbarpaletteitem[notransition][place="toolbar"],
+toolbarpaletteitem[notransition][place="palette"],
+toolbarpaletteitem[notransition][place="menu-panel"] {
+  transition: none;
 }
 
 toolbarpaletteitem > toolbarbutton > .toolbarbutton-icon,
@@ -338,7 +339,7 @@ toolbarpaletteitem > #search-container > #searchbar > .searchbar-textbox {
 
 .customization-uidensity-menuitem,
 .customization-lwtheme-menu-theme {
-  appearance: none;
+  -moz-appearance: none;
   border: 1px solid transparent;
   margin: 0 -5px 5px;
   padding-block: 0;
@@ -411,7 +412,7 @@ toolbarpaletteitem > #search-container > #searchbar > .searchbar-textbox {
 }
 
 .customization-lwtheme-menu-footeritem {
-  appearance: none;
+  -moz-appearance: none;
   -moz-box-flex: 1;
   color: inherit;
   border-style: none;
@@ -445,7 +446,7 @@ toolbarpaletteitem > #search-container > #searchbar > .searchbar-textbox {
   /* Native styling adds more 'oompf' to the popup box-shadow, so simulate that
    * as best as we can here: */
   box-shadow: 0 0 1px hsla(0,0%,0%,.3), 0 4px 10px hsla(0,0%,0%,.3);
-  appearance: none;
+  -moz-appearance: none;
   border-radius: var(--arrowpanel-border-radius);
 %else
   border: 1px solid var(--arrowpanel-border-color);

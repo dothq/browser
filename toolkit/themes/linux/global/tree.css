@@ -7,6 +7,5 @@
 /* ::::: sort direction indicator :::::  */
 
 .treecol-sortdirection {
-  appearance: auto;
-  -moz-default-appearance: treeheadersortarrow;
+  -moz-appearance: treeheadersortarrow;
 }

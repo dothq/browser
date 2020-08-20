@@ -153,10 +153,10 @@ bookmark-show-sidebar-shortcut =
 full-zoom-reduce-shortcut =
     .key = -
 
-full-zoom-reduce-shortcut-alt-a =
-    .key = _
-
-full-zoom-reduce-shortcut-alt-b =
+# If in keyboard layouts popular for your locale you need to use the shift key
+# to access the original shortcuts, the following shortcuts can be used.
+# Otherwise their values should remain empty.
+full-zoom-reduce-shortcut-alt =
     .key = {""}
 
 full-zoom-enlarge-shortcut =

@@ -42,10 +42,6 @@ pref("extensions.getAddons.link.url", "https://addons.mozilla.org/%LOCALE%/firef
 pref("extensions.getAddons.langpacks.url", "https://services.addons.mozilla.org/api/v3/addons/language-tools/?app=firefox&type=language&appversion=%VERSION%");
 pref("extensions.getAddons.discovery.api_url", "https://services.addons.mozilla.org/api/v4/discovery/?lang=%LOCALE%&edition=%DISTRIBUTION%");
 
-// Use bloomfilters for the addons blocklist, instead of JSON only.
-pref("extensions.blocklist.useMLBF", true);
-pref("extensions.blocklist.useMLBF.stashes", true);
-
 // The URL for the privacy policy related to recommended extensions.
 pref("extensions.recommendations.privacyPolicyUrl", "https://www.mozilla.org/privacy/firefox/?utm_source=firefox-browser&utm_medium=firefox-browser&utm_content=privacy-policy-link#addons");
 // The URL for Firefox Color, recommended on the theme page in about:addons.
@@ -289,9 +285,6 @@ pref("browser.urlbar.speculativeConnect.enabled", true);
 // search for bookmarklets typing "javascript: " followed by the actual query.
 pref("browser.urlbar.filter.javascript", true);
 
-// Enable a certain level of urlbar logging to the Browser Console. See Log.jsm.
-pref("browser.urlbar.loglevel", "Error");
-
 // the maximum number of results to show in autocomplete when doing richResults
 pref("browser.urlbar.maxRichResults", 10);
 
@@ -327,21 +320,9 @@ pref("browser.urlbar.openintab", false);
 // If true, we show tail suggestions when available.
 pref("browser.urlbar.richSuggestions.tail", true);
 
-// Whether aliases are styled as a "chiclet" separated from the Urlbar.
-// Also controls the other urlbar.update2 prefs.
-pref("browser.urlbar.update2", false);
-
-// Whether the urlbar displays one-offs to filter searches to history,
-// bookmarks, or tabs.
-pref("browser.urlbar.update2.localOneOffs", false);
-
-// Whether the urlbar one-offs act as search filters instead of executing a
-// search immediately.
-pref("browser.urlbar.update2.oneOffsRefresh", false);
-
-// Whether we display a tab-to-complete result when the user types an engine
-// name.
-pref("browser.urlbar.update2.tabToComplete", false);
+// Whether we expand the font size when when the urlbar is
+// focused in design update 2.
+pref("browser.urlbar.update2.expandTextOnFocus", false);
 
 pref("browser.urlbar.eventTelemetry.enabled", false);
 
@@ -774,21 +755,10 @@ pref("browser.preferences.experimental", true);
 #else
 pref("browser.preferences.experimental", false);
 #endif
-pref("browser.preferences.experimental.hidden", false);
 pref("browser.preferences.defaultPerformanceSettings.enabled", true);
-
-#if defined(NIGHTLY_BUILD)
-pref("browser.preferences.exposeHTTPSOnly", true);
-#else
-pref("browser.preferences.exposeHTTPSOnly", false);
-#endif
 
 pref("browser.download.show_plugins_in_list", true);
 pref("browser.download.hide_plugins_without_extensions", true);
-
-// URL for "Learn More" for HttpsOnly
-pref("domsecurity.httpsonly.infoURL",
-     "https://developer.mozilla.org/en-US/docs/Glossary/https");
 
 // Backspace and Shift+Backspace behavior
 // 0 goes Back/Forward
@@ -1291,8 +1261,6 @@ pref("prompts.tab_modal.enabled", true);
 // This is a fallback value for when prompt callers do not specify a modalType.
 pref("prompts.defaultModalType", 3);
 
-pref("browser.topsites.useRemoteSetting", false);
-
 // Activates preloading of the new tab url.
 pref("browser.newtab.preload", true);
 
@@ -1328,14 +1296,19 @@ pref("browser.newtabpage.activity-stream.discoverystream.enabled", true);
 pref("browser.newtabpage.activity-stream.discoverystream.hardcoded-basic-layout", false);
 pref("browser.newtabpage.activity-stream.discoverystream.spocs-endpoint", "");
 // List of regions that get stories by default.
-pref("browser.newtabpage.activity-stream.discoverystream.region-stories-config", "US,DE,CA,GB,IE");
+pref("browser.newtabpage.activity-stream.discoverystream.region-stories-config", "US,DE,CA,GB");
 // List of regions that get spocs by default.
 pref("browser.newtabpage.activity-stream.discoverystream.region-spocs-config", "US,CA");
 // List of regions that get the 7 row layout.
-pref("browser.newtabpage.activity-stream.discoverystream.region-layout-config", "US,CA,GB,DE,IE");
+pref("browser.newtabpage.activity-stream.discoverystream.region-layout-config", "US,CA,GB,DE");
 // Allows Pocket story collections to be dismissed.
 pref("browser.newtabpage.activity-stream.discoverystream.isCollectionDismissible", true);
-pref("browser.newtabpage.activity-stream.discoverystream.personalization.version", 2);
+// Switch between different versions of the recommendation provider.
+#ifdef NIGHTLY_BUILD
+  pref("browser.newtabpage.activity-stream.discoverystream.personalization.version", 2);
+#else
+  pref("browser.newtabpage.activity-stream.discoverystream.personalization.version", 1);
+#endif
 // Configurable keys used by personalization version 2.
 pref("browser.newtabpage.activity-stream.discoverystream.personalization.modelKeys", "nb_model_arts_and_entertainment, nb_model_autos_and_vehicles, nb_model_beauty_and_fitness, nb_model_blogging_resources_and_services, nb_model_books_and_literature, nb_model_business_and_industrial, nb_model_computers_and_electronics, nb_model_finance, nb_model_food_and_drink, nb_model_games, nb_model_health, nb_model_hobbies_and_leisure, nb_model_home_and_garden, nb_model_internet_and_telecom, nb_model_jobs_and_education, nb_model_law_and_government, nb_model_online_communities, nb_model_people_and_society, nb_model_pets_and_animals, nb_model_real_estate, nb_model_reference, nb_model_science, nb_model_shopping, nb_model_sports, nb_model_travel");
 // System pref to allow Pocket stories personalization to be turned on/off.
@@ -1357,8 +1330,8 @@ pref("trailhead.firstrun.branches", "join-dynamic");
 
 // Separate about welcome
 pref("browser.aboutwelcome.enabled", true);
-// Used to set multistage welcome UX
-pref("browser.aboutwelcome.overrideContent", "{\"id\": \"multi-stage-welcome-default\",\"template\": \"multistage\",\"screens\": [{\"id\": \"AW_GET_STARTED\",\"order\": 0,\"content\": {\"zap\": true,\"title\": {\"string_id\": \"onboarding-multistage-welcome-header\"},\"subtitle\": {\"string_id\": \"onboarding-multistage-welcome-subtitle\"},\"primary_button\": {\"label\": {\"string_id\": \"onboarding-multistage-welcome-primary-button-label\"},\"action\": {\"navigate\": true}},\"secondary_button\": {\"text\": {\"string_id\": \"onboarding-multistage-welcome-secondary-button-text\"},\"label\": {\"string_id\": \"onboarding-multistage-welcome-secondary-button-label\"},\"position\": \"top\",\"action\": {\"type\": \"OPEN_URL\",\"addFlowParams\": true,\"data\": {\"args\": \"https://accounts.firefox.com/?service=sync&action=email&context=fx_desktop_v3&entrypoint=activity-stream-firstrun&style=trailhead\",\"where\": \"current\"}}}}}, {\"id\": \"AW_IMPORT_SETTINGS\",\"order\": 1,\"content\": {\"zap\": true, \"disclaimer\": {\"string_id\": \"onboarding-import-sites-disclaimer\"},\"title\": {\"string_id\": \"onboarding-multistage-import-header\"},\"subtitle\": {\"string_id\": \"onboarding-multistage-import-subtitle\"},\"tiles\": {\"type\": \"topsites\",\"info\": true},\"primary_button\": {\"label\": {\"string_id\": \"onboarding-multistage-import-primary-button-label\"},\"action\": {\"type\": \"SHOW_MIGRATION_WIZARD\",\"navigate\": true}},\"secondary_button\": {\"label\":  {\"string_id\": \"onboarding-multistage-import-secondary-button-label\"},\"action\": {\"navigate\": true}}}}, {\"id\": \"AW_CHOOSE_THEME\",\"order\": 2,\"content\": {\"zap\": true,\"title\":  {\"string_id\": \"onboarding-multistage-theme-header\"},\"subtitle\": {\"string_id\": \"onboarding-multistage-theme-subtitle\"},\"tiles\": {\"type\": \"theme\",\"action\": {\"theme\": \"<event>\"}, \"data\": [{\"theme\": \"automatic\",\"label\": {\"string_id\": \"onboarding-multistage-theme-label-automatic\"}, \"description\": {\"string_id\": \"onboarding-multistage-theme-description-automatic\"}, \"tooltip\": {\"string_id\": \"onboarding-multistage-theme-tooltip-automatic\"}}, {\"theme\": \"light\",\"label\": {\"string_id\": \"onboarding-multistage-theme-label-light\"}, \"tooltip\": {\"string_id\": \"onboarding-multistage-theme-tooltip-light\"}},{\"theme\": \"dark\",\"label\": {\"string_id\": \"onboarding-multistage-theme-label-dark\"}, \"tooltip\": {\"string_id\": \"onboarding-multistage-theme-tooltip-dark\"}}]},\"primary_button\": {\"label\": {\"string_id\": \"onboarding-multistage-theme-primary-button-label\"},\"action\": {\"navigate\": true}},\"secondary_button\": {\"label\": {\"string_id\": \"onboarding-multistage-theme-secondary-button-label\"},\"action\": {\"theme\": \"automatic\",\"navigate\": true}}}}]}");
+// Used for switching simplified 3 cards welcome to multistage welcome
+pref("browser.aboutwelcome.overrideContent", "");
 
 // The pref that controls if the What's New panel is enabled.
 pref("browser.messaging-system.whatsNewPanel.enabled", true);
@@ -1465,7 +1438,12 @@ pref("identity.fxaccounts.remote.pairing.uri", "wss://channelserver.services.moz
 pref("identity.sync.tokenserver.uri", "https://token.services.mozilla.com/1.0/sync/1.5");
 
 // Fetch Sync tokens using the OAuth token function
-pref("identity.sync.useOAuthForSyncToken", true);
+#ifdef NIGHTLY_BUILD
+  // Only enabled in Nightly to avoid excessive / abnormal traffic to FxA
+  pref("identity.sync.useOAuthForSyncToken", true);
+#else
+  pref("identity.sync.useOAuthForSyncToken", false);
+#endif
 
 // Using session tokens to fetch OAuth tokens
 pref("identity.fxaccounts.useSessionTokensForOAuth", true);
@@ -1702,7 +1680,6 @@ pref("privacy.userContext.newTabContainerOnLeftClick.enabled", false);
 pref("privacy.webrtc.allowSilencingNotifications", true);
 // Set to true to use the legacy WebRTC global indicator
 pref("privacy.webrtc.legacyGlobalIndicator", false);
-pref("privacy.webrtc.hideGlobalIndicator", false);
 #else
 pref("privacy.webrtc.allowSilencingNotifications", false);
 pref("privacy.webrtc.legacyGlobalIndicator", true);
@@ -1717,7 +1694,7 @@ pref("browser.tabs.remote.autostart", true);
 pref("browser.tabs.remote.desktopbehavior", true);
 
 // Run media transport in a separate process?
-#ifdef EARLY_BETA_OR_EARLIER
+#ifdef NIGHTLY_BUILD
   pref("media.peerconnection.mtransport_process", true);
 #else
   pref("media.peerconnection.mtransport_process", false);
@@ -1741,7 +1718,11 @@ pref("browser.tabs.crashReporting.requestEmail", false);
 pref("browser.tabs.crashReporting.emailMe", false);
 pref("browser.tabs.crashReporting.email", "");
 
+#ifdef NIGHTLY_BUILD
+pref("browser.navigation.requireUserInteraction", true);
+#else
 pref("browser.navigation.requireUserInteraction", false);
+#endif
 
 // If true, unprivileged extensions may use experimental APIs on
 // nightly and developer edition.
@@ -1790,11 +1771,12 @@ pref("extensions.pocket.enabled", true);
 pref("extensions.pocket.oAuthConsumerKey", "40249-e88c401e1b1f2242d9e441c4");
 pref("extensions.pocket.site", "getpocket.com");
 
+// Can be removed once Bug 1618058 is resolved.
+pref("signon.generation.confidenceThreshold", "0.75");
+
 #ifdef NIGHTLY_BUILD
-pref("signon.management.page.fileImport.enabled", true);
 pref("signon.management.page.os-auth.enabled", true);
 #else
-pref("signon.management.page.fileImport.enabled", false);
 pref("signon.management.page.os-auth.enabled", false);
 #endif
 pref("signon.management.page.breach-alerts.enabled", true);
@@ -1841,14 +1823,14 @@ pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false);
 // The truthy values of "extensions.formautofill.available" are "on" and "detect",
 // any other value means autofill isn't available.
 // "detect" means it's enabled if conditions defined in the extension are met.
-pref("extensions.formautofill.available", "detect");
+#ifdef NIGHTLY_BUILD
+  pref("extensions.formautofill.available", "on");
+#else
+  pref("extensions.formautofill.available", "detect");
+#endif
 pref("extensions.formautofill.creditCards.available", false);
 pref("extensions.formautofill.addresses.enabled", true);
-pref("extensions.formautofill.addresses.capture.enabled", false);
 pref("extensions.formautofill.creditCards.enabled", true);
-// Temporary preference to control displaying the UI elements for
-// credit card autofill used for the duration of the A/B test.
-pref("extensions.formautofill.creditCards.hideui", false);
 // Pref for shield/heartbeat to recognize users who have used Credit Card
 // Autofill. The valid values can be:
 // 0: none
@@ -1866,8 +1848,14 @@ pref("extensions.formautofill.loglevel", "Warn");
 
 pref("toolkit.osKeyStore.loglevel", "Warn");
 
-pref("extensions.formautofill.supportedCountries", "US");
-pref("extensions.formautofill.supportRTL", false);
+#ifdef NIGHTLY_BUILD
+  // Comma separated list of countries Form Autofill is available in.
+  pref("extensions.formautofill.supportedCountries", "US,CA,DE");
+  pref("extensions.formautofill.supportRTL", true);
+#else
+  pref("extensions.formautofill.supportedCountries", "US");
+  pref("extensions.formautofill.supportRTL", false);
+#endif
 
 // Whether or not to restore a session with lazy-browser tabs.
 pref("browser.sessionstore.restore_tabs_lazily", true);
@@ -2193,15 +2181,8 @@ pref("devtools.netmonitor.har.enableAutoExportToFile", false);
 
 pref("devtools.netmonitor.features.webSockets", true);
 
-// netmonitor audit
-pref("devtools.netmonitor.audits.slow", 500);
-
-// Enable the EventSource Inspector in Nightly.
-#if defined(NIGHTLY_BUILD)
-  pref("devtools.netmonitor.features.serverSentEvents", true);
-#else
-  pref("devtools.netmonitor.features.serverSentEvents", false);
-#endif
+// Disable the EventSource Inspector.
+pref("devtools.netmonitor.features.serverSentEvents", false);
 
 // Enable the Storage Inspector
 pref("devtools.storage.enabled", true);
@@ -2223,6 +2204,8 @@ pref("devtools.dom.enabled", false);
 
 // Enable the Accessibility panel.
 pref("devtools.accessibility.enabled", true);
+// Enable accessibility panel auto initialization.
+pref("devtools.accessibility.auto-init.enabled", true);
 
 // Web console filters
 pref("devtools.webconsole.filter.error", true);
@@ -2346,6 +2329,8 @@ pref("devtools.responsive.touchSimulation.enabled", false);
 pref("devtools.responsive.metaViewport.enabled", true);
 // The user agent of the viewport.
 pref("devtools.responsive.userAgent", "");
+// Enable the RDM browser UI in all builds.
+pref("devtools.responsive.browserUI.enabled", true);
 
 // Show the custom user agent input only in Nightly.
 #if defined(NIGHTLY_BUILD)
@@ -2412,4 +2397,30 @@ pref("first-startup.timeout", 30000);
 // but it exits immediately before taking any action.
 #ifdef XP_WIN
   pref("default-browser-agent.enabled", true);
+#endif
+
+// Privacy tools
+pref("privacy.donottrackheader.enabled", true); // Adds the DNT header to all sites
+pref("app.shield.optoutstudies.enabled", false); // Opts you out of any Mozilla studies
+pref("browser.discovery.enabled", false); // Opts you out of extension recommendations
+pref("browser.crashReports.unsubmittedCheck.autoSubmit2", false); // Disable auto submissions of crash reports
+pref("services.sync.prefs.sync.browser.crashReports.unsubmittedCheck.autoSubmit2", false); // Disable auto submissions of crash reports for sync
+pref("privacy.firstparty.isolate", true)
+pref("privacy.resistFingerprinting", true)
+pref("privacy.trackingprotection.fingerprinting.enabled", true) // Blocks fingerprinting
+pref("privacy.trackingprotection.cryptomining.enabled", true) // Blocks cryptomining
+pref("privacy.trackingprotection.enabled", true)
+pref("browser.send_pings", false)
+pref("dom.event.clipboardevents.enabled", false)
+pref("media.navigator.enabled", false)
+pref("network.cookie.cookieBehavior", 1) // Only allows cookies from the originating site
+pref("network.http.referer.XOriginPolicy", 2)
+pref("network.http.referer.XOriginTrimmingPolicy", 2)
+pref("browser.sessionstore.privacy_level", 2)
+pref("beacon.enabled", false)
+pref("browser.safebrowsing.downloads.remote.enabled", false)
+pref("network.IDN_show_punycode", true)
+
+#ifndef UNIX_BUT_NOT_MAC
+  pref("layers.acceleration.force-enabled", true); // Improve performance on Linux by forcing Hardware acceleration
 #endif

@@ -1,0 +1,39 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT EDIT.
+
+DEFINES += -DNDEBUG=1 -DTRIMMED=1 -DGOOGLE_PROTOBUF_NO_RTTI -DGOOGLE_PROTOBUF_NO_STATIC_INITIALIZER -DOS_POSIX=1 -DOS_LINUX=1 -DHAVE_SIDEBAR
+DIRS := test
+LOCAL_INCLUDES += -I$(topobjdir)/dist/include/mozilla/dom
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/base
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/battery
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/canvas
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/geolocation
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/html
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/indexedDB
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/media/webaudio
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/media/webspeech/recognition
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/svg
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/xml
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/xslt/base
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/xslt/xpath
+LOCAL_INCLUDES += -I$(topsrcdir)/dom/xul
+LOCAL_INCLUDES += -I$(topsrcdir)/js/xpconnect/src
+LOCAL_INCLUDES += -I$(topsrcdir)/js/xpconnect/wrappers
+LOCAL_INCLUDES += -I$(topsrcdir)/layout/generic
+LOCAL_INCLUDES += -I$(topsrcdir)/layout/style
+LOCAL_INCLUDES += -I$(topsrcdir)/layout/xul/tree
+LOCAL_INCLUDES += -I$(topsrcdir)/media/mtransport
+LOCAL_INCLUDES += -I$(topsrcdir)/media/webrtc
+LOCAL_INCLUDES += -I$(topsrcdir)/media/webrtc/signaling/src/common/time_profiling
+LOCAL_INCLUDES += -I$(topsrcdir)/media/webrtc/signaling/src/peerconnection
+LOCAL_INCLUDES += -I$(topsrcdir)/media/webrtc/trunk
+LOCAL_INCLUDES += -I$(topsrcdir)/media/webrtc/trunk/webrtc
+LOCAL_INCLUDES += -I$(topsrcdir)/netwerk/base
+LOCAL_INCLUDES += -I$(topsrcdir)/third_party/msgpack/include
+LOCAL_INCLUDES += -I$(topobjdir)/ipc/ipdl/_ipdlheaders
+LOCAL_INCLUDES += -I$(topsrcdir)/ipc/chromium/src
+LOCAL_INCLUDES += -I$(topsrcdir)/ipc/glue
+COMPUTED_LDFLAGS += -Wl,-rpath-link,/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu/dist/bin -Wl,-rpath-link,/usr/local/lib
+NONRECURSIVE_TARGETS += export
+NONRECURSIVE_TARGETS_export += xpidl
+NONRECURSIVE_TARGETS_export_xpidl_DIRECTORY = $(DEPTH)/xpcom/xpidl
+NONRECURSIVE_TARGETS_export_xpidl_TARGETS += export

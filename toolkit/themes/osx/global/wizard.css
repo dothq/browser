@@ -9,8 +9,7 @@
 }
 
 .wizard-header {
-  appearance: auto;
-  -moz-default-appearance: dialog;
+  -moz-appearance: dialog;
 }
 
 .wizard-header-box-1 {
@@ -41,8 +40,7 @@
 
 .wizard-page-box {
   padding: 15px 23px;
-  appearance: auto;
-  -moz-default-appearance: dialog;
+  -moz-appearance: dialog;
 }
 
 .wizard-buttons-separator {

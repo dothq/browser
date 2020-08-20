@@ -1,0 +1,27 @@
+{
+  "mozconfig": {
+    "configure_args": [
+      "--enable-artifact-builds"
+    ],
+    "env": {
+      "added": {},
+      "modified": {},
+      "removed": {},
+      "unmodified": {}
+    },
+    "make_extra": [],
+    "make_flags": [],
+    "path": "/home/kieran/Documents/browser/mozconfig",
+    "topobjdir": null,
+    "vars": {
+      "added": {
+        "_mozconfig_opt": "--enable-artifact-builds"
+      },
+      "modified": {},
+      "removed": {},
+      "unmodified": {}
+    }
+  },
+  "topobjdir": "/home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu",
+  "topsrcdir": "/home/kieran/Documents/browser"
+}

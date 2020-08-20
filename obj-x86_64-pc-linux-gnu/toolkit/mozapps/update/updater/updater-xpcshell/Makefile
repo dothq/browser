@@ -1,0 +1,59 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT MODIFY BY HAND.
+DEPTH := ../../../../..
+topobjdir := /home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu
+topsrcdir := /home/kieran/Documents/browser
+srcdir := /home/kieran/Documents/browser/toolkit/mozapps/update/updater/updater-xpcshell
+srcdir_rel := ../../../../../../toolkit/mozapps/update/updater/updater-xpcshell
+relativesrcdir := toolkit/mozapps/update/updater/updater-xpcshell
+include $(DEPTH)/config/autoconf.mk
+# vim:set ts=8 sw=8 sts=8 noet:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# For changes here, also consider ../Makefile.in
+
+XPCSHELLTESTDIR = $(topobjdir)/_tests/xpcshell/toolkit/mozapps/update/tests
+
+ifeq (,$(MOZ_SUITE)$(MOZ_THUNDERBIRD))
+MOCHITESTBROWSERDIR = $(topobjdir)/_tests/testing/mochitest/browser/toolkit/mozapps/update/tests/browser
+endif
+
+ifndef MOZ_WINCONSOLE
+ifdef MOZ_DEBUG
+MOZ_WINCONSOLE = 1
+else
+MOZ_WINCONSOLE = 0
+endif
+endif
+
+include $(topsrcdir)/config/rules.mk
+
+ifneq (,$(COMPILE_ENVIRONMENT)$(MOZ_ARTIFACT_BUILDS))
+tools::
+ifeq (cocoa,$(MOZ_WIDGET_TOOLKIT))
+	# Copy for xpcshell tests
+	$(NSINSTALL) -D $(XPCSHELLTESTDIR)/data/updater-xpcshell.app
+	rsync -a -C --exclude '*.in' $(srcdir)/../macbuild/Contents $(XPCSHELLTESTDIR)/data/updater-xpcshell.app
+	sed -e 's/%APP_NAME%/$(MOZ_APP_DISPLAYNAME)/' $(srcdir)/../macbuild/Contents/Resources/English.lproj/InfoPlist.strings.in | \
+	  iconv -f UTF-8 -t UTF-16 > $(XPCSHELLTESTDIR)/data/updater-xpcshell.app/Contents/Resources/English.lproj/InfoPlist.strings
+	$(NSINSTALL) -D $(XPCSHELLTESTDIR)/data/updater-xpcshell.app/Contents/MacOS
+	$(NSINSTALL) $(FINAL_TARGET)/updater-xpcshell $(XPCSHELLTESTDIR)/data/updater-xpcshell.app/Contents/MacOS
+	rm -Rf $(XPCSHELLTESTDIR)/data/updater.app
+	mv $(XPCSHELLTESTDIR)/data/updater-xpcshell.app $(XPCSHELLTESTDIR)/data/updater.app
+	mv $(XPCSHELLTESTDIR)/data/updater.app/Contents/MacOS/updater-xpcshell $(XPCSHELLTESTDIR)/data/updater.app/Contents/MacOS/org.mozilla.updater
+
+ifdef MOCHITESTBROWSERDIR
+	rsync -a -C $(XPCSHELLTESTDIR)/data/updater.app $(MOCHITESTBROWSERDIR)/
+endif
+else
+	$(MKDIR) -p $(XPCSHELLTESTDIR)/data
+	cp $(FINAL_TARGET)/updater-xpcshell$(BIN_SUFFIX) $(XPCSHELLTESTDIR)/data/updater$(BIN_SUFFIX)
+ifdef MOCHITESTBROWSERDIR
+	$(MKDIR) -p $(MOCHITESTBROWSERDIR)
+	cp $(FINAL_TARGET)/updater-xpcshell$(BIN_SUFFIX) $(MOCHITESTBROWSERDIR)/updater$(BIN_SUFFIX)
+endif
+endif
+endif
+
+include $(topsrcdir)/config/recurse.mk

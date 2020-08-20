@@ -17,8 +17,7 @@ panel {
 }
 
 menupopup {
-  appearance: auto;
-  -moz-default-appearance: menupopup;
+  -moz-appearance: menupopup;
 }
 
 menupopup > menu > menupopup {
@@ -28,7 +27,7 @@ menupopup > menu > menupopup {
 }
 
 panel[type="arrow"] {
-  appearance: none;
+  -moz-appearance: none;
   background: transparent;
   border: none;
 }
@@ -46,10 +45,10 @@ panel[type="arrow"][side="right"] {
 .panel-arrowcontent {
   padding: var(--arrowpanel-padding);
   color: var(--arrowpanel-color);
-  background: var(--arrowpanel-background);
-  background-clip: padding-box;
-  border: 1px solid var(--arrowpanel-border-color);
-  box-shadow: 0 0 4px hsla(0,0%,0%,.2);
+  background: transparent;
+  border-radius: 6px !important;
+  border: none;
+  box-shadow: 0 1.6px 3.6px 0 rgba(0,0,0,.132),0 .3px .9px 0 rgba(0,0,0,.108);
   margin: 4px;
 }
 
@@ -126,7 +125,7 @@ panel[type="arrow"].panel-no-padding::part(arrowcontent) {
 /* rules for popups associated with menulists */
 
 menulist > menupopup {
-  appearance: none;
+  -moz-appearance: none;
   min-width: 0;
   background-color: -moz-Field;
 }

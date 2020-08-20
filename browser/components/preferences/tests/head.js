@@ -139,27 +139,41 @@ function waitForEvent(aSubject, aEventName, aTimeoutMs, aTarget) {
   return eventDeferred.promise.then(cleanup, cleanup);
 }
 
-async function openPreferencesViaOpenPreferencesAPI(aPane, aOptions) {
-  let finalPaneEvent = Services.prefs.getBoolPref("identity.fxaccounts.enabled")
-    ? "sync-pane-loaded"
-    : "privacy-pane-loaded";
-  let finalPrefPaneLoaded = TestUtils.topicObserved(finalPaneEvent, () => true);
-  gBrowser.selectedTab = BrowserTestUtils.addTab(gBrowser, "about:blank");
-  openPreferences(aPane, aOptions);
-  let newTabBrowser = gBrowser.selectedBrowser;
+function openPreferencesViaOpenPreferencesAPI(aPane, aOptions) {
+  return new Promise(resolve => {
+    let finalPaneEvent = Services.prefs.getBoolPref(
+      "identity.fxaccounts.enabled"
+    )
+      ? "sync-pane-loaded"
+      : "privacy-pane-loaded";
+    let finalPrefPaneLoaded = TestUtils.topicObserved(
+      finalPaneEvent,
+      () => true
+    );
+    gBrowser.selectedTab = BrowserTestUtils.addTab(gBrowser, "about:blank");
+    openPreferences(aPane);
+    let newTabBrowser = gBrowser.selectedBrowser;
 
-  if (!newTabBrowser.contentWindow) {
-    await BrowserTestUtils.waitForEvent(newTabBrowser, "Initialized", true);
-    await BrowserTestUtils.waitForEvent(newTabBrowser.contentWindow, "load");
-    await finalPrefPaneLoaded;
-  }
-
-  let win = gBrowser.contentWindow;
-  let selectedPane = win.history.state;
-  if (!aOptions || !aOptions.leaveOpen) {
-    gBrowser.removeCurrentTab();
-  }
-  return { selectedPane };
+    newTabBrowser.addEventListener(
+      "Initialized",
+      function() {
+        newTabBrowser.contentWindow.addEventListener(
+          "load",
+          async function() {
+            let win = gBrowser.contentWindow;
+            let selectedPane = win.history.state;
+            await finalPrefPaneLoaded;
+            if (!aOptions || !aOptions.leaveOpen) {
+              gBrowser.removeCurrentTab();
+            }
+            resolve({ selectedPane });
+          },
+          { once: true }
+        );
+      },
+      { capture: true, once: true }
+    );
+  });
 }
 
 async function evaluateSearchResults(keyword, searchReults) {

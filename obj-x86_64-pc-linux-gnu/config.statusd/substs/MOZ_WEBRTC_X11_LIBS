@@ -1,0 +1,6 @@
+[
+    "-lXext",
+    "-lXdamage",
+    "-lXfixes",
+    "-lXcomposite"
+]

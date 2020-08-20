@@ -18,17 +18,11 @@ menubar {
 menu,
 menuitem,
 menucaption {
-  appearance: auto;
-  -moz-default-appearance: menuitem;
+  -moz-appearance: menuitem;
   -moz-box-align: center;
   max-width: 42em;
   list-style-image: none;
   -moz-image-region: auto;
-
-  /* Specify our background to avoid triggering reflows on hover. This is an
-   * optimization, as backgrounds don't disable theming on XUL elements, but
-   * also papers over bug 1653832. */
-  background-color: initial;
 }
 
 menu[_moz-menuactive="true"],
@@ -38,7 +32,7 @@ menuitem[_moz-menuactive="true"] {
 }
 
 menuitem[customoptionstyling="true"] {
-  appearance: none;
+  -moz-appearance: none;
 }
 
 menuitem[customoptionstyling="true"][_moz-menuactive="true"] {
@@ -144,8 +138,7 @@ menulist > menupopup > menu {
   /* These next two rules are needed to prevent inheritance and thus ugliness */
   list-style-image: none;
   -moz-image-region: auto;
-  appearance: auto;
-  -moz-default-appearance: menuarrow;
+  -moz-appearance: menuarrow;
 }
 
 .menubar-left {
@@ -169,25 +162,21 @@ menulist > menupopup > menu > .menu-iconic-left {
 /* ::::: checkbox menuitem ::::: */
 
 menuitem[checked="true"] {
-  appearance: auto !important;
-  -moz-default-appearance: checkmenuitem !important;
+  -moz-appearance: checkmenuitem !important;
 }
 
 menuitem[type="checkbox"] {
-  appearance: auto !important;
-  -moz-default-appearance: checkmenuitem !important;
+  -moz-appearance: checkmenuitem !important;
 }
 
 /* ::::: radio menuitem ::::: */
 
 menuitem[type="radio"] {
-  appearance: auto !important;
-  -moz-default-appearance: radiomenuitem !important;
+  -moz-appearance: radiomenuitem !important;
 }
 
 /* ::::: menuseparator ::::: */
 
 menuseparator {
-  appearance: auto !important;
-  -moz-default-appearance: menuseparator !important;
+  -moz-appearance: menuseparator;
 }

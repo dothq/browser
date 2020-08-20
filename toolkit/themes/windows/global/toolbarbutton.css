@@ -9,8 +9,7 @@
 /* ::::: toolbarbutton ::::: */
 
 toolbarbutton {
-  appearance: auto;
-  -moz-default-appearance: toolbarbutton;
+  -moz-appearance: toolbarbutton;
   -moz-box-align: center;
   -moz-box-pack: center;
   margin: 0;
@@ -62,7 +61,7 @@ toolbarbutton[disabled="true"] {
 /* ::::: toolbarbutton menu ::::: */
 
 .toolbarbutton-menu-dropmarker {
-  appearance: none;
+  -moz-appearance: none;
   list-style-image: url("chrome://global/skin/icons/arrow-dropdown-12.svg");
   -moz-context-properties: fill;
   fill: currentColor;

@@ -1,0 +1,47 @@
+# THIS FILE WAS AUTOMATICALLY GENERATED. DO NOT MODIFY BY HAND.
+DEPTH := ../..
+topobjdir := /home/kieran/Documents/browser/obj-x86_64-pc-linux-gnu
+topsrcdir := /home/kieran/Documents/browser
+srcdir := /home/kieran/Documents/browser/ipc/app
+srcdir_rel := ../../../ipc/app
+relativesrcdir := ipc/app
+include $(DEPTH)/config/autoconf.mk
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+ifndef MOZ_WINCONSOLE
+ifdef MOZ_DEBUG
+MOZ_WINCONSOLE = 1
+else
+MOZ_WINCONSOLE = 0
+endif
+endif
+
+include $(topsrcdir)/config/config.mk
+
+include $(topsrcdir)/config/rules.mk
+
+ifneq ($(MOZ_WIDGET_TOOLKIT),android)
+#LIBS += ../contentproc/$(LIB_PREFIX)plugin-container.$(LIB_SUFFIX)
+endif
+
+ifeq ($(OS_ARCH),WINNT) #{
+# Note the manifest file exists in the tree, so we use the explicit filename
+# here.
+EXTRA_DEPS += plugin-container.exe.manifest
+endif #}
+
+ifeq (cocoa,$(MOZ_WIDGET_TOOLKIT)) #{
+
+libs::
+	$(NSINSTALL) -D $(DIST)/bin/$(PROGRAM).app
+	rsync -a -C --exclude '*.in' $(srcdir)/macbuild/Contents $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME).app 
+	sed -e 's/%PROGRAM%/$(MOZ_CHILD_PROCESS_NAME)/' -e 's|%MOZ_DEVELOPER_REPO_PATH%|$(topsrcdir)|' -e 's|%MOZ_DEVELOPER_OBJ_PATH%|$(topobjdir)|' $(srcdir)/macbuild/Contents/Info.plist.in > $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME).app/Contents/Info.plist
+	sed -e 's/%APP_NAME%/$(MOZ_CHILD_PROCESS_BUNDLENAME)/' $(srcdir)/macbuild/Contents/Resources/English.lproj/InfoPlist.strings.in | \
+	  iconv -f UTF-8 -t UTF-16 > $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME).app/Contents/Resources/English.lproj/InfoPlist.strings
+	$(NSINSTALL) -D $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME).app/Contents/MacOS
+	$(NSINSTALL) $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME) $(DIST)/bin/$(MOZ_CHILD_PROCESS_NAME).app/Contents/MacOS
+endif #}
+
+include $(topsrcdir)/config/recurse.mk

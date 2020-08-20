@@ -5,8 +5,7 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 :host {
-  appearance: auto;
-  -moz-default-appearance: menulist;
+  -moz-appearance: menulist;
   margin: 5px 2px 3px;
   min-height: 20px;
   color: -moz-DialogText;
@@ -24,8 +23,7 @@
 /* Label box */
 
 #label-box {
-  appearance: auto;
-  -moz-default-appearance: menulist-text;
+  -moz-appearance: menulist-text;
   -moz-box-align: center;
   -moz-box-pack: center;
   margin-bottom: 1px;

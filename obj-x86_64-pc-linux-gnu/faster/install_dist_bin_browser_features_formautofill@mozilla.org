@@ -1,0 +1,9 @@
+5
+8chrome.manifest"manifest en-US.manifest\n"
+5chrome/content/*/home/kieran/Documents/browser/browser/extensions/formautofill/content/*chrome/content/
+5chrome/res/*/home/kieran/Documents/browser/browser/extensions/formautofill/skin/shared/*chrome/res/
+5chrome/res/*.jsm/home/kieran/Documents/browser/browser/extensions/formautofill/*.jsmchrome/res/
+5chrome/res/addressmetadata/*/home/kieran/Documents/browser/browser/extensions/formautofill/addressmetadata/*chrome/res/addressmetadata/
+5chrome/res/phonenumberutils/*.jsm/home/kieran/Documents/browser/browser/extensions/formautofill/phonenumberutils/*.jsmchrome/res/phonenumberutils/
+8en-US.manifest"locale formautofill en-US en-US/locale/en-US/\n"
+1en-US/locale/en-US/formautofill.properties/home/kieran/Documents/browser/browser/extensions/formautofill/locales/en-US/formautofill.properties
