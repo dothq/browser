@@ -29,6 +29,26 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
   <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
 </a>
 
+## 💻 Build Dot Browser
+If you are on `Windows` please refer to [this doc](https://firefox-source-docs.mozilla.org/setup/windows_build.html) from Mozilla.
+
+#### 1. Clone Dot Browser
+    git clone https://github.com/dothq/browser dotbrowser
+#### 2. `cd` into the cloned repository
+    cd dotbrowser
+   
+#### 3. Bootstrap the project using `mach`
+    ./mach bootstrap
+    
+#### 4. Pick what target you want to build as
+If you want a fast build, type `1` for Artifact builds, or type `2` for a full-fat build (this may take a few hours depending on your system).
+
+#### 5. Run the build
+    ./mach build
+    
+#### 6. Run the Dot Browser binary
+    ./mach run
+
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
 
