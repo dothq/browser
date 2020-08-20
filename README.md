@@ -30,7 +30,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 </a>
 
 ## 💻 Build Dot Browser
-> The following steps are designed for unix-based operating systems, refer to [this doc](https://firefox-source-docs.mozilla.org/setup/windows_build.html) if you are on Windows.
+> The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
 
 **1.** Open your terminal and `git clone` this repository.
 
