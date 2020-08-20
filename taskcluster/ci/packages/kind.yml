@@ -1,0 +1,237 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - taskgraph.transforms.try_job:transforms
+    - taskgraph.transforms.job:transforms
+    - taskgraph.transforms.cached_tasks:transforms
+    - taskgraph.transforms.task:transforms
+
+job-defaults:
+    treeherder:
+        kind: build
+        platform: packages/opt
+        tier: 1
+    worker-type: b-linux
+    worker:
+        max-run-time: 1800
+    run-on-projects: []
+    run:
+        dist: jessie
+        snapshot: 20200422T205110Z
+
+jobs:
+    deb8-python3.6:
+        description: "Python 3.6 backport for Debian jessie"
+        treeherder:
+            symbol: Deb8(python3.6)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20171205T222638Z/pool/main/p/python3.6/python3.6_3.6.3-2.dsc
+                sha256: d791dd2671127394ce5383e345b2fed9ab2481be65b6c420fa53b2ee18c240ca
+            patch: python3.6-jessie.diff
+            pre-build-command: debian/rules control-file
+
+    deb8-python3-defaults:
+        description: "python3-defaults backport for Debian jessie"
+        treeherder:
+            symbol: Deb8(python3-defaults)
+        run:
+            using: debian-package
+            dsc:
+                # The last version that doesn't also require python 3.7 or a separate python3-distutils package.
+                url: http://snapshot.debian.org/archive/debian/20171026T221955Z/pool/main/p/python3-defaults/python3-defaults_3.6.3-2.dsc
+                sha256: df91831a9a307f5e7f3fabdda52f21eeffd2f683cbeca5a581c37c1c0912549d
+            packages:
+                - deb8-python3.6
+            pre-build-command: debian/rules control-file
+
+    deb8-python-setuptools:
+        description: "python-setuptools backport for Debian jessie"
+        treeherder:
+            symbol: Deb8(python-setuptools)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20170413T152542Z/pool/main/p/python-setuptools/python-setuptools_33.1.1-1%7Ebpo8%2B1.dsc
+                sha256: e5a152e45151ee2d19959d8266e9bff09f5164ee04a0613aeb8f1d7a304fa073
+
+    deb8-cmake:
+        description: "Cmake backport for Debian jessie"
+        treeherder:
+            symbol: Deb8(cmake)
+        worker:
+            env:
+                DEB_BUILD_PROFILES: stage1
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20200320T222820Z/pool/main/c/cmake/cmake_3.16.3-1%7Ebpo9%2B1.dsc
+                sha256: 714651ac6c974694eb3452f37a70624d3d786ac02fb8ea4eb8fddae44649105d
+            patch: cmake-jessie.diff
+
+    deb10-cmake:
+        description: "Cmake backport for Debian buster"
+        treeherder:
+            symbol: Deb10(cmake)
+        run:
+            using: debian-package
+            dist: buster
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20200202T210747Z/pool/main/c/cmake/cmake_3.16.3-1.dsc
+                sha256: ecfa7cbc93dc6a9749022ccd9538843f4a0e2e77a14bb2f87e325aaf3c36b519
+            pre-build-command: apt-get install debhelper/buster-backports
+
+    deb8-ninja:
+        description: "Ninja backport for Debian jessie"
+        treeherder:
+            symbol: Deb8(ninja)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20160209T042121Z/pool/main/n/ninja-build/ninja-build_1.6.0-1.dsc
+                sha256: 25cd62b011d669c31bcd51d36d454dd826bc50af6a3af8d87bcab8948ec21626
+
+    deb8-mercurial:
+        description: "Modern Mercurial for Debian jessie"
+        treeherder:
+            symbol: Deb8(hg)
+        run:
+            using: debian-package
+            tarball:
+                url: https://www.mercurial-scm.org/release/mercurial-4.8.1.tar.gz
+                sha256: 48a45f5cde9104fbc2daf310d710d4ebf286d879b89fa327d24b005434b0fa21
+            pre-build-command: >-
+                cp -r contrib/packaging/debian debian &&
+                sed -i -e "s/__VERSION__/$(awk -F\" '$2 {print $2}' mercurial/__version__.py)-1.deb8moz1/" \
+                             -e "s/__DATE__/$(date --rfc-2822)/" \
+                             -e "s/__CODENAME__/jessie/" debian/changelog
+
+    deb10-mercurial:
+        description: "Modern Mercurial for Debian buster"
+        treeherder:
+            symbol: Deb10(hg)
+        run:
+            using: debian-package
+            dist: buster
+            tarball:
+                url: https://www.mercurial-scm.org/release/mercurial-4.8.1.tar.gz
+                sha256: 48a45f5cde9104fbc2daf310d710d4ebf286d879b89fa327d24b005434b0fa21
+            pre-build-command: >-
+                cp -r contrib/packaging/debian debian &&
+                sed -i -e "s/__VERSION__/$(awk -F\" '$2 {print $2}' mercurial/__version__.py)-1.deb10moz1/" \
+                             -e "s/__DATE__/$(date --rfc-2822)/" \
+                             -e "s/__CODENAME__/stretch/" debian/changelog
+
+    deb8-git:
+        description: "Modern git for Debian jessie"
+        treeherder:
+            symbol: Deb8(git)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20160317T100542Z/pool/main/g/git/git_2.8.0%7Erc3-1.dsc
+                sha256: 6e81a318fb4eb5cca0333b7b6ff0c70dd0097e9fe711b159d5eac4b9f47c6c27
+
+    deb8-valgrind:
+        description: "Valgrind for Debian jessie"
+        treeherder:
+            symbol: Deb8(valgrind)
+        worker:
+            env:
+                VERSION: 3.16.1
+                COMMIT: 24f63fd435e7bdab5058f2ab52953eb53a768010
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20190714T155055Z/pool/main/v/valgrind/valgrind_3.15.0-1.dsc
+                sha256: 2bd467ec486302060ed4e91452231b2c0a09afcd51c25d4ba8d3028218328681
+            packages:
+                - deb8-git
+            patch: valgrind-jessie.diff
+            pre-build-command: >-
+                git clone -n git://sourceware.org/git/valgrind.git ../valgrind-git &&
+                git -C ../valgrind-git archive --format=tar --prefix=valgrind-$VERSION/ $COMMIT | bzip2 > ../valgrind_$VERSION.orig.tar.bz2 &&
+                tar -C .. -jxf ../valgrind_$VERSION.orig.tar.bz2 &&
+                cp -r debian ../valgrind-$VERSION &&
+                cd ../valgrind-$VERSION &&
+                sed -i '/07_fix-spelling-in-binary.patch/d;/08_fix-spelling-in-manpage.patch/d;/11_arm64-cache-flush.patch/d' debian/patches/series &&
+                debchange -v 1:$VERSION-1.deb8moz1 --distribution jessie "Mozilla backport of 3.16.1." < /dev/null
+
+    deb8-dh-python:
+        description: "dh-python for Debian jessie"
+        treeherder:
+            symbol: Deb8(dh-python)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20170125T211752Z/pool/main/d/dh-python/dh-python_2.20170125.dsc
+                sha256: ef4f2951cea36ae4aac29126a1017505f98b595432fb5bdac0f21b4b4d72c1b4
+            packages:
+                - deb8-python3.6
+                - deb8-python3-defaults
+
+    deb8-xz-utils:
+        description: "xz-utils for Debian jessie"
+        treeherder:
+            symbol: Deb8(xz)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20161010T223637Z/pool/main/x/xz-utils/xz-utils_5.2.2-1.2.dsc
+                sha256: 13c8d8d0c243af78dc89b6e2cd670c8d8a2522379e1fcd196957c95d988d5961
+
+    deb8-32-xz-utils:
+        description: "xz-utils for Debian jessie 32-bits"
+        treeherder:
+            symbol: Deb8-32(xz)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20161010T223637Z/pool/main/x/xz-utils/xz-utils_5.2.2-1.2.dsc
+                sha256: 13c8d8d0c243af78dc89b6e2cd670c8d8a2522379e1fcd196957c95d988d5961
+            arch: i386
+
+    deb8-gdb:
+        description: "gdb for Debian jessie"
+        treeherder:
+            symbol: Deb8(gdb)
+        run:
+            using: debian-package
+            dsc:
+                url: http://snapshot.debian.org/archive/debian/20170119T152956Z/pool/main/g/gdb/gdb_7.12-6.dsc
+                sha256: 9727dcb3d6b655e4f2a92110f5db076a490aa50b739804be239905ecff3aacc8
+            patch: gdb-jessie.diff
+
+    deb8-python-zstandard:
+        description: "python-zstandard for Debian jessie"
+        treeherder:
+            symbol: Deb8(python-zstandard)
+        run:
+            using: debian-package
+            tarball:
+                url: https://github.com/indygreg/python-zstandard/archive/0.11.1.tar.gz
+                sha256: 2df90698e22f0da49cdd360438479f363e58eb8c3ac6e8bac84d831cf8e7baf4
+            name: python-zstandard
+            patch: python-zstandard-jessie.diff
+            packages:
+                - deb8-dh-python
+                - deb8-python3.6
+                - deb8-python3-defaults
+
+    deb10-python-zstandard:
+        description: "python-zstandard for Debian buster"
+        treeherder:
+            symbol: Deb10(python-zstandard)
+        run:
+            using: debian-package
+            dist: buster
+            tarball:
+                url: https://github.com/indygreg/python-zstandard/archive/0.11.1.tar.gz
+                sha256: 2df90698e22f0da49cdd360438479f363e58eb8c3ac6e8bac84d831cf8e7baf4
+            name: python-zstandard
+            pre-build-command: debchange -v 0.11.1-1.deb10moz --distribution buster "Mozilla backport for buster"

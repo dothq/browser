@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Test MediaRecorder Record with media.ogg.enabled = false</title>
+  <script src="/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="/tests/SimpleTest/test.css" />
+  <script type="text/javascript" src="manifest.js"></script>
+</head>
+<body>
+<pre id="test">
+<script class="testbody" type="text/javascript">
+function testThrows(stream, options) {
+  try {
+    new MediaRecorder(stream, options);
+    return false;
+  } catch(e) {
+    return e.name;
+  }
+}
+(async () => {
+  SimpleTest.waitForExplicitFinish();
+  await SpecialPowers.pushPrefEnv({set: [
+      ["media.ogg.enabled", false],
+      ["media.encoder.webm.enabled", false],
+    ]});
+  const stream = new AudioContext().createMediaStreamDestination().stream;
+  is(testThrows(stream, {mimeType: "audio/ogg"}), "NotSupportedError",
+    "Creating an ogg recorder without ogg support throws");
+  is(testThrows(stream, {mimeType: "audio/webm"}), "NotSupportedError",
+    "Creating a webm recorder without webm support throws");
+  is(testThrows(stream, {mimeType: "video/webm"}), "NotSupportedError",
+    "Creating a webm recorder without webm support throws");
+  is(testThrows(stream, {mimeType: "apa/bepa"}), "NotSupportedError",
+    "Creating a recorder for a bogus mime type throws");
+  is(testThrows(stream, {}), false,
+    "Creating a default recorder never throws, even without container support");
+  const recorder = new MediaRecorder(stream);
+  try {
+    recorder.start();
+    ok(false, "Starting a recorder without container support should throw");
+  } catch(e) {
+    is(e.name, "NotSupportedError",
+      "Starting a recorder without container support throws");
+  }
+  SimpleTest.finish();
+})();
+</script>
+</pre>
+</body>
+</html>

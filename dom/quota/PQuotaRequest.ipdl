@@ -1,0 +1,109 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+include protocol PQuota;
+
+namespace mozilla {
+namespace dom {
+namespace quota {
+
+struct StorageNameResponse
+{
+  nsString name;
+};
+
+struct StorageInitializedResponse
+{
+  bool initialized;
+};
+
+struct TemporaryStorageInitializedResponse
+{
+  bool initialized;
+};
+
+struct InitResponse
+{
+};
+
+struct InitTemporaryStorageResponse
+{
+};
+
+struct InitStorageAndOriginResponse
+{
+  bool created;
+};
+
+struct ClearOriginResponse
+{
+};
+
+struct ResetOriginResponse
+{
+};
+
+struct ClearDataResponse
+{
+};
+
+struct ClearAllResponse
+{
+};
+
+struct ResetAllResponse
+{
+};
+
+struct PersistedResponse
+{
+  bool persisted;
+};
+
+struct PersistResponse
+{
+};
+
+struct EstimateResponse
+{
+  uint64_t usage;
+  uint64_t limit;
+};
+
+struct ListOriginsResponse
+{
+  nsCString[] origins;
+};
+
+union RequestResponse
+{
+  nsresult;
+  StorageNameResponse;
+  StorageInitializedResponse;
+  TemporaryStorageInitializedResponse;
+  InitResponse;
+  InitTemporaryStorageResponse;
+  InitStorageAndOriginResponse;
+  ClearOriginResponse;
+  ResetOriginResponse;
+  ClearDataResponse;
+  ClearAllResponse;
+  ResetAllResponse;
+  PersistedResponse;
+  PersistResponse;
+  EstimateResponse;
+  ListOriginsResponse;
+};
+
+protocol PQuotaRequest
+{
+  manager PQuota;
+
+child:
+  async __delete__(RequestResponse response);
+};
+
+} // namespace quota
+} // namespace dom
+} // namespace mozilla

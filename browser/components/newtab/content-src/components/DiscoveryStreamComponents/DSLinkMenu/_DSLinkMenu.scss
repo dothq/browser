@@ -1,0 +1,33 @@
+.ds-hero-item,
+.ds-list-item,
+.ds-card,
+.ds-signup {
+  @include context-menu-button;
+
+  .context-menu {
+    opacity: 0;
+  }
+
+  &.active {
+    .context-menu {
+      opacity: 1;
+    }
+  }
+
+  &.last-item {
+    @include context-menu-open-left;
+
+    .context-menu {
+      opacity: 1;
+    }
+  }
+
+  &:-moz-any(:hover, :focus, .active) {
+    @include context-menu-button-hover;
+    outline: none;
+
+    &.ds-card-grid-border {
+      @include fade-in-card;
+    }
+  }
+}

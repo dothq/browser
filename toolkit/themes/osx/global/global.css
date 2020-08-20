@@ -1,0 +1,198 @@
+% This Source Code Form is subject to the terms of the Mozilla Public
+% License, v. 2.0. If a copy of the MPL was not distributed with this
+% file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+%include shared.inc
+%include ../../shared/global.inc.css
+
+:root {
+  /* ::::: Variables ::::: */
+  --arrowpanel-padding: 16px;
+  --default-arrowpanel-background: #fff;
+  --default-arrowpanel-color: hsl(0,0%,10%);
+  --default-arrowpanel-border-color: hsla(210,4%,10%,.05);
+  --arrowpanel-background: var(--default-arrowpanel-background);
+  --arrowpanel-color: var(--default-arrowpanel-color);
+  --arrowpanel-border-color: var(--default-arrowpanel-border-color);
+  --arrowpanel-border-radius: 3.5px;
+  --panel-disabled-color: GrayText;
+
+  --focus-ring-box-shadow: 0 0 0 1px -moz-mac-focusring inset, 0 0 0 1px -moz-mac-focusring;
+  /* ::::: Styles ::::: */
+  appearance: auto;
+  -moz-default-appearance: dialog;
+  background-color: #FFFFFF;
+  color: -moz-DialogText;
+  font: message-box;
+}
+
+/* ::::: Alert icons :::::*/
+
+.message-icon,
+.alert-icon,
+.error-icon,
+.question-icon {
+  width: 32px;
+  height: 32px;
+  margin: 6px;
+  margin-inline-end: 20px;
+}
+
+.message-icon {
+  list-style-image: url("chrome://global/skin/icons/info.svg");
+}
+
+.alert-dialog #infoIcon,
+.alert-icon {
+  list-style-image: url("chrome://global/skin/icons/warning-64.png");
+}
+
+.error-icon {
+  list-style-image: url("chrome://global/skin/icons/error-64.png");
+}
+
+.question-icon {
+  list-style-image: url("chrome://global/skin/icons/question-64.png");
+}
+
+/* ::::: iframe ::::: */
+
+xul|iframe {
+  border: none;
+  width: 100px;
+  height: 100px;
+  min-width: 10px;
+  min-height: 10px;
+}
+
+@supports -moz-bool-pref("layout.css.emulate-moz-box-with-flex") {
+  /* In emulation, <iframe> is block instead of inline, so reset the width/height */
+  xul|iframe {
+    width: auto;
+    height: auto;
+  }
+}
+
+/* ::::: Miscellaneous formatting ::::: */
+
+:root:-moz-lwtheme {
+  appearance: none;
+}
+
+:root[lwtheme-image]:-moz-lwtheme-darktext {
+  text-shadow: 0 -0.5px 1.5px white;
+}
+
+:root[lwtheme-image]:-moz-lwtheme-brighttext {
+  text-shadow: 1px 1px 1.5px black;
+}
+
+xul|separator:not([orient="vertical"]) {
+  height: 1.5em;
+}
+xul|separator[orient="vertical"] {
+  width: 1.5em;
+}
+
+xul|separator.thin:not([orient="vertical"]) {
+  height: 0.5em;
+}
+xul|separator.thin[orient="vertical"] {
+  width: 0.5em;
+}
+
+xul|separator.groove:not([orient="vertical"]) {
+  border-top: 1px solid #A3A3A3;
+  height: 0;
+  margin-block: 0.4em;
+}
+xul|separator.groove[orient="vertical"] {
+  border-left: 1px solid #A3A3A3;
+  width: 0;
+  margin-inline: 0.4em;
+}
+
+xul|description,
+xul|label {
+  cursor: default;
+  margin-block: 1px 2px;
+  margin-inline: 6px 5px;
+}
+
+xul|description {
+  margin-bottom: 4px;
+}
+
+xul|label[disabled="true"] {
+  color: GrayText;
+}
+
+.tooltip-label {
+  margin: 0;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.indent {
+  margin-inline-start: 23px;
+}
+
+.box-padded {
+  padding: 5px;
+}
+
+.text-link {
+  color: -moz-nativehyperlinktext;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+.text-link:-moz-focusring {
+  box-shadow: var(--focus-ring-box-shadow);
+}
+
+html|input {
+  margin: 4px;
+}
+
+xul|notification > xul|hbox > xul|button {
+  margin: 0 3px;
+  padding: 1px 10px;
+  min-width: 60px;
+  min-height: 16px;
+  appearance: none;
+  border-radius: 10000px;
+  border: @roundButtonBorderWidth@ @roundButtonBorderStyle@ @roundButtonBorderColor@;
+  color: @roundButtonColor@;
+  background: @roundButtonBackgroundImage@;
+  box-shadow: @roundButtonShadow@;
+}
+
+xul|notification > xul|hbox > xul|button:active:hover {
+  color: @roundButtonColor@;
+  background: @roundButtonPressedBackgroundImage@;
+  box-shadow: @roundButtonPressedShadow@;
+}
+
+xul|notification > xul|hbox > xul|button:-moz-focusring {
+  box-shadow: var(--focus-ring-box-shadow), @roundButtonShadow@;
+}
+
+xul|notification > xul|hbox > xul|button:active:hover:-moz-focusring {
+  box-shadow: var(--focus-ring-box-shadow), @roundButtonPressedShadow@;
+}
+
+xul|notification > xul|hbox > xul|button > .button-box > .button-text {
+  margin: 0 !important;
+}
+
+xul|popupnotificationcontent {
+  margin-top: .5em;
+}
+
+%include ../../shared/notification-popup.inc.css

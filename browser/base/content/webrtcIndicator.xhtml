@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://browser/skin/webRTC-indicator.css" type="text/css"?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+      id="webrtcIndicator"
+      windowtype="Browser:WebRTCGlobalIndicator"
+      chromemargin="0,0,0,0">
+
+  <head>
+    <link rel="localization" href="branding/brand.ftl"/>
+    <link rel="localization" href="browser/webrtcIndicator.ftl"/>
+    <title data-l10n-id="webrtc-indicator-title"></title>
+    <script src="chrome://browser/content/webrtcIndicator.js"></script>
+  </head>
+
+  <body role="alert">
+    <div id="drag-indicator" />
+    <div id="display-share" class="row-item" role="group" aria-labelledby="">
+      <image id="display-share-icon" />
+
+      <span id="window-share-info" data-l10n-id="webrtc-sharing-window"/>
+      <span id="browser-window-share-info" data-l10n-id="webrtc-sharing-browser-window"/>
+      <button id="stop-sharing-window" class="stop-button" data-l10n-id="webrtc-stop-sharing-button"/>
+
+      <span id="screen-share-info" data-l10n-id="webrtc-sharing-screen"/>
+      <button id="stop-sharing-screen" class="stop-button" data-l10n-id="webrtc-stop-sharing-button"/>
+    </div>
+    <div class="row-item separator" />
+    <div id="device-share" class="row-item">
+      <button id="microphone-button" class="control-icon" type="microphone" data-l10n-id="webrtc-microphone-button"/>
+      <button id="camera-button" class="control-icon" type="camera" data-l10n-id="webrtc-camera-button"/>
+    </div>
+    <div class="row-item separator" />
+    <div id="window-controls" class="row-item">
+      <button id="minimize" class="control-icon" data-l10n-id="webrtc-minimize"/>
+    </div>
+  </body>
+</html>

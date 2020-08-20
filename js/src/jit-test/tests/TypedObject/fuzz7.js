@@ -1,0 +1,1 @@
+new TypedObject.StructType(RegExp());

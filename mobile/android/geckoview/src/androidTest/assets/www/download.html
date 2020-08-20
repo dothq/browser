@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <script>
+      const blob = new Blob(["Downloaded Data"], {type: "text/plain"});
+      const element = document.createElement("a");
+      element.href = URL.createObjectURL(blob);
+      element.download = "download.txt";
+      element.style.display = "none";
+      document.body.appendChild(element);
+      element.click();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+$search-height: 48px;
+$search-icon-size: 24px;
+$search-icon-padding: 12px;
+$search-icon-width: 2 * $search-icon-padding + $search-icon-size -2;
+$search-button-width: 48px;
+$glyph-forward: url('chrome://browser/skin/forward.svg');
+
+.search-wrapper {
+  padding: 34px 0 64px;
+
+  .only-search & {
+    padding: 0 0 64px;
+  }
+
+  .logo-and-wordmark {
+    $logo-size: 96px;
+    $wordmark-size: 172px;
+
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 49px;
+
+    .logo {
+      background: url('chrome://branding/content/about-logo.png') no-repeat center;
+      background-size: $logo-size;
+      @media (min-resolution: 2x) {
+        background-image: url('chrome://branding/content/about-logo@2x.png');
+      }
+      display: inline-block;
+      height: $logo-size;
+      width: $logo-size;
+    }
+
+    .wordmark {
+      background: url('chrome://branding/content/firefox-wordmark.svg') no-repeat center center;
+      background-size: $wordmark-size;
+      -moz-context-properties: fill;
+      display: inline-block;
+      fill: var(--newtab-search-wordmark-color);
+      height: $logo-size;
+      margin-inline-start: 15px;
+      width: $wordmark-size;
+    }
+
+    @media (max-width: $break-point-medium - 1) {
+      $logo-size-small: 64px;
+      $wordmark-small-size: 100px;
+
+      .logo {
+        background-size: $logo-size-small;
+        height: $logo-size-small;
+        width: $logo-size-small;
+      }
+
+      .wordmark {
+        background-size: $wordmark-small-size;
+        height: $logo-size-small;
+        width: $wordmark-small-size;
+      }
+    }
+  }
+
+  .search-inner-wrapper {
+    cursor: default;
+    display: flex;
+    min-height: $search-height;
+    margin: 0 auto;
+    position: relative;
+    width: $searchbar-width-small;
+
+    .ds-outer-wrapper-breakpoint-override & {
+      width: 216px;
+    }
+
+    @media (min-width: $break-point-medium) {
+      width: $searchbar-width-medium;
+
+      .ds-outer-wrapper-breakpoint-override & {
+        width: 460px;
+      }
+    }
+
+    @media (min-width: $break-point-large) {
+      width: $searchbar-width-large;
+
+      .ds-outer-wrapper-breakpoint-override & {
+        width: 696px;
+      }
+    }
+  }
+
+  input {
+    background: var(--newtab-textbox-background-color) var(--newtab-search-icon) $search-icon-padding center no-repeat;
+    background-size: $search-icon-size;
+    border: solid 1px var(--newtab-search-border-color);
+    box-shadow: $shadow-secondary, 0 0 0 1px $black-15;
+    font-size: 15px;
+    -moz-context-properties: fill;
+    fill: var(--newtab-search-icon-color);
+    padding: 0;
+    padding-inline-end: $search-button-width;
+    padding-inline-start: $search-icon-width;
+    width: 100%;
+
+    &:dir(rtl) {
+      background-position-x: right $search-icon-padding;
+    }
+  }
+
+  &:hover input {
+    box-shadow: $shadow-secondary, 0 0 0 1px $black-25;
+  }
+
+  .search-inner-wrapper:active input,
+  input:focus {
+    border: $input-border-active;
+    box-shadow: var(--newtab-textbox-focus-boxshadow);
+  }
+
+  .search-button {
+    background: $glyph-forward no-repeat center center;
+    background-size: 16px 16px;
+    border: 0;
+    border-radius: 0 $border-radius $border-radius 0;
+    -moz-context-properties: fill;
+    fill: var(--newtab-search-icon-color);
+    height: 100%;
+    inset-inline-end: 0;
+    position: absolute;
+    width: $search-button-width;
+
+    &:focus,
+    &:hover {
+      background-color: $grey-90-10;
+      cursor: pointer;
+    }
+
+    &:active {
+      background-color: $grey-90-20;
+    }
+
+    &:dir(rtl) {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+.non-collapsible-section + .below-search-snippet-wrapper {
+  // If search is enabled, we need to invade its large bottom padding.
+  margin-top: -48px;
+}
+
+@media (max-height: 700px) {
+  .search-wrapper {
+    padding: 0 0 30px;
+  }
+
+  .non-collapsible-section + .below-search-snippet-wrapper {
+    // In shorter windows, search doesn't have such a large padding.
+    margin-top: -14px;
+  }
+
+  .below-search-snippet-wrapper {
+    min-height: 0;
+  }
+}
+
+.search-handoff-button {
+  background: var(--newtab-textbox-background-color) var(--newtab-search-icon) $search-icon-padding center no-repeat;
+  background-size: $search-icon-size;
+  border: solid 1px var(--newtab-search-border-color);
+  border-radius: 3px;
+  box-shadow: $shadow-secondary, 0 0 0 1px $black-15;
+  cursor: text;
+  font-size: 15px;
+  padding: 0;
+  padding-inline-end: 48px;
+  padding-inline-start: 46px;
+  opacity: 1;
+  transition: opacity 500ms;
+  width: 100%;
+
+  &:dir(rtl) {
+    background-position-x: right $search-icon-padding;
+  }
+
+  &:hover {
+    box-shadow: $shadow-secondary, 0 0 0 1px $black-25;
+  }
+
+  .fake-focus & {
+    border: $input-border-active;
+    box-shadow: var(--newtab-textbox-focus-boxshadow);
+
+    .fake-caret {
+      display: block;
+    }
+  }
+
+  .search-hidden & {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .fake-editable:focus {
+    outline: none;
+    caret-color: transparent;
+  }
+
+  .fake-editable {
+    color: transparent;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .fake-textbox {
+    opacity: 0.54;
+    text-align: start;
+  }
+
+  .fake-caret {
+    animation: caret-animation 1.3s steps(5, start) infinite;
+    background: var(--newtab-text-primary-color);
+    display: none;
+    inset-inline-start: 47px;
+    height: 17px;
+    position: absolute;
+    top: 16px;
+    width: 1px;
+
+    @keyframes caret-animation {
+      to {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+@media (min-height: 701px) {
+  body:not(.inline-onboarding) .fixed-search {
+    main {
+      padding-top: 146px;
+    }
+
+    .search-wrapper {
+      $search-header-bar-height: 95px;
+      $search-height: 35px;
+      $search-icon-size: 16px;
+      $search-icon-padding: 16px;
+
+      background-color: var(--newtab-search-header-background-color);
+      border-bottom: solid 1px var(--newtab-border-secondary-color);
+      min-height: $search-header-bar-height;
+      left: 0;
+      padding: 30px 0;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 9;
+
+      .search-inner-wrapper {
+        min-height: $search-height;
+      }
+
+      input {
+        background-position-x: $search-icon-padding;
+        background-size: $search-icon-size;
+
+        &:dir(rtl) {
+          background-position-x: right $search-icon-padding;
+        }
+      }
+    }
+
+    .search-handoff-button {
+      background-position-x: $search-icon-padding;
+      background-size: $search-icon-size;
+
+      &:dir(rtl) {
+        background-position-x: right $search-icon-padding;
+      }
+
+      .fake-caret {
+        top: 10px;
+      }
+    }
+  }
+}
+
+@at-root {
+  // Adjust the style of the contentSearchUI-generated table
+  .contentSearchSuggestionTable {
+    background-color: var(--newtab-search-dropdown-color);
+    border: 0;
+    box-shadow: $context-menu-shadow;
+    transform: translateY($textbox-shadow-size);
+
+    .contentSearchHeader {
+      background-color: var(--newtab-search-dropdown-header-color);
+      color: var(--newtab-text-secondary-color);
+    }
+
+    .contentSearchHeader,
+    .contentSearchSettingsButton {
+      border-color: var(--newtab-border-secondary-color);
+    }
+
+    .contentSearchSuggestionsList {
+      border: 0;
+    }
+
+    .contentSearchOneOffsTable {
+      background-color: var(--newtab-search-dropdown-header-color);
+      border-top: solid 1px var(--newtab-border-secondary-color);
+    }
+
+    .contentSearchSearchWithHeaderSearchText {
+      color: var(--newtab-text-primary-color);
+    }
+
+    .contentSearchSuggestionsContainer {
+      background-color: var(--newtab-search-dropdown-color);
+    }
+
+    .contentSearchSuggestionRow {
+      &.selected {
+        background: var(--newtab-element-hover-color);
+        color: var(--newtab-text-primary-color);
+
+        &:active {
+          background: var(--newtab-element-active-color);
+        }
+
+        .historyIcon {
+          fill: var(--newtab-icon-secondary-color);
+        }
+      }
+    }
+
+    .contentSearchOneOffsTable {
+      .contentSearchSuggestionsContainer {
+        background-color: var(--newtab-search-dropdown-header-color);
+      }
+    }
+
+    .contentSearchOneOffItem {
+      // Make the border slightly shorter by offsetting from the top and bottom
+      $border-offset: 18%;
+
+      background-image: none;
+      border-image: linear-gradient(transparent $border-offset, var(--newtab-border-secondary-color) $border-offset, var(--newtab-border-secondary-color) 100% - $border-offset, transparent 100% - $border-offset) 1;
+      border-inline-end: 1px solid;
+      position: relative;
+
+      &.selected {
+        background: var(--newtab-element-hover-color);
+      }
+
+      &:active {
+        background: var(--newtab-element-active-color);
+      }
+    }
+
+    .contentSearchSettingsButton {
+      &:hover {
+        background: var(--newtab-element-hover-color);
+        color: var(--newtab-text-primary-color);
+      }
+    }
+  }
+
+  .contentSearchHeaderRow > td > img,
+  .contentSearchSuggestionRow > td > .historyIcon {
+    margin-inline-start: 7px;
+    margin-inline-end: 15px;
+  }
+}

@@ -1,0 +1,139 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+kea{
+    Version{"37"}
+    zoneStrings{
+        "America:Blanc-Sablon"{
+            ec{"Blank-Sablon"}
+        }
+        "America:Cancun"{
+            ec{"Kankun"}
+        }
+        "America:Chicago"{
+            ec{"Xikagu"}
+        }
+        "America:Chihuahua"{
+            ec{"Xiuáua"}
+        }
+        "America:Costa_Rica"{
+            ec{"Kosta Rika"}
+        }
+        "America:Indianapolis"{
+            ec{"Indianapolis"}
+        }
+        "Atlantic:Bermuda"{
+            ec{"Bermuda"}
+        }
+        "Etc:UTC"{
+            ls{"Ora Universal Kordenadu"}
+        }
+        "Etc:Unknown"{
+            ec{"Sidadi diskonxedu"}
+        }
+        "Europe:Dublin"{
+            ld{"Ora Padron di Irlanda"}
+        }
+        "Europe:London"{
+            ld{"Ora di Veron Britániku"}
+        }
+        "meta:Africa_Central"{
+            ls{"Ora di Áfrika Sentral"}
+        }
+        "meta:Africa_Eastern"{
+            ls{"Ora di Áfrika Oriental"}
+        }
+        "meta:Africa_Southern"{
+            ls{"Ora di Sul di Áfrika"}
+        }
+        "meta:Africa_Western"{
+            ld{"Ora di Veron di Áfrika Osidental"}
+            lg{"Ora di Áfrika Osidental"}
+            ls{"Ora Padron di Áfrika Osidental"}
+        }
+        "meta:Alaska"{
+            ld{"Ora di Veron di Alaska"}
+            lg{"Ora di Alaska"}
+            ls{"Ora Padron di Alaska"}
+        }
+        "meta:America_Central"{
+            ld{"Ora di Veron Sentral"}
+            lg{"Ora Sentral"}
+            ls{"Ora Padron Sentral"}
+        }
+        "meta:America_Eastern"{
+            ld{"Ora di Veron Oriental"}
+            lg{"Ora Oriental"}
+            ls{"Ora Padron Oriental"}
+        }
+        "meta:America_Mountain"{
+            ld{"Ora di Veron di Montanha"}
+            lg{"Ora di Montanha"}
+            ls{"Ora Padron di Montanha"}
+        }
+        "meta:America_Pacific"{
+            ld{"Ora di Veron di Pasífiku"}
+            lg{"Ora di Pasífiku"}
+            ls{"Ora Padron di Pasífiku"}
+        }
+        "meta:Atlantic"{
+            ld{"Ora di Veron di Atlántiku"}
+            lg{"Ora di Atlántiku"}
+            ls{"Ora Padron di Atlántiku"}
+        }
+        "meta:Australia_Central"{
+            ld{"Ora di Veron di Austrália Sentral"}
+            lg{"Ora di Austrália Sentral"}
+            ls{"Ora Padron di Austrália Sentral"}
+        }
+        "meta:Australia_CentralWestern"{
+            ld{"Ora di Veron di Austrália Sentru-Osidental"}
+            lg{"Ora di Austrália Sentru-Osidental"}
+            ls{"Ora Padron di Austrália Sentru-Osidental"}
+        }
+        "meta:Australia_Eastern"{
+            ld{"Ora di Veron di Austrália Oriental"}
+            lg{"Ora di Austrália Oriental"}
+            ls{"Ora Padron di Austrália Oriental"}
+        }
+        "meta:Australia_Western"{
+            ld{"Ora di Veron di Austrália Osidental"}
+            lg{"Ora di Austrália Osidental"}
+            ls{"Ora Padron di Austrália Osidental"}
+        }
+        "meta:Cape_Verde"{
+            ld{"Ora di Veron de Kabu Verdi"}
+            lg{"Ora di Kabu Verdi"}
+            ls{"Ora Padron di Kabu Verdi"}
+        }
+        "meta:Cuba"{
+            ld{"Ora di Veron di Kuba"}
+            lg{"Ora di Kuba"}
+            ls{"Ora Padron di Kuba"}
+        }
+        "meta:Europe_Central"{
+            ld{"Ora di Veron di Europa Sentral"}
+            lg{"Ora di Europa Sentral"}
+            ls{"Ora Padron di Europa Sentral"}
+        }
+        "meta:Europe_Eastern"{
+            ld{"Ora di Veron di Europa Oriental"}
+            lg{"Ora di Europa Oriental"}
+            ls{"Ora Padron di Europa Oriental"}
+        }
+        "meta:Europe_Western"{
+            ld{"Ora di Veron di Europa Osidental"}
+            lg{"Ora di Europa Osidental"}
+            ls{"Ora Padron di Europa Osidental"}
+        }
+        "meta:GMT"{
+            ls{"Ora Médiu di Greenwich"}
+        }
+        fallbackFormat{"{1} ({0})"}
+        gmtFormat{"GMT{0}"}
+        gmtZeroFormat{"GMT"}
+        hourFormat{"+HH:mm;-HH:mm"}
+        regionFormat{"Ora di {0}"}
+        regionFormatDaylight{"Ora di Veron di {0}"}
+        regionFormatStandard{"Ora Padron di {0}"}
+    }
+}

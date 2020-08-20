@@ -1,0 +1,51 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+%include ../../shared/customizableui/panelUI.inc.css
+
+/* bookmark panel submenus */
+
+#BMB_bookmarksPopup menupopup[placespopup=true] {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  padding-top: 4px;
+  padding-inline-start: 3px;
+}
+
+#BMB_bookmarksPopup menupopup[placespopup=true]::part(innerbox) {
+  /* emulating MozPlacesPopupArrow but without the arrow */
+  box-shadow: 0 0 4px rgba(0,0,0,0.2);
+  background: var(--arrowpanel-background);
+  color: var(--arrowpanel-color);
+  border: 1px solid var(--arrowpanel-border-color);
+  margin-top: -4px;
+}
+
+/* Add border-radius on Windows 7 */
+@media (-moz-os-version: windows-win7) {
+  #BMB_bookmarksPopup menupopup[placespopup=true]::part(innerbox) {
+    border-radius: 3.5px;
+  }
+}
+
+/* bookmark panel separator */
+#BMB_bookmarksPopup menuseparator {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Disabled empty item looks too small otherwise, because it has no icon. */
+menuitem.subviewbutton[disabled]:not(.menuitem-iconic) {
+  /* This is 16px for an icon + 3px for its margins + 1px for its padding +
+   * 2px for its border, see above */
+  min-height: 22px;
+}
+
+/* Anchor the bookmark menu drop down panel at the same height as other
+   panels when in the #toolbar-menubar */
+#toolbar-menubar #BMB_bookmarksPopup {
+  margin-top: -6px;
+}

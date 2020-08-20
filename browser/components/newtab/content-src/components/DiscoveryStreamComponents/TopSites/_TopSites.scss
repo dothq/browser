@@ -1,0 +1,121 @@
+$top-sites-vertical-space-with-spoc: 20px;
+
+// ds topsites wraps the original topsites, with a few css changes.
+.ds-top-sites {
+  // This is the override layer.
+  .top-sites {
+    .top-site-outer {
+      padding: 0 12px;
+
+      .top-site-inner > a:-moz-any(.active, :focus) .tile {
+        @include ds-fade-in;
+
+        @include dark-theme-only {
+          @include ds-fade-in($blue-40-40);
+        }
+      }
+
+      .top-site-inner > a:-moz-any(:hover) .tile {
+        @include ds-fade-in($grey-30);
+
+        @include dark-theme-only {
+          @include ds-fade-in($grey-60);
+        }
+      }
+    }
+
+    .top-sites-list {
+      margin: 0 -12px;
+    }
+  }
+}
+
+// Size overrides for topsites in the 2/3 view.
+.ds-column-5,
+.ds-column-6,
+.ds-column-7,
+.ds-column-8 {
+  .ds-top-sites {
+
+    .top-site-outer {
+      padding: 0 10px;
+    }
+
+    .top-sites-list {
+      margin: 0 -10px;
+    }
+
+    .top-site-inner {
+      --leftPanelIconWidth: 84.67px;
+
+      .tile {
+        width: var(--leftPanelIconWidth);
+        height: var(--leftPanelIconWidth);
+      }
+
+      .title {
+        width: var(--leftPanelIconWidth);
+      }
+    }
+  }
+}
+
+// Size overrides for topsites in the 1/3 view.
+.ds-column-1,
+.ds-column-2,
+.ds-column-3,
+.ds-column-4 {
+  .ds-top-sites {
+
+    .top-site-outer {
+      padding: 0 8px;
+    }
+
+    .top-sites-list {
+      margin: 0 -8px;
+    }
+
+    .top-site-inner {
+      --rightPanelIconWidth: 82.67px;
+
+      .tile {
+        width: var(--rightPanelIconWidth);
+        height: var(--rightPanelIconWidth);
+      }
+
+      .title {
+        width: var(--rightPanelIconWidth);
+      }
+    }
+  }
+}
+
+.top-sites-spoc {
+  .top-sites-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .top-site-outer {
+      margin: 0 0 $top-sites-vertical-space-with-spoc;
+
+      .top-site-spoc-label {
+        @include dark-theme-only {
+          color: $grey-40;
+        }
+
+        color: $grey-50;
+        font-size: 11px;
+        display: flex;
+        justify-content: center;
+        margin-top: -4px;
+      }
+
+      &.dragged {
+
+        .top-site-spoc-label {
+          visibility: hidden;
+        }
+      }
+    }
+  }
+}

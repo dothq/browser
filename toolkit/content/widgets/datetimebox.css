@@ -1,0 +1,61 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace svg url("http://www.w3.org/2000/svg");
+
+.datetimebox {
+  display: flex;
+}
+
+.datetime-input-box-wrapper {
+  display: inline-flex;
+  flex: 1;
+  background-color: inherit;
+  min-width: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.datetime-input-edit-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  flex-grow: 1;
+}
+
+.datetime-edit-field {
+  display: inline;
+  user-select: none;
+  text-align: center;
+  padding: 1px 3px;
+  border: 0;
+  margin: 0;
+  ime-mode: disabled;
+  outline: none;
+}
+
+.datetime-edit-field:not([disabled="true"]):focus {
+  background-color: Highlight;
+  color: HighlightText;
+  outline: none;
+}
+
+.datetime-edit-field[disabled="true"],
+.datetime-edit-field[readonly="true"] {
+  user-select: none;
+}
+
+.datetime-reset-button {
+  color: inherit;
+  fill: currentColor;
+  opacity: .5;
+  background-color: transparent;
+  border: none;
+  flex: none;
+  padding-inline: 2px;
+}
+
+svg|svg.datetime-reset-button-svg {
+  pointer-events: none;
+}

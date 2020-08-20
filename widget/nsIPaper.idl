@@ -1,0 +1,45 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "nsISupports.idl"
+
+[scriptable, uuid(a4dd9675-6311-45a9-a547-44e0127304a6)]
+interface nsIPaper : nsISupports
+{
+  /**
+   * The name of the paper.
+   */
+  readonly attribute AString name;
+
+  /**
+   * The width of the paper in points.
+   */
+  readonly attribute double width;
+
+  /**
+   * The height of the paper in points.
+   */
+  readonly attribute double height;
+
+  /**
+   * The unwritable margin at the top of the paper in points.
+   */
+  readonly attribute double unwriteableMarginTop;
+
+  /**
+   * The unwritable margin at the bottom of the paper in points.
+   */
+  readonly attribute double unwriteableMarginBottom;
+
+  /**
+   * The unwritable margin at the left of the paper in points.
+   */
+  readonly attribute double unwriteableMarginLeft;
+
+  /**
+   * The unwritable margin at the right of the paper in points.
+   */
+  readonly attribute double unwriteableMarginRight;
+};

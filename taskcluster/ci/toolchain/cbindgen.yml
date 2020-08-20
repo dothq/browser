@@ -1,0 +1,66 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    description: "cbindgen toolchain build"
+    attributes:
+        local-toolchain: true
+    worker-type: b-linux
+    worker:
+        max-run-time: 3600
+    run:
+        script: build-cbindgen.sh
+        toolchain-artifact: public/build/cbindgen.tar.xz
+    run-on-projects: [trunk]
+    fetches:
+        fetch:
+            # If you update this, make sure to update the minimum version in
+            # build/moz.configure/bindgen.configure as well.
+            - cbindgen-0.14.3
+
+linux64-cbindgen:
+    treeherder:
+        symbol: TL(cbindgen)
+    worker:
+        max-run-time: 1800
+    run:
+        arguments: ['x86_64-unknown-linux-gnu']
+    fetches:
+        toolchain:
+            - linux64-rust-1.41
+
+macosx64-cbindgen:
+    treeherder:
+        symbol: TM(cbindgen)
+    worker:
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/macosx64/cross-releng.manifest"
+    run:
+        arguments: ['x86_64-apple-darwin']
+        resources:
+            - taskcluster/scripts/misc/tooltool-download.sh
+        tooltool-downloads: internal
+    fetches:
+        toolchain:
+            - linux64-cctools-port-clang-9
+            - linux64-clang-9
+            - linux64-llvm-dsymutil
+            - linux64-rust-macos-1.41
+
+win64-cbindgen:
+    treeherder:
+        symbol: TW64(cbindgen)
+    worker-type: b-win2012
+    worker:
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/win64/vs2017.manifest"
+    run:
+        arguments: ['x86_64-pc-windows-msvc']
+        resources:
+            - taskcluster/scripts/misc/tooltool-download.sh
+        toolchain-artifact: public/build/cbindgen.tar.bz2
+        tooltool-downloads: internal
+    fetches:
+        toolchain:
+            - win64-rust-1.41

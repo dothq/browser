@@ -1,0 +1,638 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+  --toolbarbutton-icon-fill-attention: var(--lwt-toolbarbutton-icon-fill-attention, #0a84ff);
+}
+
+:root:-moz-lwtheme {
+  --toolbarbutton-icon-fill-opacity: 1;
+}
+
+:root[lwt-popup-brighttext] panel,
+toolbar[brighttext] {
+  --toolbarbutton-icon-fill-attention: var(--lwt-toolbarbutton-icon-fill-attention, #45a1ff);
+}
+
+.toolbarbutton-animatable-box,
+.toolbarbutton-1 {
+  color: inherit !important;
+  -moz-context-properties: fill, fill-opacity;
+  fill: var(--lwt-toolbarbutton-icon-fill, currentColor);
+  fill-opacity: var(--toolbarbutton-icon-fill-opacity);
+}
+
+.toolbarbutton-animatable-box {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  list-style-image: none;
+  /* Height must be equal to height of toolbarbutton padding-box. --toolbarbutton-height
+     is calculated and set during runtime by BrowserUtils.setToolbarButtonHeightProperty()
+     before the animation begins. */
+  height: var(--toolbarbutton-height);
+}
+
+#back-button:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#forward-button:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#reload-button:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#nav-bar-overflow-button:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#PlacesChevron:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#panic-button:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#PanelUI-menu-button:-moz-locale-dir(rtl) > .toolbarbutton-badge-stack > .toolbarbutton-icon {
+  transform: scaleX(-1);
+}
+
+#back-button {
+  list-style-image: url("chrome://browser/skin/back.svg");
+}
+
+#forward-button {
+  list-style-image: url("chrome://browser/skin/forward.svg");
+}
+
+/* The animations for the reload-button and stop-button are disabled
+   outside of the nav-bar due to bug 1382894. */
+:-moz-any(#reload-button, #stop-button) > .toolbarbutton-animatable-box {
+  display: none;
+}
+#nav-bar-customization-target > #stop-reload-button > :-moz-any(#reload-button, #stop-button) > .toolbarbutton-animatable-box {
+  display: block;
+}
+
+#stop-reload-button[animate] > #reload-button > .toolbarbutton-icon,
+#stop-reload-button[animate] > #reload-button[displaystop] + #stop-button > .toolbarbutton-icon {
+  fill: transparent;
+}
+
+@keyframes reload-to-stop {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-450px);
+  }
+}
+
+@keyframes reload-to-stop-rtl {
+  from {
+    transform: scaleX(-1) translateX(0);
+  }
+  to {
+    transform: scaleX(-1) translateX(-450px);
+  }
+}
+
+@keyframes stop-to-reload {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-450px);
+  }
+}
+
+@keyframes stop-to-reload-rtl {
+  from {
+    transform: scaleX(-1) translateX(0);
+  }
+  to {
+    transform: scaleX(-1) translateX(-450px);
+  }
+}
+
+#stop-reload-button[animate] > #reload-button,
+#stop-reload-button[animate] > #stop-button {
+  position: relative;
+}
+
+#reload-button > .toolbarbutton-animatable-box,
+#stop-button > .toolbarbutton-animatable-box {
+  top: calc(50% - 10px); /* Vertically center the 20px tall animatable image */
+  /* Since .toolbarbutton-icon uses a different width than the animatable-box,
+     we need to set a padding relative to the difference in widths. */
+  margin-inline-start: calc((16px + 2 * var(--toolbarbutton-inner-padding) - 18px) / 2);
+  width: 18px; /* Width of each frame within the SVG sprite */
+  height: 20px; /* Height of each frame within the SVG sprite */
+}
+
+#stop-reload-button[animate] > #reload-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  background-image: url("chrome://browser/skin/reload-to-stop.svg");
+  width: 468px;
+}
+
+#stop-reload-button[animate] > #reload-button:not([displaystop]) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: reload-to-stop;
+}
+
+#stop-reload-button[animate] > #reload-button:not([displaystop]):-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: reload-to-stop-rtl;
+}
+
+#reload-button:not([displaystop]) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-timing-function: steps(25);
+  animation-duration: 417ms;
+}
+
+#stop-reload-button[animate] > #reload-button[displaystop] + #stop-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  background-image: url("chrome://browser/skin/stop-to-reload.svg");
+  width: 468px;
+}
+
+#stop-reload-button[animate] > #reload-button[displaystop] + #stop-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: stop-to-reload;
+}
+
+#stop-reload-button[animate] > #reload-button[displaystop] + #stop-button:-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: stop-to-reload-rtl;
+}
+
+#reload-button[displaystop] + #stop-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-timing-function: steps(25);
+  animation-duration: 417ms;
+}
+
+#reload-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  transform: translateX(-450px);
+}
+
+#reload-button:-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  transform: scaleX(-1) translateX(-450px);
+}
+
+#reload-button[displaystop] + #stop-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  transform: translateX(-450px);
+}
+
+#reload-button[displaystop] + #stop-button:-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  transform: scaleX(-1) translateX(-450px);
+}
+
+#reload-button {
+  list-style-image: url("chrome://browser/skin/reload.svg");
+}
+
+#stop-button {
+  list-style-image: url("chrome://browser/skin/stop.svg");
+}
+
+#home-button {
+  list-style-image: url("chrome://browser/skin/home.svg");
+}
+
+#bookmarks-toolbar-button,
+#bookmarks-toolbar-placeholder {
+  list-style-image: url("chrome://browser/skin/bookmarks-toolbar.svg");
+}
+
+#bookmarks-menu-button {
+  list-style-image: url("chrome://browser/skin/bookmark-star-on-tray.svg");
+}
+
+#history-panelmenu {
+  list-style-image: url("chrome://browser/skin/history.svg");
+}
+
+#downloads-button {
+  list-style-image: url("chrome://browser/skin/downloads/download-icons.svg#arrow-with-bar");
+}
+
+#add-ons-button {
+  list-style-image: url("chrome://mozapps/skin/extensions/extension.svg");
+}
+
+#open-file-button {
+  list-style-image: url("chrome://browser/skin/open.svg");
+}
+
+#save-page-button {
+  list-style-image: url("chrome://browser/skin/save.svg");
+}
+
+#sync-button {
+  list-style-image: url("chrome://browser/skin/tab.svg");
+}
+
+#characterencoding-button {
+  list-style-image: url("chrome://browser/skin/characterEncoding.svg");
+}
+
+#new-window-button {
+  list-style-image: url("chrome://browser/skin/new-window.svg");
+}
+
+#new-tab-button {
+  list-style-image: url("chrome://browser/skin/new-tab.svg");
+}
+
+#privatebrowsing-button {
+  list-style-image: url("chrome://browser/skin/privateBrowsing.svg");
+}
+
+#find-button {
+  list-style-image: url("chrome://browser/skin/search-glass.svg");
+}
+
+#print-button {
+  list-style-image: url("chrome://browser/skin/print.svg");
+}
+
+%ifdef XP_MACOSX
+#restore-button,
+%endif
+#fullscreen-button {
+  list-style-image: url("chrome://browser/skin/fullscreen.svg");
+}
+
+#developer-button {
+  list-style-image: url("chrome://browser/skin/developer.svg");
+}
+
+#profiler-button > .toolbarbutton-icon {
+  list-style-image: url("chrome://devtools/skin/images/tool-profiler.svg");
+}
+
+#profiler-button:not(.profiler-active) > image {
+  transform: scaleX(-1);
+}
+
+#profiler-button.profiler-active > image {
+  fill: #0060df;
+  fill-opacity: 1;
+  background-color: #0060df33;
+}
+
+#profiler-button.profiler-active:hover > image {
+  background-color: #0060df22;
+}
+
+#profiler-button.profiler-paused > image {
+  opacity: 0.4;
+}
+
+#profiler-button > .toolbarbutton-menu-dropmarker {
+  /* Inherit the fill and fill-opacity values from the toolbarbutton
+     instead of using the values from .toolbarbutton-menu-dropmarker */
+  -moz-context-properties: fill, fill-opacity;
+  fill: inherit;
+  fill-opacity: inherit;
+}
+
+.widget-overflow-list #profiler-button > .toolbarbutton-menu-dropmarker,
+#customization-palette #profiler-button > .toolbarbutton-menu-dropmarker {
+  display: none;
+}
+
+#preferences-button {
+  list-style-image: url("chrome://global/skin/icons/settings.svg");
+}
+
+#PanelUI-menu-button {
+  list-style-image: url("chrome://browser/skin/menu.svg");
+}
+
+#PanelUI-menu-button[badge-status="update-available"],
+#PanelUI-menu-button[badge-status="update-downloading"],
+#PanelUI-menu-button[badge-status="update-manual"],
+#PanelUI-menu-button[badge-status="update-restart"] {
+  list-style-image: url("chrome://browser/skin/menu-badged.svg");
+}
+
+#cut-button {
+  list-style-image: url("chrome://browser/skin/edit-cut.svg");
+}
+
+#copy-button {
+  list-style-image: url("chrome://browser/skin/edit-copy.svg");
+}
+
+#paste-button {
+  list-style-image: url("chrome://browser/skin/edit-paste.svg");
+}
+
+#zoom-out-button {
+  list-style-image: url("chrome://browser/skin/zoom-out.svg");
+}
+
+#zoom-in-button {
+  list-style-image: url("chrome://browser/skin/zoom-in.svg");
+}
+
+#PlacesChevron,
+#nav-bar-overflow-button {
+  list-style-image: url("chrome://browser/skin/chevron.svg");
+}
+
+#nav-bar-overflow-button[animate] > .toolbarbutton-icon {
+  fill: transparent;
+}
+
+@keyframes overflow-animation {
+  from {
+    transform: translateX(0);
+  }
+  50% {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    transform: translateX(-1260px);
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+}
+
+@keyframes overflow-animation-rtl {
+  from {
+    transform: scaleX(-1) translateX(0);
+  }
+  50% {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    transform: scaleX(-1) translateX(-1260px);
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+}
+
+/* The animation is supposed to show the blue fill color for 520ms, then the
+   fade to the toolbarbutton-fill color for the remaining 210ms. Thus with an
+   animation-duration of 730ms, 71% is the point where we start the fade out. */
+@keyframes overflow-fade {
+  from {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  71% {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    fill: inherit;
+  }
+}
+
+#nav-bar-overflow-button > .toolbarbutton-animatable-box {
+  top: calc(50% - 18px); /* Vertically center the 36px tall animatable image */
+  /* Since .toolbarbutton-icon uses a different width than the animatable box,
+     we need to set a padding relative to the difference in widths. */
+  margin-inline-start: calc((16px + 2 * var(--toolbarbutton-inner-padding) - 18px) / 2);
+  width: 18px; /* Width of each frame within the SVG sprite */
+  height: 36px; /* Height of each frame within the SVG sprite */
+}
+
+#nav-bar-overflow-button > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  min-height: 36px; /* Minimum height must be equal to the height of the SVG sprite */
+}
+
+#nav-bar-overflow-button[animate] > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: overflow-animation;
+  animation-timing-function: steps(70);
+  animation-duration: 1167ms;
+  background-image: url("chrome://browser/skin/chevron-animation.svg");
+  width: 1278px;
+}
+
+#nav-bar-overflow-button[animate]:-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: overflow-animation-rtl;
+}
+
+#nav-bar-overflow-button[animate][fade] > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  animation-name: overflow-fade;
+  animation-timing-function: ease-out;
+  animation-duration: 730ms;
+}
+
+#nav-bar-overflow-button[animate][fade]:-moz-locale-dir(rtl) > .toolbarbutton-animatable-box > .toolbarbutton-animatable-image {
+  transform: scaleX(-1);
+}
+
+#email-link-button {
+  list-style-image: url("chrome://browser/skin/mail.svg");
+}
+
+#sidebar-button {
+  list-style-image: url("chrome://browser/skin/sidebars-right.svg");
+}
+
+#sidebar-button:-moz-locale-dir(ltr):not([positionend]),
+#sidebar-button:-moz-locale-dir(rtl)[positionend] {
+  list-style-image: url("chrome://browser/skin/sidebars.svg");
+}
+
+#panic-button {
+  list-style-image: url("chrome://browser/skin/forget.svg");
+}
+
+#panic-button[open] {
+  fill: rgb(213, 32, 20);
+}
+
+#library-button {
+  list-style-image: url("chrome://browser/skin/library.svg");
+}
+
+@keyframes library-bookmark-animation {
+  from {
+    transform: translateX(0);
+    fill: inherit;
+  }
+  25% {
+    fill: inherit;
+  }
+  50% {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    transform: translateX(-1056px);
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+}
+
+@keyframes library-bookmark-animation-rtl {
+  from {
+    transform: translateX(1056px);
+    fill: inherit;
+  }
+  25% {
+    fill: inherit;
+  }
+  50% {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    transform: translateX(0);
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+}
+
+@keyframes library-bookmark-fade {
+  from {
+    fill: var(--toolbarbutton-icon-fill-attention);
+    fill-opacity: 1;
+  }
+  to {
+    fill: inherit;
+  }
+}
+
+#library-button[animate] > .toolbarbutton-icon {
+  fill: transparent;
+}
+
+#library-animatable-box[animate] {
+  /* Position the sprite at the y-position of the library-button, then adjust
+     based on the size difference between half of the button height and half
+     of the sprite height. */
+  top: calc(var(--library-button-height) / 2 - 27px);
+  /* Set a margin relative to the difference in widths of the .toolbarbutton-icon
+     and the .toolbar-animatable-box. This is correct even in RTL because the item
+     is positioned using `left`. */
+  left: calc(var(--library-icon-x) + (16px + 2 * var(--toolbarbutton-inner-padding) - 22px) / 2);
+  width: 22px; /* Width of each frame within the SVG sprite */
+  height: 54px; /* Height of each frame within the SVG sprite */
+}
+
+#library-animatable-box[animate] > .toolbarbutton-animatable-image {
+  min-height: 54px; /* Minimum height must be equal to the height of the SVG sprite */
+  width: 1078px;
+  animation-duration: 800ms;
+  animation-timing-function: steps(48);
+}
+
+#library-animatable-box[animate][fade] > .toolbarbutton-animatable-image {
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+}
+
+#library-animatable-box[animate="bookmark"] > .toolbarbutton-animatable-image {
+  background-image: url("chrome://browser/skin/library-bookmark-animation.svg");
+  animation-name: library-bookmark-animation;
+  -moz-context-properties: fill, fill-opacity, stroke;
+  stroke: var(--toolbarbutton-icon-fill-attention);
+}
+
+#library-animatable-box[animate="bookmark"]:-moz-locale-dir(rtl) > .toolbarbutton-animatable-image {
+  animation-name: library-bookmark-animation-rtl;
+}
+
+#library-animatable-box[animate="bookmark"][fade] > .toolbarbutton-animatable-image {
+  animation-name: library-bookmark-fade;
+}
+
+@keyframes library-pocket-animation {
+  from {
+    transform: translateX(0);
+    fill: inherit;
+  }
+  25% {
+    fill: inherit;
+  }
+  50% {
+    fill: #ef4056;
+  }
+  to {
+    transform: translateX(-1056px);
+    fill: #ef4056;
+  }
+}
+
+@keyframes library-pocket-animation-rtl {
+  from {
+    transform: translateX(1056px);
+    fill: inherit;
+  }
+  25% {
+    fill: inherit;
+  }
+  50% {
+    fill: #ef4056;
+  }
+  to {
+    transform: translateX(0);
+    fill: #ef4056;
+  }
+}
+
+/* We need to use an animation here instead of a transition
+   to guarantee that the animation succeeds. With transitions
+   if the starting value is already equal to the end value
+   then no transition will occur and thus no transitionend event. */
+@keyframes library-pocket-fade {
+  from {
+    fill: #ef4056;
+  }
+  to {
+    fill: inherit;
+  }
+}
+
+#library-animatable-box[animate="pocket"] > .toolbarbutton-animatable-image {
+  background-image: url("chrome://browser/skin/library-pocket-animation.svg");
+  animation-name: library-pocket-animation;
+}
+
+#library-animatable-box[animate="pocket"]:-moz-locale-dir(rtl) > .toolbarbutton-animatable-image {
+  animation-name: library-pocket-animation-rtl;
+}
+
+#library-animatable-box[animate="pocket"][fade] > .toolbarbutton-animatable-image {
+  animation-name: library-pocket-fade;
+}
+
+/* ----- BOOKMARK BUTTONS ----- */
+
+.bookmark-item {
+  list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+toolbarbutton.bookmark-item {
+  -moz-context-properties: fill, fill-opacity;
+  fill: var(--lwt-toolbarbutton-icon-fill, currentColor);
+  fill-opacity: var(--toolbarbutton-icon-fill-opacity);
+}
+
+.bookmark-item[container] {
+  list-style-image: url("chrome://browser/skin/places/folder.svg");
+}
+
+.bookmark-item[container][query] {
+  list-style-image: url("chrome://browser/skin/places/folder-smart.svg");
+}
+
+.bookmark-item[query][tagContainer] {
+  list-style-image: url("chrome://browser/skin/places/tag.svg");
+  -moz-image-region: auto;
+}
+
+.bookmark-item[query][dayContainer] {
+  list-style-image: url("chrome://browser/skin/places/history.svg");
+  -moz-image-region: auto;
+}
+
+.bookmark-item[query][hostContainer] {
+  list-style-image: url("chrome://browser/skin/places/folder.svg");
+}
+
+#whats-new-menu-button {
+  list-style-image: url("chrome://browser/skin/whatsnew.svg");
+}
+#pioneer-button {
+  list-style-image: url("chrome://browser/skin/pioneer.svg");
+}

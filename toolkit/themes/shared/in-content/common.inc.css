@@ -1,0 +1,1185 @@
+%if 0
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+%endif
+@namespace html "http://www.w3.org/1999/xhtml";
+@namespace xul "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
+
+:root {
+  --in-content-page-color: #0c0c0d;
+  --in-content-page-background: #f9f9fa;
+  --in-content-text-color: var(--grey-90);
+  --in-content-deemphasized-text: var(--grey-60);
+  --in-content-selected-text: #fff;
+  --in-content-box-background: #fff;
+  --in-content-box-background-odd: rgba(12, 12, 13, 0.05); /* grey 90 a05 */
+  --in-content-box-background-hover: #ededf0; /* grey 20 */
+  --in-content-box-background-active: #d7d7db; /* grey 30 */
+  --in-content-box-border-color: var(--grey-90-a30);
+  --in-content-box-info-background: var(--grey-20);
+  --in-content-item-hover: rgba(69, 161, 255, 0.2); /* blue 40 a20 */
+  --in-content-item-selected: #0a84ff;
+  --in-content-border-highlight: #0a84ff;
+  --in-content-border-focus: #0a84ff;
+  --in-content-border-hover: var(--grey-90-a50);
+  --in-content-border-active: var(--blue-50);
+  --in-content-border-active-shadow: var(--blue-50-a30);
+  --in-content-border-invalid: var(--red-50);
+  --in-content-border-invalid-shadow: var(--red-50-a30);
+  --in-content-border-color: #d7d7db;
+  --in-content-category-outline-focus: 1px dotted #0a84ff;
+  --in-content-category-text-selected: #0a84ff;
+  --in-content-category-text-selected-active: #0060df;
+  --in-content-category-background-hover: rgba(12,12,13,0.1);
+  --in-content-category-background-active: rgba(12,12,13,0.15);
+  --in-content-category-background-selected-hover: rgba(12,12,13,0.15);
+  --in-content-category-background-selected-active: rgba(12,12,13,0.2);
+  --in-content-tab-color: #424f5a;
+  --in-content-link-color: var(--blue-60);
+  --in-content-link-color-hover: var(--blue-70);
+  --in-content-link-color-active: var(--blue-80);
+  --in-content-link-color-visited: var(--blue-60);
+  --in-content-button-background: var(--grey-90-a10);
+  --in-content-button-background-hover: var(--grey-90-a20);
+  --in-content-button-background-active: var(--grey-90-a30);
+  --in-content-primary-button-background: var(--blue-60);
+  --in-content-primary-button-background-hover: var(--blue-70);
+  --in-content-primary-button-background-active: var(--blue-80);
+  --in-content-table-background: #ebebeb;
+  --in-content-table-border-dark-color: #d1d1d1;
+  --in-content-table-header-background: #0a84ff;
+  --in-content-dialog-header-background: #f1f1f1;
+  --in-content-sidebar-width: 240px;
+
+  --panel-border-radius: 2px; /* This is overridden on Windows */
+
+  --blue-40: #45a1ff;
+  --blue-40-a10: rgb(69, 161, 255, 0.1);
+  --blue-50: #0a84ff;
+  --blue-50-a30: rgba(10, 132, 255, 0.3);
+  --blue-60: #0060df;
+  --blue-70: #003eaa;
+  --blue-80: #002275;
+  --grey-20: #ededf0;
+  --grey-30: #d7d7db;
+  --grey-40: #b1b1b3;
+  --grey-60: #4a4a4f;
+  --grey-90: #0c0c0d;
+  --grey-90-a10: rgba(12, 12, 13, 0.1);
+  --grey-90-a20: rgba(12, 12, 13, 0.2);
+  --grey-90-a30: rgba(12, 12, 13, 0.3);
+  --grey-90-a50: rgba(12, 12, 13, 0.5);
+  --grey-90-a60: rgba(12, 12, 13, 0.6);
+  --green-50: #30e60b;
+  --green-60: #12bc00;
+  --green-70: #058b00;
+  --green-80: #006504;
+  --green-90: #003706;
+  --orange-50: #ff9400;
+  --red-50: #ff0039;
+  --red-50-a30: rgba(255, 0, 57, 0.3);
+  --red-60: #d70022;
+  --red-70: #a4000f;
+  --red-80: #5a0002;
+  --red-90: #3e0200;
+  --yellow-50: #ffe900;
+  --yellow-60: #d7b600;
+  --yellow-60-a30: rgba(215, 182, 0, 0.3);
+  --yellow-70: #a47f00;
+  --yellow-80: #715100;
+  --yellow-90: #3e2800;
+
+  --shadow-10: 0 1px 4px var(--grey-90-a10);
+  --shadow-30: 0 4px 16px var(--grey-90-a10);
+
+  --card-padding: 16px;
+  --card-shadow: var(--shadow-10);
+  --card-outline-color: var(--grey-30);
+  --card-shadow-hover: var(--card-shadow), 0 0 0 5px var(--card-outline-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Keep this in sync with layout/base/PresShell.cpp! */
+    --in-content-page-background: #2A2A2E;
+    --in-content-page-color: rgb(249, 249, 250);
+    --in-content-text-color: var(--in-content-page-color);
+    --in-content-deemphasized-text: var(--grey-40);
+    --in-content-box-background: #202023;
+    --in-content-box-background-hover: rgba(249,249,250,0.15);
+    --in-content-box-background-active: rgba(249,249,250,0.2);
+    --in-content-box-background-odd: rgba(249,249,250,0.05);
+    --in-content-box-info-background: rgba(249,249,250,0.15);
+
+    --in-content-border-color: rgba(249,249,250,0.2);
+    --in-content-border-hover: rgba(249,249,250,0.3);
+    --in-content-box-border-color: rgba(249,249,250,0.2);
+
+    --in-content-button-background: rgba(249,249,250,0.1);
+    --in-content-button-background-hover: rgba(249,249,250,0.15);
+    --in-content-button-background-active: rgba(249,249,250,0.2);
+
+    --in-content-category-background-hover: rgba(249,249,250,0.1);
+    --in-content-category-background-active: rgba(249,249,250,0.15);
+    --in-content-category-background-selected-hover: rgba(249,249,250,0.15);
+    --in-content-category-background-selected-active: rgba(249,249,250,0.2);
+
+    --in-content-table-background: #202023;
+    --in-content-table-border-dark-color: rgba(249,249,250,0.2);
+    --in-content-table-header-background: #002b57;
+    --in-content-dialog-header-background: rgba(249,249,250,0.05);
+
+    --in-content-category-text-selected: var(--blue-40);
+    --in-content-category-text-selected-active: var(--blue-50);
+    --in-content-link-color: var(--blue-40);
+    --in-content-link-color-hover: var(--blue-50);
+    --in-content-link-color-active: var(--blue-60);
+    --in-content-link-color-visited: var(--blue-40);
+
+    --in-content-tab-color: var(--in-content-page-color);
+
+    --card-outline-color: var(--grey-60);
+
+    scrollbar-color: rgba(249,249,250,.4) rgba(20,20,25,.3);
+  }
+}
+
+:root {
+  font: message-box;
+  appearance: none;
+  background-color: var(--in-content-page-background);
+  color: var(--in-content-page-color);
+}
+
+html|body {
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0;
+}
+
+html|h1 {
+  font-size: 2.5em;
+  font-weight: lighter;
+  line-height: 1.2;
+  color: var(--in-content-text-color);
+  margin: 0;
+  margin-bottom: .5em;
+}
+
+html|hr {
+  border-style: solid none none none;
+  border-color: var(--in-content-border-color);
+}
+
+html|h2 {
+  font-weight: 600;
+  line-height: 1.4em;
+}
+
+.main-content {
+  padding: 40px 28px;
+  overflow: auto;
+}
+
+/* tabpanels and tabs */
+
+xul|tabpanels {
+  appearance: none;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  color: inherit;
+}
+
+xul|tabs {
+  margin-bottom: 15px;
+  border-block: 1px solid var(--in-content-box-border-color);
+  background-color: var(--in-content-page-background);
+  color: var(--in-content-tab-color);
+}
+
+xul|tab {
+  appearance: none;
+  margin-top: 0;
+  padding: 4px 20px 0 !important;
+  min-height: 44px;
+  color: inherit;
+  background-color: var(--in-content-page-background);
+  border-bottom: 4px solid transparent;
+  transition: background-color 50ms ease 0s;
+}
+
+xul|tab:hover {
+  background-color: var(--in-content-box-background-hover);
+}
+
+xul|tab[selected] {
+  background-color: var(--in-content-box-background-hover);
+  border-bottom-color: var(--in-content-border-highlight);
+}
+
+/* html buttons */
+
+html|button {
+  padding: 3px;
+  font: inherit;
+}
+
+/* xul buttons and menulists */
+
+button,
+html|select,
+html|input[type="color"],
+xul|menulist {
+  appearance: none;
+  min-height: 32px;
+  /* !important overrides button.css for disabled and default XUL buttons: */
+  color: inherit !important;
+  border: 1px solid transparent; /* needed for high-contrast mode, where it'll show up */
+  border-radius: 2px;
+  background-color: var(--in-content-button-background);
+  font-weight: 400;
+  padding: 0 8px;
+  text-decoration: none;
+  margin: 4px 8px;
+  /* Ensure font-size isn't overridden by widget styling (e.g. in forms.css) */
+  font-size: 1em;
+}
+
+xul|button,
+html|button {
+  /* Use the same margin of other elements for the alignment */
+  margin-inline: 4px;
+}
+
+html|button::-moz-focus-inner,
+html|select::-moz-focus-inner,
+html|input[type="color"]::-moz-focus-inner {
+  border: none;
+}
+
+button:-moz-focusring,
+html|select:-moz-focusring,
+html|input[type="checkbox"]:-moz-focusring,
+html|input[type="color"]:-moz-focusring,
+xul|menulist:-moz-focusring {
+  outline: 2px solid var(--in-content-border-active);
+  /* offset outline to align with 1px border-width set for buttons/menulists above. */
+  outline-offset: -1px;
+  /* Make outline-radius slightly bigger than the border-radius set above,
+   * to make the thicker outline corners look smooth */
+  -moz-outline-radius: 3px;
+  box-shadow: 0 0 0 4px var(--in-content-border-active-shadow);
+}
+
+html|select:not([size]):not([multiple]) {
+  background-image: url("chrome://global/skin/icons/arrow-dropdown-12.svg");
+  background-position: right 3px center;
+  background-repeat: no-repeat;
+  background-size: auto 12px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  font-size: inherit;
+  line-height: 2.1;
+  padding-inline: 5px 24px;
+  text-overflow: ellipsis;
+}
+
+html|select:not([size]):not([multiple]):dir(rtl) {
+  background-position-x: left 3px;
+}
+
+html|select:not([size]):not([multiple]) > html|option {
+  background-color: var(--in-content-box-background);
+  color: var(--in-content-text-color);
+}
+
+html|button:enabled:hover,
+html|select:not([size]):not([multiple]):enabled:hover,
+html|input[type="color"]:hover,
+xul|button:not([disabled="true"]):hover,
+xul|menulist:not([disabled="true"]):hover {
+  background-color: var(--in-content-button-background-hover);
+}
+
+html|button:enabled:hover:active,
+html|select:not([size]):not([multiple]):enabled:hover:active,
+html|input[type="color"]:enabled:hover:active,
+xul|button:not([disabled="true"]):hover:active,
+xul|button[open],
+xul|button[open]:hover,
+xul|menulist[open="true"]:not([disabled="true"]) {
+  background-color: var(--in-content-button-background-active);
+}
+
+html|button:disabled,
+html|select:disabled,
+html|input[type="color"]:disabled,
+xul|button[disabled="true"],
+xul|menulist[disabled="true"] {
+  opacity: 0.4;
+}
+
+html|button[autofocus],
+html|button[type="submit"],
+button.primary {
+  background-color: var(--in-content-primary-button-background);
+  color: var(--in-content-selected-text) !important;
+}
+
+html|button[autofocus]:enabled:hover,
+html|button[type="submit"]:enabled:hover,
+html|button.primary:enabled:hover,
+xul|button.primary:not([disabled="true"]):hover {
+  background-color: var(--in-content-primary-button-background-hover);
+}
+
+html|button[autofocus]:enabled:hover:active,
+html|button[type="submit"]:enabled:hover:active,
+html|button.primary:enabled:hover:active,
+xul|button.primary:not([disabled="true"]):hover:active {
+  background-color: var(--in-content-primary-button-background-active);
+}
+
+html|button.danger-button {
+  background-color: var(--red-60);
+  color: white !important;
+}
+
+html|button.danger-button:enabled:hover {
+  background-color: var(--red-70);
+}
+
+html|button.danger-button:enabled:hover:active {
+  background-color: var(--red-80);
+}
+
+html|button.ghost-button {
+  background-color: transparent;
+}
+
+html|button.ghost-button:enabled:hover {
+  background-color: var(--in-content-button-background);
+}
+
+html|button.ghost-button:enabled:hover:active {
+  background-color: var(--in-content-button-background-hover);
+}
+
+html|input[type="color"] {
+  padding: 6px;
+  width: 50px;
+}
+
+xul|menulist[image]::part(icon) {
+  margin-inline-end: 5px;
+}
+
+xul|*.close-icon > xul|*.button-box {
+  padding-block: 0;
+  padding-inline: 0 !important;
+}
+
+xul|menulist::part(dropmarker) {
+  appearance: none;
+  margin-inline-end: 4px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  list-style-image: url("chrome://global/skin/icons/arrow-dropdown-12.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+xul|menulist::part(dropmarker-icon) {
+  width: 12px;
+  height: 12px;
+}
+
+xul|menulist > xul|menupopup {
+  appearance: none;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  background-color: var(--in-content-box-background);
+}
+
+xul|menulist > xul|menupopup xul|menu,
+xul|menulist > xul|menupopup xul|menuitem {
+  appearance: none;
+  font-size: 1em;
+  color: var(--in-content-text-color);
+  padding-block: 0.2em;
+  padding-inline: 10px 30px;
+}
+
+xul|menulist > xul|menupopup > xul|menu:not([disabled="true"])[_moz-menuactive="true"],
+xul|menulist > xul|menupopup > xul|menuitem:not([disabled="true"])[_moz-menuactive="true"] {
+  color: var(--in-content-text-color);
+  background-color: var(--in-content-item-hover);
+}
+
+xul|menulist > xul|menupopup > xul|menu:not([disabled="true"])[selected="true"],
+xul|menulist > xul|menupopup > xul|menuitem:not([disabled="true"])[selected="true"] {
+  color: var(--in-content-selected-text);
+  background-color: var(--in-content-item-selected);
+}
+
+xul|menulist > xul|menupopup > xul|menu[disabled="true"],
+xul|menulist > xul|menupopup > xul|menuitem[disabled="true"] {
+  color: #999;
+  /* override the [_moz-menuactive="true"] background color from
+     global/menu.css */
+  background-color: transparent;
+}
+
+xul|menulist > xul|menupopup xul|menuseparator {
+  appearance: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--in-content-box-border-color);
+  border-bottom: none;
+}
+
+/* textboxes */
+
+html|input[type="email"],
+html|input[type="tel"],
+html|input[type="text"],
+html|input[type="password"],
+html|input[type="url"],
+html|input[type="number"],
+html|textarea,
+xul|search-textbox {
+  appearance: none;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  color: inherit;
+  background-color: var(--in-content-box-background);
+}
+
+xul|search-textbox {
+  min-height: 32px;
+  padding-inline: 8px;
+}
+
+html|input[type="email"],
+html|input[type="tel"],
+html|input[type="text"],
+html|input[type="password"],
+html|input[type="url"],
+html|input[type="number"],
+html|textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 5px 8px;
+  margin: 2px 4px;
+}
+
+html|input[type="email"]:enabled:not(:focus):hover,
+html|input[type="tel"]:enabled:not(:focus):hover,
+html|input[type="text"]:enabled:not(:focus):hover,
+html|input[type="password"]:enabled:not(:focus):hover,
+html|input[type="url"]:enabled:not(:focus):hover,
+html|input[type="number"]:enabled:not(:focus):hover,
+html|textarea:enabled:not(:focus):hover,
+xul|search-textbox:not([disabled="true"]):not([focused]):hover {
+  border-color: var(--in-content-border-hover);
+}
+
+html|input[type="email"]:focus,
+html|input[type="tel"]:focus,
+html|input[type="text"]:focus,
+html|input[type="password"]:focus,
+html|input[type="url"]:focus,
+html|input[type="number"]:focus,
+html|textarea:focus,
+xul|search-textbox[focused] {
+  border-color: var(--in-content-border-active);
+  box-shadow: 0 0 0 1px var(--in-content-border-active),
+    0 0 0 4px var(--in-content-border-active-shadow);
+}
+
+html|input[type="email"]:-moz-ui-invalid,
+html|input[type="tel"]:-moz-ui-invalid,
+html|input[type="text"]:-moz-ui-invalid,
+html|input[type="password"]:-moz-ui-invalid,
+html|input[type="url"]:-moz-ui-invalid,
+html|input[type="number"]:-moz-ui-invalid,
+html|textarea:-moz-ui-invalid {
+  border-color: var(--in-content-border-invalid);
+}
+
+/* Don't show the field error outlines and focus borders at the same time. */
+html|input[type="email"]:-moz-ui-invalid:focus,
+html|input[type="tel"]:-moz-ui-invalid:focus,
+html|input[type="text"]:-moz-ui-invalid:focus,
+html|input[type="password"]:-moz-ui-invalid:focus,
+html|input[type="url"]:-moz-ui-invalid:focus,
+html|input[type="number"]:-moz-ui-invalid:focus,
+html|textarea:-moz-ui-invalid:focus {
+  box-shadow: 0 0 0 3px var(--in-content-border-invalid-shadow);
+}
+
+html|input[type="email"]:disabled,
+html|input[type="tel"]:disabled,
+html|input[type="text"]:disabled,
+html|input[type="password"]:disabled,
+html|input[type="url"]:disabled,
+html|input[type="number"]:disabled,
+html|textarea:disabled,
+xul|search-textbox[disabled="true"] {
+  opacity: 0.4;
+}
+
+/* Links */
+
+html|a,
+.text-link {
+  color: var(--in-content-link-color);
+  text-decoration: none;
+}
+
+html|a:hover,
+.text-link:hover {
+  color: var(--in-content-link-color-hover);
+  text-decoration: underline;
+}
+
+html|a:visited {
+  color: var(--in-content-link-color-visited);
+}
+
+html|a:hover:active,
+.text-link:hover:active {
+  color: var(--in-content-link-color-active);
+  text-decoration: none;
+}
+
+/* Checkboxes and radio buttons */
+
+xul|checkbox {
+  appearance: none;
+  height: 30px;
+  margin: 2px 0;
+}
+
+xul|*.checkbox-check,
+html|input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  margin: 0;
+  margin-inline-end: 10px;
+  background-color: var(--in-content-box-background);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+xul|checkbox:not([disabled="true"]):hover > xul|*.checkbox-check,
+html|input[type="checkbox"]:not(:disabled):hover {
+  border-color: var(--in-content-border-focus);
+}
+
+xul|checkbox[checked] > xul|*.checkbox-check {
+  list-style-image: url("chrome://global/skin/icons/check.svg");
+  -moz-context-properties: fill;
+  fill: #2292d0;
+}
+
+html|input[type="checkbox"]:checked {
+  background-image: url("chrome://global/skin/icons/check.svg");
+  -moz-context-properties: fill;
+  fill: #2292d0;
+}
+
+xul|checkbox[disabled="true"],
+xul|label[disabled="true"] {
+  color: inherit;
+}
+
+xul|checkbox[disabled="true"],
+html|input[type="checkbox"]:disabled,
+xul|label[disabled="true"] {
+  opacity: 0.5;
+}
+
+xul|richlistitem > xul|*.checkbox-check {
+  margin: 3px 6px;
+}
+
+html|*.toggle-container-with-text {
+  display: flex;
+  align-items: center;
+}
+
+xul|radio {
+  margin-inline-start: 0;
+  appearance: none;
+}
+
+xul|*.radio-check {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 50%;
+  margin: 0;
+  margin-inline-end: 10px;
+  background-color: var(--in-content-box-background);
+}
+
+xul|radio:not([disabled="true"]):hover > xul|*.radio-check {
+  border-color: var(--in-content-border-focus);
+}
+
+xul|*.radio-check[selected] {
+  list-style-image: url("chrome://global/skin/in-content/radio.svg");
+  -moz-context-properties: fill;
+  fill: #2292d0;
+}
+
+xul|radio[disabled="true"] {
+  color: inherit;
+  opacity: 0.5;
+}
+
+xul|*.radio-label-box {
+  margin-inline: -1px 8px; /* the negative margin-inline-start for the transparent border */
+  padding-inline-start: 0;
+}
+
+/* Category List */
+
+#categories {
+  appearance: none;
+  background-color: initial; /* override the background-color set on all richlistboxes in common.inc.css */
+  margin: 70px 0 0;
+  border-width: 0;
+  width: var(--in-content-sidebar-width);
+  box-shadow: none;
+}
+
+html|*#categories {
+  box-sizing: border-box;
+  padding: 1px;
+}
+
+#categories > .category {
+  min-height: 48px;
+  appearance: none;
+  margin-inline-start: 34px;
+  padding-inline: 10px;
+  transition: background-color 150ms;
+}
+
+html|*#categories > html|*.category {
+  border: 0;
+  background-color: initial;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  background-position-y: 12px;
+  margin-inline-end: 0;
+  min-width: auto;
+  padding-inline-start: 34px;
+  text-align: start;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+}
+
+html|*#categories > html|*.category:dir(rtl) {
+  background-position-x: right 10px;
+}
+
+#categories > .category:hover {
+  background-color: var(--in-content-category-background-hover);
+  border-radius: 2px;
+}
+
+#categories > .category:hover:active {
+  background-color: var(--in-content-category-background-active);
+}
+
+#categories > .category[selected],
+#categories > .category.selected {
+  color: var(--in-content-category-text-selected) !important;
+  background-color: transparent;
+}
+
+#categories > .category[selected]:hover,
+#categories > .category.selected:hover {
+  background-color: var(--in-content-category-background-selected-hover);
+}
+
+#categories > .category[selected]:hover:active,
+#categories > .category.selected:hover:active {
+  color: var(--in-content-category-text-selected-active) !important;
+  background-color: var(--in-content-category-background-selected-active);
+}
+
+#categories[keyboard-navigation="true"]:-moz-focusring > .category[current] {
+  outline: var(--in-content-category-outline-focus);
+}
+
+html|*#categories[last-input-type="mouse"] > html|button.category:-moz-focusring {
+  outline: none;
+  box-shadow: none;
+}
+
+.category-name {
+  font-size: 1.07em;
+  line-height: 1.4em;
+  padding-inline-start: 9px;
+  margin: 0;
+  -moz-user-select: none;
+}
+
+.category-icon {
+  width: 24px;
+  height: 24px;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+}
+
+.category[selected] > .category-icon,
+.category.selected > .category-icon {
+  fill-opacity: 1;
+}
+
+@media (max-width: 830px) {
+  :root {
+    --in-content-sidebar-width: 118px;
+  }
+
+  html|*.category:not(.category-no-icon) > html|*.category-name,
+  .category-icon + .category-name {
+    display: none;
+  }
+
+  #categories > .category {
+    padding-inline-start: 12px; /* make category icons align center */
+    margin-inline-end: 33px;
+  }
+
+  html|*#categories > html|*.category {
+    width: 48px;
+    min-width: auto;
+    box-sizing: border-box;
+  }
+
+  html|*#categories > html|*.category,
+  /* We need to override the full-width RTL rule, so explicitly specify RTL. */
+  html|*#categories > html|*.category:dir(rtl) {
+    background-position: center;
+  }
+
+  .main-content {
+    padding-inline: 0;
+  }
+
+  .pane-container {
+    margin-inline-end: 10px;
+  }
+}
+
+/* header */
+
+.header {
+  margin-inline-end: 4px; /* add the 4px end-margin of other elements */
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  -moz-box-align: baseline;
+}
+
+.header-name {
+  font-size: 1.46em;
+  font-weight: 300;
+  line-height: 1.3em;
+  margin: 0;
+  -moz-user-select: none;
+}
+
+/* List boxes */
+
+html|select[size][multiple],
+xul|listheader,
+xul|richlistbox {
+  appearance: none;
+  margin-inline: 0;
+  background-color: var(--in-content-box-background);
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  color: var(--in-content-text-color);
+}
+
+xul|listheader {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: 1px;
+  box-shadow: inset 0 -1px var(--in-content-border-color);
+}
+
+xul|listheader + xul|richlistbox {
+  margin-top: 0;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+html|select[size][multiple] > html|option,
+xul|treechildren::-moz-tree-row {
+  padding: 0.3em;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background-image: none;
+}
+
+xul|treechildren::-moz-tree-row(multicol, odd) {
+  background-color: var(--in-content-box-background-odd);
+}
+
+html|select[size][multiple] > html|option:hover,
+xul|treechildren::-moz-tree-row(hover) {
+  background-color: var(--in-content-item-hover);
+}
+
+xul|treechildren::-moz-tree-row(selected) {
+  background-color: var(--in-content-item-selected);
+}
+
+xul|panel[type="autocomplete-richlistbox"] {
+  background-color: var(--in-content-box-background);
+  border: 1px solid var(--in-content-box-border-color);
+  color: var(--in-content-text-color);
+}
+
+/* Trees */
+
+xul|tree {
+  appearance: none;
+  font-size: 1em;
+  border: 1px solid var(--in-content-box-border-color);
+  border-radius: 2px;
+  background-color: var(--in-content-box-background);
+  margin: 0;
+}
+
+xul|tree:-moz-focusring,
+xul|richlistbox:-moz-focusring {
+  border-color: var(--in-content-border-active);
+  box-shadow: 0 0 0 1px var(--in-content-border-active),
+    0 0 0 4px var(--in-content-border-active-shadow);
+}
+
+xul|treecols {
+  appearance: none;
+  border: none;
+  border-bottom: 1px solid var(--in-content-border-color);
+  padding: 0;
+}
+
+xul|treecol:not([hideheader="true"]),
+xul|treecolpicker {
+  appearance: none;
+  border: none;
+  background-color: var(--in-content-box-background-hover);
+  color: #808080;
+  padding: 5px 10px;
+}
+
+xul|treecol:not([hideheader="true"]):not([sortable="false"]):hover,
+xul|treecolpicker:hover {
+  background-color: var(--in-content-box-background-active);
+  color: var(--in-content-text-color);
+}
+
+xul|treecol:not([hideheader="true"]):not(:first-child),
+xul|treecolpicker {
+  border-inline-start-width: 1px;
+  border-inline-start-style: solid;
+  border-image: linear-gradient(transparent 0%, transparent 20%, var(--in-content-box-border-color) 20%, var(--in-content-box-border-color) 80%, transparent 80%, transparent 100%) 1 1;
+}
+
+xul|treecol[sortDirection]:not([hideheader="true"]) > xul|*.treecol-sortdirection {
+  list-style-image: url("chrome://global/skin/in-content/dropdown.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+  width: 18px;
+  height: 18px;
+}
+
+xul|treecol[sortDirection="ascending"]:not([hideheader="true"]) > xul|*.treecol-sortdirection {
+  transform: scaleY(-1);
+}
+
+/* This is the only way to increase the height of a tree row unfortunately */
+xul|treechildren::-moz-tree-row {
+  min-height: 2em;
+}
+
+/* Color needs to be set on tree cell in order to be applied */
+xul|treechildren::-moz-tree-cell-text,
+xul|treechildren::-moz-tree-twisty,
+xul|treechildren::-moz-tree-image {
+  color: var(--in-content-text-color);
+}
+
+xul|treechildren::-moz-tree-cell-text(selected),
+xul|treechildren::-moz-tree-twisty(selected),
+xul|treechildren::-moz-tree-image(selected) {
+  color: var(--in-content-selected-text);
+}
+
+/* Message bars */
+.message-bar {
+  background-color: var(--in-content-box-info-background);
+  border-radius: 4px;
+  min-height: 32px;
+  -moz-box-align: center;
+  padding: 4px;
+}
+
+.message-bar-description {
+  margin: 2px 0;
+  line-height: 1.25;
+}
+
+/* The message-bar-button styles have extra specificity to override
+ * the defaults for buttons. */
+.message-bar-content > .message-bar-button {
+  background-color: var(--grey-90-a10);
+  border: none;
+  border-radius: 2px;
+  height: 24px;
+  margin-inline-start: 8px;
+  padding: 0 8px;
+}
+
+.message-bar-content > .message-bar-button:hover {
+  background-color: var(--grey-90-a20);
+}
+
+.message-bar-content > .message-bar-button:hover:active {
+  background-color: var(--grey-90-a30);
+}
+
+.message-bar-icon {
+  list-style-image: url("chrome://global/skin/icons/identity-icon.svg");
+  width: 24px;
+  height: 24px;
+  padding: 4px;
+  margin-inline-end: 4px;
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+/* Warning styles */
+.message-bar-warning {
+  background-color: var(--yellow-50);
+  color: var(--yellow-90);
+}
+
+.message-bar-warning > .message-bar-icon {
+  list-style-image: url("chrome://browser/skin/warning.svg");
+}
+
+input[type="text"][warning]:enabled:not(:focus) {
+  border-color: var(--yellow-60);
+  box-shadow: 0 0 0 1px var(--yellow-60), 0 0 0 4px var(--yellow-60-a30);
+}
+
+.card {
+  background: var(--in-content-box-background);
+  /* Needed for high-contrast where the border will appear. */
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: var(--card-shadow);
+  margin: 0 0 8px;
+  /* Remove the border from the overall padding. */
+  padding: calc(var(--card-padding) - 1px);
+  transition: box-shadow 150ms;
+}
+
+.card:not(.card-no-hover):hover {
+  box-shadow: var(--card-shadow-hover);
+}
+
+.card-heading-image {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin: -16px -16px 16px;
+}
+
+.card-heading-image:dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.sidebar-footer-list {
+  list-style-type: none;
+  margin-block: 0 36px;
+  margin-inline: 34px 0;
+  padding: 0;
+}
+
+.sidebar-footer-link,
+.sidebar-footer-button > .text-link {
+  -moz-box-flex: 1;
+  margin-inline: 34px 0;
+  text-decoration: none;
+  color: currentColor;
+  width: 36px;
+  height: 36px;
+  cursor: default;
+}
+
+.sidebar-footer-link {
+  display: flex;
+  align-items: center;
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position-x: 13px;
+  background-position-y: 10px;
+  cursor: default;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  padding-inline-start: 43px;
+
+  /* These override the common styles. */
+  margin: 0;
+  font-size: .9em;
+  width: auto;
+}
+
+.sidebar-footer-link:dir(rtl) {
+  background-position-x: right 13px;
+}
+
+.sidebar-footer-link,
+.sidebar-footer-link:hover,
+.sidebar-footer-link:hover:active,
+.sidebar-footer-link:visited {
+  text-decoration: none;
+  color: currentColor;
+}
+
+.sidebar-footer-link:hover,
+.sidebar-footer-button > .text-link:hover {
+  background-color: var(--in-content-category-background-hover);
+  border-radius: 2px;
+}
+
+.sidebar-footer-link:hover:active:not([disabled]),
+.sidebar-footer-button > .text-link:hover:active:not([disabled]) {
+  background-color: var(--in-content-category-background-active);
+  color: currentColor;
+}
+
+.sidebar-footer-link:-moz-focusring,
+.sidebar-footer-button > .text-link:-moz-focusring {
+  outline: var(--in-content-category-outline-focus);
+}
+
+.sidebar-footer-icon {
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+  margin: 10px;
+  margin-inline-start: 13px;
+  vertical-align: middle;
+}
+
+.sidebar-footer-icon:hover {
+  fill: currentColor !important;
+}
+
+.sidebar-footer-button:last-of-type {
+  margin-bottom: 36px;
+}
+
+xul|*.help-icon {
+  list-style-image: url("chrome://global/skin/icons/help.svg");
+}
+
+html|*.help-icon {
+  background-image: url("chrome://global/skin/icons/help.svg");
+}
+
+.preferences-icon {
+  background-image: url("chrome://global/skin/icons/settings.svg");
+}
+
+.addons-icon {
+  list-style-image: url("chrome://mozapps/skin/extensions/extension.svg");
+  /* The add-ons icon doesn't have much (any?) margin, so make it a bit smaller. */
+  width: 14px;
+  height: 14px;
+  margin-inline-start: 15px;
+}
+
+.sidebar-footer-label {
+  margin: 0 4px;
+  font-size: .9em;
+  -moz-user-select: none;
+}
+
+@media (max-width: 830px) {
+  .sidebar-footer-button > .text-link {
+    -moz-box-flex: 0;
+    width: 36px;
+    height: 36px;
+    margin-inline-start: 0;
+  }
+
+  .sidebar-footer-icon {
+    margin: 10px;
+  }
+
+  .sidebar-footer-label {
+    display: none;
+  }
+
+  .sidebar-footer-list {
+    margin-inline-start: 40px;
+  }
+
+  .sidebar-footer-link {
+    width: 36px;
+    height: 36px;
+    padding-inline-start: 0;
+    margin-inline-start: 1px;
+  }
+
+  .sidebar-footer-link,
+  /* We need to override the full-width RTL rule, so explicitly specify RTL. */
+  .sidebar-footer-link:dir(rtl) {
+    background-position: center;
+  }
+
+  .sidebar-footer-link-text {
+    display: none;
+  }
+}
+
+.back-button {
+  -moz-context-properties: fill;
+  fill: currentColor;
+  background-image: url("chrome://global/skin/icons/arrow-left.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  min-width: auto;
+  width: 32px;
+  margin-block: 0;
+  margin-inline-start: 0;
+}
+
+.back-button:-moz-locale-dir(rtl),
+.back-button:dir(rtl) {
+  transform: scaleX(-1);
+}

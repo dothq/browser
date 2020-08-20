@@ -1,0 +1,196 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*** Status and progress indicator ***/
+
+#downloads-indicator-anchor {
+  min-width: 16px;
+  min-height: 16px;
+}
+
+#downloads-indicator-progress-outer {
+  width: 16px;
+  height: 16px;
+  background-size: 16px;
+  background: url("chrome://browser/skin/downloads/download-icons.svg#default-bar") center no-repeat;
+}
+
+#downloads-button[attention="success"] > .toolbarbutton-badge-stack > #downloads-indicator-anchor > #downloads-indicator-icon,
+#downloads-button[attention="success"] > .toolbarbutton-badge-stack > #downloads-indicator-anchor > #downloads-indicator-progress-outer {
+  -moz-context-properties: fill, fill-opacity;
+  fill: var(--toolbarbutton-icon-fill-attention);
+  fill-opacity: 1;
+}
+#downloads-button[progress] > .toolbarbutton-badge-stack > #downloads-indicator-anchor > #downloads-indicator-progress-outer {
+  background: url("chrome://browser/skin/downloads/download-icons.svg#progress-bar-bg") center no-repeat;
+}
+
+#downloads-indicator-icon {
+  -moz-context-properties: fill, fill-opacity;
+  background-image: url("chrome://browser/skin/downloads/download-icons.svg#arrow");
+  width: 16px;
+  height: 16px;
+}
+
+#downloads-indicator-progress-inner {
+  background: url("chrome://browser/skin/downloads/download-icons.svg#progress-bar-fg") left no-repeat;
+  margin-inline-end: 16px;
+  -moz-context-properties: fill;
+  fill: var(--toolbarbutton-icon-fill-attention);
+  background-size: 16px;
+  /* From javascript side we use animation delay from 0s to -100s to show
+   * corresponding frames needed for progress.
+   * animation-delay is set to a positive value to make nothing shown.
+   */
+  animation-play-state: paused;
+  animation-delay: 1s;
+  animation-duration: 100s;
+  animation-timing-function: linear;
+  animation-name: indicatorArrowProgress;
+}
+
+#downloads-indicator-progress-inner:-moz-locale-dir(rtl) {
+  background-position-x: right;
+}
+
+@keyframes indicatorArrowProgress {
+  0% {
+    margin-inline-end: 15px;
+  }
+  100% {
+    margin-inline-end: 1px;
+  }
+}
+
+/*** Status badges ***/
+
+#downloads-button[attention="warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge,
+#downloads-button[attention="severe"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  display: -moz-box;
+  height: 8px;
+  width: 8px;
+  min-width: 0;
+  border-radius: 50%;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin-top: -1px !important;
+  margin-inline-end: -2px !important;
+}
+
+#downloads-button[cui-areatype="toolbar"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  height: 7px;
+  width: 7px;
+}
+
+#downloads-button[attention="severe"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  background: #D90000;
+}
+
+#downloads-button[attention="warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  background: #FFBF00;
+}
+
+#downloads-button[attention="severe"] > .toolbarbutton-badge-stack > .toolbarbutton-badge:-moz-window-inactive,
+#downloads-button[attention="warning"] > .toolbarbutton-badge-stack > .toolbarbutton-badge:-moz-window-inactive {
+  filter: none;
+}
+
+/*** Download notifications ***/
+
+#downloads-button[notification="start"] > .toolbarbutton-badge-stack > #downloads-indicator-anchor > #downloads-indicator-icon {
+  animation-name: downloadsIndicatorStartDip;
+  /* Upon changing the duration_delay below, please keep the delay time of
+     setTimeout() identical in indicator.js for this animation.
+
+     Timing here needs to align with the animation on #downloads-indicator-notification
+  */
+  animation-duration: 360ms;
+  animation-delay: 400ms;
+  animation-iteration-count: 1;
+}
+
+@keyframes downloadsIndicatorStartDip {
+  0% {
+    transform: translateY(0);
+    animation-timing-function: linear;
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: ease-out;
+  }
+  88% {
+    transform: translateY(3px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes downloadsIndicatorFinishPulse {
+  from  { transform: scale(1); }
+  37.5% { transform: scale(1.4); animation-timing-function: ease-out; }
+  to    { transform: scale(1); animation-timing-function: ease-in; }
+}
+
+#downloads-button[notification="finish"] > .toolbarbutton-badge-stack > #downloads-indicator-anchor > #downloads-indicator-icon {
+  animation-name: downloadsIndicatorFinishPulse;
+  animation-delay: 250ms;
+  animation-duration: 300ms;
+  animation-iteration-count: 2;
+}
+
+#downloads-animation-container {
+  min-height: 1px;
+  min-width: 1px;
+  height: 1px;
+  margin-bottom: -1px;
+  /* Makes the outermost animation container element positioned, so that its
+     contents are rendered over the main browser window in the Z order.
+     This is required by the animated event notification. */
+  position: relative;
+  /* The selected tab may overlap #downloads-indicator-notification */
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* download start animation */
+
+#downloads-notification-anchor {
+  width: 42px; /* Width of each frame within the SVG sprite */
+  height: 98px; /* Height of each frame within the SVG sprite */
+  /* We need a min-height as well, to avoid being compressed away by our
+     container (#downloads-animation-container), which is 1px tall as defined
+     in a CSS rule above this one. */
+  min-height: 98px;
+  overflow: hidden;
+  /* animation is not directional and shouldn't be reversed in RTL */
+  direction: ltr;
+}
+
+#downloads-indicator-notification {
+  opacity: 0;
+  min-width: 1344px;
+  height: 98px; /* Height is equal to height of each frame in the SVG animation */
+  -moz-context-properties: fill;
+  fill: #737373;
+}
+
+@keyframes downloadsIndicatorNotificationStart {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1302px);
+  }
+}
+
+#downloads-notification-anchor[notification="start"] > #downloads-indicator-notification {
+  opacity: 1;
+  background: url("chrome://browser/skin/downloads/notification-start-animation.svg") 0 center no-repeat;
+  transform: translateX(0px);
+  animation-name: downloadsIndicatorNotificationStart;
+  animation-duration: 540ms;
+  animation-delay: 64ms;
+  animation-timing-function: steps(31);
+}

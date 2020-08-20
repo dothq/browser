@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=2100"/>
+  <title>Sanity check for double-tap zooming</title>
+  <script type="application/javascript" src="apz_test_native_event_utils.js"></script>
+  <script type="application/javascript" src="apz_test_utils.js"></script>
+  <script src="/tests/SimpleTest/paint_listener.js"></script>
+  <script type="application/javascript">
+
+function* doubleTapOn(element, x, y, testDriver) {
+  // This listener will trigger the test to continue once APZ is done with
+  // processing the scroll.
+  SpecialPowers.Services.obs.addObserver(testDriver, "APZ:TransformEnd");
+
+  synthesizeNativeTap(element, x, y);
+  synthesizeNativeTap(element, x, y);
+
+  // Wait for the APZ:TransformEnd to fire
+  yield true;
+
+  // We get here once the APZ:TransformEnd has fired, so we don't need that
+  // observer any more.
+  SpecialPowers.Services.obs.removeObserver(testDriver, "APZ:TransformEnd");
+
+  // Flush state so we can query an accurate resolution
+  yield flushApzRepaints(testDriver);
+}
+
+function* test(testDriver) {
+  var resolution = getResolution();
+  ok(resolution > 0,
+     "The initial_resolution is " + resolution + ", which is some sane value");
+
+  // Check that double-tapping once zooms in
+  yield* doubleTapOn(document.getElementById("target"), 10, 10, testDriver);
+  var prev_resolution = resolution;
+  resolution = getResolution();
+  ok(resolution > prev_resolution, "The first double-tap has increased the resolution to " + resolution);
+
+  // Check that double-tapping again on the same spot zooms out
+  yield* doubleTapOn(document.getElementById("target"), 10, 10, testDriver);
+  prev_resolution = resolution;
+  resolution = getResolution();
+  ok(resolution < prev_resolution, "The second double-tap has decreased the resolution to " + resolution);
+}
+
+waitUntilApzStable()
+.then(runContinuation(test))
+.then(subtestDone);
+
+  </script>
+  <style type="text/css">
+    .box {
+        width: 800px;
+        height: 500px;
+        margin: 0 auto;
+    }
+</style>
+</head>
+<body>
+<div class="box">Text before the div.</div>
+<div id="target" style="margin-left: 100px; width:900px; height: 400px; background-image: linear-gradient(blue,red)"></div>
+<div class="box">Text after the div.</div>
+</body>
+</html>

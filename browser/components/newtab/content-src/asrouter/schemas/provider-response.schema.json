@@ -1,0 +1,118 @@
+{
+  "title": "ProviderResponse",
+  "description": "A response object for remote providers of AS Router",
+  "type": "object",
+  "version": "6.1.0",
+  "properties": {
+    "messages": {
+      "type": "array",
+      "description": "An array of router messages",
+      "items": {
+        "title": "RouterMessage",
+        "description": "A definition of an individual message",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for the message that should not conflict with any other previous message"
+          },
+          "template": {
+            "type": "string",
+            "description": "An id matching an existing Activity Stream Router template",
+            "enum": ["simple_snippet"]
+          },
+          "bundled": {
+            "type": "integer",
+            "description": "The number of messages of the same template this one should be shown with (optional)"
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "If bundled with other messages of the same template, which order should this one be placed in? (optional - defaults to 0)"
+          },
+          "content": {
+            "type": "object",
+            "description": "An object containing all variables/props to be rendered in the template. See individual template schemas for details."
+          },
+          "targeting": {
+            "type": "string",
+            "description": "A JEXL expression representing targeting information"
+          },
+          "personalized": {
+            "type": "boolean",
+            "description": "Is a personalized score applied to the provider's messages?"
+          },
+          "personalizedModelVersion": {
+            "type": "string",
+            "description": "The version of the model use for personalization"
+          },
+          "trigger": {
+            "type": "object",
+            "description": "An action to trigger potentially showing the message",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A string identifying the trigger action",
+                "enum": ["firstRun", "openURL"]
+              },
+              "params": {
+                "type": "array",
+                "description": "An optional array of string parameters for the trigger action",
+                "items": {
+                  "type": "string",
+                  "description": "A parameter for the trigger action"
+                }
+              }
+            },
+            "required": ["id"]
+          },
+          "frequency": {
+            "type": "object",
+            "description": "An object containing frequency cap information for a message.",
+            "properties": {
+              "lifetime": {
+                "type": "integer",
+                "description": "The maximum lifetime impressions for a message.",
+                "minimum": 1,
+                "maximum": 100
+              },
+              "custom": {
+                "type": "array",
+                "description": "An array of custom frequency cap definitions.",
+                "items": {
+                  "description": "A frequency cap definition containing time and max impression information",
+                  "type": "object",
+                  "properties": {
+                    "period": {
+                      "oneOf": [
+                        {
+                          "type": "integer",
+                          "description": "Period of time in milliseconds (e.g. 86400000 for one day)"
+                        },
+                        {
+                          "type": "string",
+                          "description": "One of a preset list of short forms for period of time (e.g. 'daily' for one day)",
+                          "enum": ["daily"]
+                        }
+                      ]
+
+                    },
+                    "cap": {
+                      "type": "integer",
+                      "description": "The maximum impressions for the message within the defined period.",
+                      "minimum": 1,
+                      "maximum": 100
+                    }
+                  },
+                  "required": ["period", "cap"]
+                }
+              }
+            }
+          }
+        },
+        "required": ["id", "template", "content"]
+      }
+    }
+  },
+  "required": ["messages"]
+}

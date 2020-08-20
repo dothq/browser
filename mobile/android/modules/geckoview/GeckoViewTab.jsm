@@ -1,0 +1,186 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+"use strict";
+
+var EXPORTED_SYMBOLS = ["GeckoViewTab", "GeckoViewTabBridge"];
+
+const { GeckoViewModule } = ChromeUtils.import(
+  "resource://gre/modules/GeckoViewModule.jsm"
+);
+const { XPCOMUtils } = ChromeUtils.import(
+  "resource://gre/modules/XPCOMUtils.jsm"
+);
+
+XPCOMUtils.defineLazyModuleGetters(this, {
+  EventDispatcher: "resource://gre/modules/Messaging.jsm",
+  Services: "resource://gre/modules/Services.jsm",
+  mobileWindowTracker: "resource://gre/modules/GeckoViewWebExtension.jsm",
+});
+
+class Tab {
+  constructor(window) {
+    this.id = GeckoViewTabBridge.windowIdToTabId(
+      window.windowUtils.outerWindowID
+    );
+    this.browser = window.browser;
+    this.active = false;
+  }
+
+  get linkedBrowser() {
+    return this.browser;
+  }
+
+  getActive() {
+    return this.active;
+  }
+}
+
+// Because of bug 1410749, we can't use 0, though, and just to be safe
+// we choose a value that is unlikely to overlap with Fennec's tab IDs.
+const TAB_ID_BASE = 10000;
+
+const GeckoViewTabBridge = {
+  /**
+   * Converts windowId to tabId as in GeckoView every browser window has exactly one tab.
+   *
+   * @param {number} windowId outerWindowId
+   *
+   * @returns {number} tabId
+   */
+  windowIdToTabId(windowId) {
+    return TAB_ID_BASE + windowId;
+  },
+
+  /**
+   * Converts tabId to windowId.
+   *
+   * @param {number} tabId
+   *
+   * @returns {number}
+   *          outerWindowId of browser window to which the tab belongs.
+   */
+  tabIdToWindowId(tabId) {
+    return tabId - TAB_ID_BASE;
+  },
+
+  /**
+   * Delegates openOptionsPage handling to the app.
+   *
+   * @param {number} extensionId
+   *        The ID of the extension requesting the options menu.
+   *
+   * @returns {Promise<Void>}
+   *          A promise resolved after successful handling.
+   */
+  async openOptionsPage(extensionId) {
+    debug`openOptionsPage for extensionId ${extensionId}`;
+
+    return EventDispatcher.instance.sendRequestForResult({
+      type: "GeckoView:WebExtension:OpenOptionsPage",
+      extensionId,
+    });
+  },
+
+  /**
+   * Request the GeckoView App to create a new tab (GeckoSession).
+   *
+   * @param {object} options
+   * @param {string} options.extensionId
+   *        The ID of the extension that requested a new tab.
+   * @param {object} options.createProperties
+   *        The properties for the new tab, see tabs.create reference for details.
+   *
+   * @returns {Promise<Tab>}
+   *          A promise resolved to the newly created tab.
+   * @throws {Error}
+   *         Throws an error if the GeckoView app doesn't support tabs.create or fails to handle the request.
+   */
+  async createNewTab({ extensionId, createProperties } = {}) {
+    debug`createNewTab`;
+
+    const sessionId = await EventDispatcher.instance.sendRequestForResult({
+      type: "GeckoView:WebExtension:NewTab",
+      extensionId,
+      createProperties,
+    });
+
+    if (!sessionId) {
+      throw new Error("Cannot create new tab");
+    }
+
+    const window = await new Promise(resolve => {
+      const handler = {
+        observe(aSubject, aTopic, aData) {
+          if (
+            aTopic === "geckoview-window-created" &&
+            aSubject.name === sessionId
+          ) {
+            Services.obs.removeObserver(handler, "geckoview-window-created");
+            resolve(aSubject);
+          }
+        },
+      };
+      Services.obs.addObserver(handler, "geckoview-window-created");
+    });
+
+    if (!window.tab) {
+      window.tab = new Tab(window);
+    }
+    return window.tab;
+  },
+
+  /**
+   * Request the GeckoView App to close a tab (GeckoSession).
+   *
+   *
+   * @param {object} options
+   * @param {Window} options.window The window owning the tab to close
+   * @param {string} options.extensionId
+   *
+   * @returns {Promise<Void>}
+   *          A promise resolved after GeckoSession is closed.
+   * @throws {Error}
+   *         Throws an error if the GeckoView app doesn't allow extension to close tab.
+   */
+  async closeTab({ window, extensionId } = {}) {
+    await window.WindowEventDispatcher.sendRequestForResult({
+      type: "GeckoView:WebExtension:CloseTab",
+      extensionId,
+    });
+  },
+
+  async updateTab({ window, extensionId, updateProperties } = {}) {
+    await window.WindowEventDispatcher.sendRequestForResult({
+      type: "GeckoView:WebExtension:UpdateTab",
+      extensionId,
+      updateProperties,
+    });
+  },
+};
+
+class GeckoViewTab extends GeckoViewModule {
+  onInit() {
+    const { window } = this;
+    if (!window.tab) {
+      window.tab = new Tab(window);
+    }
+
+    this.registerListener(["GeckoView:WebExtension:SetTabActive"]);
+  }
+
+  onEvent(aEvent, aData, aCallback) {
+    debug`onEvent: event=${aEvent}, data=${aData}`;
+
+    switch (aEvent) {
+      case "GeckoView:WebExtension:SetTabActive": {
+        const { active } = aData;
+        mobileWindowTracker.setTabActive(this.window, active);
+        break;
+      }
+    }
+  }
+}
+
+const { debug, warn } = GeckoViewTab.initLogging("GeckoViewTab"); // eslint-disable-line no-unused-vars

@@ -1,0 +1,32 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+%include ../../shared/customizableui/panelUI.inc.css
+
+#BMB_bookmarksPopup menupopup {
+  appearance: none;
+  background: var(--arrowpanel-background);
+  color: var(--arrowpanel-color);
+  border: 1px solid var(--arrowpanel-border-color);
+  margin-top: -6px;
+  padding-top: 1px;
+}
+
+menuitem.subviewbutton {
+  appearance: none !important;
+}
+
+.subviewradio > .radio-label-box {
+  appearance: none;
+}
+
+/*
+ * #pageActionFeedbackAnimatableImage is wider than the panel, and due to a
+ * bug in panels on Linux, a box-shadow appears where the image would be if
+ * overflow:hidden wasn't applied. Disabling the box-shadow for this panel on
+ * Linux works around this issue. This bug is on file as 1394575.
+ */
+#pageActionFeedback::part(arrowcontent) {
+  box-shadow: none;
+}

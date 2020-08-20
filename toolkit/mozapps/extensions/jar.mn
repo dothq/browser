@@ -1,0 +1,35 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+toolkit.jar:
+% content mozapps %content/mozapps/
+#ifndef MOZ_FENNEC
+  content/mozapps/extensions/extensions.xhtml                   (content/extensions.xhtml)
+  content/mozapps/extensions/extensions.js                      (content/extensions.js)
+  content/mozapps/extensions/blocklist.xhtml                    (content/blocklist.xhtml)
+  content/mozapps/extensions/blocklist.js                       (content/blocklist.js)
+  content/mozapps/extensions/pluginPrefs.xhtml                  (content/pluginPrefs.xhtml)
+  content/mozapps/extensions/pluginPrefs.js                     (content/pluginPrefs.js)
+  content/mozapps/extensions/OpenH264-license.txt               (content/OpenH264-license.txt)
+  content/mozapps/extensions/aboutaddons.html                   (content/aboutaddons.html)
+  content/mozapps/extensions/aboutaddons.js                     (content/aboutaddons.js)
+  content/mozapps/extensions/aboutaddonsCommon.js               (content/aboutaddonsCommon.js)
+  content/mozapps/extensions/aboutaddons.css                    (content/aboutaddons.css)
+  content/mozapps/extensions/abuse-reports.js                   (content/abuse-reports.js)
+  content/mozapps/extensions/abuse-report-frame.html            (content/abuse-report-frame.html)
+  content/mozapps/extensions/abuse-report-panel.css             (content/abuse-report-panel.css)
+  content/mozapps/extensions/abuse-report-panel.js              (content/abuse-report-panel.js)
+  content/mozapps/extensions/default-theme.svg                  (content/default-theme.svg)
+  content/mozapps/extensions/drag-drop-addon-installer.js       (content/drag-drop-addon-installer.js)
+  content/mozapps/extensions/firefox-compact-dark.svg           (content/firefox-compact-dark.svg)
+  content/mozapps/extensions/firefox-compact-light.svg          (content/firefox-compact-light.svg)
+  content/mozapps/extensions/message-bar.css                    (content/message-bar.css)
+  content/mozapps/extensions/message-bar.js                     (content/message-bar.js)
+  content/mozapps/extensions/named-deck.js                      (content/named-deck.js)
+  content/mozapps/extensions/panel-list.css                     (content/panel-list.css)
+  content/mozapps/extensions/panel-item.css                     (content/panel-item.css)
+  content/mozapps/extensions/rating-star.css                    (content/rating-star.css)
+  content/mozapps/extensions/shortcuts.css                      (content/shortcuts.css)
+  content/mozapps/extensions/shortcuts.js                       (content/shortcuts.js)
+#endif

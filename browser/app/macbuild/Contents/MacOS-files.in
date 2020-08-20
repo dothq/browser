@@ -1,0 +1,20 @@
+# Specifies files that should be copied (preserving symlinks) from dist/bin
+# to the .app/Contents/MacOS directory.
+/*.app/***
+/certutil
+/firefox-bin
+#if defined(MOZ_GECKODRIVER)
+/geckodriver
+#endif
+/gtest/***
+#if defined(MOZ_ASAN) || defined(MOZ_TSAN)
+/llvm-symbolizer
+#endif
+#if defined(MOZ_CRASHREPORTER)
+/minidump-analyzer
+#endif
+/pingsender
+/pk12util
+/ssltunnel
+/xpcshell
+/XUL

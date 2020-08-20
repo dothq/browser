@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="application/javascript" src="pc.js"></script>
+</head>
+<body>
+<pre id="test">
+<script type="application/javascript">
+  createHTML({
+    bug: "856319",
+    title: "Don't offer m=application unless createDataChannel is called first"
+  });
+
+  runNetworkTest(function () {
+    var pc = new RTCPeerConnection();
+
+    // necessary to circumvent bug 864109
+    var options = { offerToReceiveAudio: true };
+
+    pc.createOffer(options).then(offer => {
+      ok(!offer.sdp.includes("m=application"),
+        "m=application is not contained in the SDP");
+
+      networkTestFinished();
+    })
+    .catch(generateErrorCallback());
+  });
+
+</script>
+</pre>
+</body>
+</html>

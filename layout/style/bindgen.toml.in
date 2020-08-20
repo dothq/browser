@@ -1,0 +1,4 @@
+[build]
+args = [
+    @BINDGEN_SYSTEM_TOML_FLAGS@
+]

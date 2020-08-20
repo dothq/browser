@@ -1,0 +1,213 @@
+% This Source Code Form is subject to the terms of the Mozilla Public
+% License, v. 2.0. If a copy of the MPL was not distributed with this
+% file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+/* ===== global.css =====================================================
+  == Styles that apply everywhere.
+  ======================================================================= */
+
+%include ../../shared/global.inc.css
+
+:root {
+  /* ::::: Variables ::::: */
+  --arrowpanel-padding: 10px;
+  --default-arrowpanel-background: -moz-field;
+  --default-arrowpanel-color: -moz-fieldText;
+  --default-arrowpanel-border-color: ThreeDShadow;
+  --arrowpanel-background: var(--default-arrowpanel-background);
+  --arrowpanel-color: var(--default-arrowpanel-color);
+  --arrowpanel-border-color: var(--default-arrowpanel-border-color);
+  --panel-disabled-color: GrayText;
+  /* ::::: Styles ::::: */
+  background-color: -moz-Dialog;
+  color: -moz-DialogText;
+  font: message-box;
+}
+
+@media (-moz-windows-default-theme) {
+  :root {
+    --arrowpanel-border-color: hsla(210,4%,10%,.2);
+  }
+}
+
+/* ::::: Alert icons :::::*/
+
+.message-icon,
+.alert-icon,
+.error-icon,
+.question-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.message-icon {
+  list-style-image: url("chrome://global/skin/icons/info.svg");
+}
+
+.alert-dialog #infoIcon,
+.alert-icon {
+  list-style-image: url("chrome://global/skin/icons/warning.svg");
+  width: 32px;
+  height: 32px;
+}
+
+.error-icon {
+  list-style-image: url("chrome://global/skin/icons/Error.png");
+}
+
+.question-icon {
+  list-style-image: url("chrome://global/skin/icons/help.svg");
+}
+
+/* ::::: iframe ::::: */
+
+xul|iframe {
+  border: none;
+  width: 100px;
+  height: 100px;
+  min-width: 10px;
+  min-height: 10px;
+}
+
+@supports -moz-bool-pref("layout.css.emulate-moz-box-with-flex") {
+  /* In emulation, <iframe> is block instead of inline, so reset the width/height */
+  xul|iframe {
+    width: auto;
+    height: auto;
+  }
+}
+
+xul|toolbar[mode="text"] .toolbarbutton-text {
+  padding: 0 !important;
+  margin: 3px 5px !important;
+}
+
+/* ::::: Print preview ::::: */
+
+.print-preview-navigate-button {
+  min-width: 1.9em;
+}
+
+.print-preview-navigate-button > .toolbarbutton-icon {
+  display: none;
+}
+
+#print-preview-portrait-button {
+  list-style-image: url("chrome://global/skin/icons/Print-preview.png");
+  -moz-image-region: rect(0px 16px 16px 0px);
+}
+
+#print-preview-landscape-button {
+  list-style-image: url("chrome://global/skin/icons/Print-preview.png");
+  -moz-image-region: rect(0px 32px 16px 16px);
+}
+
+#print-preview-portrait-button > .toolbarbutton-icon,
+#print-preview-landscape-button > .toolbarbutton-icon {
+  margin-inline-end: 2px;
+}
+
+html|*#print-preview-pageNumber {
+  /* 3 chars + (3px border + 1px padding) on both sides */
+  width: calc(8px + 3ch);
+  margin: 0 4px;
+}
+
+/* ::::: Miscellaneous formatting ::::: */
+
+:root[lwtheme-image]:-moz-lwtheme-darktext {
+  text-shadow: 0 -0.5px 1.5px white;
+}
+
+:root[lwtheme-image]:-moz-lwtheme-brighttext {
+  text-shadow: 1px 1px 1.5px black;
+}
+
+/* separators */
+xul|separator:not([orient="vertical"]) {
+  height: 1.5em;
+}
+xul|separator[orient="vertical"] {
+  width: 1.5em;
+}
+
+xul|separator.thin:not([orient="vertical"]) {
+  height: 0.5em;
+}
+xul|separator.thin[orient="vertical"] {
+  width: 0.5em;
+}
+
+xul|separator.groove:not([orient="vertical"]) {
+  border-top: 1px solid ThreeDShadow;
+  border-bottom: 1px solid ThreeDHighlight;
+  height: 0;
+  margin-block: 0.4em;
+}
+xul|separator.groove[orient="vertical"] {
+  border-left: 1px solid ThreeDShadow;
+  border-right: 1px solid ThreeDHighlight;
+  width: 0;
+  margin-inline: 0.4em;
+}
+
+xul|description,
+xul|label {
+  cursor: default;
+  margin-block: 1px 2px;
+  margin-inline: 6px 5px;
+}
+
+xul|description {
+  margin-bottom: 4px;
+}
+
+xul|label[disabled="true"] {
+  color: GrayText;
+}
+
+@media (-moz-windows-classic) {
+  xul|label[disabled="true"] {
+    color: ThreeDShadow;
+    text-shadow: 1px 1px ThreeDHighlight;
+  }
+}
+
+.tooltip-label {
+  margin: 0;
+}
+
+.header {
+  font-weight: bold;
+}
+
+.indent {
+  margin-inline-start: 23px;
+}
+
+.box-padded {
+  padding: 5px;
+}
+
+.text-link {
+  color: -moz-nativehyperlinktext;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+.text-link:-moz-focusring {
+  outline: 1px dotted;
+}
+
+html|input {
+  margin: 2px 4px;
+}
+
+xul|popupnotificationcontent {
+  margin-top: .5em;
+}
+
+%include ../../shared/notification-popup.inc.css

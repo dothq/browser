@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="chrome://global/skin/in-content/info-pages.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="chrome://browser/content/aboutTabCrashed.css"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="chrome://browser/skin/aboutTabCrashed.css"/>
+    <link rel="localization" href="branding/brand.ftl"/>
+    <link rel="localization" href="browser/aboutTabCrashed.ftl"/>
+	
+    <title data-l10n-id="crashed-title"></title>
+  </head>
+
+  <body>
+    <div id="main" class="container" multiple="false">
+
+      <div class="title">
+        <h1 class="title-text" data-l10n-id="crashed-header"></h1>
+      </div>
+
+      <div class="offers">
+        <h2 data-l10n-id="crashed-offer-help"></h2>
+        <p id="offerHelpMessageSingle" data-l10n-id="crashed-single-offer-help-message"></p>
+        <p id="offerHelpMessageMultiple" data-l10n-id="crashed-multiple-offer-help-message"></p>
+      </div>
+
+      <div id="reportBox">
+        <h2 data-l10n-id="crashed-request-help"></h2>
+        <p data-l10n-id="crashed-request-help-message"></p>
+
+        <h2 data-l10n-id="crashed-request-report-title"></h2>
+
+        <div class="checkbox-with-label">
+          <input type="checkbox" id="sendReport" role="checkbox"/>
+          <label for="sendReport" data-l10n-id="crashed-send-report"></label>
+        </div>
+
+        <ul id="options">
+          <li>
+            <textarea id="comments" data-l10n-id="crashed-comment" rows="4"></textarea>
+          </li>
+
+          <li class="checkbox-with-label">
+            <input type="checkbox" id="includeURL" role="checkbox"/>
+            <label for="includeURL" data-l10n-id="crashed-include-URL"></label>
+          </li>
+
+          <li id="requestEmail" hidden="true">
+            <div class="checkbox-with-label">
+              <input type="checkbox" id="emailMe" role="checkbox"/>
+              <label for="emailMe" data-l10n-id="crashed-email-me"></label>
+            </div>
+            <input type="text" id="email" data-l10n-id="crashed-email-placeholder"/>
+          </li>
+        </ul>
+
+        <div id="requestAutoSubmit" hidden="true">
+          <h2 data-l10n-id="crashed-request-auto-submit-title"></h2>
+          <div class="checkbox-with-label">
+            <input type="checkbox" id="autoSubmit" role="checkbox"/>
+            <label for="autoSubmit" data-l10n-id="crashed-auto-submit-checkbox"></label>
+          </div>
+        </div>
+      </div>
+
+      <p id="reportSent" data-l10n-id="crashed-report-sent"></p>
+
+      <div class="button-container">
+        <button id="closeTab" data-l10n-id="crashed-close-tab-button"></button>
+        <button id="restoreTab" class="primary" data-l10n-id="crashed-restore-tab-button"></button>
+        <button id="restoreAll" autofocus="true" data-l10n-id="crashed-restore-all-button"/>
+      </div>
+    </div>
+  </body>
+  <script src="chrome://browser/content/aboutTabCrashed.js"/>
+</html>

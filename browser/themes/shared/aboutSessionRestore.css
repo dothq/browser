@@ -1,0 +1,105 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+.description-wrapper {
+  background-image: url("chrome://browser/skin/illustrations/error-session-restore.svg");
+  background-repeat: no-repeat;
+  background-size: 38%;
+  padding-inline-start: 38%;
+  background-position: left center;
+  min-height: 300px;
+}
+
+.description-wrapper:dir(rtl) {
+  background-position-x: right;
+}
+
+.title {
+  background-image: none;
+}
+
+#tabsToggle {
+  cursor: pointer;
+  /* Override button background-color and color from common.css */
+  background-color: transparent;
+  color: #0a84ff !important;
+  -moz-context-properties: fill;
+  fill: currentColor;
+  border: none;
+  padding: 0;
+  margin: 0;
+  padding-inline-end: 45px;
+  position: relative;
+}
+
+#tabsToggle:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  inset-inline-start: 0;
+  background-image: url("chrome://global/skin/icons/arrow-dropdown-16.svg");
+  background-repeat: no-repeat;
+  background-size: 20px;
+  background-position: right center;
+}
+
+#tabsToggle:dir(rtl):after {
+  background-position-x: left;
+}
+
+#tabsToggle:not(.show-tabs):after {
+  transform: scaleY(-1);
+}
+
+#tabsToggle.show-tabs > #hideTabs,
+#tabsToggle:not(.show-tabs) > #showTabs {
+  display: none;
+}
+
+.tree-container:not(.expanded) {
+  visibility: collapse;
+}
+
+.button-container {
+  text-align: end;
+}
+
+treechildren::-moz-tree-image(icon),
+treechildren::-moz-tree-image(noicon) {
+  padding-inline-end: 2px;
+  margin: 0 2px;
+  width: 16px;
+  height: 16px;
+}
+
+treechildren::-moz-tree-image(noicon) {
+  list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+treechildren::-moz-tree-image(container, noicon) {
+  list-style-image: url("chrome://browser/skin/window.svg");
+}
+
+treechildren::-moz-tree-image(checked) {
+  list-style-image: url("chrome://global/skin/icons/check.svg");
+  -moz-context-properties: fill, stroke;
+  fill: #2292d0;
+}
+treechildren::-moz-tree-image(checked, selected) {
+  fill: white;
+  stroke: #0095dd;
+}
+
+treechildren::-moz-tree-image(partial) {
+  list-style-image: url("chrome://global/skin/icons/check-partial.svg");
+  -moz-context-properties: fill, stroke;
+  fill: #2292d0;
+}
+treechildren::-moz-tree-image(partial, selected) {
+  fill: white;
+  stroke: #0095dd;
+}

@@ -1,0 +1,64 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+es_419{
+    Currencies{
+        CAD{
+            "CAD",
+            "dólar canadiense",
+        }
+        EUR{
+            "EUR",
+            "euro",
+        }
+        MWK{
+            "MWK",
+            "kwacha malauí",
+        }
+        THB{
+            "THB",
+            "baht tailandes",
+        }
+        USD{
+            "USD",
+            "dólar estadounidense",
+        }
+        UZS{
+            "UZS",
+            "som uzbeko",
+        }
+        VND{
+            "VND",
+            "dong",
+        }
+    }
+    Currencies%narrow{
+        EGP{"E£"}
+        FKP{"FK£"}
+        SSP{"SD£"}
+        SYP{"S£"}
+        VEF{"BsF"}
+    }
+    CurrencyPlurals{
+        BGN{
+            one{"lev búlgaro"}
+            other{"leva búlgaros"}
+        }
+        MWK{
+            one{"kwacha malauí"}
+            other{"kwachas malauís"}
+        }
+        THB{
+            one{"baht tailandes"}
+            other{"bahts tailandeses"}
+        }
+        UZS{
+            one{"som uzbeko"}
+            other{"soms uzbekos"}
+        }
+        XXX{
+            one{"(unidad de moneda desconocida)"}
+            other{"(moneda desconocida)"}
+        }
+    }
+    Version{"37"}
+}

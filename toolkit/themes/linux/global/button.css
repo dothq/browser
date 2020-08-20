@@ -1,0 +1,75 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* ===== button.css =====================================================
+  == Styles used by the XUL button element.
+  ======================================================================= */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* :::::::::: button :::::::::: */
+
+button {
+  appearance: button;
+  margin: 1px 5px 2px;
+  min-width: 6.3em;
+  color: ButtonText;
+  text-shadow: none;
+}
+
+.button-box {
+  appearance: auto;
+  -moz-default-appearance: button-focus;
+}
+
+.button-text {
+  margin: 0;
+  margin-inline-start: 2px;
+  text-align: center;
+}
+
+/* .......... hover state .......... */
+
+button:hover:not(:-moz-any(:active,[disabled="true"],[open="true"],[checked="true"],[default="true"])) {
+  color: -moz-buttonhovertext;
+}
+
+/* .......... active state .......... */
+
+button:-moz-any(:hover:active,[open="true"]):not([default="true"]):not([disabled="true"]) {
+  color: -moz-gtk-buttonactivetext;
+}
+
+/* .......... disabled state .......... */
+
+button[disabled="true"] {
+  color: GrayText;
+}
+
+/* ::::: menu buttons ::::: */
+
+.button-menu-dropmarker {
+  appearance: auto;
+  -moz-default-appearance: toolbarbutton-dropdown;
+}
+
+/* ::::: plain buttons ::::: */
+
+button.plain {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+button[type="disclosure"] {
+  margin: 0;
+  appearance: none;
+  list-style-image: url("chrome://global/skin/icons/twisty-collapsed.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+  min-width: 0;
+}
+
+button[type="disclosure"][open="true"] {
+  list-style-image: url("chrome://global/skin/icons/twisty-expanded.svg");
+}

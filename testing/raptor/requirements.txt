@@ -1,0 +1,11 @@
+mozcrash ~= 2.0
+mozrunner ~= 7.0
+mozprofile ~= 2.1
+manifestparser >= 1.1
+wptserve ~= 2.0
+mozdevice >= 4.0.0
+mozproxy >= 1.0
+pyyaml ~= 3.1
+mozpower >= 1.0.0
+mozversion >= 1.0
+../condprofile

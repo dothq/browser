@@ -1,0 +1,7 @@
+CACHE MANIFEST
+
+https://example.com/tests/SimpleTest/SimpleTest.js
+https://example.com/tests/dom/tests/mochitest/ajax/offline/offlineTests.js
+
+NETWORK:
+*

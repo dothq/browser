@@ -1,0 +1,274 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/* ===== menu.css =======================================================
+  == Styles used by XUL menu-related elements.
+  ======================================================================= */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* ::::: menu/menuitem ::::: */
+
+menupopup,
+menubar {
+  font: menu;
+}
+
+menu,
+menuitem,
+menucaption {
+  appearance: auto;
+  -moz-default-appearance: menuitem;
+  -moz-box-align: center;
+  list-style-image: none;
+  -moz-image-region: auto;
+}
+
+menu[disabled="true"],
+menuitem[disabled="true"],
+menu[_moz-menuactive="true"][disabled="true"],
+menuitem[_moz-menuactive="true"][disabled="true"] {
+  color: GrayText;
+  text-shadow: none;
+}
+
+@media (-moz-windows-classic) {
+  menu[disabled="true"],
+  menubar > menu[disabled="true"][_moz-menuactive="true"],
+  menuitem[disabled="true"] {
+    color: ThreeDShadow;
+    text-shadow: 1px 1px ThreeDHighlight;
+  }
+}
+
+menuitem[default="true"],
+menuitem.spell-suggestion,
+menucaption {
+  font-weight: bold;
+}
+
+/* ..... Internal content .... */
+
+.menu-accel,
+.menu-iconic-accel,
+.menu-text,
+.menu-iconic-text {
+  margin: 0 !important;
+  padding: 1px 0;
+}
+
+.menu-text {
+  padding-inline-start: 1.45em !important;
+  appearance: auto;
+  -moz-default-appearance: menuitemtext;
+}
+
+.menu-text,
+.menu-iconic-text {
+  margin-inline-start: 2px !important;
+  padding-inline-end: 2px;
+}
+
+.menu-accel,
+.menu-iconic-accel {
+  margin-inline: 0.74em 1.35em !important;
+}
+
+.menu-iconic-left {
+  min-width: 1.45em;
+}
+
+.menu-iconic-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.menu-iconic > .menu-iconic-left,
+.menuitem-iconic > .menu-iconic-left {
+  appearance: auto;
+  -moz-default-appearance: menuimage;
+  padding-top: 2px;
+}
+
+/* ..... menu arrow box ..... */
+
+.menu-right {
+  appearance: auto;
+  -moz-default-appearance: menuarrow;
+  margin-inline-end: -2px;
+  list-style-image: none;
+  min-width: 1.28em;
+  padding-top: 1px;
+}
+
+/* ::::: menu/menuitems in menubar ::::: */
+
+menubar > menu[_moz-menuactive="true"]:not([disabled="true"]) {
+  color: -moz-menubarhovertext;
+}
+
+@media (-moz-windows-classic) {
+  menubar > menu {
+    border: 2px solid transparent;
+  }
+
+  menubar > menu[_moz-menuactive="true"][open="true"] {
+    border-width: 3px 1px 1px 3px;
+  }
+}
+
+menubar > menu:-moz-lwtheme {
+  appearance: none;
+  border-color: transparent;
+}
+
+menubar > menu:-moz-lwtheme:not([disabled="true"]) {
+  color: inherit !important;
+}
+
+menubar > menu:-moz-lwtheme[_moz-menuactive="true"]:not([disabled="true"]) {
+  background-color: Highlight;
+  color: HighlightText !important;
+  text-shadow: none;
+}
+
+@media (-moz-windows-default-theme) {
+  menubar > menu:-moz-lwtheme {
+    appearance: auto;
+    -moz-default-appearance: menuitem;
+  }
+
+  menubar > menu:-moz-lwtheme[_moz-menuactive="true"]:not([disabled="true"]) {
+    color: inherit !important;
+    text-shadow: inherit;
+  }
+}
+
+%ifdef XP_WIN
+menubar > menu:-moz-window-inactive {
+  color: ThreeDShadow;
+}
+%endif
+
+/* ..... internal content .... */
+
+.menubar-text {
+  margin: 1px 6px 2px !important;
+}
+
+/* ::::: menu/menuitems in popups ::::: */
+
+menupopup > menu,
+menupopup > menuitem,
+menupopup > menucaption {
+  max-width: 42em;
+}
+
+menu[_moz-menuactive="true"],
+menuitem[_moz-menuactive="true"] {
+  background-color: -moz-menuhover;
+  color: -moz-menuhovertext;
+}
+
+/* ::::: menu/menuitems in menulist popups ::::: */
+
+menulist > menupopup {
+  font: inherit;
+}
+
+menulist > menupopup > menuitem,
+menulist > menupopup > menucaption,
+menulist > menupopup > menu {
+  appearance: none !important;
+  border: 1px solid transparent;
+  padding-inline: 5px;
+  max-width: none;
+  color: -moz-FieldText;
+}
+
+menulist > menupopup > menuitem[_moz-menuactive="true"],
+menulist > menupopup > menu[_moz-menuactive="true"] {
+  background-color: highlight;
+  color: highlighttext;
+}
+
+menulist > menupopup > menuitem > .menu-iconic-left,
+menulist > menupopup > menucaption > .menu-iconic-left,
+menulist > menupopup > menu > .menu-iconic-left {
+  display: none;
+}
+
+menulist > menupopup > menuitem > label,
+menulist > menupopup > menucaption > label,
+menulist > menupopup > menu > label {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+menulist:-moz-focusring > menupopup > menuitem[_moz-menuactive="true"] {
+  border: 1px dotted #F5DB95;
+}
+
+menulist > menupopup > menuitem[_moz-menuactive="true"][disabled="true"] {
+  color: GrayText;
+}
+
+@media (-moz-windows-classic) {
+  menulist > menupopup > menuitem[disabled="true"]:not([_moz-menuactive="true"]) {
+    color: GrayText;
+    text-shadow: none;
+  }
+}
+
+menulist > menupopup > :-moz-any(menuitem, menucaption):not(.menuitem-iconic) > .menu-iconic-text {
+  margin: 0 !important;
+}
+
+/* ::::: checkbox and radio menuitems ::::: */
+
+menuitem[type="checkbox"],
+menuitem[checked="true"] {
+  appearance: auto;
+  -moz-default-appearance: checkmenuitem;
+}
+menuitem[type="checkbox"] > .menu-iconic-left,
+menuitem[checked="true"] > .menu-iconic-left {
+  appearance: auto;
+  -moz-default-appearance: menucheckbox;
+  padding-top: 0;
+}
+
+menuitem[type="radio"] {
+  appearance: auto;
+  -moz-default-appearance: radiomenuitem;
+}
+menuitem[type="radio"] > .menu-iconic-left {
+  appearance: auto;
+  -moz-default-appearance: menuradio;
+  padding-top: 0;
+}
+
+menuitem[type="checkbox"] > .menu-iconic-left > .menu-iconic-icon,
+menuitem[checked="true"] > .menu-iconic-left > .menu-iconic-icon,
+menuitem[type="radio"] > .menu-iconic-left > .menu-iconic-icon {
+  /* prevent .menu-iconic-icon from enforcing a minimal height of 16px (see bug 411064)
+     XXXzeniko apply that .menu-iconic-icon rule only for children of .menu-iconic */
+  display: none;
+}
+
+/* ::::: menuseparator ::::: */
+
+menuseparator {
+  appearance: auto;
+  -moz-default-appearance: menuseparator;
+  padding: 3px 1px 4px;
+  border-top: 1px solid ThreeDShadow;
+  border-bottom: 1px solid ThreeDHighlight;
+}
+
+menulist > menupopup > menuseparator {
+  padding: 6px 0 5px;
+  border-top: 1px solid #000000;
+  border-bottom: none;
+}
