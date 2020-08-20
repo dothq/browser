@@ -29,6 +29,24 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
   <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
 </a>
 
+## 💻 Build Dot Browser
+> The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
+
+**1.** Open your terminal and `git clone` this repository.
+
+**2.** Now inside the respository folder run `./mach bootstrap`, this will setup the project and make sure everything is ready.
+
+**3.** You can now pick which build type you want to do when `mach` asks you to choose a build type.
+  * You'll need to pick the appropriate build type as different parts of the project require different methods of being built.
+  
+    * **Artifact builds** - When building with the Artifact type instead of compiling the C++ code on your system, `mach` will fetch pre-built binaries from Mozilla and then   will link the frontend (html, js, css) with the binary. Artifact builds take under a minute to build on a mid-range system.
+    
+    * **Full builds** - Full builds are used when you want to modify the C++ code or want to generate a custom binary for distribution.
+    
+**4.** You can then start the build once `mach` says your system is ready, the command to build the project is `./mach build`. This may take a few seconds up to a few hours.
+
+**5.** If you've made it this far, you've successfully built Dot! Now, you'll want to run the binary you built, you can do this by running `./mach run`.
+
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
 
