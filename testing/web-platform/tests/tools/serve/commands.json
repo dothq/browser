@@ -1,0 +1,18 @@
+{
+  "serve": {
+    "path": "serve.py",
+    "script": "run",
+    "parser": "get_parser",
+    "help": "Run wptserve server",
+    "virtualenv": false
+  },
+  "serve-wave": {
+    "path": "wave.py",
+    "script": "run",
+    "parser": "get_parser",
+    "help": "Run wptserve server for WAVE",
+    "virtualenv": true,
+    "install": ["ua-parser"],
+    "requirements": ["../wave/requirements.txt"]
+  }
+}

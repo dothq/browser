@@ -1,0 +1,306 @@
+# Definitions for jobs that run periodically.  For details on the format, see
+# `https://hg.mozilla.org/ci/ci-admin/file/default/build-decision/src/build_decision/cron/schema.yml`.
+# For documentation, see `taskcluster/docs/cron.rst`.
+---
+
+jobs:
+    - name: daily-releases
+      job:
+          type: decision-task
+          treeherder-symbol: RPd
+          target-tasks-method: daily_releases
+      run-on-projects:
+          - mozilla-beta
+      when:
+          by-project:
+              # No default
+              mozilla-beta:
+                  - {weekday: 'Monday', hour: 2, minute: 0}
+                  - {weekday: 'Wednesday', hour: 2, minute: 0}
+                  - {weekday: 'Friday', hour: 2, minute: 0}
+
+    - name: nightly-desktop
+      job:
+          type: decision-task
+          treeherder-symbol: Nd
+          target-tasks-method: nightly_desktop
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          by-project:
+              # Match buildbot starts for now
+              mozilla-central: [{hour: 10, minute: 0}, {hour: 22, minute: 0}]
+              # No default
+
+    - name: nightly-desktop-linux
+      job:
+          type: decision-task
+          treeherder-symbol: Nd-Ln
+          target-tasks-method: nightly_linux
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when: []  # never (hook only)
+
+    - name: nightly-desktop-osx
+      job:
+          type: decision-task
+          treeherder-symbol: Nd-OSX
+          target-tasks-method: nightly_macosx
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when: []  # never (hook only)
+
+    - name: nightly-desktop-win32
+      job:
+          type: decision-task
+          treeherder-symbol: Nd-win32
+          target-tasks-method: nightly_win32
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when: []  # never (hook only)
+
+    - name: nightly-desktop-win64
+      job:
+          type: decision-task
+          treeherder-symbol: Nd-win64
+          target-tasks-method: nightly_win64
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when: []  # never (hook only)
+
+    - name: nightly-desktop-win64-aarch64
+      job:
+          type: decision-task
+          treeherder-symbol: Nd-win64-aarch64
+          target-tasks-method: nightly_win64_aarch64
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when: []  # never (hook only)
+
+    - name: ship-geckoview
+      job:
+          type: decision-task
+          treeherder-symbol: ship_geckoview
+          target-tasks-method: ship_geckoview
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          by-project:
+              mozilla-central: [{hour: 10, minute: 0}]
+
+    - name: tp6m-fennec-v68
+      job:
+          type: decision-task
+          treeherder-symbol: f68
+          target-tasks-method: fennec_v68
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {weekday: 'Saturday', hour: 5, minute: 0}
+
+    - name: live-site-perf-testing
+      job:
+          type: decision-task
+          treeherder-symbol: lst
+          target-tasks-method: live_site_perf_testing
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {weekday: 'Sunday', hour: 5, minute: 0}
+
+    - name: general-perf-testing
+      job:
+          type: decision-task
+          treeherder-symbol: gpt
+          target-tasks-method: general_perf_testing
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {weekday: 'Monday', hour: 10, minute: 30}
+          - {weekday: 'Wednesday', hour: 10, minute: 30}
+          - {weekday: 'Friday', hour: 10, minute: 30}
+
+    - name: searchfox-index
+      job:
+          type: decision-task
+          treeherder-symbol: Searchfox
+          target-tasks-method: searchfox_index
+      run-on-projects:
+          - mozilla-central
+          - mozilla-beta
+          - mozilla-release
+          - mozilla-esr68
+          - mozilla-esr78
+      when:
+          - {hour: 10, minute: 0}
+
+    - name: coverity-tree-analysis
+      job:
+          type: decision-task
+          treeherder-symbol: CoverityTA
+          target-tasks-method: coverity_static_analysis_full
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {hour: 10, minute: 0}
+
+    - name: customv8-update
+      job:
+          type: decision-task
+          treeherder-symbol: customv8
+          target-tasks-method: customv8_update
+          optimize-target-tasks: false
+      run-on-projects:
+          - mozilla-central
+      when:
+          by-project:
+              mozilla-central: [{hour: 10, minute: 30}]
+
+    - name: chromium-update
+      job:
+          type: decision-task
+          treeherder-symbol: Chromium
+          target-tasks-method: chromium_update
+          optimize-target-tasks: false
+      run-on-projects:
+          - mozilla-central
+      when:
+          by-project:
+              mozilla-central: [{hour: 10, minute: 30}]
+
+    - name: bouncer-check
+      job:
+          type: decision-task
+          treeherder-symbol: Rel
+          target-tasks-method: cron_bouncer_check
+      run-on-projects:
+          - mozilla-central
+          - mozilla-beta
+          - mozilla-release
+          - mozilla-esr68
+          - mozilla-esr78
+      when:
+          by-project:
+              # No default branch
+              mozilla-central:
+                  - {hour: 7, minute: 0}
+                  - {hour: 19, minute: 0}
+              mozilla-beta:
+                  - {hour: 7, minute: 0}
+                  - {hour: 19, minute: 0}
+              mozilla-release:
+                  - {hour: 7, minute: 0}
+                  - {hour: 19, minute: 0}
+              mozilla-esr68:
+                  - {hour: 7, minute: 0}
+                  - {hour: 19, minute: 0}
+              mozilla-esr78:
+                  - {hour: 7, minute: 0}
+                  - {hour: 19, minute: 0}
+
+    - name: periodic-update
+      job:
+          type: decision-task
+          treeherder-symbol: Nfile
+          target-tasks-method: file_update
+      run-on-projects:
+          - mozilla-central
+          - mozilla-beta
+          - mozilla-release
+          - mozilla-esr68
+          - mozilla-esr78
+      when:
+          - {weekday: 'Monday', hour: 10, minute: 0}
+          - {weekday: 'Thursday', hour: 10, minute: 0}
+
+    - name: python-dependency-update
+      job:
+          type: decision-task
+          treeherder-symbol: Nfile
+          target-tasks-method: python_dependency_update
+      run-on-projects:
+          - mozilla-central
+      when:
+          by-project:
+              # No default branch
+              mozilla-central:
+                  - {weekday: 'Monday', hour: 10, minute: 0}
+
+    - name: raptor-tp6m
+      job:
+          type: decision-task
+          treeherder-symbol: tp6m
+          target-tasks-method: raptor_tp6m
+          include-push-tasks: true
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {weekday: 'Monday', hour: 3, minute: 0}
+          - {weekday: 'Tuesday', hour: 3, minute: 0}
+          - {weekday: 'Wednesday', hour: 3, minute: 0}
+          - {weekday: 'Thursday', hour: 3, minute: 0}
+          - {weekday: 'Friday', hour: 3, minute: 0}
+          - {weekday: 'Saturday', hour: 3, minute: 0}
+          - {weekday: 'Sunday', hour: 3, minute: 0}
+
+    - name: condprof
+      job:
+          type: decision-task
+          treeherder-symbol: condprof
+          target-tasks-method: condprof
+          include-push-tasks: true
+          optimize-target-tasks: false
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {hour: 16, minute: 00}
+
+    - name: l10n-bumper
+      job:
+          type: decision-task
+          treeherder-symbol: l10n-bump
+          target-tasks-method: l10n_bump
+      run-on-projects:
+          - mozilla-central
+          - mozilla-beta
+          - mozilla-esr68
+          # no mozilla-esr78
+      when:
+          - {minute: 45}
+
+    - name: system-symbols
+      job:
+          type: decision-task
+          treeherder-symbol: system-symbols
+          target-tasks-method: system_symbols
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {hour: 0, minute: 0}
+
+    - name: perftest
+      job:
+          type: decision-task
+          treeherder-symbol: perftest
+          target-tasks-method: perftest
+      run-on-projects:
+          - mozilla-central
+      when:
+          - {hour: 4, minute: 00}
+
+    - name: scriptworker-canary
+      job:
+          type: trigger-action
+          action-name: scriptworker-canary
+          include-cron-input: true
+      when: []  # never (hook only)

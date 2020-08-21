@@ -1,0 +1,235 @@
+<html>
+
+<head>
+  <title>Text selection testing</title>
+
+  <link rel="stylesheet" type="text/css"
+        href="chrome://mochikit/content/tests/SimpleTest/test.css" />
+
+  <script src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+
+  <script type="application/javascript"
+          src="../common.js"></script>
+  <script type="application/javascript"
+          src="../events.js"></script>
+
+  <script type="application/javascript">
+    /**
+     * Invokers
+     */
+    function addSelections(aID, aSelections) {
+      this.hyperTextNode = getNode(aID);
+      this.hyperText = getAccessible(aID, [ nsIAccessibleText ]);
+      this.initialSelectionCount = this.hyperText.selectionCount;
+
+      // Multiple selection changes will be coalesced, so just listen for one.
+      this.eventSeq = [
+        new invokerChecker(EVENT_TEXT_SELECTION_CHANGED, aID),
+      ];
+
+      this.invoke = function addSelection_invoke() {
+        for (let [startOffset, endOffset] of aSelections) {
+          this.hyperText.addSelection(startOffset, endOffset);
+        }
+      };
+
+      this.finalCheck = function addSelection_finalCheck() {
+        is(this.hyperText.selectionCount,
+           aSelections.length + this.initialSelectionCount,
+           "addSelection: Wrong selection count for " + aID);
+
+        for (let i in aSelections) {
+          let [expectedStart, expectedEnd] = aSelections[i];
+          let startOffset = {}, endOffset = {};
+          this.hyperText.getSelectionBounds(this.initialSelectionCount + i,
+            startOffset, endOffset);
+
+          is(startOffset.value, Math.min(expectedStart, expectedEnd),
+             "addSelection: Wrong start offset for " + aID);
+          is(endOffset.value, Math.max(expectedStart, expectedEnd),
+             "addSelection: Wrong end offset for " + aID);
+
+          if (i == this.hyperText.selectionCount - 1) {
+            is(this.hyperText.caretOffset, expectedEnd,
+               "addSelection: caretOffset not at selection end for " + aID);
+          }
+        }
+      };
+
+      this.getID = function addSelection_getID() {
+        return "nsIAccessibleText::addSelection test for " + aID;
+      };
+    }
+
+    function changeSelection(aID, aIndex, aSelection) {
+      let [startOffset, endOffset] = aSelection;
+      this.hyperTextNode = getNode(aID);
+      this.hyperText = getAccessible(aID, [ nsIAccessibleText ]);
+
+      this.eventSeq = [
+        new invokerChecker(EVENT_TEXT_SELECTION_CHANGED, aID),
+      ];
+
+      this.invoke = function changeSelection_invoke() {
+        this.hyperText.setSelectionBounds(aIndex, startOffset, endOffset);
+      };
+
+      this.finalCheck = function changeSelection_finalCheck() {
+        var start = {}, end = {};
+        this.hyperText.getSelectionBounds(aIndex, start, end);
+
+        is(start.value, Math.min(startOffset, endOffset),
+           "setSelectionBounds: Wrong start offset for " + aID);
+        is(end.value, Math.max(startOffset, endOffset),
+           "setSelectionBounds: Wrong end offset for " + aID);
+
+        is(this.hyperText.caretOffset, endOffset,
+           "setSelectionBounds: caretOffset not at selection end for " + aID);
+      };
+
+      this.getID = function changeSelection_getID() {
+        return "nsIAccessibleText::setSelectionBounds test for " + aID;
+      };
+    }
+
+    function removeSelections(aID) {
+      this.hyperText = getAccessible(aID, [ nsIAccessibleText ]);
+
+      this.eventSeq = [
+        new invokerChecker(EVENT_TEXT_SELECTION_CHANGED, document),
+      ];
+
+      this.invoke = function removeSelection_invoke() {
+        let selectionCount = this.hyperText.selectionCount;
+        for (let i = 0; i < selectionCount; i++) {
+          this.hyperText.removeSelection(0);
+        }
+      };
+
+      this.finalCheck = function removeSelection_finalCheck() {
+        is(this.hyperText.selectionCount, 0,
+           "removeSelection: Wrong selection count for " + aID);
+      };
+
+      this.getID = function removeSelection_getID() {
+        return "nsIAccessibleText::removeSelection test for " + aID;
+      };
+    }
+
+    function changeDOMSelection(aID, aNodeID1, aNodeOffset1,
+                                aNodeID2, aNodeOffset2,
+                                aTests) {
+      this.hyperText = getAccessible(aID, [ nsIAccessibleText ]);
+
+      this.eventSeq = [
+        new invokerChecker(EVENT_TEXT_SELECTION_CHANGED, aID),
+      ];
+
+      this.invoke = function changeDOMSelection_invoke() {
+        // HyperTextAccessible::GetSelectionDOMRanges ignores hidden selections.
+        // Here we may be focusing an editable element (and thus hiding the
+        // main document selection), so blur it so that we test what we want to
+        // test.
+        document.activeElement.blur();
+
+        var sel = window.getSelection();
+        var range = document.createRange();
+        range.setStart(getNode(aNodeID1), aNodeOffset1);
+        range.setEnd(getNode(aNodeID2), aNodeOffset2);
+        sel.addRange(range);
+      };
+
+      this.finalCheck = function changeDOMSelection_finalCheck() {
+        for (var i = 0; i < aTests.length; i++) {
+          var text = getAccessible(aTests[i][0], nsIAccessibleText);
+          is(text.selectionCount, 1,
+             "setSelectionBounds: Wrong selection count for " + aID);
+          var startOffset = {}, endOffset = {};
+          text.getSelectionBounds(0, startOffset, endOffset);
+
+          is(startOffset.value, aTests[i][1],
+             "setSelectionBounds: Wrong start offset for " + aID);
+          is(endOffset.value, aTests[i][2],
+             "setSelectionBounds: Wrong end offset for " + aID);
+        }
+      };
+
+      this.getID = function changeDOMSelection_getID() {
+        return "DOM selection change for " + aID;
+      };
+    }
+
+    function onfocusEventSeq(aID) {
+      var caretMovedChecker =
+        new invokerChecker(EVENT_TEXT_CARET_MOVED, aID);
+      var selChangedChecker =
+        new invokerChecker(EVENT_TEXT_SELECTION_CHANGED, aID);
+      selChangedChecker.unexpected = true;
+
+      return [ caretMovedChecker, selChangedChecker ];
+    }
+
+    /**
+     * Do tests
+     */
+
+    // gA11yEventDumpToConsole = true; // debug stuff
+
+    var gQueue = null;
+    function doTests() {
+      gQueue = new eventQueue();
+
+      gQueue.push(new addSelections("paragraph", [[1, 3], [6, 10]]));
+      gQueue.push(new changeSelection("paragraph", 0, [2, 4]));
+      gQueue.push(new removeSelections("paragraph"));
+
+      // reverse selection
+      gQueue.push(new addSelections("paragraph", [[1, 3], [10, 6]]));
+      gQueue.push(new removeSelections("paragraph"));
+
+      gQueue.push(new synthFocus("textbox", onfocusEventSeq("textbox")));
+      gQueue.push(new changeSelection("textbox", 0, [1, 3]));
+
+      // reverse selection
+      gQueue.push(new changeSelection("textbox", 0, [3, 1]));
+
+      gQueue.push(new synthFocus("textarea", onfocusEventSeq("textarea")));
+      gQueue.push(new changeSelection("textarea", 0, [1, 3]));
+
+      gQueue.push(new changeDOMSelection("c1", "c1_span1", 0, "c1_span2", 0,
+                                         [["c1", 2, 2]]));
+      gQueue.push(new changeDOMSelection("c2", "c2", 0, "c2_div2", 1,
+                                         [["c2", 0, 3], ["c2_div2", 0, 2]]));
+      gQueue.invoke(); // Will call SimpleTest.finish();
+    }
+
+    SimpleTest.waitForExplicitFinish();
+    addA11yLoadEvent(doTests);
+  </script>
+</head>
+
+<body>
+
+  <a target="_blank"
+     href="https://bugzilla.mozilla.org/show_bug.cgi?id=688126"
+     title="nsIAccessibleText::setSelectionBounds doesn't fire text selection changed events in some cases">
+    Bug 688126
+  </a>
+  <a target="_blank"
+     href="https://bugzilla.mozilla.org/show_bug.cgi?id=688124"
+     title="no text selection changed event when selection is removed">
+    Bug 688124
+  </a>
+  <p id="display"></p>
+  <div id="content" style="display: none"></div>
+  <pre id="test">
+  </pre>
+
+  <p id="paragraph">hello world</p>
+  <input id="textbox" value="hello"/>
+  <textarea id="textarea">hello</textarea>
+  <div id="c1">hi<span id="c1_span1"></span><span id="c1_span2"></span>hi</div>
+  <div id="c2">hi<div id="c2_div2">hi</div></div>
+
+</body>
+</html>

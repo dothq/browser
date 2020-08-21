@@ -1,0 +1,24 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+geckoview.jar:
+% content geckoview %content/
+
+  content/config.xhtml
+  content/config.js
+% override chrome://global/content/config.xhtml chrome://geckoview/content/config.xhtml
+
+  content/geckoview.xhtml
+  content/geckoview.js
+  content/GeckoViewAutofillChild.js
+  content/GeckoViewContentChild.js
+  content/GeckoViewMediaChild.js
+  content/GeckoViewProgressChild.js
+  content/GeckoViewPromptChild.js
+  content/GeckoViewScrollChild.js
+  content/GeckoViewSettingsChild.js
+  content/GeckoViewSelectionActionChild.js
+  content/SessionStateAggregator.js
+
+% content branding %content/branding/

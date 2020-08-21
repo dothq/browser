@@ -1,0 +1,156 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    max-run-time: 2700
+    suite: raptor
+    workdir: /builds/worker
+    run-on-projects: []
+    tier: 2
+    target:
+        by-test-platform:
+            android-hw-p2-8-0-android-aarch64.*:
+                index: gecko.v2.mozilla-esr68.signed-nightly.nightly.latest.mobile.android-aarch64-release-opt
+                name: build/target.apk
+            default:
+                index: gecko.v2.mozilla-esr68.signed-nightly.nightly.latest.mobile.android-api-16-release-opt
+                name: build/target.apk
+    virtualization: hardware
+    mozharness:
+        script: raptor_script.py
+        config:
+            - raptor/android_hw_config.py
+        extra-options:
+            - --no-conditioned-profile
+
+raptor-speedometer-fennec68:
+    description: "Raptor Speedometer on Fennec68"
+    try-name: raptor-speedometer-fennec68
+    treeherder-symbol: Rap(sp-f68)
+    max-run-time: 2000
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-speedometer-fennec68-power:
+    description: "Raptor Speedometer power on Fennec68"
+    try-name: raptor-speedometer-fennec68-power
+    treeherder-symbol: Rap(sp-p-f68)
+    max-run-time: 2000
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+            - --power-test
+
+raptor-scn-power-idle-fennec68:
+    description: "Raptor idle-browser power-usage test on Fennec68"
+    try-name: raptor-scn-power-idle-fennec68
+    treeherder-symbol: Rap(idl-p-f68)
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+            - --power-test
+
+raptor-scn-power-idle-bg-fennec68:
+    description: "Raptor idle-browser (backgrounded) power-usage measurement on Fennec68"
+    try-name: raptor-scn-power-idle-bg-fennec68
+    treeherder-symbol: Rap(idlbg-p-f68)
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle-bg-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+            - --power-test
+
+raptor-youtube-playback-fennec68:
+    description: "Raptor YouTube Playback on Fennec68"
+    try-name: raptor-youtube-playback-fennec68
+    treeherder-symbol: Rap(ytp)
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-av1-sfr-fennec68:
+    description: "Raptor YouTube Playback AV1 SFR on Fennec68"
+    try-name: raptor-youtube-playback-av1-sfr-fennec68
+    treeherder-symbol: Rap(ytp-av1-sfr)
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-av1-sfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-h264-sfr-fennec68:
+    description: "Raptor YouTube Playback H264 SFR on Fennec68"
+    try-name: raptor-youtube-playback-h264-sfr-fennec68
+    treeherder-symbol: Rap(ytp-h264-sfr)
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-h264-sfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-h264-fennec68:
+    description: "Raptor YouTube Playback H264 on Fennec68"
+    try-name: raptor-youtube-playback-h264-fennec68
+    treeherder-symbol: Rap(ytp-h264)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-h264-std-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-vp9-sfr-fennec68:
+    description: "Raptor YouTube Playback VP9 SFR on Fennec68"
+    try-name: raptor-youtube-playback-vp9-sfr-fennec68
+    treeherder-symbol: Rap(ytp-vp9-sfr)
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-vp9-sfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-widevine-hfr-fennec68:
+    description: "Raptor YouTube Playback Widevine HFR on Fennec68"
+    try-name: raptor-youtube-playback-widevine-hfr-fennec68
+    treeherder-symbol: Rap(ytp-widevine-hfr)
+    max-run-time: 3000
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-hfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-widevine-h264-sfr-fennec68:
+    description: "Raptor YouTube Playback Widevine H264 SFR on Fennec68"
+    try-name: raptor-youtube-playback-widevine-h264-sfr-fennec68
+    treeherder-symbol: Rap(ytp-widevine-h264-sfr)
+    max-run-time: 3000
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-h264-sfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox
+
+raptor-youtube-playback-widevine-vp9-sfr-fennec68:
+    description: "Raptor YouTube Playback Widevine VP9 SFR on Fennec68"
+    try-name: raptor-youtube-playback-widevine-vp9-sfr-fennec68
+    treeherder-symbol: Rap(ytp-widevine-vp9-sfr)
+    max-run-time: 3000
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-vp9-sfr-fennec68
+            - --app=fennec
+            - --binary=org.mozilla.firefox

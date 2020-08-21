@@ -1,0 +1,53 @@
+ac_add_options --disable-compile-environment
+
+# In case mozconfig.cache was already included
+unset CCACHE
+unset SCCACHE_VERBOSE_STATS
+# In case it wasn't
+NO_CACHE=1
+
+# Override any toolchain defines we've inherited from other mozconfigs.
+unset CC
+unset CXX
+unset HOST_CC
+unset HOST_CXX
+unset LINKER
+unset RUSTC
+unset RUSTFLAGS
+unset CARGO
+unset RUSTDOC
+unset RUSTFMT
+unset CBINDGEN
+unset MAKECAB
+unset DUMP_SYMS
+unset TOOLCHAIN_PREFIX
+unset BINDGEN_CFLAGS
+unset LLVM_CONFIG
+unset LLVM_PROFDATA
+unset ENABLE_CLANG_PLUGIN
+unset MACOS_SDK_DIR
+unset MACOS_PRIVATE_FRAMEWORKS_DIR
+unset DIA_SDK_PATH
+unset VC_PATH
+unset WINDOWSSDKDIR
+unset MOZ_LTO
+
+unset MOZ_STDCXX_COMPAT
+unset MOZ_NO_PIE_COMPAT
+
+unset AR
+unset NM
+unset RANLIB
+unset NASM
+
+# Don't unset this on Linux artifact builds so the artifact builds correctly
+# package any Wasm sandboxed shared libraries.
+if test `uname -s` != Linux; then
+  unset WASM_SANDBOXED_LIBRARIES
+fi
+unset WASM_CC
+unset WASM_CXX
+unset LUCETC
+unset WASI_SYSROOT
+unset PDBSTR
+unset WINCHECKSEC

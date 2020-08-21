@@ -1,0 +1,12 @@
+[package]
+name = "xpcom"
+version = "0.1.0"
+authors = ["michael@thelayzells.com"]
+
+[dependencies]
+libc = "0.2"
+nsstring = { path = "../nsstring" }
+nserror = { path = "../nserror" }
+threadbound = "0.1"
+xpcom_macros = { path = "xpcom_macros" }
+thin-vec = { version = "0.1.0", features = ["gecko-ffi"] }

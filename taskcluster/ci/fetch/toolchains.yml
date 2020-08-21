@@ -1,0 +1,494 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+binutils-2.27:
+    description: binutils 2.27 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/binutils/binutils-2.27.tar.bz2
+        sha256: 369737ce51587f92466041a97ab7d2358c6d9e1b6490b3940eb09fb0a9a6ac88
+        size: 26099568
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/EAF1C276A747E9ED86210CBAC3126D3B4AE55E93.key
+        artifact-name: binutils-source.tar.zst
+        strip-components: 1
+        add-prefix: binutils-source/
+
+binutils-2.31.1:
+    description: binutils 2.31.1 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/binutils/binutils-2.31.1.tar.xz
+        sha256: 5d20086ecf5752cc7d9134246e9588fa201740d540f7eb84d795b1f7a93bca86
+        size: 20467996
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-binutils/3A24BC1E8FB409FA9F14371813FCEF89DD9E3C4F.key
+        artifact-name: binutils-source.tar.zst
+        strip-components: 1
+        add-prefix: binutils-source/
+
+gcc-6.4.0:
+    description: GCC 6.4.0 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/gcc/gcc-6.4.0/gcc-6.4.0.tar.xz
+        sha256: 850bf21eafdfe5cd5f6827148184c08c4a0852a37ccf36ce69855334d2c914d4
+        size: 76156220
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/13975A70E63C361C73AE69EF6EEB81F8981C74C7.key
+        artifact-name: gcc-source.tar.zst
+        strip-components: 1
+        add-prefix: gcc-source/
+
+gcc-7.4.0:
+    description: GCC 7.4.0 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/gcc/gcc-7.4.0/gcc-7.4.0.tar.xz
+        sha256: eddde28d04f334aec1604456e536416549e9b1aa137fc69204e65eb0c009fe51
+        size: 62601888
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/13975A70E63C361C73AE69EF6EEB81F8981C74C7.key
+        artifact-name: gcc-source.tar.zst
+        strip-components: 1
+        add-prefix: gcc-source/
+
+gcc-8.3.0:
+    description: GCC 8.3.0 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/gcc/gcc-8.3.0/gcc-8.3.0.tar.xz
+        sha256: 64baadfe6cc0f4947a84cb12d7f0dfaf45bb58b7e92461639596c21e02d97d2c
+        size: 63694700
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/33C235A34C46AA3FFB293709A328C3A2C3C45C06.key
+        artifact-name: gcc-source.tar.zst
+        strip-components: 1
+        add-prefix: gcc-source/
+
+gcc-9.1.0:
+    description: GCC 9.1.0 source code
+    fetch:
+        type: static-url
+        url: ftp://ftp.gnu.org/gnu/gcc/gcc-9.1.0/gcc-9.1.0.tar.xz
+        sha256: 79a66834e96a6050d8fe78db2c3b32fb285b230b855d0a66288235bc04b327a0
+        size: 70546856
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/33C235A34C46AA3FFB293709A328C3A2C3C45C06.key
+        artifact-name: gcc-source.tar.zst
+        strip-components: 1
+        add-prefix: gcc-source/
+
+gmp-5.1.3:
+    description: GMP 5.1.3 source code
+    fetch:
+        type: static-url
+        url: https://ftp.gnu.org/gnu/gmp/gmp-5.1.3.tar.bz2
+        sha256: 752079520b4690531171d0f4532e40f08600215feefede70b24fabdc6f1ab160
+        size: 2196480
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/343C2FF0FBEE5EC2EDBEF399F3599FF828C67298.key
+        artifact-name: gmp-source.tar.zst
+        strip-components: 1
+        add-prefix: gmp-source/
+
+gmp-6.1.0:
+    description: GMP 6.1.0 source code
+    fetch:
+        type: static-url
+        url: https://ftp.gnu.org/gnu/gmp/gmp-6.1.0.tar.bz2
+        sha256: 498449a994efeba527885c10405993427995d3f86b8768d8cdf8d9dd7c6b73e8
+        size: 2383840
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/343C2FF0FBEE5EC2EDBEF399F3599FF828C67298.key
+        artifact-name: gmp-source.tar.zst
+        strip-components: 1
+        add-prefix: gmp-source/
+
+iris-2.0:
+    description: Iris_Firefox source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/iris_firefox
+        revision: a91a1cb88a16b0ee4d30f0dfc165d2cacf48b10c
+
+isl-0.15:
+    description: ISL 0.15 source code
+    fetch:
+        type: static-url
+        url: ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-0.15.tar.bz2
+        sha256: 8ceebbf4d9a81afa2b4449113cee4b7cb14a687d7a549a963deb5e2a41458b6b
+        size: 1574964
+        artifact-name: isl-source.tar.zst
+        strip-components: 1
+        add-prefix: isl-source/
+
+isl-0.16.1:
+    description: ISL 0.16.1 source code
+    fetch:
+        type: static-url
+        url: ftp://gcc.gnu.org/pub/gcc/infrastructure/isl-0.16.1.tar.bz2
+        sha256: 412538bb65c799ac98e17e8cfcdacbb257a57362acfaaff254b0fcae970126d2
+        size: 1626446
+        artifact-name: isl-source.tar.zst
+        strip-components: 1
+        add-prefix: isl-source/
+
+mpc-0.8.2:
+    description: mpc 0.8.2 source code
+    fetch:
+        type: static-url
+        url: http://www.multiprecision.org/downloads/mpc-0.8.2.tar.gz
+        sha256: ae79f8d41d8a86456b68607e9ca398d00f8b7342d1d83bcf4428178ac45380c7
+        size: 548401
+        gpg-signature:
+            sig-url: "{url}.asc"
+            key-path: build/unix/build-gcc/AD17A21EF8AED8F1CC02DBD9F7D5C9BF765C61E3.key
+        artifact-name: mpc-source.tar.zst
+        strip-components: 1
+        add-prefix: mpc-source/
+
+mpc-1.0.3:
+    description: mpc 1.0.3 source code
+    fetch:
+        type: static-url
+        url: http://www.multiprecision.org/downloads/mpc-1.0.3.tar.gz
+        sha256: 617decc6ea09889fb08ede330917a00b16809b8db88c29c31bfbb49cbf88ecc3
+        size: 669925
+        gpg-signature:
+            sig-url: "{url}.sig"
+            key-path: build/unix/build-gcc/AD17A21EF8AED8F1CC02DBD9F7D5C9BF765C61E3.key
+        artifact-name: mpc-source.tar.zst
+        strip-components: 1
+        add-prefix: mpc-source/
+
+mpfr-3.1.4:
+    description: mpfr 3.1.4 source code
+    fetch:
+        type: static-url
+        url: http://www.mpfr.org/mpfr-3.1.4/mpfr-3.1.4.tar.bz2
+        sha256: d3103a80cdad2407ed581f3618c4bed04e0c92d1cf771a65ead662cc397f7775
+        size: 1279284
+        gpg-signature:
+            sig-url: "{url}.asc"
+            key-path: build/unix/build-gcc/07F3DBBECC1A39605078094D980C197698C3739D.key
+        artifact-name: mpfr-source.tar.zst
+        strip-components: 1
+        add-prefix: mpfr-source/
+
+mpfr-3.1.5:
+    description: mpfr 3.1.5 source code
+    fetch:
+        type: static-url
+        url: http://www.mpfr.org/mpfr-3.1.5/mpfr-3.1.5.tar.bz2
+        sha256: ca498c1c7a74dd37a576f353312d1e68d490978de4395fa28f1cbd46a364e658
+        size: 1279489
+        gpg-signature:
+            sig-url: "{url}.asc"
+            key-path: build/unix/build-gcc/07F3DBBECC1A39605078094D980C197698C3739D.key
+        artifact-name: mpfr-source.tar.zst
+        strip-components: 1
+        add-prefix: mpfr-source/
+
+nasm-2.14.02:
+    description: nasm 2.14.02 source code
+    fetch:
+        type: static-url
+        url: https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.xz
+        sha256: e24ade3e928f7253aa8c14aa44726d1edf3f98643f87c9d72ec1df44b26be8f5
+        size: 827620
+
+nasm-2.13.02:
+    description: nasm 2.13.02 source code
+    fetch:
+        type: static-url
+        url: https://www.nasm.us/pub/nasm/releasebuilds/2.13.02/nasm-2.13.02.tar.xz
+        sha256: 8ac3235f49a6838ff7a8d7ef7c19a4430d0deecc0c2d3e3e237b5e9f53291757
+        size: 805744
+
+wix-3.14.0:
+    description: wix 3.14.0.2812 binary release
+    # WIX doesn't use a wrapping toplevel DIR, so we should really repackage it when
+    # Bug 1479533 and related code is ready.
+    fetch:
+        type: static-url
+        # This is a dev version of the toolset, upstream will purge over time...
+        url: http://wixtoolset.org/downloads/v3.14.0.2812/wix314-binaries.zip
+        sha256: 923892298f37514622c58cbbd9c2cadf2822d9bb53df8ee83aaeb05280777611
+        size: 34664320
+
+grcov-osx-x86_64:
+    description: grcov binary release
+    fetch:
+        type: static-url
+        url: https://github.com/mozilla/grcov/releases/download/v0.5.14/grcov-osx-x86_64.tar.bz2
+        sha256: 17692a7ee09fbd49cac1194500c9c9e2bc76a23cd702f88026955f25fe7548a8
+        size: 1213868
+
+zlib-1.2.11:
+    description: zlib 1.2.11 source code
+    fetch:
+        type: static-url
+        url: http://zlib.net/zlib-1.2.11.tar.gz
+        sha256: c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
+        size: 607698
+        gpg-signature:
+            sig-url: "{url}.asc"
+            key-path: build/unix/build-gcc/5ED46A6721D365587791E2AA783FCD8E58BCAFBA.key
+
+nsis-3.01:
+    description: nsis 3.01 source code
+    fetch:
+        type: static-url
+        url: https://downloads.sourceforge.net/project/nsis/NSIS%203/3.01/nsis-3.01-src.tar.bz2
+        sha256: 604c011593be484e65b2141c50a018f1b28ab28c994268e4ecd377773f3ffba1
+        size: 1649428
+
+nsis-3.01-win:
+    description: nsis 3.01 for windows
+    fetch:
+        type: static-url
+        url: https://hg.mozilla.org/mozilla-build/raw-file/3b8c537ca3c879551956ad47ca9f089583f647c5/nsis-3.01.zip
+        sha256: daa17556c8690a34fb13af25c87ced89c79a36a935bf6126253a9d9a5226367c
+        size: 2505205
+
+upx-3.95-win:
+    description: upx 3.95 for windows
+    fetch:
+        type: static-url
+        url: https://hg.mozilla.org/mozilla-build/raw-file/3b8c537ca3c879551956ad47ca9f089583f647c5/upx-3.95-win64.zip
+        sha256: 5c076f87ba64d82f11513f4af0ceb07246a3540aa3c72ca3ffc2d53971fa56e3
+        size: 462820
+
+wine-5.0:
+    description: wine-5.0.tar.xz
+    fetch:
+        type: static-url
+        url: https://dl.winehq.org/wine/source/5.0/wine-5.0.tar.xz
+        sha256: 181550ba69a80b00c631f80c28ff7642264613bbecdb0c0fc04d6534866713b4
+        size: 22469428
+        gpg-signature:
+            sig-url: "{url}.sign"
+            key-path: build/unix/build-gcc/DA23579A74D4AD9AF9D3F945CEFAC8EAAF17519D.key
+
+cbindgen-0.14.3:
+    description: cbindgen source code
+    fetch:
+        type: git
+        repo: https://github.com/eqrion/cbindgen
+        revision: cc2876f709808a52d132a5f84e53ca1964eb92db
+
+cctools-port:
+    description: cctools-port source code
+    fetch:
+        type: git
+        repo: https://github.com/tpoechtrager/cctools-port
+        revision: 4e1faecce83dc14108397a9fb6e7025411e4702d
+
+libtapi:
+    description: libtapi source code
+    fetch:
+        type: git
+        repo: https://github.com/tpoechtrager/apple-libtapi
+        revision: 3efb201881e7a76a21e0554906cf306432539cef
+
+libdmg-hfsplus:
+    description: libdmg-hfsplug source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/libdmg-hfsplus/
+        revision: 2ee327795680101d36f9700bd0fb618362237718
+
+hfsplus-tools:
+    description: hfstools-plus source code
+    fetch:
+        type: static-url
+        # Most-upstream is https://opensource.apple.com/source/diskdev_cmds/
+        url: https://src.fedoraproject.org/repo/pkgs/hfsplus-tools/diskdev_cmds-540.1.linux3.tar.gz/0435afc389b919027b69616ad1b05709/diskdev_cmds-540.1.linux3.tar.gz
+        sha256: b01b203a97f9a3bf36a027c13ddfc59292730552e62722d690d33bd5c24f5497
+        size: 411205
+
+rust-size:
+    description: rust-size source code
+    fetch:
+        type: git
+        repo: https://github.com/luser/rust-size
+        revision: ab659d93b1faba95307df952aefe3fbed3583669
+
+gn:
+    description: GN source code
+    fetch:
+        type: git
+        repo: https://gn.googlesource.com/gn
+        revision: d69a9c3765dee2e650bcccebbadf72c5d42d92b1
+
+grcov:
+    description: grcov source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/grcov
+        revision: 51300e533abc21231881259290da7692c279c0d6
+
+sccache:
+    description: sccache source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/sccache
+        # 0.2.13 release + various changes
+        revision: d172e77c1bfd08714e71fe80f80cc149eeae1749
+
+fxc2:
+    description: fxc2 source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/fxc2
+        revision: 63ad74b7faa7033f2c1be9cc1cd0225241a1a9a5
+
+mingw-w64:
+    description: mingw-w64 source code
+    fetch:
+        type: git
+        repo: git://git.code.sf.net/p/mingw-w64/mingw-w64
+        revision: 1b373beec6d07478ffba33726bb3bb21f32e4411
+
+libunwind:
+    description: libunwind source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm-mirror/libunwind
+        revision: efd17a11b0fae29d3414e11e99307e082d4ee949
+
+llvm-mingw:
+    description: llvm-mingw source code
+    fetch:
+        type: git
+        repo: https://github.com/mstorsjo/llvm-mingw
+        revision: 9f8e5cebd6dbbb7546e8917e6c59284699a48d26
+
+android-rs-glue:
+    description: android-rs-glue source code
+    fetch:
+        type: git
+        repo: https://github.com/jamienicol/android-rs-glue
+        revision: 7a57ad320de79c74a57a8ce02b1dc69b1ea7332a
+
+clang-5.0:
+    description: clang 5.0.2 source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm/llvm-project
+        revision: 6a075b6de4cafebec9ca1ff9eec7229a617c93f6
+
+clang-7:
+    description: clang 7 source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm/llvm-project
+        revision: d0d8eb2e5415b8be29343e3c17a18e49e67b5551
+
+clang-8:
+    description: clang 8.0.1 source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm/llvm-project
+        revision: 19a71f6bdf2dddb10764939e7f0ec2b98dba76c9
+
+clang-9:
+    description: clang 9.0.1 source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm/llvm-project
+        revision: c1a0a213378a458fbea1a5c77b315c7dce08fd05
+
+clang-10:
+    description: clang 10.0.0 source code
+    fetch:
+        type: git
+        repo: https://github.com/llvm/llvm-project
+        revision: d32170dbd5b0d54436537b6b75beaf44324e0c28
+
+wasi-sdk:
+    description: wasi-sdk source code
+    fetch:
+        type: git
+        repo: https://github.com/CraneStation/wasi-sdk
+        revision: 5225b05436ce57f01fe649f411f3ff701246628b
+
+ninja:
+    description: ninja 1.9.0
+    fetch:
+        type: static-url
+        url: https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip
+        sha256: 2d70010633ddaacc3af4ffbd21e22fae90d158674a09e132e06424ba3ab036e9
+        size: 254497
+        artifact-name: ninja.tar.zst
+        add-prefix: ninja/bin/
+
+cmake:
+    description: cmake 3.15.1
+    fetch:
+        type: static-url
+        url: https://github.com/Kitware/CMake/releases/download/v3.15.1/cmake-3.15.1-win64-x64.zip
+        sha256: 82a0edfed4cb0b45b25d2f99e621d3ed4014f66191d8f3c7eadf1d9ccf9c461b
+        size: 32214192
+        artifact-name: cmake.tar.zst
+        strip-components: 1
+        add-prefix: cmake/
+
+lucetc-source:
+    description: lucetc source code
+    fetch:
+        type: git
+        repo: https://github.com/PLSysSec/lucet_sandbox_compiler/
+        revision: a0a1ce981638109f1f76cd1eecf17a0436a20055
+
+dump-syms:
+    description: dump_syms source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/dump_syms/
+        # 0.0.5 + ELF/MachO/fixes
+        revision: 756bf4b555418960564c0a7c6d5ed0b1a8329283
+
+fix-stacks:
+    description: fix-stacks source code
+    fetch:
+        type: git
+        repo: https://github.com/mozilla/fix-stacks/
+        revision: b8b127d27cdcd64a5e66a7fb0a06c6c818445a61
+
+winchecksec:
+    description: winchecksec source code
+    fetch:
+        type: git
+        repo: https://github.com/trailofbits/winchecksec/
+        revision: 93ffe67dbfc757bf6f440d80b8acf88e652ed60a
+
+codeql-2.0.3:
+    description: CodeQL query tools
+    fetch:
+        type: static-url
+        url: https://github.com/github/codeql-cli-binaries/releases/download/v2.0.3/codeql.zip
+        sha256: 094ff1ffc7211e8222c148e375fdd53b58bd4c0fe20875d9d7abf2a5e6c341a5
+        size: 473738719
+        artifact-name: codeql.zip
+
+sonatype-nexus:
+    description: Sonatype Nexus Maven repository service
+    fetch:
+        type: static-url
+        url: https://download.sonatype.com/nexus/oss/nexus-2.14.18-01-bundle.tar.gz
+        sha256: 350af8b270bec7fda5861a15b8a5b7870fd8903d0b9a210754113d5a966ce6a6
+        size: 83493896
+        artifact-name: sonatype-nexus.tar.zst
+        strip-components: 1
+        add-prefix: sonatype-nexus/

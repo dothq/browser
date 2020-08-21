@@ -1,0 +1,30 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.single_dep:loader
+
+transforms:
+    - taskgraph.transforms.name_sanity:transforms
+    - taskgraph.transforms.balrog_submit:transforms
+    - taskgraph.transforms.scriptworker:add_balrog_scopes
+    - taskgraph.transforms.task:transforms
+
+kind-dependencies:
+    - beetmover-repackage
+
+only-for-attributes:
+    - nightly
+    - shippable
+
+not-for-build-platforms:
+    - android-api-16-shippable/opt
+    - android-x86_64-shippable/opt
+    - android-x86-shippable/opt
+    - android-aarch64-shippable/opt
+
+job-template:
+    update-no-wnp:
+        by-release-type:
+            nightly.*: false
+            default: true

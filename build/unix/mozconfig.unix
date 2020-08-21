@@ -1,0 +1,48 @@
+. "$topsrcdir/build/mozconfig.common"
+
+TOOLTOOL_DIR=${TOOLTOOL_DIR:-$topsrcdir}
+
+if [ -n "$FORCE_GCC" ]; then
+    CC="$MOZ_FETCHES_DIR/gcc/bin/gcc"
+    CXX="$MOZ_FETCHES_DIR/gcc/bin/g++"
+
+    # We want to make sure we use binutils and other binaries in the tooltool
+    # package.
+    mk_add_options "export PATH=$MOZ_FETCHES_DIR/gcc/bin:$PATH"
+    ac_add_options --with-clang-path=$MOZ_FETCHES_DIR/clang/bin/clang
+else
+    CC="$MOZ_FETCHES_DIR/clang/bin/clang"
+    CXX="$MOZ_FETCHES_DIR/clang/bin/clang++"
+
+    # For some builds we don't want to have Clang based static-analysis activated
+    if [ -z "$DISABLE_CLANG_PLUGIN" ]; then
+        export ENABLE_CLANG_PLUGIN=1
+    fi
+
+    case "$PERFHERDER_EXTRA_OPTIONS" in
+    base-toolchains*)
+      # Clang versions < 7.0 don't support the -fcrash-diagnostics-dir flag.
+      ;;
+    *)
+      export CFLAGS="$CFLAGS -fcrash-diagnostics-dir=${UPLOAD_PATH}"
+      export CXXFLAGS="$CXXFLAGS -fcrash-diagnostics-dir=${UPLOAD_PATH}"
+      ;;
+    esac
+
+    if [ -z "$USE_ARTIFACT" ]; then
+        if [ -n "$TASKCLUSTER_PGO_PROFILE_USE" ]; then
+            export MOZ_LTO=cross
+            ac_add_options --enable-profile-use=cross
+            ac_add_options --with-pgo-jarlog=${MOZ_FETCHES_DIR}/en-US.log
+            ac_add_options --with-pgo-profile-path=${MOZ_FETCHES_DIR}/merged.profdata
+            export LLVM_PROFDATA="$MOZ_FETCHES_DIR/clang/bin/llvm-profdata"
+            export AR="$MOZ_FETCHES_DIR/clang/bin/llvm-ar"
+            export NM="$MOZ_FETCHES_DIR/clang/bin/llvm-nm"
+            export RANLIB="$MOZ_FETCHES_DIR/clang/bin/llvm-ranlib"
+        fi
+    fi
+
+    mk_add_options "export PATH=$MOZ_FETCHES_DIR/binutils/bin:$PATH"
+fi
+
+. "$topsrcdir/build/unix/mozconfig.stdcxx"

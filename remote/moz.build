@@ -1,0 +1,44 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+DIRS += [
+  "startup",
+  "test",
+]
+
+XPCOM_MANIFESTS += ["components.conf"]
+JAR_MANIFESTS += ["jar.mn"]
+
+XPIDL_MODULE = "remote"
+XPIDL_SOURCES += ["nsIRemoteAgent.idl"]
+
+with Files("**"):
+    BUG_COMPONENT = ("Remote Protocol", "Agent")
+with Files("domains/**/Emulation.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Emulation")
+with Files("domains/**/DOM.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "DOM")
+with Files("domains/**/Input.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Input")
+with Files("domains/**/Log.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Log")
+with Files("domains/**/Network.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Network")
+with Files("domains/**/Page.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Page")
+with Files("domains/**/Performance.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Performance")
+with Files("domains/**/Runtime.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Runtime")
+with Files("domains/**/Security.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Security")
+with Files("domains/**/Browser.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Browser")
+with Files("domains/**/Target.jsm"):
+    BUG_COMPONENT = ("Remote Protocol", "Target")
+
+with Files("doc/**"):
+    SCHEDULES.exclusive = ["docs"]
+
+SPHINX_TREES["/remote"] = "doc"

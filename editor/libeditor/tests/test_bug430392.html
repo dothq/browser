@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=430392
+-->
+<head>
+  <title>Test for Bug 430392</title>
+  <script src="/tests/SimpleTest/SimpleTest.js"></script>
+  <script src="/tests/SimpleTest/EventUtils.js"></script>
+  <link rel="stylesheet" type="text/css" href="/tests/SimpleTest/test.css" />
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=430392">Mozilla Bug 430392</a>
+<p id="display"></p>
+<div id="content">
+  <div contenteditable="true" id="edit"> <span contenteditable="false">A</span> ; <span contenteditable="false">B</span> ; <span contenteditable="false">C</span> </div>
+</div>
+<pre id="test">
+<script class="testbody" type="text/javascript">
+
+/** Test for Bug 430392 **/
+
+function test() {
+  var edit = document.getElementById("edit");
+  var html = edit.innerHTML;
+  var expectedText = edit.textContent;
+  document.getElementById("edit").focus();
+
+  // Each test is [desc, callback].  callback() is called and we check that the
+  // textContent didn't change.  For expected failures, the format is [desc,
+  // callback, expectedValue], and the test will be marked as an expected fail
+  // if the textContent changes to expectedValue, and an unexpected fail if
+  // it's neither the original value nor expectedValue.
+  var tests = [["adding returns", () => {
+    getSelection().collapse(edit.firstChild, 0);
+    synthesizeKey("KEY_ArrowRight");
+    synthesizeKey("KEY_Enter");
+    synthesizeKey("KEY_Enter");
+    synthesizeKey("KEY_Backspace");
+    synthesizeKey("KEY_Backspace");
+  }],
+  ["adding shift-returns", () => {
+    getSelection().collapse(edit.firstChild, 0);
+    synthesizeKey("KEY_ArrowRight");
+    synthesizeKey("KEY_Enter", {shiftKey: true});
+    synthesizeKey("KEY_Enter", {shiftKey: true});
+    synthesizeKey("KEY_Backspace");
+    synthesizeKey("KEY_Backspace");
+  }]];
+  [
+    "insertorderedlist",
+    "insertunorderedlist",
+    ["formatblock", "p"],
+  ]
+  .forEach(item => {
+      var cmd = Array.isArray(item) ? item[0] : item;
+      var param = Array.isArray(item) ? item[1] : "";
+      tests.push([cmd, () => { document.execCommand(cmd, false, param); }]);
+   });
+  // These are all TODO -- they don't move the non-editable elements
+  [
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "subscript",
+    "superscript",
+    ["forecolor", "blue"],
+    ["backcolor", "blue"],
+    ["hilitecolor", "blue"],
+    ["fontname", "monospace"],
+    ["fontsize", "1"],
+    "justifyright",
+    "justifycenter",
+    "justifyfull",
+  ]
+  .forEach(item => {
+      var cmd = Array.isArray(item) ? item[0] : item;
+      var param = Array.isArray(item) ? item[1] : "";
+      tests.push([cmd, () => { document.execCommand(cmd, false, param); },
+                  " A ;  ; BC "]);
+   });
+  tests.push(["indent", () => { document.execCommand("indent"); },
+              "  ;  ;  ABC"]);
+  tests.forEach(arr => {
+    ["div", "br", "p"].forEach(sep => {
+      document.execCommand("defaultParagraphSeparator", false, sep);
+
+      var expectedFailText = typeof arr[2] == "function" ? arr[2]() : arr[2];
+
+      edit.innerHTML = html;
+      edit.focus();
+      getSelection().selectAllChildren(edit);
+      arr[1]();
+      if (typeof expectedFailText != "undefined") {
+        todo_is(edit.textContent, expectedText,
+                arr[0] + " should not change text (" + sep + ")");
+        if (edit.textContent !== expectedText &&
+            edit.textContent !== expectedFailText) {
+          is(edit.textContent, expectedFailText,
+             arr[0] + " changed to different failure (" + sep + ")");
+        }
+      } else {
+        is(edit.textContent, expectedText,
+           arr[0] + " should not change text (" + sep + ")");
+      }
+    });
+  });
+
+  SimpleTest.finish();
+}
+
+// In WSRunScanner::GetEditableBlockParentOrTopmotEditableInlineContent().
+// Before it, HTMLEditor must be able to stop handling edit action at
+// non-editable content.
+SimpleTest.expectAssertions(18);
+
+SimpleTest.waitForExplicitFinish();
+SimpleTest.waitForFocus(test);
+
+</script>
+</pre>
+</body>
+</html>

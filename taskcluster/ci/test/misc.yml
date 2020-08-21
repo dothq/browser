@@ -1,0 +1,249 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+geckoview-junit:
+    description: "Geckoview junit run"
+    suite: geckoview-junit
+    variants: ["geckoview-e10s-multi"]
+    treeherder-symbol: gv-junit
+    loopback-video: true
+    e10s: true
+    target: geckoview-androidTest.apk
+    max-run-time: 3600
+    tier: default
+    mozharness:
+        script: android_emulator_unittest.py
+        config:
+            by-test-platform:
+                android-em-7.*:
+                    - android/android_common.py
+                    - android/androidx86_7_0.py
+        extra-options:
+            - --test-suite=geckoview-junit
+
+telemetry-tests-client:
+    description: "Telemetry tests client run"
+    suite: telemetry-tests-client
+    treeherder-symbol: tt(c)
+    max-run-time: 1200
+    tier: default
+    mozharness:
+        script: telemetry/telemetry_client.py
+        config:
+            by-test-platform:
+                linux.*:
+                    - remove_executables.py
+                windows.*: []
+                macosx.*: []
+
+test-verify:
+    description: "Extra verification of tests modified on this push"
+    suite: test-verify
+    treeherder-symbol: TV
+    loopback-video: true
+    max-run-time: 10800
+    allow-software-gl-layers: false
+    run-on-projects:
+        by-test-platform:
+            # do not run on ccov or asan
+            .*-ccov/.*: []
+            .*-asan/.*: []
+            # where shippable is available, do not run on plain opt, except on try
+            (?:windows10-64|windows7-32|linux1804-64|macosx.*64)(?:-qr)?/opt: []
+            # do not run on mozilla-central, beta or release: usually just confirms earlier results
+            default: ['autoland']
+    built-projects-only: true
+    target:
+        by-test-platform:
+            android-em-7.*: geckoview-androidTest.apk
+            default: null
+    tier: 2
+    mozharness:
+        script:
+            by-test-platform:
+                android-em.*: android_emulator_unittest.py
+                default: desktop_unittest.py
+        config:
+            by-test-platform:
+                android-em-7.*:
+                    - android/android_common.py
+                    - android/androidx86_7_0.py
+                linux.*:
+                    - unittests/linux_unittest.py
+                    - remove_executables.py
+                macosx.*:
+                    - unittests/mac_unittest.py
+                windows.*:
+                    - unittests/win_unittest.py
+        extra-options:
+            - --verify
+    fetches:
+        toolchain:
+            by-test-platform:
+                linux.*:
+                    - linux64-node
+                    - linux64-minidump-stackwalk
+                    - linux64-fix-stacks
+                macosx.*:
+                    - macosx64-node
+                    - macosx64-minidump-stackwalk
+                    - macosx64-fix-stacks
+                win.*aarch64.*:
+                    - win32-node
+                    - win32-minidump-stackwalk
+                win.*-64.*:
+                    - win64-node
+                    - win32-minidump-stackwalk
+                    - win32-fix-stacks
+                win.*32.*:
+                    - win32-node
+                    - win32-minidump-stackwalk
+                    - win32-fix-stacks
+                android-em-7.*:
+                    - android-sdk-linux
+                    - linux64-node
+                    - linux64-minidump-stackwalk
+                    - linux64-fix-stacks
+
+test-verify-gpu:
+    description: "Extra verification of tests modified on this push on gpu instances"
+    suite:
+        category: test-verify
+        name: test-verify-gpu
+    schedules-component: test-verify-gpu
+    treeherder-symbol: TVg
+    loopback-video: true
+    virtualization: virtual-with-gpu
+    max-run-time: 10800
+    allow-software-gl-layers: false
+    run-on-projects:
+        by-test-platform:
+            # do not run on ccov or asan
+            .*-ccov/.*: []
+            .*-asan/.*: []
+            # where shippable is available, do not run on plain opt, except on try
+            (?:windows10-64|windows7-32|linux1804-64|macosx.*64)(?:-qr)?/opt: []
+            # do not run on mozilla-central, beta or release: usually just confirms earlier results
+            default: ['autoland']
+    built-projects-only: true
+    tier: 2
+    mozharness:
+        script:
+            by-test-platform:
+                android-em.*: android_emulator_unittest.py
+                default: desktop_unittest.py
+        config:
+            by-test-platform:
+                android-em-7.*:
+                    - android/android_common.py
+                    - android/androidx86_7_0.py
+                linux.*:
+                    - unittests/linux_unittest.py
+                    - remove_executables.py
+                macosx.*:
+                    - unittests/mac_unittest.py
+                windows.*:
+                    - unittests/win_unittest.py
+        extra-options:
+            - --verify
+            - --gpu-required
+
+test-coverage:
+    description: "Per-test coverage"
+    suite: test-coverage
+    treeherder-symbol: TC
+    loopback-video: true
+    instance-size: default
+    max-run-time: 10800
+    allow-software-gl-layers: false
+    run-on-projects:
+        by-test-platform:
+            .*-ccov/.*: built-projects
+            default: []
+    tier: 2
+    mozharness:
+        script:
+            by-test-platform:
+                android-em.*: android_emulator_unittest.py
+                default: desktop_unittest.py
+        config:
+            by-test-platform:
+                android-em-7.*:
+                    - android/android_common.py
+                    - android/androidx86_7_0.py
+                linux.*:
+                    - unittests/linux_unittest.py
+                    - remove_executables.py
+                macosx.*:
+                    - unittests/mac_unittest.py
+                windows.*:
+                    - unittests/win_unittest.py
+        extra-options:
+            - --per-test-coverage
+    fetches:
+        toolchain:
+            by-test-platform:
+                linux.*:
+                    - linux64-node
+                    - linux64-minidump-stackwalk
+                    - linux64-fix-stacks
+                macosx.*:
+                    - macosx64-node
+                    - macosx64-minidump-stackwalk
+                    - macosx64-fix-stacks
+                win.*aarch64.*:
+                    - win32-node
+                    - win32-minidump-stackwalk
+                win.*-64.*:
+                    - win64-node
+                    - win32-minidump-stackwalk
+                    - win32-fix-stacks
+                win.*32.*:
+                    - win32-node
+                    - win32-minidump-stackwalk
+                    - win32-fix-stacks
+                android-em-7.*:
+                    - android-sdk-linux
+                    - linux64-node
+                    - linux64-minidump-stackwalk
+                    - linux64-fix-stacks
+
+test-coverage-gpu:
+    description: "Per-test coverage for tests that require gpu instances"
+    suite: test-coverage
+    treeherder-symbol: TCg
+    loopback-video: true
+    virtualization: virtual-with-gpu
+    instance-size: default
+    max-run-time: 10800
+    allow-software-gl-layers: false
+    run-on-projects:
+        by-test-platform:
+            # only run on mozilla-central and try.
+            .*-ccov/.*: ['mozilla-central']
+            default: []
+    tier:
+        by-test-platform:
+            windows10-64-asan.*: 3
+            default: 2
+    mozharness:
+        script:
+            by-test-platform:
+                android-em.*: android_emulator_unittest.py
+                default: desktop_unittest.py
+        config:
+            by-test-platform:
+                android-em-7.*:
+                    - android/android_common.py
+                    - android/androidx86_7_0.py
+                linux.*:
+                    - unittests/linux_unittest.py
+                    - remove_executables.py
+                macosx.*:
+                    - unittests/mac_unittest.py
+                windows.*:
+                    - unittests/win_unittest.py
+        extra-options:
+            - --per-test-coverage
+            - --gpu-required

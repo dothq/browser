@@ -1,0 +1,141 @@
+/* -*- Mode: Groovy; c-basic-offset: 4; tab-width: 20; indent-tabs-mode: nil; -*-
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+// The JNI wrapper generation tasks depend on the JAR creation task of the :annotations project.
+evaluationDependsOn(':annotations')
+
+ext.configureVariantWithGeckoBinaries = { variant ->
+    // :app needs the full Fennec omni.ja, whereas other projects need the
+    // GeckoView-specific omni.ja.
+    def omnijarDir = { "${topobjdir}/dist/${it}" }("app".equals(project.name) ? "fennec" : "geckoview")
+    // All projects take the same Gecko libraries, which (for historical
+    // reasons) are in "fennec".
+    def distDir = "${topobjdir}/dist/fennec"
+
+    def syncOmnijarFromDistDir = task("syncOmnijarFromDistDirFor${variant.name.capitalize()}", type: Sync) {
+        onlyIf {
+            if (source.empty) {
+                throw new StopExecutionException("Required omnijar not found in ${omnijarDir}/{omni.ja,assets/omni.ja}.  Have you built and packaged?")
+            }
+            return true
+        }
+
+        into("${project.buildDir}/moz.build/src/${variant.name}/omnijar")
+        from("${omnijarDir}/omni.ja",
+             "${omnijarDir}/assets/omni.ja") {
+            // Throw an exception if we find multiple, potentially conflicting omni.ja files.
+            duplicatesStrategy 'fail'
+        }
+    }
+
+    def syncLibsFromDistDir = task("syncLibsFromDistDirFor${variant.name.capitalize()}", type: Sync) {
+        onlyIf {
+            if (!mozconfig.substs.COMPILE_ENVIRONMENT && !mozconfig.substs.MOZ_ARTIFACT_BUILDS) {
+                // We won't have JNI libraries if we're not compiling and we're not downloading
+                // artifacts.  Such a configuration is used for running lints, generating docs, etc.
+                return true
+            }
+            if (source.empty) {
+                throw new StopExecutionException("Required JNI libraries not found in ${distDir}/lib.  Have you built and packaged?")
+            }
+            return true
+        }
+
+        into("${project.buildDir}/moz.build/src/${variant.name}/jniLibs")
+        from("${distDir}/lib")
+    }
+
+    def syncAssetsFromDistDir = task("syncAssetsFromDistDirFor${variant.name.capitalize()}", type: Sync) {
+        into("${project.buildDir}/moz.build/src/${variant.name}/assets")
+        from("${distDir}/assets") {
+            exclude 'omni.ja'
+        }
+    }
+
+    // Local (read, not 'official') builds want to reflect developer changes to
+    // the omnijar sources, and (when compiling) to reflect developer changes to
+    // the native binaries.  To do this, the Gradle build calls out to the
+    // moz.build system, which can be re-entrant.  Official builds are driven by
+    // the moz.build system and should never be re-entrant in this way.
+    if (!mozconfig.substs.MOZILLA_OFFICIAL) {
+        if ("app".equals(project.name)) {
+            syncOmnijarFromDistDir.dependsOn rootProject.machStagePackageForFennec
+            syncLibsFromDistDir.dependsOn rootProject.machStagePackageForFennec
+            syncAssetsFromDistDir.dependsOn rootProject.machStagePackageForFennec
+        } else {
+            syncOmnijarFromDistDir.dependsOn rootProject.machStagePackageForGeckoview
+            syncLibsFromDistDir.dependsOn rootProject.machStagePackageForGeckoview
+            syncAssetsFromDistDir.dependsOn rootProject.machStagePackageForGeckoview
+        }
+    }
+
+    def assetGenTask = tasks.findByName("generate${variant.name.capitalize()}Assets")
+    def jniLibFoldersTask = tasks.findByName("merge${variant.name.capitalize()}JniLibFolders")
+    if ((variant.productFlavors*.name).contains('withGeckoBinaries')) {
+        assetGenTask.dependsOn syncOmnijarFromDistDir
+        assetGenTask.dependsOn syncAssetsFromDistDir
+        jniLibFoldersTask.dependsOn syncLibsFromDistDir
+
+        android.sourceSets."${variant.name}".assets.srcDir syncOmnijarFromDistDir.destinationDir
+        android.sourceSets."${variant.name}".assets.srcDir syncAssetsFromDistDir.destinationDir
+
+        if (!mozconfig.substs.MOZ_ANDROID_FAT_AAR_ARCHITECTURES) {
+            android.sourceSets."${variant.name}".jniLibs.srcDir syncLibsFromDistDir.destinationDir
+        } else {
+            android.sourceSets."${variant.name}".jniLibs.srcDir "${topobjdir}/dist/fat-aar/output/jni"
+        }
+    }
+}
+
+ext.configureLibraryVariantWithJNIWrappers = { variant, module ->
+    // BundleLibRuntime prepares the library for further processing to be
+    // incorporated in an app. We use this version to create the JNI wrappers.
+    def jarTask = tasks["bundleLibRuntime${variant.name.capitalize()}"]
+    def bundleJar = jarTask.outputs.files.find({ it.name == 'classes.jar' })
+
+    def annotationProcessorsJarTask = project(':annotations').jar
+
+    def wrapperTask
+    if (System.env.IS_LANGUAGE_REPACK == '1') {
+        // Single-locale l10n repacks set `IS_LANGUAGE_REPACK=1` and don't
+        // really have a build environment.
+        wrapperTask = task("generateJNIWrappersFor${module}${variant.name.capitalize()}")
+    } else {
+        wrapperTask = task("generateJNIWrappersFor${module}${variant.name.capitalize()}", type: JavaExec) {
+            classpath annotationProcessorsJarTask.archivePath
+        
+            // Configure the classpath at evaluation-time, not at
+            // configuration-time: see above comment.
+            doFirst {
+                classpath variant.javaCompileProvider.get().classpath
+                // Include android.jar.
+                classpath variant.javaCompileProvider.get().options.bootstrapClasspath
+            }
+    
+            main = 'org.mozilla.gecko.annotationProcessors.AnnotationProcessor'
+            args module
+            args bundleJar
+            
+            workingDir "${topobjdir}/widget/android"
+
+            inputs.file(bundleJar)
+            inputs.file(annotationProcessorsJarTask.archivePath)
+            inputs.property("module", module)
+
+            outputs.file("${topobjdir}/widget/android/GeneratedJNINatives.h")
+            outputs.file("${topobjdir}/widget/android/GeneratedJNIWrappers.cpp")
+            outputs.file("${topobjdir}/widget/android/GeneratedJNIWrappers.h")
+
+            dependsOn jarTask
+            dependsOn annotationProcessorsJarTask
+        }
+    }
+
+    if (module == 'Generated') {
+        tasks["bundle${variant.name.capitalize()}Aar"].dependsOn wrapperTask
+    } else {
+        tasks["assemble${variant.name.capitalize()}"].dependsOn wrapperTask
+    }
+}

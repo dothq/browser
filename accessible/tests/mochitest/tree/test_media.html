@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=483573
+-->
+<head>
+  <title>HTML5 audio/video tests</title>
+  <link rel="stylesheet" type="text/css" href="chrome://mochikit/content/tests/SimpleTest/test.css" />
+
+  <script src="chrome://mochikit/content/tests/SimpleTest/SimpleTest.js"></script>
+
+  <script type="application/javascript"
+          src="../common.js"></script>
+  <script type="application/javascript"
+          src="../role.js"></script>
+  <script type="application/javascript"
+          src="../states.js"></script>
+
+  <script type="application/javascript">
+
+    async function loadAudioSource() {
+      /**
+       * Setting the source dynamically and wait for it to load,
+       * so we can test the accessibility tree of the control in its ready and
+       * stable state.
+       *
+       * See bug 1484048 comment 25 for discussion on how it switches UI when
+       * loading a statically declared source.
+       */
+      await new Promise(resolve => {
+        let el = document.getElementById("audio");
+        el.addEventListener("canplaythrough", resolve, {once: true});
+        el.src = "../bug461281.ogg";
+      });
+
+      doTest();
+    }
+
+    function doTest() {
+      // ////////////////////////////////////////////////////////////////////////
+      // test the accessible tree
+
+      var accTree = {
+        role: ROLE_GROUPING,
+        children: [
+          { // start/stop button
+            role: ROLE_PUSHBUTTON,
+            name: "Play",
+            children: [],
+          },
+          { // buffer bar
+            role: ROLE_PROGRESSBAR,
+            children: [],
+          },
+          { // progress bar
+            role: ROLE_PROGRESSBAR,
+            children: [],
+          },
+          { // slider of progress bar
+            role: ROLE_SLIDER,
+            // name: "0:00 of 0:02 elapsed",
+            children: [],
+          },
+          { // mute button
+            role: ROLE_PUSHBUTTON,
+            name: "Mute",
+            children: [],
+          },
+          { // slider of volume bar
+            role: ROLE_SLIDER,
+            children: [],
+          },
+        ],
+      };
+      testAccessibleTree("audio", accTree);
+
+      todo(false, "Enable name test for slider. Fail on Linux.");
+      SimpleTest.finish();
+    }
+
+    SimpleTest.waitForExplicitFinish();
+    addA11yLoadEvent(loadAudioSource);
+  </script>
+</head>
+<body>
+
+  <a target="_blank"
+     title="Expose HTML5 video and audio elements' embedded controls through accessibility APIs"
+     href="https://bugzilla.mozilla.org/show_bug.cgi?id=483573">Mozilla Bug 483573</a>
+  <p id="display"></p>
+  <div id="content" style="display: none"></div>
+  <pre id="test">
+  </pre>
+
+  <audio id="audio" controls="true"></audio>
+
+  <div id="eventDump"></div>
+</body>
+</html>

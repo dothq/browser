@@ -1,0 +1,94 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    description: "Clang-tidy build"
+    attributes:
+        local-toolchain: true
+    index:
+        product: static-analysis
+    worker-type: b-linux-large
+    worker:
+        max-run-time: 3600
+    run:
+        toolchain-artifact: public/build/clang-tidy.tar.zst
+        resources:
+            - 'build/clang-plugin/**/*.cpp'
+            - 'build/clang-plugin/**/*.h'
+            - 'build/clang-plugin/*.inc'
+            - 'build/clang-plugin/*.py'
+            - 'build/clang-plugin/moz.build'
+            - 'build/clang-plugin/Makefile.in'
+            - 'build/build-clang/build-clang.py'
+    run-on-projects:
+        - trunk
+    fetches:
+        fetch:
+            - clang-10
+
+linux64-clang-tidy:
+    index:
+        job-name: linux64-clang-tidy
+    treeherder:
+        symbol: TL(clang-tidy)
+    run:
+        script: build-clang.sh
+        arguments:
+            - 'build/build-clang/clang-tidy-linux64.json'
+        resources:
+            - 'build/build-clang/clang-tidy-linux64.json'
+    fetches:
+        toolchain:
+            - linux64-binutils
+            - linux64-gcc-7
+
+macosx64-clang-tidy:
+    index:
+        job-name: macosx64-clang-tidy
+    treeherder:
+        symbol: TM(clang-tidy)
+    worker-type: b-linux-large
+    worker:
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/macosx64/cross-releng.manifest"
+    run:
+        using: toolchain-script
+        script: build-clang.sh
+        tooltool-downloads: internal
+        arguments:
+            - 'build/build-clang/clang-tidy-macosx64.json'
+        resources:
+            - 'build/build-clang/clang-tidy-macosx64.json'
+            - 'taskcluster/scripts/misc/tooltool-download.sh'
+    fetches:
+        toolchain:
+            - linux64-binutils
+            - linux64-cctools-port-clang-10
+            - linux64-clang-10
+            - linux64-gcc-7
+            - linux64-node
+
+win64-clang-tidy:
+    description: "Clang-tidy toolchain build"
+    index:
+        job-name: win64-clang-tidy
+    treeherder:
+        symbol: TW64(clang-tidy)
+        tier: 2
+    worker-type: b-win2012
+    worker:
+        max-run-time: 7200
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/win64/vs2017.manifest"
+    run:
+        script: build-clang.sh
+        arguments:
+            - 'build/build-clang/clang-tidy-win64.json'
+        resources:
+            - 'build/build-clang/clang-tidy-win64.json'
+        tooltool-downloads: internal
+    fetches:
+        fetch:
+            - cmake
+            - ninja

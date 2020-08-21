@@ -1,0 +1,307 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    worker-type: b-linux
+    worker:
+        max-run-time: 1800
+
+linux64-infer:
+    description: "infer build"
+    index:
+        product: static-analysis
+        job-name: linux64-infer
+    treeherder:
+        symbol: TL(infer)
+    worker:
+        docker-image: {in-tree: static-analysis-build}
+        max-run-time: 3600
+    run:
+        script: build-infer-linux.sh
+        resources:
+            - 'build/build-infer/build-infer.py'
+            - 'build/build-infer/infer-linux64.json'
+        toolchain-artifact: public/build/infer.tar.xz
+
+linux64-llvm-dsymutil:
+    description: "llvm-dsymutil toolchain build"
+    treeherder:
+        symbol: TL(dsymutil)
+    run:
+        script: build-llvm-dsymutil.sh
+        toolchain-artifact: public/build/llvm-dsymutil.tar.xz
+    fetches:
+        fetch:
+            - clang-10
+        toolchain:
+            - linux64-gcc-7
+
+linux64-binutils:
+    description: "Binutils toolchain build"
+    treeherder:
+        symbol: TL(binutil)
+    worker:
+        max-run-time: 3600
+    run:
+        script: build-binutils-linux.sh
+        resources:
+            - 'build/unix/build-binutils/build-binutils.sh'
+        toolchain-artifact: public/build/binutils.tar.xz
+    fetches:
+        fetch:
+            - binutils-2.31.1
+
+linux64-hfsplus:
+    description: "hfsplus toolchain build"
+    treeherder:
+        symbol: TL(hfs+)
+    run:
+        script: build-hfsplus-linux.sh
+        resources:
+            - 'build/unix/build-hfsplus/build-hfsplus.sh'
+        toolchain-artifact: public/build/hfsplus-tools.tar.xz
+    fetches:
+        fetch:
+            - hfsplus-tools
+        toolchain:
+            - linux64-clang-9
+
+linux64-libdmg:
+    description: "libdmg-hfsplus toolchain build"
+    treeherder:
+        symbol: TL(libdmg-hfs+)
+    run:
+        script: build-libdmg-hfsplus.sh
+        toolchain-artifact: public/build/dmg.tar.xz
+    fetches:
+        fetch:
+            - libdmg-hfsplus
+
+linux64-mar-tools:
+    description: "mar-tools toolchain build"
+    treeherder:
+        symbol: TL(mar-tools)
+    fetches:
+        toolchain:
+            - linux64-clang-7
+            - linux64-binutils
+    run:
+        script: build-mar-tools.sh
+        sparse-profile: null
+        toolchain-artifact: public/build/mar-tools.tar.xz
+        resources:
+            - build/moz.configure
+            - mfbt
+            - modules/libmar/
+            - moz.configure
+            - other-licenses/bsdiff/
+            - other-licenses/nsis/Contrib/CityHash/cityhash/
+            - toolkit/mozapps/update/updater/bspatch/
+            - tools/update-packaging/
+
+linux64-upx:
+    description: "UPX build"
+    treeherder:
+        symbol: TL(upx)
+        tier: 1
+    run:
+        script: build-upx.sh
+        toolchain-artifact: public/build/upx.tar.xz
+
+linux64-custom-v8:
+    description: "Custom v8 build"
+    treeherder:
+        symbol: TL(custom-v8)
+    worker:
+        docker-image: {in-tree: custom-v8}
+        max-run-time: 3600
+    run:
+        script: build-custom-v8.sh
+        arguments: [
+            d8.zip,
+            is_debug=false,
+            target_cpu="x64"
+        ]
+        toolchain-artifact: public/build/d8.zip
+
+browsertime:
+    description: "npm install browsertime node_modules"
+    treeherder:
+        symbol: TL(browsertime)
+    run:
+        script: browsertime.sh
+        sparse-profile: null
+        resources:
+            - 'tools/browsertime/package.json'
+            - 'tools/browsertime/mach_commands.py'
+        toolchain-artifact: public/build/browsertime.tar.bz2
+    fetches:
+        toolchain:
+            - linux64-node
+
+wasi-sysroot:
+    description: "wasi sysroot build process"
+    attributes:
+        local-toolchain: true
+    treeherder:
+        symbol: TL(wasi-sysroot)
+    run-on-projects: [trunk]
+    run:
+        script: build-wasi-sysroot.sh
+        sparse-profile: null
+        toolchain-artifact: public/build/wasi-sysroot.tar.xz
+    fetches:
+        fetch:
+            - clang-9
+            - wasi-sdk
+        toolchain:
+            - linux64-binutils
+            - linux64-gcc-7
+
+wrench-deps:
+    description: "Downloads all the crates needed for building wrench"
+    treeherder:
+        symbol: WR(wrench-deps)
+    worker:
+        docker-image: {in-tree: webrender}
+    run:
+        script: wrench-deps-vendoring.sh
+        sparse-profile: null
+        resources:
+            - 'gfx/wr/Cargo.lock'
+        toolchain-artifact: public/build/wrench-deps.tar.bz2
+    fetches:
+        fetch:
+            - android-rs-glue
+        toolchain:
+            - linux64-rust-1.43  # whatever m-c is built with
+
+wgpu-deps:
+    description: "Downloads all the crates needed for testing wgpu"
+    treeherder:
+        symbol: Wgpu(deps)
+    worker:
+        docker-image: {in-tree: wgpu}
+    run:
+        script: wgpu-deps-vendoring.sh
+        sparse-profile: null
+        resources:
+            - 'gfx/wgpu/Cargo.lock'
+        toolchain-artifact: public/build/wgpu-deps.tar.bz2
+    fetches:
+        fetch:
+            - android-rs-glue
+        toolchain:
+            - linux64-rust-1.43  # whatever m-c is built with
+
+linux64-lucetc:
+    description: "lucetc build process"
+    attributes:
+        local-toolchain: true
+    treeherder:
+        symbol: TL(lucetc)
+    run-on-projects: [trunk]
+    run:
+        script: build-lucetc.sh
+        toolchain-artifact: public/build/lucetc.tar.xz
+    fetches:
+        fetch:
+            - cmake
+            - lucetc-source
+        toolchain:
+            - linux64-binutils
+            - linux64-clang
+            - linux64-rust
+
+linux64-liblowercase:
+    description: "liblowercase"
+    treeherder:
+        symbol: TL(lc)
+    run:
+        script: build-liblowercase.sh
+        sparse-profile: liblowercase
+        toolchain-artifact: public/build/liblowercase.tar.xz
+        resources:
+            - build/liblowercase/
+    fetches:
+        toolchain:
+            - linux64-rust-1.41
+
+linux64-wine:
+    description: "Wine build for Windows Cross Compile"
+    treeherder:
+        symbol: TL(wine)
+        tier: 1
+    worker:
+        docker-image: {in-tree: deb10-toolchain-build}
+        max-run-time: 10800
+    run:
+        script: build-wine.sh
+        toolchain-artifact: public/build/wine.tar.xz
+    fetches:
+        fetch:
+            - wine-5.0
+
+win32-pdbstr:
+    description: "pdbstr for 32-bits Windows"
+    treeherder:
+        symbol: TW32(pdbstr)
+    worker-type: b-win2012
+    worker:
+        artifacts:
+            - name: project/gecko/pdbstr/pdbstr.tar.bz2
+              path: pdbstr.tar.bz2
+              type: file
+    run:
+        script: exfiltrate-pdbstr.sh
+        arguments: ['x86']
+        toolchain-artifact: project/gecko/pdbstr/pdbstr.tar.bz2
+
+win64-pdbstr:
+    description: "pdbstr for 64-bits Windows"
+    treeherder:
+        symbol: TW64(pdbstr)
+    worker-type: b-win2012
+    worker:
+        artifacts:
+            - name: project/gecko/pdbstr/pdbstr.tar.bz2
+              path: pdbstr.tar.bz2
+              type: file
+    run:
+        script: exfiltrate-pdbstr.sh
+        arguments: ['x64']
+        toolchain-artifact: project/gecko/pdbstr/pdbstr.tar.bz2
+
+linux64-winchecksec:
+    description: "winchecksec"
+    treeherder:
+        symbol: TL(winchecksec)
+    worker:
+        docker-image: {in-tree: deb10-toolchain-build}
+    run:
+        script: build-winchecksec.sh
+        toolchain-artifact: public/build/winchecksec.tar.bz2
+        tooltool-downloads: internal
+    fetches:
+        fetch:
+            - winchecksec
+
+win64-winchecksec:
+    description: "winchecksec"
+    treeherder:
+        symbol: TW64(winchecksec)
+    worker:
+        docker-image: {in-tree: deb10-toolchain-build}
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/win64/vs2017.manifest"
+    run:
+        script: build-winchecksec.sh
+        toolchain-artifact: public/build/winchecksec.tar.bz2
+        tooltool-downloads: internal
+    fetches:
+        fetch:
+            - winchecksec
+        toolchain:
+            - linux64-clang-win-cross
+            - linux64-liblowercase

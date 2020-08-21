@@ -1,0 +1,91 @@
+{
+  "manifest_version": 2,
+  "name": "Firefox Screenshots",
+  "version": "39.0.0",
+  "description": "Take clips and screenshots from the Web and save them temporarily or permanently.",
+  "author": "Mozilla <screenshots-feedback@mozilla.com>",
+  "homepage_url": "https://github.com/mozilla-services/screenshots",
+  "incognito": "spanning",
+  "applications": {
+    "gecko": {
+      "id": "screenshots@mozilla.org",
+      "strict_min_version": "57.0a1"
+    }
+  },
+  "l10n_resources": [ "browser/screenshots.ftl" ],
+  "background": {
+    "scripts": [
+      "build/buildSettings.js",
+      "background/startBackground.js"
+    ]
+  },
+  "commands": {
+    "take-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Open the Firefox Screenshots UI"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://screenshots.firefox.com/*"],
+      "js": [
+        "build/buildSettings.js",
+        "log.js",
+        "catcher.js",
+        "selector/callBackground.js",
+        "sitehelper.js"
+      ]
+    }
+  ],
+  "page_action": {
+    "browser_style": true,
+    "default_icon" : {
+      "32": "icons/icon-v2.svg"
+    },
+    "default_title": "__MSG_screenshots-context-menu__",
+    "show_matches": ["<all_urls>", "about:reader*"],
+    "pinned": false
+  },
+  "icons": {
+    "32": "icons/icon-v2.svg"
+  },
+  "web_accessible_resources": [
+    "blank.html",
+    "icons/cancel.svg",
+    "icons/download.svg",
+    "icons/copy.svg",
+    "icons/icon-256.png",
+    "icons/help-16.svg",
+    "icons/menu-fullpage.svg",
+    "icons/menu-visible.svg",
+    "icons/menu-myshot.svg",
+    "icons/icon-welcome-face-without-eyes.svg"
+  ],
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "tabs",
+    "storage",
+    "notifications",
+    "clipboardWrite",
+    "contextMenus",
+    "mozillaAddons",
+    "telemetry",
+    "<all_urls>",
+    "https://screenshots.firefox.com/",
+    "resource://pdf.js/",
+    "about:reader*"
+  ],
+  "experiment_apis": {
+    "screenshots": {
+      "schema": "experiments/screenshots/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "experiments/screenshots/api.js",
+        "paths": [["experiments", "screenshots"]]
+      }
+    }
+  }
+}

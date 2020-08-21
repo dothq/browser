@@ -1,0 +1,28 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+include protocol PBackground;
+include GamepadEventTypes;
+
+namespace mozilla {
+namespace dom {
+
+async protocol PGamepadEventChannel {
+  manager PBackground;
+  parent:
+    async GamepadListenerAdded();
+    async GamepadListenerRemoved();
+    async VibrateHaptic(uint32_t aControllerIdx, uint32_t aHapticIndex,
+                        double aIntensity, double aDuration, uint32_t aPromiseID);
+    async StopVibrateHaptic(uint32_t aControllerIdx);
+    async LightIndicatorColor(uint32_t aControllerIdx, uint32_t aLightColorIndex,
+                              uint8_t aRed, uint8_t aGreen, uint8_t aBlue, uint32_t aPromiseID);
+
+  child:
+    async __delete__();
+    async GamepadUpdate(GamepadChangeEvent aGamepadEvent);
+    async ReplyGamepadPromise(uint32_t aPromiseID);
+};
+
+}
+}

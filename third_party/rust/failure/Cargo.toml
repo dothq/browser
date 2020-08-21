@@ -1,0 +1,27 @@
+[package]
+authors = ["Without Boats <boats@mozilla.com>"]
+description = "Experimental error handling abstraction."
+documentation = "https://docs.rs/failure"
+homepage = "https://rust-lang-nursery.github.io/failure/"
+license = "MIT OR Apache-2.0"
+name = "failure"
+repository = "https://github.com/rust-lang-nursery/failure"
+version = "0.1.6"
+
+[dependencies.failure_derive]
+optional = true
+version = "0.1.6"
+path = "./failure_derive"
+
+[dependencies.backtrace]
+optional = true
+version = "0.3.3"
+
+[workspace]
+members = [".", "failure_derive"]
+
+[features]
+default = ["std", "derive"]
+#small-error = ["std"]
+std = []
+derive = ["failure_derive"]

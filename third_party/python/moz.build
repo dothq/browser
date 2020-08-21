@@ -1,0 +1,97 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+# Default extra components to build config
+with Files('**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('attrs/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'Task Configuration')
+
+with Files('blessings/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('compare-locales/**'):
+    BUG_COMPONENT = ('Localization Infrastructure and Tools', 'compare-locales')
+
+with Files('dlmanager/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('enum34/**'):
+    BUG_COMPONENT = ('Release Engineering', 'General')
+
+with Files('fluent.migrate/**'):
+    BUG_COMPONENT = ('Localization Infrastructure and Tools', 'Fluent Migration')
+
+# Actually, https://github.com/projectfluent/python-fluent/issues
+with Files('fluent.syntax/**'):
+    BUG_COMPONENT = ('Localization Infrastructure and Tools', 'General')
+
+with Files('futures/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('jsmin/**'):
+    BUG_COMPONENT = ('GeckoView', 'General')
+
+with Files('mock-1.0.0/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('mohawk/**'):
+    BUG_COMPONENT = ('Taskcluster', 'Platform Libraries')
+
+with Files('mozilla-version/**'):
+    BUG_COMPONENT = ('Release Engineering', 'General')
+
+with Files('psutil/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('py/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('pyasn1/**'):
+    BUG_COMPONENT = ('Release Engineering', 'General')
+
+with Files('pyasn1-modules/**'):
+    BUG_COMPONENT = ('Core', 'Security: PSM')
+
+with Files('pylru/**'):
+    BUG_COMPONENT = ('mozilla.org', 'MozillaBuild')
+
+with Files('pystache/**'):
+    BUG_COMPONENT = ('Taskcluster', 'General')
+
+with Files('pytest/**'):
+    BUG_COMPONENT = ('Testing', 'General')
+
+with Files('pytoml/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('pyyaml/**'):
+    BUG_COMPONENT = ('Taskcluster', 'General')
+
+with Files('redo/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('requests*/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('requirements.*'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('rsa/**'):
+    BUG_COMPONENT = ('Core', 'Security: PSM')
+
+with Files('slugid/**'):
+    BUG_COMPONENT = ('Taskcluster', 'Platform Libraries')
+
+with Files('taskcluster/**'):
+    BUG_COMPONENT = ('Taskcluster', 'Platform Libraries')
+
+with Files('virtualenv/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'General')
+
+with Files('voluptuous/**'):
+    BUG_COMPONENT = ('Firefox Build System', 'Task Configuration')

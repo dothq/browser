@@ -1,0 +1,234 @@
+/* -*- Mode: IDL; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "domstubs.idl"
+#include "nsIRequest.idl"
+
+interface mozIDOMWindow;
+interface nsPIDOMWindowInner;
+interface mozIDOMWindowProxy;
+interface nsIArray;
+interface nsIInterceptedChannel;
+interface nsIPrincipal;
+interface nsIRunnable;
+interface nsIURI;
+%{C++
+namespace mozilla {
+namespace dom {
+class ClientInfo;
+class ServiceWorkerDescriptor;
+} // namespace dom
+} // namespace mozilla
+%}
+
+[ref] native const_ClientInfoRef(const mozilla::dom::ClientInfo);
+[ref] native const_ServiceWorkerDescriptorRef(const mozilla::dom::ServiceWorkerDescriptor);
+
+[scriptable, uuid(52ee2c9d-ee87-4caf-9588-23ae77ff8798)]
+interface nsIServiceWorkerUnregisterCallback : nsISupports
+{
+  // aState is true if the unregistration succeded.
+  // It's false if this ServiceWorkerRegistration doesn't exist.
+  void unregisterSucceeded(in bool aState);
+  void unregisterFailed();
+};
+
+interface nsIWorkerDebugger;
+
+[scriptable, builtinclass, uuid(76e357ed-208d-4e4c-9165-1c4059707879)]
+interface nsIServiceWorkerInfo : nsISupports
+{
+  // State values below should match the ServiceWorkerState enumeration.
+  const unsigned short STATE_PARSED = 0;
+  const unsigned short STATE_INSTALLING = 1;
+  const unsigned short STATE_INSTALLED = 2;
+  const unsigned short STATE_ACTIVATING = 3;
+  const unsigned short STATE_ACTIVATED = 4;
+  const unsigned short STATE_REDUNDANT = 5;
+  const unsigned short STATE_UNKNOWN = 6;
+
+  readonly attribute AString id;
+
+  readonly attribute AString scriptSpec;
+  readonly attribute AString cacheName;
+
+  readonly attribute unsigned short state;
+
+  readonly attribute nsIWorkerDebugger debugger;
+
+  // Return whether the ServiceWorker has a "fetch" event listener. Throws if
+  // this is unknown because the worker's main script hasn't finished executing
+  // (when exposed as evaluatingWorker).
+  readonly attribute bool handlesFetchEvents;
+
+  readonly attribute PRTime installedTime;
+  readonly attribute PRTime activatedTime;
+  readonly attribute PRTime redundantTime;
+
+  void attachDebugger();
+
+  void detachDebugger();
+};
+
+[scriptable, uuid(87e63548-d440-4b8a-b158-65ad1de0211E)]
+interface nsIServiceWorkerRegistrationInfoListener : nsISupports
+{
+  void onChange();
+};
+
+[scriptable, builtinclass, uuid(ddbc1fd4-2f2e-4fca-a395-6e010bbedfe3)]
+interface nsIServiceWorkerRegistrationInfo : nsISupports
+{
+  // State values below should match the ServiceWorkerUpdateViaCache enumeration.
+  const unsigned short UPDATE_VIA_CACHE_IMPORTS = 0;
+  const unsigned short UPDATE_VIA_CACHE_ALL = 1;
+  const unsigned short UPDATE_VIA_CACHE_NONE = 2;
+
+  readonly attribute nsIPrincipal principal;
+
+  readonly attribute AString scope;
+  readonly attribute AString scriptSpec;
+  readonly attribute unsigned short updateViaCache;
+
+  readonly attribute PRTime lastUpdateTime;
+
+  readonly attribute nsIServiceWorkerInfo evaluatingWorker;
+  readonly attribute nsIServiceWorkerInfo installingWorker;
+  readonly attribute nsIServiceWorkerInfo waitingWorker;
+  readonly attribute nsIServiceWorkerInfo activeWorker;
+
+  // Allows to get the related nsIServiceWorkerInfo for a given
+  // nsIWorkerDebugger. Over time we shouldn't need this anymore,
+  // and instead always control then nsIWorkerDebugger from
+  // nsIServiceWorkerInfo and not the other way around.  Returns
+  // null if the service worker is no longer registered.
+  nsIServiceWorkerInfo getWorkerByID(in unsigned long long aID);
+
+  void addListener(in nsIServiceWorkerRegistrationInfoListener listener);
+
+  void removeListener(in nsIServiceWorkerRegistrationInfoListener listener);
+
+  // Terminate all the service worker relate to this registration.
+  // This is used by the WebExtensions framework to shutdown the extension's
+  // background service workers as part of shutdown, which happens when:
+  // - the extension has been disabled.
+  // - the extension is shutting down to be updated.
+  // - the extension is shutting down as part of the uninstall flow.
+  //
+  // All the service workers instances related to this registration are expected
+  // to be terminate immediately.
+  //
+  // TODO - Bug 1638099: This method should also allow the WebExtension framework
+  // to mark the registration as disabled (e.g. through an additional parameter),
+  // to avoid it to be started again until the WebExtensions framework does explicitly 
+  // mark it back to enabled.
+  void forceShutdown();
+};
+
+[scriptable, uuid(9e523e7c-ad6f-4df0-8077-c74aebbc679d)]
+interface nsIServiceWorkerManagerListener : nsISupports
+{
+  void onRegister(in nsIServiceWorkerRegistrationInfo aInfo);
+
+  void onUnregister(in nsIServiceWorkerRegistrationInfo aInfo);
+};
+
+[scriptable, builtinclass, uuid(7404c8e8-4d47-4449-8ed1-47d1261d4e33)]
+interface nsIServiceWorkerManager : nsISupports
+{
+  /**
+   * A testing helper that registers a service worker for testing purpose (e.g. used to test
+   * a remote worker that has to spawn a new process to be launched).
+   * This method can only be used when "dom.serviceWorkers.testing.enabled" is true and
+   * it doesn't support all the registration options (e.g. updateViaCache is set automatically
+   * to "imports").
+   */
+  [implicit_jscontext]
+  Promise registerForTest(in nsIPrincipal aPrincipal,
+                          in AString aScope, 
+                          in AString aScriptURL);
+
+  /**
+   * Register an extension background service worker for a given
+   * extension principal and return a promise that resolves to the
+   * nsIServiceWorkerRegistrationInfo (or rejects if there was one
+   * already registered).
+   */
+  [implicit_jscontext]
+  Promise registerForAddonPrincipal(in nsIPrincipal aPrincipal);
+
+  /**
+   * Unregister an existing ServiceWorker registration for `aScope`.
+   * It keeps aCallback alive until the operation is concluded.
+   */
+  void unregister(in nsIPrincipal aPrincipal,
+                  in nsIServiceWorkerUnregisterCallback aCallback,
+                  in AString aScope);
+
+  nsIServiceWorkerRegistrationInfo getRegistrationByPrincipal(in nsIPrincipal aPrincipal,
+                                                              in AString aScope);
+
+  [notxpcom, nostdcall] bool StartControlling(in const_ClientInfoRef aClientInfo,
+                                              in const_ServiceWorkerDescriptorRef aServiceWorker);
+
+  // Testing
+  AString getScopeForUrl(in nsIPrincipal aPrincipal, in AString aPath);
+
+  // It returns an array of nsIServiceWorkerRegistrationInfos.
+  nsIArray getAllRegistrations();
+
+  // For clear-origin-attributes-data
+  void removeRegistrationsByOriginAttributes(in AString aOriginAttributes);
+
+  // It calls softUpdate() for each child process.
+  [implicit_jscontext] void propagateSoftUpdate(in jsval aOriginAttributes,
+                                                in AString aScope);
+
+  // It calls unregister() in each child process. The callback is used to
+  // inform when unregister() is completed on the current process.
+  void propagateUnregister(in nsIPrincipal aPrincipal,
+                           in nsIServiceWorkerUnregisterCallback aCallback,
+                           in AString aScope);
+
+  void sendNotificationClickEvent(in ACString aOriginSuffix,
+                                  in ACString scope,
+                                  in AString aID,
+                                  in AString aTitle,
+                                  in AString aDir,
+                                  in AString aLang,
+                                  in AString aBody,
+                                  in AString aTag,
+                                  in AString aIcon,
+                                  in AString aData,
+                                  in AString aBehavior);
+
+  void sendNotificationCloseEvent(in ACString aOriginSuffix,
+                                  in ACString scope,
+                                  in AString aID,
+                                  in AString aTitle,
+                                  in AString aDir,
+                                  in AString aLang,
+                                  in AString aBody,
+                                  in AString aTag,
+                                  in AString aIcon,
+                                  in AString aData,
+                                  in AString aBehavior);
+
+  [optional_argc] void sendPushEvent(in ACString aOriginAttributes,
+                                     in ACString aScope,
+                                     [optional] in Array<uint8_t> aDataBytes);
+  void sendPushSubscriptionChangeEvent(in ACString aOriginAttributes,
+                                       in ACString scope);
+
+  void addListener(in nsIServiceWorkerManagerListener aListener);
+
+  void removeListener(in nsIServiceWorkerManagerListener aListener);
+
+  bool isParentInterceptEnabled();
+};
+
+%{ C++
+#define SERVICEWORKERMANAGER_CONTRACTID "@mozilla.org/serviceworkers/manager;1"
+%}

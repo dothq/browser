@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="application/javascript" src="pc.js"></script>
+</head>
+<body>
+<pre id="test">
+<script type="application/javascript">
+  createHTML({
+    bug: "1038926",
+    title: "Basic windowshare-only peer connection"
+  });
+
+  var test;
+  runNetworkTest(function (options) {
+    test = new PeerConnectionTest(options);
+    var constraints = {
+      video: {
+         mozMediaSource: "window",
+         mediaSource: "window"
+      },
+      fake: false
+    };
+    test.setMediaConstraints([constraints], []);
+    test.run();
+  });
+</script>
+</pre>
+</body>
+</html>

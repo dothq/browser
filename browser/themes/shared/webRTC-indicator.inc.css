@@ -1,0 +1,199 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  --indicator-height: 32px;
+  --indicator-background-color: rgb(249,249,250);
+  --indicator-color: rgb(12,12,13);
+  --indicator-border-color: hsla(0,0%,0%,.32);
+  --indicator-icon-fill-opacity: 0.8;
+  --indicator-item-separator: 1px solid hsla(210,4%,10%,.14);
+  --indicator-stop-button-background-color: rgb(0,96,223);
+  --indicator-stop-button-hover-background-color: rgb(0,62,170);
+  --indicator-stop-button-color: rgb(255,255,255);
+  --minimize-button-background-color: hsla(240,5%,5%,.1);
+  --minimize-button-hover-background-color: hsla(240,5%,5%,.15);
+  --minimize-button-active-background-color: hsla(240,5%,5%,.2);
+  --device-button-hover-background-color: hsla(0,0%,70%,.4);
+  --device-button-active-background-color: hsla(0,0%,70%,.6);
+  max-height: var(--indicator-height);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --indicator-background-color: hsl(240, 1%, 20%);
+    --indicator-color: rgb(249, 249, 250);
+    --indicator-border-color: hsl(240, 1%, 40%);
+    --indicator-item-separator: 1px solid rgb(249, 249, 250);
+    --minimize-button-background-color: rgba(249,249,250,0.1);
+    --minimize-button-hover-background-color: rgba(249,249,250,0.15);
+    --minimize-button-active-background-color: rgba(249,249,250,0.2);
+    --device-button-hover-background-color: rgba(249,249,250,0.15);
+    --device-button-active-background-color: rgba(249,249,250,0.2);
+  }
+}
+
+body {
+  display: inline-flex;
+  background-color: var(--indicator-background-color);
+  color: var(--indicator-color);
+  margin: 0;
+  user-select: none;
+  -moz-window-dragging: drag;
+  /**
+   * On macOS, for windows with small enough dimensions, we seem to get
+   * vertical scrollbars on the body, even when the contents initially
+   * fit the window. We sidestep this by making sure we never display
+   * scrollbars.
+   */
+  overflow: hidden;
+  cursor: move;
+  border: 1px solid;
+  border-color: var(--indicator-border-color);
+  /* max-height = indicator height minus top and bottom border */
+  max-height: calc(var(--indicator-height) - 2px);
+}
+
+button {
+  appearance: none;
+  border-style: none;
+  margin: 0;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: var(--indicator-icon-fill-opacity);
+  background-repeat: no-repeat;
+  -moz-window-dragging: no-drag;
+  color: inherit;
+}
+
+.row-item {
+  display: flex;
+  align-items: center;
+  min-width: 30px;
+  margin-block: 5px;
+  margin-inline: 0 5px;
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+
+.separator {
+  border-inline-end: var(--indicator-item-separator);
+  min-width: 1px;
+  padding: 0;
+}
+
+/**
+ * For display sharing, if we happen to be sharing both
+ * a window and a screen, we want to show the UI for sharing
+ * the screen, since that's the more privacy-sensitive one.
+ */
+:root[sharingwindow]:not([sharingscreen]) > body > #display-share > #screen-share-info,
+:root[sharingwindow]:not([sharingscreen]) > body > #display-share > #stop-sharing-screen,
+:root[sharingwindow]:not([sharingbrowserwindow]) > body > #display-share > #browser-window-share-info,
+:root[sharingwindow][sharingbrowserwindow] > body > #display-share > #window-share-info,
+:root[sharingscreen] > body > #display-share > #window-share-info,
+:root[sharingscreen] > body > #display-share > #browser-window-share-info,
+:root[sharingscreen] > body > #display-share > #stop-sharing-window,
+/**
+ * If we're not sharing either the screen or the window, we can
+ * hide the entire display sharing section.
+ */
+:root:not(:-moz-any([sharingscreen],[sharingwindow])) > body > #display-share,
+:root:not(:-moz-any([sharingscreen],[sharingwindow])) > body > #display-share + .separator,
+:root:not([sharingvideo]) > body > #device-share > #camera-button,
+:root:not([sharingaudio]) > body > #device-share > #microphone-button,
+:root:not(:-moz-any([sharingvideo],[sharingaudio])) > body > #device-share,
+:root:not(:-moz-any([sharingvideo],[sharingaudio])) > body > #device-share + .separator {
+  display:none;
+}
+
+.control-icon {
+  background-position: center;
+  background-size: 16px;
+  background-color: transparent;
+  height: 16px;
+  padding: 10px 20px;
+}
+
+#display-share-icon {
+  background-image: url("chrome://browser/skin/notification-icons/screen.svg");
+  width: 16px;
+  height: 16px;
+  margin-inline: 5px 10px;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: var(--indicator-icon-fill-opacity);
+}
+
+#device-share {
+  border-radius: 5px;
+}
+
+/**
+ * For now, since the camera and microphone control buttons effectively do the
+ * same thing, we'll make them seem like a single button when hovering.
+ */
+#device-share:hover {
+  background-color: var(--device-button-hover-background-color);
+}
+
+#device-share:active {
+  background-color: var(--device-button-active-background-color);
+}
+
+#camera-button {
+  background-image: url("chrome://browser/skin/notification-icons/camera.svg");
+}
+
+#microphone-button {
+  background-image: url("chrome://browser/skin/notification-icons/microphone.svg");
+}
+
+.stop-button {
+  background-color: var(--indicator-stop-button-background-color);
+  color: var(--indicator-stop-button-color);
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin-inline-start: 15px;
+}
+
+.stop-button:hover {
+  background-color:  var(--indicator-stop-button-hover-background-color);
+}
+
+#window-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#minimize {
+  padding: 10px;
+  min-width: unset;
+  background-image: url("chrome://browser/skin/notification-icons/minimize.svg");
+  background-color: var(--minimize-button-background-color);
+}
+
+#minimize:hover {
+  background-color: var(--minimize-button-hover-background-color);
+}
+
+#minimize:active {
+  background-color: var(--minimize-button-active-background-color);
+}
+
+#drag-indicator {
+  background-image: url("chrome://browser/skin/notification-icons/drag-indicator.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 5px;
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: 0.4;
+  margin: 5px;
+}

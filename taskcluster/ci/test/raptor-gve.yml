@@ -1,0 +1,325 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    max-run-time: 1800
+    suite: raptor
+    workdir: /builds/worker
+    run-on-projects:
+        by-test-name:
+            raptor-tp6m-.*-cold:
+                by-test-platform:
+                    android-hw-.*(?<!-shippable)/opt: []
+                    android-hw-p2-.*api-16/pgo: []
+                    android-hw-p2-.*api-16-shippable/opt: []
+                    default: ['trunk', 'mozilla-beta']
+            default:
+                by-test-platform:
+                    android-hw-p2-.*-api-16/(?!opt).*: []
+                    android-hw-p2-.*-api-16-shippable/opt: []
+                    android-hw(?!-p2).*(?<!-api-16-shippable)/opt.*: []
+                    default: ['mozilla-central']
+    target: geckoview_example.apk
+    tier: 1
+    virtualization: hardware
+    mozharness:
+        script: raptor_script.py
+        config:
+            - raptor/android_hw_config.py
+        extra-options:
+            - --no-conditioned-profile
+    optimization:
+        push-interval-25: null
+
+raptor-speedometer-geckoview:
+    description: "Raptor Speedometer on GeckoView"
+    try-name: raptor-speedometer-geckoview
+    treeherder-symbol: Rap(sp)
+    run-on-projects:
+        by-test-platform:
+            android-hw-.*(?<!-shippable)/opt: []
+            android-hw-p2-.*api-16/pgo: []
+            android-hw-p2-.*aarch64.*/pgo: ['trunk', 'mozilla-beta']
+            android-hw-p2-.*aarch64-shippable/opt: ['trunk', 'mozilla-beta']
+            android-hw-g5.*/pgo: ['trunk', 'mozilla-beta']
+            android-hw-g5.*-shippable/opt: ['trunk', 'mozilla-beta']
+            default: ['mozilla-central', 'mozilla-beta']
+    max-run-time: 900
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-speedometer-geckoview-power:
+    description: "Raptor Speedometer power on GeckoView"
+    try-name: raptor-speedometer-geckoview-power
+    treeherder-symbol: Rap(sp-p)
+    target: geckoview_example.apk
+    run-on-projects: []
+    max-run-time: 1800
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --power-test
+            - --page-cycles 5
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-speedometer-geckoview-cpu-memory:
+    description: "Raptor Speedometer cpu/memory on GeckoView"
+    try-name: raptor-speedometer-geckoview-cpu-memory
+    treeherder-symbol: Rap(sp-cm)
+    target: geckoview_example.apk
+    run-on-projects: []
+    max-run-time: 1800
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --page-cycles 5
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-speedometer-geckoview-cpu-memory-power:
+    description: "Raptor Speedometer cpu/memory/power on GeckoView"
+    try-name: raptor-speedometer-geckoview-cpu-memory-power
+    treeherder-symbol: Rap(sp-cmp)
+    target: geckoview_example.apk
+    run-on-projects: []
+    max-run-time: 1800
+    mozharness:
+        extra-options:
+            - --test=raptor-speedometer
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --power-test
+            - --page-cycles 5
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-power-idle-geckoview:
+    description: "Raptor idle-browser power-use measurement on GeckoView"
+    try-name: raptor-scn-power-idle-geckoview
+    treeherder-symbol: Rap(idl-p)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --power-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-cpu-memory-idle-geckoview:
+    description: "Raptor idle-browser cpu/memory on GeckoView"
+    try-name: raptor-scn-cpu-memory-idle-geckoview
+    treeherder-symbol: Rap(idl-cm)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-cpu-memory-power-idle-geckoview:
+    description: "Raptor idle-browser cpu/memory/power on GeckoView"
+    try-name: raptor-scn-cpu-memory-power-idle-geckoview
+    treeherder-symbol: Rap(idl-cmp)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --power-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-power-idle-bg-geckoview:
+    description: "Raptor idle-browser (backgrounded) power-use measurement on GeckoView"
+    try-name: raptor-scn-power-idle-bg-geckoview
+    treeherder-symbol: Rap(idlbg-p)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle-bg
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --power-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-cpu-memory-idle-bg-geckoview:
+    description: "Raptor idle-browser (backgrounded) cpu/memory on GeckoView"
+    try-name: raptor-scn-cpu-memory-idle-bg-geckoview
+    treeherder-symbol: Rap(idlbg-cm)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle-bg
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-scn-cpu-memory-power-idle-bg-geckoview:
+    description: "Raptor idle-browser (backgrounded) cpu/memory/power on GeckoView"
+    try-name: raptor-scn-cpu-memory-power-idle-bg-geckoview
+    treeherder-symbol: Rap(idlbg-cmp)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --test=raptor-scn-power-idle-bg
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --cpu-test
+            - --memory-test
+            - --power-test
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-unity-webgl-geckoview:
+    description: "Raptor Unity WebGL on GeckoView"
+    try-name: raptor-unity-webgl-geckoview
+    treeherder-symbol: Rap(ugl)
+    run-on-projects:
+        by-test-platform:
+            android-hw-.*(?<!-shippable)/opt: []
+            android-hw-p2-.*api-16/pgo: []
+            android-hw-p2-.*api-16-shippable/opt: []
+            android-hw-(?!p2-.*api-16)/pgo: ['trunk', 'mozilla-beta']
+            android-hw-(?!p2-.*api-16)-shippable/opt: ['trunk', 'mozilla-beta']
+            default: ['mozilla-central', 'mozilla-beta']
+    max-run-time: 900
+    mozharness:
+        extra-options:
+            - --test=raptor-unity-webgl
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+    fetches:
+        fetch:
+            - unity-webgl
+
+raptor-youtube-playback-geckoview:
+    description: "Raptor YouTube Playback on GeckoView"
+    try-name: raptor-youtube-playback-geckoview
+    treeherder-symbol: Rap(ytp)
+    run-on-projects:
+        by-test-platform:
+            android-hw-p2.*aarch64.*/pgo: ['mozilla-central']
+            android-hw-p2.*aarch64-shippable/opt: ['mozilla-central']
+            android-hw-g5.*/pgo: ['mozilla-central']
+            android-hw-g5.*-shippable/opt: ['mozilla-central']
+            default: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+            # Bug 1558456 - Stop tracking youtube-playback-test on motoG5 for >1080p cases
+            # - --test-url-params is dynamically added from setup_raptor transform depending
+            # on platform and project
+
+raptor-youtube-playback-av1-sfr-geckoview:
+    description: "Raptor YouTube Playback AV1 SFR on GeckoView"
+    try-name: raptor-youtube-playback-av1-sfr-geckoview
+    treeherder-symbol: Rap(ytp-av1-sfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-av1-sfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-h264-sfr-geckoview:
+    description: "Raptor YouTube Playback H264 SFR on GeckoView"
+    try-name: raptor-youtube-playback-h264-sfr-geckoview
+    treeherder-symbol: Rap(ytp-h264-sfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-h264-sfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-h264-geckoview:
+    description: "Raptor YouTube Playback H264 on GeckoView"
+    try-name: raptor-youtube-playback-h264-geckoview
+    treeherder-symbol: Rap(ytp-h264)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-h264-std
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-vp9-sfr-geckoview:
+    description: "Raptor YouTube Playback VP9 SFR on GeckoView"
+    try-name: raptor-youtube-playback-vp9-sfr-geckoview
+    treeherder-symbol: Rap(ytp-vp9-sfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-vp9-sfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-widevine-hfr-geckoview:
+    description: "Raptor YouTube Playback Widevine HFR on GeckoView"
+    try-name: raptor-youtube-playback-widevine-hfr-geckoview
+    treeherder-symbol: Rap(ytp-widevine-hfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-hfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-widevine-h264-sfr-geckoview:
+    description: "Raptor YouTube Playback Widevine H264 SFR on GeckoView"
+    try-name: raptor-youtube-playback-widevine-h264-sfr-geckoview
+    treeherder-symbol: Rap(ytp-widevine-h264-sfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-h264-sfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity
+
+raptor-youtube-playback-widevine-vp9-sfr-geckoview:
+    description: "Raptor YouTube Playback Widevine VP9 SFR on GeckoView"
+    try-name: raptor-youtube-playback-widevine-vp9-sfr-geckoview
+    treeherder-symbol: Rap(ytp-widevine-vp9-sfr)
+    run-on-projects: []
+    max-run-time: 3600
+    mozharness:
+        extra-options:
+            - --test=raptor-youtube-playback-widevine-vp9-sfr
+            - --app=geckoview
+            - --binary=org.mozilla.geckoview_example
+            - --activity=org.mozilla.geckoview_example.GeckoViewActivity

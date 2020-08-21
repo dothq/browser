@@ -1,0 +1,873 @@
+%if 0
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+%endif
+
+%define fieldBorderColor hsla(240,5%,5%,.25)
+%define fieldHoverBorderColor hsla(240,5%,5%,.35)
+%define urlbarMarginInline 5px
+%define urlbarSearchButtonWidth calc(16px + 2 * @identityBoxPaddingInline@)
+
+:root {
+  --toolbar-field-focus-border-color: Highlight;
+
+  /* 28x28 box - 16x16 image = 12x12 padding, 6 on each side */
+  --urlbar-icon-padding: 6px;
+}
+
+:root[uidensity=compact] {
+  /* 24x24 box - 16x16 image = 8x8 padding, 4 on each side */
+  --urlbar-icon-padding: 4px;
+}
+
+:root[uidensity=touch] {
+  /* 30x30 box - 16x16 image = 14x14 padding, 7 on each side */
+  --urlbar-icon-padding: 7px;
+}
+
+#urlbar-container,
+#search-container {
+  padding-block: 3px;
+  margin-inline: @urlbarMarginInline@;
+}
+
+#urlbar,
+#searchbar {
+  min-height: 30px;
+  text-shadow: none;
+  color: -moz-FieldText;
+}
+
+#urlbar-background,
+#searchbar {
+  background-color: -moz-Field;
+  background-clip: padding-box;
+  border: 1px solid @fieldBorderColor@;
+  border-radius: var(--toolbarbutton-border-radius);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+
+#urlbar-input-container,
+#searchbar {
+  border-radius: var(--toolbarbutton-border-radius);
+  overflow: -moz-hidden-unscrollable;
+}
+
+#urlbar-input,
+#urlbar-scheme,
+.searchbar-textbox {
+  -moz-box-flex: 1;
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+#urlbar:not([focused="true"]):hover > #urlbar-background,
+#searchbar:not(:focus-within):hover {
+  border-color: @fieldHoverBorderColor@;
+  box-shadow: 0 1px 6px rgba(0,0,0,.1);
+}
+
+#urlbar[focused="true"] > #urlbar-background,
+#searchbar:focus-within {
+  border-color: var(--toolbar-field-focus-border-color);
+}
+
+#urlbar:-moz-lwtheme,
+#navigator-toolbox #searchbar:-moz-lwtheme {
+  color: var(--lwt-toolbar-field-color, black);
+}
+
+#urlbar:-moz-lwtheme > #urlbar-background,
+#navigator-toolbox #searchbar:-moz-lwtheme {
+  background-color: var(--lwt-toolbar-field-background-color, hsla(0,0%,100%,.8));
+}
+
+#urlbar:not([focused="true"]):-moz-lwtheme > #urlbar-background,
+#navigator-toolbox #searchbar:not(:focus-within):-moz-lwtheme {
+  border-color: var(--lwt-toolbar-field-border-color, @fieldBorderColor@);
+}
+
+#urlbar:not([focused="true"]):-moz-lwtheme:hover > #urlbar-background,
+#navigator-toolbox #searchbar:not(:focus-within):-moz-lwtheme:hover {
+  border-color: var(--lwt-toolbar-field-border-color, @fieldHoverBorderColor@);
+}
+
+#urlbar:-moz-lwtheme:hover > #urlbar-background,
+#navigator-toolbox #searchbar:-moz-lwtheme:hover {
+  background-color: var(--lwt-toolbar-field-background-color, white);
+}
+
+#urlbar[focused="true"]:-moz-lwtheme,
+#navigator-toolbox #searchbar:focus-within:-moz-lwtheme {
+  color: var(--lwt-toolbar-field-focus-color);
+}
+
+#urlbar[focused="true"]:-moz-lwtheme > #urlbar-background,
+#navigator-toolbox #searchbar:focus-within:-moz-lwtheme {
+  background-color: var(--lwt-toolbar-field-focus);
+}
+
+:root[lwt-selection] #urlbar-input:-moz-lwtheme::selection,
+:root[lwt-selection] .searchbar-textbox:-moz-lwtheme::selection {
+  background-color: var(--lwt-toolbar-field-highlight, Highlight);
+  color: var(--lwt-toolbar-field-highlight-text, HighlightText);
+}
+
+#urlbar:not([focused="true"]) {
+  caret-color: transparent;
+}
+
+#urlbar.searchButton > #urlbar-input-container > #urlbar-search-button {
+  width: @urlbarSearchButtonWidth@;
+  background-image: url(chrome://browser/skin/search-glass.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  -moz-context-properties: fill, fill-opacity;
+  fill: var(--lwt-toolbarbutton-icon-fill, var(--toolbar-color));
+  fill-opacity: var(--toolbarbutton-icon-fill-opacity);
+}
+
+#urlbar.searchButton > #urlbar-input-container[pageproxystate="invalid"] > #urlbar-search-button {
+  margin-inline-end: 6px;
+}
+
+/**
+ * The urlbar background is a separate element so we can animate it
+ * independently from the content. It's positioned absolutely and stretched to
+ * the bounds of the urlbar.
+ */
+
+#urlbar,
+#urlbar-input-container,
+.urlbarView {
+  position: relative;
+}
+
+#urlbar-background {
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+:root:not([chromehidden~="toolbar"]) #urlbar.searchButton:not([breakout]) > #urlbar-background,
+:root:not([chromehidden~="toolbar"]) #urlbar.searchButton:not([breakout-extend]) > #urlbar-background {
+  inset-inline-start: @urlbarSearchButtonWidth@;
+}
+
+#urlbar-input-container {
+  /* Match urlbar-background's border. */
+  border: 1px solid transparent;
+}
+
+#urlbar-container[breakout] {
+  position: relative;
+  min-height: var(--urlbar-container-height);
+}
+
+#urlbar[breakout] {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: var(--urlbar-height);
+  top: calc((var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2);
+  left: 0;
+}
+
+#urlbar[breakout] > #urlbar-input-container {
+  width: 100%;
+  height: 100%;
+}
+
+#urlbar:not([open]) > .urlbarView,
+#urlbar:not([breakout]) > .urlbarView {
+  display: none;
+}
+
+#urlbar[breakout][breakout-extend],
+#urlbar[breakout][breakout-extend-disabled][open] {
+  /* The z-index needs to be big enough to trump other positioned UI pieces
+     that we want to overlay. 3 is used in the tab bar. */
+  z-index: 3;
+  height: auto;
+}
+
+#urlbar[breakout][breakout-extend] {
+  top: -@urlbarBreakoutExtend@;
+  left: calc(-@urlbarMarginInline@ - @urlbarBreakoutExtend@);
+  width: calc(100% + 2 * @urlbarMarginInline@ + 2 * @urlbarBreakoutExtend@);
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  box-shadow: 0 3px 8px 0 rgba(0,0,0,.15)
+}
+
+#urlbar[breakout][breakout-extend][open] > #urlbar-background {
+  box-shadow: 0 5px 18px rgba(0,0,0,.2);
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-input-container {
+  height: calc(var(--urlbar-toolbar-height) + 2 * @urlbarBreakoutExtend@);
+  padding-block: calc(@urlbarBreakoutExtend@ + (var(--urlbar-toolbar-height) - var(--urlbar-height)) / 2);
+  padding-inline: calc(@urlbarMarginInline@ + @urlbarBreakoutExtend@);
+}
+
+#urlbar.searchButton[breakout][breakout-extend] > #urlbar-input-container > #urlbar-search-button {
+  fill: currentColor;
+  fill-opacity: .6;
+}
+
+@keyframes urlbar-grow {
+  0% {
+    transform: scaleX(.99) scaleY(.95);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+  animation-name: urlbar-grow;
+  animation-duration: 0s;
+  animation-timing-function: var(--animation-easing-function);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #urlbar[breakout][breakout-extend][breakout-extend-animate] > #urlbar-background {
+    animation-duration: 150ms;
+  }
+}
+
+:root[uidensity=compact] #urlbar,
+:root[uidensity=compact] #searchbar {
+  min-height: 26px;
+}
+
+:root[uidensity=touch] #urlbar,
+:root[uidensity=touch] #searchbar {
+  min-height: 32px;
+}
+
+:root[chromehidden~="toolbar"] #urlbar-container {
+  /* Remove excess space between the address bar and the menu button in popups. */
+  padding-inline-end: 0;
+}
+
+:root[customizing] .urlbar-input-box {
+  visibility: hidden;
+}
+
+#urlbar-container {
+  -moz-box-align: center;
+}
+
+#urlbar-search-splitter {
+  /* The splitter width should equal the location and search bars' combined
+     neighboring margin and border width. */
+  min-width: 12px;
+  margin: 0 -6px;
+  position: relative;
+  border: none;
+  background: transparent;
+  appearance: none;
+}
+
+/* Urlbar search mode indicator */
+#urlbar-search-mode-indicator {
+  display: none;
+  background-color: #d6ebff;
+  outline: 1px solid #0060df; /* Blue 60 */
+  -moz-outline-radius: 2px;
+  margin-inline-end: 8px;
+  min-width: 16px; /* So the close button never causes motion */
+  align-items: center;
+}
+
+#urlbar[searchmode][breakout-extend] > #urlbar-input-container > #urlbar-search-mode-indicator {
+  display: inline-flex;
+}
+
+#urlbar-search-mode-indicator-title {
+  color: #0060df; /* Blue 60 */
+  padding-inline: 5px;
+}
+
+#urlbar-search-mode-indicator-close {
+  display: none;
+  background: url(chrome://global/skin/icons/close.svg) no-repeat center;
+  background-size: 100% 16px;
+  width: 16px;
+  height: 100%;
+  margin-inline-start: -16px;
+  -moz-context-properties: fill, fill-opacity, stroke-opacity;
+  fill: #0c0c0d; /* Grey 90 */
+  fill-opacity: 0;
+  stroke-opacity: 0.6;
+  background-color: white;
+}
+
+#urlbar-search-mode-indicator:hover  > #urlbar-search-mode-indicator-close {
+  display: inline;
+}
+
+@supports -moz-bool-pref("browser.urlbar.experimental.searchModeIndicatorHover") {
+  #urlbar-search-mode-indicator-close:hover {
+    background-color: #ededf0; /* Grey 20 */
+  }
+  #urlbar-search-mode-indicator-close:hover:active {
+    background-color: #d7d7db; /* Grey 30 */
+  }
+}
+
+/* Page action panel */
+.pageAction-panel-button > .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+#pageAction-panel-bookmark,
+#star-button {
+  list-style-image: url("chrome://browser/skin/bookmark-hollow.svg");
+}
+#pageAction-panel-bookmark[starred],
+#star-button[starred] {
+  list-style-image: url("chrome://browser/skin/bookmark.svg");
+}
+#star-button[starred] {
+  fill-opacity: 1;
+  fill: var(--toolbarbutton-icon-fill-attention);
+}
+
+#pocket-button,
+#pageAction-panel-pocket {
+  list-style-image: url("chrome://browser/skin/pocket-outline.svg");
+}
+
+#pocket-button[open="true"],
+#pocket-button[pocketed="true"] {
+  list-style-image: url("chrome://browser/skin/pocket.svg");
+  fill: #ef4056;
+  fill-opacity: 1;
+}
+
+#pageAction-panel-pinTab,
+#pageAction-urlbar-pinTab {
+  list-style-image: url("chrome://browser/skin/pin-tab.svg");
+}
+
+#pageAction-panel-pinTab[pinned],
+#pageAction-urlbar-pinTab[pinned] {
+  list-style-image: url("chrome://browser/skin/unpin-tab.svg");
+}
+
+#pageAction-panel-copyURL,
+#pageAction-urlbar-copyURL {
+  list-style-image: url("chrome://browser/skin/link.svg");
+}
+
+#pageAction-panel-emailLink,
+#pageAction-urlbar-emailLink {
+  list-style-image: url("chrome://browser/skin/mail.svg");
+}
+
+#pageAction-panel-sendToDevice,
+#pageAction-urlbar-sendToDevice {
+  list-style-image: url("chrome://browser/skin/send-to-device.svg");
+}
+
+#pageAction-panel-pinTab:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#pageAction-urlbar-pinTab:-moz-locale-dir(rtl),
+#pageAction-panel-sendToDevice:-moz-locale-dir(rtl) > .toolbarbutton-icon,
+#pageAction-urlbar-sendToDevice:-moz-locale-dir(rtl) {
+  transform: scaleX(-1);
+}
+
+.pageAction-sendToDevice-device[clientType=phone] {
+  list-style-image: url("chrome://browser/skin/device-phone.svg");
+}
+
+.pageAction-sendToDevice-device[clientType=tablet] {
+  list-style-image: url("chrome://browser/skin/device-tablet.svg");
+}
+
+.pageAction-sendToDevice-device[clientType=desktop] {
+  list-style-image: url("chrome://browser/skin/device-desktop.svg");
+}
+
+.pageAction-sendToDevice-device[clientType=tv] {
+  list-style-image: url("chrome://browser/skin/device-tv.svg");
+}
+
+.pageAction-sendToDevice-device[clientType=vr] {
+  list-style-image: url("chrome://browser/skin/device-vr.svg");
+}
+
+.pageAction-sendToDevice-device.signintosync,
+#pageAction-panel-sendToDevice-fxa,
+#pageAction-urlbar-sendToDevice-fxa {
+  list-style-image: url("chrome://browser/skin/sync.svg");
+}
+
+#pageAction-panel-addSearchEngine > .toolbarbutton-badge-stack > .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+#pageAction-panel-addSearchEngine > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  display: -moz-box;
+  background: url(chrome://browser/skin/search-indicator-badge-add.svg) no-repeat center;
+  box-shadow: none;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin: -4px 0 0 !important;
+  margin-inline-end: -4px !important;
+  width: 11px;
+  height: 11px;
+  min-width: 11px;
+  min-height: 11px;
+}
+
+#pageActionActivatedActionPanel[actionID="pocket"] {
+  --arrowpanel-background: #fbfbfb;
+}
+
+#pageAction-panel-launchSSB,
+#pageAction-urlbar-launchSSB {
+  list-style-image: url("chrome://browser/skin/install-ssb.svg");
+}
+
+/* URL bar and page action buttons */
+
+#page-action-buttons {
+  -moz-box-align: center;
+}
+
+#pageActionSeparator {
+  /* This draws the separator the same way that #urlbar-label-box draws its
+     left and right borders, which end up looking like separators.  It might not
+     be the best way in this case, but it makes sure that all these vertical
+     lines in the urlbar look the same: same height, vertical position, etc. */
+  border-inline-start: 1px solid var(--urlbar-separator-color);
+  border-image: linear-gradient(transparent 15%, var(--urlbar-separator-color) 15%, var(--urlbar-separator-color) 85%, transparent 85%);
+  border-image-slice: 1;
+  width: 1px;
+  height: 28px;
+  visibility: hidden;
+}
+
+:root[uidensity=compact] #pageActionSeparator {
+  height: 24px;
+}
+
+:root[uidensity=touch] #pageActionSeparator {
+  height: 30px;
+}
+
+#page-action-buttons > :not([hidden]):not(toolbartabstop) ~ #pageActionSeparator {
+  /* Show the separator between the page actions and other elements when at
+     least one of the latter is shown. */
+  visibility: visible;
+  margin-inline: 6px;
+}
+
+#userContext-icons,
+#urlbar-zoom-button {
+  margin-inline: 6px;
+}
+
+.urlbar-icon {
+  width: 28px;
+  height: 28px;
+  padding: var(--urlbar-icon-padding);
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: 0.6;
+  color: inherit;
+}
+
+.urlbar-page-action[disabled] {
+  fill-opacity: 0.3;
+}
+
+:root[uidensity=compact] .urlbar-icon {
+  width: 24px;
+  height: 24px;
+}
+
+:root[uidensity=touch] .urlbar-icon {
+  width: 30px;
+  height: 30px;
+}
+
+:not(.urlbar-icon-wrapper) > .urlbar-icon:not([disabled]):hover,
+.urlbar-icon-wrapper:not([disabled]):hover {
+  background-color: hsla(0,0%,70%,.2);
+}
+
+:not(.urlbar-icon-wrapper) > .urlbar-icon:not([disabled])[open],
+:not(.urlbar-icon-wrapper) > .urlbar-icon:not([disabled]):hover:active,
+.urlbar-icon-wrapper:not([disabled])[open],
+.urlbar-icon-wrapper:not([disabled]):hover:active {
+  background-color: hsla(0,0%,70%,.3);
+}
+
+.urlbar-icon:-moz-focusring,
+.urlbar-icon-wrapper:-moz-focusring {
+  outline: var(--toolbarbutton-focus-outline);
+  outline-offset: -2px;
+  -moz-outline-radius: var(--toolbarbutton-border-radius);
+}
+
+#urlbar-go-button,
+.search-go-button {
+  list-style-image: url("chrome://browser/skin/forward.svg");
+}
+
+#urlbar-go-button:-moz-locale-dir(rtl),
+.search-go-button:-moz-locale-dir(rtl) {
+  transform: scaleX(-1);
+}
+
+#pageActionButton,
+.share-more-button {
+  list-style-image: url("chrome://global/skin/icons/more.svg");
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes bookmark-animation {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-627px);
+    }
+  }
+
+  @keyframes bookmark-animation-rtl {
+    from {
+      transform: scaleX(-1) translateX(0);
+    }
+    to {
+      transform: scaleX(-1) translateX(-627px);
+    }
+  }
+
+  #star-button-box {
+    position: relative;
+  }
+
+  /* Preload the bookmark animations to prevent a flicker during the first playing
+     of the animations. */
+  #star-button[preloadanimations] + #star-button-animatable-box > #star-button-animatable-image {
+    background-image: url("chrome://browser/skin/bookmark-animation.svg"),
+                      url("chrome://browser/skin/library-bookmark-animation.svg");
+    background-size: 0, 0;
+  }
+
+  #star-button[starred][animate] {
+    fill: transparent;
+    position: relative;
+  }
+
+  #star-button[starred][animate] + #star-button-animatable-box {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    top: calc(50% - 16.5px); /* 16.5px is half the height of the sprite */
+    /* .urlbar-icon has width 28px. Each frame is 33px wide. Set margin-inline-start
+       to be half the difference, -2.5px. */
+    margin-inline-start: -2.5px;
+    width: 33px; /* Width of each frame within the SVG sprite */
+    height: 33px; /* Height of each frame within the SVG sprite */
+  }
+
+  :root[uidensity=compact] #star-button[starred][animate] + #star-button-animatable-box {
+    /* .urlbar-icon has width 24px in this case */
+    margin-inline-start: -4.5px;
+  }
+
+  :root[uidensity=touch] #star-button[starred][animate] + #star-button-animatable-box {
+    /* .urlbar-icon has width 30px in this case */
+    margin-inline-start: -1.5px;
+  }
+
+  #star-button[starred][animate] + #star-button-animatable-box > #star-button-animatable-image {
+    background-image: url("chrome://browser/skin/bookmark-animation.svg");
+    background-size: auto;
+    list-style-image: none;
+    height: var(--toolbarbutton-height);
+    min-height: 33px; /* Minimum height must be equal to the height of the SVG sprite */
+    animation-name: bookmark-animation;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+    animation-timing-function: steps(19);
+    animation-duration: 317ms;
+    width: 660px;
+    -moz-context-properties: fill, stroke;
+    stroke: var(--toolbarbutton-icon-fill-attention);
+  }
+
+  #star-button[starred][animate]:-moz-locale-dir(rtl) + #star-button-animatable-box > #star-button-animatable-image {
+    animation-name: bookmark-animation-rtl;
+  }
+}
+
+
+/**
+ * Contextual Feature Recommendation
+ *
+ * Animate the recommendation icon to expand outwards and display a text label.
+ * Fake the effect of a smoothly expanding width without animating any widths
+ * by (continuously) animating only `mask-position-x` and `transform`.
+ *
+ * In a few places, transition a property using the timing-function `step-start`
+ * while collapsed and `step-end` while expanded in order to (discretely) modify
+ * the value while expanded and while transitioning in either direction.
+ *
+ * This UI is part of an experiment launching in LTR locales only. Fixing the
+ * RTL issues is tracked by Bug 1485725.
+ */
+
+:root {
+  --cfr-animation-duration: 0.35s;
+  --cfr-button-addons-icon: url(resource://activity-stream/data/content/assets/glyph-webextension-16.svg);
+  --cfr-button-features-icon: url(resource://activity-stream/data/content/assets/glyph-cfr-feature-16.svg);
+  --cfr-button-highlights-icon: url(resource://activity-stream/data/content/assets/glyph-highlights-16.svg);
+  --cfr-active-color: #0060df;
+}
+
+#contextual-feature-recommendation {
+  width: 28px;
+  margin-inline-start: 0;
+  transition: margin-inline-start step-end var(--cfr-animation-duration);
+}
+#urlbar[cfr-recommendation-state="expanded"] #contextual-feature-recommendation {
+  margin-inline-start: calc(var(--cfr-label-width) * -1);
+  transition: margin-inline-start step-start var(--cfr-animation-duration);
+}
+
+#cfr-button {
+  margin: -2px 0;
+  transition-property: fill, fill-opacity, transform;
+  transition-timing-function: ease-in-out;
+  transition-duration: var(--cfr-animation-duration);
+}
+#contextual-feature-recommendation[data-cfr-icon="webextensions-icon"] #cfr-button {
+  list-style-image: var(--cfr-button-addons-icon);
+}
+#contextual-feature-recommendation[data-cfr-icon="recommendations-icon"] #cfr-button {
+  list-style-image: var(--cfr-button-features-icon);
+}
+#contextual-feature-recommendation[data-cfr-icon="highlights-icon"] #cfr-button {
+  list-style-image: var(--cfr-button-highlights-icon);
+}
+#urlbar[cfr-recommendation-state="expanded"] #cfr-button {
+  fill: white;
+  fill-opacity: 1;
+  background-color: transparent; /* Override hover background-color */
+  transform: translateX(calc(var(--cfr-label-width) * -1));
+}
+#urlbar[cfr-recommendation-state="expanded"] #cfr-button:-moz-locale-dir(rtl) {
+  transform: translateX(calc(var(--cfr-label-width)));
+}
+@keyframes cfr-button-fade-through-active-color {
+  33% {
+    fill-opacity: 1;
+    fill: var(--cfr-active-color);
+  }
+  67% {
+    fill-opacity: 1;
+    fill: var(--cfr-active-color);
+  }
+}
+#urlbar[cfr-recommendation-state="collapsed"] #cfr-button {
+  animation: cfr-button-fade-through-active-color calc(3 * var(--cfr-animation-duration));
+}
+
+#cfr-label-container {
+  width: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  padding-inline-start: 28px;
+  mask-image: linear-gradient(to right, transparent 0, black 0);
+  mask-position-x: var(--cfr-label-width);
+  mask-repeat: no-repeat;
+  transition-property: background-color, mask-position-x, width, margin-inline-end;
+  transition-timing-function: ease-in-out, ease-in-out, step-end, step-end;
+  transition-duration: var(--cfr-animation-duration);
+}
+#cfr-label-container:-moz-locale-dir(rtl) {
+  mask-position-x: calc(var(--cfr-label-width) * -1);
+}
+
+#urlbar[cfr-recommendation-state="expanded"] #cfr-label-container {
+  width: calc(var(--cfr-label-width) + 28px);
+  background-color: var(--cfr-active-color);
+  margin-inline-end: -28px;
+  mask-position-x: 0;
+  transition-timing-function: ease-in-out, ease-in-out, step-start, step-start;
+}
+
+#cfr-label {
+  margin: 0;
+  padding: 3px 5px;
+  padding-inline-start: 0;
+  color: white;
+  mask-image: linear-gradient(to right, transparent 0, black 0);
+  mask-position-x: var(--cfr-label-width);
+  mask-repeat: no-repeat;
+  transition: mask-position-x ease-in-out var(--cfr-animation-duration);
+}
+#cfr-label:-moz-locale-dir(rtl) {
+  mask-position-x: calc(var(--cfr-label-width) * -1);
+}
+#urlbar[cfr-recommendation-state="expanded"] #cfr-label {
+  mask-position-x: 0;
+}
+
+/* Shift the url-bar text fading to stop the recommendation overlapping */
+#urlbar[cfr-recommendation-state] #urlbar-input {
+  /* A mask-image is usually only defined for the url bar when text overflows.
+     We need to re-define the mask image here so that it shows up correctly when
+     we transition to or from an `expanded` state (in which the right end of the
+     url bar may be obscured without overflow). */
+  mask-image: linear-gradient(to left, transparent, black 3ch);
+  transition: mask-position-x ease-in-out var(--cfr-animation-duration);
+}
+#urlbar[cfr-recommendation-state] #urlbar-input:-moz-locale-dir(rtl) {
+  mask-image: linear-gradient(to right, transparent, black 3ch);
+}
+#urlbar[cfr-recommendation-state="expanded"] #urlbar-input {
+  mask-position-x: calc(var(--cfr-label-width) * -1);
+}
+#urlbar[cfr-recommendation-state="expanded"] #urlbar-input:-moz-locale-dir(rtl) {
+  mask-position-x: calc(var(--cfr-label-width));
+}
+
+/* Reader mode icon */
+
+#reader-mode-button {
+  list-style-image: url(chrome://browser/skin/readerMode.svg);
+}
+
+#reader-mode-button[readeractive] {
+  fill: var(--toolbarbutton-icon-fill-attention);
+  fill-opacity: 1;
+}
+
+/* Zoom button */
+
+#urlbar-zoom-button {
+  appearance: none;
+  color: inherit;
+  font-size: .8em;
+  padding: 0 8px;
+  border-radius: 1em;
+  background-color: hsla(0,0%,0%,.05);
+  border: 1px solid hsla(210,4%,50%,.3);
+}
+
+@keyframes urlbar-zoom-reset-pulse {
+  0% {
+    transform: scale(0);
+  }
+  75% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+#urlbar-zoom-button[animate="true"] {
+  animation-name: urlbar-zoom-reset-pulse;
+  animation-duration: 250ms;
+}
+
+#urlbar-zoom-button:hover {
+  background-color: hsla(0,0%,0%,.1);
+}
+
+#urlbar-zoom-button:hover:active {
+  background-color: hsla(0,0%,0%,.15);
+}
+
+:root[lwt-toolbar-field-brighttext] #urlbar-zoom-button:hover {
+  background-color: rgba(255,255,255,.2);
+}
+
+:root[lwt-toolbar-field-brighttext] #urlbar-zoom-button:hover:active {
+  background-color: rgba(255,255,255,.3);
+}
+
+#urlbar-zoom-button:-moz-focusring {
+  outline: var(--toolbarbutton-focus-outline);
+  outline-offset: unset;
+  -moz-outline-radius: 1em;
+}
+
+#urlbar-zoom-button > .toolbarbutton-text {
+  display: -moz-box;
+}
+
+#urlbar-zoom-button > .toolbarbutton-icon {
+  display: none;
+}
+
+/* Search bar */
+
+#search-container {
+  min-width: 125px;
+}
+
+.searchbar-search-button {
+  -moz-box-align: center;
+  fill: currentColor;
+}
+
+.searchbar-search-icon {
+  list-style-image: url(chrome://browser/skin/search-glass.svg);
+  -moz-context-properties: fill, fill-opacity;
+  pointer-events: none;
+  margin-inline: 8px 6px;
+  width: 16px;
+  fill-opacity: .4;
+}
+
+.searchbar-search-button:hover > .searchbar-search-icon {
+  fill-opacity: .6;
+}
+
+.searchbar-search-button:hover:active > .searchbar-search-icon {
+  fill-opacity: .8;
+}
+
+.searchbar-search-icon-overlay {
+  pointer-events: none;
+}
+
+.searchbar-search-button[addengines=true] > .searchbar-search-icon-overlay {
+  list-style-image: url(chrome://browser/skin/search-indicator-badge-add.svg);
+  margin-inline: -15px 4px;
+  margin-top: -10px;
+  width: 11px;
+  height: 11px;
+}
+
+.searchbar-search-button[addengines=true] > .searchbar-search-icon-overlay:-moz-locale-dir(rtl) {
+  margin-inline: -25px 14px;
+}
+
+.searchbar-search-button:hover:not([addengines=true]) > .searchbar-search-icon-overlay {
+  list-style-image: url(chrome://global/skin/icons/arrow-dropdown-12.svg);
+  -moz-context-properties: fill;
+  margin-inline: -8px 2px;
+  width: 6px;
+  height: 6px;
+}
+
+.searchbar-search-button:hover:not([addengines=true]) > .searchbar-search-icon-overlay:-moz-locale-dir(rtl) {
+  margin-inline: -26px 20px;
+}

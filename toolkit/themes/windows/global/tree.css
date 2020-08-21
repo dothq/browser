@@ -1,0 +1,49 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+%include ../../shared/tree.inc.css
+
+/* ::::: sort direction indicator :::::  */
+
+.treecol-sortdirection {
+  list-style-image: none;
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+treecol[sortDirection="ascending"]:not([hideheader="true"]) > .treecol-sortdirection {
+  list-style-image: url("chrome://global/skin/tree/sort-asc.svg");
+}
+
+treecol[sortDirection="descending"]:not([hideheader="true"]) > .treecol-sortdirection {
+  list-style-image: url("chrome://global/skin/tree/sort-dsc.svg");
+}
+
+@media (-moz-windows-classic) {
+  treecol,
+  treecolpicker {
+    border: 1px solid;
+    border-top-color: ThreeDHighlight;
+    border-inline-end-color: ThreeDShadow;
+    border-bottom-color: ThreeDShadow;
+    border-inline-start-color: ThreeDHighlight;
+    background-color: -moz-Dialog;
+  }
+
+  treecol:hover:active,
+  treecolpicker:hover:active {
+    border-top-color: ThreeDShadow;
+    border-inline-end-color: ThreeDHighlight;
+    border-bottom-color: ThreeDHighlight;
+    border-inline-start-color: ThreeDShadow;
+  }
+
+  treecol[sortDirection="ascending"]:not([hideheader="true"]) > .treecol-sortdirection {
+    list-style-image: url("chrome://global/skin/tree/sort-asc-classic.png");
+  }
+
+  treecol[sortDirection="descending"]:not([hideheader="true"]) > .treecol-sortdirection {
+    list-style-image: url("chrome://global/skin/tree/sort-dsc-classic.png");
+  }
+}

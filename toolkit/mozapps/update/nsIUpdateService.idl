@@ -1,0 +1,471 @@
+/* -*- Mode: IDL; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#include "nsISupports.idl"
+
+interface nsIRequest;
+interface nsIRequestObserver;
+interface nsISimpleEnumerator;
+interface nsIFile;
+
+webidl Element;
+webidl Document;
+
+/**
+ * An interface that describes an object representing a patch file that can
+ * be downloaded and applied to a version of this application so that it
+ * can be updated.
+ */
+[scriptable, uuid(dc8fb8a9-3a53-4031-9469-2a5197ea30e7)]
+interface nsIUpdatePatch : nsISupports
+{
+  /**
+   * The type of this patch:
+   * "partial"      A binary difference between two application versions
+   * "complete"     A complete patch containing all of the replacement files
+   *                to update to the new version
+   */
+  readonly attribute AString type;
+
+  /**
+   * The URL this patch was being downloaded from
+   */
+  readonly attribute AString URL;
+
+  /**
+   * The final URL this patch was being downloaded from
+   */
+  attribute AString finalURL;
+
+  /**
+   * The size of this file, in bytes.
+   */
+  readonly attribute unsigned long size;
+
+  /**
+   * The state of this patch
+   */
+  attribute AString state;
+
+  /**
+   * A numeric error code that conveys additional information about the state of
+   * a failed update. If the update is not in the "failed" state the value is
+   * zero. The possible values are located in common/updatererrors.h and values between
+   * 80 and 99 are in nsUpdateService.js.
+   */
+  attribute long errorCode;
+
+  /**
+   * true if this patch is currently selected as the patch to be downloaded and
+   * installed for this update transaction, false if another patch from this
+   * update has been selected.
+   */
+  attribute boolean selected;
+
+  /**
+   * Serializes this patch object into a DOM Element
+   * @param   updates
+   *          The document to serialize into
+   * @returns The DOM Element created by the serialization process
+   */
+  Element serialize(in Document updates);
+};
+
+/**
+ * An interface that describes an object representing an available update to
+ * the current application - this update may have several available patches
+ * from which one must be selected to download and install, for example we
+ * might select a binary difference patch first and attempt to apply that,
+ * then if the application process fails fall back to downloading a complete
+ * file-replace patch. This object also contains information about the update
+ * that the front end and other application services can use to learn more
+ * about what is going on.
+ */
+[scriptable, uuid(e094c045-f4ff-41fd-92da-cd2effd2c7c9)]
+interface nsIUpdate : nsISupports
+{
+  /**
+   * The type of update:
+   *   "major"  A major new version of the Application
+   *   "minor"  A minor update to the Application (e.g. security update)
+   */
+  readonly attribute AString type;
+
+  /**
+   * The name of the update, or "<Application Name> <Update Version>"
+   */
+  readonly attribute AString name;
+
+  /**
+   * The string to display in the user interface for the version. If you want
+   * a real version number use appVersion.
+   */
+  readonly attribute AString displayVersion;
+
+  /**
+   * The Application version of this update.
+   */
+  readonly attribute AString appVersion;
+
+  /**
+   * The Application version prior to the application being updated.
+   */
+  readonly attribute AString previousAppVersion;
+
+  /**
+   * The Build ID of this update. Used to determine a particular build, down
+   * to the hour, minute and second of its creation. This allows the system
+   * to differentiate between several nightly builds with the same |version|
+   * for example.
+   */
+  readonly attribute AString buildID;
+
+  /**
+   * The URL to a page which offers details about the content of this
+   * update. Ideally, this page is not the release notes but some other page
+   * that summarizes the differences between this update and the previous,
+   * which also links to the release notes.
+   */
+  readonly attribute AString detailsURL;
+
+  /**
+   * The URL to the Update Service that supplied this update.
+   */
+  readonly attribute AString serviceURL;
+
+  /**
+   * The channel used to retrieve this update from the Update Service.
+   */
+  readonly attribute AString channel;
+
+  /**
+   * Whether the update is no longer supported on this system.
+   */
+  readonly attribute boolean unsupported;
+
+  /**
+   * Allows overriding the default amount of time in seconds before prompting the
+   * user to apply an update. If not specified, the value of
+   * app.update.promptWaitTime will be used.
+   */
+  attribute long long promptWaitTime;
+
+  /**
+   * Whether or not the update being downloaded is a complete replacement of
+   * the user's existing installation or a patch representing the difference
+   * between the new version and the previous version.
+   */
+  attribute boolean isCompleteUpdate;
+
+  /**
+   * When the update was installed.
+   */
+  attribute long long installDate;
+
+  /**
+   * A message associated with this update, if any.
+   */
+  attribute AString statusText;
+
+  /**
+   * The currently selected patch for this update.
+   */
+  readonly attribute nsIUpdatePatch selectedPatch;
+
+  /**
+   * The state of the selected patch:
+   *   "downloading"        The update is being downloaded.
+   *   "pending"            The update is ready to be applied.
+   *   "pending-service"    The update is ready to be applied with the service.
+   *   "pending-elevate"    The update is ready to be applied but requires elevation.
+   *   "applying"           The update is being applied.
+   *   "applied"            The update is ready to be switched to.
+   *   "applied-os"         The update is OS update and to be installed.
+   *   "applied-service"    The update is ready to be switched to with the service.
+   *   "succeeded"          The update was successfully applied.
+   *   "download-failed"    The update failed to be downloaded.
+   *   "failed"             The update failed to be applied.
+   */
+  attribute AString state;
+
+  /**
+   * A numeric error code that conveys additional information about the state of
+   * a failed update. If the update is not in the "failed" state the value is
+   * zero. The possible values are located in common/updatererrors.h and values between
+   * 80 and 99 are in nsUpdateService.js.
+   */
+  attribute long errorCode;
+
+  /**
+   * Whether an elevation failure has been encountered for this update.
+   */
+  attribute boolean elevationFailure;
+
+  /**
+   * The number of patches supplied by this update.
+   */
+  readonly attribute unsigned long patchCount;
+
+  /**
+   * Retrieves a patch.
+   * @param   index
+   *          The index of the patch to retrieve.
+   * @returns The nsIUpdatePatch at the specified index.
+   */
+  nsIUpdatePatch getPatchAt(in unsigned long index);
+
+  /**
+   * Serializes this update object into a DOM Element
+   * @param   updates
+   *          The document to serialize into
+   * @returns The DOM Element created by the serialization process
+   */
+  Element serialize(in Document updates);
+};
+
+/**
+ * An interface describing an object that listens to the progress of an update
+ * check operation. This object is notified as the check continues, finishes
+ * and if it has an error.
+ */
+[scriptable, uuid(4aa2b4bb-39ea-407b-98ff-89f19134d4c0)]
+interface nsIUpdateCheckListener : nsISupports
+{
+  /**
+   * The update check was completed.
+   * @param   request
+   *          The XMLHttpRequest handling the update check.
+   * @param   updates
+   *          An array of nsIUpdate objects listing available updates.
+   */
+  void onCheckComplete(in jsval request, in Array<nsIUpdate> updates);
+
+  /**
+   * An error occurred while loading the remote update service file.
+   * @param   request
+   *          The XMLHttpRequest handling the update check.
+   * @param   update
+   *          A nsIUpdate object that contains details about the
+   *          error in its |statusText| property.
+   */
+  void onError(in jsval request,
+               in nsIUpdate update);
+};
+
+/**
+ * An interface describing an object that knows how to check for updates.
+ */
+[scriptable, uuid(877ace25-8bc5-452a-8586-9c1cf2871994)]
+interface nsIUpdateChecker : nsISupports
+{
+  /**
+   * Checks for available updates, notifying a listener of the results.
+   * @param   listener
+   *          An object implementing nsIUpdateCheckListener which is notified
+   *          of the results of an update check.
+   * @param   force
+   *          Forces the checker to check for updates, regardless of the
+   *          current value of the user's update settings. This is used by
+   *          any piece of UI that offers the user the imperative option to
+   *          check for updates now, regardless of their update settings.
+   *          However, if updates are disabled by policy, setting force to true
+   *          will not override the the policy.
+   */
+  void checkForUpdates(in nsIUpdateCheckListener listener, in boolean force);
+
+  /**
+   * Ends any pending update check.
+   */
+  void stopCurrentCheck();
+};
+
+/**
+ * An interface describing a global application service that handles performing
+ * background update checks and provides utilities for selecting and
+ * downloading update patches.
+ */
+[scriptable, uuid(1107d207-a263-403a-b268-05772ec10757)]
+interface nsIApplicationUpdateService : nsISupports
+{
+  /**
+   * Checks for available updates in the background using the listener provided
+   * by the application update service for background checks.
+   */
+  void checkForBackgroundUpdates();
+
+  /**
+   * The Update Checker used for background update checking.
+   */
+  readonly attribute nsIUpdateChecker backgroundChecker;
+
+  /**
+   * Selects the best update to install from a list of available updates.
+   * @param   updates
+   *          An array of updates that are available
+   */
+  nsIUpdate selectUpdate(in Array<nsIUpdate> updates);
+
+  /**
+   * Adds a listener that receives progress and state information about the
+   * update that is currently being downloaded, e.g. to update a user
+   * interface.
+   * @param   listener
+   *          An object implementing nsIRequestObserver and optionally
+   *          nsIProgressEventSink that is to be notified of state and
+   *          progress information as the update is downloaded.
+   */
+  void addDownloadListener(in nsIRequestObserver listener);
+
+  /**
+   * Removes a listener that is receiving progress and state information
+   * about the update that is currently being downloaded.
+   * @param   listener
+   *          The listener object to remove.
+   */
+  void removeDownloadListener(in nsIRequestObserver listener);
+
+  /**
+   *
+   */
+  AString downloadUpdate(in nsIUpdate update, in boolean background);
+
+  /**
+   * Get the Active Updates directory
+   * @returns An nsIFile for the active updates directory.
+   */
+  nsIFile getUpdatesDirectory();
+
+  /**
+   * Stop the active update download process. This is the equivalent of
+   * calling nsIRequest::Cancel on the download's nsIRequest. When downloading
+   * with nsIIncrementalDownload, this will leave the partial download in place.
+   * When downloading with BITS, any partial download progress will be removed.
+   */
+  void stopDownload();
+
+  /**
+   * Whether or not there is an download happening at the moment.
+   */
+  readonly attribute boolean isDownloading;
+
+  /**
+   * Whether or not the Update Service can check for updates. This is a function
+   * of whether or not application update is disabled by the application and the
+   * platform the application is running on.
+   */
+  readonly attribute boolean canCheckForUpdates;
+
+  /**
+   * Whether or not the installation requires elevation. Currently only
+   * implemented on OSX, returns false on other platforms.
+   */
+  readonly attribute boolean elevationRequired;
+
+  /**
+   * Whether or not the Update Service can download and install updates.
+   * On Windows, this is a function of whether or not the maintenance service
+   * is installed and enabled. On other systems, and as a fallback on Windows,
+   * this depends on whether the current user has write access to the install
+   * directory.
+   */
+  readonly attribute boolean canApplyUpdates;
+
+  /**
+   * Whether or not a different instance is handling updates of this
+   * installation.  This currently only ever returns true on Windows
+   * when 2 instances of an application are open. Only one of the instances
+   * will actually handle updates for the installation.
+   */
+  readonly attribute boolean isOtherInstanceHandlingUpdates;
+
+  /**
+   * Whether the Update Service is able to stage updates.
+   */
+  readonly attribute boolean canStageUpdates;
+};
+
+/**
+ * An interface describing a component which handles the job of processing
+ * an update after it's been downloaded.
+ */
+[scriptable, uuid(74439497-d796-4915-8cef-3dfe43027e4d)]
+interface nsIUpdateProcessor : nsISupports
+{
+  /**
+   * Stages an update while the application is running.
+   */
+  void processUpdate();
+
+  /**
+   * Attempts to fix the permissions of the update directory. This can be done
+   * in two ways. Firefox can attempt to fix the permissions itself, or it can
+   * call into the maintenance service to request that it attempt to fix the
+   * permissions.
+   *
+   * Fixing the permissions can take some time, so this work is all done off of
+   * the main thread.
+   *
+   * Currently, this function only has a Windows implementation. On other
+   * operating systems, it will throw NS_ERROR_NOT_IMPLEMENTED.
+   *
+   * Since this function does its work off of the main thread and does not
+   * block, it will only throw if it was unable to dispatch to another thread.
+   *
+   * @param useServiceOnFailure
+   *        If set to false, Firefox will attempt to fix the permissions itself,
+   *        but the maintenance service will not be used. If set to true and
+   *        Firefox is unable to fix the permissions itself, it will attempt to
+   *        call into the maintenance service to request that it attempt to fix
+   *        the permissions.
+   */
+  void fixUpdateDirectoryPerms(in boolean useServiceOnFailure);
+};
+
+/**
+ * An interface describing a global application service that maintains a list
+ * of updates previously performed as well as the current active update.
+ */
+[scriptable, uuid(0f1098e9-a447-4af9-b030-6f8f35c85f89)]
+interface nsIUpdateManager : nsISupports
+{
+  /**
+   * Gets the update at the specified index
+   * @param   index
+   *          The index within the updates array
+   * @returns The nsIUpdate object at the specified index
+   */
+  nsIUpdate getUpdateAt(in long index);
+
+  /**
+   * Gets the total number of updates in the history list.
+   */
+  long getUpdateCount();
+
+  /**
+   * The active (current) update. The active update is not in the history list.
+   */
+  attribute nsIUpdate activeUpdate;
+
+  /**
+   * Saves all updates to disk.
+   */
+  void saveUpdates();
+
+  /**
+   * Refresh the update status based on the information in update.status.
+   */
+  void refreshUpdateStatus();
+
+  /**
+   * The user agreed to proceed with an elevated update and we are now
+   * permitted to show an elevation prompt.
+   */
+  void elevationOptedIn();
+
+  /**
+   * Clean up and remove the active update without applying it.
+   */
+  void cleanupActiveUpdate();
+};

@@ -1,0 +1,66 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    description: "minidump_stackwalk toolchain build"
+    attributes:
+        local-toolchain: true
+    worker-type: b-linux
+    worker:
+        max-run-time: 1800
+    run:
+        script: build-minidump-stackwalk.sh
+        sparse-profile: null
+        resources:
+            - 'build/moz.configure'
+            - 'config/external/zlib'
+            - 'mfbt'
+            - 'moz.configure'
+            - 'testing/tools/fileid'
+            - 'toolkit/crashreporter'
+            - 'toolkit/crashreporter/google-breakpad/src/common'
+            - 'toolkit/crashreporter/google-breakpad/src/processor'
+            - 'toolkit/crashreporter/rust'
+            - 'tools/crashreporter/'
+        toolchain-artifact: public/build/minidump_stackwalk.tar.xz
+    run-on-projects:
+        - trunk
+
+linux64-minidump-stackwalk:
+    treeherder:
+        symbol: TL(stackwalk)
+    fetches:
+        toolchain:
+            - linux64-clang-9
+            - linux64-binutils
+            - linux64-rust-1.41
+
+macosx64-minidump-stackwalk:
+    treeherder:
+        symbol: TM(stackwalk)
+    worker:
+        env:
+            TOOLTOOL_MANIFEST: "browser/config/tooltool-manifests/macosx64/cross-releng.manifest"
+    run:
+        arguments: ['macosx64']
+        resources:
+            - 'taskcluster/scripts/misc/tooltool-download.sh'
+        tooltool-downloads: internal
+    fetches:
+        toolchain:
+            - linux64-cctools-port-clang-9
+            - linux64-clang-9
+            - linux64-rust-macos-1.41
+
+win32-minidump-stackwalk:
+    treeherder:
+        symbol: TW32(stackwalk)
+    worker:
+        docker-image: {in-tree: mingw32-build}
+    run:
+        arguments: ['mingw32']
+    fetches:
+        toolchain:
+            - linux64-clang-mingw-x86
+            - mingw32-rust-1.41

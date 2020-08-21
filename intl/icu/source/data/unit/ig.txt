@@ -1,0 +1,27 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+ig{
+    Version{"37"}
+    units{
+        duration{
+            century{
+                dnam{"Ọtụtụ nari afọ"}
+            }
+            day{
+                dnam{"Ọtụtụ Ubochi"}
+            }
+            decade{
+                dnam{"Ọtụtụ afọ iri"}
+            }
+            month{
+                dnam{"Ọtụtụ Ọnwa"}
+            }
+            week{
+                dnam{"Ọtụtụ Izu"}
+            }
+            year{
+                dnam{"Ọtụtụ Afọ"}
+            }
+        }
+    }
+}

@@ -1,0 +1,45 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    description: "Node repack toolchain build"
+    attributes:
+        local-toolchain: true
+    worker-type: b-linux
+    worker:
+        max-run-time: 1800
+    run-on-projects: [trunk]
+    run:
+        script: repack-node.sh
+        toolchain-artifact: public/build/node.tar.xz
+
+linux64-node-10:
+    treeherder:
+        symbol: TL(node-10)
+    run:
+        arguments: ['linux64', '10']
+        toolchain-alias: linux64-node
+
+macosx64-node-10:
+    treeherder:
+        symbol: TM(node-10)
+    run:
+        arguments: ['macosx64', '10']
+        toolchain-alias: macosx64-node
+
+win64-node-10:
+    treeherder:
+        symbol: TW64(node-10)
+    run:
+        arguments: ['win64', '10']
+        toolchain-artifact: public/build/node.tar.bz2
+        toolchain-alias: win64-node
+
+win32-node-10:
+    treeherder:
+        symbol: TW32(node-10)
+    run:
+        arguments: ['win32', '10']
+        toolchain-artifact: public/build/node.tar.bz2
+        toolchain-alias: win32-node

@@ -1,0 +1,98 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+XPIDL_SOURCES += [
+    'nsIHTTPHeaderListener.idl',
+    'nsIPluginDocument.idl',
+    'nsIPluginHost.idl',
+    'nsIPluginInputStream.idl',
+    'nsIPluginInstanceOwner.idl',
+    'nsIPluginTag.idl',
+    'nspluginroot.idl',
+]
+
+XPIDL_MODULE = 'plugin'
+
+EXPORTS += [
+    'npapi.h',
+    'npfunctions.h',
+    'npruntime.h',
+    'nptypes.h',
+    'nsJSNPRuntime.h',
+    'nsNPAPIPluginInstance.h',
+    'nsPluginDirServiceProvider.h',
+    'nsPluginHost.h',
+    'nsPluginInstanceOwner.h',
+    'nsPluginLogging.h',
+    'nsPluginNativeWindow.h',
+    'nsPluginsCID.h',
+    'nsPluginsDir.h',
+    'nsPluginTags.h',
+]
+
+UNIFIED_SOURCES += [
+    'nsJSNPRuntime.cpp',
+    'nsNPAPIPluginInstance.cpp',
+    'nsNPAPIPluginStreamListener.cpp',
+    'nsPluginInstanceOwner.cpp',
+    'nsPluginStreamListenerPeer.cpp',
+    'nsPluginTags.cpp',
+    'PluginFinder.cpp',
+]
+
+SOURCES += [
+    'nsNPAPIPlugin.cpp', # Conflict with X11 headers
+    'nsPluginHost.cpp',  # Conflict with NS_NPAPIPLUGIN_CALLBACK
+]
+
+if CONFIG['OS_ARCH'] == 'WINNT':
+    UNIFIED_SOURCES += [
+        'nsPluginDirServiceProvider.cpp',
+        'nsPluginNativeWindowWin.cpp',
+        'nsPluginsDirWin.cpp',
+    ]
+elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'cocoa':
+    UNIFIED_SOURCES += [
+        'nsPluginNativeWindow.cpp',
+    ]
+    SOURCES += [
+        'nsPluginsDirDarwin.cpp', # conflict with mozilla::EventPriority
+    ]
+else:
+    UNIFIED_SOURCES += [
+        'nsPluginNativeWindow.cpp',
+        'nsPluginsDirUnix.cpp',
+    ]
+
+XPCOM_MANIFESTS += [
+    'components.conf',
+]
+
+LOCAL_INCLUDES += [
+    '/dom/base',
+    '/dom/plugins/ipc',
+    '/layout/generic',
+    '/layout/xul',
+    '/netwerk/base',
+    '/widget',
+    '/widget/cocoa',
+    '/xpcom/base',
+]
+
+if CONFIG['OS_ARCH'] == 'WINNT':
+    LOCAL_INCLUDES += [
+        '/xpcom/base',
+    ]
+
+include('/ipc/chromium/chromium-config.mozbuild')
+
+FINAL_LIBRARY = 'xul'
+
+CXXFLAGS += CONFIG['MOZ_CAIRO_CFLAGS']
+CXXFLAGS += CONFIG['TK_CFLAGS']
+
+if CONFIG['CC_TYPE'] in ('clang', 'gcc'):
+    CXXFLAGS += ['-Wno-error=shadow']

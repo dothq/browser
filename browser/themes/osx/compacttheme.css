@@ -1,0 +1,16 @@
+% This Source Code Form is subject to the terms of the Mozilla Public
+% License, v. 2.0. If a copy of the MPL was not distributed with this
+% file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+%include ../shared/compacttheme.inc.css
+
+#TabsToolbar:-moz-lwtheme-darktext {
+  appearance: auto;
+  -moz-default-appearance: -moz-mac-vibrant-titlebar-light;
+  -moz-font-smoothing-background-color: -moz-mac-vibrant-titlebar-light;
+}
+
+.tabbrowser-tab[multiselected]:-moz-lwtheme-darktext,
+.tabbrowser-tab[visuallyselected=true]:-moz-lwtheme-darktext {
+  -moz-font-smoothing-background-color: var(--toolbar-bgcolor);
+}

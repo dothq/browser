@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+<head>
+<meta charset="UTF-8">
+<script>
+
+function f()
+{
+    function spin() {
+        for (var i = 0; i < 8; ++i) {
+            var x = new XMLHttpRequest();
+            x.open('GET', 'data:text/html,' + i, false);
+            x.send();
+        }
+    }
+
+    window.addEventListener("popstate", spin);
+    window.close();
+    window.location = "#c";
+    finish();
+}
+
+function init()
+{
+  SpecialPowers.pushPrefEnv({"set": [
+    ["security.data_uri.unique_opaque_origin", false],
+    ["security.data_uri.block_toplevel_data_uri_navigations", false],
+  ]}, start);
+}
+
+function start()
+{
+    var html = "<script>" + f + "<\/script><body onload=f()>";
+    var win = window.open("data:text/html," + encodeURIComponent(html), null, "width=300,height=300");
+    win.finish = function() {
+      SpecialPowers.clearUserPref("security.data_uri.unique_opaque_origin");
+      document.documentElement.removeAttribute("class");
+    };
+}
+
+</script>
+</head>
+<body onload="init();"></body>
+</html>

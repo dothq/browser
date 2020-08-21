@@ -1,0 +1,200 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>RTCRtpTransceiver.prototype.setCodecPreferences</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+  'use strict';
+
+  // Test is based on the following editor draft:
+  // https://w3c.github.io/webrtc-pc/archives/20170605/webrtc.html
+
+  /*
+    5.4.  RTCRtpTransceiver Interface
+      interface RTCRtpTransceiver {
+        ...
+        void setCodecPreferences(sequence<RTCRtpCodecCapability> codecs);
+      };
+
+      setCodecPreferences
+        - Setting codecs to an empty sequence resets codec preferences to any
+          default value.
+
+        - The codecs sequence passed into setCodecPreferences can only contain
+          codecs that are returned by RTCRtpSender.getCapabilities(kind) or
+          RTCRtpReceiver.getCapabilities(kind), where kind is the kind of the
+          RTCRtpTransceiver on which the method is called. Additionally, the
+          RTCRtpCodecParameters dictionary members cannot be modified. If
+          codecs does not fulfill these requirements, the user agent MUST throw
+          an InvalidModificationError.
+   */
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    transceiver.setCodecPreferences(capabilities.codecs);
+
+  }, `setCodecPreferences() on audio transceiver with codecs returned from RTCRtpSender.getCapabilities('audio') should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('video');
+    const capabilities = RTCRtpReceiver.getCapabilities('video');
+    transceiver.setCodecPreferences(capabilities.codecs);
+
+  }, `setCodecPreferences() on video transceiver with codecs returned from RTCRtpReceiver.getCapabilities('video') should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities1 = RTCRtpSender.getCapabilities('audio');
+    const capabilities2 = RTCRtpReceiver.getCapabilities('audio');
+    transceiver.setCodecPreferences([...capabilities1.codecs, ... capabilities2.codecs]);
+
+  }, `setCodecPreferences() with both sender receiver codecs combined should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    transceiver.setCodecPreferences([]);
+
+  }, `setCodecPreferences([]) should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    const { codecs } = capabilities;
+
+    if(codecs.length >= 2) {
+      const tmp = codecs[0];
+      codecs[0] = codecs[1];
+      codecs[1] = tmp;
+    }
+
+    transceiver.setCodecPreferences(codecs);
+
+  }, `setCodecPreferences() with reordered codecs should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('video');
+    const capabilities = RTCRtpSender.getCapabilities('video');
+    const { codecs } = capabilities;
+    // This test verifies that the mandatory VP8 codec is present
+    // and can be set.
+    let tried = false;
+    codecs.forEach(codec => {
+      if (codec.mimeType.toLowerCase() === 'video/vp8') {
+        transceiver.setCodecPreferences([codecs[0]]);
+        tried = true;
+      }
+    });
+    assert_true(tried, 'VP8 video codec was found and tried');
+  }, `setCodecPreferences() with only one video codec should succeed`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('video');
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(capabilities.codecs));
+
+  }, `setCodecPreferences() on audio transceiver with codecs returned from getCapabilities('video') should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const codecs = [{
+      mimeType: 'data',
+      clockRate: 2000,
+      channels: 2,
+      sdpFmtpLine: '0-15'
+    }];
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with user defined codec with invalid mimeType should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const codecs = [{
+      mimeType: 'audio/piepiper',
+      clockRate: 2000,
+      channels: 2,
+      sdpFmtpLine: '0-15'
+    }];
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with user defined codec should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    const codecs = [
+      ...capabilities.codecs,
+      {
+        mimeType: 'audio/piepiper',
+        clockRate: 2000,
+        channels: 2,
+        sdpFmtpLine: '0-15'
+      }];
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with user defined codec together with codecs returned from getCapabilities() should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    const codecs = [capabilities.codecs[0]];
+    codecs[0].clockRate = codecs[0].clockRate / 2;
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with modified codec clock rate should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    const codecs = [capabilities.codecs[0]];
+    codecs[0].channels = codecs[0].channels + 11;
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with modified codec channel count should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+    const codecs = [capabilities.codecs[0]];
+    codecs[0].sdpFmtpLine = "modifiedparameter=1";
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with modified codec parameters should throw InvalidModificationError`);
+
+  test(() => {
+    const pc = new RTCPeerConnection();
+    const transceiver = pc.addTransceiver('audio');
+    const capabilities = RTCRtpSender.getCapabilities('audio');
+
+    const { codecs } = capabilities;
+    assert_greater_than(codecs.length, 0,
+      'Expect at least one codec available');
+
+    const [ codec ] = codecs;
+    const { channels=2 } = codec;
+    codec.channels = channels+1;
+
+    assert_throws_dom('InvalidModificationError', () => transceiver.setCodecPreferences(codecs));
+
+  }, `setCodecPreferences() with modified codecs returned from getCapabilities() should throw InvalidModificationError`);
+
+ </script>

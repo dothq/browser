@@ -1,0 +1,86 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+job-defaults:
+    suite: awsy
+    max-run-time: 7200
+    instance-size: xlarge
+    virtualization:
+        by-test-platform:
+            windows10-64(?:-pgo|-shippable)?-qr/.*: virtual-with-gpu
+            windows10-64/.*: virtual-with-gpu
+            default: virtual
+    allow-software-gl-layers: false
+    mozharness:
+        script: awsy_script.py
+        config:
+            by-test-platform:
+                windows.*:
+                    - awsy/taskcluster_windows_config.py
+                macosx.*/opt:
+                    - awsy/macosx_config.py
+                default:
+                    - awsy/linux_config.py
+    tier: default
+    fission-tier:
+        by-test-platform:
+            linux1804-64(?!-shippable).*: 3
+            windows10-64(-qr)?/opt: 3
+            default: 2
+    run-on-projects:
+        by-test-platform:
+            .*-devedition/.*: []  # don't run on devedition
+            (linux|win|mac)(?!.*shippable).*/opt: []
+            default: ['integration', 'mozilla-central', 'mozilla-beta', 'mozilla-release']
+    fission-run-on-projects:
+        by-test-platform:
+            linux1804-64-shippable-qr/opt: ['mozilla-central']
+            windows10-64-shippable-qr/opt: ['mozilla-central']
+            default: []
+
+
+awsy:
+    description: "Are we slim yet"
+    treeherder-symbol: SY(sy)
+
+awsy-tp6:
+    description: "Are we slim yet - tp6 pageset"
+    variants:
+        by-test-platform:
+            windows10-64-shippable-qr/opt: []  # temporary disable on win
+            default: ['fission']
+    treeherder-symbol: SY(sy-tp6)
+    run-on-projects:
+        by-test-platform:
+            .*-ccov/.*: []  # don't run on coverage
+            .*-devedition/.*: []  # don't run on devedition
+            (linux|win|mac)(?!.*shippable)(?!.*ccov).*/opt: []
+            default: ['integration', 'mozilla-central', 'mozilla-beta', 'mozilla-release']
+    mozharness:
+        extra-options:
+            - --tp6
+
+awsy-dmd:
+    description: "Are we slim yet - dmd enabled"
+    treeherder-symbol: SY(sy-d)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --dmd
+
+awsy-base:
+    description: "Are we slim yet - about:blank base case"
+    treeherder-symbol: SY(ab)
+    mozharness:
+        extra-options:
+            - --base
+
+awsy-base-dmd:
+    description: "Are we slim yet - about:blank base case - dmd enabled"
+    treeherder-symbol: SY(ab-d)
+    run-on-projects: []
+    mozharness:
+        extra-options:
+            - --base
+            - --dmd

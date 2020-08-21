@@ -1,0 +1,362 @@
+# -*- Mode: python; indent-tabs-mode: nil; tab-width: 40 -*-
+# vim: set filetype=python:
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+with Files("**"):
+    BUG_COMPONENT = ("Core", "Widget")
+
+with Files("crashtests/*1128214*"):
+    BUG_COMPONENT = ("Core", "Layout")
+
+with Files("crashtests/*303901*"):
+    BUG_COMPONENT = ("Core", "Graphics")
+
+with Files("crashtests/*380359*"):
+    BUG_COMPONENT = ("Core", "Widget")
+
+with Files("reftests/**"):
+    BUG_COMPONENT = ("Core", "Widget: Cocoa")
+
+with Files("reftests/*fallback*"):
+    BUG_COMPONENT = ("Core", "Layout: Form Controls")
+
+with Files("*CompositorWidget*"):
+    BUG_COMPONENT = ("Core", "Graphics")
+
+with Files("*Gfx*"):
+    BUG_COMPONENT = ("Core", "Graphics")
+
+with Files("*WindowSurface*"):
+    BUG_COMPONENT = ("Core", "Graphics")
+
+with Files("*FontRange*"):
+    BUG_COMPONENT = ("Core", "Widget: Cocoa")
+
+toolkit = CONFIG['MOZ_WIDGET_TOOLKIT']
+
+if toolkit in ('cocoa', 'android', 'uikit'):
+    DIRS += [toolkit]
+
+if toolkit == 'windows':
+    DIRS += ['windows']
+
+    XPIDL_SOURCES += [
+        'nsIJumpListBuilder.idl',
+        'nsIJumpListItem.idl',
+        'nsIPrintSettingsWin.idl',
+        'nsITaskbarOverlayIconController.idl',
+        'nsITaskbarPreview.idl',
+        'nsITaskbarPreviewButton.idl',
+        'nsITaskbarPreviewController.idl',
+        'nsITaskbarProgress.idl',
+        'nsITaskbarTabPreview.idl',
+        'nsITaskbarWindowPreview.idl',
+        'nsIWindowsUIUtils.idl',
+        'nsIWinTaskbar.idl',
+    ]
+elif toolkit == 'cocoa':
+    XPIDL_SOURCES += [
+        'nsIMacDockSupport.idl',
+        'nsIMacFinderProgress.idl',
+        'nsIMacSharingService.idl',
+        'nsIMacWebAppUtils.idl',
+        'nsIStandaloneNativeMenu.idl',
+        'nsISystemStatusBar.idl',
+        'nsITaskbarProgress.idl',
+        'nsITouchBarHelper.idl',
+        'nsITouchBarInput.idl',
+        'nsITouchBarUpdater.idl',
+    ]
+    EXPORTS += [
+        'nsINativeMenuService.h',
+    ]
+
+TEST_DIRS += [
+    'tests',
+    'tests/gtest'
+]
+
+DIRS += ['headless']
+
+# Don't build the DSO under the 'build' directory as windows does.
+#
+# The DSOs get built in the toolkit dir itself.  Do this so that
+# multiple implementations of widget can be built on the same
+# source tree.
+#
+if CONFIG['MOZ_WIDGET_TOOLKIT'] == 'gtk':
+    DIRS += ['gtk']
+
+    XPIDL_SOURCES += [
+        'nsIGtkTaskbarProgress.idl',
+        'nsITaskbarProgress.idl',
+    ]
+
+XPIDL_SOURCES += [
+    'nsIAppShell.idl',
+    'nsIBaseWindow.idl',
+    'nsIBidiKeyboard.idl',
+    'nsIClipboard.idl',
+    'nsIClipboardHelper.idl',
+    'nsIClipboardOwner.idl',
+    'nsIColorPicker.idl',
+    'nsIDisplayInfo.idl',
+    'nsIDragService.idl',
+    'nsIDragSession.idl',
+    'nsIFilePicker.idl',
+    'nsIFormatConverter.idl',
+    'nsIGfxInfo.idl',
+    'nsIGfxInfoDebug.idl',
+    'nsIPaper.idl',
+    'nsIPrinter.idl',
+    'nsIPrinterList.idl',
+    'nsIPrintSession.idl',
+    'nsIPrintSettings.idl',
+    'nsIPrintSettingsService.idl',
+    'nsIScreen.idl',
+    'nsIScreenManager.idl',
+    'nsISharePicker.idl',
+    'nsISound.idl',
+    'nsITransferable.idl',
+    'nsIUserIdleService.idl',
+    'nsIUserIdleServiceInternal.idl',
+]
+
+XPIDL_MODULE = 'widget'
+
+EXPORTS += [
+    'GfxDriverInfo.h',
+    'GfxInfoBase.h',
+    'GfxInfoCollector.h',
+    'InputData.h',
+    'nsBaseAppShell.h',
+    'nsBaseDragService.h',
+    'nsBaseFilePicker.h',
+    'nsBaseScreen.h',
+    'nsBaseWidget.h',
+    'nsIDeviceContextSpec.h',
+    'nsIKeyEventInPluginCallback.h',
+    'nsIPluginWidget.h',
+    'nsIPrintDialogService.h',
+    'nsIRollupListener.h',
+    'nsIWidget.h',
+    'nsIWidgetListener.h',
+    'nsPaper.h',
+    'nsPrinter.h',
+    'nsUserIdleService.h',
+    'nsWidgetInitData.h',
+    'nsWidgetsCID.h',
+    'PuppetWidget.h',
+]
+
+EXPORTS.mozilla += [
+    'BasicEvents.h',
+    'CommandList.h',
+    'ContentCache.h',
+    'ContentEvents.h',
+    'EventClassList.h',
+    'EventForwards.h',
+    'EventMessageList.h',
+    'FontRange.h',
+    'LookAndFeel.h',
+    'MiscEvents.h',
+    'MouseEvents.h',
+    'ProcInfo.h',
+    'TextEventDispatcher.h',
+    'TextEventDispatcherListener.h',
+    'TextEvents.h',
+    'TextRange.h',
+    'TouchEvents.h',
+    'VsyncDispatcher.h',
+    'WidgetUtils.h',
+]
+
+EXPORTS.mozilla.widget += [
+    'CompositorWidget.h',
+    'IMEData.h',
+    'InProcessCompositorWidget.h',
+    'MediaKeysEventSourceFactory.h',
+    'nsAutoRollup.h',
+    'PuppetBidiKeyboard.h',
+    'Screen.h',
+    'ScreenManager.h',
+    'WidgetMessageUtils.h',
+    'WindowSurface.h'
+]
+
+UNIFIED_SOURCES += [
+    'CompositorWidget.cpp',
+    'ContentCache.cpp',
+    'GfxDriverInfo.cpp',
+    'GfxInfoBase.cpp',
+    'GfxInfoCollector.cpp',
+    'IMEData.cpp',
+    'InProcessCompositorWidget.cpp',
+    'InputData.cpp',
+    'nsAutoRollup.cpp',
+    'nsBaseAppShell.cpp',
+    'nsBaseScreen.cpp',
+    'nsClipboardHelper.cpp',
+    'nsClipboardProxy.cpp',
+    'nsColorPickerProxy.cpp',
+    'nsContentProcessWidgetFactory.cpp',
+    'nsDragServiceProxy.cpp',
+    'nsFilePickerProxy.cpp',
+    'nsHTMLFormatConverter.cpp',
+    'nsIWidgetListener.cpp',
+    'nsNativeBasicTheme.cpp',
+    'nsPrimitiveHelpers.cpp',
+    'nsPrintSettingsImpl.cpp',
+    'nsSoundProxy.cpp',
+    'nsTransferable.cpp',
+    'nsUserIdleService.cpp',
+    'nsXPLookAndFeel.cpp',
+    'PuppetBidiKeyboard.cpp',
+    'PuppetWidget.cpp',
+    'Screen.cpp',
+    'SharedWidgetUtils.cpp',
+    'TextEventDispatcher.cpp',
+    'VsyncDispatcher.cpp',
+    'WidgetEventImpl.cpp',
+    'WidgetUtils.cpp',
+]
+
+if CONFIG['OS_ARCH'] == 'Linux':
+    EXPORTS.mozilla.widget += [
+        'LSBUtils.h'
+    ]
+    SOURCES += [
+        'LSBUtils.cpp'
+    ]
+
+if CONFIG['MOZ_XUL'] and CONFIG['NS_PRINTING']:
+    EXPORTS += [
+        'nsDeviceContextSpecProxy.h',
+        'nsPrintSettingsService.h',
+    ]
+    UNIFIED_SOURCES += [
+        'nsDeviceContextSpecProxy.cpp',
+        'nsPrintSession.cpp',
+        'nsPrintSettingsService.cpp',
+    ]
+
+    # The Windows sub-directory has its own implemenation of these.
+    if toolkit != 'windows':
+        UNIFIED_SOURCES += [
+            'nsPaper.cpp',
+            'nsPrinter.cpp',
+        ]
+
+# nsBaseWidget.cpp needs to be built separately because of name clashes in the OS X headers
+# nsBaseDragService.cpp moved out of UNIFIED to fix xgill crash (bug 1259850) after moving widget/ContentHelper -> apz/util/TouchActionHelper
+SOURCES += [
+    'nsBaseDragService.cpp',
+    'nsBaseWidget.cpp',
+    'ScreenManager.cpp',
+]
+
+if CONFIG['MOZ_INSTRUMENT_EVENT_LOOP']:
+    EXPORTS.mozilla += [
+        'WidgetTraceEvent.h',
+    ]
+
+EXPORTS.ipc = ['nsGUIEventIPC.h']
+
+if CONFIG['MOZ_X11']:
+    DIRS += ['x11']
+    SOURCES += [
+        'GfxInfoX11.cpp',
+        'nsShmImage.cpp',
+        'WindowSurfaceX11SHM.cpp',
+    ]
+
+if toolkit == 'windows':
+    EXPORTS += [
+        'PluginWidgetProxy.h',
+    ]
+    SOURCES += [
+        'PluginWidgetProxy.cpp',
+    ]
+
+if toolkit in ('cocoa', 'windows'):
+    UNIFIED_SOURCES += [
+        'nsBaseClipboard.cpp',
+    ]
+
+if toolkit in {'gtk', 'cocoa', 'windows',
+               'android', 'uikit'}:
+    UNIFIED_SOURCES += [
+        'nsBaseFilePicker.cpp',
+    ]
+
+if toolkit in ('gtk', 'windows', 'cocoa', 'android'):
+    UNIFIED_SOURCES += [
+        'nsNativeTheme.cpp',
+    ]
+if toolkit == 'gtk':
+    XPIDL_SOURCES += [
+        'nsIApplicationChooser.idl',
+    ]
+if toolkit in ('gtk', 'cocoa'):
+    UNIFIED_SOURCES += [
+        'CUPSPrinter.cpp',
+        'nsCUPSShim.cpp'
+    ]
+
+DEFINES['MOZ_CROSS_PROCESS_IME'] = True
+
+include('/ipc/chromium/chromium-config.mozbuild')
+
+LOCAL_INCLUDES += [
+    '/dom/base',
+    '/dom/ipc',
+    '/gfx/2d',
+    '/layout/base',
+    '/layout/forms',
+    '/layout/generic',
+    '/layout/painting',
+    '/layout/xul',
+    '/layout/xul/tree/',
+    '/view',
+    '/widget',
+    '/widget/headless',
+]
+
+# We use the CUPS headers on Cocoa and GTK, but on GTK we don't depend on there being system headers.
+if toolkit == 'gtk':
+    LOCAL_INCLUDES += [
+        '/third_party/cups/include'
+    ]
+
+if toolkit == 'windows':
+    IPDL_SOURCES = [
+        'headless/HeadlessWidgetTypes.ipdlh',
+        'windows/PCompositorWidget.ipdl',
+        'windows/PlatformWidgetTypes.ipdlh',
+    ]
+elif CONFIG['MOZ_WIDGET_TOOLKIT'] == 'gtk' and CONFIG['MOZ_X11']:
+    IPDL_SOURCES = [
+        'gtk/PCompositorWidget.ipdl',
+        'gtk/PlatformWidgetTypes.ipdlh',
+        'headless/HeadlessWidgetTypes.ipdlh',
+    ]
+else:
+    IPDL_SOURCES = [
+        'headless/HeadlessWidgetTypes.ipdlh',
+        'PCompositorWidget.ipdl',
+        'PlatformWidgetTypes.ipdlh',
+    ]
+
+LOCAL_INCLUDES += [
+    '/widget/%s' % toolkit,
+]
+FINAL_LIBRARY = 'xul'
+
+if CONFIG['MOZ_ENABLE_D3D10_LAYER']:
+    DEFINES['MOZ_ENABLE_D3D10_LAYER'] = True
+
+CXXFLAGS += CONFIG['TK_CFLAGS']
+if CONFIG['MOZ_WAYLAND']:
+    CXXFLAGS += CONFIG['MOZ_WAYLAND_CFLAGS']

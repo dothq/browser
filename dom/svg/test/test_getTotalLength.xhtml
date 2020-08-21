@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!--
+https://bugzilla.mozilla.org/show_bug.cgi?id=1474284
+-->
+<head>
+  <title>Test for Bug 1474284</title>
+  <script src="/tests/SimpleTest/SimpleTest.js"></script>
+  <link rel="stylesheet" type="text/css" href="/tests/SimpleTest/test.css" />
+</head>
+<body>
+<a target="_blank" href="https://bugzilla.mozilla.org/show_bug.cgi?id=1474284">Mozilla Bug 1474284</a>
+<p id="display"></p>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+  <path id="path1" stroke="#000" fill="none"
+        d="M 50,40
+           C 50,40 0,60 30,20"/>
+  <symbol font-size="10" width="20em" height="20em">
+    <rect id="r1" x="5em" y="6em" width="20%" height="30%" />
+  </symbol>
+</svg>
+
+<pre id="test">
+<script class="testbody" type="application/javascript">
+SimpleTest.waitForExplicitFinish();
+
+function expectValue(id, expected) {
+  isfuzzy(document.getElementById(id).getTotalLength(),
+          expected, expected * 0.02,
+          `getTotalLength() on element id="${id}" returned the wrong value`);
+}
+
+function run() {
+  expectValue("path1", 55.19);
+
+  let r1 = document.getElementById("r1");
+  is(r1.getTotalLength(), 200, "getTotalLength() should work for display:none element");
+
+  SimpleTest.finish();
+}
+
+window.addEventListener("load", run);
+</script>
+</pre>
+</body>
+</html>

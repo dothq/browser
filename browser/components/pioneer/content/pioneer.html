@@ -1,0 +1,67 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome: blob:; img-src https:; object-src 'none'">
+    <link rel="localization" href="browser/branding/brandings.ftl">
+    <link rel="localization" href="branding/brand.ftl">
+    <!-- Temporary "en-US"-only l10n strings -->
+    <link rel="localization" href="preview/pioneer.ftl">
+    <link rel="stylesheet" href="chrome://global/skin/in-content/common.css">
+    <link rel="stylesheet" href="chrome://browser/content/pioneer.css">
+    <script src="chrome://browser/content/pioneer.js"></script>
+    <link rel="icon" href="chrome://browser/skin/pioneer.svg">
+    <title data-l10n-id="pioneer"></title>
+  </head>
+
+  <body>
+    <div id="report-content">
+      <button id="enrollment-button" class="primary"></button>
+      <h1 id="report-title" data-l10n-id="pioneer-document-title"></h1>
+      <div>
+        <p data-l10n-id="pioneer-summary"></p>
+      </div>
+      <p>
+        <h2>How it works</h2>
+        <ol>
+          <li>Select the Get Started button. You’ll have the chance to review the kinds of data we collect and how we protect your data. You’ll also be asked to provide some basic demographic information, like age and geography. (Pioneer is currently open to participants in the US.) You can leave Pioneer at any time.</li>
+          <li>The Pioneer icon will appear on the Firefox toolbar. Select the icon any time you want to return to this page to update your Pioneer settings, enroll in a study, or leave the program.</li>
+          <li>A notification dot means there is news about the Pioneer program or an opportunity to enroll in a study. Before you enroll in a study, you can learn more about who is conducting the study, what data they are collecting, and what they hope to learn.</li>
+        </ol>
+      </p>
+      <h2 id="header-available-studies"></h2>
+      <div id="available-studies"></div>
+      <dialog id="join-pioneer-consent-dialog" class="modal" is="trapped-dialog">
+        <h3>Pioneer Privacy Consent Notice</h3>
+        <footer>
+          <button id="join-pioneer-cancel-dialog-button">Cancel</button>
+          <button id="join-pioneer-accept-dialog-button">Accept and Join Pioneer</button>
+        </footer>
+      </dialog>
+      <dialog id="leave-pioneer-consent-dialog" class="modal" is="trapped-dialog">
+        <h3>Leaving Pioneer</h3>
+        <footer>
+          <button id="leave-pioneer-cancel-dialog-button">Cancel</button>
+          <button id="leave-pioneer-accept-dialog-button">Accept and Leave Pioneer</button>
+        </footer>
+      </dialog>
+      <dialog id="join-study-consent-dialog" class="modal" is="trapped-dialog">
+        <h3>Pioneer Study Privacy Consent Notice</h3>
+        <footer>
+          <button id="join-study-cancel-dialog-button">Cancel</button>
+          <button id="join-study-accept-dialog-button">Accept and Join Study</button>
+        </footer>
+      </dialog>
+      <dialog id="leave-study-consent-dialog" class="modal" is="trapped-dialog">
+        <h3>Leaving Study</h3>
+        <footer>
+          <button id="leave-study-cancel-dialog-button">Cancel</button>
+          <button id="leave-study-accept-dialog-button">Accept and Leave Study</button>
+        </footer>
+      </dialog>
+  </body>
+</html>

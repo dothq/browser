@@ -1,0 +1,105 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+.popup-notification-header-container,
+.popup-notification-footer-container {
+  display: flex;
+  max-width: calc(2 * var(--arrowpanel-padding) + 32px + 4px + 25em);
+}
+
+.popup-notification-body-container {
+  padding: var(--arrowpanel-padding);
+}
+
+.popup-notification-icon {
+  width: 32px;
+  height: 32px;
+  margin-inline-end: var(--arrowpanel-padding);
+}
+
+.popup-notification-body {
+  width: 25em;
+}
+
+.popup-notification-closebutton {
+  margin-inline-end: -8px;
+  margin-top: -8px;
+}
+
+.popup-notification-origin:not([value]),
+.popup-notification-learnmore-link:not([href]) {
+  display: none;
+}
+
+.popup-notification-origin {
+  margin-bottom: .3em !important;
+}
+
+.popup-notification-hint-text {
+  opacity: 0.6;
+  margin-top: .5em !important;
+}
+
+.popup-notification-learnmore-link {
+  margin-top: .5em !important;
+}
+
+.popup-notification-button-container {
+  display: flex;
+}
+
+.popup-notification-button-container > toolbarseparator {
+  appearance: none;
+  border: 0;
+  border-left: 1px solid var(--panel-separator-color);
+  margin: 7px 0 7px;
+  min-width: 0;
+}
+
+.popup-notification-button-container:hover > toolbarseparator {
+  margin: 0;
+}
+
+.popup-notification-button {
+  flex: 1;
+}
+
+.popup-notification-primary-button {
+  flex: 0 50%;
+}
+
+.popup-notification-secondary-button[hidden="true"] ~ .popup-notification-primary-button {
+  flex: 1;
+}
+
+.popup-notification-dropmarker {
+  flex: none;
+  padding: 0 15px !important;
+}
+
+.popup-notification-dropmarker > .button-box > hbox {
+  display: none;
+}
+
+.popup-notification-dropmarker > .button-box > .button-menu-dropmarker {
+  /* This is to override the linux !important */
+  appearance: none !important;
+  display: -moz-box;
+  padding: 0;
+  margin: 0;
+}
+
+.popup-notification-dropmarker > .button-box > .button-menu-dropmarker::part(icon) {
+  width: 16px;
+  height: 16px;
+  list-style-image: url(chrome://global/skin/icons/arrow-dropdown-16.svg);
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+.popup-notification-warning {
+  color: #d74345;
+}
