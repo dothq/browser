@@ -1,3 +1,0 @@
-OBSOLETE
-
-tests have been changed to use a local ocsp server (using httpserv)

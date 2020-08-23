@@ -1,3 +1,0 @@
-These are the NIST CAVS vectors for those algorithms we support in libreswan
-
-note: sha2-224 test vectors were removed because IKE/IPsec does not define those

@@ -1,9 +1,0 @@
-include protocol PmultiManager1;
-include protocol PmultiManager2;
-
-protocol PmultiManaged {
-    manager PmultiManager1 or PmultiManager2;
-
-child:
-    async __delete__();
-};

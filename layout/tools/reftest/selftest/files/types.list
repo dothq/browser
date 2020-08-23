@@ -1,5 +1,0 @@
-== green.html green.html
-!= green.html red.html
-load green.html
-script scripttest-pass.html
-print green.html green.html

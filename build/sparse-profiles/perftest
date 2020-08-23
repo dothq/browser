@@ -1,7 +1,0 @@
-%include build/sparse-profiles/docker-image
-
-[include]
-path:tools/lint/eslint/
-path:testing/performance
-path:testing/condprofile
-glob:**/perftest_*.js

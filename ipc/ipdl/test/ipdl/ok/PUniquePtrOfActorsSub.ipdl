@@ -1,7 +1,0 @@
-include protocol PUniquePtrOfActors;
-
-protocol PUniquePtrOfActorsSub {
-    manager PUniquePtrOfActors;
-
-child: async __delete__();
-};

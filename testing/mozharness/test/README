@@ -1,2 +1,0 @@
-test/           : non-network-dependent unit tests
-test/networked/ : network-dependent unit tests.

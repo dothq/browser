@@ -1,3 +1,0 @@
-# We only use constants from KeyEvent
-[android.view.KeyEvent = skip:true]
-<field> = skip:false

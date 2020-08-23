@@ -1,7 +1,0 @@
-{
-   <oom_instead_of_bump_pointer_overflow has an expected malloc fishy value>
-   Memcheck:FishyValue
-   malloc(size)
-   fun:malloc
-   obj:/**/target/*/deps/tests-*
-}

@@ -1,5 +1,0 @@
---testingtesting
-Content-Type: text/html
-
-<script>opener.finishTest();</script>
---testingtesting--

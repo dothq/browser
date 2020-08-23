@@ -1,3 +1,0 @@
-/* malware.example.com is in the malware database. */
-@import url("http://malware.example.com/tests/toolkit/components/url-classifier/tests/mochitest/bad.css");
-#styleImport { visibility: hidden; }

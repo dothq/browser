@@ -1,3 +1,0 @@
-(function() {
-  dump("ERROR\n");
-})();

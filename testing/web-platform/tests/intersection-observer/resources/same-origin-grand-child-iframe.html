@@ -1,8 +1,0 @@
-<!DOCTYPE html>
-<div id="target"></div>
-<script>
-const observer = new IntersectionObserver(records => {
-  window.top.postMessage(records[0].rootBounds, "*");
-}, {});
-observer.observe(target);
-</script>

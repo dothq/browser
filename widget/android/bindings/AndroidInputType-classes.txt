@@ -1,3 +1,0 @@
-# We only use constants from InputType
-[android.text.InputType = skip:true]
-<field> = skip:false

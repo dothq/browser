@@ -1,5 +1,0 @@
-protocol Pactorparam {
-
-child: async Msg(Pactorparam p);
-
-};

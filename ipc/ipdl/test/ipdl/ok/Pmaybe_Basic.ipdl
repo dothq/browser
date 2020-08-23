@@ -1,4 +1,0 @@
-protocol Pmaybe_Basic {
-child:
-    async Msg(int? maybe);
-};

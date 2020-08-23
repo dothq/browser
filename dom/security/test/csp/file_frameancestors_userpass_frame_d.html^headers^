@@ -1,1 +1,0 @@
-Content-Security-Policy: default-src 'none'; frame-ancestors http://sampleuser:samplepass@example.com/ ; script-src 'self';

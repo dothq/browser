@@ -1,8 +1,0 @@
-include protocol PmultiManaged;
-
-protocol PmultiManager2 {
-    manages PmultiManaged;
-
-child:
-    async PmultiManaged();
-};

@@ -1,5 +1,0 @@
-failed to find label named `$s`
-     --> tests/parse-fail/bad-index.wat:1:18
-      |
-    1 | (func br_on_null $s)
-      |                  ^

@@ -1,7 +1,0 @@
-{
-  "addons": {
-    "test_no_update_webext@tests.mozilla.org": {
-      "updates": []
-    }
-  }
-}
