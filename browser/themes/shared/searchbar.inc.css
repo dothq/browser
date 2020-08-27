@@ -1,0 +1,220 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+.searchbar-engine-image {
+  width: 16px;
+  height: 16px;
+  list-style-image: url("chrome://mozapps/skin/places/defaultFavicon.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+}
+
+.search-one-offs {
+  -moz-box-orient: vertical;
+  border-top: 1px solid var(--panel-separator-color);
+  width: 100%;
+}
+
+.search-panel-header {
+  font-weight: normal;
+  margin: 0;
+  padding: 3px;
+}
+
+.search-panel-header > label {
+  margin-top: 2px;
+  margin-bottom: 1px;
+  opacity: .6;
+}
+
+/**
+ * The borders of the various elements are specified as follows.
+ *
+ * The current engine always has a bottom border.
+ * The search results never have a border.
+ *
+ * When the search results are not collapsed:
+ * - The elements underneath the search results all have a top border.
+ *
+ * When the search results are collapsed:
+ * - The elements underneath the search results all have a bottom border, except
+ *   the lowest one: search-setting-button.
+ */
+
+.search-panel-current-engine {
+  -moz-box-align: center;
+  border-top: none !important;
+  border-bottom: 1px solid var(--panel-separator-color);
+  padding-inline-start: 6px;
+}
+
+.search-panel-tree[collapsed=true] + .search-one-offs {
+  border-top: none;
+}
+
+.search-panel-one-offs:not([hidden]),
+.search-panel-one-offs-container {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.search-panel-one-offs {
+  margin: 0 !important;
+  /* Bug 1108841: prevent font-size from affecting the layout */
+  line-height: 0;
+  flex-wrap: wrap;
+  /* Show at least 3 buttons */
+  min-width: calc(48px * 3);
+}
+
+.searchbar-engine-one-off-item {
+  appearance: none;
+  display: inline-block;
+  min-width: 48px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.searchbar-engine-one-off-item:not([selected]):hover,
+.addengine-item:hover {
+  background-color: var(--arrowpanel-dimmed-further);
+  color: inherit;
+}
+
+.searchbar-engine-one-off-item[selected] {
+  background-color: var(--autocomplete-popup-highlight-background);
+  color: var(--autocomplete-popup-highlight-color);
+}
+
+.searchbar-engine-one-off-item > .button-box {
+  padding: 0;
+}
+
+.searchbar-engine-one-off-item > .button-box > .button-text {
+  display: none;
+}
+
+.searchbar-engine-one-off-item > .button-box > .button-icon {
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.addengine-item {
+  appearance: none;
+  color: inherit;
+  height: 32px;
+  margin: 0;
+  padding: 0 10px;
+}
+
+.addengine-item:first-of-type {
+  border-top: 1px solid var(--panel-separator-color);
+}
+
+.addengine-item[selected] {
+  background-color: var(--autocomplete-popup-highlight-background);
+  color: var(--autocomplete-popup-highlight-color);
+}
+
+.addengine-item[type=menu][selected] {
+  color: inherit;
+  background-color: var(--arrowpanel-dimmed-further);
+}
+
+.addengine-item > .toolbarbutton-badge-stack > .toolbarbutton-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.addengine-item > .toolbarbutton-badge-stack > .toolbarbutton-badge {
+  display: -moz-box;
+  background: url(chrome://browser/skin/search-indicator-badge-add.svg) no-repeat center;
+  box-shadow: none;
+  /* "!important" is necessary to override the rule in toolbarbutton.css */
+  margin: -4px 0 0 !important;
+  margin-inline-end: -4px !important;
+  width: 11px;
+  height: 11px;
+  min-width: 11px;
+  min-height: 11px;
+}
+
+.addengine-item > .toolbarbutton-text {
+  text-align: start;
+  padding-inline-start: 10px;
+}
+
+.addengine-item:not([image]) {
+  list-style-image: url("chrome://browser/skin/search-engine-placeholder.png");
+}
+
+@media (min-resolution: 1.1dppx) {
+  .addengine-item:not([image]) {
+    list-style-image: url("chrome://browser/skin/search-engine-placeholder@2x.png");
+  }
+}
+
+.addengine-item[type=menu] > .toolbarbutton-menu-dropmarker {
+  display: -moz-box;
+  appearance: auto !important;
+  -moz-default-appearance: menuarrow !important;
+  list-style-image: none;
+}
+
+.search-panel-tree {
+  background: transparent;
+  color: inherit;
+}
+
+.search-panel-tree > .autocomplete-richlistitem {
+  padding: 1px;
+}
+
+.search-panel-tree > .autocomplete-richlistitem > .ac-type-icon {
+  display: -moz-box;
+  width: 14px;
+  height: 14px;
+}
+
+.search-panel-tree > .autocomplete-richlistitem[originaltype="fromhistory"] > .ac-type-icon {
+  list-style-image: url("chrome://browser/skin/history.svg");
+  -moz-context-properties: fill;
+  fill: currentColor;
+  fill-opacity: 0.6;
+}
+
+.search-panel-tree > .autocomplete-richlistitem[originaltype="fromhistory"][selected] > .ac-type-icon {
+  fill-opacity: 1;
+}
+
+.search-setting-button {
+  appearance: none;
+  margin: 0;
+  min-height: 32px;
+  border-top: 1px solid var(--panel-separator-color);
+  background-color: var(--arrowpanel-dimmed);
+  color: inherit !important; /* Overriding toolbarbutton.css on Linux. */
+}
+
+.search-setting-button-compact {
+  max-height: 32px;
+  align-self: end;
+}
+
+.search-setting-button:hover,
+.search-setting-button[selected] {
+  background-color: var(--arrowpanel-dimmed-further);
+}
+
+.search-setting-button-compact > .button-box > .button-icon {
+  list-style-image: url("chrome://global/skin/icons/settings.svg");
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: .6;
+}

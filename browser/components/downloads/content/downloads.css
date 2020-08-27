@@ -1,0 +1,174 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*** Downloads Panel ***/
+
+#downloadsListBox > richlistitem:not([selected]) button {
+  /* Only focus buttons in the selected item. */
+  -moz-user-focus: none;
+}
+
+#downloadsSummary:not([inprogress]) > vbox > #downloadsSummaryProgress,
+#downloadsSummary:not([inprogress]) > vbox > #downloadsSummaryDetails,
+#downloadsFooter:not([showingsummary]) #downloadsSummary {
+  display: none;
+}
+
+#downloadsFooter[showingsummary] > stack:hover > #downloadsSummary,
+#downloadsFooter[showingsummary] > stack:not(:hover) > #downloadsFooterButtons {
+  /* If we used "visibility: hidden;" then the mouseenter event of
+     #downloadsHistory wouldn't be triggered immediately, and the hover styling
+     of the button would not apply until the mouse is moved again.
+
+     "-moz-user-focus: ignore;" prevents the elements with "opacity: 0;" from
+     being focused with the keyboard. */
+  opacity: 0;
+  -moz-user-focus: ignore;
+}
+
+/*** Downloads View ***/
+
+#downloadsRichListBox > richlistitem button {
+  /* These buttons should never get focus, as that would "disable"
+     the downloads view controller (it's only used when the richlistbox
+     is focused). */
+  -moz-user-focus: none;
+}
+
+/*** Visibility of controls inside download items ***/
+
+.download-state[buttonhidden] > toolbarseparator,
+.download-state[buttonhidden] > .downloadButton {
+  display: none;
+}
+
+.download-state:not(:-moz-any([state="6"], /* Blocked (parental) */
+                              [state="8"], /* Blocked (dirty)    */
+                              [state="9"]) /* Blocked (policy)   */)
+                                           .downloadBlockedBadge,
+
+.download-state:not(:-moz-any([state="-1"],/* Starting (initial) */
+                              [state="5"], /* Starting (queued)  */
+                              [state="0"], /* Downloading        */
+                              [state="4"], /* Paused             */
+                              [state="7"]) /* Scanning           */)
+                                           .downloadProgress,
+
+.download-state:not(          [state="0"]  /* Downloading        */)
+                                           .downloadPauseMenuItem,
+
+.download-state:not(          [state="4"]  /* Paused             */)
+                                           .downloadResumeMenuItem,
+
+/* Blocked (dirty) downloads that have not been confirmed and
+   have temporary data. */
+.download-state:not(          [state="8"]  /* Blocked (dirty)    */)
+                                           .downloadUnblockMenuItem,
+.download-state[state="8"]:not(.temporary-block)
+                                           .downloadUnblockMenuItem,
+
+.download-state:not(:-moz-any([state="1"], /* Finished           */
+                              [state="2"], /* Failed             */
+                              [state="3"], /* Canceled           */
+                              [state="6"], /* Blocked (parental) */
+                              [state="8"], /* Blocked (dirty)    */
+                              [state="9"]) /* Blocked (policy)   */)
+                                           .downloadRemoveFromHistoryMenuItem,
+
+.download-state:not(:-moz-any([state="-1"],/* Starting (initial) */
+                              [state="0"], /* Downloading        */
+                              [state="1"], /* Finished           */
+                              [state="4"], /* Paused             */
+                              [state="5"]) /* Starting (queued)  */)
+                                           .downloadShowMenuItem,
+.download-state[state="1"]:not([exists])
+                                           .downloadShowMenuItem,
+
+.download-state:not(:-moz-any([state="-1"],/* Starting (initial) */
+                              [state="0"], /* Downloading        */
+                              [state="1"], /* Finished           */
+                              [state="4"], /* Paused             */
+                              [state="5"], /* Starting (queued)  */
+                              [state="8"]) /* Blocked (dirty)    */)
+                                           .downloadCommandsSeparator,
+.download-state[state="1"]:not([exists])
+                                           .downloadCommandsSeparator,
+.download-state[state="8"]:not(.temporary-block)
+                                           .downloadCommandsSeparator,
+
+/* the system-viewer context menu items are only shown for certain mime-types
+   and can be individually enabled via prefs */
+.download-state:not([is-pdf])              .downloadUseSystemDefaultMenuItem,
+.download-state                            .downloadUseSystemDefaultMenuItem:not([enabled]),
+.download-state                            .downloadAlwaysUseSystemDefaultMenuItem:not([enabled]),
+.download-state:not([is-pdf])              .downloadAlwaysUseSystemDefaultMenuItem
+{
+  display: none;
+}
+
+/*** Visibility of download button labels ***/
+
+.download-state:not(:-moz-any([state="-1"],/* Starting (initial) */
+                              [state="5"], /* Starting (queued)  */
+                              [state="0"], /* Downloading        */
+                              [state="4"]) /* Paused             */)
+                                           .downloadCancel,
+
+.download-state:not(:-moz-any([state="2"], /* Failed             */
+                              [state="3"]) /* Canceled           */)
+                                           .downloadRetry,
+
+.download-state:not(          [state="1"]  /* Finished           */)
+                                           .downloadShow
+{
+  display: none;
+}
+
+/*** Downloads panel ***/
+
+#downloadsPanel[hasdownloads] #emptyDownloads,
+#downloadsPanel:not([hasdownloads]) #downloadsListBox {
+  display: none;
+}
+
+/*** Downloads panel multiview (main view and blocked-downloads subview) ***/
+
+/* Make the panel wide enough to show the download list items without improperly
+   truncating them. */
+#downloadsPanel-multiView > .panel-viewcontainer,
+#downloadsPanel-multiView > .panel-viewcontainer > .panel-viewstack {
+  max-width: unset;
+}
+
+/* DownloadsSubview styles: */
+
+/* Hide all status labels by default and selectively display one at a time,
+   depending on the state of the Download. */
+.subviewbutton.download > .toolbarbutton-text > .status-text,
+/* When a Download is not hovered at all, hide the secondary action button. */
+.subviewbutton.download:not(:hover) > .action-button,
+/* Always hide the label of the secondary action button. */
+.subviewbutton.download > .action-button > .toolbarbutton-text {
+  display: none;
+}
+
+/* When a Download is _not_ hovered, display the full status message. */
+.subviewbutton.download:not(:hover) > .toolbarbutton-text > .status-full,
+/* When a Download is hovered when the file doesn't exist and cannot be retried,
+   keep showing the full status message. */
+.subviewbutton.download:hover:-moz-any(:not([canShow]),:not([exists])):not([canRetry]) > .toolbarbutton-text > .status-full,
+/* When a Download is hovered and the it can be retried, but the action button
+   is _not_ hovered, keep showing the full status message. */
+.subviewbutton.download:hover[canRetry]:not(.downloadHoveringButton) > .toolbarbutton-text > .status-full,
+/* When a Download is hovered and the file can be opened, but the action button
+   is _not_ hovered, show the 'Open File' status label. */
+.subviewbutton.download:hover[canShow][exists]:not(.downloadHoveringButton) > .toolbarbutton-text > .status-open,
+/* When a Download is hovered - its action button explicitly - and it can be
+   retried, show the 'Retry Download' label. */
+.subviewbutton.download:hover[canRetry].downloadHoveringButton > .toolbarbutton-text > .status-retry,
+/* When a Download is hovered - its action button explicitly - and the file can
+   be shown in the OS's shell, show the 'Open Containing Folder' label. */
+.subviewbutton.download:hover[canShow][exists].downloadHoveringButton > .toolbarbutton-text > .status-show {
+  display: inline;
+}

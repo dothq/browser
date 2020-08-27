@@ -1,0 +1,254 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import url("chrome://global/skin/in-content/info-pages.css");
+
+html.private {
+  --in-content-page-color: white;
+  --in-content-text-color: white;
+  --in-content-page-background: #25003e;
+  --in-content-link-color-hover: white;
+  --in-content-link-color-active: white;
+  --in-content-banner-background: #f9f9fe;
+  --in-content-banner-text-color: #0c0c0d;
+  --in-content-button-background-hover: rgba(12,12,13,.1);
+  --in-content-button-background-active: rgba(12,12,13,.15);
+}
+
+/**
+ * When the showBanner class is applied, the banner is displayed at the top
+ * of the page, and we need to adjust the padding, so that the banner is
+ * spread across the full page width.
+ */
+body.showBanner {
+  padding: 0 0 40px;
+  min-height: 0;
+}
+
+.showBanner > .showPrivate {
+  padding: 40px 48px 0;
+}
+
+a:link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+a:link:hover {
+  color: inherit;
+}
+
+.container {
+  max-width: 768px;
+}
+
+p {
+  line-height: 1.5em;
+}
+
+.logo-and-wordmark {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.logo {
+  background: url("chrome://branding/content/about-logo.png") no-repeat center center;
+  background-size: 96px;
+  display: inline-block;
+  height: 96px;
+  width: 96px;
+}
+
+@media (min-resolution: 2x) {
+  .logo {
+    background-image: url('chrome://branding/content/about-logo@2x.png');
+  }
+}
+
+.wordmark {
+  background: url("chrome://branding/content/firefox-wordmark.svg") no-repeat center center;
+  background-size: 172px;
+  -moz-context-properties: fill;
+  display: inline-block;
+  fill: #fff;
+  height: 96px;
+  margin-inline-start: 15px;
+  width: 172px;
+}
+
+.search-inner-wrapper {
+  display: flex;
+  height: 48px;
+  margin-bottom: 64px;
+  padding: 0 22px;
+}
+
+.search-handoff-button,
+.search-handoff-button:active,
+.search-handoff-button:enabled:hover:active {
+  background: #fff var(--newtab-search-icon) 12px center no-repeat;
+  background-size: 24px;
+  border: solid 1px rgba(249, 249, 250, 0.2);
+  border-radius: 3px;
+  box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.15);
+  cursor: text;
+  font-size: 15px;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: 46px 48px;
+  position: relative;
+  opacity: 1;
+  transition: opacity 500ms;
+  width: 100%;
+}
+
+.search-handoff-button.focused {
+  border: solid 1px #0060df;
+  box-shadow: 0 0 0 1px #0060df, 0 0 0 4px rgba(0, 96, 223, 0.3);
+}
+
+.search-handoff-button.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.search-handoff-button:dir(rtl),
+.search-handoff-button:active:dir(rtl),
+.search-handoff-button:enabled:hover:active:dir(rtl) {
+  background-position-x: right 12px;
+}
+
+.search-inner-wrapper .search-handoff-button:hover {
+  background-color: #fff;
+}
+
+.search-handoff-button.focused .fake-caret {
+  display: block;
+}
+
+.fake-editable:focus {
+  outline: none;
+  caret-color: transparent;
+}
+
+.fake-editable {
+  border: 0;
+  height: 100%;
+  top: 0;
+  inset-inline-start: 0;
+  opacity: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.fake-textbox {
+  color: rgb(12, 12, 13);
+  opacity: 0.54;
+  text-align: start;
+}
+
+@keyframes caret-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+.fake-caret {
+  animation: caret-animation 1.3s steps(5, start) infinite;
+  background: rgb(12, 12, 13);
+  display: none;
+  inset-inline-start: 47px;
+  height: 17px;
+  position: absolute;
+  top: 16px;
+  width: 1px;
+}
+
+.search-banner {
+  width: 100%;
+  background-color: var(--in-content-banner-background);
+  color: var(--in-content-banner-text-color);
+}
+
+.banner-body {
+  margin: auto;
+  width: max-content;
+  background-image: url("chrome://browser/skin/preferences/general.svg");
+  background-position: left 0 top 50px;
+  background-repeat: no-repeat;
+  background-size: 32px;
+  letter-spacing: -.2px;
+  padding: 50px 0;
+  padding-inline-start: 44px;
+}
+
+.banner-body:dir(rtl) {
+  background-position-x: right;
+}
+
+.banner-body h1 {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--in-content-banner-text-color);
+  line-height: 1em;
+  margin: 7px 0;
+}
+
+.banner-body p {
+  font-size: 15px;
+  line-height: 1em;
+  margin: 4px 0;
+}
+
+.info {
+  background-color: rgba(0, 0, 0, 0.2);
+  background-image: url("chrome://browser/skin/privatebrowsing/private-browsing.svg");
+  background-position: left 32px top 20px;
+  background-repeat: no-repeat;
+  background-size: 32px;
+  border-radius: 6px;
+  letter-spacing: -0.2px;
+  padding: 20px;
+  padding-inline-start: 76px;
+}
+
+.info:dir(rtl) {
+  background-position-x: right 32px;
+}
+
+.info h1 {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.info p {
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.search-banner-close-button {
+  float: inline-end;
+  /* min-width and min-height override values set on button elements. */
+  min-width: 28px;
+  min-height: 28px;
+  /* Forcing height and line-height ensure the button hover is displayed correctly
+     as a square box (and focus box). No text gets displayed here so that's ok. */
+  height: 28px;
+  line-height: 0;
+  margin: 16px;
+  padding: 0;
+  background-color: inherit;
+  border: 0;
+}
+
+.search-banner-close-image {
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: 0;
+  width: 28px;
+}

@@ -1,0 +1,45 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+with Files("**"):
+    BUG_COMPONENT = ("Firefox", "Address Bar")
+
+EXTRA_JS_MODULES += [
+    'UrlbarController.jsm',
+    'UrlbarEventBufferer.jsm',
+    'UrlbarInput.jsm',
+    'UrlbarMuxerUnifiedComplete.jsm',
+    'UrlbarPrefs.jsm',
+    'UrlbarProviderAutofill.jsm',
+    'UrlbarProviderExtension.jsm',
+    'UrlbarProviderHeuristicFallback.jsm',
+    'UrlbarProviderInterventions.jsm',
+    'UrlbarProviderOmnibox.jsm',
+    'UrlbarProviderOpenTabs.jsm',
+    'UrlbarProviderPrivateSearch.jsm',
+    'UrlbarProviderSearchSuggestions.jsm',
+    'UrlbarProviderSearchTips.jsm',
+    'UrlbarProvidersManager.jsm',
+    'UrlbarProviderTokenAliasEngines.jsm',
+    'UrlbarProviderTopSites.jsm',
+    'UrlbarProviderUnifiedComplete.jsm',
+    'UrlbarResult.jsm',
+    'UrlbarSearchUtils.jsm',
+    'UrlbarTokenizer.jsm',
+    'UrlbarUtils.jsm',
+    'UrlbarValueFormatter.jsm',
+    'UrlbarView.jsm',
+]
+
+TESTING_JS_MODULES += [
+    'tests/UrlbarTestUtils.jsm',
+]
+BROWSER_CHROME_MANIFESTS += [
+    'tests/browser-tips/browser.ini',
+    'tests/browser/browser.ini',
+    'tests/ext/browser/browser.ini',
+]
+XPCSHELL_TESTS_MANIFESTS += ['tests/unit/xpcshell.ini']
+
+SPHINX_TREES['/browser/urlbar'] = 'docs'
