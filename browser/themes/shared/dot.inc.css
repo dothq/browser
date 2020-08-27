@@ -1,0 +1,43 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+:root {
+    --tabs-border-color: transparent !important;
+}
+
+#urlbar-container {
+    --urlbar-height: 32px !important;
+}
+
+.tabbrowser-tab .tab-stack .tab-background {
+    border-radius: 6px 6px 0 0;
+}
+
+.tabbrowser-tab .tab-stack .tab-background .tab-line {
+    height: 0px !important;
+}
+
+.tabbrowser-tab .tab-stack {
+    margin-top: 3px;
+}
+
+.tab-background[multiselected="true"], .tab-background[selected="true"] {
+    border: 0px solid transparent;
+}
+
+.tabbrowser-tab::after {
+    display: none !important;
+}
+
+.titlebar-spacer[type="pre-tabs"] {
+    border-inline-color: transparent !important;
+}
+
+#nav-bar {
+    box-shadow: none !important;
+}
+
+#tabs-newtab-button {
+    margin-top: 3px !important;
+}

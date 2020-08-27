@@ -5,6 +5,8 @@
 %include downloads/indicator.inc.css
 %include addons/extension-controlled.inc.css
 
+%include dot.inc.css
+
 %filter substitution
 %define identityBoxPaddingInline 6px
 %define identityBoxMarginInlineEnd 2px
