@@ -144,25 +144,6 @@ menupopup::part(drop-indicator) {
   list-style-image: url("chrome://browser/skin/forward.svg") !important;
 }
 
-/* Find bar */
-
-.browserContainer > findbar {
-  background-color: var(--toolbar-non-lwt-bgcolor);
-  color: var(--toolbar-non-lwt-textcolor);
-  text-shadow: none;
-}
-
-:root:not([lwtheme-image]) .browserContainer > findbar:-moz-lwtheme {
-  background-color: var(--lwt-accent-color);
-  background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor));
-  border-top-color: var(--chrome-content-separator-color);
-  color: var(--toolbar-color);
-}
-
-:root:not([lwtheme-image]) .browserContainer > findbar:-moz-lwtheme:-moz-window-inactive {
-  background-color: var(--lwt-accent-color-inactive, var(--lwt-accent-color));
-}
-
 /* Private browsing and accessibility indicators */
 
 .accessibility-indicator,
@@ -183,7 +164,7 @@ menupopup::part(drop-indicator) {
   background-image: url("chrome://browser/skin/accessibility.svg");
   -moz-user-focus: normal;
   /* Clear default button styling */
-  appearance: none;
+  -moz-appearance: none;
   margin-block: unset;
   min-width: unset;
   color: unset;
@@ -634,28 +615,6 @@ menupopup::part(drop-indicator) {
   margin-bottom: 4px; /* matches the margin-bottom on description elements */
 }
 
-/* Password Manager Doorhanger */
-
-.ac-dropmarker {
-  appearance: none;
-  justify-self: end;
-  margin-inline-end: 8px;
-  align-self: center;
-}
-
-.ac-dropmarker::part(icon) {
-  list-style-image: url(chrome://global/skin/icons/arrow-dropdown-12.svg);
-  -moz-context-properties: fill;
-  fill: -moz-DialogText;
-}
-
-.ac-has-end-icon {
-  /* icon width + icon end margin */
-  padding-inline-end: calc(12px + 8px);
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
 /* ENABLE DEVTOOLS POPUP */
 
 #enable-devtools-popup {
@@ -674,7 +633,7 @@ menupopup::part(drop-indicator) {
 }
 
 #sharing-warning-proceed-to-tab {
-  appearance: none;
+  -moz-appearance: none;
   border-style: none;
   margin: 0;
   background-color: rgb(0,96,223);

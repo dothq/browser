@@ -22,7 +22,7 @@
 % We don't let the splitter overlap the sidebar on Linux since the sidebar's
 % scrollbar is too narrow on Linux.
 .sidebar-splitter {
-  appearance: none;
+  -moz-appearance: none;
   border: 0 solid;
   border-inline-end-width: 1px;
   border-color: var(--sidebar-border-color);
@@ -70,7 +70,7 @@
 }
 
 #sidebar-switcher-target {
-  appearance: none;
+  -moz-appearance: none;
   color: inherit;
   margin-inline-end: 4px;
   border-radius: var(--toolbarbutton-border-radius);

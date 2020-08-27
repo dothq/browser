@@ -42,22 +42,21 @@
 }
 
 #navigator-toolbox {
-  appearance: none;
+  -moz-appearance: none;
   --tabs-border-color: rgba(0,0,0,.3);
 }
 
 /*
   This is a workaround for Bug 1482157
-  -moz-default-appearance: toolbox; makes the macOS sheets attached to the
-  element's bottom border. We cannot put this property on the toolbox itself as
-  it cancels all backgrounds that are there, so we set it on the toolbox bottom
+  -moz-appearance: toolbox; makes the macOS sheets attached to the element's
+  bottom border. We cannot put this property on the toolbox itself as it
+  cancels all backgrounds that are there, so we set it on the toolbox bottom
   border.
 */
 #navigator-toolbox::after {
   content: "";
   display: -moz-box;
-  appearance: auto;
-  -moz-default-appearance: toolbox;
+  -moz-appearance: toolbox;
   height: 1px;
   margin-top: -1px;
   opacity: 0.001;
@@ -117,13 +116,13 @@
 }
 
 .browser-toolbar:not(.titlebar-color) {
-  appearance: none;
+  -moz-appearance: none;
   background: var(--toolbar-bgcolor);
   color: var(--toolbar-color);
 }
 
 /* Draw the bottom border of the tabs toolbar when it's not using
-   -moz-default-appearance: toolbar. */
+   -moz-appearance: toolbar. */
 :root:-moz-any([sizemode="fullscreen"],[customizing]) #nav-bar:not([tabs-hidden="true"]),
 :root:not([tabsintitlebar]) #nav-bar:not([tabs-hidden="true"]),
 #nav-bar:not([tabs-hidden="true"]):-moz-lwtheme {
@@ -242,7 +241,7 @@
   font-size: 1.25em;
 }
 
-@supports -moz-bool-pref("browser.urlbar.experimental.expandTextOnFocus") {
+@supports -moz-bool-pref("browser.urlbar.update2.expandTextOnFocus") {
   #urlbar[breakout-extend] {
     font-size: 1.36em;
   }
@@ -302,7 +301,7 @@
 
 #editBookmarkPanelRows > vbox > html|input,
 #editBookmarkPanelRows > vbox > hbox > html|input {
-  appearance: none;
+  -moz-appearance: none;
   background-color: var(--arrowpanel-field-background);
   color: inherit;
   border-radius: 2px;
@@ -333,7 +332,7 @@
 }
 
 #editBMPanel_newFolderButton {
-  appearance: none;
+  -moz-appearance: none;
   -moz-box-flex: 1;
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
@@ -376,7 +375,7 @@
 }
 
 #editBMPanel_folderMenuList::part(dropmarker) {
-  appearance: none;
+  -moz-appearance: none;
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
   fill-opacity: 0.8;
@@ -391,7 +390,7 @@
 
 #editBMPanel_folderTree,
 #editBMPanel_tagsSelector {
-  appearance: none;
+  -moz-appearance: none;
   background-color: var(--arrowpanel-field-background);
   color: inherit;
   border-radius: 2px;
@@ -431,7 +430,7 @@
 
 #editBookmarkPanel .expander-up,
 #editBookmarkPanel .expander-down {
-  appearance: none; /* override button.css */
+  -moz-appearance: none; /* override button.css */
   -moz-context-properties: fill, fill-opacity;
   fill: currentColor;
   fill-opacity: 0.8;
@@ -473,24 +472,29 @@
   --sidebar-background-color: -moz-mac-source-list;
 }
 
-/* Give the sidebar a vibrant appearance. Only do this when no lwtheme is
- * in use, because vibrant appearance values only work if there is no
+/* Give the sidebar a vibrant -moz-appearance. Only do this when no lwtheme is
+ * in use, because vibrant -moz-appearance values only work if there is no
  * background-color rendered behind the element, and we have :root:-moz-lwtheme
- * rules which set appearance: none and an opaque background color on the
+ * rules which set -moz-appearance: none and an opaque background color on the
  * root element. That background color would interfere with the vibrancy.
  * See bug 1594132 for fixing this. */
 #sidebar-box:not(:-moz-lwtheme) {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-source-list;
+  -moz-appearance: -moz-mac-source-list;
   -moz-font-smoothing-background-color: -moz-mac-source-list;
 }
 
 /* ----- CONTENT ----- */
 
 .browserContainer > findbar {
-  /* Use the default background gradient from findBar.css */
-  background-color: transparent;
   color: -moz-DialogText;
+  text-shadow: none;
+}
+
+:root:not([lwtheme-image]) .browserContainer > findbar:-moz-lwtheme {
+  background-color: var(--lwt-accent-color);
+  background-image: linear-gradient(var(--toolbar-bgcolor), var(--toolbar-bgcolor));
+  border-top-color: var(--chrome-content-separator-color);
+  color: var(--toolbar-color);
 }
 
 .openintabs-menuitem {
@@ -556,8 +560,7 @@
 }
 
 :root:-moz-any([inFullscreen], [tabsintitlebar]) #TabsToolbar:not(:-moz-lwtheme) {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-vibrant-titlebar-dark;
+  -moz-appearance: -moz-mac-vibrant-titlebar-dark;
   -moz-font-smoothing-background-color: -moz-mac-vibrant-titlebar-dark;
   background-color: #232323;
   color: hsl(240, 9%, 98%);

@@ -33,13 +33,11 @@
 }
 
 .expander-up {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-disclosure-button-open;
+  -moz-appearance: -moz-mac-disclosure-button-open;
 }
 
 .expander-down {
-  appearance: auto;
-  -moz-default-appearance: -moz-mac-disclosure-button-closed;
+  -moz-appearance: -moz-mac-disclosure-button-closed;
 }
 
 #editBMPanel_folderTree {
@@ -56,8 +54,7 @@
 }
 
 #editBMPanel_tagsSelector > richlistitem > image {
-  appearance: auto;
-  -moz-default-appearance: checkbox;
+  -moz-appearance: checkbox;
   -moz-box-align: center;
   margin: 0 2px;
   min-width: 13px;

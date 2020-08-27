@@ -1,6 +1,4 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <path fill="context-fill" fill-opacity="context-fill-opacity" d="M15.707,7.293l-7-7a1,1,0,0,0-1.414,0l-7,7A1,1,0,0,0,1.707,8.707L2,8.414V14a2,2,0,0,0,2,2h8a2,2,0,0,0,2-2V8.414l.293.293a1,1,0,0,0,1.414-1.414ZM8,11.5a.5.5,0,1,1,.5.5A.5.5,0,0,1,8,11.5ZM12,13a1,1,0,0,1-1,1H10V9A1,1,0,0,0,9,8H7A1,1,0,0,0,6,9v5H5a1,1,0,0,1-1-1V6.414l4-4,4,4Z"/>
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path fill="context-fill" fill-opacity="context-fill-opacity" d="M5 8C5 7.44772 5.44772 7 6 7H10C10.5523 7 11 7.44772 11 8V14H9V9H7V14H5V8Z" />
+<path fill="context-fill" fill-opacity="context-fill-opacity" d="M3 6.56126V14H13V6.56127L8 2.56126L3 6.56126ZM1.3753 5.29977L7.37531 0.49977C7.74052 0.207596 8.25948 0.207596 8.6247 0.499771L14.6247 5.29977C14.8619 5.48954 15 5.77686 15 6.08064V15C15 15.5523 14.5523 16 14 16H2C1.44772 16 1 15.5523 1 15V6.08064C1 5.77686 1.13809 5.48954 1.3753 5.29977Z" />
 </svg>

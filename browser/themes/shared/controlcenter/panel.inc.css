@@ -62,7 +62,6 @@
 #identity-popup[connection=file] [when-connection~=file],
 #identity-popup[connection=extension] [when-connection~=extension],
 #identity-popup[connection=cert-error-page] [when-connection~=cert-error-page],
-#identity-popup[connection=https-only-error-page] [when-connection~=https-only-error-page],
 /* Show weak cipher messages when needed. */
 #identity-popup[ciphers=weak] [when-ciphers~=weak],
 /* Show mixed content warnings when needed */
@@ -189,7 +188,7 @@
   min-width: auto;
   width: 38px;
   border-style: none;
-  appearance: none;
+  -moz-appearance: none;
   background: url("chrome://global/skin/icons/arrow-left.svg") center no-repeat;
   background-size: 16px, auto;
   -moz-context-properties: fill, fill-opacity;
@@ -304,7 +303,7 @@
   border-radius: 0;
   outline: 3px solid transparent;
   -moz-outline-radius: var(--toolbarbutton-border-radius);
-  appearance: none;
+  -moz-appearance: none;
 }
 
 #protections-popup-info-button > image {
@@ -461,7 +460,7 @@ description#identity-popup-content-verifier,
 }
 
 #protections-popup-sendReportView-collection-url {
-  appearance: none;
+  -moz-appearance: none;
   border: none;
 }
 
@@ -480,7 +479,7 @@ description#identity-popup-content-verifier,
 
 .protections-popup-category {
   /* Overwrite toolbarbutton styles */
-  appearance: none;
+  -moz-appearance: none;
   margin: 0;
   padding-inline-start: 0;
 }
@@ -723,7 +722,7 @@ description#identity-popup-content-verifier,
 
 .tracking-protection-button {
   list-style-image: url(chrome://browser/skin/tracking-protection.svg);
-  appearance: none;
+  -moz-appearance: none;
   margin-block: 1em 0;
   margin-inline: 0 8px;
   display: none;
@@ -825,7 +824,7 @@ description#identity-popup-content-verifier,
 }
 
 .identity-popup-permission-remove-button {
-  appearance: none;
+  -moz-appearance: none;
   margin: 0;
   margin-inline-start: 2px;
   border-width: 0;
@@ -949,7 +948,7 @@ description#identity-popup-content-verifier,
 }
 
 .protections-popup-tp-switch {
-  appearance: none;
+  -moz-appearance: none;
   box-sizing: border-box;
   min-width: 26px;
   border-radius: 10px;
@@ -1004,7 +1003,7 @@ description#identity-popup-content-verifier,
 
 .protections-popup-footer-button {
   /* Overwrite toolbarbutton styles */
-  appearance: none;
+  -moz-appearance: none;
   min-height: 24px;
   padding-inline-start: var(--horizontal-padding);
   margin: 0;
@@ -1070,7 +1069,7 @@ description#identity-popup-content-verifier,
 }
 
 #protections-popup-milestones-content {
-  appearance: none;
+  -moz-appearance: none;
   padding: var(--vertical-section-padding) calc(var(--horizontal-padding) * 0.5);
   margin: 0;
 }

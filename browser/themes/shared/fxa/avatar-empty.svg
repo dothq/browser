@@ -1,9 +1,5 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="context-fill" fill-opacity="context-fill-opacity">
-  <path d="M12.05 9.58C11 8.36 9.52 10 8 10s-3-1.64-4-.42a1 1 0 0 0-.06 1.23 5 5 0 0 0 8.22 0 1 1 0 0 0-.11-1.23z"/>
-  <circle cx="8" cy="6" r="3"/>
-  <path d="M8 1a7 7 0 1 0 7 7 7 7 0 0 0-7-7zm0 13a6 6 0 1 1 6-6 6 6 0 0 1-6 6z"/>
+<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="9" cy="9" r="9" fill="#4965FF"/>
+<path d="M12.3332 12.75V11.9167C12.3332 11.4746 12.1576 11.0507 11.845 10.7382C11.5325 10.4256 11.1085 10.25 10.6665 10.25H7.33317C6.89114 10.25 6.46722 10.4256 6.15466 10.7382C5.8421 11.0507 5.6665 11.4746 5.6665 11.9167V12.75" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.99967 8.58333C9.92015 8.58333 10.6663 7.83714 10.6663 6.91667C10.6663 5.99619 9.92015 5.25 8.99967 5.25C8.0792 5.25 7.33301 5.99619 7.33301 6.91667C7.33301 7.83714 8.0792 8.58333 8.99967 8.58333Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
-

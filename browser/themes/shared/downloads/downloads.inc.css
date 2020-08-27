@@ -16,7 +16,7 @@
 #downloadsListBox {
   background: transparent;
   color: inherit;
-  appearance: none;
+  -moz-appearance: none;
   margin: 0;
 }
 
@@ -31,7 +31,7 @@
   border: 0;
   min-width: 0;
   border-inline-start: 1px solid var(--panel-separator-color);
-  appearance: none;
+  -moz-appearance: none;
 }
 
 .downloadsPanelFooterButton:hover {
@@ -159,7 +159,7 @@
 }
 
 .downloadButton {
-  appearance: none;
+  -moz-appearance: none;
   min-width: 58px;
   margin: 0;
   border: none;

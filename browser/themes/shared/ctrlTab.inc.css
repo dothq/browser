@@ -7,7 +7,7 @@
 /* Ctrl-Tab */
 
 #ctrlTab-panel {
-  appearance: none;
+  -moz-appearance: none;
 %ifdef XP_MACOSX
   -moz-window-shadow: none;
 %endif
@@ -20,19 +20,14 @@
 %endif
 }
 
-.ctrlTab-preview,
-#ctrlTab-showAll {
-  appearance: none;
+.ctrlTab-preview {
+  -moz-appearance: none;
   /* !important overrides the :hover color from button.css on Linux */
   color: inherit !important;
   /* remove the :-moz-focusring outline from button.css on Windows */
   outline: none !important;
   margin: 0;
   text-shadow: 0 0 1px hsl(0,0%,12%), 0 0 2px hsl(0,0%,12%);
-}
-
-.ctrlTab-preview > .button-box {
-  display: none;
 }
 
 .ctrlTab-canvas > html|img,
@@ -65,24 +60,21 @@
   margin-bottom: 8px;
 }
 
-.ctrlTab-preview-inner,
-#ctrlTab-showAll {
+.ctrlTab-preview-inner {
   padding: 8px;
   border: 2px solid transparent;
   border-radius: .5em;
 }
 
-.ctrlTab-preview-inner {
-  margin-top: -10px;
+.ctrlTab-preview:not(#ctrlTab-showAll) > .ctrlTab-preview-inner {
+  margin: -10px -10px 0;
 }
 
-#ctrlTab-showAll {
+#ctrlTab-showAll:not(:focus) > .ctrlTab-preview-inner {
   background-color: rgba(255,255,255,.2);
-  margin-top: .5em;
 }
 
-.ctrlTab-preview:focus > .ctrlTab-preview-inner,
-#ctrlTab-showAll:focus {
+.ctrlTab-preview:focus > .ctrlTab-preview-inner {
   background-color: rgba(0,0,0,.75);
   text-shadow: none;
   border-color: #45a1ff;
@@ -90,5 +82,9 @@
 
 .ctrlTab-label {
   text-align: center;
+}
+
+#ctrlTab-showAll {
+  margin-top: .5em;
 }
 
