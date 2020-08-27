@@ -32,9 +32,11 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 ## 💻 Build Dot Browser
 > The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
 
-**1.** Open your terminal and `git clone` this repository.
+**1.** Download our build tool from `npm` by running `npm i @dothq/build -g`, you will need `Node.JS` installed on your system.
 
-**2.** Now inside the respository folder run `./mach bootstrap`, this will setup the project and make sure everything is ready.
+**2.** Grab our source code by typing `dot get dot`, this may take a few hours.
+
+**2.** Once `dot` finishes up and tells you when it's safe to start building run `./mach bootstrap`.
 
 **3.** You can now pick which build type you want to do when `mach` asks you to choose a build type.
   * You'll need to pick the appropriate build type as different parts of the project require different methods of being built.
@@ -45,7 +47,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
     
 **4.** You can then start the build once `mach` says your system is ready, the command to build the project is `./mach build`. This may take a few seconds up to a few hours.
 
-**5.** If you've made it this far, you've successfully built Dot! Now, you'll want to run the binary you built, you can do this by running `./mach run`.
+**5.** If you've made it this far, you've successfully built Dot Browser! Now, you'll want to run the binary you built, you can do this by running `./mach run`.
 
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
