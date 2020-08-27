@@ -19,14 +19,11 @@ jobs:
         with:
           node-version: 12
 
-      - name: Install Electron for release channel
-        run: yarn remove electron && yarn add electron@latest --dev && yarn global add electron@latest
+      - name: Install dot cli (2.1.0)
+        run: npm i @dothq/build@2.1.0 -g
   
-      - name: Set the release channel for this build
-        run: node scripts/tag-version.js tag=
+      - name: Downloading source code
+        run: dot get dot
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          release: true
+      - name: Check source
+        run: ls
