@@ -2413,3 +2413,7 @@ pref("first-startup.timeout", 30000);
 #ifdef XP_WIN
   pref("default-browser-agent.enabled", true);
 #endif
+
+pref("layout.css.backdrop-filter.enabled", true);
+pref("general.autoScroll", true);
+pref("gfx.webrender.all", true);

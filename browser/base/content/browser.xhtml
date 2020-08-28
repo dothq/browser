@@ -1736,21 +1736,6 @@
                        cui-areatype="toolbar"
                        tooltiptext="&libraryButton.tooltip;"
                        label="&places.library.title;"/>
-
-        <toolbarbutton id="fxa-toolbar-menu-button" class="toolbarbutton-1 chromeclass-toolbar-additional subviewbutton-nav"
-                       badged="true"
-                       onmousedown="gSync.toggleAccountPanel('PanelUI-fxa', this, event)"
-                       onkeypress="gSync.toggleAccountPanel('PanelUI-fxa', this, event)"
-                       consumeanchor="fxa-toolbar-menu-button"
-                       closemenu="none"
-                       label="&fxa.menu.firefoxAccount;"
-                       tooltiptext="&fxa.menu.firefoxAccount;"
-                       cui-areatype="toolbar"
-                       removable="true">
-                       <vbox>
-                        <image id="fxa-avatar-image"/>
-                       </vbox>
-        </toolbarbutton>
       </hbox>
 
       <toolbarbutton id="nav-bar-overflow-button"
@@ -1776,6 +1761,20 @@
                        badged="true"
                        onmousedown="PanelUI.showSubView('PanelUI-whatsNew', this, event);"
                        onkeypress="PanelUI.showSubView('PanelUI-whatsNew', this, event);"/>
+        <toolbarbutton id="fxa-toolbar-menu-button" class="toolbarbutton-1 chromeclass-toolbar-additional subviewbutton-nav"
+                       badged="true"
+                       onmousedown="gSync.toggleAccountPanel('PanelUI-fxa', this, event)"
+                       onkeypress="gSync.toggleAccountPanel('PanelUI-fxa', this, event)"
+                       consumeanchor="fxa-toolbar-menu-button"
+                       closemenu="none"
+                       label="&fxa.menu.firefoxAccount;"
+                       tooltiptext="&fxa.menu.firefoxAccount;"
+                       cui-areatype="toolbar"
+                       removable="true">
+                        <vbox>
+                          <image id="fxa-avatar-image"/>
+                        </vbox>
+        </toolbarbutton>
         <toolbarbutton id="PanelUI-menu-button"
                        class="toolbarbutton-1"
                        badged="true"

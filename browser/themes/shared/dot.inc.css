@@ -49,3 +49,17 @@
 .tab-text {
     font-size: 12px;
 }
+
+#urlbar[breakout][breakout-extend] > #urlbar-background {
+    box-shadow: 0 25.6px 57.6px 0 rgba(0,0,0,.22),0 4.8px 14.4px 0 rgba(0,0,0,.18) !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+    border-color: transparent !important;
+}
+
+#urlbar[focused="true"] > #urlbar-background {
+    -moz-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: 0.98;
+}
