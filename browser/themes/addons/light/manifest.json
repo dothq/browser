@@ -3,7 +3,7 @@
 
   "applications": {
     "gecko": {
-      "id": "default-theme@mozilla.org"
+      "id": "firefox-compact-light@mozilla.org"
     }
   },
 

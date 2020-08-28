@@ -19,7 +19,7 @@
 }
 
 .tabbrowser-tab .tab-stack {
-    margin-top: 3px;
+    margin-top: 2px;
 }
 
 .tab-background[multiselected="true"], .tab-background[selected="true"] {
@@ -39,5 +39,13 @@
 }
 
 #tabs-newtab-button {
-    margin-top: 3px !important;
+    padding-top: 2px !important;
+}
+
+#titlebar {
+    height: 36px;
+}
+
+.tab-text {
+    font-size: 12px;
 }
