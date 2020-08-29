@@ -15,11 +15,11 @@ newtab-search-box-search-button =
     .title = Search
     .aria-label = Search
 
-newtab-search-box-search-the-web-text = Search the Web
+newtab-search-box-search-the-web-text = Search or enter website name
 newtab-search-box-search-the-web-input =
-    .placeholder = Search the Web
-    .title = Search the Web
-    .aria-label = Search the Web
+    .placeholder = Search or enter website name
+    .title = SSearch or enter website name
+    .aria-label = Search or enter website name
 
 ## Top Sites - General form dialog.
 

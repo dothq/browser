@@ -15,7 +15,7 @@ new-tab = New tab
 add-bookmark = Add bookmark
 reader-view = Reader View
 # Meant to match the string displayed in an empty URL bar.
-open-location = Search or enter address
+open-location = Search or enter website name
 share = Share
 close-window = Close Window
 open-sidebar = Sidebars

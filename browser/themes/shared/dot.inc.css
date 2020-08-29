@@ -6,8 +6,8 @@
     --tabs-border-color: transparent !important;
 }
 
-#urlbar-container {
-    --urlbar-height: 32px !important;
+#urlbar {
+    --urlbar-height: 34px !important;
 }
 
 .tabbrowser-tab .tab-stack .tab-background {
@@ -54,12 +54,55 @@
     box-shadow: 0 25.6px 57.6px 0 rgba(0,0,0,.22),0 4.8px 14.4px 0 rgba(0,0,0,.18) !important;
 }
 
-#urlbar[focused="true"] > #urlbar-background {
+#urlbar > #urlbar-background {
     border-color: transparent !important;
 }
 
-#urlbar[focused="true"] > #urlbar-background {
-    -moz-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    opacity: 0.98;
+#urlbar:not([focused="true"]) > #urlbar-background {
+    box-shadow: none !important;
+}
+
+#statuspanel-label {
+    background-color: var(--toolbar-bgcolor) !important;
+    border-color: var(--chrome-content-separator-color) !important;
+    color: var(--toolbar-color) !important;
+    font-size: 12px;
+    box-shadow: 0 6.4px 14.4px 0 rgba(0,0,0,.132),0 1.2px 3.6px 0 rgba(0,0,0,.108);
+}
+
+.panel-arrowcontent {
+    border-radius: 6px;
+}
+
+.subviewbutton > .toolbarbutton-text {
+    font-size: 12px;
+}
+
+.subviewbutton[shortcut]::after {
+	opacity: 0.7;
+	font-size: 12px;
+}
+
+#urlbar > #urlbar-input-container > #identity-box {
+    padding-inline: 8px !important;
+}
+
+#urlbar[focused="true"] > #urlbar-input-container > #identity-box, 
+#urlbar[focused="true"] > #urlbar-input-container > #tracking-protection-icon-container {
+    border-radius: 4px;
+}
+
+#urlbar[focused="true"] > #urlbar-input-container > .urlbar-icon-wrapper, 
+#urlbar[focused="true"] > #urlbar-input-container > .urlbar-icon {
+    border-radius: 4px;
+}
+
+#urlbar .searchbar-engine-one-off-item {
+	border-radius: 4px;
+}
+
+.urlbar-icon {
+    height: var(--urlbar-height) !important;
+    width: var(--urlbar-height) !important;
+    --urlbar-icon-padding: 8px !important;
 }

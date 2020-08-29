@@ -301,9 +301,9 @@ enable-devtools-popup-description = To use the F12 shortcut, first open DevTools
 ## URL Bar
 
 urlbar-default-placeholder =
-  .defaultPlaceholder = Search or enter address
+  .defaultPlaceholder = Search or enter website name
 urlbar-placeholder =
-  .placeholder = Search or enter address
+  .placeholder = Search or enter website name
 urlbar-remote-control-notification-anchor =
   .tooltiptext = Browser is under remote control
 urlbar-permissions-granted =

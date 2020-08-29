@@ -44,7 +44,6 @@ DIRS += [
     'originattributes',
     'pioneer',
     'places',
-    'pocket',
     'preferences',
     'privatebrowsing',
     'prompts',
