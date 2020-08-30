@@ -245,9 +245,8 @@
   /* Overrides the default 'display: -moz-box' to prevent icon shifting issue
      with scaled text, see Bug 1591049 */
   display: block;
-  background-image: url(chrome://browser/skin/tracking-protection-animation.svg);
-  transform: translateX(-256px);
-  width: 272px;
+  background-image: url(chrome://browser/skin/tracking-protection.svg);
+  width: 16px;
   background-size: auto;
   height: 16px;
   min-height: 16px;
@@ -267,20 +266,7 @@
 }
 
 :root[lwt-toolbar-field-brighttext] #tracking-protection-icon-box:not([hasException])[active] > #tracking-protection-icon-animatable-box > #tracking-protection-icon-animatable-image {
-  background-image: url(chrome://browser/skin/tracking-protection-animation-brighttext.svg);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  #tracking-protection-icon-box[active][animate] > #tracking-protection-icon-animatable-box > #tracking-protection-icon-animatable-image {
-    animation-name: tp-icon-animation;
-    animation-timing-function: steps(16);
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
-  }
-
-  #tracking-protection-icon-box[active][animate] > #tracking-protection-icon-animatable-box > #tracking-protection-icon-animatable-image:-moz-locale-dir(rtl) {
-    animation-name: tp-icon-animation-rtl;
-  }
+  background-image: url(chrome://browser/skin/tracking-protection.svg);
 }
 
 #tracking-protection-icon-tooltip {
