@@ -114,3 +114,7 @@
 #identity-icon {
 	margin-inline-start: 2px !important;
 }
+
+#tracking-protection-icon-container {
+	padding-inline: 8px !important;
+}
