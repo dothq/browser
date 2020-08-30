@@ -1,9 +1,19 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-  <circle cx="16" cy="16" r="14" fill="#f9f9fa" fill-opacity=".8"/>
-  <path d="M16 31a15 15 0 1 1 15-15 15.017 15.017 0 0 1-15 15zm0-29a14 14 0 1 0 14 14A14.016 14.016 0 0 0 16 2z" fill="#0c0c0d" fill-opacity=".6"/>
-  <path d="M10.707 11.293a1 1 0 0 0-1.414 0l-4 4a1 1 0 0 0 0 1.414l4 4a1 1 0 0 0 1.414-1.414L7.414 16l3.293-3.293a1 1 0 0 0 0-1.414zm16 4l-4-4a1 1 0 0 0-1.414 1.414L24.586 16l-3.293 3.293a1 1 0 1 0 1.414 1.414l4-4a1 1 0 0 0 0-1.414z" fill="#0c0c0d" fill-opacity=".8"/>
-  <circle cx="16" cy="16" r="2" fill="#0c0c0d" fill-opacity=".6"/>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d)">
+<path d="M28 16C28 22.6274 22.6274 28 16 28C9.37258 28 4 22.6274 4 16C4 9.37258 9.37258 4 16 4C22.6274 4 28 9.37258 28 16Z" fill="white"/>
+<path d="M27.5 16C27.5 22.3513 22.3513 27.5 16 27.5C9.64873 27.5 4.5 22.3513 4.5 16C4.5 9.64873 9.64873 4.5 16 4.5C22.3513 4.5 27.5 9.64873 27.5 16Z" stroke="#F8F8F8"/>
+</g>
+<path d="M18.2074 15.9999C18.2074 17.219 17.2191 18.2073 16 18.2073C14.7809 18.2073 13.7926 17.219 13.7926 15.9999C13.7926 14.7808 14.7809 13.7926 16 13.7926C17.2191 13.7926 18.2074 14.7808 18.2074 15.9999Z" fill="#434343"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M21.7914 12.9622C22.1147 12.6389 22.6388 12.6389 22.9621 12.9622L24.4337 14.4338C24.8491 14.8492 25.0825 15.4126 25.0825 16.0001C25.0825 16.5876 24.8491 17.1511 24.4337 17.5665L22.9621 19.0381C22.6388 19.3614 22.1147 19.3614 21.7914 19.0381C21.4682 18.7149 21.4682 18.1907 21.7914 17.8675L23.263 16.3959C23.368 16.2909 23.427 16.1486 23.427 16.0001C23.427 15.8517 23.368 15.7094 23.263 15.6044L21.7914 14.1328C21.4682 13.8095 21.4682 13.2854 21.7914 12.9622ZM10.2083 12.9622C10.5315 13.2854 10.5315 13.8095 10.2083 14.1328L8.73668 15.6044C8.63173 15.7094 8.57276 15.8517 8.57276 16.0001C8.57276 16.1486 8.63173 16.2909 8.73669 16.3959L10.2083 17.8675C10.5315 18.1907 10.5315 18.7149 10.2083 19.0381C9.88501 19.3614 9.3609 19.3614 9.03764 19.0381L7.56605 17.5665C7.15062 17.1511 6.91724 16.5876 6.91724 16.0001C6.91724 15.4126 7.15062 14.8492 7.56605 14.4338L9.03764 12.9622C9.3609 12.6389 9.88501 12.6389 10.2083 12.9622Z" fill="#434343"/>
+<defs>
+<filter id="filter0_d" x="0" y="0" width="32" height="32" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+</filter>
+</defs>
 </svg>
