@@ -1,0 +1,91 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+%include shared.inc
+%include ../../shared/findBar.inc.css
+
+findbar {
+  background-image: linear-gradient(#e8e8e8, #d0d0d0);
+  border-top-color: #888;
+}
+
+.findbar-container {
+  padding-inline-start: 2px;
+}
+
+label.findbar-find-fast {
+  color: #6d6d6d;
+  margin: 0;
+  margin-inline-start: 12px;
+}
+
+label.findbar-find-fast:-moz-lwtheme {
+  color: inherit;
+}
+
+.findbar-closebutton {
+  margin-inline: 4px 0;
+  padding-inline: 0 8px;
+  border: none;
+  /* make sure the closebutton is displayed as the first element in the bar: */
+  -moz-box-ordinal-group: 0;
+}
+
+.findbar-find-next:not(:-moz-lwtheme),
+.findbar-find-previous:not(:-moz-lwtheme),
+.findbar-button {
+  border-style: @roundButtonBorderStyle@;
+  border-color: @roundButtonBorderColor@;
+  color: @roundButtonColor@;
+  background-image: @roundButtonBackgroundImage@;
+}
+
+.findbar-button {
+  appearance: none;
+  border-width: @roundButtonBorderWidth@;
+  margin-inline-end: 5px;
+  padding: 2px 9px;
+  border-radius: 10000px;
+}
+
+.findbar-find-next:-moz-lwtheme,
+.findbar-find-previous:-moz-lwtheme {
+  border-color: var(--lwt-toolbar-field-border-color, @roundButtonBorderColor@);
+}
+
+.findbar-find-next:not(:-moz-lwtheme):not([disabled]):hover:active,
+.findbar-find-previous:not(:-moz-lwtheme):not([disabled]):hover:active,
+.findbar-button:not([disabled]):hover:active,
+.findbar-button:not([disabled])[checked="true"] {
+  background-image: @roundButtonPressedBackgroundImage@;
+  box-shadow: @roundButtonPressedShadow@;
+}
+
+@media (-moz-mac-yosemite-theme: 0) {
+  html|input.findbar-textbox,
+  .findbar-find-next {
+    border-radius: 10000px;
+  }
+}
+
+html|input.findbar-textbox {
+  border: @roundButtonBorderWidth@ @roundButtonBorderStyle@ var(--lwt-toolbar-field-border-color, @roundButtonBorderColor@);
+  -moz-context-properties: fill, fill-opacity;
+  fill: currentColor;
+  fill-opacity: 0.8;
+  background-image: url("chrome://global/skin/icons/search-textbox.svg");
+  background-repeat: no-repeat;
+  background-position: 5px center;
+  margin: 0;
+  padding-inline-start: 19px;
+}
+
+html|input.findbar-textbox:focus {
+  box-shadow: 0 0 0 1px var(--toolbar-field-focus-border-color) inset,
+              0 0 0 1px var(--toolbar-field-focus-border-color);
+}
+
+html|input.findbar-textbox:-moz-locale-dir(rtl) {
+  background-position-x: right 5px;
+}
