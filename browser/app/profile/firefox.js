@@ -2439,6 +2439,12 @@ user_pref("network.predictor.enabled", false);
 user_pref("network.predictor.enable-prefetch", false);
 user_pref("network.prefetch-next", false);
 
+// OPT OUT OF STUDIES & EXPERIMENTS
+user_pref("app.shield.optoutstudies.enabled", false);
+user_pref("browser.onboarding.enabled", false);
+user_pref("experiments.enabled", false);
+user_pref("network.allow-experiments", false);
+
 // DISABLE SAFEBROWSING
 user_pref("browser.safebrowsing.malware.enabled", false);
 user_pref("browser.safebrowsing.phishing.enabled", false);
