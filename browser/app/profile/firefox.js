@@ -2417,6 +2417,28 @@ pref("first-startup.timeout", 30000);
 // Enable HTTPS-only mode
 pref("dom.security.https_only_mode", true);
 
+// Enable DNS-over-HTTPS by default
+user_pref("network.trr.mode", 2);
+
+// Encrypted SNI and HTTP3 support
+user_pref("network.security.esni.enabled", true);
+user_pref("network.http.http3.enabled", true);
+
+// Convert non-unicode domains to Unicode to stop phishing
+user_pref("network.IDN_show_punycode", true); 
+
+// Tighten referrer handling policy
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
+user_pref("network.http.referer.XOriginPolicy", 2);
+
+// Disable prefetch
+// Prefetch can expose your ip address to a website even before it's visited
+user_pref("network.dns.disablePrefetch", true);
+user_pref("network.dns.disablePrefetchFromHTTPS", true);
+user_pref("network.predictor.enabled", false);
+user_pref("network.predictor.enable-prefetch", false);
+user_pref("network.prefetch-next", false);
+
 pref("layout.css.backdrop-filter.enabled", true);
 pref("general.autoScroll", true);
 pref("gfx.webrender.all", true);
