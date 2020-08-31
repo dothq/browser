@@ -2423,59 +2423,60 @@ pref("general.autoScroll", true);
 
 // NETWORK
 pref("dom.security.https_only_mode", true); // Enable HTTPS-only mode
-user_pref("network.trr.mode", 2); // Enable DNS-over-HTTPS by default
+pref("network.trr.mode", 2); // Enable DNS-over-HTTPS by default
+pref("network.trr.uri", "https://trr.dns.nextdns.io/");
 
-user_pref("network.security.esni.enabled", true); // Encrypted SNI support
-user_pref("network.http.http3.enabled", true); // HTTP3 support
+pref("network.security.esni.enabled", true); // Encrypted SNI support
+pref("network.http.http3.enabled", true); // HTTP3 support
 
-user_pref("network.IDN_show_punycode", true);  // Convert non-unicode domains to Unicode to stop phishing
+pref("network.IDN_show_punycode", true);  // Convert non-unicode domains to Unicode to stop phishing
 
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Tighten referrer handling policy
-user_pref("network.http.referer.XOriginPolicy", 2);
+pref("network.http.referer.XOriginTrimmingPolicy", 2); // Tighten referrer handling policy
+pref("network.http.referer.XOriginPolicy", 2);
 
-user_pref("network.dns.disablePrefetch", true); // Disable prefetch which exposes your ip to unvisited sites
-user_pref("network.dns.disablePrefetchFromHTTPS", true);
-user_pref("network.predictor.enabled", false);
-user_pref("network.predictor.enable-prefetch", false);
-user_pref("network.prefetch-next", false);
+pref("network.dns.disablePrefetch", true); // Disable prefetch which exposes your ip to unvisited sites
+pref("network.dns.disablePrefetchFromHTTPS", true);
+pref("network.predictor.enabled", false);
+pref("network.predictor.enable-prefetch", false);
+pref("network.prefetch-next", false);
 
 // OPT OUT OF STUDIES & EXPERIMENTS
-user_pref("app.shield.optoutstudies.enabled", false);
-user_pref("browser.onboarding.enabled", false);
-user_pref("experiments.enabled", false);
-user_pref("network.allow-experiments", false);
+pref("app.shield.optoutstudies.enabled", false);
+pref("browser.onboarding.enabled", false);
+pref("experiments.enabled", false);
+pref("network.allow-experiments", false);
 
 // DISABLE SAFEBROWSING
-user_pref("browser.safebrowsing.malware.enabled", false);
-user_pref("browser.safebrowsing.phishing.enabled", false);
-user_pref("browser.safebrowsing.downloads.enabled", false);
-user_pref("browser.safebrowsing.downloads.remote.block_dangerous", false);
-user_pref("browser.safebrowsing.downloads.remote.block_dangerous_host", false);
-user_pref("browser.safebrowsing.downloads.remote.enabled", false);
-user_pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
-user_pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
-user_pref("browser.safebrowsing.blockedURIs.enabled", false);
+pref("browser.safebrowsing.malware.enabled", false);
+pref("browser.safebrowsing.phishing.enabled", false);
+pref("browser.safebrowsing.downloads.enabled", false);
+pref("browser.safebrowsing.downloads.remote.block_dangerous", false);
+pref("browser.safebrowsing.downloads.remote.block_dangerous_host", false);
+pref("browser.safebrowsing.downloads.remote.enabled", false);
+pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
+pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
+pref("browser.safebrowsing.blockedURIs.enabled", false);
 
-user_pref("browser.safebrowsing.downloads.remote.url", "");
-user_pref("browser.safebrowsing.provider.google4.dataSharing.enabled", "");
-user_pref("browser.safebrowsing.provider.google4.updateURL", "");
-user_pref("browser.safebrowsing.provider.google4.reportURL", "");
-user_pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
-user_pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
-user_pref("browser.safebrowsing.provider.google4.lists", "");
-user_pref("browser.safebrowsing.provider.google4.gethashURL", "");
-user_pref("browser.safebrowsing.provider.google4.dataSharingURL", "");
-user_pref("browser.safebrowsing.provider.google4.dataSharing.enabled", false);
-user_pref("browser.safebrowsing.provider.google4.advisoryURL", "");
-user_pref("browser.safebrowsing.provider.google4.advisoryName", "");
-user_pref("browser.safebrowsing.provider.google.updateURL", "");
-user_pref("browser.safebrowsing.provider.google.reportURL", "");
-user_pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
-user_pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
-user_pref("browser.safebrowsing.provider.google.pver", "");
-user_pref("browser.safebrowsing.provider.google.lists", "");
-user_pref("browser.safebrowsing.provider.google.gethashURL", "");
-user_pref("browser.safebrowsing.provider.google.advisoryURL", "");
+pref("browser.safebrowsing.downloads.remote.url", "");
+pref("browser.safebrowsing.provider.google4.dataSharing.enabled", "");
+pref("browser.safebrowsing.provider.google4.updateURL", "");
+pref("browser.safebrowsing.provider.google4.reportURL", "");
+pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
+pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
+pref("browser.safebrowsing.provider.google4.lists", "");
+pref("browser.safebrowsing.provider.google4.gethashURL", "");
+pref("browser.safebrowsing.provider.google4.dataSharingURL", "");
+pref("browser.safebrowsing.provider.google4.dataSharing.enabled", false);
+pref("browser.safebrowsing.provider.google4.advisoryURL", "");
+pref("browser.safebrowsing.provider.google4.advisoryName", "");
+pref("browser.safebrowsing.provider.google.updateURL", "");
+pref("browser.safebrowsing.provider.google.reportURL", "");
+pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
+pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
+pref("browser.safebrowsing.provider.google.pver", "");
+pref("browser.safebrowsing.provider.google.lists", "");
+pref("browser.safebrowsing.provider.google.gethashURL", "");
+pref("browser.safebrowsing.provider.google.advisoryURL", "");
 
 // APPEARANCE
 pref("layout.css.backdrop-filter.enabled", true);
