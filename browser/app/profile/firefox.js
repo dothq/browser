@@ -2414,6 +2414,9 @@ pref("first-startup.timeout", 30000);
   pref("default-browser-agent.enabled", true);
 #endif
 
+// Enable HTTPS-only mode
+pref("dom.security.https_only_mode", true);
+
 pref("layout.css.backdrop-filter.enabled", true);
 pref("general.autoScroll", true);
 pref("gfx.webrender.all", true);
