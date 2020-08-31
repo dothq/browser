@@ -8,4 +8,81 @@
 
 <div class="settings-panel" id="panel-appearance">
     <h2 class="panel-title" data-l10n-id="pane-appearance-title"></h2>
+
+    <!-- Themes -->
+    <div class="setting-block">
+        <h3 class="panel-subtitle" data-l10n-id="themes-block-title"></h3>
+        <p class="panel-subtitle-description" data-l10n-id="themes-block-description"></p>
+    </div>
+
+    <!-- Interface -->
+    <div class="setting-block">
+        <div class="block-group" style="margin-bottom: 18px;">
+            <h3 class="panel-subtitle" data-l10n-id="interface-block-title"></h3>
+            <p class="panel-subtitle-description" data-l10n-id="interface-block-description"></p>
+        </div>
+        
+        <div class="setting-block-item">
+            <label class="block-label" data-l10n-id="interface-block-page-zoom"></label>
+        </div>
+
+        <div class="setting-block-item">
+            <div class="block-group">
+                <label class="block-label" data-l10n-id="interface-block-home-button"></label>
+                <label class="block-desc" data-l10n-id="preference-visible"></label>
+            </div>
+            <div class="block-group">
+                <switch checked="true" style="margin-left: auto" type="pref" prefId="">
+                    <input id="show-home-button" type="checkbox" style="display: none" checked="true"></input>
+                    <div class="bobble"></div>
+                </switch>
+            </div>
+        </div>
+
+        <div class="setting-block-item">
+            <div class="block-group">
+                <label class="block-label" data-l10n-id="interface-block-bookmarks-bar"></label>
+                <label class="block-desc" data-l10n-id="preference-hidden"></label>
+            </div>
+            <div class="block-group">
+                <switch checked="true" style="margin-left: auto" type="pref" prefId="">
+                    <input id="show-bookmarks-bar" type="checkbox" style="display: none" checked="false"></input>
+                    <div class="bobble"></div>
+                </switch>
+            </div>
+        </div>
+
+        <div class="setting-block-item">
+            <div class="block-group">
+                <label class="block-label" data-l10n-id="interface-block-integrated-titlebar"></label>
+                <label class="block-desc" data-l10n-id="preference-hidden"></label>
+            </div>
+            <div class="block-group">
+                <switch checked="true" style="margin-left: auto" type="pref" prefId="browser.tabs.drawInTitlebar" prefType="bool">
+                    <input id="show-integrated-toolbar" type="checkbox" style="display: none" checked="false"></input>
+                    <div class="bobble"></div>
+                </switch>
+            </div>
+        </div>
+
+        <div class="setting-block-item">
+            <div class="block-group">
+                <label class="block-label" data-l10n-id="interface-block-drag-space"></label>
+                <label class="block-desc" data-l10n-id="preference-hidden"></label>
+            </div>
+            <div class="block-group">
+                <switch checked="true" style="margin-left: auto" type="pref" prefId="browser.tabs.extraDragSpace" prefType="bool">
+                    <input id="show-drag-space" type="checkbox" style="display: none" checked="false"></input>
+                    <div class="bobble"></div>
+                </switch>
+            </div>
+        </div>
+
+        <div class="setting-block-item">
+            <div class="block-group">
+                <label class="block-label" data-l10n-id="interface-block-font-size"></label>
+                <label class="block-desc" data-l10n-id="interface-block-font-size-desc"></label>
+            </div>
+        </div>
+    </div>
 </div>

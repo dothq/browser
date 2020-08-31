@@ -48,6 +48,35 @@
   -moz-user-select: text;
 }
 
+/* Buttons, Switches etc */
+
+switch {
+  width: 48px;
+  height: 24px;
+  background-color: var(--lwt-sidebar-background-color);
+  border-radius: 34px;
+  min-height: 24px;
+  margin-left: auto;
+}
+
+switch > .bobble {
+  width: 18px;
+  height: 18px;
+  border-radius: 22px;
+  background-color: #808080;
+  display: flex;
+  max-height: 18px;
+  align-items: center;
+  align-content: center;
+  margin: 3px;
+  transition: 0.3s background-color, 0.2s transform;
+}
+
+switch[checked="true"] > .bobble {
+  background-color: var(--lwt-sidebar-text-color, var(--newtab-text-primary-color)) !important;
+  transform: translateX(22px);
+}
+
 /* Settings Rewrite */
 
 #sidebar {
@@ -57,6 +86,7 @@
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  min-width: 375px;
 }
 
 #sidebar > #sidebar-scroll-box {
@@ -237,7 +267,7 @@
 }
 
 #panels {
-  padding: 58px;
+  width: 100vw;
 }
 
 #panels > * {
@@ -246,17 +276,69 @@
 
 .settings-panel {
   transition: 0.2s opacity, 0.2s transform;
-
   opacity: 0;
   transform: translateX(-10px);
-
-  max-width: 800px;
-
   color: var(--lwt-sidebar-text-color, var(--newtab-text-primary-color));
+  -moz-user-select: none;
+  display: flex;
+  flex-direction: column;
+
+  padding: 58px;
+  overflow-x: auto;
+  height: 100vh;
+  overflow-y: scroll;
+  width: calc(100vw - 375px);
 }
 
 .panel-title {
   font-weight: 600;
   font-size: 22px;
   line-height: 27px;
+}
+
+.panel-subtitle {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.panel-subtitle-description {
+  font-size: 16px;
+  opacity: 0.5;
+  font-weight: normal;
+}
+
+.block-label {
+  opacity: 0.9;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.block-desc {
+  opacity: 0.4;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.setting-block {
+  margin: 32px 0 0 0;
+  padding-bottom: 58px;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.setting-block-item {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  margin: 18px 0;
+}
+
+.block-group {
+  display: flex;
+  flex-direction: column;
+  width: -moz-available;
 }

@@ -62,6 +62,8 @@ function init_all() {
     if(e.target.scrollTop >= 25) document.getElementsByClassName("sidebar-header")[0].style.boxShadow = "0 6.4px 14.4px 0 rgba(0,0,0,.132),0 1.2px 3.6px 0 rgba(0,0,0,.108)"
     else document.getElementsByClassName("sidebar-header")[0].style.boxShadow = "none"
   })
+
+  startSwitchEventHandler()
 }
 
 const loadPanel = (panelId) => {
@@ -76,4 +78,62 @@ const loadPanel = (panelId) => {
 
   panel.style.opacity = 1;
   panel.style.transform = "translateX(0px)";
+}
+
+const getPref = (id, type) => {
+  const types = {
+    bool: "Bool",
+    char: "Char",
+    float: "Float",
+    int: "Int",
+    string: "String"
+  }
+
+  return Services.prefs[`get${types[type]}Pref`](id)
+}
+
+const setPref = (id, type, value) => {
+  const types = {
+    bool: "Bool",
+    char: "Char",
+    float: "Float",
+    int: "Int",
+    string: "String"
+  }
+
+  return Services.prefs[`set${types[type]}Pref`](id, value)
+}
+
+const startSwitchEventHandler = () => {
+  var switches = document.getElementsByTagName("switch");
+
+  for (const switchEl of switches) {
+    const type = switchEl.getAttribute("type");
+    const prefId = switchEl.getAttribute("prefId");
+    const prefType = switchEl.getAttribute("prefType");
+
+    if(type == "pref" && prefId && prefType) {
+      switchEl.childNodes[0].setAttribute("checked", getPref(prefId, prefType))
+
+      const checked = switchEl.childNodes[0].getAttribute("checked") == "true" ? true : false;
+
+      switchEl.setAttribute("checked", checked)
+    }
+
+    switchEl.addEventListener("click", () => {
+      const checked = switchEl.childNodes[0].getAttribute("checked") == "true" ? true : false;
+
+      switchEl.childNodes[0].setAttribute("checked", !checked);
+
+      switchEl.setAttribute("checked", !checked)
+
+      const type = switchEl.getAttribute("type");
+      const prefId = switchEl.getAttribute("prefId");
+      const prefType = switchEl.getAttribute("prefType");
+      
+      if(type == "pref" && prefId && prefType) {
+        setPref(prefId, prefType, !checked)
+      }
+    })
+  }
 }
