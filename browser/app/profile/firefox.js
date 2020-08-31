@@ -2414,31 +2414,66 @@ pref("first-startup.timeout", 30000);
   pref("default-browser-agent.enabled", true);
 #endif
 
-// Enable HTTPS-only mode
-pref("dom.security.https_only_mode", true);
+// ----------------------------
+// DOT PREFERENCE MODIFICATIONS
+// ----------------------------
 
-// Enable DNS-over-HTTPS by default
-user_pref("network.trr.mode", 2);
+// GENERAL
+pref("general.autoScroll", true);
 
-// Encrypted SNI and HTTP3 support
-user_pref("network.security.esni.enabled", true);
-user_pref("network.http.http3.enabled", true);
+// NETWORK
+pref("dom.security.https_only_mode", true); // Enable HTTPS-only mode
+user_pref("network.trr.mode", 2); // Enable DNS-over-HTTPS by default
 
-// Convert non-unicode domains to Unicode to stop phishing
-user_pref("network.IDN_show_punycode", true); 
+user_pref("network.security.esni.enabled", true); // Encrypted SNI support
+user_pref("network.http.http3.enabled", true); // HTTP3 support
 
-// Tighten referrer handling policy
-user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
+user_pref("network.IDN_show_punycode", true);  // Convert non-unicode domains to Unicode to stop phishing
+
+user_pref("network.http.referer.XOriginTrimmingPolicy", 2); // Tighten referrer handling policy
 user_pref("network.http.referer.XOriginPolicy", 2);
 
-// Disable prefetch
-// Prefetch can expose your ip address to a website even before it's visited
-user_pref("network.dns.disablePrefetch", true);
+user_pref("network.dns.disablePrefetch", true); // Disable prefetch which exposes your ip to unvisited sites
 user_pref("network.dns.disablePrefetchFromHTTPS", true);
 user_pref("network.predictor.enabled", false);
 user_pref("network.predictor.enable-prefetch", false);
 user_pref("network.prefetch-next", false);
 
+// DISABLE SAFEBROWSING
+user_pref("browser.safebrowsing.malware.enabled", false);
+user_pref("browser.safebrowsing.phishing.enabled", false);
+user_pref("browser.safebrowsing.downloads.enabled", false);
+user_pref("browser.safebrowsing.downloads.remote.block_dangerous", false);
+user_pref("browser.safebrowsing.downloads.remote.block_dangerous_host", false);
+user_pref("browser.safebrowsing.downloads.remote.enabled", false);
+user_pref("browser.safebrowsing.downloads.remote.block_potentially_unwanted", false);
+user_pref("browser.safebrowsing.downloads.remote.block_uncommon", false);
+user_pref("browser.safebrowsing.blockedURIs.enabled", false);
+
+user_pref("browser.safebrowsing.downloads.remote.url", "");
+user_pref("browser.safebrowsing.provider.google4.dataSharing.enabled", "");
+user_pref("browser.safebrowsing.provider.google4.updateURL", "");
+user_pref("browser.safebrowsing.provider.google4.reportURL", "");
+user_pref("browser.safebrowsing.provider.google4.reportPhishMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google4.reportMalwareMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google4.lists", "");
+user_pref("browser.safebrowsing.provider.google4.gethashURL", "");
+user_pref("browser.safebrowsing.provider.google4.dataSharingURL", "");
+user_pref("browser.safebrowsing.provider.google4.dataSharing.enabled", false);
+user_pref("browser.safebrowsing.provider.google4.advisoryURL", "");
+user_pref("browser.safebrowsing.provider.google4.advisoryName", "");
+user_pref("browser.safebrowsing.provider.google.updateURL", "");
+user_pref("browser.safebrowsing.provider.google.reportURL", "");
+user_pref("browser.safebrowsing.provider.google.reportPhishMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google.reportMalwareMistakeURL", "");
+user_pref("browser.safebrowsing.provider.google.pver", "");
+user_pref("browser.safebrowsing.provider.google.lists", "");
+user_pref("browser.safebrowsing.provider.google.gethashURL", "");
+user_pref("browser.safebrowsing.provider.google.advisoryURL", "");
+
+// APPEARANCE
 pref("layout.css.backdrop-filter.enabled", true);
-pref("general.autoScroll", true);
 pref("gfx.webrender.all", true);
+// ----------------------------
+// END DOT PREF MODIFICATIONS
+// ----------------------------
