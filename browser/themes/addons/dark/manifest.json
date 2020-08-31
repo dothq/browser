@@ -31,9 +31,9 @@
       "toolbar_field_focus": "#2B2B2B",
       "toolbar_field_separator": "rgba(255, 255, 255, 0.05)",
       "popup_highlight": "rgb(73, 101, 255)",
-      "ntp_background": "rgb(38, 38, 38)",
+      "ntp_background": "#1C1C1C",
       "ntp_text": "rgb(249, 249, 250)",
-      "sidebar": "#38383D",
+      "sidebar": "#121212",
       "sidebar_text": "rgb(249, 249, 250)",
       "sidebar_border": "rgba(255, 255, 255, 0.1)"
     }

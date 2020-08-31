@@ -9,11 +9,7 @@ do-not-track-option-default-content-blocking-known =
 do-not-track-option-always =
     .label = Always
 
-pref-page-title =
-    { PLATFORM() ->
-        [windows] Options
-       *[other] Preferences
-    }
+pref-page-title = Settings
 
 # This is used to determine the width of the search field in about:preferences,
 # in order to make the entire placeholder string visible
@@ -33,25 +29,40 @@ search-input-box =
 
 managed-notice = Your browser is being managed by your organization.
 
-pane-general-title = General
-category-general =
-    .tooltiptext = { pane-general-title }
+pane-general-heading = General
+pane-advanced-heading = Advanced
 
-pane-home-title = Home
-category-home =
-    .tooltiptext = { pane-home-title }
+pane-appearance-title = Appearance
+category-appearance =
+    .tooltiptext = { pane-appearance-title }
 
 pane-search-title = Search
 category-search =
     .tooltiptext = { pane-search-title }
 
-pane-privacy-title = Privacy & Security
+pane-privacy-title = Security and privacy
 category-privacy =
     .tooltiptext = { pane-privacy-title }
 
-pane-sync-title2 = { -sync-brand-short-name }
-category-sync2 =
-    .tooltiptext = { pane-sync-title2 }
+pane-keyring-title = Keyring
+category-keyring =
+    .tooltiptext = { pane-keyring-title }
+
+pane-downloads-title = Downloads
+category-downloads =
+    .tooltiptext = { pane-downloads-title }
+
+pane-language-title = Language and region
+category-language =
+    .tooltiptext = { pane-language-title }
+    
+pane-printing-title = Printing
+category-printing =
+    .tooltiptext = { pane-printing-title }
+
+pane-eoa-title = Ease of access
+category-eoa =
+    .tooltiptext = { pane-eoa-title }
 
 pane-experimental-title = { -brand-short-name } Experiments
 category-experimental =
@@ -60,7 +71,8 @@ pane-experimental-subtitle = Proceed with Caution
 pane-experimental-search-results-header = { -brand-short-name } Experiments: Proceed with Caution
 pane-experimental-description = Changing advanced configuration preferences can impact { -brand-short-name } performance or security.
 
-help-button-label = { -brand-short-name } Support
+about-button-label = About { -brand-short-name }
+help-button-label = Get support with { -brand-short-name }
 addons-button-label = Extensions & Themes
 
 focus-search =

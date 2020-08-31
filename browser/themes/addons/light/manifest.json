@@ -31,7 +31,8 @@
       "toolbar_field_focus": "#ffffff",
       "toolbar_field_separator": "rgba(0, 0, 0, 0.05)",
       "popup_highlight": "rgb(73, 101, 255)",
-      "ntp_background": "#ffffff"
+      "ntp_background": "#ffffff",
+      "sidebar": "#FBFBFB"
     }
   },
 

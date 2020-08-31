@@ -4,13 +4,15 @@
 
 :root {
     --tabs-border-color: transparent !important;
+    --toolbarbutton-border-radius: 6px !important;
 }
 
 #urlbar {
     --urlbar-height: 34px !important;
 }
 
-.tabbrowser-tab .tab-stack .tab-background {
+.tabbrowser-tab .tab-stack .tab-background,
+.tabbrowser-tab {
     border-radius: 6px 6px 0 0;
 }
 
