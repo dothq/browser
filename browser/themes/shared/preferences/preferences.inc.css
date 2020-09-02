@@ -77,6 +77,82 @@ switch[checked="true"] > .bobble {
   transform: translateX(22px);
 }
 
+dmenu {
+	background-color: #6c6c6c17 !important;
+  border-radius: 6px !important;
+	font-size: 14px !important;
+	font-family: 'Inter', sans-serif !important;
+	margin-left: auto;
+	position: relative;
+	height: 34px;
+	z-index: 0;
+  z-index: 100;
+}
+
+dmenu:hover {
+  opacity: 0.7;
+}
+
+menuoption {
+	display: flex;
+	height: 100%;
+	align-items: center;
+  padding: 0 14px;
+}
+
+dmenu::after {
+	content: "";
+	width: 16px;
+	height: 16px;
+  mask-image: url(chrome://global/skin/icons/arrow-dropdown-12.svg);
+  mask-size: cover;
+  background-color: var(--lwt-sidebar-text-color, var(--newtab-text-primary-color));
+	position: absolute;
+	left: calc(100% - 16px - 12px);
+	margin-top: calc(34px / 3.5);
+	border-radius: 10px;
+}
+
+dmenu[open="true"] {
+  border-radius: 6px 6px 0 0 !important;
+  opacity: 1 !important;
+}
+
+dmenu[open="true"] > menuitemcontainer {
+  pointer-events: all;
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+menuitemcontainer {
+  transition: 0.1s opacity, 0.15s transform;
+	width: -moz-available;
+	border-radius: 0 0 6px 6px !important;
+	position: absolute;
+	top: 34px;
+	z-index: 1;
+  display: flex;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+	background-color: #121212;
+	flex-direction: column;
+	overflow: hidden;
+	padding: 4px 0;
+}
+
+menuitem {
+	padding: 8px 0;
+	padding-left: 14px;
+	background-color: transparent;
+	margin-bottom: 0px;
+	border-radius: 0;
+}
+
+menuitem:hover {
+  background-color: #6c6c6c17 !important;
+}
+
 /* Settings Rewrite */
 
 #sidebar {
@@ -310,9 +386,10 @@ switch[checked="true"] > .bobble {
 }
 
 .block-label {
-  opacity: 0.9;
-  font-size: 15px;
-  font-weight: 500;
+	opacity: 0.9;
+	font-size: 15px;
+	font-weight: 500;
+	width: -moz-available;
 }
 
 .block-desc {

@@ -16,7 +16,7 @@
 
 :root {
   /* Note: Setting this to 0 (without px) breaks CSS calculations for OSX. */
-  --space-above-tabbar: 0px;
+  --space-above-tabbar: 1px;
   --tabs-navbar-shadow-size: 1px;
   --short-notification-background: #0250BB;
   --short-notification-gradient: #9059FF;

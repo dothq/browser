@@ -411,6 +411,7 @@ let JSWINDOWACTORS = {
       "about:newtab",
       "about:welcome",
       "about:preferences",
+      "about:sessionrestore",
       "chrome://browser/content/syncedtabs/sidebar.xhtml",
       "chrome://browser/content/places/historySidebar.xhtml",
       "chrome://browser/content/places/bookmarksSidebar.xhtml",

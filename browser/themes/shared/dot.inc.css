@@ -120,3 +120,11 @@
 #tracking-protection-icon-container {
 	padding-inline: 8px !important;
 }
+
+notification[type], notification {
+    background-color: var(--toolbar-bgcolor) !important;
+    border-color: var(--chrome-content-separator-color) !important;
+    padding: 6px 0 6px !important;
+    padding-inline-start: 14px !important;
+    font-size: 12px !important;
+}

@@ -35,6 +35,7 @@ function init_all() {
   Preferences.forceEnableInstantApply();
 
   window.selectedId = "appearance";
+  loadPanel(window.selectedId)
 
   const sidebarItems = document.getElementsByClassName("sidebar-item");
 
@@ -52,11 +53,21 @@ function init_all() {
       }
   }
 
+  Array.from(document.getElementsByTagName("dmenu")).forEach((menu) => {
+    menu.addEventListener("click", (e) => {
+      if(e.target.tagName == "menuitem") {
+        console.log(e.target)
+        menu.childNodes[0].innerHTML = e.target.innerHTML.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+
+      if(menu.getAttribute("open")) menu.removeAttribute("open")
+      else menu.setAttribute("open", true)
+    })
+  });
+
   document.getElementById("sidebar-link-about").onclick = () => {
     openAboutDialog()
   }
-
-  loadPanel("appearance")
 
   document.getElementById("sidebar-scroll-box").addEventListener("scroll", (e) => {
     if(e.target.scrollTop >= 25) document.getElementsByClassName("sidebar-header")[0].style.boxShadow = "0 6.4px 14.4px 0 rgba(0,0,0,.132),0 1.2px 3.6px 0 rgba(0,0,0,.108)"

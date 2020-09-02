@@ -103,3 +103,23 @@ treechildren::-moz-tree-image(partial, selected) {
   fill: white;
   stroke: #0095dd;
 }
+
+.title-text {
+  color: var(--newtab-text-conditional-color) !important;
+}
+
+.description {
+  color: var(--newtab-text-secondary-color) !important;
+}
+
+button {
+  background-color: #97979745;
+}
+
+button:hover {
+  background-color: #56565645 !important;
+}
+
+button:not([class]) > hbox > label {
+  color: #494949;
+}
