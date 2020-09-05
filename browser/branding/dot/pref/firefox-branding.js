@@ -18,6 +18,10 @@ pref("app.update.url.manual", "https://dothq.co"); // TODO Need to set app.updat
 // supplied in the "An update is available" page of the update wizard.
 pref("app.update.url.details", "https://dothq.co"); // TODO Need to set app.update.url.details
 
+pref("app.update.url.details", "https://dothq.co/browser/releasenotes/%VERSION%?lang=%LOCALE%");
+
+pref("app.releaseNotesURL", "https://dothq.co/browser/releasenotes/%VERSION%?lang=%LOCALE%");
+
 // The number of days a binary is permitted to be old
 // without checking for an update.  This assumes that
 // app.update.checkInstallTime is true.
