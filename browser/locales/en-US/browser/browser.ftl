@@ -171,7 +171,7 @@ full-screen-exit =
 
 # This string prompts the user to use the list of one-click search engines in
 # the Urlbar and searchbar.
-search-one-offs-with-title = This time, search with:
+search-one-offs-with-title = Or search using:
 
 # This string won't wrap, so if the translated string is longer,
 # consider translating it as if it said only "Search Settings".

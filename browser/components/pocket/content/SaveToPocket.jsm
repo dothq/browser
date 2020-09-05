@@ -21,11 +21,6 @@ ChromeUtils.defineModuleGetter(
 );
 ChromeUtils.defineModuleGetter(
   this,
-  "Pocket",
-  "chrome://pocket/content/Pocket.jsm"
-);
-ChromeUtils.defineModuleGetter(
-  this,
   "ReaderMode",
   "resource://gre/modules/ReaderMode.jsm"
 );

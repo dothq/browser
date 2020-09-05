@@ -28,8 +28,17 @@
     border: 0px solid transparent;
 }
 
+.tabbrowser-tab[selected="true"]::after {
+    opacity: 0 !important;
+}
+
+.tabbrowser-tab:hover::after {
+    opacity: 0 !important;
+}
+
 .tabbrowser-tab::after {
-    display: none !important;
+    margin-top: 8px !important;
+    margin-bottom: 6px !important;
 }
 
 .titlebar-spacer[type="pre-tabs"] {
@@ -94,8 +103,8 @@
     border-radius: 4px;
 }
 
-#urlbar[focused="true"] > #urlbar-input-container > .urlbar-icon-wrapper, 
-#urlbar[focused="true"] > #urlbar-input-container > .urlbar-icon {
+#urlbar[focused="true"] > #urlbar-input-container > #page-action-buttons > .urlbar-icon-wrapper, 
+#urlbar[focused="true"] > #urlbar-input-container > #page-action-buttons > .urlbar-icon {
     border-radius: 4px;
 }
 

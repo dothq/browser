@@ -50,12 +50,6 @@ ChromeUtils.defineModuleGetter(
   "chrome://pocket/content/pktApi.jsm"
 );
 
-ChromeUtils.defineModuleGetter(
-  this,
-  "Pocket",
-  "chrome://pocket/content/Pocket.jsm"
-);
-
 let BrowserWindowTracker;
 try {
   ChromeUtils.import(

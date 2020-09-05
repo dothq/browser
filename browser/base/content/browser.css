@@ -1433,3 +1433,39 @@ html|*.pointerlockfswarning {
 html|*.pointerlockfswarning-domain-text, html|*.pointerlockfswarning-generic-text {
   font-size: 16px !important;
 }
+
+panel::part(arrowcontent), .panel-arrowcontent {
+  border-radius: 6px !important;
+  border: none !important;
+}
+
+:-moz-any(panel, menupopup)::part(arrow) {
+  stroke: none !important;
+  -moz-context-properties: fill !important;
+  margin-bottom: -4px !important;
+}
+
+.subview-subheader, panelview .toolbarbutton-1, .subviewbutton, .widget-overflow-list .toolbarbutton-1 {
+  min-height: 28px !important;
+  transition: 0.1s background-color;
+}
+
+#widget-overflow-mainView > .panel-subview-body > toolbarseparator, .PanelUI-subView toolbarseparator, .cui-widget-panelview menuseparator, .cui-widget-panel toolbarseparator {
+  margin: 4px 0 !important;
+}
+
+.panel-header > .subviewbutton-back {
+	border-radius: 4px;
+}
+
+.panel-subview-body {
+	padding: 4px 0 !important;
+}
+
+#appMenu-zoomReset-button {
+	min-height: 22px !important;
+}
+
+#identity-popup[connection="chrome"] .identity-popup-security-connection {
+	background-image: url(chrome://branding/content/icon32.png) !important;
+}

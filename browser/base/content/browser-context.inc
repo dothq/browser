@@ -76,9 +76,6 @@
       <menuitem id="context-savelink"
                 data-l10n-id="main-context-menu-save-link"
                 oncommand="gContextMenu.saveLink();"/>
-      <menuitem id="context-savelinktopocket"
-                data-l10n-id="main-context-menu-save-link-to-pocket"
-                oncommand= "Pocket.savePage(gContextMenu.browser, gContextMenu.linkURL);"/>
       <menuitem id="context-copyemail"
                 data-l10n-id="main-context-menu-copy-email"
                 oncommand="gContextMenu.copyEmail();"/>

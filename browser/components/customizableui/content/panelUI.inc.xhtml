@@ -244,18 +244,6 @@
                         oncommand="gSync.toggleAccountPanel('PanelUI-fxa', this, event)"/>
         </toolbaritem>
         <toolbarseparator class="sync-ui-item"/>
-        <toolbaritem>
-          <toolbarbutton id="appMenu-protection-report-button"
-               class="subviewbutton subviewbutton-iconic"
-               oncommand="gProtectionsHandler.openProtections(); gProtectionsHandler.recordClick('open_full_report', null, 'app_menu');">
-            <image id="appMenu-protection-report-icon" class="toolbarbutton-icon"/>
-            <label id="appMenu-protection-report-text"
-                   class="toolbarbutton-text"
-                   data-l10n-id="appmenuitem-protection-dashboard-title">
-            </label>
-          </toolbarbutton>
-        </toolbaritem>
-        <toolbarseparator id="appMenu-tp-separator"/>
         <toolbarbutton id="appMenu-new-window-button"
                        class="subviewbutton subviewbutton-iconic"
                        label="&newNavigatorCmd.label;"
@@ -278,10 +266,6 @@
                        accesskey="s"
                        command="Tools:NonFissionWindow"/>
 #endif
-        <toolbarbutton id="appMenuRestoreLastSession"
-                       label="&appMenuHistory.restoreSession.label;"
-                       class="subviewbutton subviewbutton-iconic"
-                       command="Browser:RestoreLastSession"/>
         <toolbarseparator/>
         <toolbaritem id="appMenu-zoom-controls" class="toolbaritem-combined-buttons" closemenu="none">
           <!-- Use a spacer, because panel sizing code gets confused when using CSS methods. -->
@@ -311,26 +295,6 @@
                          type="checkbox"
                          closemenu="auto"
                          onclick="if (event.button == 0) this.closest('panel').hidePopup();"
-                         tooltip="dynamic-shortcut-tooltip"/>
-        </toolbaritem>
-        <toolbarseparator/>
-        <toolbaritem id="appMenu-edit-controls" class="toolbaritem-combined-buttons" closemenu="none">
-          <!-- Use a spacer, because panel sizing code gets confused when using CSS methods. -->
-          <spacer class="before-label"/>
-          <label value="&editMenu.label;"/>
-          <!-- This spacer keeps the scrollbar from overlapping the view. -->
-          <spacer class="after-label"/>
-          <toolbarbutton id="appMenu-cut-button"
-                         class="subviewbutton subviewbutton-iconic"
-                         command="cmd_cut"
-                         tooltip="dynamic-shortcut-tooltip"/>
-          <toolbarbutton id="appMenu-copy-button"
-                         class="subviewbutton subviewbutton-iconic"
-                         command="cmd_copy"
-                         tooltip="dynamic-shortcut-tooltip"/>
-          <toolbarbutton id="appMenu-paste-button"
-                         class="subviewbutton subviewbutton-iconic"
-                         command="cmd_paste"
                          tooltip="dynamic-shortcut-tooltip"/>
         </toolbaritem>
         <toolbarseparator/>
