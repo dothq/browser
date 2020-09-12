@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://i.imgur.com/u6zGT4z.png" height="80" length="80">
+<img src="https://raw.githubusercontent.com/dothq/browser/main/browser/branding/dot/default64.png" height="80" length="80">
 
 # Dot Browser
 Dot Browser is a privacy-conscious web browser with smarts built-in for protection against trackers and advertisments online.
