@@ -546,7 +546,7 @@ var gSync = {
       fxaMenuAccountButtonEl.classList.add("subviewbutton-nav");
       fxaMenuAccountButtonEl.setAttribute("closemenu", "none");
 
-      headerTitle = state.email;
+      headerTitle = state.displayName;
       headerDescription = this.fxaStrings.GetStringFromName(
         "account.accountSettings"
       );

@@ -1,6 +1,3 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-  <path fill="context-fill" fill-opacity="context-fill-opacity" d="M13 0H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1zm-2.5-9h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zm0 2h-5a.5.5 0 0 0 0 1h5a.5.5 0 1 0 0-1zm0 2h-5a.5.5 0 0 0 0 1h5a.5.5 0 1 0 0-1zm-3 2h-2a.5.5 0 0 0 0 1h2a.5.5 0 1 0 0-1z"/>
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<path fill="context-fill" fill-opacity="context-fill-opacity" fill-rule="evenodd" clip-rule="evenodd" d="M4 4C4 3.44772 4.44772 3 5 3H11C11.5523 3 12 3.44772 12 4C12 4.55228 11.5523 5 11 5H5C4.44772 5 4 4.55228 4 4ZM4 7C4 6.44772 4.44772 6 5 6H9C9.55229 6 10 6.44772 10 7C10 7.55228 9.55229 8 9 8H5C4.44772 8 4 7.55228 4 7ZM4 10C4 9.44771 4.44772 9 5 9H10C10.5523 9 11 9.44771 11 10C11 10.5523 10.5523 11 10 11H5C4.44772 11 4 10.5523 4 10ZM12 2H4C3.44772 2 3 2.44772 3 3V13C3 13.5523 3.44772 14 4 14H12C12.5523 14 13 13.5523 13 13V3C13 2.44772 12.5523 2 12 2ZM4 0C2.34315 0 1 1.34315 1 3V13C1 14.6569 2.34315 16 4 16H12C13.6569 16 15 14.6569 15 13V3C15 1.34315 13.6569 0 12 0H4Z" />
 </svg>
