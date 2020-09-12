@@ -1,6 +1,11 @@
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
-   - License, v. 2.0. If a copy of the MPL was not distributed with this
-   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
-  <path fill="context-fill" fill-opacity="context-fill-opacity" d="M12.408 11.992c-1.663 0-2.813-2-4.408-2s-2.844 2-4.408 2C1.54 11.992.025 10.048 0 6.719c-.015-2.068.6-2.727 3.265-2.727S6.709 5.082 8 5.082s2.071-1.091 4.735-1.091 3.28.66 3.265 2.727c-.025 3.33-1.54 5.274-3.592 5.274zM4.572 6.537c-1.619.07-2.286 1.035-2.286 1.273s1.073.909 2.122.909 2.286-.384 2.286-.727a1.9 1.9 0 0 0-2.122-1.455zm6.857 0a1.9 1.9 0 0 0-2.123 1.455c0 .343 1.236.727 2.286.727s2.122-.671 2.122-.909-.667-1.203-2.286-1.273z"/>
+<g clip-path="url(#clip0)">
+<path fill="context-fill" fill-opacity="context-fill-opacity" fill-rule="evenodd" clip-rule="evenodd" d="M0.00263635 12.928C0.0423813 12.3772 0.521155 11.9628 1.07201 12.0026C5.6906 12.3358 9.8487 12.3536 14.9311 12.0024C15.4821 11.9643 15.9596 12.3801 15.9977 12.9311C16.0357 13.482 15.62 13.9595 15.069 13.9976C9.8942 14.3553 5.64191 14.3375 0.928079 13.9974C0.377226 13.9577 -0.0371085 13.4789 0.00263635 12.928Z" />
+<path fill="context-fill" fill-opacity="context-fill-opacity" d="M3.35086 2.95197C3.49731 2.21937 4.32675 1.79362 5.05073 2.10099C8.87825 3.72604 7.13831 3.81508 11.0512 2.1674C11.7484 1.87381 12.5529 2.25666 12.7383 2.95206L13.9618 9.53024C14.1608 10.2768 13.5587 11 12.7383 11H3.26158C2.47192 11 1.8765 10.3271 2.02203 9.59914L3.35086 2.95197Z" />
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
 </svg>

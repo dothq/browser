@@ -213,11 +213,6 @@ this container is a toolbar. This avoids double-speaking. -->
 
 <!ENTITY pageAction.copyLink.label    "Copy Link">
 
-<!-- LOCALIZATION NOTE(pocket-button.tooltiptext, saveToPocketCmd.label, saveLinkToPocketCmd.label, pocketMenuitem.label):
-  "Pocket" is a brand name. -->
-<!ENTITY saveToPocketCmd.label        "Save Page to Pocket">
-<!ENTITY pocketMenuitem.label         "View Pocket List">
-
 <!ENTITY emailPageCmd.label           "Email Link…">
 
 <!ENTITY fullZoom.label                 "Zoom">

@@ -213,9 +213,6 @@
       <menuitem id="context-savepage"
                 data-l10n-id="main-context-menu-page-save"
                 oncommand="gContextMenu.savePageAs();"/>
-      <menuitem id="context-pocket"
-                data-l10n-id="main-context-menu-save-to-pocket"
-                oncommand="Pocket.savePage(gContextMenu.browser, gContextMenu.browser.currentURI.spec, gContextMenu.browser.contentTitle);"/>
       <menuseparator id="context-sep-sendpagetodevice" class="sync-ui-item"
                      hidden="true"/>
       <menu id="context-sendpagetodevice"

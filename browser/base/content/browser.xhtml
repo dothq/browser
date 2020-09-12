@@ -542,7 +542,6 @@
            noautofocus="true"
            pinTab-title="&pinTab.label;"
            unpinTab-title="&unpinTab.label;"
-           pocket-title="&saveToPocketCmd.label;"
            copyURL-title="&pageAction.copyLink.label;"
            emailLink-title="&emailPageCmd.label;"
            sendToDevice-notReadyTitle="&sendToDevice.syncNotReady.label;"
@@ -1232,10 +1231,6 @@
                        label="&bookmarksSubview.label;"
                        closemenu="none"
                        oncommand="BookmarkingUI.showSubView(this);"/>
-        <toolbarbutton id="appMenu-library-pocket-button"
-                       class="subviewbutton subviewbutton-iconic"
-                       label="&pocketMenuitem.label;"
-                       oncommand="Pocket.openList(event)"/>
         <toolbarbutton id="appMenu-library-history-button"
                        class="subviewbutton subviewbutton-iconic subviewbutton-nav"
                        label="&historyMenu.label;"
@@ -1670,12 +1665,6 @@
                        data-l10n-id="urlbar-page-action-button"
                        onmousedown="BrowserPageActions.mainButtonClicked(event);"
                        onkeypress="BrowserPageActions.mainButtonClicked(event);"/>
-                <image id="pocket-button"
-                       class="urlbar-icon urlbar-page-action"
-                       data-l10n-id="urlbar-pocket-button"
-                       role="button"
-                       hidden="true"
-                       onclick="BrowserPageActions.doCommandForAction(PageActions.actionForID('pocket'), event, this);"/>
                 <hbox id="star-button-box"
                       hidden="true"
                       class="urlbar-icon-wrapper urlbar-page-action"

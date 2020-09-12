@@ -319,5 +319,3 @@ urlbar-go-button =
   .tooltiptext = Go to the address in the Location Bar
 urlbar-page-action-button =
   .tooltiptext = Page actions
-urlbar-pocket-button =
-  .tooltiptext = Save to { -pocket-brand-name }

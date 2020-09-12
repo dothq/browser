@@ -120,10 +120,6 @@ main-context-menu-save-link =
     .label = Save Link As…
     .accesskey = k
 
-main-context-menu-save-link-to-pocket =
-    .label = Save Link to { -pocket-brand-name }
-    .accesskey = o
-
 ## The access keys for "Copy Link Location" and "Copy Email Address"
 ## should be the same if possible; the two context menu items
 ## are mutually exclusive.
@@ -292,10 +288,6 @@ main-context-menu-plugin-play =
 main-context-menu-plugin-hide =
     .label = Hide this plugin
     .accesskey = H
-
-main-context-menu-save-to-pocket =
-    .label = Save Page to { -pocket-brand-name }
-    .accesskey = k
 
 main-context-menu-send-to-device =
     .label = Send Page to Device
