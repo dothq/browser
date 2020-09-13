@@ -32,7 +32,7 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 ## 💻 Build Dot Browser
 > The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
 
-**1.** Download our build tool from [here](https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py]
+**1.** Download our build tool from [here](https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py)
 
 **2.** Grab our source code by typing `python3 bootstrap.py`, this may take a few hours.
 
