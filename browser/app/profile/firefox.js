@@ -2482,7 +2482,6 @@ pref("browser.safebrowsing.provider.google.advisoryURL", "");
 pref("layout.css.backdrop-filter.enabled", true);
 pref("gfx.webrender.all", true);
 pref("browser.tabs.drawInTitlebar", true);
-pref("extensions.activeThemeID", "firefox-compact-light@mozilla.org")
 // ----------------------------
 // END DOT PREF MODIFICATIONS
 // ----------------------------

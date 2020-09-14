@@ -120,6 +120,8 @@ static const RedirEntry kRedirMap[] = {
          nsIAboutModule::URI_CAN_LOAD_IN_PRIVILEGEDABOUT_PROCESS},
     {"pioneer", "chrome://browser/content/pioneer.html",
      nsIAboutModule::ALLOW_SCRIPT | nsIAboutModule::HIDE_FROM_ABOUTABOUT},
+    {"library", "chrome://browser/content/places/places.xhtml",
+     nsIAboutModule::ALLOW_SCRIPT},
 };
 
 static nsAutoCString GetAboutModuleName(nsIURI* aURI) {
