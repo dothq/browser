@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://i.imgur.com/u6zGT4z.png" height="80" length="80">
+<img src="https://raw.githubusercontent.com/dothq/browser/main/browser/branding/dot/default64.png" height="80" length="80">
 
 # Dot Browser
 Dot Browser is a privacy-conscious web browser with smarts built-in for protection against trackers and advertisments online.
@@ -16,14 +16,14 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 
 * **Built-in adblocker** - Dot Browser automatically blocks advertisements and trackers out of the box so you can get back to what you do best, browsing!
 * **Clean and familiar UI** - You won't need to re-invent the wheel to understand the layout.
-* **We don't track you** - We've based Dot Browser on Firefox source code, and we've stripped out all the Mozilla tracking.
+* **We don't track you** - We've based Dot Browser on the Firefox source code, and we've stripped out all the Mozilla tracking.
 * **Sync all your important data to your Dot ID** - You can backup and sync all your browsing history, bookmarks and even passwords.
 * **Modify every aspect of the browser** - With the `config` page, you can tweak and fine-tune anything in the browser. 
 * **Modern New Tab Page** - Our New Tab page features a search box and the latest news in your area. Anything is customisable.
 * **All our code is open-source** - We love transparency, which is why all our code is open-source and publically-available on GitHub.
 
 ## ❗ Issues / Support
-Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, join by clicking the banner below.
+Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, by clicking the banner below.
 
 <a href="https://invite.gg/dot">
   <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
@@ -32,11 +32,9 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 ## 💻 Build Dot Browser
 > The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
 
-**1.** Download our build tool from `npm` by running `npm i @dothq/build -g`, you will need `Node.JS` installed on your system.
+**1.** Download our build tool from [here](https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py)
 
-**2.** Grab our source code by typing `dot get dot`, this may take a few hours.
-
-**2.** Once `dot` finishes up and tells you when it's safe to start building run `./mach bootstrap`.
+**2.** Grab our source code by typing `python3 bootstrap.py`, this may take a few hours.
 
 **3.** You can now pick which build type you want to do when `mach` asks you to choose a build type.
   * You'll need to pick the appropriate build type as different parts of the project require different methods of being built.
