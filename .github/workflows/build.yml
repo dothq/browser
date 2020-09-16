@@ -20,3 +20,18 @@ jobs:
     steps:
       - name: Install Mercurial
         run: ${{ matrix.script_name }}
+
+      - name: Clone mozilla-release
+        run: hg clone https://hg.mozilla.org/releases/mozilla-release dot && cd dot
+
+      - name: Bootstrap mozilla-release
+        run: python3 bootstrap.py
+
+      - name: Clone Dot Browser
+        run: git clone https://github.com/dothq/browser dot-patch
+    
+      - name: Merge Dot Browser into mozilla-release
+        run: mv -v dot-patch/* . && ls
+
+      - name: Build Dot Browser
+        run: ./mach build
