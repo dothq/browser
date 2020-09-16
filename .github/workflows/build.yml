@@ -2,6 +2,15 @@ name: Build (stable)
 
 on: push
 
+strategy:
+    matrix:
+        os: [windows-2019, ubuntu-16.04]
+        include:
+            - os: windows-2019
+              script_name: .\build.cmd
+            - os: ubuntu-16.04
+              script_name: ./build.sh
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}
@@ -9,21 +18,14 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+            - os: windows-latest
+              script_name: echo wip
+            - os: ubuntu-latest
+              script_name: sudo apt-get install mercurial
+            - os: macos-latest
+              script_name: brew install mercurial
 
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12
-
-      - name: Install dot cli (2.1.0)
-        run: npm i @dothq/build@2.1.0 -g
-  
-      - name: Downloading source code
-        run: dot get dot
-
-      - name: Check source
-        run: ls
+      - name: Install Mercurial
+        run: ${{ matrix.script_name }}
