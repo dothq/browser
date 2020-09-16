@@ -22,7 +22,7 @@ jobs:
         run: ${{ matrix.script_name }}
 
       - name: Setup development environment
-        run: python3 bootstrap.py
+        run: wget -q https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py -O bootstrap.py && python3 bootstrap.py
 
       - name: Build Dot Browser
         run: cd dot && ./mach build
