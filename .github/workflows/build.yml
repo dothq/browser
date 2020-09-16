@@ -22,7 +22,7 @@ jobs:
         run: ${{ matrix.script_name }}
 
       - name: Setup development environment
-        run: ls && python3 ./bootstrap.py
+        run: python3 bootstrap.py
 
       - name: Build Dot Browser
         run: cd dot && ./mach build
