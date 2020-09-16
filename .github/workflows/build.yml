@@ -21,7 +21,10 @@ jobs:
       - name: Install Mercurial
         run: ${{ matrix.script_name }}
 
-      - name: Setup development environment
+      - name: Clone bootstrapper
+        run: curl https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py -o bootstrap.py
+      
+      - name: Execute bootstrapper
         run: python3 bootstrap.py
 
       - name: Build Dot Browser
