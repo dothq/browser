@@ -2,15 +2,6 @@ name: Build (stable)
 
 on: push
 
-strategy:
-    matrix:
-        os: [windows-2019, ubuntu-16.04]
-        include:
-            - os: windows-2019
-              script_name: .\build.cmd
-            - os: ubuntu-16.04
-              script_name: ./build.sh
-
 jobs:
   release:
     runs-on: ${{ matrix.os }}
