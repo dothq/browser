@@ -24,8 +24,12 @@ jobs:
       - name: Clone bootstrapper
         run: curl https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py -o bootstrap.py
       
-      - name: Execute bootstrapper
-        run: python3 bootstrap.py
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      
+      - name: Start bootstrapper
+        run: python bootstrap.py
 
       - name: Build Dot Browser
         run: cd dot && ./mach build
