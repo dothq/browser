@@ -15,7 +15,7 @@ jobs:
           persist-credentials: false
 
       - name: Sync repo
-        uses: repo-sync/github-sync@v2
+        uses: repo-sync/github-sync@v2.3.0
         with:
           source_repo: "https://github.com/dothq/ffr"
           source_branch: "release"
