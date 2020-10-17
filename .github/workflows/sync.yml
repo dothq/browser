@@ -2,8 +2,13 @@ name: Sync
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:
+    - cron: '*/1 * * * *' # every minute
+  workflow_dispatch: # manually run sync
+  
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
 
 jobs:
   release:
@@ -14,7 +19,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: repo-sync
+      - name: Sync repo
         uses: repo-sync/github-sync@v2
         with:
           source_repo: "https://github.com/dothq/ffr"
