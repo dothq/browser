@@ -7,12 +7,7 @@ on:
   
 jobs:
   sync:
-
     runs-on: ubuntu-latest
-
-jobs:
-  release:
-    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
