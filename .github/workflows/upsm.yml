@@ -1,0 +1,14 @@
+name: Update submodules
+
+on:
+  schedule:
+    - cron: '*/1 * * * *' # every minute
+  workflow_dispatch: # manually run
+  
+jobs:
+  sync:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master

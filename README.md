@@ -29,6 +29,15 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
   <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
 </a>
 
+## 📚 Versions
+
+Product | Latest stable | Latest beta
+---|---|---
+[Dot Browser for Desktop](https://github.com/dothq/browser-ff) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&include_prereleases&label=latest%20beta%20version)
+[Dot Browser for iOS](https://github.com/dothq/browser-ios) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&include_prereleases&label=latest%20beta%20version)
+[Dot Browser for Android](https://github.com/dothq/browser-android) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-android?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-android?color=white&include_prereleases&label=latest%20beta%20version)
+
+
 ## 💻 Build Dot Browser
 > The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
 

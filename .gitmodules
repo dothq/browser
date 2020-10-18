@@ -1,0 +1,9 @@
+[submodule "ios"]
+	path = ios
+	url = https://github.com/dothq/browser-ios
+[submodule "android"]
+	path = android
+	url = https://github.com/dothq/browser-android
+[submodule "desktop"]
+	path = desktop
+	url = https://github.com/dothq/browser-ff
