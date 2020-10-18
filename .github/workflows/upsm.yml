@@ -6,9 +6,11 @@ on:
   workflow_dispatch: # manually run
   
 jobs:
-  sync:
+  upsm:
 
     runs-on: ubuntu-latest
     steps:
     - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
+      uses: srt32/git-actions@v0.0.3
+      with:
+        args: git submodule update --init --recursive
