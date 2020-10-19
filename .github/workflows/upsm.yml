@@ -10,5 +10,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+    - name: Clone repo
+      run: git clone --recurse-submodules https://github.com/dothq/browser && cd browser
     - name: Update submodules
-      run: git clone --recurse-submodules https://github.com/dothq/browser && cd browser && git submodule update --remote --recursive && git add . && git commit -m "👪 Pull in submodule changes" && git push origin main
+      run: git submodule update --remote --recursive
+    - name: Commit and push
+      run: git add . && git commit -m "👪 Pull in submodule changes" && git push origin main
