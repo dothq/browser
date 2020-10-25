@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/dothq/browser-ff/release/browser/branding/dot/default64.png" height="80" length="80">
+<img src="https://raw.githubusercontent.com/dothq/browser-ff/master/browser/branding/dot/default64.png" height="80" length="80">
 
 # Dot Browser
 Dot Browser is a privacy-conscious web browser with smarts built-in for protection against trackers and advertisments online.
@@ -31,11 +31,11 @@ Create issues [here](https://github.com/dothq/browser/issues/new). Get support f
 
 ## 📚 Versions
 
-Product | Latest stable | Latest beta
----|---|---
-[Dot Browser for Desktop](https://github.com/dothq/browser-ff) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&include_prereleases&label=latest%20beta%20version)
-[Dot Browser for iOS](https://github.com/dothq/browser-ios) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&include_prereleases&label=latest%20beta%20version)
-[Dot Browser for Android](https://github.com/dothq/browser-android) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-android?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-android?color=white&include_prereleases&label=latest%20beta%20version)
+Product | Build status | Latest stable | Latest beta
+---|---|---|--
+[Dot Browser for Desktop](https://github.com/dothq/browser-ff) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-ff/status.svg)](https://ci.dothq.co/dothq/browser-ff) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&include_prereleases&label=latest%20beta%20version)
+[Dot Browser for iOS](https://github.com/dothq/browser-ios) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-ios/status.svg)](https://ci.dothq.co/dothq/browser-ios) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&include_prereleases&label=latest%20beta%20version)
+[Dot Browser for Android](https://github.com/dothq/browser-android) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-android/status.svg)](https://ci.dothq.co/dothq/browser-android) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-android?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-android?color=white&include_prereleases&label=latest%20beta%20version)
 
 
 ## 💻 Build Dot Browser
