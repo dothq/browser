@@ -1,0 +1,13 @@
+{
+  "name": "dot",
+  "version": "0.0.0",
+  "description": "Dot Browser is a privacy-conscious web browser that protects you from being tracked and monitored online.",
+  "main": "index.js",
+  "repository": "https://github.com/dothq/browser",
+  "author": "Dot HQ <contact@dothq.co>",
+  "license": "See LICENSE.md",
+  "devDependencies": {
+    "@types/node": "^14.14.2",
+    "ts-node": "^9.0.0"
+  }
+}
