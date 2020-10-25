@@ -10,9 +10,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - name: Clone repo
-      run: git clone --recurse-submodules https://github.com/dothq/browser && cd browser
-    - name: Update submodules
-      run: git submodule update --remote --recursive
-    - name: Commit and push
-      run: git add . && git commit -m "👪 Pull in submodule changes" && git push origin main
+      - name: Trigger Dependabot Job
+        uses: fjogeleit/http-request-action@master
+        with:
+            url: 'https://api.dependabot.com/update_configs/242491/trigger_update_job'
+            method: 'POST'
+            customHeaders: { 'Authorization': '${{ secrets.DPAB_PTOKEN }}' }
