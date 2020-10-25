@@ -15,4 +15,5 @@ jobs:
         with:
             url: 'https://api.dependabot.com/update_configs/242491/trigger_update_job'
             method: 'POST'
-            customHeaders: { 'Authorization': '${{ secrets.DPAB_PTOKEN }}' }
+            customHeaders: >-
+              { "Authorization": "${{ secrets.DPAB_PTOKEN }}" }
