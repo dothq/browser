@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Help and support
-    url: https://invite.gg/dot
-    about: Join our Discord if you need help or support with Dot Browser.
+  - name: Feature Request
+    url: https://github.com/dothq/browser/discussions/new?category_id=32000754
+    about: Share your feature request with the community 
+  - name: Ask questions, leave feedback and get support
+    url: https://github.com/dothq/browser/discussions/new
+    about: Create a thread in the Discussions tab
