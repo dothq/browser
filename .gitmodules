@@ -7,3 +7,6 @@
 [submodule "desktop"]
 	path = desktop
 	url = https://github.com/dothq/browser-ff
+[submodule "ntp"]
+	path = ntp
+	url = https://github.com/dothq/ntp
