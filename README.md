@@ -65,11 +65,7 @@ Product | Build status | Latest stable | Latest beta
 - [KaiLikesLinux](https://github.com/KaiLikesLinux) - ***Documentation***
 
 ## 💸 Donations
-We accept one-time donations on Ko-Fi to keep our servers running, (you'll have to pay each month if you want a monthly payment)
-
-<a href="https://ko-fi.com/dothq">
-  <img alt="Ko-Fi" width="180" src="https://i.imgur.com/Di0tfki.png" />
-</a>
+We accept donations on [Patreon](https://patreon.com/dothq) to keep our servers running.
 
 ## 📜 License
 **Dot Browser** is licensed under the [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0) license.
