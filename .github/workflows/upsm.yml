@@ -1,19 +1,22 @@
 name: Update submodules
 
-on:
-  schedule:
-    - cron: '*/1 * * * *' # every minute
-  workflow_dispatch: # manually run
-  
+on: [push, workflow_dispatch]
+
 jobs:
   sync:
-
     runs-on: ubuntu-latest
+
     steps:
-      - name: Trigger Dependabot Job
-        uses: fjogeleit/http-request-action@master
-        with:
-            url: 'https://api.dependabot.com/update_configs/242491/trigger_update_job'
-            method: 'POST'
-            customHeaders: >-
-              { "Authorization": "${{ secrets.DPAB_PTOKEN }}" }
+      - uses: actions/checkout@v1
+        with: 
+          submodules: true
+          token: ${{ secrets.ROBOT_TOKEN }}
+
+      - name: Update submodules 
+        run: |
+          git config user.name dothq-robot
+          git config user.email 72629236+dothq-robot@users.noreply.github.com
+          git submodule update --remote --merge
+          git add .
+          git commit -m "👽 Update $(git --no-pager diff --name-only --cached | sed ':a; N; $!ba; s/\n/, /g') submodule"
+          git push origin master
