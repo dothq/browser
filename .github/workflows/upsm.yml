@@ -7,16 +7,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-        with: 
-          submodules: true
-          token: ${{ secrets.ROBOT_TOKEN }}
+      - name: Clone repository
+        run: |
+          git config user.name dothq-robot
+          git config user.email 72629236+dothq-robot@users.noreply.github.com
+          git clone --recurse-submodules -j8 https://github.com/dothq/browser
 
       - name: Update submodules 
         run: |
+          cd browser
           git config user.name dothq-robot
           git config user.email 72629236+dothq-robot@users.noreply.github.com
           git submodule update --remote --merge
           git add .
           git commit -m "👽 Update $(git --no-pager diff --name-only --cached | sed ':a; N; $!ba; s/\n/, /g') submodule"
-          git push origin master
+          git push origin main
