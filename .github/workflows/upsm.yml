@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Clone repository
         run: |
-          git config user.name dothq-robot
-          git config user.email 72629236+dothq-robot@users.noreply.github.com
+          git config --global user.name dothq-robot
+          git config --global user.email 72629236+dothq-robot@users.noreply.github.com
           git clone --recurse-submodules -j8 https://github.com/dothq/browser
 
       - name: Update submodules 
