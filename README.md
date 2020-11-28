@@ -14,20 +14,26 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 
 ## 🚀 Features
 
-* **Built-in adblocker** - Dot Browser automatically blocks advertisements and trackers out of the box so you can get back to what you do best, browsing!
-* **Clean and familiar UI** - You won't need to re-invent the wheel to understand the layout.
-* **We don't track you** - We've based Dot Browser on the Firefox source code, and we've stripped out all the Mozilla tracking.
-* **Sync all your important data to your Dot ID** - You can backup and sync all your browsing history, bookmarks and even passwords.
-* **Modify every aspect of the browser** - With the `config` page, you can tweak and fine-tune anything in the browser. 
-* **Modern New Tab Page** - Our New Tab page features a search box and the latest news in your area. Anything is customisable.
-* **All our code is open-source** - We love transparency, which is why all our code is open-source and publically-available on GitHub.
+|  | Dot Browser |
+| - | ------------ |
+| 🚫 | **Built-in adblocker** that blocks thousands of advertisments and trackers |
+| 📫 | **Keep your mailbox shut** with the built-in email mask |
+| 🔒 | **No tracking or telemetry** data is collected from you |
+| ✨ | **Stylish and customisable interface** |
+| 🦊 | **Firefox based*** to give more competition in the browser space. [Learn more](https://github.com/dothq/browser-ff#-foreword) |
+| 📱 | **Multiplatform** with versions of Dot on Windows, macOS and Linux** |
+| 🤝 | **Sync your data** securely and easily with Dot IDs |
+| 🆓 | **Always free** |
+| 💻 | **Open-source** and open for contributions |
 
-## ❗ Issues / Support
-Create issues [here](https://github.com/dothq/browser/issues/new). Get support from our discord server, by clicking the banner below.
+**desktop version is based on Firefox*
+<br />
+***mobile version coming soon*
 
-<a href="https://invite.gg/dot">
-  <img src="https://discordapp.com/api/guilds/525056817399726102/widget.png?style=banner2" />
-</a>
+## 💬 Bugs and Support
+Found a bug in Dot Browser? You can report it by [creating a new issue](https://github.com/dothq/browser/issues/new?assignees=&labels=%F0%9F%90%9C+bug&template=bug_report.md&title=).
+
+Need assistance or want to ask a question? You can [join our Discord server](https://dothq.co/join) or [start a dicussion](https://github.com/dothq/browser/discussions/new).
 
 ## 📚 Versions
 
@@ -36,25 +42,6 @@ Product | Build status | Latest stable | Latest beta
 [Dot Browser for Desktop](https://github.com/dothq/browser-ff) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-ff/status.svg)](https://ci.dothq.co/dothq/browser-ff) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&include_prereleases&label=latest%20beta%20version)
 [Dot Browser for iOS](https://github.com/dothq/browser-ios) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-ios/status.svg)](https://ci.dothq.co/dothq/browser-ios) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&include_prereleases&label=latest%20beta%20version)
 [Dot Browser for Android](https://github.com/dothq/browser-android) | [![Build Status](https://ci.dothq.co/api/badges/dothq/browser-android/status.svg)](https://ci.dothq.co/dothq/browser-android) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-android?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-android?color=white&include_prereleases&label=latest%20beta%20version)
-
-
-## 💻 Build Dot Browser
-> The following steps are designed for unix-based operating systems, if you want to build Dot Browser on Windows, please refer to [this doc](https://dothq.github.io/browser/build-for-windows).
-
-**1.** Download our build tool from [here](https://raw.githubusercontent.com/dothq/browser/main/bootstrap.py)
-
-**2.** Grab our source code by typing `python3 bootstrap.py`, this may take a few hours.
-
-**3.** You can now pick which build type you want to do when `mach` asks you to choose a build type.
-  * You'll need to pick the appropriate build type as different parts of the project require different methods of being built.
-  
-    * **Artifact builds** - When building with the Artifact type instead of compiling the C++ code on your system, `mach` will fetch pre-built binaries from Mozilla and then   will link the frontend (html, js, css) with the binary. Artifact builds take under a minute to build on a mid-range system.
-    
-    * **Full builds** - Full builds are used when you want to modify the C++ code or want to generate a custom binary for distribution.
-    
-**4.** You can then start the build once `mach` says your system is ready, the command to build the project is `./mach build`. This may take a few seconds up to a few hours.
-
-**5.** If you've made it this far, you've successfully built Dot Browser! Now, you'll want to run the binary you built, you can do this by running `./mach run`.
 
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
@@ -67,8 +54,8 @@ Product | Build status | Latest stable | Latest beta
 ## 💸 Donations
 We accept donations on [Patreon](https://patreon.com/dothq) to keep our servers running.
 
-## 📜 License
-**Dot Browser** is licensed under the [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0) license.
+## 📜 Licenses
+**Dot Browser for Desktop** is licensed under the [MPL-2.0](https://www.mozilla.org/en-US/MPL/2.0) license.
 
 ## Contributors ✨
 
