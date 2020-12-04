@@ -33,7 +33,7 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 ## 💬 Bugs and Support
 Found a bug in Dot Browser? You can report it by [creating a new issue](https://github.com/dothq/browser/issues/new?assignees=&labels=%F0%9F%90%9C+bug&template=bug_report.md&title=).
 
-Need assistance or want to ask a question? You can [join our Discord server](https://dothq.co/join) or [start a dicussion](https://github.com/dothq/browser/discussions/new).
+Need assistance or want to ask a question? You can [join our Discord server](https://dothq.co/join) or [start a discussion](https://github.com/dothq/browser/discussions/new).
 
 ## 📚 Versions
 
