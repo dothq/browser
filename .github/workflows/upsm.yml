@@ -11,11 +11,12 @@ jobs:
         with:
           token: '${{ secrets.ROBOT_TOKEN }}'
           submodules: 'true'
-          
+
       - name: Update submodules 
         run: |
           git config --global user.name dothq-robot
           git config --global user.email 72629236+dothq-robot@users.noreply.github.com
+          git pull
           git submodule status
           git submodule update --init --recursive
           git add .
