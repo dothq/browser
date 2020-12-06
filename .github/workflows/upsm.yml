@@ -18,6 +18,7 @@ jobs:
           cd browser
           git config user.name dothq-robot
           git config user.email 72629236+dothq-robot@users.noreply.github.com
+          git submodule status
           git submodule update --init --recursive
           git add .
           git commit -m "👽 Update $(git --no-pager diff --name-only --cached | sed ':a; N; $!ba; s/\n/, /g') submodule"
