@@ -16,6 +16,7 @@ jobs:
       - name: Update submodules 
         run: |
           cd browser
+          git checkout $GITHUB_SHA
           git config user.name dothq-robot
           git config user.email 72629236+dothq-robot@users.noreply.github.com
           git submodule status
