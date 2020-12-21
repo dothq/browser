@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: Extensions'
+about: Report an issue with the adblocker or any of the preloaded extensions.
+title: "[Extension]: "
+labels: bug/extension
 assignees: ''
 
 ---
@@ -36,6 +36,9 @@ If applicable, add screenshots to help explain your problem.
 **Dot Browser Information (please complete the following information):**
  - Version: [e.g. 1.2.3]
  - Site you were on before the bug appeared: [e.g. dothq.co]
+
+**Extension Information (please complete the following information):**
+ - Version: [e.g. 1.2.3]
 
 **Additional context**
 Add any other context about the problem here.

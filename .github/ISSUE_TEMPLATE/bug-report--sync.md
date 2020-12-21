@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: Sync'
+about: Report an issue with synchronisation or the sync server.
+title: "[Sync]: "
+labels: bug/sync
 assignees: ''
 
 ---

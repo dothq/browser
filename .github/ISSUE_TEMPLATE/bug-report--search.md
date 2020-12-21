@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: Search'
+about: Report an issue with the search function.
+title: "[Search]: "
+labels: bug/search
 assignees: ''
 
 ---

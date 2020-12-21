@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: Settings'
+about: Report an issue with the settings or config page.
+title: "[Settings]: "
+labels: bug/settings
 assignees: ''
 
 ---

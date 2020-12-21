@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: New Tab Page (Compass)'
+about: Report an issue with Compass.
+title: "[NTP]: "
+labels: bug/ntp
 assignees: ''
 
 ---
