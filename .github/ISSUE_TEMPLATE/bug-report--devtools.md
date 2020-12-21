@@ -1,8 +1,8 @@
 ---
-name: Bug report
-about: Create a report to help us improve Dot Browser
-title: ''
-labels: ''
+name: 'Bug report: Devtools'
+about: Report an issue with the devtools.
+title: "[Devtools]: "
+labels: bug/devtools
 assignees: ''
 
 ---

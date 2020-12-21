@@ -1,8 +1,8 @@
 ---
-name: Bug report
+name: 'Bug report: Generic'
 about: Create a report to help us improve Dot Browser
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
