@@ -13,6 +13,7 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive
+          git submodule foreach --recursive git submodule update --init 
 
       - name: Push to GitHub
         run: |
