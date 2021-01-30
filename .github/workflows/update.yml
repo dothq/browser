@@ -25,5 +25,5 @@ jobs:
           git status
           git add desktop android ios ntp
           git commit -m "👽 Update submodules"
-          git remote set-url origin https://${{ secrets.ROBOT_TOKEN }}@github.com/{username}/{project}.git
+          git remote set-url origin https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
           git push origin main
