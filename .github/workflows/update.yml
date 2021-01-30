@@ -25,4 +25,4 @@ jobs:
           git status
           git add desktop android ios ntp
           git commit -m "👽 Update submodules"
-          git push origin main
+          git push origin HEAD:main
