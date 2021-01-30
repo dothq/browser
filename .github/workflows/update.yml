@@ -1,0 +1,20 @@
+name: Update submodules
+
+on: [push, workflow_dispatch]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+
+      - name: Checkout submodules
+        uses: textbook/git-checkout-submodule-action@master
+
+      - name: Push to GitHub
+        run: |
+          git config --global user.name dothq-robot
+          git config --global user.email 72629236+dothq-robot@users.noreply.github.com
+          git commit -m "👽 Update $(git --no-pager diff --name-only --cached | sed ':a; N; $!ba; s/\n/, /g') submodule"
+          git push
