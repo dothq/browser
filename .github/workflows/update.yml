@@ -13,7 +13,10 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive
-          git submodule foreach -q --recursive 'branch="$(git config -f <path>.gitmodules submodule.$name.branch)"; git checkout $branch'
+          cd desktop && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
+          cd android && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
+          cd ios && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
+          cd ntp && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
 
       - name: Push to GitHub
         run: |
@@ -21,5 +24,5 @@ jobs:
           git config --global user.email 72629236+dothq-robot@users.noreply.github.com
           git status
           git add .
-          git commit -m "👽 Update $(git --no-pager diff --name-only --cached | sed ':a; N; $!ba; s/\n/, /g') submodule"
+          git commit -m "👽 Update submodules"
           git push
