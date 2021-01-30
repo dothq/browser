@@ -7,10 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@v1
 
       - name: Checkout submodules
-        uses: textbook/git-checkout-submodule-action@master
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
 
       - name: Push to GitHub
         run: |
