@@ -1,6 +1,9 @@
 name: Update submodules
 
-on: [push, workflow_dispatch]
+on:
+  schedule:
+    - cron: '*/1 * * * *' # every minute
+  workflow_dispatch: # manually run
 
 jobs:
   run:
