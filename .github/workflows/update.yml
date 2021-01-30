@@ -13,7 +13,7 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive
-          git submodule foreach --recursive git submodule update --init 
+          git submodule foreach -q --recursive 'branch="$(git config -f <path>.gitmodules submodule.$name.branch)"; git checkout $branch'
 
       - name: Push to GitHub
         run: |
