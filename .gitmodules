@@ -10,3 +10,6 @@
 [submodule "ntp"]
 	path = ntp
 	url = https://github.com/dothq/ntp
+[submodule "extensions/adblock"]
+	path = extensions/adblock
+	url = https://github.com/dothq/adblock.git
