@@ -20,10 +20,7 @@ jobs:
           cd browser
           git submodule sync --recursive
           git submodule update --init --recursive
-          cd desktop && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
-          cd android && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
-          cd ios && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
-          cd ntp && git fetch && git checkout $(git log --branches -1 --pretty=format:"%H") && cd ..
+          git submodule foreach 'git fetch && git checkout $(git log --branches -1 --pretty=format:"%H")'
 
       - name: Push to GitHub
         run: |
