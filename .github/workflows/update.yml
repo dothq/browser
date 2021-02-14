@@ -28,6 +28,6 @@ jobs:
           git config --global user.name "dothq-robot"
           git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
           git status
-          git add desktop android ios ntp
+          git add .
           git commit -m "👽 Update submodules"
           git push origin main
