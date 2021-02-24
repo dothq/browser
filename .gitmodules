@@ -13,3 +13,6 @@
 [submodule "extensions/adblock"]
 	path = extensions/adblock
 	url = https://github.com/dothq-extensions/adblock.git
+[submodule "services/updates"]
+	path = services/updates
+	url = https://github.com/dothq-services/update-server
