@@ -16,3 +16,4 @@
 [submodule "services/updates"]
 	path = services/updates
 	url = https://github.com/dothq-services/update-server
+	branch = main
