@@ -48,7 +48,7 @@ Product | Build status | Latest stable | Latest beta
 
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
-- [AwesomeTech10](https://github.com/AwesomeTech10) - ***Main Developer***
+- [TrevorThalacker](https://github.com/trevorthalacker) - ***Main Developer***
 - [KaiLikesLinux](https://github.com/KaiLikesLinux) - ***Documentation***
 
 ## 💸 Donations
@@ -67,7 +67,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/HVENetworks"><img src="https://avatars2.githubusercontent.com/u/36706682?v=4" width="100px;" alt=""/><br /><sub><b>HVENetworks</b></sub></a><br /><a href="#security-HVENetworks" title="Security">🛡️</a></td>
-    <td align="center"><a href="http://awesometech10.js.org"><img src="https://avatars1.githubusercontent.com/u/22264706?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=AwesomeTech10" title="Code">💻</a></td>
+    <td align="center"><a href="https://trevorthalacker.me"><img src="https://avatars1.githubusercontent.com/u/22264706?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=trevorthalacker" title="Code">💻</a></td>
 
   </tr>
 </table>
