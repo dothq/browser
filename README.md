@@ -40,7 +40,6 @@ Need assistance or want to ask a question? You can [join our Discord server](htt
 Product | Build status | Latest stable | Latest beta
 ---|---|---|--
 [Dot Browser for Desktop](https://github.com/dothq/browser-ff) | ![Build](https://github.com/dothq/browser-ff/workflows/Build/badge.svg) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ff?color=white&include_prereleases&label=latest%20beta%20version)
-[Dot Browser for iOS](https://github.com/dothq/browser-ios) | ![Build](https://github.com/dothq/browser-ios/workflows/Build/badge.svg) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-ios?color=white&include_prereleases&label=latest%20beta%20version)
 [Dot Browser for Android](https://github.com/dothq/browser-android) | ![Build](https://github.com/dothq/browser-android/workflows/Build/badge.svg) | ![Latest stable](https://img.shields.io/github/v/release/dothq/browser-android?color=white&label=latest%20version) | ![Latest beta](https://img.shields.io/github/v/release/dothq/browser-android?color=white&include_prereleases&label=latest%20beta%20version)
 
 ## ❤️ Acknowledgements
