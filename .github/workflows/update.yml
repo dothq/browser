@@ -28,6 +28,5 @@ jobs:
           git config --global user.name "dothq-robot"
           git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
           git status
-          git add .
-          git commit -m "👽 Update submodules"
+          git submodule foreach 'git add . && git commit -m "🆙 Update $(basename $PWD) submodule"'
           git push origin main
