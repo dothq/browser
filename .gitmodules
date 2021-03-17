@@ -13,6 +13,9 @@
 [submodule "extensions/adblock"]
 	path = extensions/adblock
 	url = https://github.com/dothq-extensions/adblock.git
+[submodule "extensions/adblock-db"]
+	path = extensions/adblock-db
+	url = https://github.com/dothq-extensions/shield-db.git
 [submodule "services/updates"]
 	path = services/updates
 	url = https://github.com/dothq-services/update-server
