@@ -17,3 +17,6 @@
 	path = services/updates
 	url = https://github.com/dothq-services/update-server
 	branch = main
+[submodule "extensions/adblock-db"]
+	path = extensions/adblock-db
+	url = https://github.com/dothq-extensions/shield-db.git
