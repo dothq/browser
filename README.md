@@ -1,7 +1,4 @@
 <div align="center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 <img src="https://github.com/dothq/browser-ff/blob/nightly/common/browser/branding/dot/default256.png" height="80" length="80">
 
 # Dot Browser
@@ -62,19 +59,8 @@ We accept donations on [Patreon](https://patreon.com/dothq) to keep our servers 
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/bigspeedfpv"><img src="https://avatars.githubusercontent.com/u/21012310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=bigspeedfpv" title="Code">💻</a></td>
-  </tr>
-</table>
-
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -83,6 +69,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/HVENetworks"><img src="https://avatars2.githubusercontent.com/u/36706682?v=4" width="100px;" alt=""/><br /><sub><b>HVENetworks</b></sub></a><br /><a href="#security-HVENetworks" title="Security">🛡️</a></td>
     <td align="center"><a href="https://trevorthalacker.me"><img src="https://avatars1.githubusercontent.com/u/22264706?v=4" width="100px;" alt=""/><br /><sub><b>Trevor</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=trevorthalacker" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/bigspeedfpv"><img src="https://avatars.githubusercontent.com/u/21012310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=bigspeedfpv" title="Code">💻</a></td>
 
   </tr>
 </table>
