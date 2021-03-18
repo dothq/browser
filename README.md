@@ -6,7 +6,7 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 
 [![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=shield)](https://invite.gg/dot)
 ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <img src="https://dothq.co/static/landing-showcase-0a396cdd550cc2515aa0925f4aa01f31.png" />
@@ -70,6 +70,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/bigspeedfpv"><img src="https://avatars.githubusercontent.com/u/21012310?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Andrew</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=bigspeedfpv" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/trickypr"><img src="https://avatars.githubusercontent.com/u/23250792?v=4?s=100" width="100px;" alt=""/><br /><sub><b>trickypr</b></sub></a><br /><a href="https://github.com/dothq/browser/commits?author=trickypr" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/HVEVB"><img src="https://avatars.githubusercontent.com/u/36706634?v=4?s=100" width="100px;" alt=""/><br /><sub><b>HVEVB</b></sub></a><br /><a href="#security-HVEVB" title="Security">🛡️</a></td>
   </tr>
 </table>
 
