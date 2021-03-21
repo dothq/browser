@@ -9,7 +9,7 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<img src="https://dothq.co/static/landing-showcase-0a396cdd550cc2515aa0925f4aa01f31.png" />
+<img src="https://i.imgur.com/yxXDgmJ.png" />
 
 </div>
 
