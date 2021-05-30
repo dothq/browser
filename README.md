@@ -50,7 +50,7 @@ Product | Build status | Latest stable | Latest beta
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
 - [TrevorThalacker](https://github.com/trevorthalacker) - ***Main Developer***
-- [KaiLikesLinux](https://github.com/KaiLikesLinux) - ***Documentation***
+- [KaiLikesLinux](https://github.com/KaiTheCEO) - ***Documentation***
 
 ## 💸 Donations
 We accept donations on [Liberapay](https://liberapay.com/dothq) or [Patreon](https://patreon.com/dothq) to keep our servers running.
