@@ -6,7 +6,7 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 
 [![Discord](https://discordapp.com/api/guilds/525056817399726102/widget.png?style=shield)](https://invite.gg/dot)
 ![GitHub All Releases](https://img.shields.io/github/downloads/dothq/browser/total?color=black) ![GitHub stars](https://img.shields.io/github/stars/dothq/browser?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/dothq/browser?style=social) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=shield)](#contributors-)
 [![Donate on Liberapay](https://img.shields.io/liberapay/receives/dothq.svg?logo=liberapay)](https://liberapay.com/dothq)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
