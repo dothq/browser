@@ -35,9 +35,65 @@ Example: `💄 Updated the style of the UI`
 Same as commit messages, prepend the emoji corresponding to your change.
 Example: `⚡ Improve performance of the app`
 
-## Running the application
+## Developing the application
 
-To build and run Dot Browser, follow these simple instructions.
+If you want to test bleeding edge builds of Dot Browser, you can [download them from the release page](https://github.com/dothq/browser-desktop/releases).
+
+To build and contribute to Dot Browser, follow these instructions. 
+
+### Depenancies
+
+First you are going to need to install the folowing programs onto your computer depending on your operating system.
+
+#### Windows
+**TODO:** Windwos install docs
+
+#### MacOS
+Install xcode's dev tools using the following command:
+```bash
+xcode-select --install
+```
+Please install the following packages through [brew](https://brew.sh):
+ - `yasm`
+ - `nasm`
+
+#### Debian/ubuntu
+Please install the following packages through apt:
+ - `build-essential`
+ - `libpython3-dev`
+ - `m4`
+ - `nodejs`
+ - `unzip`
+ - `uuid`
+ - `zip`
+ - `yarnpkg`
+ - `libasound2-dev`
+ - `libcurl4-openssl-dev`
+ - `libdbus-1-dev`
+ - `libdbus-glib-1-dev`
+ - `libdrm-dev`
+ - `libgtk-3-dev`
+ - `libpulse-dev`
+ - `libx11-xcb-dev`
+ - `libxt-dev`
+ - `xvfb`
+ - `nasm`
+ - `yasm`
+ - `libgtk2.0-dev`
+
+**Arch/manjaro**
+Ensure you have the following programs installed on your system: 
+ - `git`
+ - `nodejs`
+ - `yarn`
+ 
+Then run the bootstrapping script to get all of your dependancies installed:
+```bash
+git clone https://github.com/dothq/browser-desktop
+cd browser-desktop
+# Melon is the build tool used to develop dot browser
+./melon boostrap
+```
 
 You will need [Git](https://git-scm.com), [Node](https://nodejs.org) and [Yarn](https://yarnpkg.com/) installed for this to work!
 
