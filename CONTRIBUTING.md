@@ -35,7 +35,7 @@ Example: `💄 Updated the style of the UI`
 Same as commit messages, prepend the emoji corresponding to your change.
 Example: `⚡ Improve performance of the app`
 
-## Developing the application
+## Developing Dot Browser
 
 If you want to test bleeding edge builds of Dot Browser, you can [download them from the release page](https://github.com/dothq/browser-desktop/releases).
 
@@ -81,7 +81,7 @@ Please install the following packages through apt:
  - `yasm`
  - `libgtk2.0-dev`
 
-**Arch/manjaro**
+#### Arch/manjaro
 Ensure you have the following programs installed on your system: 
  - `git`
  - `nodejs`
@@ -95,24 +95,28 @@ cd browser-desktop
 ./melon boostrap
 ```
 
-You will need [Git](https://git-scm.com), [Node](https://nodejs.org) and [Yarn](https://yarnpkg.com/) installed for this to work!
-
+### First build
+First, clone the repository containing the code for the desktop browser:
 ```bash
-git clone https://git.dothq.co/browser
-cd browser
-yarn
-yarn dev
+git clone https://github.com/dothq/browser-desktop
+cd browser-desktop
 ```
-
-Then open a new terminal window and type:
-
+Now we need to download the source code from firefox. To do this run:
 ```bash
-yarn start
+./melon download
 ```
-
-You should now see Dot opening.
-
-Read on for more info about the structure of our app.
+This will download the firefox source code. Once it has compleated, run:
+```bash
+./melon import
+```
+This applies the custom changes that make Dot Browser special. Once it it has compleated, you can start compiling the browser:
+```bash
+./melon build
+```
+This can take anywhere between half an hour to an hour and a half depending on how good your computer is. Once it has finished, run:
+```bash
+./melon run
+```
 
 ## Plugins
 
