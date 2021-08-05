@@ -6,6 +6,9 @@ labels: ''
 assignees: ''
 
 ---
+<!--
+IMPORTANT! Make sure you check the issue tracker to see if your issue has already been reported.
+->
 
 **Preflight Checklist**
 <!-- Please ensure you've completed the following steps by replacing [ ] with [x]-->
