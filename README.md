@@ -22,7 +22,7 @@ Dot Browser is a privacy-conscious web browser with smarts built-in for protecti
 |  | Dot Browser |
 | - | ------------ |
 | 🚫 | **Built-in adblocker** that blocks thousands of advertisments and trackers. [Learn more](https://github.com/dothq-extensions/adblock) |
-| 🔄 | **Open-source translator** for anyone to improve. [Learn more](https://github.com/dothq/dialect) |
+| 🔄 | **Powerful client-side translator** so no third-party can snoop in. [Learn more](https://github.com/dothq/dialect) |
 | 📫 | **Keep your mailbox shut** with the built-in email mask |
 | 🔒 | **No tracking or telemetry** data is collected from you |
 | ✨ | **Stylish and customisable interface** |
