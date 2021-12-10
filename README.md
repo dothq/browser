@@ -53,7 +53,7 @@ Product | Build status | Latest stable | Latest beta
 
 ## 🤝 Contributors
 - [EnderDev](https://github.com/EnderDev) - ***Main Developer***
-- [TrevorThalacker](https://github.com/trevorthalacker) - ***Main Developer***
+- [Jamie Thalacker](https://github.com/jamiethalacker) - ***Main Developer***
 - [KaiLikesLinux](https://github.com/KaiTheCEO) - ***Documentation***
 
 ## 💸 Donations
