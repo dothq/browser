@@ -18,7 +18,7 @@ body:
   - type: textarea
     attributes:
       label: Description
-      description: Provide a brief description of the feature request.
+      description: Provide a brief description of the feature request. If possible, provide sketches/mockups of your idea to help us understand better.
     validations:
       required: true
 
