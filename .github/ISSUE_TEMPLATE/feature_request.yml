@@ -1,0 +1,40 @@
+name: Feature Request
+description: Suggest an idea for Dot Browser
+title: "[Feature Request]: "
+labels: "feature"
+assignees:
+  - EnderDev
+body:
+  - type: checkboxes
+    attributes:
+      label: Preflight Checklist
+      description: Ensure you have done all the following.
+      options:
+        - label: I have checked the [issue tracker](https://github.com/dothq/browser/issues) for issues that may be similar to mine.
+          required: true
+        - label: I have checked that the title is not empty.
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a brief description of the feature request.
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Is this feature request related to a bug? For example, is your feature request a result of an existing issue/bug, so "I would like an option to customise the colour of the new tab button because it is too dark on some screens.".
+      description: 
+      options:
+        - Yes
+        - No (link to the issue in the next field)
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: Add any other context about the feature request here.
+    validations:
+      required: false

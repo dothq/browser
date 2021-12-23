@@ -14,7 +14,7 @@ body:
           required: true
         - label: I have checked whether this issue can be reproduced on another setup (e.g. other operating system or browser version/channel)
           required: true
-        - label: I have checked the title is not empty.
+        - label: I have checked that the title is not empty.
           required: true
 
   - type: textarea
