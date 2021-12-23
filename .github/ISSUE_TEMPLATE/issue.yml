@@ -1,0 +1,75 @@
+name: Bug Report
+description: Report an issue with Dot Browser
+title: "[Bug]: "
+labels: "bug"
+assignees:
+  - EnderDev
+body:
+  - type: checkboxes
+    attributes:
+      label: Preflight Checklist
+      description: Ensure you have done all the following.
+      options:
+        - label: I have checked the [issue tracker](https://github.com/dothq/browser/issues) for issues that may be similar to mine.
+          required: true
+        - label: I have checked whether this issue can be reproduced on another setup (e.g. other operating system or browser version/channel)
+          required: true
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: Provide a brief description of the issue
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Please add a series of steps to reproduce the issue
+      placeholder: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Actual result
+      description: Describe what happened. If you can, please provide screenshots/video of the issue
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected result
+      description: Describe what *should* have happened
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Browser version
+      description: The browser version can be obtained from the "About" item in the browser dropdown menu.
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Browser build date
+      description: The browser build date can be obtained from the "About" item in the browser dropdown menu.
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Browser channel
+      options:
+        # - Stable todo(EnderDev): make these available when we open the update server
+        # - Beta todo(EnderDev): make these available when we open the update server
+        - Nightly
+
+  - type: textarea
+    attributes:
+      label: Other information
+      description: Please let us know if there is anything else we need to know about this issue or if there are any extra steps you would need to take to reproducing the issue.
