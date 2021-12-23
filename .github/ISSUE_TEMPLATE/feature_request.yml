@@ -27,8 +27,8 @@ body:
       label: Is this feature request related to a bug?
       description: For example, is your feature request a result of an existing issue/bug, so "I would like an option to customise the colour of the new tab button because it is too dark on some screens.".
       options:
-        - Yes
-        - No (link to the issue in the next field)
+        - "Yes"
+        - "No (link to the issue in the next field)"
     validations:
       required: true
 
