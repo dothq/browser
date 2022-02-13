@@ -51,11 +51,6 @@ Product | Build status | Latest stable | Latest beta
 ## ❤️ Acknowledgements
 - Dot Browser wouldn't be possible without the amazing [Firefox open-source project](https://hg.mozilla.org/mozilla-central/), developed by [Mozilla](https://mozilla.org).
 
-## 🤝 Contributors
-- [EnderDev](https://github.com/EnderDev) - ***Main Developer***
-- [Jamie Thalacker](https://github.com/jamiethalacker) - ***Main Developer***
-- [KaiLikesLinux](https://github.com/KaiTheCEO) - ***Documentation***
-
 ## 💸 Donations
 We accept donations on [Liberapay](https://liberapay.com/dothq) or [Patreon](https://patreon.com/dothq) to keep our servers running.
 
