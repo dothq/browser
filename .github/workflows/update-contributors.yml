@@ -2,6 +2,8 @@ name: Update contributors
 
 on:
   push:
+    paths-ignore:
+      - 'CONTRIBUTORS.md'
 
 jobs:
   run:
