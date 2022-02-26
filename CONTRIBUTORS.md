@@ -5,11 +5,8 @@
 * Dot HQ (@dothq-robot) <<72629236+dothq-robot@users.noreply.github.com>>
 * Ejaz (@ejaz4) <<73548455+ejaz4@users.noreply.github.com>>
 * George (@FozzieHi) <<23139726+FozzieHi@users.noreply.github.com>>
-* johnpaulbin (@johnpaulbin) <johnpaulbin*********>
-* Judah Brown (@VelocityDesign) <<24457862+VelocityDesign@users.noreply.github.com>>
 * Kieran (@EnderDev) <<42723993+EnderDev@users.noreply.github.com>>
 * Levi Richardson (@lerichardson) <litbelb1@o*********>
-* Luna (@Lunarequest) <<30698906+Lunarequest@users.noreply.github.com>>
 * Marc Espín (@marc2332) <mespinsanz*********>
 * Nathan Ritchie (@ctaetcsh) <<48845980+ctaetcsh@users.noreply.github.com>>
 * proudmuslim-dev (@proudmuslim-dev) <<69869443+proudmuslim-dev@users.noreply.github.com>>
