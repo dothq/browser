@@ -6,7 +6,6 @@
 * Ejaz (@ejaz4) <<73548455+ejaz4@users.noreply.github.com>>
 * George (@FozzieHi) <<23139726+FozzieHi@users.noreply.github.com>>
 * Kieran (@EnderDev) <<42723993+EnderDev@users.noreply.github.com>>
-* Levi Richardson (@lerichardson) <litbelb1@o*********>
 * Marc Espín (@marc2332) <mespinsanz*********>
 * Nathan Ritchie (@ctaetcsh) <<48845980+ctaetcsh@users.noreply.github.com>>
 * proudmuslim-dev (@proudmuslim-dev) <<69869443+proudmuslim-dev@users.noreply.github.com>>
