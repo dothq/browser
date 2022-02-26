@@ -1,4 +1,4 @@
-name: Update submodules
+name: Update contributors
 
 on:
   push:
@@ -14,14 +14,8 @@ jobs:
           git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
           cd browser
           git status
-
-      - name: Checkout submodules
-        run: |
           yarn add axios
           ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node .github/update-contributors.js
-
-      - name: Push to GitHub
-        run: |
           git add CONTRIBUTORS.md
           git commit -m "👥 Update CONTRIBUTORS.md"
           git push origin main
