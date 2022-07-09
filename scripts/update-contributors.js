@@ -74,7 +74,7 @@ const run = async () => {
 		}
 
 		file.push(
-			`* ${name} (@${username}) ${
+			`* ${name} ([@${username}](https://github.com/${username})) ${
 				formattedEmail && formattedEmail.length
 					? `<${formattedEmail}>`
 					: ``
