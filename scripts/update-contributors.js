@@ -1,6 +1,6 @@
-const { readFileSync, writeFileSync } = require("fs");
-const { resolve } = require("path");
-const axios = require("axios");
+import { readFileSync, writeFileSync } from "fs";
+import { resolve } from "path";
+import { get } from "axios";
 
 const config = {
     headers: {
@@ -23,7 +23,7 @@ const run = async () => {
     const users = new Set();
 
     for await (const repo of repos) {
-        const { data } = await axios.get(
+        const { data } = await get(
             `https://api.github.com/repos/${repo}/contributors?per_page=100`,
             config
         )
@@ -36,7 +36,7 @@ const run = async () => {
     for await (const user of Array.from(users)) {
         const d = { username: user, email: "", name: user };
 
-        const { data: { name, email, id } } = await axios.get(`https://api.github.com/users/${user}`, config);
+        const { data: { name, email, id } } = await get(`https://api.github.com/users/${user}`, config);
 
         if (
             name &&
