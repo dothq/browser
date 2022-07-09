@@ -71,14 +71,13 @@ const run = async () => {
         const em = email.replace("[bot]", "");
         const emLength = em.length;
 
-        let censoredEmail = `<${em}>`;
+        let formattedEmail = `<${em}>`;
 
         if(!email.endsWith("github.com")) {
-            const lengthShouldCensor = (emLength * 0.5).toFixed(0);
-            censoredEmail = `${em.substring(0, lengthShouldCensor)}${[...Array(emLength - lengthShouldCensor)].join("*")}`
+            censoredEmail = ``
         }
 
-        file.push(`* ${name} (@${username}) ${censoredEmail && censoredEmail.length ? `<${censoredEmail}>` : ``}`);
+        file.push(`* ${name} (@${username}) ${formattedEmail && formattedEmail.length ? `<${formattedEmail}>` : ``}`);
     }
 
     writeFileSync(
