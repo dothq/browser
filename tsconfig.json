@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"target": "es2021",
+		"module": "commonjs",
+		"strict": true,
+		"esModuleInterop": true,
+		"noImplicitAny": true,
+		"useDefineForClassFields": true,
+		"experimentalDecorators": true,
+		"jsx": "react",
+		"baseUrl": ".",
+		"paths": {
+			"browser/*": ["./browser/*"],
+			"api/*": ["./api/*"]
+		}
+	}
+}
