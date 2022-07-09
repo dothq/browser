@@ -26,6 +26,7 @@ const main = async () => {
 			resolve(process.cwd(), "config", "version.txt"),
 		]);
 		await execa("git", ["commit", "-m", newVersion]);
+		await execa("git", ["tag", "-a", newVersion]);
 	}
 };
 
