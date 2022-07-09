@@ -70,7 +70,7 @@ const run = async () => {
 		let formattedEmail = `<${em}>`;
 
 		if (!email.endsWith("github.com")) {
-			censoredEmail = ``;
+			formattedEmail = ``;
 		}
 
 		file.push(
