@@ -11,8 +11,8 @@
 !define BrandFullNameInternal "Dot Browser"
 !define BrandFullName         "Dot Browser"
 !define CompanyName           "Dot HQ"
-!define URLInfoAbout          "https://dothq.co"
-!define HelpLink              "https://support.dothq.co"
+!define URLInfoAbout          "https://www.dothq.org"
+!define HelpLink              "https://support.dothq.org"
 
 !define URLStubDownloadX86 "https://download.mozilla.org/?os=win&lang=${AB_CD}&product=firefox-latest"
 !define URLStubDownloadAMD64 "https://download.mozilla.org/?os=win64&lang=${AB_CD}&product=firefox-latest"
