@@ -1,5 +1,5 @@
-import { get } from "axios";
-import { readFileSync, writeFileSync } from "fs";
+import axios from "axios";
+import { writeFileSync } from "fs";
 import { resolve } from "path";
 
 const config = {
@@ -11,22 +11,16 @@ const config = {
 };
 
 const run = async () => {
-	const modulesFile = readFileSync(
-		resolve(process.cwd(), ".gitmodules"),
-		"utf-8"
-	);
-	const repos = modulesFile
-		.split("\n")
-		.map((ln) => ln.trim())
-		.filter((ln) => ln.startsWith("url = "))
-		.map((ln) => ln.replace("url = ", ""))
-		.filter((ln) => ln.startsWith("http"))
-		.map((ln) => ln.split("github.com/")[1].replace(".git", ""));
+	const repos = [
+		"dothq/browser",
+		"dothq/browser-desktop",
+		"dothq/browser-android",
+	];
 
 	const users = new Set();
 
 	for await (const repo of repos) {
-		const { data } = await get(
+		const { data } = await axios.get(
 			`https://api.github.com/repos/${repo}/contributors?per_page=100`,
 			config
 		);
@@ -41,7 +35,10 @@ const run = async () => {
 
 		const {
 			data: { name, email, id },
-		} = await get(`https://api.github.com/users/${user}`, config);
+		} = await axios.get(
+			`https://api.github.com/users/${user}`,
+			config
+		);
 
 		if (name && name.length) {
 			d.name = name;
