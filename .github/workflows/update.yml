@@ -1,32 +1,32 @@
 name: Update submodules
 
 on:
-  schedule:
-    - cron: '*/1 * * * *' # every minute
-  workflow_dispatch: # manually run
+    schedule:
+        - cron: "*/1 * * * *" # every minute
+    workflow_dispatch: # manually run
 
 jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        run: |
-          git clone https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
-          cd browser
-          git status
+    run:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              run: |
+                  git clone https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
+                  cd browser
+                  git status
 
-      - name: Checkout submodules
-        run: |
-          cd browser
-          git submodule sync --recursive
-          git submodule update --init --recursive
-          git submodule foreach 'git fetch && git checkout $(git log --branches -1 --pretty=format:"%H")'
+            - name: Checkout submodules
+              run: |
+                  cd browser
+                  git submodule sync --recursive
+                  git submodule update --init --recursive
+                  git submodule foreach 'git fetch && git checkout $(git log --branches -1 --pretty=format:"%H")'
 
-      - name: Push to GitHub
-        run: |
-          cd browser
-          git config --global user.name "dothq-robot"
-          git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
-          git status
-          python3 scripts/update-submodules.py
-          git push origin main
+            - name: Push to GitHub
+              run: |
+                  cd browser
+                  git config --global user.name "dothq-robot"
+                  git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
+                  git status
+                  python3 scripts/update-submodules.py
+                  git push origin main

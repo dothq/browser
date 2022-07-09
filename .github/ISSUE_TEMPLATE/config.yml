@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Ask questions, leave feedback and get support
-    url: https://github.com/dothq/browser/discussions/new
-    about: Create a thread in the Discussions tab
+    - name: Ask questions, leave feedback and get support
+      url: https://github.com/dothq/browser/discussions/new
+      about: Create a thread in the Discussions tab

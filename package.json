@@ -1,36 +1,36 @@
 {
-    "name": "dot",
-    "license": "MPL-2.0",
-    "type": "module",
-    "private": true,
-    "scripts": {
-        "pull": "node scripts/pull-ff.js",
-        "ver": "node scripts/set-version.js",
-        "build": "node_modules/.bin/ts-node build/",
-        "lint": "npx prettier --loglevel log --write ."
-    },
-    "dependencies": {
-        "@emotion/cache": "^11.7.1",
-        "@emotion/css": "^11.7.1",
-        "@emotion/react": "^11.8.1",
-        "@emotion/styled": "^11.8.1",
-        "@hotwired/stimulus": "^3.0.1",
-        "@types/react": "^17.0.39",
-        "@types/react-dom": "^17.0.11",
-        "animejs": "^3.2.1",
-        "axios": "^0.27.2",
-        "mobx": "^6.3.13",
-        "mobx-react": "^7.3.0",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2"
-    },
-    "devDependencies": {
-        "@types/animejs": "^3.1.4",
-        "esbuild": "^0.14.21",
-        "execa": "^6.1.0",
-        "prettier": "2.5.1",
-        "prettier-plugin-organize-imports": "^2.3.4",
-        "ts-node": "^10.5.0",
-        "typescript": "^4.5.5"
-    }
+	"name": "dot",
+	"license": "MPL-2.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"pull": "node scripts/pull-ff.js",
+		"ver": "node scripts/set-version.js",
+		"build": "node_modules/.bin/ts-node build/",
+		"lint": "npx prettier --loglevel log --write ."
+	},
+	"dependencies": {
+		"@emotion/cache": "^11.7.1",
+		"@emotion/css": "^11.7.1",
+		"@emotion/react": "^11.8.1",
+		"@emotion/styled": "^11.8.1",
+		"@hotwired/stimulus": "^3.0.1",
+		"@types/react": "^17.0.39",
+		"@types/react-dom": "^17.0.11",
+		"animejs": "^3.2.1",
+		"axios": "^0.27.2",
+		"mobx": "^6.3.13",
+		"mobx-react": "^7.3.0",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
+	},
+	"devDependencies": {
+		"@types/animejs": "^3.1.4",
+		"esbuild": "^0.14.21",
+		"execa": "^6.1.0",
+		"prettier": "2.5.1",
+		"prettier-plugin-organize-imports": "^2.3.4",
+		"ts-node": "^10.5.0",
+		"typescript": "^4.5.5"
+	}
 }

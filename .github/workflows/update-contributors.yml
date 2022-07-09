@@ -1,23 +1,23 @@
 name: Update contributors
 
 on:
-  push:
-    paths-ignore:
-      - 'CONTRIBUTORS.md'
+    push:
+        paths-ignore:
+            - "CONTRIBUTORS.md"
 
 jobs:
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        run: |
-          git clone https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
-          git config --global user.name "dothq-robot"
-          git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
-          cd browser
-          git status
-          yarn add axios
-          ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node scripts/update-contributors.js
-          git add CONTRIBUTORS.md
-          git commit -m "👥 Update CONTRIBUTORS.md"
-          git push origin main
+    run:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              run: |
+                  git clone https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
+                  git config --global user.name "dothq-robot"
+                  git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
+                  cd browser
+                  git status
+                  yarn add axios
+                  ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node scripts/update-contributors.js
+                  git add CONTRIBUTORS.md
+                  git commit -m "👥 Update CONTRIBUTORS.md"
+                  git push origin main
