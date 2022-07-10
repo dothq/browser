@@ -1,9 +1,10 @@
 import axios from "axios";
 import { execa } from "execa";
-import { existsSync, writeFileSync } from "fs";
-import { platform, tmpdir } from "os";
+import { appendFileSync, existsSync, writeFileSync } from "fs";
+import { homedir, platform, tmpdir } from "os";
 import { resolve } from "path";
 import { exit } from "process";
+import which from "which";
 
 const sh = (bin, args, opts) => {
 	if (platform() == "win32") {
@@ -13,7 +14,14 @@ const sh = (bin, args, opts) => {
 		console.warn(`Running command inside Mozillabuild...`);
 	}
 
-	return execa(bin, args, { ...(opts || {}), stdio: "inherit" });
+	return execa(bin, args, {
+		...(opts || {}),
+		stdio: "inherit",
+		env: {
+			...(opts && "env" in opts ? opts.env : {}),
+			...process.env,
+		},
+	});
 };
 
 const main = async () => {
@@ -49,6 +57,116 @@ const main = async () => {
 				);
 
 				exit(1);
+			}
+		}
+
+		const where = async (bin) => {
+			try {
+				return await which(bin);
+			} catch (e) {
+				return null;
+			}
+		};
+
+		if (!(await where("git"))) {
+			console.error(`Git was not found on this machine!`);
+			console.error(`Install it from https://www.git-scm.com/`);
+		}
+
+		if (!(await where("hg"))) {
+			console.error(`Mercurial was not found on this machine!`);
+			console.error(
+				`Install it from https://www.mercurial-scm.org/`
+			);
+		}
+
+		if (!(await where("python3"))) {
+			console.error(`Python3 was not found on this machine!`);
+			console.error(`Install it from https://www.python.org/`);
+		}
+
+		if (!(await where("git-cinnabar"))) {
+			if (existsSync(resolve(homedir(), ".git-cinnabar"))) {
+				process.env.PATH = `${process.env.PATH}:${resolve(
+					homedir(),
+					".git-cinnabar"
+				)}`;
+			} else {
+				console.info(`Installing Git Cinnabar...`);
+
+				await sh("git", [
+					"clone",
+					"https://github.com/glandium/git-cinnabar",
+					resolve(homedir(), ".git-cinnabar"),
+				]);
+
+				if (platform() == "win32") {
+					console.error(
+						`Add the following item to your PATH in Windows:`
+					);
+					console.error(
+						resolve(homedir(), ".git-cinnabar")
+					);
+					exit(1);
+				} else {
+					if (
+						existsSync(
+							resolve(homedir(), ".bash_profile")
+						)
+					) {
+						appendFileSync(
+							resolve(homedir(), ".bash_profile"),
+							`\nexport PATH="$PATH:${resolve(
+								homedir(),
+								".git-cinnabar"
+							)}"`
+						);
+					} else if (
+						existsSync(resolve(homedir(), ".bashrc"))
+					) {
+						appendFileSync(
+							resolve(homedir(), ".bashrc"),
+							`\nexport PATH="$PATH:${resolve(
+								homedir(),
+								".git-cinnabar"
+							)}"`
+						);
+					} else if (
+						existsSync(resolve(homedir(), ".zshrc"))
+					) {
+						appendFileSync(
+							resolve(homedir(), ".zshrc"),
+							`\nexport PATH="$PATH:${resolve(
+								homedir(),
+								".git-cinnabar"
+							)}"`
+						);
+					} else {
+						console.error(
+							`Unable to work out your UNIX shell.`
+						);
+						console.error(
+							`Append export PATH="$PATH:${resolve(
+								homedir(),
+								".git-cinnabar"
+							)}" to your shell configuration file.`
+						);
+
+						exit(1);
+					}
+
+					process.env.PATH = `${process.env.PATH}:${resolve(
+						homedir(),
+						".git-cinnabar"
+					)}`;
+
+					if (!(await where("git-cinnabar"))) {
+						console.error(
+							`Failed to install Git Cinnabar.`
+						);
+						exit(1);
+					}
+				}
 			}
 		}
 
