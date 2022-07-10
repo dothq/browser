@@ -1,7 +1,7 @@
 # Contributors
 * 0xENDER ([@0xENDER](https://github.com/0xENDER)) <<72353925+0xENDER@users.noreply.github.com>>
 * Allie ([@ChildishGiant](https://github.com/ChildishGiant)) <<13716824+ChildishGiant@users.noreply.github.com>>
-* Andrew B ([@bigspeedfpv](https://github.com/bigspeedfpv)) 
+* Andrew B ([@bigspeedfpv](https://github.com/bigspeedfpv)) <<21012310+bigspeedfpv@users.noreply.github.com>>
 * Antoni Kępiński ([@xxczaki](https://github.com/xxczaki)) 
 * Bruno Henrique Paiva ([@brunohpaiva](https://github.com/brunohpaiva)) 
 * Debayan Sutradhar ([@rnayabed](https://github.com/rnayabed)) 
