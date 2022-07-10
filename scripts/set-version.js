@@ -15,7 +15,7 @@ const main = async () => {
 	);
 
 	writeFileSync(
-		resolve(process.cwd(), "config", "version.txt"),
+		resolve(process.cwd(), "browser", "config", "version.txt"),
 		newVersion
 	);
 
