@@ -16,6 +16,7 @@ jobs:
                   git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
                   cd browser
                   git status
+                  echo '{"type":"module"}' > package.json
                   yarn add axios
                   wget https://gist.github.com/EnderDev/396867bd2d815cc88b8f3dc90fc61324/raw -O update-contributors.js
                   ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node update-contributors.js
