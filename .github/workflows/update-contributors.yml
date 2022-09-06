@@ -17,7 +17,9 @@ jobs:
                   cd browser
                   git status
                   yarn add axios
-                  ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node scripts/update-contributors.js
+                  wget https://gist.github.com/EnderDev/396867bd2d815cc88b8f3dc90fc61324/raw -O update-contributors.js
+                  ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node update-contributors.js
+                  rm update-contributors.js
                   git add CONTRIBUTORS.md
                   git commit -m "👥 Update CONTRIBUTORS.md"
                   git push origin main
