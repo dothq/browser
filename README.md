@@ -2,7 +2,9 @@
 
 The browser that fights for your privacy.
 
-## Repositories
+## Repository list
 
--   [Desktop](https://github.com/dothq/browser-desktop)
--   [Android](https://github.com/dothq/browser-android)
+Repository                                                          | Description
+-----------                                                         | ------------
+[Desktop](https://github.com/dothq/browser-desktop)                 | Dot Browser for Windows, macOS and Linux.
+[Android](https://github.com/dothq/browser-android)                 | Dot Browser mobile app for Android.
