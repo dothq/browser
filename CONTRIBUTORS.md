@@ -1,4 +1,15 @@
 # Contributors
+
+## Mozilla Contributors
+
+Dot Browser could never exist without Mozilla Firefox, so we would like to give our thanks to all those who have worked on it over the years.
+
+You can see a list of these people at [mozilla.org/credits](https://www.mozilla.org/credits/).
+
+## Dot Browser Contributors
+
+Thank you to the following people for their help with making Dot Browser what it is today:
+
 * 0xENDER ([@0xENDER](https://github.com/0xENDER))
 * Allie ([@ChildishGiant](https://github.com/ChildishGiant))
 * Andrew B ([@bigspeedfpv](https://github.com/bigspeedfpv))

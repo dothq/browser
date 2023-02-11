@@ -4,23 +4,27 @@ on:
     push:
         paths-ignore:
             - "CONTRIBUTORS.md"
+    workflow_dispatch:
+    schedule:
+        - cron: "0 */12 * * *" # Every 12 hours
 
 jobs:
     run:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 2
+                  token: ${{ secrets.ROBOT_TOKEN }}
+
+            - name: Compile contributors
+              run: | # todo: remove --experimental-fetch at node 17
+                  ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node --experimental-fetch .github/update-contributors.js
+
+            - name: Push to Git
+              continue-on-error: true # This will probably error when the file hasn't changed
               run: |
-                  git clone https://${{ secrets.ROBOT_TOKEN }}@github.com/dothq/browser.git
-                  git config --global user.name "dothq-robot"
-                  git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
-                  cd browser
-                  git status
-                  echo '{"type":"module"}' > package.json
-                  yarn add axios
-                  wget https://gist.github.com/EnderDev/396867bd2d815cc88b8f3dc90fc61324/raw -O update-contributors.js
-                  ROBOT_TOKEN=${{ secrets.ROBOT_TOKEN }} node update-contributors.js
-                  rm update-contributors.js
                   git add CONTRIBUTORS.md
                   git commit -m "👥 Update CONTRIBUTORS.md"
                   git push origin main
