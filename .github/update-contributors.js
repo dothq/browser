@@ -17,6 +17,10 @@ const run = async () => {
 		"dothq/browser-android",
 	];
 
+    const disallowedLogins = [
+        "dothq-robot"
+    ];
+
 	const users = new Set();
 
 	for await (const repo of repos) {
@@ -25,7 +29,11 @@ const run = async () => {
 			config
 		)).json();
 
-		data.forEach((u) => users.add(u.login));
+		data.forEach((u) => {
+            if (!disallowedLogins.includes(u.login)) {
+                users.add(u.login);
+            }
+        });
 	}
 
 	const contributors = [];
