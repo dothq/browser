@@ -25,6 +25,8 @@ jobs:
             - name: Push to Git
               continue-on-error: true # This will probably error when the file hasn't changed
               run: |
+                  git config --global user.email "72629236+dothq-robot@users.noreply.github.com"
+                  git config --global user.name "dothq-robot"
                   git add CONTRIBUTORS.md
                   git commit -m "👥 Update CONTRIBUTORS.md"
                   git push origin main
