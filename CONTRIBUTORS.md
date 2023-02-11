@@ -16,7 +16,6 @@ Thank you to the following people for their help with making Dot Browser what it
 * antek ([@xxczaki](https://github.com/xxczaki))
 * Bruno Henrique Paiva ([@brunohpaiva](https://github.com/brunohpaiva))
 * Debayan Sutradhar  ([@rnayabed](https://github.com/rnayabed))
-* Dot HQ ([@dothq-robot](https://github.com/dothq-robot))
 * Efreak ([@Efreak](https://github.com/Efreak))
 * Ejaz ([@ejaz4](https://github.com/ejaz4))
 * Flaam ([@Flaam](https://github.com/Flaam))
