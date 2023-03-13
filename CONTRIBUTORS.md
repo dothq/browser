@@ -20,7 +20,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * Ejaz ([@ejaz4](https://github.com/ejaz4))
 * Flaam ([@Flaam](https://github.com/Flaam))
 * fossabot ([@fossabot](https://github.com/fossabot))
-* Frederick Ambo (Tacaly) ([@tacaly](https://github.com/tacaly))
+* Frederick Ambo ([@tacaly](https://github.com/tacaly))
 * George ([@FozzieHi](https://github.com/FozzieHi))
 * Jake Ward ([@GamingGeek](https://github.com/GamingGeek))
 * Jamie ([@ItsJamie9494](https://github.com/ItsJamie9494))
