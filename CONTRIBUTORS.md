@@ -13,7 +13,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * 0xENDER ([@0xENDER](https://github.com/0xENDER))
 * Allie ([@ChildishGiant](https://github.com/ChildishGiant))
 * Andrew B ([@bigspeedfpv](https://github.com/bigspeedfpv))
-* antek ([@xxczaki](https://github.com/xxczaki))
+* Antoni Kępiński ([@xxczaki](https://github.com/xxczaki))
 * Bruno Henrique Paiva ([@brunohpaiva](https://github.com/brunohpaiva))
 * Debayan Sutradhar  ([@rnayabed](https://github.com/rnayabed))
 * Efreak ([@Efreak](https://github.com/Efreak))
