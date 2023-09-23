@@ -38,7 +38,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * proudmuslim-dev ([@proudmuslim-dev](https://github.com/proudmuslim-dev))
 * Sandro Linux ([@SandroLinux](https://github.com/SandroLinux))
 * Shalom Ademuwagun ([@ChachyDev](https://github.com/ChachyDev))
-* Spike ([@spikecodes](https://github.com/spikecodes))
+* Spike O'Carroll ([@spikecodes](https://github.com/spikecodes))
 * Syn ([@SynCode05](https://github.com/SynCode05))
 * Systemless ([@SystemlessDev](https://github.com/SystemlessDev))
 * Toinane ([@Toinane](https://github.com/Toinane))
