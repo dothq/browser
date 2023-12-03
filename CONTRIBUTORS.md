@@ -32,7 +32,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * Kieran Drewett ([@EnderDev](https://github.com/EnderDev))
 * kodxana ([@kodxana](https://github.com/kodxana))
 * lokey ([@yourboilokey](https://github.com/yourboilokey))
-* Marc Espín ([@marc2332](https://github.com/marc2332))
+* Marc Espin ([@marc2332](https://github.com/marc2332))
 * Nathan Ritchie ([@Enstrayed](https://github.com/Enstrayed))
 * Ofek Lev ([@ofek](https://github.com/ofek))
 * proudmuslim-dev ([@proudmuslim-dev](https://github.com/proudmuslim-dev))
