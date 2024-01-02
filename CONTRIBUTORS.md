@@ -43,5 +43,5 @@ Thank you to the following people for their help with making Dot Browser what it
 * Systemless ([@SystemlessDev](https://github.com/SystemlessDev))
 * Toinane ([@Toinane](https://github.com/Toinane))
 * trickypr ([@trickypr](https://github.com/trickypr))
-* Victor Bäck ([@VBDojnaz](https://github.com/VBDojnaz))
+* Vee Bäck ([@VeeBack](https://github.com/VeeBack))
 * yungtry ([@yungtry](https://github.com/yungtry))
