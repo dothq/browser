@@ -18,7 +18,8 @@ const run = async () => {
 	];
 
     const disallowedLogins = [
-        "dothq-robot"
+        "dothq-robot",
+        "EnderDev", // Excluded as contributions should be under @kierandrewett instead
     ];
 
 	const users = new Set();
