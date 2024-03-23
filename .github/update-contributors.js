@@ -31,7 +31,7 @@ const run = async () => {
 
 		data.forEach((u) => {
             if (!disallowedLogins.includes(u.login)) {
-                users.add(u.login);
+                users.add(u.id);
             }
         });
 	}
@@ -39,16 +39,15 @@ const run = async () => {
 	const contributors = [];
 
 	for await (const user of Array.from(users)) {
-		const d = { username: user, name: user };
+		const d = { username: "", name: "" };
 
-		const { name } = await (await fetch(
-			`https://api.github.com/users/${user}`,
+		const { username, name } = await (await fetch(
+			`https://api.github.com/user/${user}`,
 			config
 		)).json();
 
-		if (name && name.length) {
-			d.name = name;
-		}
+		d.username = username;
+		d.name = name && name.length ? name : username;
 
 		contributors.push(d);
 	}
