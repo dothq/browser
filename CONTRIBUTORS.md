@@ -29,6 +29,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * Jonny Dommett ([@Dimsquid](https://github.com/Dimsquid))
 * Juan ([@minotaa](https://github.com/minotaa))
 * Kai Lyons ([@loralighte](https://github.com/loralighte))
+* Kieran Drewett ([@kierandrewett](https://github.com/kierandrewett))
 * Kieran Drewett ([@EnderDev](https://github.com/EnderDev))
 * kodxana ([@kodxana](https://github.com/kodxana))
 * lokey ([@yourboilokey](https://github.com/yourboilokey))
