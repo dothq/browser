@@ -3,7 +3,7 @@ description: Suggest an idea for Dot Browser
 title: "[Feature Request]: "
 labels: "feature"
 assignees:
-    - EnderDev
+    - kierandrewett
 body:
     - type: checkboxes
       attributes:
