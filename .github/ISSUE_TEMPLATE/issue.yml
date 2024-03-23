@@ -3,7 +3,7 @@ description: Report an issue with Dot Browser
 title: "[Bug]: "
 labels: "bug"
 assignees:
-    - EnderDev
+    - kierandrewett
 body:
     - type: checkboxes
       attributes:
