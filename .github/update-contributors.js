@@ -41,13 +41,13 @@ const run = async () => {
 	for await (const user of Array.from(users)) {
 		const d = { username: "", name: "" };
 
-		const { username, name } = await (await fetch(
+		const { login, name } = await (await fetch(
 			`https://api.github.com/user/${user}`,
 			config
 		)).json();
 
-		d.username = username;
-		d.name = name && name.length ? name : username;
+		d.username = login;
+		d.name = name && name.length ? name : login;
 
 		contributors.push(d);
 	}
