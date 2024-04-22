@@ -41,6 +41,7 @@ Thank you to the following people for their help with making Dot Browser what it
 * Spike O'Carroll ([@spikecodes](https://github.com/spikecodes))
 * Syn ([@SynCode05](https://github.com/SynCode05))
 * Systemless ([@SystemlessDev](https://github.com/SystemlessDev))
+* Tacaly ([@tacaly](https://github.com/tacaly))
 * Toinane ([@Toinane](https://github.com/Toinane))
 * trickypr ([@trickypr](https://github.com/trickypr))
 * Vee Bäck ([@VeeBack](https://github.com/VeeBack))
